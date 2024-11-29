@@ -59,7 +59,6 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
   Future<void> sendProductsToAnotherTable({
     required int oldPersonalizedCode,
     required int newPersonalizedCode,
-    required List<int> saleRequestProductsIds,
   }) async {
     isLoading = true;
     mainError = null;
@@ -68,7 +67,7 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-        saleRequestProductsIds: saleRequestProductsIds,
+        saleRequestProductsIds: _selectedSaleRequestProductsIds,
       );
     } catch (e) {
       mainError = UIError.unexpected;

@@ -95,11 +95,6 @@ void main() {
   group("Update sale request personalized code products", () {
     final int oldPersonalizedCode = faker.randomGenerator.integer(100);
     final int newPersonalizedCode = faker.randomGenerator.integer(100);
-    final List<int> saleRequestProductsIds = [
-      faker.randomGenerator.integer(100),
-      faker.randomGenerator.integer(100),
-      faker.randomGenerator.integer(100),
-    ];
 
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -108,7 +103,6 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
       );
     });
 
@@ -123,23 +117,28 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
       );
     });
     test(
         "Should call changeSaleRequestPersonalizedCodeProducts with correct values",
         () async {
+      int firstSelected = faker.randomGenerator.integer(100);
+      int secondSelected = faker.randomGenerator.integer(100);
+
+      sut.updateProductIsSelected(firstSelected);
+      sut.updateProductIsSelected(secondSelected);
+
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
-        saleRequestProductsIds: saleRequestProductsIds,
       );
 
       verify(
         () => changeSaleRequestPersonalizedCodeProducts.change(
-            oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
-            newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-            saleRequestProductsIds: saleRequestProductsIds),
+          oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
+          newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
+          saleRequestProductsIds: [firstSelected, secondSelected],
+        ),
       ).called(1);
     });
   });

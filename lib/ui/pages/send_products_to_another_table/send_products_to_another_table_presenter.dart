@@ -15,7 +15,6 @@ abstract class SendProductsToAnotherTablePresenter implements Listenable {
   Future<void> sendProductsToAnotherTable({
     required int oldPersonalizedCode,
     required int newPersonalizedCode,
-    required List<int> saleRequestProductsIds,
   });
 
   void updateProductIsSelected(int saleRequestProductId);

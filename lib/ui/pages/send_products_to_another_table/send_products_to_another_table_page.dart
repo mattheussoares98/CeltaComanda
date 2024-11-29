@@ -103,27 +103,11 @@ class _SendProductsToAnotherTablePageState
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (snapshot.data?.Products.length ==
-                              sendProductsToAnotherTablePresenter
-                                  .selectedsSaleRequestProductsIds.length) {
-                            setState(() {
-                              sendProductsToAnotherTablePresenter
-                                  .clearAllSelectedsSaleRequestProductsIds();
-                            });
-                          } else {
-                            setState(() {
-                              sendProductsToAnotherTablePresenter
-                                  .selectAllProducts();
-                            });
-                          }
+                      SelectOrUnselectAllProducts(
+                        printedViewModel: snapshot.data,
+                        callSetState: () {
+                          setState(() {});
                         },
-                        child: Text(snapshot.data?.Products.length ==
-                                sendProductsToAnotherTablePresenter
-                                    .selectedsSaleRequestProductsIds.length
-                            ? "Unselect all products"
-                            : "Select all products" + ""),
                       ),
                       ConfirmButton(
                         formKey: formKey,

@@ -14,10 +14,10 @@ List<Widget> allButtons(BuildContext context) {
     SendAllProductsToAnotherTableButton(),
     SendOneOrMoreProductsToAnotherTableButton(),
     DoLogoutButton(),
+    CloseCommandButton(),
     LiberateOrBlockTableButton(),
     if (!homePresenter.isGeneratingVersionToRede &&
         !homePresenter.isGeneratingVersionToGetNet)
       ReserveTableButton(),
-    CloseCommandButton(),
   ];
 }

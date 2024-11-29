@@ -81,6 +81,7 @@ class _SendProductsToAnotherTablePageState
                       ),
                       Expanded(
                         child: DestinySelectTableDropdown(
+                          selectedOriginCommand: selectedOriginCommand,
                           selectedDestinyCommand: selectedDestinyCommand,
                           updateSelectedCommandInDropDown: (value) {
                             setState(() {

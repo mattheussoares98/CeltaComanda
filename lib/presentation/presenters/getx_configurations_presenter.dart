@@ -252,14 +252,17 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<void> closeCommand(int commandNumber) async {
+  Future<bool> closeCommand(int commandNumber) async {
     isLoading = true;
     mainError = null;
     try {
       await closeSaleRequest.close(commandNumber.toString().padLeft(3, "0"));
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
+    } finally {
+      isLoading = false;
     }
-    isLoading = false;
   }
 }

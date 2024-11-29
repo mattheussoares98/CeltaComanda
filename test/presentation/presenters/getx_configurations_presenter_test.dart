@@ -620,5 +620,17 @@ void main() {
         () => closeSaleRequest.close(commandNumber.toString().padLeft(3, "0")),
       ).called(1);
     });
+    test("Should return true on success", () async {
+      final value = await sut.closeCommand(commandNumber);
+
+      expect(value, true);
+    });
+    test("Should return false on error", () async {
+      closeSaleRequest.mockError();
+
+      final value = await sut.closeCommand(commandNumber);
+
+      expect(value, false);
+    });
   });
 }

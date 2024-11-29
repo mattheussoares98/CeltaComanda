@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -27,11 +28,17 @@ class ConfirmButton extends StatelessWidget {
           bool? isValid = formKey.currentState?.validate();
 
           if (isValid == true) {
-            await sendProductsToAnotherTablePresenter
-                .sendProductsToAnotherTable(
-              oldPersonalizedCode: oldPersonalizedCode!,
-              newPersonalizedCode: newPersonalizedCode!,
-            );
+            notificationDialog(
+                context: context,
+                titleMessage: "Confirm send itens to another table?" + "",
+                content: null,
+                onPress: () async {
+                  await sendProductsToAnotherTablePresenter
+                      .sendProductsToAnotherTable(
+                    oldPersonalizedCode: oldPersonalizedCode!,
+                    newPersonalizedCode: newPersonalizedCode!,
+                  );
+                });
           }
         },
         child: Text(

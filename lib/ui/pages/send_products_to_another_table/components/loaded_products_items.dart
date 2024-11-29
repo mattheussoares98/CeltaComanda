@@ -51,7 +51,7 @@ class LoadedProductsItems extends StatelessWidget {
         child: GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: hasMinWidth(context) ? 3 : 1,
+            crossAxisCount: hasMinWidth(context) ? 2 : 1,
             childAspectRatio: 8,
             mainAxisSpacing: 5,
             crossAxisSpacing: 5,

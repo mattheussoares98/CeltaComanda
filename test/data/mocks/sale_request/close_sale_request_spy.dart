@@ -15,7 +15,7 @@ class CloseSaleRequestSpy extends Mock implements CloseSaleRequest {
     this._mockCloseCall().thenAnswer((any) async => any);
   }
 
-  void mockError(DomainError error) {
-    this._mockCloseCall().thenThrow(error);
+  void mockError() {
+    this._mockCloseCall().thenThrow(DomainError.unexpected);
   }
 }

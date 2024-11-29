@@ -250,4 +250,16 @@ class GetxConfigurationsPresenter extends GetxController
   void goToSendProductsToAnotherTablePage() {
     navigateTo.navigate(pageRoute: PageRoutes.sendProductsToAnotherTable);
   }
+
+  @override
+  Future<void> closeCommand(int commandNumber) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      await closeSaleRequest.close(commandNumber.toString().padLeft(3, "0"));
+    } catch (e) {
+      mainError = UIError.unexpected;
+    }
+    isLoading = false;
+  }
 }

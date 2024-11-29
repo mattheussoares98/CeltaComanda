@@ -595,4 +595,30 @@ void main() {
           pageRoute: PageRoutes.sendProductsToAnotherTable)).called(1);
     });
   });
+
+  group("Close command", () {
+    int commandNumber = faker.randomGenerator.integer(100);
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.closeCommand(commandNumber);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      closeSaleRequest.mockError();
+
+      await sut.closeCommand(commandNumber);
+    });
+    test("Should call close sale request with correct values", () async {
+      await sut.closeCommand(commandNumber);
+
+      verify(
+        () => closeSaleRequest.close(commandNumber.toString().padLeft(3, "0")),
+      ).called(1);
+    });
+  });
 }

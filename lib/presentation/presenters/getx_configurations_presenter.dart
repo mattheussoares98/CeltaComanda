@@ -22,6 +22,7 @@ class GetxConfigurationsPresenter extends GetxController
   final ChangeSaleRequestPersonalizedCode changeSaleRequestPersonalizedCode;
   final ChangeSaleRequestPersonalizedCodeProducts
       changeSaleRequestPersonalizedCodeProducts;
+  final CloseSaleRequest closeSaleRequest;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -34,6 +35,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.updateSaleRequestTemp,
     required this.changeSaleRequestPersonalizedCode,
     required this.changeSaleRequestPersonalizedCodeProducts,
+    required this.closeSaleRequest,
   });
 
   @override

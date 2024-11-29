@@ -35,6 +35,7 @@ void main() {
   late ChangeSaleRequestPersonalizedCodeSpy changeSaleRequestPersonalizedCode;
   late ChangeSaleRequestPersonalizedCodeProductsSpy
       changeSaleRequestPersonalizedCodeProducts;
+  late CloseSaleRequestSpy closeSaleRequest;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -63,6 +64,7 @@ void main() {
       changeSaleRequestPersonalizedCode: changeSaleRequestPersonalizedCode,
       changeSaleRequestPersonalizedCodeProducts:
           changeSaleRequestPersonalizedCodeProducts,
+      closeSaleRequest: closeSaleRequest,
     );
   }
 
@@ -78,6 +80,7 @@ void main() {
     changeSaleRequestPersonalizedCode = ChangeSaleRequestPersonalizedCodeSpy();
     changeSaleRequestPersonalizedCodeProducts =
         ChangeSaleRequestPersonalizedCodeProductsSpy();
+    closeSaleRequest = CloseSaleRequestSpy();
   }
 
   void initMocks() {

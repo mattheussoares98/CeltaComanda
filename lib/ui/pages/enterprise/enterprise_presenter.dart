@@ -13,8 +13,6 @@ abstract class EnterprisePresenter implements Listenable {
 
   bool isUpdatedEnterpriseName = false;
 
-  TextEditingController get enterpriseNameController;
-
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false});
   void updateEnterpriseController(String value);

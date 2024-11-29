@@ -20,6 +20,8 @@ class EnterpriseValidationPage extends StatefulWidget {
 
 class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
+  final enterpriseController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -31,9 +33,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Provider.of(context, listen: false);
           await enterprisePresenter.getLocalData(homePresenter);
 
-          if (enterprisePresenter.enterpriseNameController.text.isNotEmpty) {
-            enterprisePresenter.validateEnterpriseInput(
-                enterprisePresenter.enterpriseNameController.text);
+          if (enterpriseController.text.isNotEmpty) {
+            enterprisePresenter
+                .validateEnterpriseInput(enterpriseController.text);
           }
         });
       }
@@ -110,6 +112,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                         children: [
                           EnterpriseInput(
                             commandVideModel: snapshotCommandData.data!,
+                            enterpriseController: enterpriseController,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20),

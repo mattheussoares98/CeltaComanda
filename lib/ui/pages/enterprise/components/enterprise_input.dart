@@ -7,8 +7,10 @@ import '../../../helpers/helpers.dart';
 
 class EnterpriseInput extends StatelessWidget {
   final CommandViewModel commandVideModel;
+  final TextEditingController enterpriseController;
   const EnterpriseInput({
     required this.commandVideModel,
+    required this.enterpriseController,
     super.key,
   });
 
@@ -27,9 +29,9 @@ class EnterpriseInput extends StatelessWidget {
               errorText: snapshot.data?.description,
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: presenter.enterpriseNameController,
+            controller: enterpriseController,
             onFieldSubmitted: (_) async {
-              if (presenter.enterpriseNameController.text.isNotEmpty) {
+              if (enterpriseController.text.isNotEmpty) {
                 await presenter.validateApiAndGoToHomePage(
                   commandEntity: commandVideModel.toEntity(),
                   homePresenter: homePresenter,

@@ -58,7 +58,7 @@ class CachedImageState extends State<CachedImage> {
       return;
     }
     try {
-      final maxSizeInBytes = 3 * 1024 * 1024;
+      final maxSizeInBytes = 1.5 * 1024 * 1024;
       final client = http.Client();
       final request = http.Request('GET', Uri.parse(url));
       final response = await client.send(request);
@@ -96,40 +96,40 @@ class CachedImageState extends State<CachedImage> {
     String url =
         "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
 
-    if (_failedUrls.contains(url) || _largeImages.contains(url)) {
+    if (_correctImages.contains(url)) {
+      return CachedNetworkImage(
+        fit: EnterpriseDataBuilder.enterpriseDataEntity?.zoomImage == true &&
+                widget.zoomImage
+            ? BoxFit.fitWidth
+            : BoxFit.contain,
+        cacheManager: _customCacheManager,
+        key: ValueKey<String>(url),
+        imageUrl: url,
+        height: widget.height,
+        width: widget.width,
+        errorWidget: (context, url, error) {
+          _failedUrls.add(url);
+          return _defaultImage(
+            height: widget.height,
+            width: widget.width,
+            cacheManager: _customCacheManager,
+          );
+        },
+        placeholder: (context, url) {
+          return _defaultImage(
+            height: widget.height,
+            width: widget.width,
+            cacheManager: _customCacheManager,
+          );
+        },
+      );
+    } else {
       return _defaultImage(
         height: widget.height,
         width: widget.width,
         cacheManager: _customCacheManager,
       );
     }
-
-    return CachedNetworkImage(
-      fit: EnterpriseDataBuilder.enterpriseDataEntity?.zoomImage == true &&
-              widget.zoomImage
-          ? BoxFit.fitWidth
-          : BoxFit.contain,
-      cacheManager: _customCacheManager,
-      key: ValueKey<String>(url),
-      imageUrl: url,
-      height: widget.height,
-      width: widget.width,
-      errorWidget: (context, url, error) {
-        _failedUrls.add(url);
-        return _defaultImage(
-          height: widget.height,
-          width: widget.width,
-          cacheManager: _customCacheManager,
-        );
-      },
-      placeholder: (context, url) {
-        return _defaultImage(
-          height: widget.height,
-          width: widget.width,
-          cacheManager: _customCacheManager,
-        );
-      },
-    );
   }
 
   Widget _defaultImage({

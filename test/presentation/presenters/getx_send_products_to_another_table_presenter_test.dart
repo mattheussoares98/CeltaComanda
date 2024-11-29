@@ -106,13 +106,26 @@ void main() {
       );
     });
 
-    test("Should emit correct values on error", () async {
+    test("Should emit correct values on DomainError.unexpected", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
+      sut.updateProductIsSelected(faker.randomGenerator.integer(0));
+
       changeSaleRequestPersonalizedCodeProducts
           .mockError(DomainError.unexpected);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+      );
+    });
+
+    test("Should emit correct values on DomainError.selectProducts", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.selectProducts]));
 
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,

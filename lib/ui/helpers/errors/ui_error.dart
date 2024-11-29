@@ -27,6 +27,7 @@ enum UIError {
   paymentFailed,
   productNotFound,
   requiredField,
+  selectProducts,
   shortField,
   unexpected,
 }
@@ -88,6 +89,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgInvalidField;
       case UIError.shortField:
         return R.string.msgVeryShortField;
+      case UIError.selectProducts:
+        return R.string.msgSelectProducts;
       default:
         return R.string.msgUnexpectedError;
     }

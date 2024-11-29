@@ -64,13 +64,22 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     mainError = null;
 
     try {
+      if (_selectedSaleRequestProductsIds.isEmpty) {
+        throw DomainError.selectProducts;
+      }
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
         saleRequestProductsIds: _selectedSaleRequestProductsIds,
       );
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.selectProducts:
+          mainError = UIError.selectProducts;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

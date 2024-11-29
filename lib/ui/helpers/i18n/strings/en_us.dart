@@ -63,6 +63,7 @@ class EnUs implements Translation {
   String get msgSearchCommandToPay => 'Look up a command to make the payment';
   String get msgSelectCommand => 'Select the command';
   String get msgSelectPeopleNumbers => 'Select the number of people';
+  String get msgSelectProducts => 'Select products';
   String get msgSelectSeller => 'Select the seller';
   String get msgSelectTable => 'Select the tabls';
   String get msgSuccessToCancelProducts => 'Product cancelled';

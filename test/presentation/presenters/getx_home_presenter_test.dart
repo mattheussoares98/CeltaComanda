@@ -413,7 +413,7 @@ void main() {
         () async {
       cartPresenter.mockLoadSaleRequestTempError(DomainError.unexpected);
 
-      expectLater(sut.mainErrorStream, emits(UIError.unexpected));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -430,7 +430,7 @@ void main() {
       cartPresenter
           .mockLoadSaleRequestTempError(DomainError.commandNotAvailable);
 
-      expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -446,7 +446,7 @@ void main() {
         () async {
       printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
-      expectLater(sut.mainErrorStream, emits(UIError.unexpected));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -463,7 +463,7 @@ void main() {
       printedProductsPresenter
           .mockLoadPrintedError(DomainError.commandNotAvailable);
 
-      expectLater(sut.mainErrorStream, emits(UIError.commandNotAvailable));
+      expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
@@ -523,7 +523,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: fixedCommandEntity.commandNumber.toString(),
+          commandNumber: fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });

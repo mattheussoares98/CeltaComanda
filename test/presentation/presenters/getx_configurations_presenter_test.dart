@@ -459,7 +459,7 @@ void main() {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: newFixedCommandNumber.toString(),
+          commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });

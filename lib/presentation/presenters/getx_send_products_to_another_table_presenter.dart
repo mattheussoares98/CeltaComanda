@@ -70,7 +70,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-        saleRequestProductsIds: _selectedSaleRequestProductsIds,
+        saleRequestProductsIds:
+            _selectedSaleRequestProductsIds.map((e) => e).toList(),
       );
 
       await loadProducts(oldPersonalizedCode);
@@ -109,7 +110,7 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
   final _selectedSaleRequestProductsIds = <int>[];
   @override
   List<int> get selectedsSaleRequestProductsIds =>
-      [..._selectedSaleRequestProductsIds];
+      _selectedSaleRequestProductsIds;
 
   @override
   void selectAllProducts() {

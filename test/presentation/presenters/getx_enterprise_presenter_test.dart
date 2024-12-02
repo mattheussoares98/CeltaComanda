@@ -136,6 +136,13 @@ void main() {
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
     );
 
+    await sut.validateApiAndGoToHomePage(
+      homePresenter: homePresenter,
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+    );
+
     verify(() => persistent.makePersistent()).called(1);
   });
   test(
@@ -168,6 +175,52 @@ void main() {
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
 
+    await sut.validateApiAndGoToHomePage(
+      homePresenter: homePresenter,
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+    );
+
+    verify(() => persistent.makeNotPersistent()).called(1);
+  });
+  test(
+      "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
+      () async {
+    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      enterpriseName:
+          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+      concentradorUrl:
+          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+      persistApp: true,
+      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+      useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+      updateConcentratorEnterpriseData: EnterpriseDataBuilder
+          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
+      serviceChargePercentageOrValue: EnterpriseDataBuilder
+          .enterpriseDataEntity!.serviceChargePercentageOrValue,
+      serviceChargeType:
+          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+      updateEnterprise:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
+      updateDevicesInformations:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
+      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+    );
+    homePresenter.isGeneratingVersionToGetNetMock = true;
+
+    await sut.validateApiAndGoToHomePage(
+      homePresenter: homePresenter,
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+    );
+
     verify(() => persistent.makeNotPersistent()).called(1);
   });
   test(
@@ -197,6 +250,13 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+    );
+
+    await sut.validateApiAndGoToHomePage(
+      homePresenter: homePresenter,
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
     );
 
     verify(() => persistent.makeNotPersistent()).called(1);

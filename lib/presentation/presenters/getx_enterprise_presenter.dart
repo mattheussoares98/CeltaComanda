@@ -145,6 +145,15 @@ class GetxEnterprisePresenter extends GetxController
           isFixedCommandNumber: isFixedCommandNumber,
         ),
       );
+
+      if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
+          !homePresenter.isGeneratingVersionToRede &&
+          !homePresenter.isGeneratingVersionToGetNet) {
+        await persistent.makePersistent();
+      } else {
+        await persistent.makeNotPersistent();
+      }
+
       isLoading = false;
 
       navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);

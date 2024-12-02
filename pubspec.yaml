@@ -54,6 +54,7 @@ dependencies:
   package_info_plus: ^8.1.0
   flutter_device_imei: ^0.0.3
   firebase_auth: ^5.3.3
+  device_info_plus: ^11.1.1
 
 icons_launcher:
   image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"

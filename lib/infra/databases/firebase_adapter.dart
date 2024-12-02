@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_device_imei/flutter_device_imei.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import '../../data/database/database.dart';
 import '../../data/models/models.dart';
@@ -73,6 +77,29 @@ class FirebaseAdapter implements FirebaseStorage {
     await docRef.set(
       {
         "updateMenu": FieldValue.increment(1),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  @override
+  Future<void> addPendingDeviceToUpdate() async {
+    String? identifier;
+    if (Platform.isWindows) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      WindowsDeviceInfo windowsInfo = await deviceInfo.windowsInfo;
+      identifier = windowsInfo.deviceId;
+    } else {
+      identifier = await FlutterDeviceImei.instance.getIMEI();
+    }
+
+    var docRef = firestore
+        .collection('clients')
+        .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+
+    await docRef.set(
+      {
+        "pendingDevicesToUpdate": [identifier],
       },
       SetOptions(merge: true),
     );

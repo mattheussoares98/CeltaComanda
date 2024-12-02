@@ -13,4 +13,6 @@ abstract class FirebaseStorage {
   Future<void> addDeviceInfo(DeviceInfoEntity entity, String imei);
 
   Future<void> updateMenu();
+
+  Future<void> addPendingDeviceToUpdate();
 }

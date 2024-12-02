@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter_device_imei/flutter_device_imei.dart';
 
-import '../../../data/models/models.dart';
+import '../../models/models.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../database/database.dart';
 

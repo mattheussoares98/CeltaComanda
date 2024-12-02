@@ -66,6 +66,8 @@ void main() {
           serviceChargeType: enterpriseJsonData["serviceChargeType"],
           updateEnterprise: enterpriseJsonData["updateEnterprise"],
           zoomImage: enterpriseJsonData["zoomImage"],
+          pendingDevicesToUpdate: enterpriseJsonData["pendingDevicesToUpdate"],
+          updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
         ),
       );
     });

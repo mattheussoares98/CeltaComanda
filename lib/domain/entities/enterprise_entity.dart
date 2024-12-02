@@ -19,6 +19,8 @@ class EnterpriseEntity extends Equatable {
   final double? serviceChargePercentageOrValue;
   final int? serviceChargeType;
   final bool? zoomImage;
+  final List<String>? pendingDevicesToUpdate;
+  final int? updatePendingDevices;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -36,6 +38,8 @@ class EnterpriseEntity extends Equatable {
     required this.updateDevicesInformations,
     required this.updateEnterprise,
     required this.zoomImage,
+    required this.pendingDevicesToUpdate,
+    required this.updatePendingDevices,
   });
 
   @override
@@ -55,5 +59,7 @@ class EnterpriseEntity extends Equatable {
         updateDevicesInformations,
         updateEnterprise,
         zoomImage,
+        pendingDevicesToUpdate,
+        updatePendingDevices,
       ];
 }

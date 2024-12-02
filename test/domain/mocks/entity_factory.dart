@@ -26,6 +26,11 @@ class EntityFactory {
       serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
       serviceChargeType: faker.randomGenerator.integer(2, min: 1),
       zoomImage: faker.randomGenerator.boolean(),
+      pendingDevicesToUpdate: [
+        faker.randomGenerator.string(10),
+        faker.randomGenerator.string(10),
+      ],
+      updatePendingDevices: faker.randomGenerator.integer(100),
     );
   }
 
@@ -782,7 +787,8 @@ class EntityFactory {
             ? []
             : [
                 ProductCompositionViewModel(
-                  Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
+                  Schedule: ProductScheduleModel.fromEntity(
+                      makeProductScheduleEntity()),
                   ProductCompositionId: "1",
                   EnterpriseId: "1",
                   InternalCodeOnERPCodeFather: "1",

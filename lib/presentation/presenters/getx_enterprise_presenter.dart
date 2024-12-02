@@ -91,6 +91,8 @@ class GetxEnterprisePresenter extends GetxController
           serviceChargeType: firebaseData.serviceChargeType,
           updateEnterprise: firebaseData.updateEnterprise,
           zoomImage: firebaseData.zoomImage,
+          pendingDevicesToUpdate: firebaseData.pendingDevicesToUpdate,
+          updatePendingDevices: firebaseData.updatePendingDevices,
         );
       } else {
         throw DomainError.enterpriseOrUrlNotFound;
@@ -197,6 +199,8 @@ class GetxEnterprisePresenter extends GetxController
       updateDevicesInformations: null,
       updateEnterprise: null,
       zoomImage: null,
+      pendingDevicesToUpdate: null,
+      updatePendingDevices: null,
     );
 
     _enterpriseError.value =
@@ -257,6 +261,8 @@ class GetxEnterprisePresenter extends GetxController
         serviceChargeType: enterprise.serviceChargeType,
         updateEnterprise: enterprise.updateEnterprise,
         zoomImage: enterprise.zoomImage,
+        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
+        updatePendingDevices: enterprise.updatePendingDevices,
       );
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
@@ -287,6 +293,8 @@ class GetxEnterprisePresenter extends GetxController
         updateDevicesInformations: null,
         updateEnterprise: null,
         zoomImage: null,
+        pendingDevicesToUpdate: null,
+        updatePendingDevices: null,
       );
 
       EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;

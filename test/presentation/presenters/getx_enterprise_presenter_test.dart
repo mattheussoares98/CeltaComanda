@@ -80,6 +80,8 @@ void main() {
       updateDevicesInformations: null,
       updateEnterprise: null,
       zoomImage: null,
+      pendingDevicesToUpdate: null,
+      updatePendingDevices: null,
     );
     sut = GetxEnterprisePresenter(
       validation: validation,
@@ -134,6 +136,10 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+      pendingDevicesToUpdate:
+          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
 
     await sut.validateApiAndGoToHomePage(
@@ -172,6 +178,10 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+      pendingDevicesToUpdate:
+          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -211,6 +221,8 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+      pendingDevicesToUpdate: EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
     homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -250,6 +262,8 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+      pendingDevicesToUpdate: EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
 
     await sut.validateApiAndGoToHomePage(
@@ -293,6 +307,8 @@ void main() {
         updateDevicesInformations: null,
         updateEnterprise: null,
         zoomImage: null,
+        pendingDevicesToUpdate: null,
+        updatePendingDevices: null,
       ),
     );
   });

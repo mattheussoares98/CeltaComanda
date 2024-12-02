@@ -340,7 +340,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     try {
       final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
 
-      if (_updateMenu != enterprise.updateMenu) {
+      if (_updateMenu == -1) {
         _updateMenu = enterprise.updateMenu;
         await loadCommandData(
           menuPresenter: menuPresenter,
@@ -349,6 +349,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
+      }
+
+      if (_updateMenu != enterprise.updateMenu) {
+        _updateMenu = enterprise.updateMenu;
+        
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=

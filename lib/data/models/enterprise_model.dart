@@ -19,6 +19,8 @@ class EnterpriseValidationModel {
   final int? updateDevicesInformations;
   final int? updateEnterprise;
   final bool? zoomImage;
+  final List<String>? pendingDevicesToUpdate;
+  final int? updatePendingDevices;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -36,6 +38,8 @@ class EnterpriseValidationModel {
     required this.updateDevicesInformations,
     required this.updateEnterprise,
     required this.zoomImage,
+    required this.pendingDevicesToUpdate,
+    required this.updatePendingDevices,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -64,6 +68,8 @@ class EnterpriseValidationModel {
       serviceChargeType: json["serviceChargeType"],
       updateDevicesInformations: json["updateDevicesInformations"],
       zoomImage: json["zoomImage"],
+      pendingDevicesToUpdate: json["pendingDevicesToUpdate"],
+      updatePendingDevices: json["updatePendingDevices"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
               ? null
@@ -92,6 +98,8 @@ class EnterpriseValidationModel {
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
         zoomImage: entity.zoomImage,
+        pendingDevicesToUpdate: entity.pendingDevicesToUpdate,
+        updatePendingDevices: entity.updatePendingDevices,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -111,6 +119,8 @@ class EnterpriseValidationModel {
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
         zoomImage: zoomImage,
+        pendingDevicesToUpdate: pendingDevicesToUpdate,
+        updatePendingDevices: updatePendingDevices,
       );
 
   Map<String, dynamic> toJson() => {
@@ -134,5 +144,7 @@ class EnterpriseValidationModel {
                     .toJson()
                 : null,
         'zoomImage': zoomImage,
+        'pendingDevicesToUpdate': pendingDevicesToUpdate,
+        'updatePendingDevices': updatePendingDevices,
       };
 }

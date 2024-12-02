@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import '../../../main/builders/builders.dart';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
@@ -36,6 +37,11 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
           EnterprisePresenter enterprisePresenter =
               Provider.of(context, listen: false);
           await enterprisePresenter.getLocalData();
+          if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName !=
+              "") {
+            enterpriseController.text =
+                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
+          }
 
           if (enterpriseController.text.isNotEmpty) {
             enterprisePresenter
@@ -58,7 +64,8 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     required EnterprisePresenter enterprisePresenter,
     required HomePresenter homePresenter,
   }) async {
-    if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
+    if ((_formKey.currentState == null || !_formKey.currentState!.validate()) &&
+        isFixedCommandNumber) {
       return;
     }
 
@@ -108,11 +115,14 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                           FixedNumberCommandSwitch(
                             isFixedCommandNumber: isFixedCommandNumber,
                             updateIsFixedCommandNumber: () {
-                              isFixedCommandNumber = !isFixedCommandNumber;
+                              setState(() {
+                                isFixedCommandNumber = !isFixedCommandNumber;
+                              });
                             },
                           ),
                           if (isFixedCommandNumber)
                             FixedCommandNumberInput(
+                              isFixedCommandNumber: isFixedCommandNumber,
                               commandNumberController: commandNumberController,
                               formKey: _formKey,
                               validateEnterprise: () async {

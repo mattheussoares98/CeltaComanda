@@ -134,17 +134,20 @@ class GetxEnterprisePresenter extends GetxController
         url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
         commandNumber: commandNumber == null || commandNumber.isEmpty == true
             ? "001"
-            : commandNumber,
+            : commandNumber.padLeft(3, "0"),
       );
 
       await localCommandData.update(
         CommandEntity(
-          commandNumber: commandNumber,
+          commandNumber: commandNumber == null || commandNumber.isEmpty == true
+              ? null
+              : commandNumber.padLeft(3, "0"),
           isFixedCommandNumber: isFixedCommandNumber,
         ),
       );
-
       isLoading = false;
+
+      navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

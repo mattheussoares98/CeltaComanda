@@ -116,7 +116,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
           enterpriseId:
               EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
-          commandNumber: commandNumber!,
+          commandNumber: commandNumber!.padLeft(3, "0"),
         );
 
         final sellersEntity = await loadSellers.load();

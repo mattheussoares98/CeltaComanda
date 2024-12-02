@@ -6,10 +6,12 @@ class FixedCommandNumberInput extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final void Function() validateEnterprise;
   final TextEditingController commandNumberController;
+  final bool isFixedCommandNumber;
   const FixedCommandNumberInput({
     required this.formKey,
     required this.validateEnterprise,
     required this.commandNumberController,
+    required this.isFixedCommandNumber,
     super.key,
   });
 
@@ -31,7 +33,9 @@ class FixedCommandNumberInput extends StatelessWidget {
             commandNumberController.text = newValue;
           },
           validator: (value) {
-            if (value == null) {
+            if (!isFixedCommandNumber) {
+              return null;
+            } else if (value == null) {
               return R.string.msgWriteTableNumber;
             } else if (int.tryParse(value) == null) {
               return R.string.msgInvalidNumber;

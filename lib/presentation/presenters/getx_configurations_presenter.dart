@@ -24,6 +24,7 @@ class GetxConfigurationsPresenter extends GetxController
       changeSaleRequestPersonalizedCodeProducts;
   final CloseSaleRequest closeSaleRequest;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
+  final LoadUniqueIdentifier loadUniqueIdentifier;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -38,6 +39,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.changeSaleRequestPersonalizedCodeProducts,
     required this.closeSaleRequest,
     required this.addPendingDeviceToUpdate,
+    required this.loadUniqueIdentifier,
   });
 
   @override
@@ -126,7 +128,8 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
 
     try {
-      await addPendingDeviceToUpdate.add();
+      final identifier = await loadUniqueIdentifier.get();
+      await addPendingDeviceToUpdate.add(identifier);
       await updateMenu.update();
       return true;
     } catch (e) {

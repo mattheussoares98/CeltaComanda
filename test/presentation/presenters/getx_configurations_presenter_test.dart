@@ -37,6 +37,7 @@ void main() {
       changeSaleRequestPersonalizedCodeProducts;
   late CloseSaleRequestSpy closeSaleRequest;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
+  late LoadUniqueIdentifierSpy loadUniqueIdentifier;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -44,6 +45,7 @@ void main() {
   late String? sellerCode;
   late CommandEntity fixedCommandEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
+  late String identifier;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -67,6 +69,7 @@ void main() {
           changeSaleRequestPersonalizedCodeProducts,
       closeSaleRequest: closeSaleRequest,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
+      loadUniqueIdentifier: loadUniqueIdentifier,
     );
   }
 
@@ -84,11 +87,14 @@ void main() {
         ChangeSaleRequestPersonalizedCodeProductsSpy();
     closeSaleRequest = CloseSaleRequestSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
+    loadUniqueIdentifier = LoadUniqueIdentifierSpy();
   }
 
   void initMocks() {
     localCommandData.mockLoad(fixedCommandEntity);
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
+    loadUniqueIdentifier.mockGet(identifier);
+    addPendingDeviceToUpdate.mockAdd(identifier);
   }
 
   void initEntitys() {
@@ -103,6 +109,7 @@ void main() {
       newFixedCommandNumber,
     );
     homePresenter.commandNumberMock = newFixedCommandNumber.toString();
+    identifier = faker.randomGenerator.string(10);
   }
 
   setUp(() {
@@ -335,7 +342,12 @@ void main() {
     test("Should call addPendingDeviceToUpdate.add", () async {
       await sut.loadMenuAgain();
 
-      verify(() => addPendingDeviceToUpdate.add()).called(1);
+      verify(() => addPendingDeviceToUpdate.add(identifier)).called(1);
+    });
+    test("Should call load pending device", () async {
+      await sut.loadMenuAgain();
+
+      verify(() => loadUniqueIdentifier.get()).called(1);
     });
   });
 

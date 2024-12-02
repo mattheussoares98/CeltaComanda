@@ -22,6 +22,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final Persistent persistent;
   final AddDeviceInfo addDeviceInfo;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
+  final LoadUniqueIdentifier uniqueIdentifier;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -35,6 +36,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.persistent,
     required this.addDeviceInfo,
     required this.addPendingDeviceToUpdate,
+    required this.uniqueIdentifier,
   });
 
   @override
@@ -366,7 +368,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (enterprise.updatePendingDevices !=
           EnterpriseDataBuilder.enterpriseDataEntity?.updatePendingDevices) {
-        await addPendingDeviceToUpdate.add();
+        final identifier = await uniqueIdentifier.get();
+        await addPendingDeviceToUpdate.add(identifier);
+
         EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
         await localEnterpriseData.add(enterprise);
       }

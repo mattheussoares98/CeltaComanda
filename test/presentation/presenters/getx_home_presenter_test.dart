@@ -37,6 +37,7 @@ void main() {
   late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
+  late LoadUniqueIdentifierSpy uniqueIdentifier;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -48,6 +49,7 @@ void main() {
   late int userCode;
   late String password;
   late Map<String, dynamic> enterpriseJson;
+  late String identifier;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -72,6 +74,7 @@ void main() {
       persistent: persistent,
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
+      uniqueIdentifier: uniqueIdentifier,
     );
   }
 
@@ -87,6 +90,7 @@ void main() {
     persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
+    uniqueIdentifier = LoadUniqueIdentifierSpy();
   }
 
   void initMocks() {
@@ -97,6 +101,8 @@ void main() {
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSellers.mockLoadSellers(sellerEntitys);
     addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
+    addPendingDeviceToUpdate.mockAdd(identifier);
+    uniqueIdentifier.mockGet(identifier);
   }
 
   void initEntitys() {
@@ -122,6 +128,7 @@ void main() {
     enterpriseJson = EnterpriseValidationModel.fromEntity(
             EnterpriseDataBuilder.enterpriseDataEntity!)
         .toJson();
+    identifier = faker.randomGenerator.string(10);
   }
 
   setUp(() {
@@ -1296,7 +1303,23 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => addPendingDeviceToUpdate.add()).called(1);
+        verify(() => addPendingDeviceToUpdate.add(identifier)).called(1);
+      });
+      test("Should get unique identifier", () async {
+        enterpriseJson["updatePendingDevices"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => uniqueIdentifier.get()).called(1);
       });
 
       test("Should update enterprise on updateDeviceInformations changes",

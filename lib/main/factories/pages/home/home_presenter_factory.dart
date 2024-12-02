@@ -14,4 +14,5 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       persistent: makeAndroidPersistent(),
       addDeviceInfo: makeRemoteAddDeviceInfo(),
       addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
+      uniqueIdentifier: makeLocalUniqueIdentifier(),
     );

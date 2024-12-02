@@ -1,3 +1,3 @@
 abstract class AddPendingDeviceToUpdate {
-  Future<void> add();
+  Future<void> add(String uniqueIdentifier);
 }

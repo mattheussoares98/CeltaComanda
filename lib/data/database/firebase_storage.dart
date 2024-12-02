@@ -14,5 +14,5 @@ abstract class FirebaseStorage {
 
   Future<void> updateMenu();
 
-  Future<void> addPendingDeviceToUpdate();
+  Future<void> addPendingDeviceToUpdate(String uniqueIdentifier);
 }

@@ -36,6 +36,7 @@ void main() {
   late CommandInformationsSpy commandInformations;
   late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
+  late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -58,6 +59,7 @@ void main() {
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
     enterprisePresenter = EnterprisePresenterSpy();
+
     sut = GetxHomePresenter(
       navigateTo: navigateTo,
       localEnterpriseData: localEnterpriseData,
@@ -69,6 +71,7 @@ void main() {
       loadSellers: loadSellers,
       persistent: persistent,
       addDeviceInfo: addDeviceInfo,
+      addPendingDeviceToUpdate: addPendingDeviceToUpdate,
     );
   }
 
@@ -83,6 +86,7 @@ void main() {
     commandInformations = CommandInformationsSpy();
     persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
+    addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
   }
 
   void initMocks() {
@@ -1272,6 +1276,68 @@ void main() {
             EnterpriseValidationModel.fromJson(enterpriseJson).toEntity();
 
         verify(() => localEnterpriseData.add(newEnterprise)).called(1);
+      });
+    });
+
+    group("Update pending devices", () {
+      test(
+          "Should call add pending device to update if local data is differently than remote data",
+          () async {
+        enterpriseJson["updatePendingDevices"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => addPendingDeviceToUpdate.add()).called(1);
+      });
+
+      test("Should update enterprise on updateDeviceInformations changes",
+          () async {
+        enterpriseJson["updatePendingDevices"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        expect(
+          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+        );
+      });
+
+      test("Should update locally when updateDeviceInformations changes",
+          () async {
+        enterpriseJson["updatePendingDevices"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => localEnterpriseData.add(
+                EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
+            .called(1);
       });
     });
   });

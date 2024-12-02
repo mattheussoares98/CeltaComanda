@@ -6,6 +6,10 @@ import 'package:mocktail/mocktail.dart';
 
 class AddPendingDeviceToUpdateSpy extends Mock
     implements AddPendingDeviceToUpdate {
+  AddPendingDeviceToUpdateSpy() {
+    this.mockAddPendingDevice();
+  }
+
   When _mockAddCall() => when(() => this.add());
 
   void mockAddPendingDevice() {

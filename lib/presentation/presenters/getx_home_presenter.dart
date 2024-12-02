@@ -21,6 +21,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LoadSellers loadSellers;
   final Persistent persistent;
   final AddDeviceInfo addDeviceInfo;
+  final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -33,6 +34,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.loadSellers,
     required this.persistent,
     required this.addDeviceInfo,
+    required this.addPendingDeviceToUpdate,
   });
 
   @override
@@ -353,7 +355,20 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (_updateMenu != enterprise.updateMenu) {
         _updateMenu = enterprise.updateMenu;
-        
+        await loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+      }
+
+      if (enterprise.updatePendingDevices !=
+          EnterpriseDataBuilder.enterpriseDataEntity?.updatePendingDevices) {
+        await addPendingDeviceToUpdate.add();
+        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+        await localEnterpriseData.add(enterprise);
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
@@ -377,7 +392,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
     } catch (e) {
       debugPrint(e.toString());
-      e;
     }
   }
 

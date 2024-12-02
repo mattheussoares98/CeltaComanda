@@ -36,6 +36,7 @@ void main() {
   late ChangeSaleRequestPersonalizedCodeProductsSpy
       changeSaleRequestPersonalizedCodeProducts;
   late CloseSaleRequestSpy closeSaleRequest;
+  late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -65,6 +66,7 @@ void main() {
       changeSaleRequestPersonalizedCodeProducts:
           changeSaleRequestPersonalizedCodeProducts,
       closeSaleRequest: closeSaleRequest,
+      addPendingDeviceToUpdate: addPendingDeviceToUpdate,
     );
   }
 
@@ -81,6 +83,7 @@ void main() {
     changeSaleRequestPersonalizedCodeProducts =
         ChangeSaleRequestPersonalizedCodeProductsSpy();
     closeSaleRequest = CloseSaleRequestSpy();
+    addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
   }
 
   void initMocks() {
@@ -327,6 +330,12 @@ void main() {
       final value = await sut.loadMenuAgain();
 
       expect(value, false);
+    });
+
+    test("Should call addPendingDeviceToUpdate.add", () async {
+      await sut.loadMenuAgain();
+
+      verify(() => addPendingDeviceToUpdate.add()).called(1);
     });
   });
 

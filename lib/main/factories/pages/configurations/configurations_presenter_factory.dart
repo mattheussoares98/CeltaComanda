@@ -15,4 +15,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       changeSaleRequestPersonalizedCode: makeRemoteChangeSaleRequestPersonalizedCode(),
       changeSaleRequestPersonalizedCodeProducts: makeRemoteChangeSaleRequestPersonalizedCodeProducts(),
       closeSaleRequest: makeRemoteCloseSaleRequest(),
+      addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
     );

@@ -48,7 +48,7 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> addDeviceInfo(DeviceInfoEntity entity, String imei) async {
+  Future<void> addDeviceInfo(DeviceInfoEntity entity) async {
     try {
       var docRef = firestore
           .collection('clients')
@@ -57,7 +57,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .doc("loadedDevices");
 
       await docRef.set({
-        imei: DeviceInfoModel.fromEntity(entity).toJson(),
+        entity.uniqueIdentifier: DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {
       throw DomainError.unexpected;

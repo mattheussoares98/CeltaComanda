@@ -24,9 +24,10 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
         commandNumber: commandNumber,
         lastUpdatedDate: DateTime.now().toIso8601String(),
         applicationVersion: packageInfo.version,
+        uniqueIdentifier: uniqueIdentifier,
       ).toEntity();
 
-      await firebaseStorage.addDeviceInfo(entity, uniqueIdentifier);
+      await firebaseStorage.addDeviceInfo(entity);
     } catch (e) {
       debugPrint(e.toString());
     }

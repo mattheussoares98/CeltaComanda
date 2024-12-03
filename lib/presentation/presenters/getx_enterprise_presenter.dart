@@ -289,4 +289,8 @@ class GetxEnterprisePresenter extends GetxController
       _pdvsNotUsing.stream;
   set pdvsNotUsing(List<PdvNotUsingViewModel>? value) =>
       _pdvsNotUsing.value = value;
+
+  final _selectedPdv = Rx<PdvNotUsingViewModel?>(null);
+  @override
+  Stream<PdvNotUsingViewModel?> get selectedPdvStream => _selectedPdv.stream;
 }

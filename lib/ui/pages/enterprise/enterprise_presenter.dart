@@ -9,6 +9,7 @@ abstract class EnterprisePresenter implements Listenable {
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
   Stream<List<PdvNotUsingViewModel>?> get pdvsNotUsingStream;
+  Stream<PdvNotUsingViewModel?> get selectedPdvStream;
 
   bool isUpdatedEnterpriseName = false;
 

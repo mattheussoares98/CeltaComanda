@@ -36,7 +36,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
         Future.delayed(Duration.zero, () async {
           EnterprisePresenter enterprisePresenter =
               Provider.of(context, listen: false);
-          await enterprisePresenter.getLocalData();
+          await enterprisePresenter.updateEnterpriseWithLocalData();
           if (EnterpriseDataBuilder.enterpriseDataEntity != null &&
               EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName !=
                   "") {
@@ -70,7 +70,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
       return;
     }
 
-    await enterprisePresenter.validateApiAndGoToHomePage(
+    await enterprisePresenter.validateEnterpriseAndGoToHomePage(
       commandNumber: commandNumberController.text,
       isFixedCommandNumber: isFixedCommandNumber,
       homePresenter: homePresenter,

@@ -14,14 +14,14 @@ abstract class EnterprisePresenter implements Listenable {
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false});
 
-  Future<void> validateApiAndGoToHomePage({
+  Future<void> validateEnterpriseAndGoToHomePage({
     required bool isFixedCommandNumber,
     required String? commandNumber,
     required HomePresenter homePresenter,
   });
-  Future<void> getFirebaseAndConcentradorEnterpriseParameters();
+  
   Future<void> updateConcentratorEnterpriseParameters();
-  Future<void> getLocalData();
+  Future<void> updateEnterpriseWithLocalData();
 
   Future<void> clearEnterpriseData();
 }

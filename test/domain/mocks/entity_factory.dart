@@ -1030,7 +1030,8 @@ class EntityFactory {
             parkingControlIPAddress: faker.randomGenerator.string(10),
           );
 
-  static makeEnterpriseConcentradorEntity() => EnterpriseConcentradorEntity(
+  static EnterpriseConcentradorEntity makeEnterpriseConcentradorEntity() =>
+      EnterpriseConcentradorEntity(
         enterpriseId: faker.randomGenerator.integer(100),
         enterpriseCode: faker.randomGenerator.integer(100),
         federalSimpleType: faker.randomGenerator.integer(100),

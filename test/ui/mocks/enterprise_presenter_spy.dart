@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_this
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +22,12 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
     when(() => this.isUpdatedEnterpriseName)
         .thenReturn(isUpdatedEnterpriseNameController);
 
-    when(() => this.getLocalData()).thenAnswer((any) async => any);
-    when(() => this.clearEnterpriseData()).thenAnswer((any) async => any);
-    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
+    when(() => this.updateEnterpriseWithLocalData())
         .thenAnswer((any) async => any);
+    when(() => this.clearEnterpriseData()).thenAnswer((any) async => any);
     when(() => this.updateConcentratorEnterpriseParameters())
         .thenAnswer((any) async => any);
-    when(() => this.validateApiAndGoToHomePage(
+    when(() => this.validateEnterpriseAndGoToHomePage(
           isFixedCommandNumber: any(named: "isFixedCommandNumber"),
           commandNumber: any(named: "commandNumber"),
           homePresenter: any(named: "homePresenter"),
@@ -54,15 +52,6 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
   void emitFormValid() => isFormValidController.add(true);
   void emitLoading([bool show = true]) => isLoadingController.add(show);
   void emitMainError(UIError error) => mainErrorController.add(error);
-  void mockLoadRemoteData(EnterpriseEntity? enterpriseEntity) {
-    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
-        .thenAnswer((_) async => enterpriseEntity);
-  }
-
-  void mockLoadRemoteDataError() {
-    when(() => this.getFirebaseAndConcentradorEnterpriseParameters())
-        .thenThrow((_) async => DomainError.enterpriseOrUrlNotFound);
-  }
 
   void dispose() {
     mainErrorController.close();

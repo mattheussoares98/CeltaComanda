@@ -44,18 +44,12 @@ class GetxEnterprisePresenter extends GetxController
   Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
 
   @override
-  Future<void> getLocalData() async {
-    EnterpriseDataBuilder.enterpriseDataEntity =
-        await localEntepriseData.load();
-
+  Future<void> updateEnterpriseWithLocalData() async {
     isLoading = true;
     mainError = null;
     try {
-      final commandEntity = await localCommandData.load();
-
-      if (commandEntity == null) {
-        throw Exception();
-      }
+      EnterpriseDataBuilder.enterpriseDataEntity =
+          await localEntepriseData.load();
     } catch (e) {
       e;
     } finally {
@@ -64,61 +58,7 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
-  Future<void> getFirebaseAndConcentradorEnterpriseParameters() async {
-    try {
-      final firebaseData = await loadEnterpriseData.load();
-
-      if (firebaseData != null) {
-        final concentradorData =
-            await loadEnterpriseConcentradorParameters.load(
-          concentradorUrl: firebaseData.concentradorUrl!,
-          enterpriseId: firebaseData.enterpriseId!,
-        );
-
-        EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-          enterpriseName: firebaseData.enterpriseName,
-          url: firebaseData.url,
-          enterpriseId: firebaseData.enterpriseId,
-          concentradorUrl: firebaseData.concentradorUrl,
-          persistApp: firebaseData.persistApp,
-          urlCCS: firebaseData.urlCCS,
-          useCovenant: firebaseData.useCovenant,
-          enterpriseConcentradorParametersEntity: concentradorData,
-          updateMenu: firebaseData.updateMenu,
-          updateConcentratorEnterpriseData:
-              firebaseData.updateConcentratorEnterpriseData,
-          updateDevicesInformations: firebaseData.updateDevicesInformations,
-          serviceChargePercentageOrValue:
-              firebaseData.serviceChargePercentageOrValue,
-          serviceChargeType: firebaseData.serviceChargeType,
-          updateEnterprise: firebaseData.updateEnterprise,
-          zoomImage: firebaseData.zoomImage,
-          pendingDevicesToUpdate: firebaseData.pendingDevicesToUpdate,
-          updatePendingDevices: firebaseData.updatePendingDevices,
-        );
-      } else {
-        throw DomainError.enterpriseOrUrlNotFound;
-      }
-
-      if (EnterpriseDataBuilder
-              .enterpriseDataEntity?.enterpriseName.isNotEmpty ==
-          true) {
-        await localEntepriseData
-            .add(EnterpriseDataBuilder.enterpriseDataEntity!);
-      }
-
-      if (EnterpriseDataBuilder.enterpriseDataEntity == null) {
-        throw DomainError.enterpriseOrUrlNotFound;
-      }
-    } catch (e) {
-      rethrow;
-    } finally {
-      isUpdatedEnterpriseName = false;
-    }
-  }
-
-  @override
-  Future<void> validateApiAndGoToHomePage({
+  Future<void> validateEnterpriseAndGoToHomePage({
     required bool isFixedCommandNumber,
     required String? commandNumber,
     required HomePresenter homePresenter,
@@ -127,11 +67,44 @@ class GetxEnterprisePresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
-
       if (isUpdatedEnterpriseName ||
           EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
-        await getFirebaseAndConcentradorEnterpriseParameters();
+        final firebaseData = await loadEnterpriseData.load();
+
+        if (firebaseData == null) {
+          throw DomainError.enterpriseOrUrlNotFound;
+        } else {
+          final concentradorData =
+              await loadEnterpriseConcentradorParameters.load(
+            concentradorUrl: firebaseData.concentradorUrl!,
+            enterpriseId: firebaseData.enterpriseId!,
+          );
+
+          EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+            enterpriseName: firebaseData.enterpriseName,
+            url: firebaseData.url,
+            enterpriseId: firebaseData.enterpriseId,
+            concentradorUrl: firebaseData.concentradorUrl,
+            persistApp: firebaseData.persistApp,
+            urlCCS: firebaseData.urlCCS,
+            useCovenant: firebaseData.useCovenant,
+            enterpriseConcentradorParametersEntity: concentradorData,
+            updateMenu: firebaseData.updateMenu,
+            updateConcentratorEnterpriseData:
+                firebaseData.updateConcentratorEnterpriseData,
+            updateDevicesInformations: firebaseData.updateDevicesInformations,
+            serviceChargePercentageOrValue:
+                firebaseData.serviceChargePercentageOrValue,
+            serviceChargeType: firebaseData.serviceChargeType,
+            updateEnterprise: firebaseData.updateEnterprise,
+            zoomImage: firebaseData.zoomImage,
+            pendingDevicesToUpdate: firebaseData.pendingDevicesToUpdate,
+            updatePendingDevices: firebaseData.updatePendingDevices,
+          );
+
+          await localEntepriseData
+              .add(EnterpriseDataBuilder.enterpriseDataEntity!);
+        }
       }
 
       await commandInformations.ticketIsPermitted(
@@ -169,9 +142,6 @@ class GetxEnterprisePresenter extends GetxController
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;
           break;
-        // case DomainError.obligatoryFixedCommandNumber:
-        //   mainError = UIError.obligatoryFixedCommandNumber;
-        //   break;
         default:
           mainError = UIError.unexpected;
       }

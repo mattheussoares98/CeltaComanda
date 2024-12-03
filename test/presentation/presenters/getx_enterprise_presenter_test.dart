@@ -28,6 +28,7 @@ void main() {
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
+  late LoadUniqueIdentifierSpy loadUniqueIdentifier;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -50,6 +51,7 @@ void main() {
     loadEnterpriseConcentradorParameters =
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
+    loadUniqueIdentifier = LoadUniqueIdentifierSpy();
   }
 
   void initPresenters() {
@@ -66,6 +68,7 @@ void main() {
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
+      loadUniqueIdentifier: loadUniqueIdentifier,
     );
   }
 

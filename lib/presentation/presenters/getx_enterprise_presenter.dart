@@ -23,6 +23,7 @@ class GetxEnterprisePresenter extends GetxController
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
   final PdvRegistration pdvRegistration;
+  final LoadUniqueIdentifier loadUniqueIdentifier;
 
   GetxEnterprisePresenter({
     required this.validation,
@@ -34,6 +35,7 @@ class GetxEnterprisePresenter extends GetxController
     required this.persistent,
     required this.loadEnterpriseConcentradorParameters,
     required this.pdvRegistration,
+    required this.loadUniqueIdentifier,
   });
 
   @override
@@ -306,9 +308,11 @@ class GetxEnterprisePresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
+      final identifier = await loadUniqueIdentifier.get();
+
       await pdvRegistration.setPdvRegister(
         pdvId: selectedPdv.PdvId.toInt(),
-        uniqueIdentifier: "uniqueIdentifier",
+        uniqueIdentifier: identifier,
         versionNumber: "versionNumber",
       );
     } catch (e) {

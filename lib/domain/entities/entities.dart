@@ -8,6 +8,7 @@ export './enterprise_entity.dart';
 export './expansible_group_entity.dart';
 export 'expansible_group_from_product_complete_entity.dart';
 export './expansible_group_schedule_entity.dart';
+export './pdv_entity.dart';
 export './print_request_entity.dart';
 export './printed_entity.dart';
 export './printed_products_entity.dart';

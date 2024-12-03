@@ -1199,7 +1199,10 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => addDeviceInfo.add(sut.commandNumber?.toInt())).called(1);
+        verify(() => addDeviceInfo.add(
+              commandNumber: sut.commandNumber?.toInt(),
+              uniqueIdentifier: identifier,
+            )).called(1);
       });
       test("Should update enterprise on updateDeviceInformations changes",
           () async {

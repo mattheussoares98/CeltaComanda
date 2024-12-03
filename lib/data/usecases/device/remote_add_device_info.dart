@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_device_imei/flutter_device_imei.dart';
 
 import '../../models/models.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -14,10 +13,12 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
   });
 
   @override
-  Future<void> add(int? commandNumber) async {
+  Future<void> add({
+    required int? commandNumber,
+    required String uniqueIdentifier,
+  }) async {
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String? imei = await FlutterDeviceImei.instance.getIMEI();//TODO receber o identifier como parâmetro
 
       final entity = DeviceInfoModel(
         commandNumber: commandNumber,
@@ -25,7 +26,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
         applicationVersion: packageInfo.version,
       ).toEntity();
 
-      await firebaseStorage.addDeviceInfo(entity, imei ?? "unrecognizedImei");
+      await firebaseStorage.addDeviceInfo(entity, uniqueIdentifier);
     } catch (e) {
       debugPrint(e.toString());
     }

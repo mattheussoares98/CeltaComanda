@@ -1,3 +1,6 @@
 abstract class AddDeviceInfo {
-  Future<void> add(int? commandNumber);
+  Future<void> add({
+    required int? commandNumber,
+    required String uniqueIdentifier,
+  });
 }

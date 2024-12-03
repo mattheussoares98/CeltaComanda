@@ -51,7 +51,7 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
-  Future<void> validateEnterpriseAndGoToHomePage({
+  Future<void> validateEnterpriseByName({
     required bool isFixedCommandNumber,
     required String? commandNumber,
     required HomePresenter homePresenter,

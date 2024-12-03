@@ -15,7 +15,7 @@ abstract class EnterprisePresenter implements Listenable {
   void validateEnterpriseInput(String value,
       {bool? updateEnterpriseNameController = false});
 
-  Future<void> validateEnterpriseAndGoToHomePage({
+  Future<void> validateEnterpriseByName({
     required bool isFixedCommandNumber,
     required String? commandNumber,
     required HomePresenter homePresenter,

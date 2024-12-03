@@ -27,7 +27,7 @@ class EnterprisePresenterSpy extends Mock implements EnterprisePresenter {
     when(() => this.clearEnterpriseData()).thenAnswer((any) async => any);
     when(() => this.updateConcentratorEnterpriseParameters())
         .thenAnswer((any) async => any);
-    when(() => this.validateEnterpriseAndGoToHomePage(
+    when(() => this.validateEnterpriseByName(
           isFixedCommandNumber: any(named: "isFixedCommandNumber"),
           commandNumber: any(named: "commandNumber"),
           homePresenter: any(named: "homePresenter"),

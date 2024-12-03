@@ -172,7 +172,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
 
-    await sut.validateEnterpriseAndGoToHomePage(
+    await sut.validateEnterpriseByName(
       homePresenter: homePresenter,
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       commandNumber:
@@ -215,7 +215,7 @@ void main() {
     );
     homePresenter.isGeneratingVersionToRedeMock = true;
 
-    await sut.validateEnterpriseAndGoToHomePage(
+    await sut.validateEnterpriseByName(
       homePresenter: homePresenter,
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       commandNumber:
@@ -258,7 +258,7 @@ void main() {
     );
     homePresenter.isGeneratingVersionToGetNetMock = true;
 
-    await sut.validateEnterpriseAndGoToHomePage(
+    await sut.validateEnterpriseByName(
       homePresenter: homePresenter,
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       commandNumber:
@@ -300,7 +300,7 @@ void main() {
           EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
 
-    await sut.validateEnterpriseAndGoToHomePage(
+    await sut.validateEnterpriseByName(
       homePresenter: homePresenter,
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       commandNumber:
@@ -370,7 +370,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -386,7 +386,7 @@ void main() {
           emitsInOrder([null, UIError.enterpriseOrUrlNotFound]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -400,7 +400,7 @@ void main() {
           emitsInOrder([null, UIError.commandNotAvailable]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -410,7 +410,7 @@ void main() {
     test("Should call load enterprise data if url is null", () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -423,7 +423,7 @@ void main() {
         () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -445,7 +445,7 @@ void main() {
       loadEnterpriseConcentradorParameters
           .mockLoadEnterprise(newConcentratorEnterprise);
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -480,7 +480,7 @@ void main() {
     test("Should add enterprise locally correctly", () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -496,7 +496,7 @@ void main() {
         "Should verify ticket is permitted with 001 when command is null or empty",
         () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: null,
         homePresenter: homePresenter,
@@ -507,7 +507,7 @@ void main() {
           )).called(1);
 
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: "",
         homePresenter: homePresenter,
@@ -523,7 +523,7 @@ void main() {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
       final commandNumber = faker.randomGenerator.integer(100);
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -537,7 +537,7 @@ void main() {
         "Should update local command data with null value if command is null or empty",
         () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: null,
         homePresenter: homePresenter,
@@ -550,7 +550,7 @@ void main() {
           )).called(1);
 
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: "",
         homePresenter: homePresenter,
@@ -567,7 +567,7 @@ void main() {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
       final commandNumber = faker.randomGenerator.integer(100);
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -583,7 +583,7 @@ void main() {
     test("Should navigate to home page in success", () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -598,7 +598,7 @@ void main() {
         () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
       homePresenter.isGeneratingVersionToGetNetMock = true;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -607,7 +607,7 @@ void main() {
 
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = true;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -620,7 +620,7 @@ void main() {
         () async {
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
       homePresenter.isGeneratingVersionToGetNetMock = false;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -629,7 +629,7 @@ void main() {
 
       EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = false;
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
@@ -647,7 +647,7 @@ void main() {
         ),
       );
 
-      await sut.validateEnterpriseAndGoToHomePage(
+      await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,

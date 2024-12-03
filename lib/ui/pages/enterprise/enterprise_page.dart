@@ -70,7 +70,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
       return;
     }
 
-    await enterprisePresenter.validateEnterpriseAndGoToHomePage(
+    await enterprisePresenter.validateEnterpriseByName(
       commandNumber: commandNumberController.text,
       isFixedCommandNumber: isFixedCommandNumber,
       homePresenter: homePresenter,

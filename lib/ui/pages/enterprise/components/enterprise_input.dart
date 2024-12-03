@@ -34,7 +34,7 @@ class EnterpriseInput extends StatelessWidget {
             controller: enterpriseController,
             onFieldSubmitted: (_) async {
               if (enterpriseController.text.isNotEmpty) {
-                await presenter.validateEnterpriseAndGoToHomePage(
+                await presenter.validateEnterpriseByName(
                   commandNumber: commandNumberController.text,
                   isFixedCommandNumber: isFixedCommandNumber,
                   homePresenter: homePresenter,

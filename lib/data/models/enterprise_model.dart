@@ -68,7 +68,10 @@ class EnterpriseValidationModel {
       serviceChargeType: json["serviceChargeType"],
       updateDevicesInformations: json["updateDevicesInformations"],
       zoomImage: json["zoomImage"],
-      pendingDevicesToUpdate: json["pendingDevicesToUpdate"],
+      pendingDevicesToUpdate: json["pendingDevicesToUpdate"]
+          ?.map((e) => e)
+          .toList()
+          .cast<String>(),
       updatePendingDevices: json["updatePendingDevices"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null

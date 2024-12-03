@@ -355,8 +355,16 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
       }
 
-      if (_updateMenu != enterprise.updateMenu) {
+      final identifier = await uniqueIdentifier.get();
+      if (_updateMenu != enterprise.updateMenu &&
+          enterprise.pendingDevicesToUpdate != null) {
         _updateMenu = enterprise.updateMenu;
+        await Future.delayed(
+          Duration(
+            seconds:
+                enterprise.pendingDevicesToUpdate!.indexOf(identifier) * 10,
+          ),
+        );
         await loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -368,10 +376,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (enterprise.updatePendingDevices !=
           EnterpriseDataBuilder.enterpriseDataEntity?.updatePendingDevices) {
-        final identifier = await uniqueIdentifier.get();
-        await addPendingDeviceToUpdate.add(identifier);
-
         EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+
+        await addPendingDeviceToUpdate.add(identifier);
         await localEnterpriseData.add(enterprise);
       }
 

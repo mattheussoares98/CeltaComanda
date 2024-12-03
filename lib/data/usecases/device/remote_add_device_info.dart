@@ -17,7 +17,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
   Future<void> add(int? commandNumber) async {
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String? imei = await FlutterDeviceImei.instance.getIMEI();
+      String? imei = await FlutterDeviceImei.instance.getIMEI();//TODO receber o identifier como parâmetro
 
       final entity = DeviceInfoModel(
         commandNumber: commandNumber,

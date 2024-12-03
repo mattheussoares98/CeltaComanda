@@ -73,6 +73,7 @@ class FirebaseAdapter implements FirebaseStorage {
     await docRef.set(
       {
         "updatePendingDevices": FieldValue.increment(1),
+        "pendingDevicesToUpdate": [],
       },
       SetOptions(merge: true),
     );

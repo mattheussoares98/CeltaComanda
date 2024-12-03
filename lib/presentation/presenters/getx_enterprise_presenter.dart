@@ -277,6 +277,11 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
+  void updateSelectedPdv(PdvNotUsingViewModel pdv) {
+    _selectedPdv.value = pdv;
+  }
+
+  @override
   bool isUpdatedEnterpriseName = false;
 
   final _enterpriseError = Rx<UIError?>(null);

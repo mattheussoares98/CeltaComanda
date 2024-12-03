@@ -769,4 +769,22 @@ void main() {
       );
     });
   });
+
+  group("Update selected pdv", () {
+    test("Should update selected pdv correctly", () {
+      final first =
+          PdvNotUsingViewModel.fromEntity(EntityFactory.makePdvEntity());
+      final second =
+          PdvNotUsingViewModel.fromEntity(EntityFactory.makePdvEntity());
+      final third =
+          PdvNotUsingViewModel.fromEntity(EntityFactory.makePdvEntity());
+
+      expectLater(sut.selectedPdvStream, emitsInOrder([first, second, third]));
+
+      sut.updateSelectedPdv(first);
+      sut.updateSelectedPdv(second);
+      sut.updateSelectedPdv(third);
+      sut.updateSelectedPdv(third);
+    });
+  });
 }

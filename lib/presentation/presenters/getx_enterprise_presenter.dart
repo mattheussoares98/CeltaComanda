@@ -37,13 +37,6 @@ class GetxEnterprisePresenter extends GetxController
   });
 
   @override
-  bool isUpdatedEnterpriseName = false;
-
-  final _enterpriseError = Rx<UIError?>(null);
-  @override
-  Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
-
-  @override
   Future<void> updateEnterpriseWithLocalData() async {
     isLoading = true;
     mainError = null;
@@ -280,4 +273,18 @@ class GetxEnterprisePresenter extends GetxController
       e;
     }
   }
+
+  @override
+  bool isUpdatedEnterpriseName = false;
+
+  final _enterpriseError = Rx<UIError?>(null);
+  @override
+  Stream<UIError?> get enterpriseErrorStream => _enterpriseError.stream;
+
+  final _pdvsNotUsing = Rx<List<PdvNotUsingViewModel>?>(null);
+  @override
+  Stream<List<PdvNotUsingViewModel>?> get pdvsNotUsingStream =>
+      _pdvsNotUsing.stream;
+  set pdvsNotUsing(List<PdvNotUsingViewModel>? value) =>
+      _pdvsNotUsing.value = value;
 }

@@ -8,6 +8,7 @@ abstract class EnterprisePresenter implements Listenable {
   Stream<UIError?> get enterpriseErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get isFormValidStream;
+  Stream<List<PdvNotUsingViewModel>?> get pdvsNotUsingStream;
 
   bool isUpdatedEnterpriseName = false;
 
@@ -19,7 +20,7 @@ abstract class EnterprisePresenter implements Listenable {
     required String? commandNumber,
     required HomePresenter homePresenter,
   });
-  
+
   Future<void> updateConcentratorEnterpriseParameters();
   Future<void> updateEnterpriseWithLocalData();
 

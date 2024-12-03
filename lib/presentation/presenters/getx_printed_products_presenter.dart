@@ -326,8 +326,10 @@ class GetxPrintedProductsPresenter
 
     _channel?.setMethodCallHandler((MethodCall call) async {
       if (call.arguments == "Success") {
+        closePage();
         debugPrint("Success");
       } else {
+        closePage();
         debugPrint("Error");
       }
     });

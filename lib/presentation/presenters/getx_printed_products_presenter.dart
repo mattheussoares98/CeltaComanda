@@ -1,7 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
@@ -311,5 +310,31 @@ class GetxPrintedProductsPresenter
     } else if (_peopleQuantity > 1) {
       _peopleQuantity--;
     }
+  }
+
+  MethodChannel? _channel;
+  @override
+  void initPrinterResultHandler({
+    required HomePresenter homePresenter,
+    required void Function() closePage,
+  }) {
+    if (homePresenter.isGeneratingVersionToRede) {
+      _channel = MethodChannel(Channels.redePrinter.name);
+    } else {
+      return;
+    }
+
+    _channel?.setMethodCallHandler((MethodCall call) async {
+      if (call.arguments == "Success") {
+        debugPrint("Success");
+      } else {
+        debugPrint("Error");
+      }
+    });
+  }
+
+  @override
+  void disposePrinterHandler() {
+    _channel?.setMethodCallHandler(null);
   }
 }

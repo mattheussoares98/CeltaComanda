@@ -21,6 +21,7 @@ class PrintProductsPage extends StatefulWidget {
 
 class _PrintProductsPageState extends State<PrintProductsPage> {
   final repaintBoundaryKey = GlobalKey();
+  PrintedProductsPresenter? printedProductsPresenter;
 
   @override
   initState() {
@@ -28,10 +29,24 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
+        printedProductsPresenter = Provider.of(context, listen: false);
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+        printedProductsPresenter?.initPrinterResultHandler(
+          homePresenter: homePresenter,
+          closePage: () {
+            Navigator.of(context).pop();
+          },
+        );
         await Future.delayed(Duration.zero);
         await print();
       }
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    printedProductsPresenter?.disposePrinterHandler();
   }
 
   Future<void> print() async {
@@ -47,8 +62,6 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
         final bitmap = byteData!.buffer.asUint8List();
 
         await printedProductsPresenter.printPrintedProducts(bitmap);
-
-        Navigator.of(context).pop();
       });
     } catch (e) {
       debugPrint(e.toString());

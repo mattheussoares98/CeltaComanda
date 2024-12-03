@@ -5,7 +5,7 @@ import 'package:flutter_device_imei/flutter_device_imei.dart';
 
 import '../../../domain/usecases/usecases.dart';
 
-class LocalUniqueIdentifier implements LoadUniqueIdentifier {
+class LocalLoadUniqueIdentifier implements LoadUniqueIdentifier {
   @override
   Future<String> get() async {
     String? identifier;

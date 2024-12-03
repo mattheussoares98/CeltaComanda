@@ -131,9 +131,13 @@ class GetxEnterprisePresenter extends GetxController
         await persistent.makeNotPersistent();
       }
 
-      isLoading = false;
-
-      navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
+      if (homePresenter.isGeneratingVersionToGetNet ||
+          homePresenter.isGeneratingVersionToRede) {
+        final pdvsNotUsing = await pdvRegistration.getPdvNotUsing();
+      } else {
+        isLoading = false;
+        navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
+      }
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

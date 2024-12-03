@@ -4,6 +4,7 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../models/models.dart';
 
 class ConcentratorPdvRegistration implements PdvRegistration {
   final HttpClient httpAdapter;
@@ -11,7 +12,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
   ConcentratorPdvRegistration({required this.httpAdapter});
 
   @override
-  Future<void> getPdvNotUsing() async {
+  Future<List<PdvEntity>> getPdvNotUsing() async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
@@ -26,14 +27,16 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       );
       if (response == null) {
         throw Error();
-      } else {}
+      } else {
+        return response.map((e) => PdvModel.fromJson(e)).toList();
+      }
     } catch (error) {
       throw DomainError.unexpected;
     }
   }
 
   @override
-  Future<List<PdvEntity>> setPdvRegister({
+  Future<void> setPdvRegister({
     required int pdvId,
     required String uniqueIdentifier,
     required String versionNumber,
@@ -51,8 +54,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       );
       if (response == null) {
         throw Error();
-      } else {}
-      return [];
+      }
     } catch (error) {
       throw DomainError.unexpected;
     }

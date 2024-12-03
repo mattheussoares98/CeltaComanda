@@ -584,6 +584,50 @@ void main() {
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
           .called(1);
     });
+
+    test(
+        "Should get pdvs not using when is generating version to rede or getnet",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      await sut.validateEnterpriseAndGoToHomePage(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+      verify(() => pdvRegistration.getPdvNotUsing()).called(1);
+
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToRedeMock = true;
+      await sut.validateEnterpriseAndGoToHomePage(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+      verify(() => pdvRegistration.getPdvNotUsing()).called(1);
+    });
+
+    test(
+        "Should not get pdv not using when dont is generating version to rede or getnet",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToGetNetMock = false;
+      await sut.validateEnterpriseAndGoToHomePage(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+      verifyNever(() => pdvRegistration.getPdvNotUsing());
+
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToRedeMock = false;
+      await sut.validateEnterpriseAndGoToHomePage(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+      verifyNever(() => pdvRegistration.getPdvNotUsing());
+    });
   });
 
   group("Validate enterprise input", () {

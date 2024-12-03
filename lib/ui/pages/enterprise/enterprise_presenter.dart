@@ -28,4 +28,6 @@ abstract class EnterprisePresenter implements Listenable {
   Future<void> clearEnterpriseData();
 
   void updateSelectedPdv(PdvNotUsingViewModel pdv);
+
+  Future<void> registerPdvAndGoToHomePage(PdvNotUsingViewModel selectedPdv);
 }

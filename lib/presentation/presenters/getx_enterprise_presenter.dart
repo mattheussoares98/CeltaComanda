@@ -298,4 +298,23 @@ class GetxEnterprisePresenter extends GetxController
   final _selectedPdv = Rx<PdvNotUsingViewModel?>(null);
   @override
   Stream<PdvNotUsingViewModel?> get selectedPdvStream => _selectedPdv.stream;
+
+  @override
+  Future<void> registerPdvAndGoToHomePage(
+    PdvNotUsingViewModel selectedPdv,
+  ) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      await pdvRegistration.setPdvRegister(
+        pdvId: selectedPdv.PdvId.toInt(),
+        uniqueIdentifier: "uniqueIdentifier",
+        versionNumber: "versionNumber",
+      );
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

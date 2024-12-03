@@ -2,8 +2,7 @@ import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
 import '../../factories.dart';
 
-EnterprisePresenter makeGetxEnterprisePresenter() =>
-    GetxEnterprisePresenter(
+EnterprisePresenter makeGetxEnterprisePresenter() => GetxEnterprisePresenter(
       validation: makeEnterpriseValidation(),
       localEntepriseData: makeLocalEnterpriseData(),
       loadEnterpriseData: makeRemoteLoadEnterpriseData(),
@@ -13,4 +12,5 @@ EnterprisePresenter makeGetxEnterprisePresenter() =>
       persistent: makeAndroidPersistent(),
       loadEnterpriseConcentradorParameters:
           makeRemoteLoadEnterpriseConcentradorParameters(),
+      pdvRegistration: makeConcentratorPdvRegistration(),
     );

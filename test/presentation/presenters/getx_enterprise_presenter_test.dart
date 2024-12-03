@@ -25,6 +25,7 @@ void main() {
   late PersistentSpy persistent;
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
+  late PdvRegistrationSpy pdvRegistration;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -61,6 +62,7 @@ void main() {
     loadCommandData.mockLoad(commandEntity);
     loadEnterpriseConcentradorParameters
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
+    pdvRegistration = PdvRegistrationSpy();
 
     homePresenter = HomePresenterSpy();
     clearedEnterprise = EnterpriseEntity(
@@ -93,6 +95,7 @@ void main() {
       persistent: persistent,
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
+      pdvRegistration: pdvRegistration,
     );
   });
 
@@ -221,8 +224,10 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate: EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      pendingDevicesToUpdate:
+          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
     homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -262,8 +267,10 @@ void main() {
       updateDevicesInformations:
           EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
       zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate: EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      pendingDevicesToUpdate:
+          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+      updatePendingDevices:
+          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
     );
 
     await sut.validateApiAndGoToHomePage(

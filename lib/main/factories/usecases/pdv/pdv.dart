@@ -1,0 +1,1 @@
+export './concentrator_pdv_registration_factory.dart';

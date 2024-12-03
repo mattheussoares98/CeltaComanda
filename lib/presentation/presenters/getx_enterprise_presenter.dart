@@ -22,6 +22,7 @@ class GetxEnterprisePresenter extends GetxController
   final Persistent persistent;
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
+  final PdvRegistration pdvRegistration;
 
   GetxEnterprisePresenter({
     required this.validation,
@@ -32,6 +33,7 @@ class GetxEnterprisePresenter extends GetxController
     required this.localCommandData,
     required this.persistent,
     required this.loadEnterpriseConcentradorParameters,
+    required this.pdvRegistration,
   });
 
   @override

@@ -1229,4 +1229,21 @@ class EntityFactory {
         AllowSaturday: faker.randomGenerator.integer(1, min: 0),
         AllowSunday: faker.randomGenerator.integer(1, min: 0),
       );
+
+  static PdvEntity makePdvEntity() => PdvEntity(
+        PdvId: faker.randomGenerator.integer(100),
+        PdvNumber: faker.randomGenerator.string(10),
+        IPAddress: faker.randomGenerator.string(10),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        MacAddress: faker.randomGenerator.string(10),
+        VersionNumber: faker.randomGenerator.string(10),
+        ParametersJSON: faker.randomGenerator.string(10),
+        UrlSATSharing: faker.randomGenerator.string(10),
+        SATHabilitationType: faker.randomGenerator.integer(10),
+        SATHabilitationTypeString: faker.randomGenerator.string(10),
+        SATStatus: faker.randomGenerator.string(10),
+        SATStatusDateHourLastUpdate: faker.randomGenerator.string(10),
+        SATStatusDateHourLastUpdateString: faker.randomGenerator.string(10),
+        IsUsing: faker.randomGenerator.boolean(),
+      );
 }

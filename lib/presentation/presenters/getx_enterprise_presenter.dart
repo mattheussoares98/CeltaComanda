@@ -126,7 +126,9 @@ class GetxEnterprisePresenter extends GetxController
 
       if (homePresenter.isGeneratingVersionToGetNet ||
           homePresenter.isGeneratingVersionToRede) {
-        final pdvsNotUsing = await pdvRegistration.getPdvNotUsing();
+        final pdvs = await pdvRegistration.getPdvNotUsing();
+        pdvsNotUsing =
+            pdvs?.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList();
       } else {
         isLoading = false;
         navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);

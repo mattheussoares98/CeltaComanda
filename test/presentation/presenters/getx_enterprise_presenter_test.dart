@@ -2,6 +2,7 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 import '../../data/mocks/mocks.dart';
@@ -36,6 +37,7 @@ void main() {
   late EnterpriseEntity clearedEnterprise;
   late bool isFixedCommandNumber;
   late int commandNumber;
+  late List<PdvEntity>? pdvsNotUsing;
 
   void initUseCases() {
     validation = ValidationSpy();
@@ -98,6 +100,11 @@ void main() {
       pendingDevicesToUpdate: null,
       updatePendingDevices: null,
     );
+
+    pdvsNotUsing = [
+      EntityFactory.makePdvEntity(),
+      EntityFactory.makePdvEntity(),
+    ];
   }
 
   void mockSuccess() {
@@ -109,6 +116,7 @@ void main() {
     localCommandData.mockLoad(commandEntity);
     loadEnterpriseConcentradorParameters
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
+    pdvRegistration.mockGetPdvNotUsing(pdvsNotUsing);
   }
 
   setUp(() {
@@ -627,6 +635,23 @@ void main() {
         homePresenter: homePresenter,
       );
       verifyNever(() => pdvRegistration.getPdvNotUsing());
+    });
+    test("Should emit correct values on enterprises not using", () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToRedeMock = true;
+
+      expectLater(
+        sut.pdvsNotUsingStream,
+        emits(
+          pdvsNotUsing?.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList(),
+        ),
+      );
+
+      await sut.validateEnterpriseAndGoToHomePage(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
     });
   });
 

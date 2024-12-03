@@ -19,20 +19,20 @@ class PdvEntity extends Equatable {
   final bool? IsUsing;
 
   const PdvEntity({
-    this.PdvId,
-    this.PdvNumber,
-    this.IPAddress,
-    this.EnterpriseId,
-    this.MacAddress,
-    this.VersionNumber,
-    this.ParametersJSON,
-    this.UrlSATSharing,
-    this.SATHabilitationType,
-    this.SATHabilitationTypeString,
-    this.SATStatus,
-    this.SATStatusDateHourLastUpdate,
-    this.SATStatusDateHourLastUpdateString,
-    this.IsUsing,
+    required this.PdvId,
+    required this.PdvNumber,
+    required this.IPAddress,
+    required this.EnterpriseId,
+    required this.MacAddress,
+    required this.VersionNumber,
+    required this.ParametersJSON,
+    required this.UrlSATSharing,
+    required this.SATHabilitationType,
+    required this.SATHabilitationTypeString,
+    required this.SATStatus,
+    required this.SATStatusDateHourLastUpdate,
+    required this.SATStatusDateHourLastUpdateString,
+    required this.IsUsing,
   });
 
   @override

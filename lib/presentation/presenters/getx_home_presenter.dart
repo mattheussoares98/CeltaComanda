@@ -362,7 +362,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await Future.delayed(
           Duration(
             seconds:
-                enterprise.pendingDevicesToUpdate!.indexOf(identifier) * 10,
+                enterprise.pendingDevicesToUpdate!.indexOf(identifier) * 15,
           ),
         );
         await loadCommandData(

@@ -61,11 +61,18 @@ class RedePrinter(
     class PrinterCallbackImpl : IPrinterCallback {
         override fun onCompleted() {
             println("Print completed successfully!")
+            sendMessageToFlutter("Success")
         }
 
         override fun onError(errorMessage: String) {
             println("Error occurred during printing: $errorMessage")
+            sendMessageToFlutter("Error")
         }
+    }
+
+    private fun sendMessageToFlutter(message: String) {
+        val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
+        methodChannel.invokeMethod("paymentResult", message)
     }
 }
 

@@ -287,6 +287,32 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
+  Future<void> registerPdvAndGoToHomePage(
+    PdvNotUsingViewModel selectedPdv,
+  ) async {
+    isLoading = true;
+    mainError = null;
+    try {
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+      final applicationVersion = await loadDeviceData.getApplicationVersion();
+
+      await pdvRegistration.setPdvRegister(
+        pdvId: selectedPdv.PdvId.toInt(),
+        imeiOrWindowsId: imeiOrWindowsId,
+        versionNumber: applicationVersion,
+      );
+
+      //TODO save commandEntity with pdv number
+
+      navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
   bool isUpdatedEnterpriseName = false;
 
   final _enterpriseError = Rx<UIError?>(null);
@@ -303,26 +329,4 @@ class GetxEnterprisePresenter extends GetxController
   final _selectedPdv = Rx<PdvNotUsingViewModel?>(null);
   @override
   Stream<PdvNotUsingViewModel?> get selectedPdvStream => _selectedPdv.stream;
-
-  @override
-  Future<void> registerPdvAndGoToHomePage(
-    PdvNotUsingViewModel selectedPdv,
-  ) async {
-    isLoading = true;
-    mainError = null;
-    try {
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
-      final applicationVersion = await loadDeviceData.getApplicationVersion();
-
-      await pdvRegistration.setPdvRegister(
-        pdvId: selectedPdv.PdvId.toInt(),
-        imeiOrWindowsId: imeiOrWindowsId,
-        versionNumber: applicationVersion,
-      );
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
 }

@@ -859,5 +859,14 @@ void main() {
             versionNumber: applicationVersion,
           )).called(1);
     });
+    test("Should call navigate to home page", () async {
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.home,
+            clear: true,
+          )).called(1);
+    });
   });
 }

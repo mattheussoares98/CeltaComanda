@@ -11,7 +11,18 @@ class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
     this._mockGetImeiOrWindowsIdCall().thenAnswer((any) async => identifier);
   }
 
-  void mockError() {
+  void mockGetImeiError() {
     this._mockGetImeiOrWindowsIdCall().thenThrow(DomainError.unexpected);
+  }
+
+  When _mockGetApplicationVersionCall() =>
+      when(() => this.getApplicationVersion());
+
+  void mockGetApplicationVersion(String identifier) {
+    this._mockGetApplicationVersionCall().thenAnswer((any) async => identifier);
+  }
+
+  void mockGetApplicationVersionError() {
+    this._mockGetApplicationVersionCall().thenThrow(DomainError.unexpected);
   }
 }

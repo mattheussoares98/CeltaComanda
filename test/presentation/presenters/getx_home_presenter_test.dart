@@ -104,6 +104,7 @@ void main() {
     addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
     addPendingDeviceToUpdate.mockAdd(imeiOrWindowsId);
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
+    loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
   }
 
   void initEntitys() {
@@ -1245,6 +1246,23 @@ void main() {
         verify(() => localEnterpriseData.add(
                 EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
             .called(1);
+      });
+
+      test("Should call get application version", () async {
+        enterpriseJson["updateDevicesInformations"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => loadDeviceData.getApplicationVersion()).called(1);
       });
     });
 

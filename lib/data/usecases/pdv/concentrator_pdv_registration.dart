@@ -56,15 +56,12 @@ class ConcentratorPdvRegistration implements PdvRegistration {
 
       final url = EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl;
 
-      final response = await httpAdapter.request(
+      await httpAdapter.request(
         url:
-            '$url/api/APISaleRequest/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$imeiOrWindowsId&versionNumber=$versionNumber',
+            '$url/api/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$imeiOrWindowsId&versionNumber=$versionNumber',
         method: "post",
         headers: headers,
       );
-      if (response == null) {
-        throw Error();
-      }
     } catch (error) {
       throw DomainError.unexpected;
     }

@@ -69,6 +69,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       CommandEntity(
         commandNumber: _commandNumber,
         isFixedCommandNumber: false,
+        pdv: null,
       ),
     );
   }

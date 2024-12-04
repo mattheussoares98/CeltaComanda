@@ -167,6 +167,7 @@ class GetxConfigurationsPresenter extends GetxController
         CommandEntity(
           commandNumber: commandNumber,
           isFixedCommandNumber: true,
+          pdv: null, //TODO maintain the same pdv. Need get this before save
         ),
       );
 

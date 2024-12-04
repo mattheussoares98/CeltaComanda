@@ -115,6 +115,7 @@ class GetxEnterprisePresenter extends GetxController
               ? null
               : commandNumber.padLeft(3, "0"),
           isFixedCommandNumber: isFixedCommandNumber,
+          pdv: null,
         ),
       );
 

@@ -406,6 +406,7 @@ void main() {
           CommandEntity(
             commandNumber: newFixedCommandNumber.toString().padLeft(3, '0'),
             isFixedCommandNumber: true,
+            pdv: null, //TODO correct this test after correct how save the pdv
           ),
         ),
       ).called(1);

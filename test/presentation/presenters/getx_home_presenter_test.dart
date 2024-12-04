@@ -208,8 +208,11 @@ void main() {
         );
 
         verify(
-          () => localCommandData.update(
-              CommandEntity(commandNumber: null, isFixedCommandNumber: false)),
+          () => localCommandData.update(CommandEntity(
+            commandNumber: null,
+            isFixedCommandNumber: false,
+            pdv: null,
+          )),
         ).called(1);
       });
     });
@@ -307,10 +310,12 @@ void main() {
       const fixed = CommandEntity(
         commandNumber: "commandNumber",
         isFixedCommandNumber: true,
+        pdv: null,
       );
       const notFixed = CommandEntity(
         commandNumber: "commandNumber",
         isFixedCommandNumber: false,
+        pdv: null,
       );
 
       localCommandData.mockLoad(fixed);
@@ -337,11 +342,13 @@ void main() {
       final entity1 = CommandEntity(
         commandNumber: faker.randomGenerator.integer(999).toString(),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
+        pdv: null,
       );
 
       final entity2 = CommandEntity(
         commandNumber: faker.randomGenerator.integer(999).toString(),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
+        pdv: null,
       );
 
       localCommandData.mockLoad(entity1);

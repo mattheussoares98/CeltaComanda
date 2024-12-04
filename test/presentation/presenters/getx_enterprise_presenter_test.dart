@@ -574,6 +574,7 @@ void main() {
             CommandEntity(
               commandNumber: null,
               isFixedCommandNumber: isFixedCommandNumber,
+              pdv: null,
             ),
           )).called(1);
 
@@ -587,6 +588,7 @@ void main() {
             CommandEntity(
               commandNumber: null,
               isFixedCommandNumber: isFixedCommandNumber,
+              pdv: null,
             ),
           )).called(1);
     });
@@ -604,6 +606,7 @@ void main() {
             CommandEntity(
               commandNumber: commandNumber.toString().padLeft(3, "0"),
               isFixedCommandNumber: isFixedCommandNumber,
+              pdv: null,
             ),
           )).called(1);
     });

@@ -6,6 +6,7 @@ enum DomainError {
   commandAlreadyPaid,
   commandNotAvailable,
   commandNumberObligatory,
+  dontHaveUnusedPdvs,
   enterpriseOrUrlNotFound,
   invalidCombox,
   invalidCredentials,

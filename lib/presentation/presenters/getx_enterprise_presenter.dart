@@ -130,7 +130,7 @@ class GetxEnterprisePresenter extends GetxController
           homePresenter.isGeneratingVersionToRede) {
         final pdvs = await pdvRegistration.getPdvNotUsing();
         pdvsNotUsing =
-            pdvs?.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList();
+            pdvs.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList();
       } else {
         isLoading = false;
         navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
@@ -139,6 +139,9 @@ class GetxEnterprisePresenter extends GetxController
       switch (error) {
         case DomainError.commandNotAvailable:
           mainError = UIError.commandNotAvailable;
+          break;
+        case DomainError.dontHaveUnusedPdvs:
+          mainError = UIError.dontHaveUnusedPdvs;
           break;
         case DomainError.enterpriseOrUrlNotFound:
           mainError = UIError.enterpriseOrUrlNotFound;

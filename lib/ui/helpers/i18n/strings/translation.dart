@@ -13,6 +13,7 @@ abstract class Translation {
   String get msgConfirmClearTotalPaid;
   String get msgConfirmSendProducts;
   String get msgConsultCommandToViewProducts;
+  String get msgDontHaveUnusedPdvs;
   String get msgEvaluateFood;
   String get msgEvaluateDrink;
   String get msgEvaluateEnvironment;

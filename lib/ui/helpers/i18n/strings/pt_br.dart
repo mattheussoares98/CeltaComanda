@@ -23,6 +23,7 @@ class PtBr implements Translation {
   String get msgConfirmSendProducts => "Deseja realmente enviar os produtos?";
   String get msgConsultCommandToViewProducts =>
       "Consulte alguma comanda para visualizar os produtos solicitados";
+  String get msgDontHaveUnusedPdvs => "Não há PDVs liberados para registro";
   String get msgEvaluateFood => "Avalie a comida";
   String get msgEvaluateDrink => "Avalie a bebida";
   String get msgEvaluateEnvironment => "Avalie o ambiente";

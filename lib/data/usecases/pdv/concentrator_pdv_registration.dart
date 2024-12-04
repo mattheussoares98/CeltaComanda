@@ -24,13 +24,24 @@ class ConcentratorPdvRegistration implements PdvRegistration {
         method: "get",
         headers: headers,
       );
-      if (response == null) {
-        throw Error();
+
+      if (response.isEmpty) {
+        throw DomainError.dontHaveUnusedPdvs;
+      } else if (response == null) {
+        throw DomainError.unexpected;
       } else {
-        return response.map((e) => PdvModel.fromJson(e)).toList().cast<PdvModel>();
+        return response
+            .map((e) => PdvModel.fromJson(e))
+            .toList()
+            .cast<PdvModel>();
       }
-    } catch (error) {
-      throw DomainError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.dontHaveUnusedPdvs:
+          throw DomainError.dontHaveUnusedPdvs;
+        default:
+          throw DomainError.unexpected;
+      }
     }
   }
 

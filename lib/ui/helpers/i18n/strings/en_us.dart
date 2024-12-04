@@ -21,6 +21,8 @@ class EnUs implements Translation {
   String get msgConfirmSendProducts => "Do you want confirm send products?";
   String get msgConsultCommandToViewProducts =>
       "Search command to view products";
+  String get msgDontHaveUnusedPdvs =>
+      "There are no PDVs released for registration";
   String get msgEvaluateFood => 'Rate the food';
   String get msgEvaluateDrink => 'Rate the drink';
   String get msgEvaluateEnvironment => 'Rate the environment';

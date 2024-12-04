@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -376,7 +377,7 @@ void main() {
     });
   });
 
-  group("Validate enterprise and go to home page", () {
+  group("Validate enterprise by name", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -409,6 +410,22 @@ void main() {
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.validateEnterpriseByName(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should emit correct values dont have liberated pdvs to registration",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      pdvRegistration.mockGetPdvNotUsingError(DomainError.dontHaveUnusedPdvs);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.dontHaveUnusedPdvs]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.validateEnterpriseByName(

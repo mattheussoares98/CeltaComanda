@@ -1,7 +1,7 @@
 import '../../entities/entities.dart';
 
 abstract class PdvRegistration {
-  Future<List<PdvEntity>?> getPdvNotUsing();
+  Future<List<PdvEntity>> getPdvNotUsing();
 
   Future<void> setPdvRegister({
     required int pdvId,

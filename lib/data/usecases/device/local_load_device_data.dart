@@ -6,7 +6,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../domain/usecases/usecases.dart';
 
-class LocalLoadUniqueIdentifier implements LoadDeviceData {
+class LocalLoadimeiOrWindowsId implements LoadDeviceData {
   @override
   Future<String> getImeiOrWindowsId() async {
     String? identifier;

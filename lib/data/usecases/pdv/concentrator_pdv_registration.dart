@@ -38,7 +38,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
   @override
   Future<void> setPdvRegister({
     required int pdvId,
-    required String uniqueIdentifier,
+    required String imeiOrWindowsId,
     required String versionNumber,
   }) async {
     try {
@@ -48,7 +48,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
 
       final response = await httpAdapter.request(
         url:
-            '$url/api/APISaleRequest/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$uniqueIdentifier&versionNumber=$versionNumber',
+            '$url/api/APISaleRequest/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$imeiOrWindowsId&versionNumber=$versionNumber',
         method: "post",
         headers: headers,
       );

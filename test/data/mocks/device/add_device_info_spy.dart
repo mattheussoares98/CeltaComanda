@@ -7,7 +7,8 @@ import 'package:mocktail/mocktail.dart';
 class AddDeviceInfoSpy extends Mock implements AddDeviceInfo {
   When _mockDeviceInfoCall() => when(() => this.add(
         commandNumber: any(named: "commandNumber"),
-        uniqueIdentifier: any(named: "uniqueIdentifier"),
+        imeiOrWindowsId: any(named: "imeiOrWindowsId"),
+        applicationVersion: any(named: "applicationVersion"),
       ));
 
   void mockDeviceInfo(int? commandNumber) {

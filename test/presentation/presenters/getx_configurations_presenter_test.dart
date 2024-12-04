@@ -37,7 +37,7 @@ void main() {
       changeSaleRequestPersonalizedCodeProducts;
   late CloseSaleRequestSpy closeSaleRequest;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
-  late LoadDeviceDataSpy loadUniqueIdentifier;
+  late LoadDeviceDataSpy loadimeiOrWindowsId;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -69,7 +69,7 @@ void main() {
           changeSaleRequestPersonalizedCodeProducts,
       closeSaleRequest: closeSaleRequest,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
-      loadDeviceData: loadUniqueIdentifier,
+      loadDeviceData: loadimeiOrWindowsId,
     );
   }
 
@@ -87,13 +87,13 @@ void main() {
         ChangeSaleRequestPersonalizedCodeProductsSpy();
     closeSaleRequest = CloseSaleRequestSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
-    loadUniqueIdentifier = LoadDeviceDataSpy();
+    loadimeiOrWindowsId = LoadDeviceDataSpy();
   }
 
   void initMocks() {
     localCommandData.mockLoad(fixedCommandEntity);
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    loadUniqueIdentifier.mockGetImeiOrWindowsId(identifier);
+    loadimeiOrWindowsId.mockGetImeiOrWindowsId(identifier);
     addPendingDeviceToUpdate.mockAdd(identifier);
   }
 
@@ -347,7 +347,7 @@ void main() {
     test("Should call load pending device", () async {
       await sut.loadMenuAgain();
 
-      verify(() => loadUniqueIdentifier.getImeiOrWindowsId()).called(1);
+      verify(() => loadimeiOrWindowsId.getImeiOrWindowsId()).called(1);
     });
   });
 

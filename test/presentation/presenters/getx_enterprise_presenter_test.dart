@@ -28,7 +28,7 @@ void main() {
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
-  late LoadDeviceDataSpy loadUniqueIdentifier;
+  late LoadDeviceDataSpy loadimeiOrWindowsId;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -51,7 +51,7 @@ void main() {
     loadEnterpriseConcentradorParameters =
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
-    loadUniqueIdentifier = LoadDeviceDataSpy();
+    loadimeiOrWindowsId = LoadDeviceDataSpy();
   }
 
   void initPresenters() {
@@ -68,7 +68,7 @@ void main() {
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
-      loadDeviceData: loadUniqueIdentifier,
+      loadDeviceData: loadimeiOrWindowsId,
     );
   }
 

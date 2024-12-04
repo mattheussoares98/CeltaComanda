@@ -362,7 +362,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         await Future.delayed(
           Duration(
             seconds:
-                enterprise.pendingDevicesToUpdate!.indexOf(imeiOrWindowsId) * 15,
+                enterprise.pendingDevicesToUpdate!.indexOf(imeiOrWindowsId) *
+                    15,
           ),
         );
         await loadCommandData(
@@ -391,9 +392,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (enterprise.updateDevicesInformations !=
           EnterpriseDataBuilder
               .enterpriseDataEntity?.updateDevicesInformations) {
+        final applicationVersion = await loadDeviceData.getApplicationVersion();
         await addDeviceInfo.add(
           commandNumber: commandNumber?.toInt(),
-          uniqueIdentifier: imeiOrWindowsId,
+          imeiOrWindowsId: imeiOrWindowsId,
+          applicationVersion: applicationVersion,
         );
         EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
         await localEnterpriseData.add(enterprise);

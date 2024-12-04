@@ -5,7 +5,7 @@ abstract class PdvRegistration {
 
   Future<void> setPdvRegister({
     required int pdvId,
-    required String uniqueIdentifier,
+    required String imeiOrWindowsId,
     required String versionNumber,
   });
 }

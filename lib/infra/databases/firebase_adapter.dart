@@ -57,7 +57,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .doc("loadedDevices");
 
       await docRef.set({
-        entity.uniqueIdentifier: DeviceInfoModel.fromEntity(entity).toJson(),
+        entity.imeiOrWindowsId: DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {
       throw DomainError.unexpected;
@@ -89,14 +89,14 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> addPendingDeviceToUpdate(String uniqueIdentifier) async {
+  Future<void> addPendingDeviceToUpdate(String imeiOrWindowsId) async {
     var docRef = firestore
         .collection('clients')
         .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
 
     await docRef.set(
       {
-        "pendingDevicesToUpdate": FieldValue.arrayUnion([uniqueIdentifier]),
+        "pendingDevicesToUpdate": FieldValue.arrayUnion([imeiOrWindowsId]),
       },
       SetOptions(merge: true),
     );

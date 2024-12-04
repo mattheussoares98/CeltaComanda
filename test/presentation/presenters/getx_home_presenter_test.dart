@@ -37,7 +37,7 @@ void main() {
   late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
-  late LoadDeviceDataSpy uniqueIdentifier;
+  late LoadDeviceDataSpy loadDeviceData;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -49,7 +49,8 @@ void main() {
   late int userCode;
   late String password;
   late Map<String, dynamic> enterpriseJson;
-  late String identifier;
+  late String imeiOrWindowsId;
+  late double applicationVersion;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -74,7 +75,7 @@ void main() {
       persistent: persistent,
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
-      loadDeviceData: uniqueIdentifier,
+      loadDeviceData: loadDeviceData,
     );
   }
 
@@ -90,7 +91,7 @@ void main() {
     persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
-    uniqueIdentifier = LoadDeviceDataSpy();
+    loadDeviceData = LoadDeviceDataSpy();
   }
 
   void initMocks() {
@@ -101,8 +102,8 @@ void main() {
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSellers.mockLoadSellers(sellerEntitys);
     addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
-    addPendingDeviceToUpdate.mockAdd(identifier);
-    uniqueIdentifier.mockGetImeiOrWindowsId(identifier);
+    addPendingDeviceToUpdate.mockAdd(imeiOrWindowsId);
+    loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
   }
 
   void initEntitys() {
@@ -128,7 +129,8 @@ void main() {
     enterpriseJson = EnterpriseValidationModel.fromEntity(
             EnterpriseDataBuilder.enterpriseDataEntity!)
         .toJson();
-    identifier = faker.randomGenerator.string(10);
+    imeiOrWindowsId = faker.randomGenerator.string(10);
+    applicationVersion = faker.randomGenerator.decimal();
   }
 
   setUp(() {
@@ -1201,7 +1203,8 @@ void main() {
 
         verify(() => addDeviceInfo.add(
               commandNumber: sut.commandNumber?.toInt(),
-              uniqueIdentifier: identifier,
+              imeiOrWindowsId: imeiOrWindowsId,
+              applicationVersion: applicationVersion.toString(),
             )).called(1);
       });
       test("Should update enterprise on updateDeviceInformations changes",
@@ -1306,7 +1309,7 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => addPendingDeviceToUpdate.add(identifier)).called(1);
+        verify(() => addPendingDeviceToUpdate.add(imeiOrWindowsId)).called(1);
       });
       test("Should get unique identifier", () async {
         enterpriseJson["updatePendingDevices"] =
@@ -1322,7 +1325,7 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => uniqueIdentifier.getImeiOrWindowsId()).called(1);
+        verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
       });
 
       test("Should update enterprise on updateDeviceInformations changes",

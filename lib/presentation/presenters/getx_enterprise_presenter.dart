@@ -312,7 +312,7 @@ class GetxEnterprisePresenter extends GetxController
 
       await pdvRegistration.setPdvRegister(
         pdvId: selectedPdv.PdvId.toInt(),
-        uniqueIdentifier: imeiOrWindowsId,
+        imeiOrWindowsId: imeiOrWindowsId,
         versionNumber: "versionNumber",
       );
     } catch (e) {

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../models/models.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -15,16 +14,15 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
   @override
   Future<void> add({
     required int? commandNumber,
-    required String uniqueIdentifier,
+    required String imeiOrWindowsId,
+    required String applicationVersion,
   }) async {
     try {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
       final entity = DeviceInfoModel(
         commandNumber: commandNumber,
         lastUpdatedDate: DateTime.now().toIso8601String(),
-        applicationVersion: packageInfo.version,
-        uniqueIdentifier: uniqueIdentifier,
+        applicationVersion: applicationVersion,
+        imeiOrWindowsId: imeiOrWindowsId,
       ).toEntity();
 
       await firebaseStorage.addDeviceInfo(entity);

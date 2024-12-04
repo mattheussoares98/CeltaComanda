@@ -18,7 +18,7 @@ class PdvRegistrationSpy extends Mock implements PdvRegistration {
 
   When _mockSetPdvRegisterCall() => when(() => this.setPdvRegister(
         pdvId: any(named: "pdvId"),
-        uniqueIdentifier: any(named: "uniqueIdentifier"),
+        imeiOrWindowsId: any(named: "imeiOrWindowsId"),
         versionNumber: any(named: "versionNumber"),
       ));
   void _mockSetPdvRegister() =>

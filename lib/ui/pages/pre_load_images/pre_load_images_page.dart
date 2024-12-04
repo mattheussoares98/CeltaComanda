@@ -21,56 +21,13 @@ class PreLoadImagesPage extends StatefulWidget {
 
 class _PreLoadImagesPageState extends State<PreLoadImagesPage>
     with UIErrorManager, LoadingManager {
-  List<String> allPlus = [];
-  List<String> allEans = [];
-
-  void addPlusInAllPlusList(MenuPresenter menuPresenter) {
-    final allProducts = menuPresenter.loadedMenu
-        .expand((map) => map.values)
-        .expand((lista) => lista)
-        .toList();
-
-    void addPlu(String? plu) {
-      if (!allPlus.contains(plu) && plu != null) {
-        allPlus.add(plu);
-      }
-    }
-
-    for (var product in allProducts) {
-      addPlu(product.EanCode ?? product.PriceLookupCode);
-
-      if (product.childsComposition != null) {
-        for (var combox in product.childsComposition!) {
-          addPlu(combox.PluChild);
-
-          if (combox.childs?.isNotEmpty == true) {
-            for (var child in combox.childs!) {
-              addPlu(child.PluChild);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  void addEansInAllEansList(MenuPresenter menuPresenter) {
-    final allProducts = menuPresenter.loadedMenu
-        .expand((map) => map.values)
-        .expand((lista) => lista)
-        .toList();
-
-    for (var product in allProducts) {
-      if (product.EanCode != null) {
-        allEans.add(product.EanCode!);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    addPlusInAllPlusList(menuPresenter);
-    addEansInAllEansList(menuPresenter);
+    final allProducts = menuPresenter.loadedMenu
+        .expand((map) => map.values)
+        .expand((lista) => lista)
+        .toList();
 
     return Stack(
       children: [
@@ -83,35 +40,13 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 1,
               ),
-              itemCount: allPlus.length,
+              itemCount: allProducts.length,
               itemBuilder: (context, index) {
-                final plu = allPlus[index];
+                final product = allProducts[index];
 
                 return ImageWidget(
                   ean: null,
-                  plu: plu,
-                  selectedProduct: null,
-                  height: 1,
-                  width: 1,
-                );
-              }),
-        ),
-        SizedBox(
-          height: 1,
-          child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 1,
-                childAspectRatio: 1,
-                crossAxisSpacing: 1,
-                mainAxisSpacing: 1,
-              ),
-              itemCount: allEans.length,
-              itemBuilder: (context, index) {
-                final ean = allEans[index];
-
-                return ImageWidget(
-                  ean: ean,
-                  plu: "",
+                  plu: product.PriceLookupCode,
                   selectedProduct: null,
                   height: 1,
                   width: 1,

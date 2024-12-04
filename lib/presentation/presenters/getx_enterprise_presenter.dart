@@ -309,11 +309,12 @@ class GetxEnterprisePresenter extends GetxController
     mainError = null;
     try {
       final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+      final applicationVersion = await loadDeviceData.getApplicationVersion();
 
       await pdvRegistration.setPdvRegister(
         pdvId: selectedPdv.PdvId.toInt(),
         imeiOrWindowsId: imeiOrWindowsId,
-        versionNumber: "versionNumber",
+        versionNumber: applicationVersion,
       );
     } catch (e) {
       mainError = UIError.unexpected;

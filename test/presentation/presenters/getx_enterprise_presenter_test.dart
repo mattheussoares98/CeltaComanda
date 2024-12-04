@@ -28,7 +28,7 @@ void main() {
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
-  late LoadDeviceDataSpy loadimeiOrWindowsId;
+  late LoadDeviceDataSpy loadDeviceData;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -39,6 +39,8 @@ void main() {
   late bool isFixedCommandNumber;
   late int commandNumber;
   late List<PdvEntity>? pdvsNotUsing;
+  late String imeiOrWindowsId;
+  late String applicationVersion;
 
   void initUseCases() {
     validation = ValidationSpy();
@@ -51,7 +53,7 @@ void main() {
     loadEnterpriseConcentradorParameters =
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
-    loadimeiOrWindowsId = LoadDeviceDataSpy();
+    loadDeviceData = LoadDeviceDataSpy();
   }
 
   void initPresenters() {
@@ -68,7 +70,7 @@ void main() {
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
-      loadDeviceData: loadimeiOrWindowsId,
+      loadDeviceData: loadDeviceData,
     );
   }
 
@@ -108,6 +110,8 @@ void main() {
       EntityFactory.makePdvEntity(),
       EntityFactory.makePdvEntity(),
     ];
+    applicationVersion = faker.randomGenerator.decimal().toString();
+    imeiOrWindowsId = faker.guid.guid();
   }
 
   void mockSuccess() {
@@ -120,6 +124,8 @@ void main() {
     loadEnterpriseConcentradorParameters
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
     pdvRegistration.mockGetPdvNotUsing(pdvsNotUsing);
+    loadDeviceData.mockGetApplicationVersion(applicationVersion);
+    loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
   }
 
   setUp(() {
@@ -142,212 +148,214 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
   });
 
-  test(
-      "Should make persist app when go to home page and enterprise.persist app is true",
-      () async {
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
-      concentradorUrl:
-          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-      persistApp: true,
-      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-      useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-      updateConcentratorEnterpriseData: EnterpriseDataBuilder
-          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-      serviceChargePercentageOrValue: EnterpriseDataBuilder
-          .enterpriseDataEntity!.serviceChargePercentageOrValue,
-      serviceChargeType:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
-      updateEnterprise:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-      updateDevicesInformations:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
-      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate:
-          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-    );
+  group("old tests", () {
+    test(
+        "Should make persist app when go to home page and enterprise.persist app is true",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+        pendingDevicesToUpdate:
+            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+        updatePendingDevices:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      );
 
-    await sut.validateEnterpriseByName(
-      homePresenter: homePresenter,
-      isFixedCommandNumber: faker.randomGenerator.boolean(),
-      commandNumber:
-          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-    );
+      await sut.validateEnterpriseByName(
+        homePresenter: homePresenter,
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        commandNumber:
+            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      );
 
-    verify(() => persistent.makePersistent()).called(1);
-  });
-  test(
-      "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
-      () async {
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
-      concentradorUrl:
-          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-      persistApp: true,
-      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-      useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-      updateConcentratorEnterpriseData: EnterpriseDataBuilder
-          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-      serviceChargePercentageOrValue: EnterpriseDataBuilder
-          .enterpriseDataEntity!.serviceChargePercentageOrValue,
-      serviceChargeType:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
-      updateEnterprise:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-      updateDevicesInformations:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
-      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate:
-          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-    );
-    homePresenter.isGeneratingVersionToRedeMock = true;
+      verify(() => persistent.makePersistent()).called(1);
+    });
+    test(
+        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+        pendingDevicesToUpdate:
+            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+        updatePendingDevices:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      );
+      homePresenter.isGeneratingVersionToRedeMock = true;
 
-    await sut.validateEnterpriseByName(
-      homePresenter: homePresenter,
-      isFixedCommandNumber: faker.randomGenerator.boolean(),
-      commandNumber:
-          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-    );
+      await sut.validateEnterpriseByName(
+        homePresenter: homePresenter,
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        commandNumber:
+            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      );
 
-    verify(() => persistent.makeNotPersistent()).called(1);
-  });
-  test(
-      "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
-      () async {
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
-      concentradorUrl:
-          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-      persistApp: true,
-      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-      useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-      updateConcentratorEnterpriseData: EnterpriseDataBuilder
-          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-      serviceChargePercentageOrValue: EnterpriseDataBuilder
-          .enterpriseDataEntity!.serviceChargePercentageOrValue,
-      serviceChargeType:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
-      updateEnterprise:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-      updateDevicesInformations:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
-      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate:
-          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-    );
-    homePresenter.isGeneratingVersionToGetNetMock = true;
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
+    test(
+        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: true,
+        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+        pendingDevicesToUpdate:
+            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+        updatePendingDevices:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      );
+      homePresenter.isGeneratingVersionToGetNetMock = true;
 
-    await sut.validateEnterpriseByName(
-      homePresenter: homePresenter,
-      isFixedCommandNumber: faker.randomGenerator.boolean(),
-      commandNumber:
-          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-    );
+      await sut.validateEnterpriseByName(
+        homePresenter: homePresenter,
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        commandNumber:
+            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      );
 
-    verify(() => persistent.makeNotPersistent()).called(1);
-  });
-  test(
-      "Should make NOT persist app when go to home page and enterprise.persist app is false",
-      () async {
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
-      enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-      url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-      enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
-      concentradorUrl:
-          EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-      persistApp: false,
-      urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-      useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-      enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-          .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-      updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-      updateConcentratorEnterpriseData: EnterpriseDataBuilder
-          .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-      serviceChargePercentageOrValue: EnterpriseDataBuilder
-          .enterpriseDataEntity!.serviceChargePercentageOrValue,
-      serviceChargeType:
-          EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
-      updateEnterprise:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-      updateDevicesInformations:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updateDevicesInformations,
-      zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-      pendingDevicesToUpdate:
-          EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-      updatePendingDevices:
-          EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-    );
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
+    test(
+        "Should make NOT persist app when go to home page and enterprise.persist app is false",
+        () async {
+      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        enterpriseName:
+            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+        concentradorUrl:
+            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+        persistApp: false,
+        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
+            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseDataBuilder
+            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        serviceChargeType:
+            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+        updateEnterprise:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseDataBuilder
+            .enterpriseDataEntity!.updateDevicesInformations,
+        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+        pendingDevicesToUpdate:
+            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+        updatePendingDevices:
+            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+      );
 
-    await sut.validateEnterpriseByName(
-      homePresenter: homePresenter,
-      isFixedCommandNumber: faker.randomGenerator.boolean(),
-      commandNumber:
-          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-    );
+      await sut.validateEnterpriseByName(
+        homePresenter: homePresenter,
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        commandNumber:
+            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      );
 
-    verify(() => persistent.makeNotPersistent()).called(1);
-  });
+      verify(() => persistent.makeNotPersistent()).called(1);
+    });
 
-  test("Should call loadCommandData on loadLocalData", () async {
-    await sut.updateEnterpriseWithLocalData();
+    test("Should call loadCommandData on loadLocalData", () async {
+      await sut.updateEnterpriseWithLocalData();
 
-    verify(() => localEnterpriseData.load()).called(1);
-  });
+      verify(() => localEnterpriseData.load()).called(1);
+    });
 
-  test(
-      "Should update EnterpriseDataBuilder.enterpriseName when validateEnterpriseInput",
-      () async {
-    String enterpriseName = faker.randomGenerator.string(20);
+    test(
+        "Should update EnterpriseDataBuilder.enterpriseName when validateEnterpriseInput",
+        () async {
+      String enterpriseName = faker.randomGenerator.string(20);
 
-    sut.validateEnterpriseInput(enterpriseName);
+      sut.validateEnterpriseInput(enterpriseName);
 
-    expect(
-      EnterpriseDataBuilder.enterpriseDataEntity,
-      EnterpriseEntity(
-        enterpriseName: enterpriseName,
-        url: null,
-        enterpriseId: null,
-        concentradorUrl: null,
-        persistApp: null,
-        urlCCS: null,
-        useCovenant: null,
-        enterpriseConcentradorParametersEntity: null,
-        updateMenu: null,
-        updateConcentratorEnterpriseData: null,
-        serviceChargePercentageOrValue: null,
-        serviceChargeType: null,
-        updateDevicesInformations: null,
-        updateEnterprise: null,
-        zoomImage: null,
-        pendingDevicesToUpdate: null,
-        updatePendingDevices: null,
-      ),
-    );
+      expect(
+        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseEntity(
+          enterpriseName: enterpriseName,
+          url: null,
+          enterpriseId: null,
+          concentradorUrl: null,
+          persistApp: null,
+          urlCCS: null,
+          useCovenant: null,
+          enterpriseConcentradorParametersEntity: null,
+          updateMenu: null,
+          updateConcentratorEnterpriseData: null,
+          serviceChargePercentageOrValue: null,
+          serviceChargeType: null,
+          updateDevicesInformations: null,
+          updateEnterprise: null,
+          zoomImage: null,
+          pendingDevicesToUpdate: null,
+          updatePendingDevices: null,
+        ),
+      );
+    });
   });
 
   group("Update enterprise with local data", () {
@@ -788,6 +796,51 @@ void main() {
       sut.updateSelectedPdv(second);
       sut.updateSelectedPdv(third);
       sut.updateSelectedPdv(third);
+    });
+  });
+
+  group("Register PDV and go to home page", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      loadDeviceData.mockGetImeiError();
+
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+    });
+    test("Should call get imei or windows id", () async {
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
+    });
+    test("Should call get application version", () async {
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+
+      verify(() => loadDeviceData.getApplicationVersion()).called(1);
+    });
+
+    test("Should call set pdv register with correct values", () async {
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      await sut.registerPdvAndGoToHomePage(selectedPdv);
+
+      verify(() => pdvRegistration.setPdvRegister(
+            pdvId: selectedPdv.PdvId.toInt(),
+            imeiOrWindowsId: imeiOrWindowsId,
+            versionNumber: applicationVersion,
+          )).called(1);
     });
   });
 }

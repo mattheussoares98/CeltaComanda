@@ -7,8 +7,8 @@ import 'package:mocktail/mocktail.dart';
 class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
   When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId());
 
-  void mockGetImeiOrWindowsId(String identifier) {
-    this._mockGetImeiOrWindowsIdCall().thenAnswer((any) async => identifier);
+  void mockGetImeiOrWindowsId(String imeiOrWindowsId) {
+    this._mockGetImeiOrWindowsIdCall().thenAnswer((any) async => imeiOrWindowsId);
   }
 
   void mockGetImeiError() {
@@ -18,8 +18,8 @@ class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
   When _mockGetApplicationVersionCall() =>
       when(() => this.getApplicationVersion());
 
-  void mockGetApplicationVersion(String identifier) {
-    this._mockGetApplicationVersionCall().thenAnswer((any) async => identifier);
+  void mockGetApplicationVersion(String applicationVersion) {
+    this._mockGetApplicationVersionCall().thenAnswer((any) async => applicationVersion);
   }
 
   void mockGetApplicationVersionError() {

@@ -11,7 +11,7 @@ class PdvRegistrationSpy extends Mock implements PdvRegistration {
     this._mockSetPdvRegister();
   }
   When _mockGetPdvNotUsingCall() => when(() => this.getPdvNotUsing());
-  void mockGetPdvNotUsing(List<PdvEntity>? value) =>
+  void mockGetPdvNotUsing(List<PdvEntity> value) =>
       this._mockGetPdvNotUsingCall().thenAnswer((any) async => value);
   void mockGetPdvNotUsingError(DomainError error) =>
       this._mockGetPdvNotUsingCall().thenThrow(error);

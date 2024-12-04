@@ -39,7 +39,7 @@ void main() {
   late EnterpriseEntity clearedEnterprise;
   late bool isFixedCommandNumber;
   late int commandNumber;
-  late List<PdvEntity>? pdvsNotUsing;
+  late List<PdvEntity> pdvsNotUsing;
   late String imeiOrWindowsId;
   late String applicationVersion;
 
@@ -674,7 +674,7 @@ void main() {
       expectLater(
         sut.pdvsNotUsingStream,
         emits(
-          pdvsNotUsing?.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList(),
+          pdvsNotUsing.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList(),
         ),
       );
 
@@ -824,7 +824,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -840,7 +840,7 @@ void main() {
 
       loadDeviceData.mockGetImeiError();
 
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -848,7 +848,7 @@ void main() {
       );
     });
     test("Should call get imei or windows id", () async {
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -858,7 +858,7 @@ void main() {
       verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
     test("Should call get application version", () async {
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -869,7 +869,7 @@ void main() {
     });
 
     test("Should call set pdv register with correct values", () async {
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -883,7 +883,7 @@ void main() {
           )).called(1);
     });
     test("Should call navigate to home page", () async {
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
@@ -896,7 +896,7 @@ void main() {
           )).called(1);
     });
     test("Should update local command data correctly", () async {
-      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing![0]);
+      final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),

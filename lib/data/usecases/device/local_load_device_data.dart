@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_device_imei/flutter_device_imei.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../domain/usecases/usecases.dart';
 
@@ -18,5 +19,15 @@ class LocalLoadUniqueIdentifier implements LoadDeviceData {
     }
 
     return identifier ?? "";
+  }
+
+  @override
+  Future<String> getApplicationVersion() async {
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.version;
+    } catch (e) {
+      return "unrecognized";
+    }
   }
 }

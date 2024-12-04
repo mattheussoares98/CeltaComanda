@@ -23,7 +23,7 @@ class GetxEnterprisePresenter extends GetxController
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
   final PdvRegistration pdvRegistration;
-  final LoadUniqueIdentifier loadUniqueIdentifier;
+  final LoadDeviceData loadDeviceData;
 
   GetxEnterprisePresenter({
     required this.validation,
@@ -35,7 +35,7 @@ class GetxEnterprisePresenter extends GetxController
     required this.persistent,
     required this.loadEnterpriseConcentradorParameters,
     required this.pdvRegistration,
-    required this.loadUniqueIdentifier,
+    required this.loadDeviceData,
   });
 
   @override
@@ -308,11 +308,11 @@ class GetxEnterprisePresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      final identifier = await loadUniqueIdentifier.get();
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
 
       await pdvRegistration.setPdvRegister(
         pdvId: selectedPdv.PdvId.toInt(),
-        uniqueIdentifier: identifier,
+        uniqueIdentifier: imeiOrWindowsId,
         versionNumber: "versionNumber",
       );
     } catch (e) {

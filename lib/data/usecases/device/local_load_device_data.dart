@@ -5,9 +5,9 @@ import 'package:flutter_device_imei/flutter_device_imei.dart';
 
 import '../../../domain/usecases/usecases.dart';
 
-class LocalLoadUniqueIdentifier implements LoadUniqueIdentifier {
+class LocalLoadUniqueIdentifier implements LoadDeviceData {
   @override
-  Future<String> get() async {
+  Future<String> getImeiOrWindowsId() async {
     String? identifier;
     if (Platform.isWindows) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

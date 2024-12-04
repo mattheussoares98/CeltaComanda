@@ -4,14 +4,14 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class LoadUniqueIdentifierSpy extends Mock implements LoadUniqueIdentifier {
-  When _mockGetCall() => when(() => this.get());
+class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
+  When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId());
 
-  void mockGet(String identifier) {
-    this._mockGetCall().thenAnswer((any) async => identifier);
+  void mockGetImeiOrWindowsId(String identifier) {
+    this._mockGetImeiOrWindowsIdCall().thenAnswer((any) async => identifier);
   }
 
   void mockError() {
-    this._mockGetCall().thenThrow(DomainError.unexpected);
+    this._mockGetImeiOrWindowsIdCall().thenThrow(DomainError.unexpected);
   }
 }

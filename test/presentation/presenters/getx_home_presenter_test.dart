@@ -37,7 +37,7 @@ void main() {
   late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
-  late LoadUniqueIdentifierSpy uniqueIdentifier;
+  late LoadDeviceDataSpy uniqueIdentifier;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -74,7 +74,7 @@ void main() {
       persistent: persistent,
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
-      uniqueIdentifier: uniqueIdentifier,
+      loadDeviceData: uniqueIdentifier,
     );
   }
 
@@ -90,7 +90,7 @@ void main() {
     persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
-    uniqueIdentifier = LoadUniqueIdentifierSpy();
+    uniqueIdentifier = LoadDeviceDataSpy();
   }
 
   void initMocks() {
@@ -102,7 +102,7 @@ void main() {
     loadSellers.mockLoadSellers(sellerEntitys);
     addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
     addPendingDeviceToUpdate.mockAdd(identifier);
-    uniqueIdentifier.mockGet(identifier);
+    uniqueIdentifier.mockGetImeiOrWindowsId(identifier);
   }
 
   void initEntitys() {
@@ -1322,7 +1322,7 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => uniqueIdentifier.get()).called(1);
+        verify(() => uniqueIdentifier.getImeiOrWindowsId()).called(1);
       });
 
       test("Should update enterprise on updateDeviceInformations changes",

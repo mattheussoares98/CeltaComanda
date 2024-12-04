@@ -22,7 +22,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final Persistent persistent;
   final AddDeviceInfo addDeviceInfo;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
-  final LoadUniqueIdentifier uniqueIdentifier;
+  final LoadDeviceData loadDeviceData;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -36,7 +36,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.persistent,
     required this.addDeviceInfo,
     required this.addPendingDeviceToUpdate,
-    required this.uniqueIdentifier,
+    required this.loadDeviceData,
   });
 
   @override
@@ -355,14 +355,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
       }
 
-      final identifier = await uniqueIdentifier.get();
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
       if (_updateMenu != enterprise.updateMenu &&
           enterprise.pendingDevicesToUpdate != null) {
         _updateMenu = enterprise.updateMenu;
         await Future.delayed(
           Duration(
             seconds:
-                enterprise.pendingDevicesToUpdate!.indexOf(identifier) * 15,
+                enterprise.pendingDevicesToUpdate!.indexOf(imeiOrWindowsId) * 15,
           ),
         );
         await loadCommandData(
@@ -378,7 +378,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           EnterpriseDataBuilder.enterpriseDataEntity?.updatePendingDevices) {
         EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
 
-        await addPendingDeviceToUpdate.add(identifier);
+        await addPendingDeviceToUpdate.add(imeiOrWindowsId);
         await localEnterpriseData.add(enterprise);
       }
 
@@ -393,7 +393,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               .enterpriseDataEntity?.updateDevicesInformations) {
         await addDeviceInfo.add(
           commandNumber: commandNumber?.toInt(),
-          uniqueIdentifier: identifier,
+          uniqueIdentifier: imeiOrWindowsId,
         );
         EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
         await localEnterpriseData.add(enterprise);

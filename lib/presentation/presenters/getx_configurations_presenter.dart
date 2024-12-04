@@ -24,7 +24,7 @@ class GetxConfigurationsPresenter extends GetxController
       changeSaleRequestPersonalizedCodeProducts;
   final CloseSaleRequest closeSaleRequest;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
-  final LoadUniqueIdentifier loadUniqueIdentifier;
+  final LoadDeviceData loadDeviceData;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -39,7 +39,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.changeSaleRequestPersonalizedCodeProducts,
     required this.closeSaleRequest,
     required this.addPendingDeviceToUpdate,
-    required this.loadUniqueIdentifier,
+    required this.loadDeviceData,
   });
 
   @override
@@ -128,8 +128,8 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
 
     try {
-      final identifier = await loadUniqueIdentifier.get();
-      await addPendingDeviceToUpdate.add(identifier);
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+      await addPendingDeviceToUpdate.add(imeiOrWindowsId);
       await updateMenu.update();
       return true;
     } catch (e) {

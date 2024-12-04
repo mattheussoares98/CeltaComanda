@@ -271,7 +271,7 @@ class GetxMenuPresenter extends GetxController
 
       final lastDate = await updatedAllImages.getLastDate();
       if (lastDate == null || lastDate.day < DateTime.now().day) {
-        _showPreLoadImages.subject.add(true);
+        showPreLoadImage = true;
         await updatedAllImages.updateLastDate(DateTime.now());
       }
     } on DomainError catch (error) {
@@ -436,7 +436,7 @@ class GetxMenuPresenter extends GetxController
   final _showPreLoadImages = false.obs;
   @override
   Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
-  set showPreLoadImage(bool value) => _showPreLoadImages.subject.add(value);
+  set showPreLoadImage(bool value) => _showPreLoadImages.value = value;
 
   final _doScrollGroupsStream = false.obs;
   @override

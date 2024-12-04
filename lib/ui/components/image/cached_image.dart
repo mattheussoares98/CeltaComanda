@@ -58,7 +58,7 @@ class CachedImageState extends State<CachedImage> {
       return;
     }
     try {
-      final maxSizeInBytes = 1.5 * 1024 * 1024;
+      final maxSizeInBytes = 1 * 1024 * 1024;
       final client = http.Client();
       final request = http.Request('GET', Uri.parse(url));
       final response = await client.send(request);

@@ -8,5 +8,6 @@ enum CacheKeys {
   hiveBoxName,
   paidInformations,
   printRequest,
+  updatedAllImages,
   updatedSaleRequestTemp,
 }

@@ -52,6 +52,7 @@ void main() {
   late LoadSuggestionSaleSpy loadSuggestionSale;
   late ManageProductScheduleSpy manageProductSchedule;
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
+  late UpdatedAllImagesSpy updatedAllImages;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -68,6 +69,7 @@ void main() {
     loadSuggestionSale = LoadSuggestionSaleSpy();
     manageProductSchedule = ManageProductScheduleSpy();
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
+    updatedAllImages = UpdatedAllImagesSpy();
   }
 
   void initPresenters() {
@@ -87,6 +89,7 @@ void main() {
       loadSuggestionSale: loadSuggestionSale,
       manageProductSchedule: manageProductSchedule,
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
+      updatedAllImages: updatedAllImages,
     );
   }
 

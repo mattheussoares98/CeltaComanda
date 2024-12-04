@@ -1,5 +1,4 @@
-import 'package:clean_celta_mobile/domain/entities/pdv_entity.dart';
-
+import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
@@ -28,7 +27,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       if (response == null) {
         throw Error();
       } else {
-        return response.map((e) => PdvModel.fromJson(e)).toList();
+        return response.map((e) => PdvModel.fromJson(e)).toList().cast<PdvModel>();
       }
     } catch (error) {
       throw DomainError.unexpected;

@@ -34,6 +34,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           clear: true,
         );
       } else {
+        //TODO if is generating version to getnet or rede and dont have pdv number, cant navigate to home page
         navigateTo.navigate(
           pageRoute: PageRoutes.home,
           clear: true,

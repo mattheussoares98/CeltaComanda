@@ -27,6 +27,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final commandNumberController = TextEditingController();
   bool isFixedCommandNumber = false;
+  int? selectedPdvNumber;
 
   @override
   void initState() {
@@ -145,6 +146,42 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                         );
                       },
                     ),
+                    if (homePresenter.isGeneratingVersionToGetNet ||
+                        homePresenter.isGeneratingVersionToRede)
+                      StreamBuilder(
+                          stream: enterprisePresenter.pdvsNotUsingStream,
+                          builder: (context, snapshot) {
+                            return DropdownButtonFormField(
+                              validator: (value) {
+                                return null;
+                              },
+                              isExpanded: true,
+                              alignment: Alignment.center,
+                              hint: Text(selectedPdvNumber == null
+                                  ? "select " + "pdv"
+                                  : "${R.string.table} $selectedPdvNumber"),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: getStringSize(context),
+                                  color: Colors.black),
+                              items: snapshot.data
+                                  ?.map(
+                                    (e) => DropdownMenuItem(
+                                      value: e.PdvNumber,
+                                      onTap: () async {},
+                                      child: Center(
+                                        child: Text(e.PdvNumber),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) async {
+                                setState(() {
+                                  // selectedPdvNumber = value!.toInt();
+                                });
+                              },
+                            );
+                          }),
                   ],
                 ),
               )

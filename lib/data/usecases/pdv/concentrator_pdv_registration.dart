@@ -31,9 +31,9 @@ class ConcentratorPdvRegistration implements PdvRegistration {
         throw DomainError.unexpected;
       } else {
         return response
-            .map((e) => PdvModel.fromJson(e))
+            .map((e) => PdvModel.fromJson(e).toEntity())
             .toList()
-            .cast<PdvModel>();
+            .cast<PdvEntity>();
       }
     } on DomainError catch (error) {
       switch (error) {

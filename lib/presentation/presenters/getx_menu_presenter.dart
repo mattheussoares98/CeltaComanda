@@ -268,7 +268,12 @@ class GetxMenuPresenter extends GetxController
       _updateSuggestions(suggestions);
 
       _menu.subject.add(_loadedMenu);
-      _showPreLoadImages.subject.add(true);
+
+      final lastDate = await updatedAllImages.getLastDate();
+      if (lastDate == null || lastDate.day < DateTime.now().day) {
+        _showPreLoadImages.subject.add(true);
+        await updatedAllImages.updateLastDate(DateTime.now());
+      }
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

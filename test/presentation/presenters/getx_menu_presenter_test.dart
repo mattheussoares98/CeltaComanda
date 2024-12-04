@@ -167,6 +167,7 @@ void main() {
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
     getProductComposition.mockGetChildsOfFather(productsCompositionsEntitys);
     loadSuggestionSale.mockLoad(suggestions);
+    updatedAllImages.mockGetLastDate(null);
   }
 
   setUp(() {
@@ -530,6 +531,32 @@ void main() {
       );
 
       expect(sut.loadedMenu.first.values.first.first.subgroupName, "primeiro");
+    });
+
+    test(
+        "Should show pre load images if dont return last updated all images data",
+        () async {
+      expectLater(sut.showPreLoadImagesStream, emitsInOrder([true, false]));
+
+      updatedAllImages.mockGetLastDate(null);
+
+      await sut.getGroupsAndProducts(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test("Should not show pre load images if last date is equal today",
+        () async {
+      expectLater(sut.showPreLoadImagesStream, emits(false));
+
+      updatedAllImages.mockGetLastDate(DateTime.now());
+
+      await sut.getGroupsAndProducts(
+        commandNumber: faker.randomGenerator.integer(999).toString(),
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
     });
   });
 

@@ -16,7 +16,7 @@ class UpdatedAllImagesSpy extends Mock implements UpdatedAllImages {
   }
 
   When _getLastDateCall() => when(() => this.getLastDate());
-  void mockGetLastDate(DateTime date) =>
+  void mockGetLastDate(DateTime? date) =>
       _getLastDateCall().thenAnswer((any) async => date);
   void getLastDataError() {
     _getLastDateCall().thenThrow(DomainError.unexpected);

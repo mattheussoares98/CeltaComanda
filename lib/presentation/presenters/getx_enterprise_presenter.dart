@@ -288,9 +288,11 @@ class GetxEnterprisePresenter extends GetxController
   }
 
   @override
-  Future<void> registerPdvAndGoToHomePage(
-    PdvNotUsingViewModel selectedPdv,
-  ) async {
+  Future<void> registerPdvAndGoToHomePage({
+    required PdvNotUsingViewModel selectedPdv,
+    required String? commandNumber,
+    required bool isFixedCommandNumber,
+  }) async {
     isLoading = true;
     mainError = null;
     try {
@@ -303,7 +305,13 @@ class GetxEnterprisePresenter extends GetxController
         versionNumber: applicationVersion,
       );
 
-      //TODO save commandEntity with pdv number
+      await localCommandData.update(
+        CommandEntity(
+          commandNumber: commandNumber?.toString().padLeft(3, "0"),
+          isFixedCommandNumber: isFixedCommandNumber,
+          pdv: selectedPdv.toEntity(),
+        ),
+      );
 
       navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
     } catch (e) {

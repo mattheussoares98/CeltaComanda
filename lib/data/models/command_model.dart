@@ -23,7 +23,7 @@ class CommandModel {
     return CommandModel(
       commandNumber: json['commandNumber'] == "" ? null : json['commandNumber'],
       isFixedCommandNumber: json['isFixedCommandNumber'],
-      pdv: json['pdv'],
+      pdv: json['pdv'] == null ? null : PdvModel.fromJson(json['pdv']),
     );
   }
 
@@ -42,6 +42,6 @@ class CommandModel {
   Map<String, dynamic> toJson() => {
         "commandNumber": commandNumber,
         "isFixedCommandNumber": isFixedCommandNumber,
-        "pdv": pdv,
+        "pdv": pdv?.toJson(),
       };
 }

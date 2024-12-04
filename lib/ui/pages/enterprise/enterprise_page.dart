@@ -192,7 +192,15 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                         : () async {
                                             await enterprisePresenter
                                                 .registerPdvAndGoToHomePage(
-                                              selectedPdv!,
+                                              selectedPdv: selectedPdv!,
+                                              commandNumber:
+                                                  commandNumberController
+                                                          .text.isEmpty
+                                                      ? null
+                                                      : commandNumberController
+                                                          .text,
+                                              isFixedCommandNumber:
+                                                  isFixedCommandNumber,
                                             );
                                           },
                                     child: Text("Register " + "pdv number"),

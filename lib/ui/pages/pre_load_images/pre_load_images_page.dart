@@ -47,18 +47,20 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
 
         allProductsLength = allProducts.length;
 
-        productsShowing = allProducts.sublist(
-            currentPart, (allProductsLength / divideIntoTimes).toInt() + 1);
+        setState(() {
+          productsShowing = allProducts.sublist(
+              currentPart, (allProductsLength / divideIntoTimes).toInt() + 1);
+        });
 
         timer = Timer.periodic(Duration(seconds: 5), (_) async {
-          if (currentPart < divideIntoTimes) {
+          if (currentPart == divideIntoTimes - 1) {
+            menuPresenter.cancelPreloadImage();
+          } else {
             setState(() {
               currentPart++;
               productsShowing = allProducts.sublist(currentPart,
                   (allProductsLength / divideIntoTimes).toInt() + currentPart);
             });
-          } else if(currentPart == divideIntoTimes - 1) {
-            //TODO cancel preload image
           }
         });
       }

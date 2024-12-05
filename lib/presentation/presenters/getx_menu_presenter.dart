@@ -277,6 +277,8 @@ class GetxMenuPresenter extends GetxController
                   1)) {
         showPreLoadImage = true;
         await updatedAllImages.updateLastDate(DateTime.now());
+      } else {
+        showPreLoadImage = false;
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -287,13 +289,6 @@ class GetxMenuPresenter extends GetxController
       }
     } finally {
       isLoading = false;
-      Future.delayed(
-          Duration(
-              seconds: EnterpriseDataBuilder
-                      .enterpriseDataEntity?.waitDaysToPreloadImages ??
-                  10), () {
-        showPreLoadImage = false;
-      });
     }
   }
 
@@ -783,5 +778,10 @@ class GetxMenuPresenter extends GetxController
 
     expansibleGroupSchedule = null;
     expansibleGroupSchedule = schedule;
+  }
+
+  @override
+  void cancelPreloadImage() {
+    showPreLoadImage = false;
   }
 }

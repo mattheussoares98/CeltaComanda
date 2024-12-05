@@ -270,7 +270,11 @@ class GetxMenuPresenter extends GetxController
       _menu.subject.add(_loadedMenu);
 
       final lastDate = await updatedAllImages.getLastDate();
-      if (lastDate == null || lastDate.day < DateTime.now().day) {
+      if (lastDate == null ||
+          (lastDate.day - DateTime.now().day).abs() >=
+              (EnterpriseDataBuilder
+                      .enterpriseDataEntity?.waitDaysToPreloadImages ??
+                  1)) {
         showPreLoadImage = true;
         await updatedAllImages.updateLastDate(DateTime.now());
       }
@@ -283,7 +287,11 @@ class GetxMenuPresenter extends GetxController
       }
     } finally {
       isLoading = false;
-      Future.delayed(const Duration(seconds: 10), () {
+      Future.delayed(
+          Duration(
+              seconds: EnterpriseDataBuilder
+                      .enterpriseDataEntity?.waitDaysToPreloadImages ??
+                  10), () {
         showPreLoadImage = false;
       });
     }

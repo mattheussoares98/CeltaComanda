@@ -79,7 +79,7 @@ class _MenuPageState extends State<MenuPage>
                           height: MediaQuery.of(context).size.height,
                           child: Column(
                             children: [
-                              if (showPreLoadImageSnapshot.data == true)
+                              // if (showPreLoadImageSnapshot.data == true)
                                 const PreLoadImagesPage(),
                               GroupsSubgroupsAndProducts(
                                 selectedIndex: selectedGroupIndex.data,

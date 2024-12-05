@@ -1,3 +1,7 @@
+// ignore_for_file: division_optimization
+
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 
 import '../../../ui/components/components.dart';
@@ -21,14 +25,54 @@ class PreLoadImagesPage extends StatefulWidget {
 
 class _PreLoadImagesPageState extends State<PreLoadImagesPage>
     with UIErrorManager, LoadingManager {
+  int currentPart = 0;
+  List<ProductsViewModel> allProducts = [];
+  List<ProductsViewModel> productsShowing = [];
+  int allProductsLength = 0;
+  Timer? timer;
+  int divideIntoTimes = 10;
+
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
+        allProducts = menuPresenter.loadedMenu
+            .expand((map) => map.values)
+            .expand((lista) => lista)
+            .toList();
+
+        allProductsLength = allProducts.length;
+
+        productsShowing = allProducts.sublist(
+            currentPart, (allProductsLength / divideIntoTimes).toInt() + 1);
+
+        timer = Timer.periodic(Duration(seconds: 5), (_) async {
+          if (currentPart < divideIntoTimes) {
+            setState(() {
+              currentPart++;
+              productsShowing = allProducts.sublist(currentPart,
+                  (allProductsLength / divideIntoTimes).toInt() + currentPart);
+            });
+          } else if(currentPart == divideIntoTimes - 1) {
+            //TODO cancel preload image
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    final allProducts = menuPresenter.loadedMenu
-        .expand((map) => map.values)
-        .expand((lista) => lista)
-        .toList();
-
     return Stack(
       children: [
         SizedBox(
@@ -40,9 +84,9 @@ class _PreLoadImagesPageState extends State<PreLoadImagesPage>
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 1,
               ),
-              itemCount: allProducts.length,
+              itemCount: productsShowing.length,
               itemBuilder: (context, index) {
-                final product = allProducts[index];
+                final product = productsShowing[index];
 
                 return ImageWidget(
                   ean: null,

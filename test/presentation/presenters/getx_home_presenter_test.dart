@@ -693,6 +693,10 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
         updatePendingDevices:
             EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages:
+            EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages:
+            EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -739,6 +743,10 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
         updatePendingDevices:
             EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages:
+            EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages:
+            EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -782,6 +790,8 @@ void main() {
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
         updatePendingDevices:
             EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages:EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages:EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
 
       await sut.loadCommandData(
@@ -1116,6 +1126,8 @@ void main() {
             faker.randomGenerator.string(10),
           ],
           updatePendingDevices: faker.randomGenerator.integer(100),
+          waitDaysToPreloadImages: faker.randomGenerator.integer(100),
+          secondsPreloadingImages: faker.randomGenerator.integer(100),
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1153,6 +1165,8 @@ void main() {
             faker.randomGenerator.string(10),
           ],
           updatePendingDevices: faker.randomGenerator.integer(100),
+          waitDaysToPreloadImages: faker.randomGenerator.integer(100),
+          secondsPreloadingImages: faker.randomGenerator.integer(100),
         );
 
         await sut.doOnRemoteEnterpriseChanges(

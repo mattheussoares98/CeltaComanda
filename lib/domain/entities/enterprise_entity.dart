@@ -21,6 +21,8 @@ class EnterpriseEntity extends Equatable {
   final bool? zoomImage;
   final List<String>? pendingDevicesToUpdate;
   final int? updatePendingDevices;
+  final int? waitDaysToPreloadImages;
+  final int? secondsPreloadingImages;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -40,6 +42,8 @@ class EnterpriseEntity extends Equatable {
     required this.zoomImage,
     required this.pendingDevicesToUpdate,
     required this.updatePendingDevices,
+    required this.waitDaysToPreloadImages,
+    required this.secondsPreloadingImages,
   });
 
   @override
@@ -61,5 +65,7 @@ class EnterpriseEntity extends Equatable {
         zoomImage,
         pendingDevicesToUpdate,
         updatePendingDevices,
+        waitDaysToPreloadImages,
+        secondsPreloadingImages,
       ];
 }

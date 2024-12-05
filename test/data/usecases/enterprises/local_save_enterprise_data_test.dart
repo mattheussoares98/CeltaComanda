@@ -40,6 +40,8 @@ void main() {
         faker.randomGenerator.string(10),
       ],
       updatePendingDevices: faker.randomGenerator.integer(100),
+      waitDaysToPreloadImages: faker.randomGenerator.integer(100),
+      secondsPreloadingImages: faker.randomGenerator.integer(100),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

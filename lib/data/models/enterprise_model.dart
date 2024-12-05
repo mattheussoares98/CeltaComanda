@@ -21,6 +21,8 @@ class EnterpriseValidationModel {
   final bool? zoomImage;
   final List<String>? pendingDevicesToUpdate;
   final int? updatePendingDevices;
+  final int? waitDaysToPreloadImages;
+  final int? secondsPreloadingImages;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -40,6 +42,8 @@ class EnterpriseValidationModel {
     required this.zoomImage,
     required this.pendingDevicesToUpdate,
     required this.updatePendingDevices,
+    required this.waitDaysToPreloadImages,
+    required this.secondsPreloadingImages,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -68,10 +72,8 @@ class EnterpriseValidationModel {
       serviceChargeType: json["serviceChargeType"],
       updateDevicesInformations: json["updateDevicesInformations"],
       zoomImage: json["zoomImage"],
-      pendingDevicesToUpdate: json["pendingDevicesToUpdate"]
-          ?.map((e) => e)
-          .toList()
-          .cast<String>(),
+      pendingDevicesToUpdate:
+          json["pendingDevicesToUpdate"]?.map((e) => e).toList().cast<String>(),
       updatePendingDevices: json["updatePendingDevices"],
       enterpriseConcentradorParametersEntity:
           json["enterpriseConcentradorParametersEntity"] == null
@@ -79,6 +81,8 @@ class EnterpriseValidationModel {
               : EnterpriseConcentradorParametersModel.fromJson(
                       json["enterpriseConcentradorParametersEntity"])
                   .toEntity(),
+      waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
+      secondsPreloadingImages: json["secondsPreloadingImages"],
     );
   }
 
@@ -103,6 +107,8 @@ class EnterpriseValidationModel {
         zoomImage: entity.zoomImage,
         pendingDevicesToUpdate: entity.pendingDevicesToUpdate,
         updatePendingDevices: entity.updatePendingDevices,
+        waitDaysToPreloadImages: entity.waitDaysToPreloadImages,
+        secondsPreloadingImages: entity.secondsPreloadingImages,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -124,6 +130,8 @@ class EnterpriseValidationModel {
         zoomImage: zoomImage,
         pendingDevicesToUpdate: pendingDevicesToUpdate,
         updatePendingDevices: updatePendingDevices,
+        waitDaysToPreloadImages: waitDaysToPreloadImages,
+        secondsPreloadingImages: secondsPreloadingImages,
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,5 +157,7 @@ class EnterpriseValidationModel {
         'zoomImage': zoomImage,
         'pendingDevicesToUpdate': pendingDevicesToUpdate,
         'updatePendingDevices': updatePendingDevices,
+        'waitDaysToPreloadImages': waitDaysToPreloadImages,
+        'secondsPreloadingImages': secondsPreloadingImages,
       };
 }

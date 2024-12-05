@@ -1865,6 +1865,8 @@ void main() {
         zoomImage: oldEnterprise.zoomImage,
         pendingDevicesToUpdate: oldEnterprise.pendingDevicesToUpdate,
         updatePendingDevices: oldEnterprise.updatePendingDevices,
+        waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
+        secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

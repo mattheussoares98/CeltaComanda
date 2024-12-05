@@ -68,6 +68,8 @@ void main() {
           zoomImage: enterpriseJsonData["zoomImage"],
           pendingDevicesToUpdate: enterpriseJsonData["pendingDevicesToUpdate"],
           updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
+          waitDaysToPreloadImages: enterpriseJsonData["waitDaysToPreloadImages"],
+          secondsPreloadingImages: enterpriseJsonData["secondsPreloadingImages"],
         ),
       );
     });

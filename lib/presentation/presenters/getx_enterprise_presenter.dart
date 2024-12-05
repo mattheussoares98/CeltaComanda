@@ -95,6 +95,8 @@ class GetxEnterprisePresenter extends GetxController
             zoomImage: firebaseData.zoomImage,
             pendingDevicesToUpdate: firebaseData.pendingDevicesToUpdate,
             updatePendingDevices: firebaseData.updatePendingDevices,
+            waitDaysToPreloadImages: firebaseData.waitDaysToPreloadImages,
+            secondsPreloadingImages: firebaseData.secondsPreloadingImages,
           );
 
           await localEntepriseData
@@ -178,6 +180,8 @@ class GetxEnterprisePresenter extends GetxController
       zoomImage: null,
       pendingDevicesToUpdate: null,
       updatePendingDevices: null,
+      waitDaysToPreloadImages: null,
+      secondsPreloadingImages: null,
     );
 
     _enterpriseError.value =
@@ -240,6 +244,8 @@ class GetxEnterprisePresenter extends GetxController
         zoomImage: enterprise.zoomImage,
         pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
         updatePendingDevices: enterprise.updatePendingDevices,
+        waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
+        secondsPreloadingImages: enterprise.secondsPreloadingImages,
       );
 
       await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
@@ -272,6 +278,8 @@ class GetxEnterprisePresenter extends GetxController
         zoomImage: null,
         pendingDevicesToUpdate: null,
         updatePendingDevices: null,
+        waitDaysToPreloadImages: null,
+        secondsPreloadingImages: null,
       );
 
       EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;

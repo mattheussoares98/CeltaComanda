@@ -105,6 +105,8 @@ void main() {
       zoomImage: null,
       pendingDevicesToUpdate: null,
       updatePendingDevices: null,
+      waitDaysToPreloadImages: null,
+      secondsPreloadingImages: null,
     );
 
     pdvsNotUsing = [
@@ -179,8 +181,9 @@ void main() {
         zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
 
       await sut.validateEnterpriseByName(
@@ -221,8 +224,9 @@ void main() {
         zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -264,8 +268,9 @@ void main() {
         zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -307,8 +312,9 @@ void main() {
         zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
       );
 
       await sut.validateEnterpriseByName(
@@ -354,6 +360,8 @@ void main() {
           zoomImage: null,
           pendingDevicesToUpdate: null,
           updatePendingDevices: null,
+          waitDaysToPreloadImages: null,
+          secondsPreloadingImages: null,
         ),
       );
     });
@@ -500,6 +508,8 @@ void main() {
           zoomImage: newEnterprise.zoomImage,
           pendingDevicesToUpdate: newEnterprise.pendingDevicesToUpdate,
           updatePendingDevices: newEnterprise.updatePendingDevices,
+          waitDaysToPreloadImages: newEnterprise.waitDaysToPreloadImages,
+          secondsPreloadingImages: newEnterprise.secondsPreloadingImages,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
         ),
       );
@@ -711,6 +721,8 @@ void main() {
             zoomImage: null,
             pendingDevicesToUpdate: null,
             updatePendingDevices: null,
+            waitDaysToPreloadImages: null,
+            secondsPreloadingImages: null,
           ));
     });
   });
@@ -765,8 +777,9 @@ void main() {
             zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
             pendingDevicesToUpdate: EnterpriseDataBuilder
                 .enterpriseDataEntity!.pendingDevicesToUpdate,
-            updatePendingDevices: EnterpriseDataBuilder
-                .enterpriseDataEntity!.updatePendingDevices,
+            updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+            waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+            secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
           ));
     });
   });
@@ -796,6 +809,8 @@ void main() {
           zoomImage: null,
           pendingDevicesToUpdate: null,
           updatePendingDevices: null,
+          waitDaysToPreloadImages: null,
+          secondsPreloadingImages: null,
         ),
       );
     });

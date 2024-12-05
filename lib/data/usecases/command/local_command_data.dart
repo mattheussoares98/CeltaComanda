@@ -12,16 +12,15 @@ class LocalLoadCommandData implements LocalCommandData {
   LocalLoadCommandData({required this.hiveStorage});
 
   @override
-  Future<CommandEntity> load() async {
+  Future<CommandEntity?> load() async {
     try {
       final json = await hiveStorage.get(
         CacheKeys.commandData.name,
       );
       if (json != null) {
         return CommandModel.fromJson(json).toEntity();
-      } else {
-        throw Exception();
       }
+      return null;
     } catch (error) {
       throw DomainError.unexpected;
     }

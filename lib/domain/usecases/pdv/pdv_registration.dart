@@ -8,4 +8,6 @@ abstract class PdvRegistration {
     required String imeiOrWindowsId,
     required String versionNumber,
   });
+
+  Future<PdvEntity?> getById(int pdvId);
 }

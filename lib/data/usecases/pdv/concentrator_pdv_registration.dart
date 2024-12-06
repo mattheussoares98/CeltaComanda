@@ -55,7 +55,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
 
       final url = EnterpriseBuilder.entity!.concentradorUrl;
 
-      final version = "$versionNumber = ${DateTime.now().day.toString().padLeft(2, "0")}/${DateTime.now().month.toString().padLeft(2, "0")}/${DateTime.now().year}";
+      final version =
+          "$versionNumber = ${DateTime.now().day.toString().padLeft(2, "0")}/${DateTime.now().month.toString().padLeft(2, "0")}/${DateTime.now().year}";
 
       await httpAdapter.request(
         url:
@@ -65,6 +66,29 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       );
     } catch (error) {
       throw DomainError.unexpected;
+    }
+  }
+
+  @override
+  Future<PdvEntity?> getById(int pdvId) async {
+    try {
+      var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
+
+      final url = EnterpriseBuilder.entity!.concentradorUrl;
+
+      final response = await httpAdapter.request(
+        url: '$url/api/APIPdvs/GetById?id=$pdvId',
+        method: "post",
+        headers: headers,
+      );
+
+      if (response == null) {
+        return null;
+      } else {
+        return PdvModel.fromJson(response).toEntity();
+      }
+    } catch (error) {
+      return null;
     }
   }
 }

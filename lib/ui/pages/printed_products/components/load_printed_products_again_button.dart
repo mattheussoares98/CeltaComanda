@@ -22,7 +22,7 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
             },
       icon: Row(
         children: [
-          if (homePresenter.commandEntity!.commandNumber != null)
+          if (homePresenter.commandEntity?.commandNumber != null)
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Text(

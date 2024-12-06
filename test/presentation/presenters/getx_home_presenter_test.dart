@@ -664,7 +664,8 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-          commandNumber: fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
+          commandNumber:
+              fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });
@@ -1038,32 +1039,6 @@ void main() {
   });
 
   group("Update command entity", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.updateCommandEntity(
-        commandNumber: commandEntity.commandNumber,
-        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
-        pdv: commandEntity.pdv,
-      );
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      localCommandData.mockUpdateError();
-
-      await sut.updateCommandEntity(
-        commandNumber: commandEntity.commandNumber,
-        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
-        pdv: commandEntity.pdv,
-      );
-    });
-
     test("Should update correctly when pass all parameters", () async {
       await sut.updateCommandEntity(
         commandNumber: commandEntity.commandNumber,

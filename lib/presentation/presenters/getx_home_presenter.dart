@@ -106,7 +106,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {
-        //TODO create test for here
         await updateCommandEntity(
           commandNumber: loadedCommand.commandNumber,
           isFixedCommandNumber: loadedCommand.isFixedCommandNumber,
@@ -258,24 +257,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required bool isFixedCommandNumber,
     required PdvEntity? pdv,
   }) async {
-    isLoading = true;
-    mainError = null;
-
     final entity = CommandEntity(
       commandNumber: commandNumber?.padLeft(3, "0"),
       isFixedCommandNumber: isFixedCommandNumber,
       pdv: pdv ?? _commandEntity?.pdv,
     );
 
-    try {
-      _commandEntity = entity;
+    _commandEntity = entity;
+    await localCommandData.update(entity);
 
-      await localCommandData.update(entity);
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
     notifyListeners();
   }
 

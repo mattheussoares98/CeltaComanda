@@ -31,7 +31,7 @@ class RemoteFinishSaleRequestConcentrador
 
       final response = await httpAdapter.request(
         url:
-            '${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers',
+            '${EnterpriseBuilder.entity!.concentradorUrl!}/api/APISaleRequest/Finish?enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&pdvnumber=$pdvNumberWithThreeNumbers&personalizedCode=$commandNumberWithThreeNumbers',
         method: "put",
         headers: headers,
         body: body.isEmpty ? null : body,

@@ -33,7 +33,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .collection('requests')
           .doc(mesAnoAtual)
           .collection("requestsInformations")
-          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+          .doc(EnterpriseBuilder.entity!.enterpriseName);
 
       var incremento = FieldValue.increment(entity.timesUsed);
       var adicionarData = FieldValue.arrayUnion(entity.dates);
@@ -52,7 +52,7 @@ class FirebaseAdapter implements FirebaseStorage {
     try {
       var docRef = firestore
           .collection('clients')
-          .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName)
+          .doc(EnterpriseBuilder.entity!.enterpriseName)
           .collection("devices")
           .doc("loadedDevices");
 
@@ -68,7 +68,7 @@ class FirebaseAdapter implements FirebaseStorage {
   Future<void> updateMenu() async {
     var docRef = firestore
         .collection('clients')
-        .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+        .doc(EnterpriseBuilder.entity!.enterpriseName);
 
     await docRef.set(
       {
@@ -92,7 +92,7 @@ class FirebaseAdapter implements FirebaseStorage {
   Future<void> addPendingDeviceToUpdate(String imeiOrWindowsId) async {
     var docRef = firestore
         .collection('clients')
-        .doc(EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName);
+        .doc(EnterpriseBuilder.entity!.enterpriseName);
 
     await docRef.set(
       {

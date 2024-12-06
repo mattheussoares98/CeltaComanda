@@ -15,9 +15,9 @@ class ConcentratorPdvRegistration implements PdvRegistration {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl;
+      final url = EnterpriseBuilder.entity!.concentradorUrl;
       final enterpriseId =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+          EnterpriseBuilder.entity!.enterpriseId;
 
       final response = await httpAdapter.request(
         url: '$url/api/APIPdvs/GetPdvNotUsing?enterpriseId=$enterpriseId',
@@ -54,7 +54,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl;
+      final url = EnterpriseBuilder.entity!.concentradorUrl;
 
       await httpAdapter.request(
         url:

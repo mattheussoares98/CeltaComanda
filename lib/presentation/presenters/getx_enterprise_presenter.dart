@@ -43,7 +43,7 @@ class GetxEnterprisePresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      EnterpriseDataBuilder.enterpriseDataEntity =
+      EnterpriseBuilder.entity =
           await localEntepriseData.load();
     } catch (e) {
       e;
@@ -63,7 +63,7 @@ class GetxEnterprisePresenter extends GetxController
       isLoading = true;
 
       if (isUpdatedEnterpriseName ||
-          EnterpriseDataBuilder.enterpriseDataEntity!.url == null) {
+          EnterpriseBuilder.entity!.url == null) {
         final firebaseData = await loadEnterpriseData.load();
 
         if (firebaseData == null) {
@@ -75,7 +75,7 @@ class GetxEnterprisePresenter extends GetxController
             enterpriseId: firebaseData.enterpriseId!,
           );
 
-          EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+          EnterpriseBuilder.entity = EnterpriseEntity(
             enterpriseName: firebaseData.enterpriseName,
             url: firebaseData.url,
             enterpriseId: firebaseData.enterpriseId,
@@ -100,12 +100,12 @@ class GetxEnterprisePresenter extends GetxController
           );
 
           await localEntepriseData
-              .add(EnterpriseDataBuilder.enterpriseDataEntity!);
+              .add(EnterpriseBuilder.entity!);
         }
       }
 
       await commandInformations.ticketIsPermitted(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         commandNumber: commandNumber == null || commandNumber.isEmpty == true
             ? "001"
             : commandNumber.padLeft(3, "0"),
@@ -121,7 +121,7 @@ class GetxEnterprisePresenter extends GetxController
         ),
       );
 
-      if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
+      if (EnterpriseBuilder.entity?.persistApp == true &&
           !homePresenter.isGeneratingVersionToRede &&
           !homePresenter.isGeneratingVersionToGetNet) {
         await persistent.makePersistent();
@@ -162,7 +162,7 @@ class GetxEnterprisePresenter extends GetxController
     String enterpriseName, {
     bool? updateEnterpriseNameController = false,
   }) {
-    EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+    EnterpriseBuilder.entity = EnterpriseEntity(
       enterpriseName: enterpriseName,
       url: null,
       enterpriseId: null,
@@ -218,13 +218,13 @@ class GetxEnterprisePresenter extends GetxController
   @override
   Future<void> updateConcentratorEnterpriseParameters() async {
     try {
-      final enterprise = EnterpriseDataBuilder.enterpriseDataEntity!;
+      final enterprise = EnterpriseBuilder.entity!;
       final concentradorData = await loadEnterpriseConcentradorParameters.load(
         concentradorUrl: enterprise.concentradorUrl!,
         enterpriseId: enterprise.enterpriseId!,
       );
 
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -248,7 +248,7 @@ class GetxEnterprisePresenter extends GetxController
         secondsPreloadingImages: enterprise.secondsPreloadingImages,
       );
 
-      await localEntepriseData.add(EnterpriseDataBuilder.enterpriseDataEntity!);
+      await localEntepriseData.add(EnterpriseBuilder.entity!);
     } catch (e) {
       e;
     }
@@ -258,7 +258,7 @@ class GetxEnterprisePresenter extends GetxController
   Future<void> clearEnterpriseData() async {
     try {
       final oldEnterpriseName =
-          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName;
+          EnterpriseBuilder.entity?.enterpriseName;
 
       final newEnterprise = EnterpriseEntity(
         enterpriseName: oldEnterpriseName ?? "",
@@ -282,7 +282,7 @@ class GetxEnterprisePresenter extends GetxController
         secondsPreloadingImages: null,
       );
 
-      EnterpriseDataBuilder.enterpriseDataEntity = newEnterprise;
+      EnterpriseBuilder.entity = newEnterprise;
 
       await localEntepriseData.add(newEnterprise);
     } catch (e) {

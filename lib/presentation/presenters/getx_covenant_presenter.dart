@@ -164,7 +164,7 @@ class GetxCovenantPresenter extends GetxController
 
       SoapResponse soapResponse = await covenantLimit
           .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-        crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+        crossIdentity: EnterpriseBuilder.entity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
         customerCode: _selectedCovenant.keys.first.toInt(),
         covenantCode: _selectedCovenant.values.first!.toInt(),

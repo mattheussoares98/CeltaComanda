@@ -87,7 +87,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     homePresenter.commandNumberMock =
         faker.randomGenerator.integer(3).toString().padLeft(3, "0");
@@ -172,10 +172,10 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: EnterpriseDataBuilder
-          .enterpriseDataEntity?.serviceChargePercentageOrValue,
+      IncrementValue: EnterpriseBuilder
+          .entity?.serviceChargePercentageOrValue,
       IncrementType:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+          EnterpriseBuilder.entity?.serviceChargeType,
     );
 
     cartProductViewModelWithChilds =
@@ -607,9 +607,9 @@ void main() {
       await sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
 
       verify(() => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!)).called(1);
     });
   });
@@ -1072,9 +1072,9 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
@@ -1094,10 +1094,10 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementValue: EnterpriseBuilder
+            .entity?.serviceChargePercentageOrValue,
         IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+            EnterpriseBuilder.entity?.serviceChargeType,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1117,7 +1117,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: teste,
           )).called(1);
 
@@ -1165,16 +1165,16 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementValue: EnterpriseBuilder
+            .entity?.serviceChargePercentageOrValue,
         IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+            EnterpriseBuilder.entity?.serviceChargeType,
         TotalLiquid: totalLiquid,
         Products: [...products],
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: entity,
           )).called(1);
     });
@@ -1260,9 +1260,9 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
@@ -1272,7 +1272,7 @@ void main() {
       verifyNever(() => confirmedCartProducts.updateValue(false));
 
       verifyNever(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           ));
 
@@ -1311,9 +1311,9 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
@@ -1323,7 +1323,7 @@ void main() {
       verifyNever(() => confirmedCartProducts.updateValue(false));
 
       verifyNever(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           ));
 
@@ -1366,15 +1366,15 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           )).called(1);
 
@@ -1417,15 +1417,15 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       ).called(1);
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           )).called(1);
 
@@ -1527,7 +1527,7 @@ void main() {
       );
 
       verifyNever(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           ));
     });
@@ -1545,7 +1545,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           )).called(1);
     });
@@ -1563,7 +1563,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: updateSaleRequestTempEntity,
           )).called(1);
     });
@@ -1692,9 +1692,9 @@ void main() {
 
       verifyNever(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!,
         ),
       );
@@ -1839,13 +1839,13 @@ void main() {
       expect(
           value,
           totalLiquid *
-              (EnterpriseDataBuilder
-                      .enterpriseDataEntity!.serviceChargePercentageOrValue! /
+              (EnterpriseBuilder
+                      .entity!.serviceChargePercentageOrValue! /
                   100));
     });
     test("Should return correct value", () {
-      final oldEnterprise = EnterpriseDataBuilder.enterpriseDataEntity;
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      final oldEnterprise = EnterpriseBuilder.entity;
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName: oldEnterprise!.enterpriseName,
         url: oldEnterprise.url,
         enterpriseId: oldEnterprise.enterpriseId,

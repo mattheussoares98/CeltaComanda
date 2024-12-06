@@ -20,7 +20,7 @@ class RemoteLoadExpansibleGroupsByProductsCodes
     try {
       final response = await httpAdapter.request(
           url:
-              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/FindFromProductsComplete",
+              "${EnterpriseBuilder.entity!.url!}/api/APIGroups/FindFromProductsComplete",
           method: "post",
           body: {
             "ExpansibleGroupType":

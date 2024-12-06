@@ -84,7 +84,7 @@ void main() {
   }
 
   initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
@@ -856,7 +856,7 @@ void main() {
 
       verify(
         () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+          crossIdentity: EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
@@ -1009,7 +1009,7 @@ void main() {
 
       verifyNever(
         () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+          crossIdentity: EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),

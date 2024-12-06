@@ -11,7 +11,7 @@ class RemoteCloseSaleRequest implements CloseSaleRequest {
   @override
   Future<void> close(String personalizedCode) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
 
       await httpAdapter.request(
         url: "$url/api/apiSaleRequest/CloseSaleRequest?_personalizedCode=$personalizedCode",

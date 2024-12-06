@@ -18,7 +18,7 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
     try {
       final saleRequest = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/Get?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_personalizedCode=$commandNumber&_considerUsing=true",
+            "${EnterpriseBuilder.entity!.url}/api/apiSaleRequest/Get?_enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&_personalizedCode=$commandNumber&_considerUsing=true",
         method: "get",
       );
       if (saleRequest == null) {

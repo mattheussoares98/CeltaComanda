@@ -98,7 +98,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     selectedSeller = EntityFactory.makeSellersViewModel();
@@ -478,9 +478,9 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);

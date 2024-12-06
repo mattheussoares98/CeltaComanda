@@ -36,7 +36,7 @@ void main() {
   }
 
   initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     email = faker.internet.httpUrl();
     password = faker.guid.guid();

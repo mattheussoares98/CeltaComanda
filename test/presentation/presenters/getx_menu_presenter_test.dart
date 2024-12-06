@@ -94,7 +94,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
     homePresenter.commandNumberMock =
@@ -161,7 +161,7 @@ void main() {
 
   void mockSuccess() {
     loadExpansibleGroups.mockLoadExpansibleGroups(expansibleGroups);
-    localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
+    localEnterpriseData.mockAdd(EnterpriseBuilder.entity!);
     searchProductByCode.mockSearchProductByCode(productEntity);
     loadProducts.mockLoadProducts(products);
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
@@ -178,7 +178,7 @@ void main() {
   });
 
   setUpAll(() {
-    registerFallbackValue(EnterpriseDataBuilder.enterpriseDataEntity);
+    registerFallbackValue(EnterpriseBuilder.entity);
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
@@ -614,45 +614,45 @@ void main() {
       await sut.searchProduct("123456");
 
       verify(() => searchProductByCode.search(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             value: "12345-6",
           )).called(1);
 
       await sut.searchProduct("12345");
 
       verify(() => searchProductByCode.search(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             value: "01234-5",
           )).called(1);
 
       await sut.searchProduct("1");
 
       verify(() => searchProductByCode.search(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             value: "00000-1",
           )).called(1);
 
       await sut.searchProduct("1234567890123");
 
       verify(() => searchProductByCode.search(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             value: "1234567890123",
           )).called(1);
 
       await sut.searchProduct("1234567");
 
       verify(() => searchProductByCode.search(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             value: "1234567",
           )).called(1);
     });
@@ -734,9 +734,9 @@ void main() {
       verify(() => barcodeScanner.read()).called(1);
       verify(() => searchProductByCode.search(
             value: "1234567890123",
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
           )).called(1);
     });
 
@@ -747,9 +747,9 @@ void main() {
       verify(() => barcodeScanner.read()).called(1);
       verifyNever(() => searchProductByCode.search(
             value: "",
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
           ));
     });
 

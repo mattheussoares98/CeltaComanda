@@ -96,7 +96,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     mainError = null;
 
     try {
-      if (EnterpriseDataBuilder.enterpriseDataEntity?.persistApp == true &&
+      if (EnterpriseBuilder.entity?.persistApp == true &&
           !_isGeneratingVersionToTablet) {
         await persistent.makePersistent();
       } else {
@@ -118,9 +118,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (isFixedCommandNumber && commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: commandNumber!.padLeft(3, "0"),
         );
 
@@ -181,7 +181,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
     try {
       final isValid = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -216,7 +216,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     isLoading = true;
     try {
       bool isValidPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         personalizedCode: userCode.toInt(),
         password: password,
       );
@@ -337,8 +337,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         expansibleGroupFromProductPresenter,
     required EnterprisePresenter enterprisePresenter,
   }) async {
-    if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId == null ||
-        EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {
+    if (EnterpriseBuilder.entity?.enterpriseId == null ||
+        EnterpriseBuilder.entity?.url == null) {
       return;
     }
 
@@ -377,35 +377,35 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       if (enterprise.updatePendingDevices !=
-          EnterpriseDataBuilder.enterpriseDataEntity?.updatePendingDevices) {
-        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+          EnterpriseBuilder.entity?.updatePendingDevices) {
+        EnterpriseBuilder.entity = enterprise;
 
         await addPendingDeviceToUpdate.add(imeiOrWindowsId);
         await localEnterpriseData.add(enterprise);
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
-          EnterpriseDataBuilder
-              .enterpriseDataEntity?.updateConcentratorEnterpriseData) {
+          EnterpriseBuilder
+              .entity?.updateConcentratorEnterpriseData) {
         await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
 
       if (enterprise.updateDevicesInformations !=
-          EnterpriseDataBuilder
-              .enterpriseDataEntity?.updateDevicesInformations) {
+          EnterpriseBuilder
+              .entity?.updateDevicesInformations) {
         final applicationVersion = await loadDeviceData.getApplicationVersion();
         await addDeviceInfo.add(
           commandNumber: commandNumber?.toInt(),
           imeiOrWindowsId: imeiOrWindowsId,
           applicationVersion: applicationVersion,
         );
-        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+        EnterpriseBuilder.entity = enterprise;
         await localEnterpriseData.add(enterprise);
       }
 
       if (enterprise.updateEnterprise !=
-          EnterpriseDataBuilder.enterpriseDataEntity?.updateEnterprise) {
-        EnterpriseDataBuilder.enterpriseDataEntity = enterprise;
+          EnterpriseBuilder.entity?.updateEnterprise) {
+        EnterpriseBuilder.entity = enterprise;
         await localEnterpriseData.add(enterprise);
       }
     } catch (e) {
@@ -423,7 +423,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
     try {
       bool isValidPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         personalizedCode: userPersonalizedCode,
         password: password,
       );
@@ -434,7 +434,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       final canCancel = await userValidations.canCancel(
         personalizedCode: userPersonalizedCode,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
       );
 
       if (!canCancel) {

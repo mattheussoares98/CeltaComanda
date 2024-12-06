@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage>
 
     return ListenFirebaseStreamAndCallFunction(
       collection: "clients",
-      doc: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+      doc: EnterpriseBuilder.entity!.enterpriseName,
       function: (data) async {
         await homePresenter.doOnRemoteEnterpriseChanges(
           data: data,

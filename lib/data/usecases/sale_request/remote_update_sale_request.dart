@@ -24,7 +24,7 @@ class RemoteUpdateSaleRequest implements UpdateSaleRequest {
 
       final response = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/UpdateSaleRequest",
+            "${EnterpriseBuilder.entity!.url}/api/apiSaleRequest/UpdateSaleRequest",
         method: "put",
         body: body,
       );

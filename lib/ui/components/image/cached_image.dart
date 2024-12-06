@@ -34,7 +34,7 @@ class CachedImageState extends State<CachedImage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         String url =
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
+            "${EnterpriseBuilder.entity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
 
         await _imageHasAValidSize(url);
       }
@@ -94,11 +94,11 @@ class CachedImageState extends State<CachedImage> {
   @override
   Widget build(BuildContext context) {
     String url =
-        "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
+        "${EnterpriseBuilder.entity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
 
     if (_correctImages.contains(url)) {
       return CachedNetworkImage(
-        fit: EnterpriseDataBuilder.enterpriseDataEntity?.zoomImage == true &&
+        fit: EnterpriseBuilder.entity?.zoomImage == true &&
                 widget.zoomImage
             ? BoxFit.fitWidth
             : BoxFit.contain,
@@ -138,7 +138,7 @@ class CachedImageState extends State<CachedImage> {
     required BaseCacheManager? cacheManager,
   }) {
     final url =
-        "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl}/Images/Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo.png";
+        "${EnterpriseBuilder.entity!.concentradorUrl}/Images/Enterprise${EnterpriseBuilder.entity!.enterpriseId}/Logo.png";
     return CachedNetworkImage(
       fit: BoxFit.contain,
       cacheManager: cacheManager,

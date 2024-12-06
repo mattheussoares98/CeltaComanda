@@ -172,19 +172,19 @@ class GetxConfigurationsPresenter extends GetxController
       );
 
       final saleRequestTempEntity = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
       await updateSaleRequestTemp.update(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         entity: UpdateSaleRequestTempEntity(
           Comments: null,
           Peoples: null,
           DeliveryControl: null,
           EnterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
           SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
           TotalLiquid: saleRequestTempEntity.TotalLiquid,

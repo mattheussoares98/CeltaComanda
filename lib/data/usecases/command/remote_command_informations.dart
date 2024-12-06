@@ -15,7 +15,7 @@ class RemoteCommandInformations implements CommandInformations {
     try {
       final isValid = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APITicketAC/IsValidDateTime?ticketNumber=$commandNumber",
+            "${EnterpriseBuilder.entity!.url!}/api/APITicketAC/IsValidDateTime?ticketNumber=$commandNumber",
         method: "get",
       );
 
@@ -37,7 +37,7 @@ class RemoteCommandInformations implements CommandInformations {
     try {
       final ticketIsPermitted = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APITicketAC/OpenOrBlockade?_personalizedCode=$commandNumber&isOpen=$isOpen",
+            "${EnterpriseBuilder.entity!.url!}/api/APITicketAC/OpenOrBlockade?_personalizedCode=$commandNumber&isOpen=$isOpen",
         method: "post",
       );
 

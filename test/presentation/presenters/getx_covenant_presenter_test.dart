@@ -59,7 +59,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
@@ -476,7 +476,7 @@ void main() {
 
       verify(
         () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+          crossIdentity: EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
@@ -653,7 +653,7 @@ void main() {
 
       verifyNever(
         () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-          crossIdentity: EnterpriseDataBuilder.enterpriseDataEntity!
+          crossIdentity: EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),

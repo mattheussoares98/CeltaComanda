@@ -24,7 +24,7 @@ void main() {
     mockHiveBox = BoxSpy();
     hive.mockOpenBox(mockHiveBox);
     presenter = MenuPresenterSpy();
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
   });
 

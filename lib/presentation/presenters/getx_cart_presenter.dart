@@ -41,8 +41,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     try {
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
@@ -426,8 +426,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: homePresenter.commandNumber!,
       );
 
@@ -456,11 +456,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: EnterpriseDataBuilder
-                .enterpriseDataEntity?.serviceChargePercentageOrValue ??
+        IncrementValue: EnterpriseBuilder
+                .entity?.serviceChargePercentageOrValue ??
             0,
         IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType ?? 0,
+            EnterpriseBuilder.entity?.serviceChargeType ?? 0,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -468,7 +468,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       if (cartProductsAlreadyConfirmed != true) {
         await updateSaleRequestTemp.update(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           entity: entity,
         );
         await confirmedCartProducts.updateValue(true);
@@ -606,14 +606,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   double calculateServiceChargeValue(double totalLiquidSaleRequest) {
-    if (EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue ==
+    if (EnterpriseBuilder
+            .entity?.serviceChargePercentageOrValue ==
         null) {
       return 0;
     } else {
       return totalLiquidSaleRequest *
-          (EnterpriseDataBuilder
-                  .enterpriseDataEntity!.serviceChargePercentageOrValue! /
+          (EnterpriseBuilder
+                  .entity!.serviceChargePercentageOrValue! /
               100);
     }
   }

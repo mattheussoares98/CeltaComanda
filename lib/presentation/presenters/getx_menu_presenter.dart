@@ -61,8 +61,8 @@ class GetxMenuPresenter extends GetxController
 
     try {
       final product = await searchProductByCode.search(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         value: value,
       );
 
@@ -175,7 +175,7 @@ class GetxMenuPresenter extends GetxController
 
     try {
       await commandInformations.ticketIsPermitted(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         commandNumber: commandNumber,
       );
 
@@ -272,8 +272,8 @@ class GetxMenuPresenter extends GetxController
       final lastDate = await updatedAllImages.getLastDate();
       if (lastDate == null ||
           (lastDate.day - DateTime.now().day).abs() >=
-              (EnterpriseDataBuilder
-                      .enterpriseDataEntity?.waitDaysToPreloadImages ??
+              (EnterpriseBuilder
+                      .entity?.waitDaysToPreloadImages ??
                   1)) {
         showPreLoadImage = true;
         await updatedAllImages.updateLastDate(DateTime.now());
@@ -603,7 +603,7 @@ class GetxMenuPresenter extends GetxController
   }) {
     final schedule = ProductScheduleViewModel(
       InternalCodeOnERP: internalCodeOnErp,
-      EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+      EnterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
       AllowMonday: monday ?? _productSchedule.value?.AllowMonday == true,
       AllowTuesday: tuesday ?? _productSchedule.value?.AllowTuesday == true,
       AllowWednesday:

@@ -23,12 +23,12 @@ void main() {
   Get.testMode = true;
 
   setUp(() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     navigateTo = NavigateToSpy();
     loadEnterpriseData = LocalEnterpriseDataSpy();
     obtainPlatform = ObtainPlataformSpy();
-    loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
+    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadEnterpriseData: loadEnterpriseData,

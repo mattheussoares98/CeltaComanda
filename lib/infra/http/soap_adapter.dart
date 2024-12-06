@@ -45,7 +45,7 @@ class SoapAdapter implements SoapRequest {
 
       final response = await http.post(
         Uri.parse(
-            '${EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS}/$serviceASMX'),
+            '${EnterpriseBuilder.entity!.urlCCS}/$serviceASMX'),
         headers: soapHeaders,
         body: envelope,
       );

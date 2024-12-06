@@ -19,7 +19,7 @@ PreferredSize homeAppBar({
       backgroundColor: const Color(0xFFF1F5F8),
       actions: [
         if (homePresenter.isGeneratingVersionToRede ||
-            EnterpriseDataBuilder.enterpriseDataEntity?.useCovenant == true)
+            EnterpriseBuilder.entity?.useCovenant == true)
           SizedBox(
             width: MediaQuery.of(context).size.width *
                 (hasMinWidth(context) ? 0.2 : 0.16),

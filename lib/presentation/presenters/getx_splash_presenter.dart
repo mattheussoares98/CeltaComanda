@@ -20,15 +20,15 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   Future<void> checkPageToGo({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      EnterpriseDataBuilder.enterpriseDataEntity =
+      EnterpriseBuilder.entity =
           await loadEnterpriseData.load();
       bool isWeb = obtainPlatform.isWeb();
 
       if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
-      } else if (EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId ==
+      } else if (EnterpriseBuilder.entity?.enterpriseId ==
               null ||
-          EnterpriseDataBuilder.enterpriseDataEntity?.url == null) {
+          EnterpriseBuilder.entity?.url == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,

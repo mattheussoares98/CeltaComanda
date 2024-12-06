@@ -17,7 +17,7 @@ class RemoteLoadSellers implements LoadSellers {
 
       final response = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!}/api/APISellers/GetAll?take=100&skip=0&enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!}&userId=1",
+            "${EnterpriseBuilder.entity!.concentradorUrl!}/api/APISellers/GetAll?take=100&skip=0&enterpriseId=${EnterpriseBuilder.entity!.enterpriseId!}&userId=1",
         method: "get",
         headers: headers,
       );

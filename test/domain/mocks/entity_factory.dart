@@ -691,9 +691,9 @@ class EntityFactory {
         CustomerCode: faker.randomGenerator.integer(3),
         CovenantCode: faker.randomGenerator.integer(3),
         IncrementType:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
-        IncrementValue: EnterpriseDataBuilder
-            .enterpriseDataEntity?.serviceChargePercentageOrValue,
+            EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementValue: EnterpriseBuilder
+            .entity?.serviceChargePercentageOrValue,
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>
@@ -1210,7 +1210,7 @@ class EntityFactory {
           int internalCodeOnErp) =>
       ProductScheduleViewModel(
         InternalCodeOnERP: internalCodeOnErp,
-        EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        EnterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         AllowMonday: faker.randomGenerator.boolean(),
         AllowTuesday: faker.randomGenerator.boolean(),
         AllowWednesday: faker.randomGenerator.boolean(),

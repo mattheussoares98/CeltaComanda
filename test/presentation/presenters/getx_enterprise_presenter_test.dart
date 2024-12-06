@@ -77,7 +77,7 @@ void main() {
 
   void initEntitys() {
     enterpriseEntity = EntityFactory.makeEnterpriseData();
-    EnterpriseDataBuilder.enterpriseDataEntity = enterpriseEntity;
+    EnterpriseBuilder.entity = enterpriseEntity;
     ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
     commandEntity = EntityFactory.makeCommandEntity();
     enterpriseConcentradorParametersEntity =
@@ -88,7 +88,7 @@ void main() {
 
     clearedEnterprise = EnterpriseEntity(
       enterpriseName:
-          EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName ?? "",
+          EnterpriseBuilder.entity?.enterpriseName ?? "",
       url: null,
       enterpriseId: null,
       concentradorUrl: null,
@@ -118,9 +118,9 @@ void main() {
   }
 
   void mockSuccess() {
-    localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
-    localEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
-    loadEnterpriseData.mockLoad(EnterpriseDataBuilder.enterpriseDataEntity!);
+    localEnterpriseData.mockAdd(EnterpriseBuilder.entity!);
+    localEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
     commandInformations.mockTicketIsPermitted(ticketIsPermittedEntity);
     localCommandData.mockUpdate();
     localCommandData.mockLoad(commandEntity);
@@ -155,35 +155,35 @@ void main() {
     test(
         "Should make persist app when go to home page and enterprise.persist app is true",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+            EnterpriseBuilder.entity!.concentradorUrl,
         persistApp: true,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       await sut.validateEnterpriseByName(
@@ -198,35 +198,35 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+            EnterpriseBuilder.entity!.concentradorUrl,
         persistApp: true,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -242,35 +242,35 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+            EnterpriseBuilder.entity!.concentradorUrl,
         persistApp: true,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -286,35 +286,35 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is false",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
+            EnterpriseBuilder.entity!.concentradorUrl,
         persistApp: false,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-        waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-        secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages: EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       await sut.validateEnterpriseByName(
@@ -341,7 +341,7 @@ void main() {
       sut.validateEnterpriseInput(enterpriseName);
 
       expect(
-        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseBuilder.entity,
         EnterpriseEntity(
           enterpriseName: enterpriseName,
           url: null,
@@ -381,7 +381,7 @@ void main() {
 
       await sut.updateEnterpriseWithLocalData();
 
-      expect(EnterpriseDataBuilder.enterpriseDataEntity, newEnterprise);
+      expect(EnterpriseBuilder.entity, newEnterprise);
     });
   });
 
@@ -399,7 +399,7 @@ void main() {
 
     test("Should emit correct value if remote enterprise data is null",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       loadEnterpriseData.mockLoad(null);
 
       expectLater(sut.mainErrorStream,
@@ -413,7 +413,7 @@ void main() {
       );
     });
     test("Should emit correct value if ticket is not permitted", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       commandInformations.mockErrorTicketIsPermitted();
 
       expectLater(sut.mainErrorStream,
@@ -428,7 +428,7 @@ void main() {
     });
     test("Should emit correct values dont have liberated pdvs to registration",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToGetNetMock = true;
       pdvRegistration.mockGetPdvNotUsingError(DomainError.dontHaveUnusedPdvs);
 
@@ -444,7 +444,7 @@ void main() {
     });
 
     test("Should call load enterprise data if url is null", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -457,7 +457,7 @@ void main() {
 
     test("Should load enterprise concentrator parameters with correct values",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -467,13 +467,13 @@ void main() {
 
       verify(() => loadEnterpriseConcentradorParameters.load(
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             concentradorUrl:
-                EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!,
+                EnterpriseBuilder.entity!.concentradorUrl!,
           )).called(1);
     });
     test("Should update enterprise correctly", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       final newEnterprise = EntityFactory.makeEnterpriseData();
       final newConcentratorEnterprise =
           EntityFactory.makeEnterpriseConcentradorParametersEntity();
@@ -488,7 +488,7 @@ void main() {
       );
 
       expect(
-        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseBuilder.entity,
         EnterpriseEntity(
           enterpriseName: newEnterprise.enterpriseName,
           url: newEnterprise.url,
@@ -516,7 +516,7 @@ void main() {
     });
 
     test("Should add enterprise locally correctly", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -526,39 +526,39 @@ void main() {
 
       verify(
         () => localEnterpriseData
-            .add(EnterpriseDataBuilder.enterpriseDataEntity!),
+            .add(EnterpriseBuilder.entity!),
       ).called(1);
     });
 
     test(
         "Should verify ticket is permitted with 001 when command is null or empty",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: null,
         homePresenter: homePresenter,
       );
       verify(() => commandInformations.ticketIsPermitted(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             commandNumber: "001",
           )).called(1);
 
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: "",
         homePresenter: homePresenter,
       );
       verify(() => commandInformations.ticketIsPermitted(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             commandNumber: "001",
           )).called(1);
     });
 
     test("Should verify ticket is permitted with correct command number",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       final commandNumber = faker.randomGenerator.integer(100);
       await sut.validateEnterpriseByName(
@@ -567,14 +567,14 @@ void main() {
         homePresenter: homePresenter,
       );
       verify(() => commandInformations.ticketIsPermitted(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             commandNumber: commandNumber.toString().padLeft(3, "0"),
           )).called(1);
     });
     test(
         "Should update local command data with null value if command is null or empty",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: null,
@@ -588,7 +588,7 @@ void main() {
             ),
           )).called(1);
 
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: "",
@@ -604,7 +604,7 @@ void main() {
     });
 
     test("Should update local command data with correct values", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       final commandNumber = faker.randomGenerator.integer(100);
       await sut.validateEnterpriseByName(
@@ -622,7 +622,7 @@ void main() {
     });
 
     test("Should navigate to home page in success", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
 
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -637,7 +637,7 @@ void main() {
     test(
         "Should get pdvs not using when is generating version to rede or getnet",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToGetNetMock = true;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -646,7 +646,7 @@ void main() {
       );
       verify(() => pdvRegistration.getPdvNotUsing()).called(1);
 
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = true;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -659,7 +659,7 @@ void main() {
     test(
         "Should not get pdv not using when dont is generating version to rede or getnet",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToGetNetMock = false;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -668,7 +668,7 @@ void main() {
       );
       verifyNever(() => pdvRegistration.getPdvNotUsing());
 
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = false;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
@@ -678,7 +678,7 @@ void main() {
       verifyNever(() => pdvRegistration.getPdvNotUsing());
     });
     test("Should emit correct values on enterprises not using", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = clearedEnterprise;
+      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = true;
 
       expectLater(
@@ -702,7 +702,7 @@ void main() {
       sut.validateEnterpriseInput(enterpriseName);
 
       expect(
-          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseBuilder.entity,
           EnterpriseEntity(
             enterpriseName: enterpriseName,
             url: null,
@@ -734,9 +734,9 @@ void main() {
 
       verify(() => loadEnterpriseConcentradorParameters.load(
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             concentradorUrl:
-                EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl!,
+                EnterpriseBuilder.entity!.concentradorUrl!,
           )).called(1);
     });
     test("Should update enterprise correctly", () async {
@@ -748,38 +748,38 @@ void main() {
       await sut.updateConcentratorEnterpriseParameters();
 
       expect(
-          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseBuilder.entity,
           EnterpriseEntity(
             enterpriseConcentradorParametersEntity:
                 newConcentratorEnterpriseParameters,
             enterpriseName:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
+                EnterpriseBuilder.entity!.enterpriseName,
+            url: EnterpriseBuilder.entity!.url,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+                EnterpriseBuilder.entity!.enterpriseId,
             concentradorUrl:
-                EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-            persistApp: EnterpriseDataBuilder.enterpriseDataEntity!.persistApp,
-            urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
+                EnterpriseBuilder.entity!.concentradorUrl,
+            persistApp: EnterpriseBuilder.entity!.persistApp,
+            urlCCS: EnterpriseBuilder.entity!.urlCCS,
             useCovenant:
-                EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
-            updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-            updateConcentratorEnterpriseData: EnterpriseDataBuilder
-                .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-            serviceChargePercentageOrValue: EnterpriseDataBuilder
-                .enterpriseDataEntity!.serviceChargePercentageOrValue,
+                EnterpriseBuilder.entity!.useCovenant,
+            updateMenu: EnterpriseBuilder.entity!.updateMenu,
+            updateConcentratorEnterpriseData: EnterpriseBuilder
+                .entity!.updateConcentratorEnterpriseData,
+            serviceChargePercentageOrValue: EnterpriseBuilder
+                .entity!.serviceChargePercentageOrValue,
             serviceChargeType:
-                EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
-            updateDevicesInformations: EnterpriseDataBuilder
-                .enterpriseDataEntity!.updateDevicesInformations,
+                EnterpriseBuilder.entity!.serviceChargeType,
+            updateDevicesInformations: EnterpriseBuilder
+                .entity!.updateDevicesInformations,
             updateEnterprise:
-                EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-            zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
-            pendingDevicesToUpdate: EnterpriseDataBuilder
-                .enterpriseDataEntity!.pendingDevicesToUpdate,
-            updatePendingDevices: EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-            waitDaysToPreloadImages: EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-            secondsPreloadingImages: EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+                EnterpriseBuilder.entity!.updateEnterprise,
+            zoomImage: EnterpriseBuilder.entity!.zoomImage,
+            pendingDevicesToUpdate: EnterpriseBuilder
+                .entity!.pendingDevicesToUpdate,
+            updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+            waitDaysToPreloadImages: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+            secondsPreloadingImages: EnterpriseBuilder.entity!.secondsPreloadingImages,
           ));
     });
   });
@@ -789,10 +789,10 @@ void main() {
       sut.clearEnterpriseData();
 
       expect(
-        EnterpriseDataBuilder.enterpriseDataEntity,
+        EnterpriseBuilder.entity,
         EnterpriseEntity(
           enterpriseName:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
+              EnterpriseBuilder.entity!.enterpriseName,
           url: null,
           enterpriseId: null,
           concentradorUrl: null,

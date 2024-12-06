@@ -38,11 +38,11 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
           EnterprisePresenter enterprisePresenter =
               Provider.of(context, listen: false);
           await enterprisePresenter.updateEnterpriseWithLocalData();
-          if (EnterpriseDataBuilder.enterpriseDataEntity != null &&
-              EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseName !=
+          if (EnterpriseBuilder.entity != null &&
+              EnterpriseBuilder.entity?.enterpriseName !=
                   "") {
             enterpriseController.text =
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName;
+                EnterpriseBuilder.entity!.enterpriseName;
           }
 
           if (enterpriseController.text.isNotEmpty) {

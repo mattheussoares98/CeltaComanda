@@ -95,7 +95,7 @@ void main() {
   }
 
   void initMocks() {
-    localEnterpriseData.mockAdd(EnterpriseDataBuilder.enterpriseDataEntity!);
+    localEnterpriseData.mockAdd(EnterpriseBuilder.entity!);
     localCommandData.mockLoad(fixedCommandEntity);
     localCommandData.mockUpdate();
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
@@ -108,7 +108,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     fixedCommandEntity = EntityFactory.makeCommandEntity(true);
     notFixedCommandEntity = EntityFactory.makeCommandEntity(false);
@@ -128,7 +128,7 @@ void main() {
     userCode = faker.randomGenerator.integer(100);
 
     enterpriseJson = EnterpriseValidationModel.fromEntity(
-            EnterpriseDataBuilder.enterpriseDataEntity!)
+            EnterpriseBuilder.entity!)
         .toJson();
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
@@ -405,9 +405,9 @@ void main() {
           ));
       verifyNever(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: notFixedCommandEntity.commandNumber!,
         ),
       );
@@ -545,9 +545,9 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
@@ -665,38 +665,38 @@ void main() {
     test(
         "Should make persist when Enterprise.persist is true and is not generating version to rede",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+            EnterpriseBuilder.entity!.concentradorUrl,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: true,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
         updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+            EnterpriseBuilder.entity!.updatePendingDevices,
         waitDaysToPreloadImages:
-            EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
-            EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -715,38 +715,38 @@ void main() {
     test(
         "Should make NOT persist when is generating version to rede and Enterprise.persist is true",
         () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+            EnterpriseBuilder.entity!.concentradorUrl,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: true,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
         updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
+            EnterpriseBuilder.entity!.updatePendingDevices,
         waitDaysToPreloadImages:
-            EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
+            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
-            EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -762,36 +762,36 @@ void main() {
       verify(() => persistent.makeNotPersistent()).called(1);
     });
     test("Should make NOT persist Enterprise.persist is false", () async {
-      EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+      EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName:
-            EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseName,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId,
+            EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity!.url,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
         concentradorUrl:
-            EnterpriseDataBuilder.enterpriseDataEntity!.concentradorUrl,
-        urlCCS: EnterpriseDataBuilder.enterpriseDataEntity!.urlCCS,
-        useCovenant: EnterpriseDataBuilder.enterpriseDataEntity!.useCovenant,
+            EnterpriseBuilder.entity!.concentradorUrl,
+        urlCCS: EnterpriseBuilder.entity!.urlCCS,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: false,
-        enterpriseConcentradorParametersEntity: EnterpriseDataBuilder
-            .enterpriseDataEntity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseDataBuilder.enterpriseDataEntity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseDataBuilder
-            .enterpriseDataEntity!.serviceChargePercentageOrValue,
+        enterpriseConcentradorParametersEntity: EnterpriseBuilder
+            .entity!.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity!.updateMenu,
+        updateConcentratorEnterpriseData: EnterpriseBuilder
+            .entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue: EnterpriseBuilder
+            .entity!.serviceChargePercentageOrValue,
         serviceChargeType:
-            EnterpriseDataBuilder.enterpriseDataEntity!.serviceChargeType,
+            EnterpriseBuilder.entity!.serviceChargeType,
         updateEnterprise:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseDataBuilder
-            .enterpriseDataEntity!.updateDevicesInformations,
-        zoomImage: EnterpriseDataBuilder.enterpriseDataEntity!.zoomImage,
+            EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations: EnterpriseBuilder
+            .entity!.updateDevicesInformations,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
-            EnterpriseDataBuilder.enterpriseDataEntity!.pendingDevicesToUpdate,
+            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
         updatePendingDevices:
-            EnterpriseDataBuilder.enterpriseDataEntity!.updatePendingDevices,
-        waitDaysToPreloadImages:EnterpriseDataBuilder.enterpriseDataEntity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:EnterpriseDataBuilder.enterpriseDataEntity!.secondsPreloadingImages,
+            EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages:EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages:EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       await sut.loadCommandData(
@@ -939,7 +939,7 @@ void main() {
       );
 
       verify(() => userValidations.isValidPassword(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             personalizedCode: userCode,
             password: password,
           )).called(1);
@@ -1105,7 +1105,7 @@ void main() {
 
     group("Never change data", () {
       test("Should not call functions if enterpriseId is null", () async {
-        EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        EnterpriseBuilder.entity = EnterpriseEntity(
           enterpriseName: faker.randomGenerator.string(10),
           url: faker.randomGenerator.string(10),
           enterpriseId: null,
@@ -1144,7 +1144,7 @@ void main() {
             .load()); //first abstract called function when dont return because id or url is null
       });
       test("Should not call functions if enterpriseUrl is null", () async {
-        EnterpriseDataBuilder.enterpriseDataEntity = EnterpriseEntity(
+        EnterpriseBuilder.entity = EnterpriseEntity(
           enterpriseName: faker.randomGenerator.string(10),
           url: null,
           enterpriseId: faker.randomGenerator.integer(100),
@@ -1245,7 +1245,7 @@ void main() {
         );
 
         expect(
-          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseBuilder.entity,
           EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
         );
       });
@@ -1304,7 +1304,7 @@ void main() {
         );
 
         expect(
-          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseBuilder.entity,
           EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
         );
       });
@@ -1383,7 +1383,7 @@ void main() {
         );
 
         expect(
-          EnterpriseDataBuilder.enterpriseDataEntity,
+          EnterpriseBuilder.entity,
           EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
         );
       });
@@ -1454,7 +1454,7 @@ void main() {
       );
 
       verify(() => userValidations.isValidPassword(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             personalizedCode: userPersonalizedCode,
             password: password,
           ));

@@ -19,7 +19,7 @@ class RemoteLoadProducts implements LoadProducts {
       if (expansibleGroupId == null) throw DomainError.unexpected;
 
       String url =
-          "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}&_groupCode=$expansibleGroupId";
+          "${EnterpriseBuilder.entity!.url}/api/APIProduct/GetAllByGroup?_enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&_groupCode=$expansibleGroupId";
       final response = await httpAdapter.request(url: url, method: "get");
       if (response == null) throw Error();
 

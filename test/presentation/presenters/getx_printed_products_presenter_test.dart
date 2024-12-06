@@ -74,7 +74,7 @@ void main() {
   void initEntitys() {
     personalizedCode = faker.randomGenerator.integer(5);
     password = faker.randomGenerator.string(5);
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     printedEntity = EntityFactory.makePrintedProductsEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
@@ -131,14 +131,14 @@ void main() {
         () => userValidations.isValidPassword(
           password: password,
           personalizedCode: personalizedCode,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
         ),
       ).called(1);
     });
 
     test('Should return true on password is valid', () async {
       final validPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         password: password,
         personalizedCode: personalizedCode,
       );
@@ -150,7 +150,7 @@ void main() {
       userValidations.mockIsValidPassword(false);
 
       final validPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         password: password,
         personalizedCode: personalizedCode,
       );
@@ -272,7 +272,7 @@ void main() {
       verify(
         () => userValidations.canCancel(
           personalizedCode: personalizedCode,
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
         ),
       ).called(1);
     });
@@ -280,7 +280,7 @@ void main() {
     test('Should return true on user can cancel', () async {
       final canCancel = await userValidations.canCancel(
         personalizedCode: personalizedCode,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
       );
 
       expect(canCancel, true);
@@ -291,7 +291,7 @@ void main() {
 
       final canCancel = await userValidations.canCancel(
         personalizedCode: personalizedCode,
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
       );
 
       expect(canCancel, false);
@@ -374,9 +374,9 @@ void main() {
       await sut.loadPrinted(homePresenter.commandNumber!);
 
       verify(() => loadPrintedProducts.load(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             enterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
             commandNumber: int.parse(homePresenter.commandNumberMock!),
           )).called(1);
     });
@@ -384,8 +384,8 @@ void main() {
     test("Should return correct printedProducts on LoadPrintedProducts",
         () async {
       final result = await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: int.parse(homePresenter.commandNumberMock!),
       );
 
@@ -395,8 +395,8 @@ void main() {
     test("Should return null on loadPrintedProducts", () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
       final result = await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: int.parse(homePresenter.commandNumberMock!),
       );
 
@@ -447,9 +447,9 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!.toInt(),
         ),
       ).called(1);
@@ -516,9 +516,9 @@ void main() {
       );
 
       verify(() => loadPrintedProducts.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!.toInt())).called(1);
     });
 
@@ -727,7 +727,7 @@ void main() {
 
       verify(
         () => userValidations.isValidPassword(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           personalizedCode: personalizedCode,
           password: password,
         ),
@@ -752,7 +752,7 @@ void main() {
             IncrementValue: 0,
             TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
             EnterpriseId:
-                EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
+                EnterpriseBuilder.entity?.enterpriseId,
           ),
           commandNumberWithThreeNumbers:
               homePresenter.commandNumberMock!.padLeft(3, "0"),
@@ -772,9 +772,9 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandNumberMock!.toInt(),
         ),
       ).called(2);
@@ -794,7 +794,7 @@ void main() {
 
       verifyNever(
         () => userValidations.isValidPassword(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           personalizedCode: personalizedCode,
           password: password,
         ),

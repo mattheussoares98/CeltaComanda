@@ -13,9 +13,9 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
   @override
   Future<void> delete(int internalCodeOnErp) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final enterpriseId =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+          EnterpriseBuilder.entity!.enterpriseId;
       await httpAdapter.request(
         url:
             "$url/api/APIProduct/DeleteProductSchedule?enterpriseId=$enterpriseId&internalCodeOnERP=$internalCodeOnErp",
@@ -29,9 +29,9 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
   @override
   Future<List<ProductScheduleEntity>> get(int internalCodeOnErp) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final enterpriseId =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+          EnterpriseBuilder.entity!.enterpriseId;
       final result = await httpAdapter.request(
         url:
             "$url/api/APIProduct/GetProductSchedules?enterpriseId=$enterpriseId&internalCodeOnERP=$internalCodeOnErp",
@@ -51,7 +51,7 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
   @override
   Future<void> insertUpdate(ProductScheduleEntity entity) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final body = ProductScheduleModel.fromEntity(entity).toJson();
 
       await httpAdapter.request(

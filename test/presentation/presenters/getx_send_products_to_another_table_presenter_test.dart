@@ -38,7 +38,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(100);
     printedEntity = EntityFactory.makePrintedProductsEntity();
@@ -166,9 +166,9 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           enterpriseId:
-              EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+              EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: oldPersonalizedCode,
         ),
       ).called(1);

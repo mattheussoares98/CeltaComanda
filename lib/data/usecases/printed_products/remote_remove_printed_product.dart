@@ -15,7 +15,7 @@ class RemoteRemovePrintedProduct implements RemovePrintedProduct {
     try {
       await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APISaleRequestProduct/DeleteSaleRequestProduct?id=$productId",
+            "${EnterpriseBuilder.entity!.url}/api/APISaleRequestProduct/DeleteSaleRequestProduct?id=$productId",
         method: "get",
       );
     } catch (error) {

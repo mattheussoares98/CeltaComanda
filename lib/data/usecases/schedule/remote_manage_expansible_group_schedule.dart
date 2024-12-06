@@ -14,9 +14,9 @@ class RemoteManageExpansibleGroupSchedule
   @override
   Future<void> delete(int expansibleGroupId) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final enterpriseId =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+          EnterpriseBuilder.entity!.enterpriseId;
       await httpAdapter.request(
         url:
             "$url/api/APIGroups/DeleteExpansibleGroupSchedule?enterpriseId=$enterpriseId&expansibleGroupId=$expansibleGroupId",
@@ -30,7 +30,7 @@ class RemoteManageExpansibleGroupSchedule
   @override
   Future<List<ExpansibleGroupScheduleEntity>> get(int expansibleGroupId) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
 
       final result = await httpAdapter.request(
         url:
@@ -51,7 +51,7 @@ class RemoteManageExpansibleGroupSchedule
   @override
   Future<void> insertUpdate(ExpansibleGroupScheduleEntity entity) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final body = ExpansibleGroupScheduleModel.fromEntity(entity).toJson();
 
       await httpAdapter.request(

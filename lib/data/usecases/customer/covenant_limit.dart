@@ -16,11 +16,11 @@ class RemoteCovenantLimit implements CovenantLimit {
     required double value,
   }) async {
     try {
-      if (EnterpriseDataBuilder.enterpriseDataEntity!
+      if (EnterpriseBuilder.entity!
                   .enterpriseConcentradorParametersEntity ==
               null ||
-          EnterpriseDataBuilder
-                  .enterpriseDataEntity!
+          EnterpriseBuilder
+                  .entity!
                   .enterpriseConcentradorParametersEntity!
                   .celtaBSCrossIdentity ==
               null) {
@@ -29,7 +29,7 @@ class RemoteCovenantLimit implements CovenantLimit {
 
       final soapResponse = await soapAdapter.post(
         parameters: {
-          "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
+          "crossIdentity": EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
           "covenantCode": covenantCode,
           "customerCode": customerCode,

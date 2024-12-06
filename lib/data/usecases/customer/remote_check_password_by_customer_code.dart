@@ -14,8 +14,8 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
     required String password,
   }) async {
     try {
-      if (EnterpriseDataBuilder
-              .enterpriseDataEntity!
+      if (EnterpriseBuilder
+              .entity!
               .enterpriseConcentradorParametersEntity!
               .celtaBSCrossIdentity!
               .isEmpty ==
@@ -25,7 +25,7 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
 
       final soapResponse = await soapAdapter.post(
         parameters: {
-          "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
+          "crossIdentity": EnterpriseBuilder.entity!
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
           "customerCode": customerCode,
           "password": password,

@@ -59,9 +59,9 @@ void main() {
         TotalLiquid: totalLiquid,
         CustomerCode: cartPresenter.saleRequestTempMock!.CustomerCode?.toInt(),
         CovenantCode: cartPresenter.saleRequestTempMock!.CovenantCode?.toInt(),
-        IncrementValue: EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
+        IncrementValue: EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
           IncrementType:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+          EnterpriseBuilder.entity?.serviceChargeType,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: 1,
@@ -109,7 +109,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
     optionalFathers =
         EntityFactory.makeProductsCompositionsEntity(isOptionalItem: true);
@@ -118,7 +118,7 @@ void main() {
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
 
-    EnterpriseDataBuilder.enterpriseDataEntity =
+    EnterpriseBuilder.entity =
         EntityFactory.makeEnterpriseData();
 
     homePresenter.commandNumberMock =
@@ -484,7 +484,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case1,
               totalLiquid: 10,
@@ -513,7 +513,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case2,
               totalLiquid: 8,
@@ -542,7 +542,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case3,
               totalLiquid: 0,
@@ -571,7 +571,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case4,
               totalLiquid: 5,
@@ -600,7 +600,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case5,
               totalLiquid: 13,
@@ -629,7 +629,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case6,
               totalLiquid: 26,
@@ -658,7 +658,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case7,
               totalLiquid: 10,
@@ -687,7 +687,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case8,
               totalLiquid: 56,
@@ -784,7 +784,7 @@ void main() {
           productsCompositions: [case1]);
 
       verifyNever(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case1,
               totalLiquid: 10,
@@ -814,7 +814,7 @@ void main() {
       );
 
       verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
             entity: makeUpdateSaleRequestTempEntity(
               productCompositionViewModel: case1,
               totalLiquid: 10,
@@ -908,8 +908,8 @@ void main() {
     test('Should return correct entity on success to loadSaleRequestTemp',
         () async {
       final value = await loadSaleRequestTemp.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: homePresenter.commandNumberMock!,
       );
 

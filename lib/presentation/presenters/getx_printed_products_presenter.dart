@@ -69,8 +69,8 @@ class GetxPrintedProductsPresenter
 
     try {
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
-        enterpriseId: EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+        url: EnterpriseBuilder.entity!.url!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber.toInt(),
       );
 
@@ -112,7 +112,7 @@ class GetxPrintedProductsPresenter
 
     try {
       final isValidPassword = await userValidations.isValidPassword(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         personalizedCode: personalizedCode,
         password: password,
       );
@@ -125,7 +125,7 @@ class GetxPrintedProductsPresenter
         updateCanCancelProducts(
           await userValidations.canCancel(
             personalizedCode: personalizedCode,
-            url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+            url: EnterpriseBuilder.entity!.url!,
           ),
         );
       }
@@ -247,7 +247,7 @@ class GetxPrintedProductsPresenter
     try {
       if (validateUserAndPassword) {
         bool isValid = await userValidations.isValidPassword(
-          url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+          url: EnterpriseBuilder.entity!.url!,
           personalizedCode: userPersonalizedCode,
           password: password,
         );
@@ -263,7 +263,7 @@ class GetxPrintedProductsPresenter
         IncrementType: 0,
         IncrementValue: 0,
         TotalLiquid: printed.TotalLiquid.toDouble(),
-        EnterpriseId: EnterpriseDataBuilder.enterpriseDataEntity?.enterpriseId,
+        EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
       );
 
       await updateSaleRequest.update(

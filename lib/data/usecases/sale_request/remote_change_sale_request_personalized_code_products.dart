@@ -16,9 +16,9 @@ class RemoteChangeSaleRequestPersonalizedCodeProducts
     required List<int> saleRequestProductsIds,
   }) async {
     try {
-      final url = EnterpriseDataBuilder.enterpriseDataEntity!.url;
+      final url = EnterpriseBuilder.entity!.url;
       final enterpriseId =
-          EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId;
+          EnterpriseBuilder.entity!.enterpriseId;
       final oldCode = oldPersonalizedCode.padLeft(3, "0");
       final newCode = newPersonalizedCode.padLeft(3, "0");
 

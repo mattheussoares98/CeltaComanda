@@ -51,7 +51,7 @@ class EnterpriseLogoImage extends StatelessWidget {
                               child: CachedImage(
                                 ean: null,
                                 plu:
-                                    "Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo",
+                                    "Enterprise${EnterpriseBuilder.entity!.enterpriseId}/Logo",
                                 height: MediaQuery.of(context).size.height,
                                 width: MediaQuery.of(context).size.width,
                               ),
@@ -73,7 +73,7 @@ class EnterpriseLogoImage extends StatelessWidget {
           child: CachedImage(
             ean: null,
             plu:
-                "Enterprise${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}/Logo",
+                "Enterprise${EnterpriseBuilder.entity!.enterpriseId}/Logo",
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
           ),

@@ -13,7 +13,7 @@ class RemoteFinishSaleRequestTempById implements FinishSaleRequestTempById {
     try {
       await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/apiSaleRequest/FinishTempById?saleRequestTempId=$saleRequestTempId",
+            "${EnterpriseBuilder.entity!.url}/api/apiSaleRequest/FinishTempById?saleRequestTempId=$saleRequestTempId",
         method: "post",
       );
     } catch (error) {

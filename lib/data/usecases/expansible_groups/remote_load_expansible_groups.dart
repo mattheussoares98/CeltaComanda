@@ -15,7 +15,7 @@ class RemoteLoadExpansibleGroups implements LoadExpansibleGroups {
     try {
       final response = await httpAdapter.request(
         url:
-            "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIGroups/GetAll?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId}",
+            "${EnterpriseBuilder.entity!.url!}/api/APIGroups/GetAll?_enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}",
         method: "get",
       );
       if (response == null) {

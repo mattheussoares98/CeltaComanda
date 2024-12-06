@@ -19,7 +19,7 @@ class RemoteGetProductComposition extends GetProductComposition {
     try {
       final response = await httpAdapter.request(
           url:
-              "${EnterpriseDataBuilder.enterpriseDataEntity!.url!}/api/APIProduct/getproductcomposition?_enterpriseId=${EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!}&_internalCodeOnERPCodeFather=$internalCodeOnErp",
+              "${EnterpriseBuilder.entity!.url!}/api/APIProduct/getproductcomposition?_enterpriseId=${EnterpriseBuilder.entity!.enterpriseId!}&_internalCodeOnERPCodeFather=$internalCodeOnErp",
           method: "get");
 
       if (response == null) {

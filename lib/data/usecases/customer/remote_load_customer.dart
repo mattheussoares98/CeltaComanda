@@ -16,8 +16,8 @@ class RemoteLoadCustomer implements LoadCustomer {
     required int searchTypeInt,
   }) async {
     try {
-      if (EnterpriseDataBuilder
-              .enterpriseDataEntity!
+      if (EnterpriseBuilder
+              .entity!
               .enterpriseConcentradorParametersEntity!
               .celtaBSCrossIdentity!
               .isEmpty ==
@@ -27,12 +27,12 @@ class RemoteLoadCustomer implements LoadCustomer {
       final soapResponse = await soapAdapter.post(
         parameters: {
           "filters": json.encode({
-            "crossIdentity": EnterpriseDataBuilder.enterpriseDataEntity!
+            "crossIdentity": EnterpriseBuilder.entity!
                 .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
             "customerData": value,
             "customerDataType": searchTypeInt,
             "enterpriseCode":
-                EnterpriseDataBuilder.enterpriseDataEntity!.enterpriseId!,
+                EnterpriseBuilder.entity!.enterpriseId!,
           }),
         },
         typeOfResponse: "GetCustomerJsonResponse",

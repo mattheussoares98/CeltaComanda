@@ -17,7 +17,7 @@ class RemoteLoadSuggestionSale implements LoadSuggestionSale {
   Future<List<SuggestionSaleEntity>> load() async {
     try {
       String url =
-          "${EnterpriseDataBuilder.enterpriseDataEntity!.url}/api/APIProduct/GetAllProductForSuggestionSale";
+          "${EnterpriseBuilder.entity!.url}/api/APIProduct/GetAllProductForSuggestionSale";
       final response = await httpAdapter.request(url: url, method: "get");
       if (response == null) throw Error();
 

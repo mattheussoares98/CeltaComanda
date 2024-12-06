@@ -322,13 +322,13 @@ class GetxInsertProductsPresenter extends GetxController
         CovenantCode: cartPresenter.saleRequestTemp!.CovenantCode?.toInt(),
         CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
         IncrementValue:
-            EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargePercentageOrValue,
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
         IncrementType:
-          EnterpriseDataBuilder.enterpriseDataEntity?.serviceChargeType,
+          EnterpriseBuilder.entity?.serviceChargeType,
       );
 
       await updateSaleRequestTemp.update(
-        url: EnterpriseDataBuilder.enterpriseDataEntity!.url!,
+        url: EnterpriseBuilder.entity!.url!,
         entity: entity,
       );
 

@@ -24,6 +24,7 @@ void main() {
   late ObtainPlataformSpy obtainPlatform;
   late LocalCommandDataSpy localCommandData;
   late PdvRegistrationSpy pdvRegistration;
+  late LoadDeviceDataSpy loadDeviceData;
 
   late CommandEntity commandEntity;
   late PdvEntity registeredPdv;
@@ -37,6 +38,7 @@ void main() {
     obtainPlatform = ObtainPlataformSpy();
     localCommandData = LocalCommandDataSpy();
     pdvRegistration = PdvRegistrationSpy();
+    loadDeviceData = LoadDeviceDataSpy();
   }
 
   void initPresenters() {
@@ -48,6 +50,7 @@ void main() {
       obtainPlatform: obtainPlatform,
       localCommandData: localCommandData,
       pdvRegistration: pdvRegistration,
+      loadDeviceData: loadDeviceData,
     );
   }
 

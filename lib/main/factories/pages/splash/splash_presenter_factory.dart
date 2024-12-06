@@ -8,4 +8,5 @@ SplashPresenter makeGetxSplashPresenter() => GetxSplashPresenter(
       obtainPlatform: makeFlutterGetPlatform(),
       localCommandData: makeLocalCommandData(),
       pdvRegistration: makeConcentratorPdvRegistration(),
+      loadDeviceData: makeLocalLoadDeviceData(),
     );

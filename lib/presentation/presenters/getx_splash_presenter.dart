@@ -11,6 +11,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final ObtainPlataform obtainPlatform;
   final LocalCommandData localCommandData;
   final PdvRegistration pdvRegistration;
+  final LoadDeviceData loadDeviceData;
 
   GetxSplashPresenter({
     required this.navigateTo,
@@ -18,6 +19,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
     required this.obtainPlatform,
     required this.localCommandData,
     required this.pdvRegistration,
+    required this.loadDeviceData,
   });
 
   @override

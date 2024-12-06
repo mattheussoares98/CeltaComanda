@@ -10,12 +10,14 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final NavigateTo navigateTo;
   final ObtainPlataform obtainPlatform;
   final LocalCommandData localCommandData;
+  final PdvRegistration pdvRegistration;
 
   GetxSplashPresenter({
     required this.navigateTo,
     required this.loadEnterpriseData,
     required this.obtainPlatform,
     required this.localCommandData,
+    required this.pdvRegistration,
   });
 
   @override
@@ -38,13 +40,14 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
-      } else if (localCommandEntity?.pdv == null &&
-          (homePresenter.isGeneratingVersionToGetNet ||
-              homePresenter.isGeneratingVersionToRede)) {
-        navigateTo.navigate(
-          pageRoute: PageRoutes.enterpriseValidation,
-          clear: true,
-        );
+      } else if (homePresenter.isGeneratingVersionToGetNet ||
+          homePresenter.isGeneratingVersionToRede) {
+        if (localCommandEntity?.pdv == null) {
+          navigateTo.navigate(
+            pageRoute: PageRoutes.enterpriseValidation,
+            clear: true,
+          );
+        }
       } else {
         navigateTo.navigate(
           pageRoute: PageRoutes.home,

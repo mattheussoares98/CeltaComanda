@@ -23,6 +23,7 @@ void main() {
   late LocalEnterpriseDataSpy loadEnterpriseData;
   late ObtainPlataformSpy obtainPlatform;
   late LocalCommandDataSpy localCommandData;
+  late PdvRegistrationSpy pdvRegistration;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -32,6 +33,7 @@ void main() {
     loadEnterpriseData = LocalEnterpriseDataSpy();
     obtainPlatform = ObtainPlataformSpy();
     localCommandData = LocalCommandDataSpy();
+    pdvRegistration = PdvRegistrationSpy();
   }
 
   void initPresenters() {
@@ -42,6 +44,7 @@ void main() {
       loadEnterpriseData: loadEnterpriseData,
       obtainPlatform: obtainPlatform,
       localCommandData: localCommandData,
+      pdvRegistration: pdvRegistration,
     );
   }
 
@@ -51,6 +54,7 @@ void main() {
 
   void initMockSuccess() {
     loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+    localCommandData.mockLoad(EntityFactory.makeCommandEntity());
   }
 
   setUp(() {

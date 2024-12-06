@@ -111,7 +111,9 @@ class GetxPaymentPresenter extends GetxController
     isLoading = true;
     try {
       await finishSaleRequestConcentrador.finish(
-        pdvNumber: 100,
+        pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber == null
+            ? 100
+            : homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
         commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
         finalizations: _successfulPayments,
       );
@@ -408,7 +410,9 @@ class GetxPaymentPresenter extends GetxController
         ));
 
         await finishSaleRequestConcentrador.finish(
-          pdvNumber: 100,
+          pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber == null
+              ? 100
+              : homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
           commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
           finalizations: _successfulPayments,
         );

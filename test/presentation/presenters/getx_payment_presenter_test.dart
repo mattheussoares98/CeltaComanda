@@ -290,7 +290,8 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-            commandNumber: homePresenter.commandEntityController!.commandNumber!),
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!),
       ).called(1);
     });
     test('Should emit correct values on is invalid datetime', () async {
@@ -438,7 +439,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
     });
-    test("Should call finishSaleRequestConcentrador with correct values",
+    test(
+        "Should call finishSaleRequestConcentrador with correct values if commandEntity.pdv is not null",
         () async {
       sut.successfulPayments.add(
         ConcentratorFinalizationModel(
@@ -456,8 +458,41 @@ void main() {
       );
 
       verify(() => finishSaleRequestConcentrador.finish(
+            pdvNumber:
+                homePresenter.commandEntityController!.pdv!.PdvNumber!.toInt(),
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
+            finalizations: sut.successfulPayments,
+          )).called(1);
+    });
+    test(
+        "Should call finishSaleRequestConcentrador with correct values if commandEntity.pdv is null",
+        () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked.roundAccordingBs(),
+          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      homePresenter.commandEntityController = CommandEntity(
+        commandNumber: commandNumber,
+        isFixedCommandNumber: true,
+        pdv: null,
+      );
+
+      await sut.liquidateCommand(
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: sut.successfulPayments,
           )).called(1);
     });
@@ -478,8 +513,8 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandEntityController!.commandNumber!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test(
         "Should not call finish in concentrador when paid is less than total liquid ",
@@ -494,7 +529,8 @@ void main() {
 
       verifyNever(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: null,
           ));
     });
@@ -890,7 +926,8 @@ void main() {
       verifyNever(
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
-          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+          commandNumber:
+              homePresenter.commandEntityController!.commandNumber!.toInt(),
           finalizations: null,
         ),
       );
@@ -941,8 +978,9 @@ void main() {
               CovenantCode: sut.selectedCovenant.values.first!.toInt(),
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
-            commandNumberWithThreeNumbers:
-                homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
+            commandNumberWithThreeNumbers: homePresenter
+                .commandEntityController!.commandNumber!
+                .padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId
                 .toInt(),
@@ -1079,7 +1117,8 @@ void main() {
 
       verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: sut.successfulPayments,
           )).called(1);
     });

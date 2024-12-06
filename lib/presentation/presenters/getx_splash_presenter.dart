@@ -52,14 +52,27 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
         } else {
           final registeredPdv =
               await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
+          final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
 
-          // if (registeredPdv == null) {
-          //   //não conseguiu validar, depois valida
-          //   navigateTo.navigate(
-          //     pageRoute: PageRoutes.home,
-          //     clear: true,
-          //   );
-          // }
+          if (registeredPdv == null) {
+            //não conseguiu validar, depois valida
+            navigateTo.navigate(
+              pageRoute: PageRoutes.home,
+              clear: true,
+            );
+          } else if (registeredPdv.MacAddress == imeiOrWindowsId) {
+            //TODO atualizar registro no concentrador
+            //o id registrado no concentrador é igual ao do dispositivo local
+            navigateTo.navigate(
+              pageRoute: PageRoutes.home,
+              clear: true,
+            );
+          } else {
+            navigateTo.navigate(
+              pageRoute: PageRoutes.enterpriseValidation,
+              clear: true,
+            );
+          }
         }
       } else {
         navigateTo.navigate(

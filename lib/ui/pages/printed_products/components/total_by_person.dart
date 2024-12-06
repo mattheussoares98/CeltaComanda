@@ -76,7 +76,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: getStringSize(context)),
             ),
-            if (!homePresenter.isFixedCommandNumber)
+            if (homePresenter.commandEntity?.isFixedCommandNumber == false)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: ElevatedButton(

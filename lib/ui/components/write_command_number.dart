@@ -168,6 +168,8 @@ Future<void> _onPress({
           homePresenter.commandEntity?.isFixedCommandNumber == true,
       pdv: homePresenter.commandEntity?.pdv,
     );
-    await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+    await printedProductsPresenter.loadPrinted(
+      homePresenter.commandEntity!.commandNumber!,
+    );
   }
 }

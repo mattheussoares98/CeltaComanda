@@ -44,9 +44,9 @@ class _HomePageState extends State<HomePage>
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     timer = Timer.periodic(Duration(minutes: 1), (_) async {
-      if (homePresenter.commandNumber != null) {
+      if (homePresenter.commandEntity!.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
-          homePresenter.commandNumber!,
+          homePresenter.commandEntity!.commandNumber!,
           showIsLoading: false,
         );
       }
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage>
             drawerEnableOpenDragGesture: false,
             //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
             drawer: !homePresenter.isGeneratingVersionToTablet ||
-                    homePresenter.commandNumber == null
+                    homePresenter.commandEntity!.commandNumber == null
                 ? const DrawerItems()
                 : null,
             appBar: homeAppBar(
@@ -138,7 +138,9 @@ class _HomePageState extends State<HomePage>
                       );
                     });
                   }
-                  return MenuPage(homePresenter.isFixedCommandNumber);
+                  return MenuPage(
+                      homePresenter.commandEntity?.isFixedCommandNumber ==
+                          true);
                 }),
           ),
         ),

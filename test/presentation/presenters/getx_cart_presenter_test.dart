@@ -37,7 +37,6 @@ void main() {
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
   late CartProductEntity cartProductEntityWithChilds;
-  late String commandNumber;
   late UpdateSaleRequestTempEntity updateSaleRequestTempEntity;
   late List<UpdateSaleRequestTempProductEntity>
       cartSaleRequestTempProductsEntity;
@@ -88,9 +87,7 @@ void main() {
 
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString().padLeft(3, "0");
-    homePresenter.isFixedCommandNumberMock = true;
+    homePresenter.commandEntityController = EntityFactory.makeCommandEntity();
     comments = faker.randomGenerator.string(10);
     tableNumber = faker.randomGenerator.integer(1000, min: 1);
 
@@ -106,7 +103,6 @@ void main() {
       maximumProductQuantity: 1,
       minimumProductQuantity: 1,
     );
-    commandNumber = faker.randomGenerator.integer(100).toString();
 
     cartSaleRequestTempProductsEntity = sut.cartProducts
         .map((element) => UpdateSaleRequestTempProductEntity(
@@ -183,6 +179,12 @@ void main() {
     printRequestEntity = EntityFactory.makePrintRequestEntity();
     saleRequestEntity = EntityFactory.makeSaleRequestEntity();
     saleRequestModel = SaleRequestModel.fromEntity(saleRequestEntity);
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: true,
+      pdv: EntityFactory.makePdvEntity(),
+    );
   }
 
   void initMockSuccess() {
@@ -190,7 +192,8 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
     cartInformations.mockGetCart([cartProductViewModelWithChilds]);
-    barcodeScanner.mockBarcodeScanner(commandNumber);
+    barcodeScanner.mockBarcodeScanner(
+        homePresenter.commandEntityController!.commandNumber!);
     loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
   }
 
@@ -462,7 +465,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
       );
 
       verify(() => cartInformations.clearCartProducts()).called(1);
@@ -576,7 +579,8 @@ void main() {
   group("LoadSaleRequestTemp", () {
     test("Should update SaleRequestTemp correctly on LoadSaleRequestTemp",
         () async {
-      await sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
+      await sut.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!);
 
       expect(sut.saleRequestTemp,
           SaleRequestTempViewModel.fromEntity(saleRequestTempEntity));
@@ -585,7 +589,8 @@ void main() {
     test("Should emits correct events on LoadSaleRequestTemp throws", () async {
       loadSaleRequestTemp.mockError(DomainError.unexpected);
 
-      final error = sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
+      final error = sut.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!);
 
       expect(error, throwsA(DomainError.unexpected));
     });
@@ -595,18 +600,21 @@ void main() {
         () async {
       loadSaleRequestTemp.mockError(DomainError.commandNotAvailable);
 
-      final error = sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
+      final error = sut.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!);
 
       expect(error, throwsA(DomainError.commandNotAvailable));
     });
 
     test("Should call LoadSaleRequestTemp with correct values", () async {
-      await sut.getSaleRequestTemp(homePresenter.commandNumberMock!);
+      await sut.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!);
 
       verify(() => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!)).called(1);
+          commandNumber:
+              homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
   });
 
@@ -1063,14 +1071,14 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
       );
 
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
 
@@ -1118,8 +1126,8 @@ void main() {
       verify(() => finishSaleRequestTempById.finish(
             saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
@@ -1142,7 +1150,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
       );
 
       final totalLiquid = products
@@ -1184,7 +1192,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         tableNumber: tableNumber,
         homePresenter: homePresenter,
-        commandNumber: homePresenter.commandNumberMock,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
       );
     });
     // test("Should emit correct values on BarcodeScanner throws unexpected",
@@ -1202,7 +1210,7 @@ void main() {
     //     printedProductsPresenter: printedProductsPresenter,
     //     tableNumber: tableNumber,
     //     homePresenter: homePresenter,
-    //     commandNumber: homePresenter.commandNumberMock,
+    //     commandNumber: homePresenter.commandEntityController!.commandNumber,
     //   );
     // });
     // test("Should emit correct values on BarcodeScanner throws BarcodeNotRead",
@@ -1220,7 +1228,7 @@ void main() {
     //     printedProductsPresenter: printedProductsPresenter,
     //     tableNumber: tableNumber,
     //     homePresenter: homePresenter,
-    //     commandNumber: homePresenter.commandNumberMock,
+    //     commandNumber: homePresenter.commandEntityController!.commandNumber,
     //   );
     // });
     test("Should emit correct values LoadSaleRequestTemp throws", () async {
@@ -1255,7 +1263,7 @@ void main() {
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
 
@@ -1305,7 +1313,7 @@ void main() {
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
 
@@ -1359,7 +1367,7 @@ void main() {
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
 
@@ -1409,7 +1417,7 @@ void main() {
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
 
@@ -1620,7 +1628,7 @@ void main() {
     test(
         "Should not call barcodeScanner.read if homePresenter.isFixedCommandNumber",
         () async {
-      expect(homePresenter.isFixedCommandNumber, true);
+      expect(homePresenter.commandEntity?.isFixedCommandNumber, true);
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1637,8 +1645,13 @@ void main() {
         "Should use homePresenter.commandNumber to saveProducts when isFixedCommandNumber",
         () async {
       final fixedCommandNumber = faker.randomGenerator.integer(999).toString();
-      homePresenter.commandNumberMock = fixedCommandNumber;
-      expect(homePresenter.commandNumber, fixedCommandNumber);
+      homePresenter.commandEntityController = CommandEntity(
+        commandNumber: fixedCommandNumber,
+        isFixedCommandNumber:
+            homePresenter.commandEntityController!.isFixedCommandNumber,
+        pdv: homePresenter.commandEntityController!.pdv,
+      );
+      expect(homePresenter.commandEntity!.commandNumber, fixedCommandNumber);
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1683,7 +1696,7 @@ void main() {
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       );
     });
@@ -1697,7 +1710,11 @@ void main() {
         emitsInOrder([null, UIError.commandNumberObligatory]),
       );
 
-      homePresenter.isFixedCommandNumberMock = false;
+      homePresenter.commandEntityController = CommandEntity(
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
+        isFixedCommandNumber: false,
+        pdv: homePresenter.commandEntityController!.pdv,
+      );
 
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
@@ -1711,7 +1728,11 @@ void main() {
     test(
         "Should update command number when is not fixed command number and write command number",
         () async {
-      homePresenter.isFixedCommandNumberMock = false;
+      homePresenter.commandEntityController = CommandEntity(
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
+        isFixedCommandNumber: false,
+        pdv: homePresenter.commandEntityController!.pdv,
+      );
       String newCommandNumber = faker.randomGenerator.integer(100).toString();
 
       await sut.saveProducts(
@@ -1727,8 +1748,8 @@ void main() {
       verify(() => homePresenter.updateCommandEntity(
             commandNumber: newCommandNumber,
             isFixedCommandNumber:
-                homePresenter.commandEntity?.isFixedCommandNumber == true,
-            pdv: homePresenter.commandEntity?.pdv,
+                homePresenter.commandEntityController?.isFixedCommandNumber == true,
+            pdv: homePresenter.commandEntityController?.pdv,
           )).called(1);
     });
   });

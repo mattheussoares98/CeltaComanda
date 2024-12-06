@@ -8,12 +8,10 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  bool get isFixedCommandNumber;
   bool get isGeneratingVersionToRede;
   bool get isGeneratingVersionToGetNet;
   bool get isGeneratingVersionToTablet;
   bool get isGeneratingVersionToMicrosoftStore;
-  String? get commandNumber;
   int? get selectedPeoples;
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;

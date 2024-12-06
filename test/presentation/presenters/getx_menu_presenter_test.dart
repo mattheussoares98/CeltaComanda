@@ -94,11 +94,14 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     expansibleGroups = EntityFactory.makeExpansibleGroupsEntity();
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
     expansibleGroupsViewModel = expansibleGroups
         .map((e) => ExpansibleGroupsViewModel(
               Name: e.Name,
@@ -206,7 +209,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
     test(
@@ -218,7 +221,7 @@ void main() {
       final future = sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(future, throwsA(DomainError.commandNotAvailable));
@@ -232,7 +235,7 @@ void main() {
       final future = sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(future, throwsA(DomainError.unexpected));
@@ -241,7 +244,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       verify(() => loadExpansibleGroups.load()).called(1);
@@ -254,7 +257,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(sut.loadedMenu.last.entries.first.key.Name, R.string.avaliate);
@@ -264,7 +267,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
@@ -274,7 +277,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
 
@@ -289,7 +292,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
 
@@ -337,7 +340,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
     test('Should put "promotion" in second group list', () async {
@@ -395,7 +398,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
 
@@ -404,7 +407,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       verify(() => expansibleGroupFromProductPresenter
@@ -420,7 +423,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       verify(() => loadSuggestionSale.load()).called(1);
@@ -436,7 +439,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(
@@ -570,7 +573,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       verify(() => getProductComposition.getFathers(
@@ -591,7 +594,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       verify(() => getProductComposition.getChildsOfFather(
@@ -615,8 +618,7 @@ void main() {
 
       verify(() => searchProductByCode.search(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             value: "12345-6",
           )).called(1);
 
@@ -624,8 +626,7 @@ void main() {
 
       verify(() => searchProductByCode.search(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             value: "01234-5",
           )).called(1);
 
@@ -633,8 +634,7 @@ void main() {
 
       verify(() => searchProductByCode.search(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             value: "00000-1",
           )).called(1);
 
@@ -642,8 +642,7 @@ void main() {
 
       verify(() => searchProductByCode.search(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             value: "1234567890123",
           )).called(1);
 
@@ -651,8 +650,7 @@ void main() {
 
       verify(() => searchProductByCode.search(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             value: "1234567",
           )).called(1);
     });
@@ -711,7 +709,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
       expect(sut.searchedProduct, null);
     });
@@ -735,8 +733,7 @@ void main() {
       verify(() => searchProductByCode.search(
             value: "1234567890123",
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           )).called(1);
     });
 
@@ -748,8 +745,7 @@ void main() {
       verifyNever(() => searchProductByCode.search(
             value: "",
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           ));
     });
 
@@ -996,7 +992,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1020,7 +1016,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1043,7 +1039,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1151,7 +1147,7 @@ void main() {
 
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1254,7 +1250,7 @@ void main() {
 
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );

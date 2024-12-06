@@ -59,9 +59,9 @@ void main() {
         TotalLiquid: totalLiquid,
         CustomerCode: cartPresenter.saleRequestTempMock!.CustomerCode?.toInt(),
         CovenantCode: cartPresenter.saleRequestTempMock!.CovenantCode?.toInt(),
-        IncrementValue: EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-          IncrementType:
-          EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
+        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: 1,
@@ -109,8 +109,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     optionalFathers =
         EntityFactory.makeProductsCompositionsEntity(isOptionalItem: true);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
@@ -118,11 +117,14 @@ void main() {
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
 
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
 
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(300).toString();
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
 
     obligatoryFather = EntityFactory.makeProductCompositionViewModel(
       quantity: faker.randomGenerator.decimal(),
@@ -793,7 +795,7 @@ void main() {
           ));
 
       verifyNever(() =>
-          cartPresenter.getSaleRequestTemp(homePresenter.commandNumberMock!));
+          cartPresenter.getSaleRequestTemp(homePresenter.commandEntityController!.commandNumber!));
     });
     test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
       final case1 = EntityFactory.makeProductCompositionViewModel(
@@ -866,9 +868,8 @@ void main() {
             .toList(),
       );
 
-      verify(() =>
-              cartPresenter.getSaleRequestTemp(homePresenter.commandNumberMock!))
-          .called(1);
+      verify(() => cartPresenter
+          .getSaleRequestTemp(homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test("Should emit correct values on cartPresenter.load throws unexpected",
         () async {
@@ -910,7 +911,7 @@ void main() {
       final value = await loadSaleRequestTemp.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumberMock!,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
       expect(value, saleRequestTempEntity);

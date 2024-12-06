@@ -14,19 +14,19 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return IconButton(
-      onPressed: homePresenter.commandNumber == null
+      onPressed: homePresenter.commandEntity!.commandNumber == null
           ? null
           : () async {
               await printedProductsPresenter
-                  .loadPrinted(homePresenter.commandNumber!);
+                  .loadPrinted(homePresenter.commandEntity!.commandNumber!);
             },
       icon: Row(
         children: [
-          if (homePresenter.commandNumber != null)
+          if (homePresenter.commandEntity!.commandNumber != null)
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Text(
-                "${R.string.command} ${homePresenter.commandNumber!.toInt()}",
+                "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
                 style: TextStyle(fontSize: getStringSize(context)),
               ),
             ),

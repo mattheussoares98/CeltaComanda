@@ -86,10 +86,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                   showRemoveServiceChargeButton: false,
                   requestUserAndPassword: true,
                   printed: printedProductsPresenter.printed!,
-                  commandNumber: homePresenter.commandNumber!.toInt(),
+                  commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
                   loadPrintedAgain: () async {
                     await printedProductsPresenter
-                        .loadPrinted(homePresenter.commandNumber!);
+                        .loadPrinted(homePresenter.commandEntity!.commandNumber!);
                   },
                 ),
             ],

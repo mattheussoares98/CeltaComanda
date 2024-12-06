@@ -24,7 +24,7 @@ class LoadMenuButton extends StatelessWidget {
         child: TextButton.icon(
           key: const Key("loadMenu"),
           onPressed: () async {
-            if (homePresenter.isFixedCommandNumber) {
+            if (homePresenter.commandEntity?.isFixedCommandNumber == true) {
               await homePresenter.loadCommandData(
                 menuPresenter: menuPresenter,
                 printedProductsPresenter: printedProductsPresenter,

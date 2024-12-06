@@ -74,19 +74,20 @@ void main() {
   void initEntitys() {
     personalizedCode = faker.randomGenerator.integer(5);
     password = faker.randomGenerator.string(5);
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     printedEntity = EntityFactory.makePrintedProductsEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(3).toString();
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
     bitmap = Uint8List(faker.randomGenerator.integer(100));
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
   }
 
   void mockSuccess() {
@@ -94,7 +95,7 @@ void main() {
     userValidations.mockIsValidPassword(true);
     userValidations.mockCanCancel(true);
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
-    barcodeScanner.mockBarcodeScanner(homePresenter.commandNumberMock!);
+    barcodeScanner.mockBarcodeScanner(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
   }
 
@@ -350,11 +351,11 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
     });
     test('Should update printedProducts correctly on loadPrinted success',
         () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.printed, PrintedViewModel.fromEntity(printedEntity));
     });
@@ -362,22 +363,21 @@ void main() {
     test(
         'Should clear printed products if the second search dont return anything',
         () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       expect(sut.printed, PrintedViewModel.fromEntity(printedEntity));
 
       loadPrintedProducts.mockLoadPrintedProducts(null);
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       expect(sut.printed, null);
     });
 
     test("Should call loadPrintedProducts with correct values", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       verify(() => loadPrintedProducts.load(
             url: EnterpriseBuilder.entity!.url!,
-            enterpriseId:
-                EnterpriseBuilder.entity!.enterpriseId!,
-            commandNumber: int.parse(homePresenter.commandNumberMock!),
+            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+            commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
           )).called(1);
     });
 
@@ -386,7 +386,7 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: int.parse(homePresenter.commandNumberMock!),
+        commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
 
       expect(result, printedEntity);
@@ -397,7 +397,7 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: int.parse(homePresenter.commandNumberMock!),
+        commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
 
       expect(result, null);
@@ -408,7 +408,8 @@ void main() {
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      final error = sut.loadPrinted(homePresenter.commandNumber!);
+      final error =
+          sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(error, throwsA(DomainError.unexpected));
     });
@@ -418,13 +419,14 @@ void main() {
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
-      final error = sut.loadPrinted(homePresenter.commandNumber!);
+      final error =
+          sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(error, throwsA(DomainError.commandNotAvailable));
     });
 
     test("Should clear printed on call clearPrinted", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       sut.clear();
 
       expect(sut.printed, null);
@@ -442,15 +444,14 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       verify(
         () => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),
       ).called(1);
       expect(sut.canCancelProducts, true);
@@ -463,7 +464,7 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       verify(() => removePrintedProduct.remove(saleRequestProductId)).called(1);
@@ -480,7 +481,7 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
     });
 
@@ -497,7 +498,7 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
     });
 
@@ -512,14 +513,13 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       verify(() => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!.toInt())).called(1);
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt())).called(1);
     });
 
     test("Should emit correct values on removeProduct throws", () async {
@@ -535,7 +535,7 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
     });
 
@@ -552,7 +552,7 @@ void main() {
         saleRequestProductId: saleRequestProductId,
         menuPresenter: menuPresenter,
         cartPresenter: cartPresenter,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
     });
 
@@ -577,7 +577,7 @@ void main() {
         IncrementValue: faker.randomGenerator.decimal(),
       ));
 
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.printed, null);
     });
@@ -586,7 +586,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emits(false));
 
-      await sut.loadPrinted(homePresenter.commandNumber!, showIsLoading: false);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!,
+          showIsLoading: false);
     });
   });
 
@@ -609,7 +610,7 @@ void main() {
   group("Get total liquid", () {
     test("Should return 0 if printed products is null", () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.getTotalLiquid(sut.printed), 0);
     });
@@ -619,7 +620,7 @@ void main() {
 
       loadPrintedProducts.mockLoadPrintedProducts(printed);
 
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       double value =
           sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed);
@@ -631,7 +632,7 @@ void main() {
 
       loadPrintedProducts.mockLoadPrintedProducts(printed);
 
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(
         sut.getTotalLiquid(sut.printed),
@@ -645,7 +646,7 @@ void main() {
 
       loadPrintedProducts.mockLoadPrintedProducts(printed);
 
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(
         sut.getTotalLiquid(sut.printed),
@@ -658,12 +659,12 @@ void main() {
   group("Get sub total", () {
     test("Should return 0 if printed products is null", () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.getSubtotal(sut.printed), 0);
     });
     test("Should return total liquid of printed products", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(
         sut.getSubtotal(sut.printed),
@@ -673,14 +674,14 @@ void main() {
   });
   group("Remove service charge", () {
     test("Should emit correct values in success", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       // expectLater(sut.mainErrorStream, emits(null)); //dont works because in the loadPrinted already put null value in mainStream
 
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
@@ -695,7 +696,7 @@ void main() {
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
@@ -710,17 +711,17 @@ void main() {
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
     });
     test("Should call validate user password with correct values", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
@@ -734,11 +735,11 @@ void main() {
       ).called(1);
     });
     test("Should call update sale request with correct values", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
@@ -751,21 +752,20 @@ void main() {
             IncrementType: 0,
             IncrementValue: 0,
             TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
-            EnterpriseId:
-                EnterpriseBuilder.entity?.enterpriseId,
+            EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
           ),
           commandNumberWithThreeNumbers:
-              homePresenter.commandNumberMock!.padLeft(3, "0"),
+              homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
           saleRequestId: sut.printed!.SaleRequestId.toInt(),
         ),
       ).called(1);
     });
     test("Should call loadPrinted", () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: true,
       );
@@ -773,9 +773,8 @@ void main() {
       verify(
         () => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),
       ).called(2);
     });
@@ -783,11 +782,11 @@ void main() {
     test(
         "Should not validate user credentials when validateUserAndPassword is false",
         () async {
-      await sut.loadPrinted(homePresenter.commandNumber!);
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
         userPersonalizedCode: personalizedCode,
         password: password,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
         validateUserAndPassword: false,
       );

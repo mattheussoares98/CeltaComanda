@@ -58,7 +58,7 @@ class GetxPaymentPresenter extends GetxController
       );
 
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       if (!isValid) {
@@ -112,14 +112,16 @@ class GetxPaymentPresenter extends GetxController
     try {
       await finishSaleRequestConcentrador.finish(
         pdvNumber: 100,
-        commandNumber: homePresenter.commandNumber!.toInt(),
+        commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
         finalizations: _successfulPayments,
       );
 
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
       _lastRequestedPaymentFinalization = null;
-      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      await printedProductsPresenter.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+      );
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -391,7 +393,7 @@ class GetxPaymentPresenter extends GetxController
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
           commandNumberWithThreeNumbers:
-              homePresenter.commandNumber!.toString().padLeft(3, "0"),
+              homePresenter.commandEntity!.commandNumber!,
           saleRequestId:
               printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );
@@ -407,7 +409,7 @@ class GetxPaymentPresenter extends GetxController
 
         await finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
-          commandNumber: homePresenter.commandNumber!.toInt(),
+          commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
           finalizations: _successfulPayments,
         );
 
@@ -416,7 +418,7 @@ class GetxPaymentPresenter extends GetxController
         showSuccessAndCloseUntilHomePage();
 
         await printedProductsPresenter
-            .loadPrinted(homePresenter.commandNumber!);
+            .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       }
     } catch (e) {
       mainError = UIError.unexpected;

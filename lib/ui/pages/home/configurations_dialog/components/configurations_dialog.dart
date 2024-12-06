@@ -24,8 +24,9 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
     super.initState();
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    if (homePresenter.commandNumber != null) {
-      homePresenter.updateSelectedCommand(homePresenter.commandNumber!.toInt());
+    if (homePresenter.commandEntity!.commandNumber != null) {
+      homePresenter.updateSelectedCommand(
+          homePresenter.commandEntity!.commandNumber!.toInt());
     }
   }
 

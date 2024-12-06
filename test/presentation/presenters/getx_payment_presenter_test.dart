@@ -84,13 +84,16 @@ void main() {
   }
 
   initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
     printedEntity = EntityFactory.makePrintedProductsEntity();
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(999).toString();
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
     commandNumber = faker.randomGenerator.integer(999).toString();
     homePresenter.isGeneratingVersionToRedeMock = true;
     customersEntitys = EntityFactory.makeCustomersEntitys();
@@ -287,7 +290,7 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-            commandNumber: homePresenter.commandNumberMock!),
+            commandNumber: homePresenter.commandEntityController!.commandNumber!),
       ).called(1);
     });
     test('Should emit correct values on is invalid datetime', () async {
@@ -454,7 +457,7 @@ void main() {
 
       verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandNumberMock!.toInt(),
+            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: sut.successfulPayments,
           )).called(1);
     });
@@ -476,7 +479,7 @@ void main() {
       );
 
       verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumberMock!)).called(1);
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test(
         "Should not call finish in concentrador when paid is less than total liquid ",
@@ -491,7 +494,7 @@ void main() {
 
       verifyNever(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandNumberMock!.toInt(),
+            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: null,
           ));
     });
@@ -887,7 +890,7 @@ void main() {
       verifyNever(
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
+          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
           finalizations: null,
         ),
       );
@@ -939,7 +942,7 @@ void main() {
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
             commandNumberWithThreeNumbers:
-                homePresenter.commandNumberMock!.padLeft(3, "0"),
+                homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId
                 .toInt(),
@@ -1076,7 +1079,7 @@ void main() {
 
       verify(() => finishSaleRequestConcentrador.finish(
             pdvNumber: 100,
-            commandNumber: homePresenter.commandNumberMock!.toInt(),
+            commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: sut.successfulPayments,
           )).called(1);
     });

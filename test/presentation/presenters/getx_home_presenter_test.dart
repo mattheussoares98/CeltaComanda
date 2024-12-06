@@ -102,7 +102,7 @@ void main() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSellers.mockLoadSellers(sellerEntitys);
-    addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
+    addDeviceInfo.mockDeviceInfo(fixedCommandEntity.commandNumber?.toInt());
     addPendingDeviceToUpdate.mockAdd(imeiOrWindowsId);
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
     loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
@@ -322,7 +322,8 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
-    test("Should update sut.isFixedCommandNumber correctly", () async {
+    test("Should update sut.commandEntity?.isFixedCommandNumber correctly",
+        () async {
       const fixed = CommandEntity(
         commandNumber: "commandNumber",
         isFixedCommandNumber: true,
@@ -342,7 +343,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.isFixedCommandNumber, true);
+      expect(sut.commandEntity?.isFixedCommandNumber, true);
 
       localCommandData.mockLoad(notFixed);
       await sut.loadCommandData(
@@ -352,17 +353,19 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.isFixedCommandNumber, false);
+      expect(sut.commandEntity?.isFixedCommandNumber, false);
     });
-    test("Should update sut.commandNumber correctly", () async {
+    test("Should update sut.commandEntity!.commandNumber correctly", () async {
       final entity1 = CommandEntity(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
+        commandNumber:
+            faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
         pdv: null,
       );
 
       final entity2 = CommandEntity(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
+        commandNumber:
+            faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
         pdv: null,
       );
@@ -375,7 +378,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.commandNumber, entity1.commandNumber.toString());
+      expect(
+          sut.commandEntity!.commandNumber, entity1.commandNumber.toString());
 
       localCommandData.mockLoad(entity2);
       await sut.loadCommandData(
@@ -385,7 +389,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.commandNumber, entity2.commandNumber.toString());
+      expect(
+          sut.commandEntity!.commandNumber, entity2.commandNumber.toString());
     });
 
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
@@ -399,7 +404,7 @@ void main() {
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
-          commandNumber: sut.commandNumber ?? "001",
+          commandNumber: sut.commandEntity!.commandNumber ?? "001",
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter)).called(1);
     });
@@ -439,10 +444,10 @@ void main() {
       );
 
       verify(() => cartPresenter.getSaleRequestTemp(
-            fixedCommandEntity.commandNumber.toString(),
+            fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
-          .called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(sut.commandEntity!.commandNumber!)).called(1);
     });
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
@@ -596,7 +601,12 @@ void main() {
     });
 
     test("Should update sellers correctly", () async {
-      expect(sut.isFixedCommandNumber, false);
+      await sut.updateCommandEntity(
+        commandNumber: sut.commandEntity?.commandNumber,
+        isFixedCommandNumber: false,
+        pdv: sut.commandEntity?.pdv,
+      );
+      expect(sut.commandEntity?.isFixedCommandNumber, false);
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -654,7 +664,7 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-          commandNumber: fixedCommandEntity.commandNumber.toString(),
+          commandNumber: fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });
@@ -1281,7 +1291,7 @@ void main() {
         );
 
         verify(() => addDeviceInfo.add(
-              commandNumber: sut.commandNumber?.toInt(),
+              commandNumber: sut.commandEntity!.commandNumber?.toInt(),
               imeiOrWindowsId: imeiOrWindowsId,
               applicationVersion: applicationVersion.toString(),
             )).called(1);

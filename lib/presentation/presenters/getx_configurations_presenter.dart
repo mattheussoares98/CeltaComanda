@@ -171,8 +171,9 @@ class GetxConfigurationsPresenter extends GetxController
       await localCommandData.update(
         CommandEntity(
           commandNumber: commandNumber,
-          isFixedCommandNumber: true,
-          pdv: null, //TODO maintain the same pdv. Need get this before save
+          isFixedCommandNumber:
+              homePresenter.commandEntity?.isFixedCommandNumber == true,
+          pdv: homePresenter.commandEntity?.pdv,
         ),
       );
 
@@ -202,7 +203,8 @@ class GetxConfigurationsPresenter extends GetxController
       );
 
       _peoples = peoples;
-      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      await printedProductsPresenter
+          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       return true;
     } on DomainError catch (e) {
       switch (e) {

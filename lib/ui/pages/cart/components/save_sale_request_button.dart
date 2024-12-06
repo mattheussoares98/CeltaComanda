@@ -80,7 +80,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
       onPressed: () async {
         commandNumberController.clear();
 
-        if (homePresenter.isFixedCommandNumber) {
+        if (homePresenter.commandEntity?.isFixedCommandNumber == true) {
           notificationDialog(
             context: context,
             titleMessage: R.string.sendRequest,

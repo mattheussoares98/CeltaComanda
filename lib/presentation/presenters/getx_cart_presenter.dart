@@ -410,9 +410,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     addNewPrintRequestInFirebase();
 
     try {
-      if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
+      if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber == null) {
         throw DomainError.commandNumberObligatory;
-      } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {
+      } else if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber != null) {
         await homePresenter.updateCommandEntity(
           commandNumber: commandNumber,
           isFixedCommandNumber:
@@ -422,7 +424,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
 
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       if (!isValid) {
@@ -433,7 +435,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           await loadSaleRequestTemp.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       _saleRequestTemp =
@@ -483,7 +485,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await confirmedCartProducts.updateValue(false);
       await cartInformations.clearCartProducts();
-      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      await printedProductsPresenter.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+      );
 
       _cartProducts.clear();
 

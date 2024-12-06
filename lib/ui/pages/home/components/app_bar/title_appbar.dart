@@ -27,7 +27,7 @@ class TitleAppbar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (homePresenter.commandNumber != null)
+        if (homePresenter.commandEntity?.commandNumber != null)
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
@@ -39,7 +39,7 @@ class TitleAppbar extends StatelessWidget {
                   doOnPress(context);
                 },
                 child: Text(
-                  "${R.string.table} ${homePresenter.commandNumber?.toInt()}",
+                  "${R.string.table} ${homePresenter.commandEntity!.commandNumber?.toInt()}",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

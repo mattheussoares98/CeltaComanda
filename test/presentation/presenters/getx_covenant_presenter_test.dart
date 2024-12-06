@@ -59,13 +59,16 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
-    homePresenter.commandNumberMock =
-        faker.randomGenerator.integer(100).toString().padLeft(3, "0");
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber:
+          faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
     soapResponse = SoapResponse(
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
@@ -419,7 +422,7 @@ void main() {
     //   verify(
     //     () => finishSaleRequestConcentrador.finish(
     //       pdvNumber: 100,
-    //       commandNumber: homePresenter.commandNumberMock!.toInt(),
+    //       commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
     //       finalizations: [
     //         ConcentratorFinalizationModel(
     //           FinalizationId:
@@ -458,7 +461,8 @@ void main() {
       );
 
       verify(
-        () => printedProductsPresenter.loadPrinted(homePresenter.commandNumberMock!),
+        () => printedProductsPresenter
+            .loadPrinted(homePresenter.commandEntityController!.commandNumber!),
       ).called(1);
     });
     test("Should call authorize covenant limit use by code", () async {
@@ -509,7 +513,7 @@ void main() {
       verifyNever(
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
-          commandNumber: homePresenter.commandNumberMock!.toInt(),
+          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
           finalizations: null,
         ),
       );
@@ -580,7 +584,7 @@ void main() {
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
             commandNumberWithThreeNumbers:
-                homePresenter.commandNumberMock!.padLeft(3, "0"),
+                homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId
                 .toInt(),

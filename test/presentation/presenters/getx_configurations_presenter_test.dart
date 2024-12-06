@@ -107,7 +107,12 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(
       newFixedCommandNumber,
     );
-    homePresenter.commandNumberMock = newFixedCommandNumber.toString();
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
+
     identifier = faker.randomGenerator.string(10);
   }
 
@@ -360,8 +365,8 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumber!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test("Should emit correct values when update command number", () async {
       expectLater(sut.mainErrorStream, emits(null));
@@ -404,8 +409,9 @@ void main() {
         () => localCommandData.update(
           CommandEntity(
             commandNumber: newFixedCommandNumber.toString().padLeft(3, '0'),
-            isFixedCommandNumber: true,
-            pdv: null, //TODO correct this test after correct how save the pdv
+            isFixedCommandNumber:
+                homePresenter.commandEntityController!.isFixedCommandNumber,
+            pdv: homePresenter.commandEntityController!.pdv,
           ),
         ),
       ).called(1);
@@ -439,10 +445,11 @@ void main() {
 
       verify(
         () => homePresenter.updateCommandEntity(
-          commandNumber: newFixedCommandNumber.toString(),
+          commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
           isFixedCommandNumber:
-              homePresenter.commandEntity?.isFixedCommandNumber == true,
-          pdv: homePresenter.commandEntity?.pdv,
+              homePresenter.commandEntityController?.isFixedCommandNumber ==
+                  true,
+          pdv: homePresenter.commandEntityController?.pdv,
         ),
       ).called(1);
     });

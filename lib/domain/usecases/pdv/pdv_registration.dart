@@ -10,4 +10,10 @@ abstract class PdvRegistration {
   });
 
   Future<PdvEntity?> getById(int pdvId);
+
+  Future<void> updatePdvRegister({
+    required PdvEntity entity,
+    required String imeiOrWindowsId,
+    required String versionNumber,
+  });
 }

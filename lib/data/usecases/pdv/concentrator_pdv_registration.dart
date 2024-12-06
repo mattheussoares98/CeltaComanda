@@ -91,4 +91,30 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       return null;
     }
   }
+
+  @override
+  Future<void> updatePdvRegister({
+    required PdvEntity entity,
+    required String imeiOrWindowsId,
+    required String versionNumber,
+  }) async {
+    try {
+      var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
+
+      final url = EnterpriseBuilder.entity!.concentradorUrl;
+
+      final version =
+          "$versionNumber = ${DateTime.now().day.toString().padLeft(2, "0")}/${DateTime.now().month.toString().padLeft(2, "0")}/${DateTime.now().year}";
+      final pdvId = entity.PdvId!;
+
+      await httpAdapter.request(
+        url:
+            '$url/api/APIPdvs/Update?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$imeiOrWindowsId&versionNumber=$version',
+        method: "put",
+        headers: headers,
+      );
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
+  }
 }

@@ -244,12 +244,16 @@ void main() {
   });
 
   group("Clear data", () {
-    test('Should clear command number', () async {
-      // sut.updateCommandEntity("001");
+    test('Should clear commandEntity', () async {
+      await sut.updateCommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+        pdv: commandEntity.pdv,
+      );
 
-      sut.clear();
+      await sut.clear();
 
-      expect(sut.commandNumber, isNull);
+      expect(sut.commandEntity, isNull);
     });
     test('Should clear updateMenu count', () async {
       await sut.loadCommandData(
@@ -263,6 +267,17 @@ void main() {
       sut.clear();
 
       expect(sut.updateMenu, -1);
+    });
+    test('Should call local command data update correctly', () async {
+      await sut.clear();
+
+      verify(() => localCommandData.update(
+            CommandEntity(
+              commandNumber: null,
+              isFixedCommandNumber: false,
+              pdv: null,
+            ),
+          )).called(1);
     });
   });
 

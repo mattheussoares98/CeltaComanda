@@ -63,11 +63,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> clear() async {
-    _commandNumber = null;
+    _commandEntity = null;
     _updateMenu = -1;
     await localCommandData.update(
       CommandEntity(
-        commandNumber: _commandNumber,
+        commandNumber: null,
         isFixedCommandNumber: false,
         pdv: null,
       ),

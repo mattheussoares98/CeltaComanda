@@ -309,6 +309,34 @@ void main() {
 
       verify(() => localCommandData.load()).called(1);
     });
+    test("Should update command entity locally when dont return a null value",
+        () async {
+      localCommandData.mockLoad(commandEntity);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => localCommandData.update(commandEntity)).called(1);
+    });
+    test("Should not update local command data when return a null value",
+        () async {
+      localCommandData.mockLoad(null);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verifyNever(() => localCommandData.update(commandEntity));
+    });
 
     test("Should emit correct values on loadUseFixedCommandNumber", () async {
       expectLater(sut.mainErrorStream, emits(null));

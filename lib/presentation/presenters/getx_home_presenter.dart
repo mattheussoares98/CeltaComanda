@@ -49,6 +49,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
+    //TODO remove the registration of pdv, if has
     await enterprisePresenter.clearEnterpriseData();
     await persistent.makeNotPersistent();
     await clear();

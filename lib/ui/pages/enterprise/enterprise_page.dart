@@ -143,7 +143,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                           homePresenter: homePresenter,
                           enterprisePresenter: enterprisePresenter,
                         );
-                        selectedPdv = null;
+                        setState(() {
+                          selectedPdv = null;
+                        });
                       },
                     ),
                     if (homePresenter.isGeneratingVersionToGetNet ||
@@ -153,7 +155,9 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                         commandNumberController: commandNumberController,
                         selectedPdv: selectedPdv,
                         updateSelectedPdv: (value) {
-                          selectedPdv = value;
+                          setState(() {
+                            selectedPdv = value;
+                          });
                         },
                       ),
                   ],

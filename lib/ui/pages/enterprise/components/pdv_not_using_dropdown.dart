@@ -42,8 +42,8 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                   isExpanded: true,
                   alignment: Alignment.center,
                   hint: Text(snapshot.data == null
-                      ? "validate the enterprise first" + ""
-                      : "select " + "pdv"),
+                      ? R.string.msgValidateEnterpriseFirst
+                      : R.string.selectPdv),
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: getStringSize(context),
@@ -54,7 +54,8 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                           value: e,
                           onTap: () async {},
                           child: Center(
-                            child: Text("PDV " + e.PdvNumber),
+                            child: Text(
+                                "${R.string.pdv.toUpperCase()} ${e.PdvNumber}"),
                           ),
                         ),
                       )
@@ -79,7 +80,11 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                             isFixedCommandNumber: widget.isFixedCommandNumber,
                           );
                         },
-                  child: Text("Register " + "pdv number"),
+                  child: Text(
+                    widget.selectedPdv == null
+                        ? R.string.selectPdv
+                        : R.string.register,
+                  ),
                 ),
               ),
             ],

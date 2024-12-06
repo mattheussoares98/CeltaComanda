@@ -18,22 +18,44 @@ void main() {
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   late ObtainPlataformSpy obtainPlatform;
+  late LocalCommandDataSpy localCommandData;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
-  setUp(() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+  void initUsecases() {
     navigateTo = NavigateToSpy();
     loadEnterpriseData = LocalEnterpriseDataSpy();
     obtainPlatform = ObtainPlataformSpy();
-    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+    localCommandData = LocalCommandDataSpy();
+  }
+
+  void initPresenters() {
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadEnterpriseData: loadEnterpriseData,
       obtainPlatform: obtainPlatform,
+      localCommandData: localCommandData,
     );
+  }
+
+  void initEntitys() {
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
+  }
+
+  void initMockSuccess() {
+    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+  }
+
+  setUp(() {
+    initUsecases();
+    initPresenters();
+    initEntitys();
+    initMockSuccess();
+  });
+
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeCommandEntity());
   });
 
   group("Go to home page", () {

@@ -6,7 +6,7 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       localEnterpriseData: makeLocalEnterpriseData(),
       navigateTo: makeNavigateTo(),
       commandInformations: makeRemoteCommandInformations(),
-      localCommandData: makeLocalUseFixedCommandNumber(),
+      localCommandData: makeLocalCommandData(),
       userValidations: makeRemoteUserValidations(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),

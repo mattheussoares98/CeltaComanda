@@ -162,7 +162,12 @@ Future<void> _onPress({
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
   } else {
-    homePresenter.updateCommandNumber(commandNumber);
+    await homePresenter.updateCommandEntity(
+      commandNumber: commandNumber,
+      isFixedCommandNumber:
+          homePresenter.commandEntity?.isFixedCommandNumber == true,
+      pdv: homePresenter.commandEntity?.pdv,
+    );
     await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
   }
 }

@@ -98,8 +98,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     selectedSeller = EntityFactory.makeSellersViewModel();
     peoples = faker.randomGenerator.integer(100);
@@ -439,8 +438,12 @@ void main() {
       );
 
       verify(
-        () => homePresenter.updateCommandNumber(
-            newFixedCommandNumber.toString().padLeft(3, '0')),
+        () => homePresenter.updateCommandEntity(
+          commandNumber: newFixedCommandNumber.toString(),
+          isFixedCommandNumber:
+              homePresenter.commandEntity?.isFixedCommandNumber == true,
+          pdv: homePresenter.commandEntity?.pdv,
+        ),
       ).called(1);
     });
     test("Should return false if update fixed command number throws", () async {
@@ -479,8 +482,7 @@ void main() {
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);

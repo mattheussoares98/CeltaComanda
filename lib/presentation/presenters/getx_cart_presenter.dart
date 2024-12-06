@@ -413,7 +413,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
         throw DomainError.commandNumberObligatory;
       } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {
-        homePresenter.updateCommandNumber(commandNumber.padLeft(3, "0"));
+        await homePresenter.updateCommandEntity(
+          commandNumber: commandNumber,
+          isFixedCommandNumber:
+              homePresenter.commandEntity?.isFixedCommandNumber == true,
+          pdv: homePresenter.commandEntity?.pdv,
+        );
       }
 
       bool isValid = await commandInformations.isValidDatetime(
@@ -456,11 +461,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: EnterpriseBuilder
-                .entity?.serviceChargePercentageOrValue ??
-            0,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType ?? 0,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue ?? 0,
+        IncrementType: EnterpriseBuilder.entity?.serviceChargeType ?? 0,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -606,15 +609,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   double calculateServiceChargeValue(double totalLiquidSaleRequest) {
-    if (EnterpriseBuilder
-            .entity?.serviceChargePercentageOrValue ==
-        null) {
+    if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null) {
       return 0;
     } else {
       return totalLiquidSaleRequest *
-          (EnterpriseBuilder
-                  .entity!.serviceChargePercentageOrValue! /
-              100);
+          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
     }
   }
 }

@@ -855,7 +855,7 @@ class EntityFactory {
 
   static CommandEntity makeCommandEntity([bool? isFixedCommandNumber]) =>
       CommandEntity(
-        commandNumber: faker.randomGenerator.integer(100).toString(),
+        commandNumber: faker.randomGenerator.integer(10).toString(),
         isFixedCommandNumber: isFixedCommandNumber == true,
         pdv: makePdvEntity(),
       );

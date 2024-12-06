@@ -119,8 +119,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (isFixedCommandNumber && commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: commandNumber!.padLeft(3, "0"),
         );
 
@@ -246,11 +245,28 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  void updateCommandNumber(String? value) {
-    if (value == null) {
-      _commandNumber = value;
-    } else {
-      _commandNumber = value.padLeft(3, "0");
+  Future<void> updateCommandEntity({
+    required String? commandNumber,
+    required bool isFixedCommandNumber,
+    required PdvEntity? pdv,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    final entity = CommandEntity(
+      commandNumber: commandNumber?.padLeft(3, "0"),
+      isFixedCommandNumber: isFixedCommandNumber,
+      pdv: pdv ?? _commandEntity?.pdv,
+    );
+
+    try {
+      _commandEntity = entity;
+
+      await localCommandData.update(entity);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
     notifyListeners();
   }
@@ -385,14 +401,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
-          EnterpriseBuilder
-              .entity?.updateConcentratorEnterpriseData) {
+          EnterpriseBuilder.entity?.updateConcentratorEnterpriseData) {
         await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
 
       if (enterprise.updateDevicesInformations !=
-          EnterpriseBuilder
-              .entity?.updateDevicesInformations) {
+          EnterpriseBuilder.entity?.updateDevicesInformations) {
         final applicationVersion = await loadDeviceData.getApplicationVersion();
         await addDeviceInfo.add(
           commandNumber: commandNumber?.toInt(),
@@ -463,4 +477,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   int? _updateMenu = -1;
   @override
   int? get updateMenu => _updateMenu;
+
+  CommandEntity? _commandEntity;
+  @override
+  CommandEntity? get commandEntity => _commandEntity;
 }

@@ -162,7 +162,12 @@ class GetxConfigurationsPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      homePresenter.updateCommandNumber(commandNumber);
+      await homePresenter.updateCommandEntity(
+        commandNumber: commandNumber,
+        isFixedCommandNumber:
+            homePresenter.commandEntity?.isFixedCommandNumber == true,
+        pdv: homePresenter.commandEntity?.pdv,
+      );
       await localCommandData.update(
         CommandEntity(
           commandNumber: commandNumber,
@@ -183,8 +188,7 @@ class GetxConfigurationsPresenter extends GetxController
           Comments: null,
           Peoples: null,
           DeliveryControl: null,
-          EnterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          EnterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
           SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
           TotalLiquid: saleRequestTempEntity.TotalLiquid,

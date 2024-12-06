@@ -61,8 +61,12 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
               clear: true,
             );
           } else if (registeredPdv.MacAddress == imeiOrWindowsId) {
-            //TODO atualizar registro no concentrador
-            //o id registrado no concentrador é igual ao do dispositivo local
+            final versionNumber = await loadDeviceData.getApplicationVersion();
+            await pdvRegistration.updatePdvRegister(
+              entity: registeredPdv,
+              versionNumber: versionNumber,
+            );
+            
             navigateTo.navigate(
               pageRoute: PageRoutes.home,
               clear: true,

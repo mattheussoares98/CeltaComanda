@@ -13,7 +13,6 @@ abstract class PdvRegistration {
 
   Future<void> updatePdvRegister({
     required PdvEntity entity,
-    required String imeiOrWindowsId,
     required String versionNumber,
   });
 }

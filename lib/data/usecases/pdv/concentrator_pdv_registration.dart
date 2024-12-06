@@ -95,7 +95,6 @@ class ConcentratorPdvRegistration implements PdvRegistration {
   @override
   Future<void> updatePdvRegister({
     required PdvEntity entity,
-    required String imeiOrWindowsId,
     required String versionNumber,
   }) async {
     try {
@@ -106,6 +105,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       final version =
           "$versionNumber = ${DateTime.now().day.toString().padLeft(2, "0")}/${DateTime.now().month.toString().padLeft(2, "0")}/${DateTime.now().year}";
       final pdvId = entity.PdvId!;
+      final imeiOrWindowsId = entity.MacAddress!;
 
       await httpAdapter.request(
         url:
@@ -114,7 +114,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
         headers: headers,
       );
     } catch (error) {
-      throw DomainError.unexpected;
+      //tudo bem, depois atualiza o registro. Já foi certificado de que é o mesmo dispositivo
     }
   }
 }

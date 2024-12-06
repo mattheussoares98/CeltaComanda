@@ -77,6 +77,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makePdvEntity());
   });
 
   group("Is web", () {
@@ -265,10 +266,32 @@ void main() {
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
     });
     test(
-        "Should go to enterprise page if device id and remote id registered is equal",
+        "Should call correct usecases if device id and remote id registered is equal",
         () async {
       homePresenter.isGeneratingVersionToGetNetMock = true;
       loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
+      final applicationVersion = faker.guid.guid();
+      loadDeviceData.mockGetApplicationVersion(applicationVersion);
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadDeviceData.getApplicationVersion()).called(1);
+      verify(() => pdvRegistration.updatePdvRegister(
+            entity: registeredPdv,
+            versionNumber: applicationVersion,
+          )).called(1);
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
+          .called(1);
+    });
+    test("Should go to home page if update pdv register trhows", () async {
+      //já validou que o mac é igual o id do dispositivo, não tem problema se não atualizar. Depois atualiza
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
+      final applicationVersion = faker.guid.guid();
+      loadDeviceData.mockGetApplicationVersion(applicationVersion);
+      pdvRegistration.mockUpdatePdvRegisterError();
 
       await sut.checkPageToGo(
         homePresenter: homePresenter,

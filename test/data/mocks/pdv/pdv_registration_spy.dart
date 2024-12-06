@@ -9,6 +9,7 @@ import 'package:mocktail/mocktail.dart';
 class PdvRegistrationSpy extends Mock implements PdvRegistration {
   PdvRegistrationSpy() {
     this._mockSetPdvRegister();
+    this._mockUpdatePdvRegister();
   }
   When _mockGetPdvNotUsingCall() => when(() => this.getPdvNotUsing());
   void mockGetPdvNotUsing(List<PdvEntity> value) =>
@@ -31,4 +32,13 @@ class PdvRegistrationSpy extends Mock implements PdvRegistration {
       this._mockGetByIdCall().thenAnswer((any) async => entity);
   void mockGetByIdError() =>
       this._mockGetByIdCall().thenAnswer((any) async => null);
+
+  When _mockUpdatePdvRegisterCall() => when(() => this.updatePdvRegister(
+        entity: any(named: "entity"),
+        versionNumber: any(named: "versionNumber"),
+      ));
+  void _mockUpdatePdvRegister() =>
+      this._mockUpdatePdvRegisterCall().thenAnswer((any) async => any);
+  void mockUpdatePdvRegisterError() =>
+      this._mockUpdatePdvRegisterCall().thenAnswer((any) async => null);
 }

@@ -13,8 +13,12 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui/mocks/mocks.dart';
+
 void main() {
   late GetxSplashPresenter sut;
+  late HomePresenterSpy homePresenter;
+
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   late ObtainPlataformSpy obtainPlatform;
@@ -31,6 +35,8 @@ void main() {
   }
 
   void initPresenters() {
+    homePresenter = HomePresenterSpy();
+
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadEnterpriseData: loadEnterpriseData,
@@ -61,7 +67,10 @@ void main() {
   group("Go to home page", () {
     test('Should go to home page on success to load data of API', () async {
       obtainPlatform.mockIsWeb(false);
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -77,7 +86,10 @@ void main() {
       obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(null);
 
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -117,7 +129,10 @@ void main() {
         ),
       );
 
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -156,7 +171,10 @@ void main() {
         ),
       );
 
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -170,7 +188,51 @@ void main() {
         () async {
       loadEnterpriseData.mockLoadError();
 
-      await sut.checkPageToGo();
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
+    });
+    test(
+        "Should go to enterprise page if is generating version to getnet and dont have a pdv in local command data",
+        () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      obtainPlatform.mockIsWeb(false);
+
+      localCommandData.mockLoad(
+        CommandEntity(
+          commandNumber: faker.randomGenerator.integer(100).toString(),
+          isFixedCommandNumber: faker.randomGenerator.boolean(),
+          pdv: null,
+        ),
+      );
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
+    });
+    test(
+        "Should go to enterprise page if is generating version to rede and dont have a pdv in local command data",
+        () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      obtainPlatform.mockIsWeb(false);
+
+      localCommandData.mockLoad(
+        CommandEntity(
+          commandNumber: faker.randomGenerator.integer(100).toString(),
+          isFixedCommandNumber: faker.randomGenerator.boolean(),
+          pdv: null,
+        ),
+      );
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
 
       verify(() => navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
@@ -179,12 +241,16 @@ void main() {
 
   group("Go to web login page", () {
     test("Should call getPlataform.isWeb", () async {
-      await sut.checkPageToGo();
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
 
       verify(() => obtainPlatform.isWeb()).called(1);
     });
     test("Should go to webLoginPage if is web page", () async {
-      await sut.checkPageToGo();
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
 
       verify(() =>
               navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true))

@@ -19,11 +19,16 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   });
 
   @override
-  Future<void> checkPageToGo({int durationInSeconds = 2}) async {
+  Future<void> checkPageToGo({
+    required HomePresenter homePresenter,
+    int durationInSeconds = 2,
+  }) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       EnterpriseBuilder.entity = await loadEnterpriseData.load();
       bool isWeb = obtainPlatform.isWeb();
+
+      final localCommandEntity = await localCommandData.load();
 
       if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
@@ -33,8 +38,14 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
+      } else if (localCommandEntity?.pdv == null &&
+          (homePresenter.isGeneratingVersionToGetNet ||
+              homePresenter.isGeneratingVersionToRede)) {
+        navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation,
+          clear: true,
+        );
       } else {
-        //TODO if is generating version to getnet or rede and dont have pdv number, cant navigate to home page
         navigateTo.navigate(
           pageRoute: PageRoutes.home,
           clear: true,

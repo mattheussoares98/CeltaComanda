@@ -47,6 +47,17 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
             pageRoute: PageRoutes.enterpriseValidation,
             clear: true,
           );
+        } else {
+          final registeredPdv =
+              await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
+
+          // if (registeredPdv == null) {
+          //   //não conseguiu validar, depois valida
+          //   navigateTo.navigate(
+          //     pageRoute: PageRoutes.home,
+          //     clear: true,
+          //   );
+          // }
         }
       } else {
         navigateTo.navigate(

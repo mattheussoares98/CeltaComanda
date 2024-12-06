@@ -1235,7 +1235,7 @@ class EntityFactory {
 
   static PdvEntity makePdvEntity() => PdvEntity(
         PdvId: faker.randomGenerator.integer(100),
-        PdvNumber: faker.randomGenerator.string(10),
+        PdvNumber: faker.randomGenerator.integer(100).toString(),
         IPAddress: faker.randomGenerator.string(10),
         EnterpriseId: faker.randomGenerator.integer(100),
         MacAddress: faker.randomGenerator.string(10),

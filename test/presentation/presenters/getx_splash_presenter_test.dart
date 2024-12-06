@@ -25,6 +25,9 @@ void main() {
   late LocalCommandDataSpy localCommandData;
   late PdvRegistrationSpy pdvRegistration;
 
+  late CommandEntity commandEntity;
+  late PdvEntity registeredPdv;
+
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
@@ -50,11 +53,14 @@ void main() {
 
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
+    commandEntity = EntityFactory.makeCommandEntity();
+    registeredPdv = EntityFactory.makePdvEntity();
   }
 
   void initMockSuccess() {
     loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
-    localCommandData.mockLoad(EntityFactory.makeCommandEntity());
+    localCommandData.mockLoad(commandEntity);
+    pdvRegistration.mockGetById(registeredPdv);
   }
 
   setUp(() {
@@ -82,6 +88,34 @@ void main() {
           clear: true,
         ),
       ).called(1);
+    });
+    test(
+        'Should call get pdv by id if local pdv is not null and is generating version to rede',
+        () async {
+      obtainPlatform.mockIsWeb(false);
+      homePresenter.isGeneratingVersionToRedeMock = true;
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(() => pdvRegistration.getById(commandEntity.pdv!.PdvId!))
+          .called(1);
+    });
+    test(
+        'Should call get pdv by id if local pdv is not null and is generating version to getnet',
+        () async {
+      obtainPlatform.mockIsWeb(false);
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(() => pdvRegistration.getById(commandEntity.pdv!.PdvId!))
+          .called(1);
     });
   });
 

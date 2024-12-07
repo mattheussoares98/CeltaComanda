@@ -51,6 +51,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
     required int pdvId,
     required String imeiOrWindowsId,
     required String versionNumber,
+    required String ip,
+    required bool isUsing,
   }) async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
@@ -62,7 +64,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
 
       await httpAdapter.request(
         url:
-            '$url/api/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=true&ipAddress=127.0.0.1&macAddress=$imeiOrWindowsId&versionNumber=$version',
+            '$url/api/APIPdvs/SetPdvRegister?pdvId=$pdvId&isUsing=$isUsing&ipAddress=$ip&macAddress=$imeiOrWindowsId&versionNumber=$version',
         method: "post",
         headers: headers,
       );

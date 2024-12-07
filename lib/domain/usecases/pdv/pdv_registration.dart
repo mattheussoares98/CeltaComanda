@@ -7,6 +7,8 @@ abstract class PdvRegistration {
     required int pdvId,
     required String imeiOrWindowsId,
     required String versionNumber,
+    required String ip,
+    required bool isUsing,
   });
 
   Future<PdvEntity?> getById(int pdvId);

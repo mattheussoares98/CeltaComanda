@@ -43,8 +43,7 @@ class GetxEnterprisePresenter extends GetxController
     isLoading = true;
     mainError = null;
     try {
-      EnterpriseBuilder.entity =
-          await localEntepriseData.load();
+      EnterpriseBuilder.entity = await localEntepriseData.load();
     } catch (e) {
       e;
     } finally {
@@ -62,8 +61,7 @@ class GetxEnterprisePresenter extends GetxController
       mainError = null;
       isLoading = true;
 
-      if (isUpdatedEnterpriseName ||
-          EnterpriseBuilder.entity!.url == null) {
+      if (isUpdatedEnterpriseName || EnterpriseBuilder.entity!.url == null) {
         final firebaseData = await loadEnterpriseData.load();
 
         if (firebaseData == null) {
@@ -99,8 +97,7 @@ class GetxEnterprisePresenter extends GetxController
             secondsPreloadingImages: firebaseData.secondsPreloadingImages,
           );
 
-          await localEntepriseData
-              .add(EnterpriseBuilder.entity!);
+          await localEntepriseData.add(EnterpriseBuilder.entity!);
         }
       }
 
@@ -257,8 +254,7 @@ class GetxEnterprisePresenter extends GetxController
   @override
   Future<void> clearEnterpriseData() async {
     try {
-      final oldEnterpriseName =
-          EnterpriseBuilder.entity?.enterpriseName;
+      final oldEnterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
       final newEnterprise = EnterpriseEntity(
         enterpriseName: oldEnterpriseName ?? "",
@@ -311,6 +307,8 @@ class GetxEnterprisePresenter extends GetxController
         pdvId: selectedPdv.PdvId.toInt(),
         imeiOrWindowsId: imeiOrWindowsId,
         versionNumber: applicationVersion,
+        ip: "127.0.0.1",
+        isUsing: true,
       );
 
       await localCommandData.update(

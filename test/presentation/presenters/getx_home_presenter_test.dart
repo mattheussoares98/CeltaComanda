@@ -38,6 +38,7 @@ void main() {
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadDeviceData;
+  late PdvRegistrationSpy pdvRegistration;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -77,6 +78,7 @@ void main() {
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadDeviceData,
+      pdvRegistration: pdvRegistration,
     );
   }
 
@@ -93,6 +95,7 @@ void main() {
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadDeviceData = LoadDeviceDataSpy();
+    pdvRegistration = PdvRegistrationSpy();
   }
 
   void initMocks() {

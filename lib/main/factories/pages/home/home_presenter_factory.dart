@@ -15,4 +15,5 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       addDeviceInfo: makeRemoteAddDeviceInfo(),
       addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
       loadDeviceData: makeLocalLoadDeviceData(),
+      pdvRegistration: makeConcentratorPdvRegistration(),
     );

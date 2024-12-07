@@ -23,6 +23,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final AddDeviceInfo addDeviceInfo;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
   final LoadDeviceData loadDeviceData;
+  final PdvRegistration pdvRegistration;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -37,6 +38,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.addDeviceInfo,
     required this.addPendingDeviceToUpdate,
     required this.loadDeviceData,
+    required this.pdvRegistration,
   });
 
   @override
@@ -50,6 +52,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     printedProductsPresenter.clear();
     cartPresenter.clear();
     //TODO remove the registration of pdv, if has
+    
     await enterprisePresenter.clearEnterpriseData();
     await persistent.makeNotPersistent();
     await clear();

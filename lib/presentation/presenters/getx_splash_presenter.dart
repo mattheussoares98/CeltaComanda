@@ -9,32 +9,76 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final ObtainPlataform obtainPlatform;
+  final LocalCommandData localCommandData;
+  final PdvRegistration pdvRegistration;
+  final LoadDeviceData loadDeviceData;
 
   GetxSplashPresenter({
     required this.navigateTo,
     required this.loadEnterpriseData,
     required this.obtainPlatform,
+    required this.localCommandData,
+    required this.pdvRegistration,
+    required this.loadDeviceData,
   });
 
   @override
-  Future<void> checkPageToGo({int durationInSeconds = 2}) async {
+  Future<void> checkPageToGo({
+    required HomePresenter homePresenter,
+    int durationInSeconds = 2,
+  }) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
-      EnterpriseBuilder.entity =
-          await loadEnterpriseData.load();
+      EnterpriseBuilder.entity = await loadEnterpriseData.load();
       bool isWeb = obtainPlatform.isWeb();
+
+      final localCommandEntity = await localCommandData.load();
 
       if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
-      } else if (EnterpriseBuilder.entity?.enterpriseId ==
-              null ||
+      } else if (EnterpriseBuilder.entity?.enterpriseId == null ||
           EnterpriseBuilder.entity?.url == null) {
         navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
+      } else if (homePresenter.isGeneratingVersionToGetNet ||
+          homePresenter.isGeneratingVersionToRede) {
+        if (localCommandEntity?.pdv == null) {
+          navigateTo.navigate(
+            pageRoute: PageRoutes.enterpriseValidation,
+            clear: true,
+          );
+        } else {
+          final registeredPdv =
+              await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
+          final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+
+          if (registeredPdv == null) {
+            //não conseguiu validar, depois valida
+            navigateTo.navigate(
+              pageRoute: PageRoutes.home,
+              clear: true,
+            );
+          } else if (registeredPdv.MacAddress == imeiOrWindowsId) {
+            final versionNumber = await loadDeviceData.getApplicationVersion();
+            await pdvRegistration.updatePdvRegister(
+              entity: registeredPdv,
+              versionNumber: versionNumber,
+            );
+            
+            navigateTo.navigate(
+              pageRoute: PageRoutes.home,
+              clear: true,
+            );
+          } else {
+            navigateTo.navigate(
+              pageRoute: PageRoutes.enterpriseValidation,
+              clear: true,
+            );
+          }
+        }
       } else {
-        //TODO if is generating version to getnet or rede and dont have pdv number, cant navigate to home page
         navigateTo.navigate(
           pageRoute: PageRoutes.home,
           clear: true,

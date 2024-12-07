@@ -87,6 +87,7 @@ class EnUs implements Translation {
       'Something went wrong. Please try again later.';
   String get msgUseOnlyWhenIsFixedTableNumber =>
       'This option should only be used when using a fixed tablet per table';
+  String get msgValidateEnterpriseFirst => "Validate the enterprise first";
   String get msgVeryShortField => 'Field too short';
   String get msgWantCloseApplication =>
       'Do you really want to close the application?';
@@ -194,6 +195,7 @@ class EnUs implements Translation {
   String get originTable => 'Oritin table';
   String get password => 'Password';
   String get pay => 'Pay';
+  String get pdv => 'Pdv';
   String get paymentValue => 'Payment value';
   String get peopleQuantity => 'Number of people';
   String get per => 'Per';
@@ -206,6 +208,7 @@ class EnUs implements Translation {
   String get promotionWithoutPoints => 'Promotion without points';
   String get quantity => 'Quantity';
   String get quantityAbbreviated => 'Qty';
+  String get register => 'Register';
   String get reload => 'Reload';
   String get removeProduct => 'Remove product';
   String get removeServiceCharge => 'Remove service';
@@ -225,6 +228,7 @@ class EnUs implements Translation {
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
   String get selectPaymentOption => 'Select a payment option';
+  String get selectPdv => 'Select one PDV';
   String get selectProduct => 'Select a product!';
   String get selectQuantity => 'Enter the quantity';
   String get seller => 'Seller';

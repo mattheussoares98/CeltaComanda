@@ -29,7 +29,7 @@ class _SearchCommandIconState extends State<SearchCommandIcon> {
           children: [
             IconButton(
               icon: Icon(
-                homePresenter.isFixedCommandNumber
+                homePresenter.commandEntity?.isFixedCommandNumber == true
                     ? Icons.refresh
                     : Icons.find_replace_rounded,
                 color: Theme.of(context).primaryColor,

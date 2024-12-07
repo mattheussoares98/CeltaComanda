@@ -62,6 +62,7 @@ abstract class Translation {
   String get msgUpdatedTableConfigurationsSuccess;
   String get msgUnexpectedError;
   String get msgUseOnlyWhenIsFixedTableNumber;
+  String get msgValidateEnterpriseFirst;
   String get msgVeryShortField;
   String get msgWantCloseApplication;
   String get msgWantCloseTable;
@@ -165,6 +166,7 @@ abstract class Translation {
   String get originTable;
   String get password;
   String get pay;
+  String get pdv;
   String get paymentValue;
   String get peopleQuantity;
   String get per;
@@ -177,6 +179,7 @@ abstract class Translation {
   String get promotionWithoutPoints;
   String get quantity;
   String get quantityAbbreviated;
+  String get register;
   String get reload;
   String get removeProduct;
   String get removeServiceCharge;
@@ -194,6 +197,7 @@ abstract class Translation {
   String get selectOneComment;
   String get selectedProductsAndComments;
   String get selectPaymentOption;
+  String get selectPdv;
   String get selectProduct;
   String get selectQuantity;
   String get seller;

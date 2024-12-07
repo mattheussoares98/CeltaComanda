@@ -32,8 +32,10 @@ class SearchDataByCommandNumber extends StatelessWidget {
           padding: const EdgeInsets.only(top: 30),
           child: TextButton.icon(
             onPressed: () async {
-              if (homePresenter.isFixedCommandNumber) {
-                await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+              if (homePresenter.commandEntity?.isFixedCommandNumber == true) {
+                await printedProductsPresenter.loadPrinted(
+                  homePresenter.commandEntity!.commandNumber!,
+                );
               } else {
                 writeCommandNumber(
                   context: context,
@@ -47,7 +49,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
               color: Theme.of(context).primaryColorDark,
             ),
             label: Text(
-              homePresenter.isFixedCommandNumber
+              homePresenter.commandEntity?.isFixedCommandNumber == true
                   ? R.string.searchCommandData
                   : R.string.searchDataOfOtherCommandNumber,
               textAlign: TextAlign.center,

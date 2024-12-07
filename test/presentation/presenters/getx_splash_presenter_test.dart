@@ -13,60 +13,96 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui/mocks/mocks.dart';
+
 void main() {
   late GetxSplashPresenter sut;
+  late HomePresenterSpy homePresenter;
+
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy loadEnterpriseData;
   late ObtainPlataformSpy obtainPlatform;
+  late LocalCommandDataSpy localCommandData;
+  late PdvRegistrationSpy pdvRegistration;
+  late LoadDeviceDataSpy loadDeviceData;
+
+  late CommandEntity commandEntity;
+  late PdvEntity registeredPdv;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
 
-  setUp(() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+  void initUsecases() {
     navigateTo = NavigateToSpy();
     loadEnterpriseData = LocalEnterpriseDataSpy();
     obtainPlatform = ObtainPlataformSpy();
-    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+    localCommandData = LocalCommandDataSpy();
+    pdvRegistration = PdvRegistrationSpy();
+    loadDeviceData = LoadDeviceDataSpy();
+  }
+
+  void initPresenters() {
+    homePresenter = HomePresenterSpy();
+
     sut = GetxSplashPresenter(
       navigateTo: navigateTo,
       loadEnterpriseData: loadEnterpriseData,
       obtainPlatform: obtainPlatform,
+      localCommandData: localCommandData,
+      pdvRegistration: pdvRegistration,
+      loadDeviceData: loadDeviceData,
     );
+  }
+
+  void initEntitys() {
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
+    commandEntity = EntityFactory.makeCommandEntity();
+    registeredPdv = EntityFactory.makePdvEntity();
+  }
+
+  void initMockSuccess() {
+    loadEnterpriseData.mockLoad(EnterpriseBuilder.entity!);
+    localCommandData.mockLoad(commandEntity);
+    pdvRegistration.mockGetById(registeredPdv);
+    obtainPlatform.mockIsWeb(false);
+    loadDeviceData.mockGetImeiOrWindowsId(commandEntity.pdv!.MacAddress!);
+  }
+
+  setUp(() {
+    initUsecases();
+    initPresenters();
+    initEntitys();
+    initMockSuccess();
   });
 
-  group("Go to home page", () {
-    test('Should go to home page on success to load data of API', () async {
-      obtainPlatform.mockIsWeb(false);
-      await sut.checkPageToGo(durationInSeconds: 0);
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeCommandEntity());
+    registerFallbackValue(EntityFactory.makePdvEntity());
+  });
 
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.home,
-          clear: true,
-        ),
-      ).called(1);
+  group("Is web", () {
+    test("Should call getPlataform.isWeb", () async {
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => obtainPlatform.isWeb()).called(1);
+    });
+    test("Should go to webLoginPage if is web page", () async {
+      obtainPlatform.mockIsWeb(true);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() =>
+              navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true))
+          .called(1);
     });
   });
 
-  group("Go to enterprise validation page", () {
-    test('Should go to enterprise validation enterprise is null', () async {
-      obtainPlatform.mockIsWeb(false);
-      loadEnterpriseData.mockLoad(null);
-
-      await sut.checkPageToGo(durationInSeconds: 0);
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.enterpriseValidation,
-          clear: true,
-        ),
-      ).called(1);
-    });
+  group("Enterprise id or url is null", () {
     test('Should go to enterprise validation if EnterpriseId is null',
         () async {
-      obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(
         EnterpriseEntity(
           enterpriseName: "enterpriseName",
@@ -95,7 +131,10 @@ void main() {
         ),
       );
 
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -105,7 +144,6 @@ void main() {
       ).called(1);
     });
     test('Should go to enterprise validation if url is null', () async {
-      obtainPlatform.mockIsWeb(false);
       loadEnterpriseData.mockLoad(
         EnterpriseEntity(
           enterpriseName: "enterpriseName",
@@ -134,7 +172,160 @@ void main() {
         ),
       );
 
-      await sut.checkPageToGo(durationInSeconds: 0);
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation,
+          clear: true,
+        ),
+      ).called(1);
+    });
+  });
+
+  group("Is generating version to rede or getnet", () {
+    test(
+        'Should call get pdv by id if local pdv is not null and is generating version to rede',
+        () async {
+      homePresenter.isGeneratingVersionToRedeMock = true;
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(() => pdvRegistration.getById(commandEntity.pdv!.PdvId!))
+          .called(1);
+    });
+
+    test('Should call get pdv by id if local pdv is not null', () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(() => pdvRegistration.getById(commandEntity.pdv!.PdvId!))
+          .called(1);
+    });
+
+    test("Should go to enterprise page dont have a pdv in local command data",
+        () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+
+      localCommandData.mockLoad(
+        CommandEntity(
+          commandNumber: faker.randomGenerator.integer(100).toString(),
+          isFixedCommandNumber: faker.randomGenerator.boolean(),
+          pdv: null,
+        ),
+      );
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
+    });
+    test("Should go to home page if get pdv by id return null", () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      pdvRegistration.mockGetById(null);
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
+          .called(1);
+    });
+    test("Should call load imei or windows id", () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      pdvRegistration.mockGetById(null);
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
+    });
+    test(
+        "Should go to enterprise page if device id and remote id registered are differently",
+        () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
+    });
+    test(
+        "Should call correct usecases if device id and remote id registered is equal",
+        () async {
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
+      final applicationVersion = faker.guid.guid();
+      loadDeviceData.mockGetApplicationVersion(applicationVersion);
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadDeviceData.getApplicationVersion()).called(1);
+      verify(() => pdvRegistration.updatePdvRegister(
+            entity: registeredPdv,
+            versionNumber: applicationVersion,
+          )).called(1);
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
+          .called(1);
+    });
+    test("Should go to home page if update pdv register trhows", () async {
+      //já validou que o mac é igual o id do dispositivo, não tem problema se não atualizar. Depois atualiza
+      homePresenter.isGeneratingVersionToGetNetMock = true;
+      loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
+      final applicationVersion = faker.guid.guid();
+      loadDeviceData.mockGetApplicationVersion(applicationVersion);
+      pdvRegistration.mockUpdatePdvRegisterError();
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
+          .called(1);
+    });
+  });
+
+  group("All succeeds", () {
+    test('Should go to home page on success to load data of API', () async {
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.home,
+          clear: true,
+        ),
+      ).called(1);
+    });
+  });
+
+  group("Throws navigations", () {
+    test('Should go to enterprise validation enterprise is null', () async {
+      loadEnterpriseData.mockLoad(null);
+
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+        durationInSeconds: 0,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -148,25 +339,12 @@ void main() {
         () async {
       loadEnterpriseData.mockLoadError();
 
-      await sut.checkPageToGo();
+      await sut.checkPageToGo(
+        homePresenter: homePresenter,
+      );
 
       verify(() => navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
-    });
-  });
-
-  group("Go to web login page", () {
-    test("Should call getPlataform.isWeb", () async {
-      await sut.checkPageToGo();
-
-      verify(() => obtainPlatform.isWeb()).called(1);
-    });
-    test("Should go to webLoginPage if is web page", () async {
-      await sut.checkPageToGo();
-
-      verify(() =>
-              navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true))
-          .called(1);
     });
   });
 }

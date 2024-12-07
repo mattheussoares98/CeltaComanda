@@ -15,7 +15,7 @@ class PrintPrintedProductsButton extends StatelessWidget {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return IconButton(
-      onPressed: homePresenter.commandNumber == null
+      onPressed: homePresenter.commandEntity!.commandNumber == null
           ? null
           : () {
               printedProductsPresenter.goToPrintProductsPage();

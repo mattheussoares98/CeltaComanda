@@ -32,7 +32,7 @@ class ConfirmUpdateCommandDataButton extends StatelessWidget {
 
           final updated = await configurationsPresenter.updateCommandData(
             newFixedCommandNumber: configurationsPresenter.selectedCommand ??
-                homePresenter.commandNumber!.toInt(),
+                homePresenter.commandEntity!.commandNumber!.toInt(),
             printedProductsPresenter: printedProductsPresenter,
             peoples: configurationsPresenter.selectedPeoples,
             sellerCode:

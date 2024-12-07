@@ -7,9 +7,10 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 class SplashPresenterSpy extends Mock
     implements SplashPresenter /* LoadCrossId */ {
   SplashPresenterSpy() {
-    when(() => this
-            .checkPageToGo(durationInSeconds: any(named: 'durationInSeconds')))
-        .thenAnswer((any) async => any);
+    when(() => this.checkPageToGo(
+          homePresenter: any(named: "homePresenter"),
+          durationInSeconds: any(named: 'durationInSeconds'),
+        )).thenAnswer((any) async => any);
   }
 
   // void mockLoadAccount(CrossIdEntity? crossIdEntity) {

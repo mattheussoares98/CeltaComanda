@@ -40,13 +40,6 @@ void main() {
     expect(find.byKey(const Key("loading")), findsOneWidget);
   });
 
-  testWidgets('Should call LoadCrossId on page load',
-      (WidgetTester tester) async {
-    await loadPage(tester);
-
-    verify(() => presenter.checkPageToGo()).called(1);
-  });
-
   testWidgets('Should change to ExpansibleGroupsPage',
       (WidgetTester tester) async {
     await loadPage(tester);

@@ -51,6 +51,7 @@ void main() {
   late Map<String, dynamic> enterpriseJson;
   late String imeiOrWindowsId;
   late double applicationVersion;
+  late CommandEntity commandEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -101,15 +102,14 @@ void main() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     updateSaleRequestTemp.mockUpdateSaleRequestTemp();
     loadSellers.mockLoadSellers(sellerEntitys);
-    addDeviceInfo.mockDeviceInfo(sut.commandNumber?.toInt());
+    addDeviceInfo.mockDeviceInfo(fixedCommandEntity.commandNumber?.toInt());
     addPendingDeviceToUpdate.mockAdd(imeiOrWindowsId);
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
     loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     fixedCommandEntity = EntityFactory.makeCommandEntity(true);
     notFixedCommandEntity = EntityFactory.makeCommandEntity(false);
     newFixedCommandNumber = faker.randomGenerator.integer(999);
@@ -127,11 +127,12 @@ void main() {
 
     userCode = faker.randomGenerator.integer(100);
 
-    enterpriseJson = EnterpriseValidationModel.fromEntity(
-            EnterpriseBuilder.entity!)
-        .toJson();
+    enterpriseJson =
+        EnterpriseValidationModel.fromEntity(EnterpriseBuilder.entity!)
+            .toJson();
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
+    commandEntity = EntityFactory.makeCommandEntity();
   }
 
   setUp(() {
@@ -243,12 +244,16 @@ void main() {
   });
 
   group("Clear data", () {
-    test('Should clear command number', () async {
-      sut.updateCommandNumber("001");
+    test('Should clear commandEntity', () async {
+      await sut.updateCommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+        pdv: commandEntity.pdv,
+      );
 
-      sut.clear();
+      await sut.clear();
 
-      expect(sut.commandNumber, isNull);
+      expect(sut.commandEntity, isNull);
     });
     test('Should clear updateMenu count', () async {
       await sut.loadCommandData(
@@ -262,6 +267,17 @@ void main() {
       sut.clear();
 
       expect(sut.updateMenu, -1);
+    });
+    test('Should call local command data update correctly', () async {
+      await sut.clear();
+
+      verify(() => localCommandData.update(
+            CommandEntity(
+              commandNumber: null,
+              isFixedCommandNumber: false,
+              pdv: null,
+            ),
+          )).called(1);
     });
   });
 
@@ -293,6 +309,34 @@ void main() {
 
       verify(() => localCommandData.load()).called(1);
     });
+    test("Should update command entity locally when dont return a null value",
+        () async {
+      localCommandData.mockLoad(commandEntity);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => localCommandData.update(commandEntity)).called(1);
+    });
+    test("Should not update local command data when return a null value",
+        () async {
+      localCommandData.mockLoad(null);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verifyNever(() => localCommandData.update(commandEntity));
+    });
 
     test("Should emit correct values on loadUseFixedCommandNumber", () async {
       expectLater(sut.mainErrorStream, emits(null));
@@ -306,7 +350,8 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
     });
-    test("Should update sut.isFixedCommandNumber correctly", () async {
+    test("Should update sut.commandEntity?.isFixedCommandNumber correctly",
+        () async {
       const fixed = CommandEntity(
         commandNumber: "commandNumber",
         isFixedCommandNumber: true,
@@ -326,7 +371,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.isFixedCommandNumber, true);
+      expect(sut.commandEntity?.isFixedCommandNumber, true);
 
       localCommandData.mockLoad(notFixed);
       await sut.loadCommandData(
@@ -336,17 +381,19 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.isFixedCommandNumber, false);
+      expect(sut.commandEntity?.isFixedCommandNumber, false);
     });
-    test("Should update sut.commandNumber correctly", () async {
+    test("Should update sut.commandEntity!.commandNumber correctly", () async {
       final entity1 = CommandEntity(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
+        commandNumber:
+            faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
         pdv: null,
       );
 
       final entity2 = CommandEntity(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
+        commandNumber:
+            faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
         isFixedCommandNumber: faker.randomGenerator.boolean(),
         pdv: null,
       );
@@ -359,7 +406,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.commandNumber, entity1.commandNumber.toString());
+      expect(
+          sut.commandEntity!.commandNumber, entity1.commandNumber.toString());
 
       localCommandData.mockLoad(entity2);
       await sut.loadCommandData(
@@ -369,7 +417,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      expect(sut.commandNumber, entity2.commandNumber.toString());
+      expect(
+          sut.commandEntity!.commandNumber, entity2.commandNumber.toString());
     });
 
     test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
@@ -383,7 +432,7 @@ void main() {
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
-          commandNumber: sut.commandNumber ?? "001",
+          commandNumber: sut.commandEntity!.commandNumber ?? "001",
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter)).called(1);
     });
@@ -406,8 +455,7 @@ void main() {
       verifyNever(
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: notFixedCommandEntity.commandNumber!,
         ),
       );
@@ -424,10 +472,10 @@ void main() {
       );
 
       verify(() => cartPresenter.getSaleRequestTemp(
-            fixedCommandEntity.commandNumber.toString(),
+            fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
           )).called(1);
-      verify(() => printedProductsPresenter.loadPrinted(sut.commandNumber!))
-          .called(1);
+      verify(() => printedProductsPresenter
+          .loadPrinted(sut.commandEntity!.commandNumber!)).called(1);
     });
     test(
         "Should emit correct values on cartPresenter.loadSaleRequest throw DomainError.unexpected",
@@ -546,15 +594,14 @@ void main() {
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });
     test("Should update peoples number", () async {
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -568,7 +615,7 @@ void main() {
     });
 
     test("Should call loadSellers", () async {
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -582,7 +629,12 @@ void main() {
     });
 
     test("Should update sellers correctly", () async {
-      expect(sut.isFixedCommandNumber, false);
+      await sut.updateCommandEntity(
+        commandNumber: sut.commandEntity?.commandNumber,
+        isFixedCommandNumber: false,
+        pdv: sut.commandEntity?.pdv,
+      );
+      expect(sut.commandEntity?.isFixedCommandNumber, false);
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -596,7 +648,7 @@ void main() {
           sellerEntitys.map((e) => SellersViewModel.fromEntity(e)).toList());
     });
     test("Should update selected seller correctly", () async {
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -619,7 +671,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -640,7 +692,8 @@ void main() {
 
       verify(
         () => commandInformations.isValidDatetime(
-          commandNumber: fixedCommandEntity.commandNumber.toString(),
+          commandNumber:
+              fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);
     });
@@ -651,7 +704,7 @@ void main() {
       );
 
       commandInformations.mockIsValidDateTime(false);
-      sut.updateCommandNumber(newFixedCommandNumber.toString());
+      // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -666,33 +719,28 @@ void main() {
         "Should make persist when Enterprise.persist is true and is not generating version to rede",
         () async {
       EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName:
-            EnterpriseBuilder.entity!.enterpriseName,
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         url: EnterpriseBuilder.entity!.url,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl:
-            EnterpriseBuilder.entity!.concentradorUrl,
+        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
         urlCCS: EnterpriseBuilder.entity!.urlCCS,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: true,
-        enterpriseConcentradorParametersEntity: EnterpriseBuilder
-            .entity!.enterpriseConcentradorParametersEntity,
+        enterpriseConcentradorParametersEntity:
+            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
         updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseBuilder
-            .entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseBuilder
-            .entity!.serviceChargePercentageOrValue,
-        serviceChargeType:
-            EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise:
-            EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseBuilder
-            .entity!.updateDevicesInformations,
+        updateConcentratorEnterpriseData:
+            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
+        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations:
+            EnterpriseBuilder.entity!.updateDevicesInformations,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseBuilder.entity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
         waitDaysToPreloadImages:
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
@@ -716,33 +764,28 @@ void main() {
         "Should make NOT persist when is generating version to rede and Enterprise.persist is true",
         () async {
       EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName:
-            EnterpriseBuilder.entity!.enterpriseName,
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         url: EnterpriseBuilder.entity!.url,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl:
-            EnterpriseBuilder.entity!.concentradorUrl,
+        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
         urlCCS: EnterpriseBuilder.entity!.urlCCS,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: true,
-        enterpriseConcentradorParametersEntity: EnterpriseBuilder
-            .entity!.enterpriseConcentradorParametersEntity,
+        enterpriseConcentradorParametersEntity:
+            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
         updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseBuilder
-            .entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseBuilder
-            .entity!.serviceChargePercentageOrValue,
-        serviceChargeType:
-            EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise:
-            EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseBuilder
-            .entity!.updateDevicesInformations,
+        updateConcentratorEnterpriseData:
+            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
+        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations:
+            EnterpriseBuilder.entity!.updateDevicesInformations,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseBuilder.entity!.updatePendingDevices,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
         waitDaysToPreloadImages:
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
@@ -763,35 +806,32 @@ void main() {
     });
     test("Should make NOT persist Enterprise.persist is false", () async {
       EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName:
-            EnterpriseBuilder.entity!.enterpriseName,
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         url: EnterpriseBuilder.entity!.url,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl:
-            EnterpriseBuilder.entity!.concentradorUrl,
+        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
         urlCCS: EnterpriseBuilder.entity!.urlCCS,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         persistApp: false,
-        enterpriseConcentradorParametersEntity: EnterpriseBuilder
-            .entity!.enterpriseConcentradorParametersEntity,
+        enterpriseConcentradorParametersEntity:
+            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
         updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData: EnterpriseBuilder
-            .entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: EnterpriseBuilder
-            .entity!.serviceChargePercentageOrValue,
-        serviceChargeType:
-            EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise:
-            EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations: EnterpriseBuilder
-            .entity!.updateDevicesInformations,
+        updateConcentratorEnterpriseData:
+            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
+        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
+        updateDevicesInformations:
+            EnterpriseBuilder.entity!.updateDevicesInformations,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         pendingDevicesToUpdate:
             EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices:
-            EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:EnterpriseBuilder.entity!.secondsPreloadingImages,
+        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
+        waitDaysToPreloadImages:
+            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        secondsPreloadingImages:
+            EnterpriseBuilder.entity!.secondsPreloadingImages,
       );
 
       await sut.loadCommandData(
@@ -1026,16 +1066,46 @@ void main() {
     });
   });
 
-  group("Update command number", () {
-    test("Should update command number correctly", () {
-      sut.updateCommandNumber("99");
-      expect(sut.commandNumber, "099");
+  group("Update command entity", () {
+    test("Should update correctly when pass all parameters", () async {
+      await sut.updateCommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+        pdv: commandEntity.pdv,
+      );
 
-      sut.updateCommandNumber(null);
-      expect(sut.commandNumber, null);
+      expect(
+          sut.commandEntity,
+          CommandEntity(
+            commandNumber:
+                commandEntity.commandNumber?.toString().padLeft(3, "0"),
+            isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+            pdv: commandEntity.pdv,
+          ));
+    });
+    test("Should update correctly when pass null values", () async {
+      await sut.updateCommandEntity(
+        commandNumber: null,
+        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+        pdv: null,
+      );
 
-      sut.updateCommandNumber("1");
-      expect(sut.commandNumber, "001");
+      expect(
+          sut.commandEntity,
+          CommandEntity(
+            commandNumber: null,
+            isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+            pdv: null,
+          ));
+    });
+    test("Should update call local command data update", () async {
+      await sut.updateCommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: commandEntity.isFixedCommandNumber,
+        pdv: commandEntity.pdv,
+      );
+
+      verify(() => localCommandData.update(sut.commandEntity!)).called(1);
     });
   });
 
@@ -1224,7 +1294,7 @@ void main() {
         );
 
         verify(() => addDeviceInfo.add(
-              commandNumber: sut.commandNumber?.toInt(),
+              commandNumber: sut.commandEntity!.commandNumber?.toInt(),
               imeiOrWindowsId: imeiOrWindowsId,
               applicationVersion: applicationVersion.toString(),
             )).called(1);

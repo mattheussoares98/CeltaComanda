@@ -15,7 +15,7 @@ class UpdateCommandNumberDropdown extends StatelessWidget {
 
     return DropdownButtonFormField<int>(
       isExpanded: true,
-      value: homePresenter.commandNumber?.toInt(),
+      value: homePresenter.commandEntity!.commandNumber?.toInt(),
       validator: (value) {
         if (value == null) {
           return R.string.msgSelectCommand;

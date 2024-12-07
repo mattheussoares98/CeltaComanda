@@ -162,12 +162,18 @@ class GetxConfigurationsPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      homePresenter.updateCommandNumber(commandNumber);
+      await homePresenter.updateCommandEntity(
+        commandNumber: commandNumber,
+        isFixedCommandNumber:
+            homePresenter.commandEntity?.isFixedCommandNumber == true,
+        pdv: homePresenter.commandEntity?.pdv,
+      );
       await localCommandData.update(
         CommandEntity(
           commandNumber: commandNumber,
-          isFixedCommandNumber: true,
-          pdv: null, //TODO maintain the same pdv. Need get this before save
+          isFixedCommandNumber:
+              homePresenter.commandEntity?.isFixedCommandNumber == true,
+          pdv: homePresenter.commandEntity?.pdv,
         ),
       );
 
@@ -183,8 +189,7 @@ class GetxConfigurationsPresenter extends GetxController
           Comments: null,
           Peoples: null,
           DeliveryControl: null,
-          EnterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          EnterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
           SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
@@ -198,7 +203,8 @@ class GetxConfigurationsPresenter extends GetxController
       );
 
       _peoples = peoples;
-      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      await printedProductsPresenter
+          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       return true;
     } on DomainError catch (e) {
       switch (e) {

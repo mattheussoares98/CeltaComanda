@@ -98,8 +98,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     newFixedCommandNumber = faker.randomGenerator.integer(999);
     selectedSeller = EntityFactory.makeSellersViewModel();
     peoples = faker.randomGenerator.integer(100);
@@ -108,7 +107,12 @@ void main() {
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(
       newFixedCommandNumber,
     );
-    homePresenter.commandNumberMock = newFixedCommandNumber.toString();
+    homePresenter.commandEntityController = CommandEntity(
+      commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      pdv: EntityFactory.makePdvEntity(),
+    );
+
     identifier = faker.randomGenerator.string(10);
   }
 
@@ -361,8 +365,8 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => printedProductsPresenter
-          .loadPrinted(homePresenter.commandNumber!)).called(1);
+      verify(() => printedProductsPresenter.loadPrinted(
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test("Should emit correct values when update command number", () async {
       expectLater(sut.mainErrorStream, emits(null));
@@ -405,8 +409,9 @@ void main() {
         () => localCommandData.update(
           CommandEntity(
             commandNumber: newFixedCommandNumber.toString().padLeft(3, '0'),
-            isFixedCommandNumber: true,
-            pdv: null, //TODO correct this test after correct how save the pdv
+            isFixedCommandNumber:
+                homePresenter.commandEntityController!.isFixedCommandNumber,
+            pdv: homePresenter.commandEntityController!.pdv,
           ),
         ),
       ).called(1);
@@ -439,8 +444,13 @@ void main() {
       );
 
       verify(
-        () => homePresenter.updateCommandNumber(
-            newFixedCommandNumber.toString().padLeft(3, '0')),
+        () => homePresenter.updateCommandEntity(
+          commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
+          isFixedCommandNumber:
+              homePresenter.commandEntityController?.isFixedCommandNumber ==
+                  true,
+          pdv: homePresenter.commandEntityController?.pdv,
+        ),
       ).called(1);
     });
     test("Should return false if update fixed command number throws", () async {
@@ -479,8 +489,7 @@ void main() {
       verify(
         () => loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);

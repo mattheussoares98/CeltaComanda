@@ -24,21 +24,13 @@ class LoadMenuButton extends StatelessWidget {
         child: TextButton.icon(
           key: const Key("loadMenu"),
           onPressed: () async {
-            if (homePresenter.isFixedCommandNumber) {
-              await homePresenter.loadCommandData(
-                menuPresenter: menuPresenter,
-                printedProductsPresenter: printedProductsPresenter,
-                cartPresenter: cartPresenter,
-                expansibleGroupFromProductPresenter:
-                    expansibleGroupFromProductPresenter,
-              );
-            } else {
-              await menuPresenter.getGroupsAndProducts(
-                commandNumber: "001",
-                expansibleGroupFromProductPresenter:
-                    expansibleGroupFromProductPresenter,
-              );
-            }
+            await homePresenter.loadCommandData(
+              menuPresenter: menuPresenter,
+              printedProductsPresenter: printedProductsPresenter,
+              cartPresenter: cartPresenter,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+            );
           },
           icon: Icon(
             Icons.menu_book,

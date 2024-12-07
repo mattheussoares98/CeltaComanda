@@ -49,6 +49,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
+    //TODO remove the registration of pdv, if has
     await enterprisePresenter.clearEnterpriseData();
     await persistent.makeNotPersistent();
     await clear();
@@ -63,11 +64,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> clear() async {
-    _commandNumber = null;
+    _commandEntity = null;
     _updateMenu = -1;
     await localCommandData.update(
       CommandEntity(
-        commandNumber: _commandNumber,
+        commandNumber: null,
         isFixedCommandNumber: false,
         pdv: null,
       ),
@@ -106,22 +107,25 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {
-        _isFixedCommandNumber = loadedCommand.isFixedCommandNumber;
-        _commandNumber = loadedCommand.commandNumber;
+        await updateCommandEntity(
+          commandNumber: loadedCommand.commandNumber,
+          isFixedCommandNumber: loadedCommand.isFixedCommandNumber,
+          pdv: loadedCommand.pdv,
+        );
       }
 
       await menuPresenter.getGroupsAndProducts(
-        commandNumber: commandNumber ?? "001",
+        commandNumber: commandEntity?.commandNumber ?? "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
 
-      if (isFixedCommandNumber && commandNumber != null) {
+      if (commandEntity?.isFixedCommandNumber == true &&
+          commandEntity?.commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: commandNumber!.padLeft(3, "0"),
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+          commandNumber: commandEntity!.commandNumber!.padLeft(3, "0"),
         );
 
         final sellersEntity = await loadSellers.load();
@@ -134,11 +138,14 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               (e) => e.SellersId.toString() == saleRequest.SellerCode),
         );
 
-        await cartPresenter.getSaleRequestTemp(commandNumber!);
-        await printedProductsPresenter.loadPrinted(_commandNumber!);
+        await cartPresenter.getSaleRequestTemp(commandEntity!.commandNumber!);
+        await printedProductsPresenter.loadPrinted(
+          commandEntity!.commandNumber!,
+        );
 
         final isValid = await commandInformations.isValidDatetime(
-            commandNumber: commandNumber!);
+          commandNumber: commandEntity!.commandNumber!,
+        );
         if (!isValid) {
           throw DomainError.blockedCommand;
         }
@@ -246,18 +253,22 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  void updateCommandNumber(String? value) {
-    if (value == null) {
-      _commandNumber = value;
-    } else {
-      _commandNumber = value.padLeft(3, "0");
-    }
+  Future<void> updateCommandEntity({
+    required String? commandNumber,
+    required bool isFixedCommandNumber,
+    required PdvEntity? pdv,
+  }) async {
+    final entity = CommandEntity(
+      commandNumber: commandNumber?.padLeft(3, "0"),
+      isFixedCommandNumber: isFixedCommandNumber,
+      pdv: pdv ?? _commandEntity?.pdv,
+    );
+
+    _commandEntity = entity;
+    await localCommandData.update(entity);
+
     notifyListeners();
   }
-
-  String? _commandNumber;
-  @override
-  String? get commandNumber => _commandNumber;
 
   final _isLoading = false.obs;
   @override
@@ -271,16 +282,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
 
-  bool _isFixedCommandNumber = false;
   @override
-  bool get isFixedCommandNumber => _isFixedCommandNumber;
-
-  @override
-  bool get isGeneratingVersionToRede => false;
+  bool get isGeneratingVersionToRede => true;
   @override
   bool get isGeneratingVersionToGetNet => false;
   @override
-  bool get isGeneratingVersionToMicrosoftStore => true;
+  bool get isGeneratingVersionToMicrosoftStore => false;
 
   bool _isGeneratingVersionToTablet = false;
   @override
@@ -385,17 +392,15 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       if (enterprise.updateConcentratorEnterpriseData !=
-          EnterpriseBuilder
-              .entity?.updateConcentratorEnterpriseData) {
+          EnterpriseBuilder.entity?.updateConcentratorEnterpriseData) {
         await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
 
       if (enterprise.updateDevicesInformations !=
-          EnterpriseBuilder
-              .entity?.updateDevicesInformations) {
+          EnterpriseBuilder.entity?.updateDevicesInformations) {
         final applicationVersion = await loadDeviceData.getApplicationVersion();
         await addDeviceInfo.add(
-          commandNumber: commandNumber?.toInt(),
+          commandNumber: commandEntity?.commandNumber?.toInt(),
           imeiOrWindowsId: imeiOrWindowsId,
           applicationVersion: applicationVersion,
         );
@@ -463,4 +468,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   int? _updateMenu = -1;
   @override
   int? get updateMenu => _updateMenu;
+
+  CommandEntity? _commandEntity;
+  @override
+  CommandEntity? get commandEntity => _commandEntity;
 }

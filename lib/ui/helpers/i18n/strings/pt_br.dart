@@ -88,6 +88,7 @@ class PtBr implements Translation {
       'Algo errado aconteceu. Tente novamente em breve.';
   String get msgUseOnlyWhenIsFixedTableNumber =>
       'Essa opção deve ser usada somente quando estiver utilizando um tablet fixo por mesa';
+  String get msgValidateEnterpriseFirst => "Valide a empresa primeiro";
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantCloseTable => "Deseja realmente fechar a mesa?";
@@ -194,6 +195,7 @@ class PtBr implements Translation {
   String get originTable => 'Mesa de origem';
   String get password => 'Senha';
   String get pay => 'Pagar';
+  String get pdv => 'Pdv';
   String get paymentValue => 'Valor do pagamento';
   String get peopleQuantity => 'Quantidade de pessoas';
   String get per => 'Por';
@@ -206,6 +208,7 @@ class PtBr implements Translation {
   String get promotionWithoutPoints => 'Promocao';
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';
+  String get register => 'Registrar';
   String get reload => 'Recarregar';
   String get removeProduct => 'Remover produto';
   String get removeServiceCharge => 'Remover taxa';
@@ -226,6 +229,7 @@ class PtBr implements Translation {
   String get selectedProductsAndComments =>
       'Produtos selecionados e comentários';
   String get selectPaymentOption => "Selecione uma opção de pagamento";
+  String get selectPdv => "Selecione um PDV";
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
   String get seller => "Vendedor";

@@ -54,9 +54,10 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
 
     return PopScope(
       onPopInvokedWithResult: (didPop, result) async {
-        if (homePresenter.commandNumber != null) {
-          await printedProductsPresenter
-              .loadPrinted(homePresenter.commandNumber!);
+        if (homePresenter.commandEntity?.commandNumber != null) {
+          await printedProductsPresenter.loadPrinted(
+            homePresenter.commandEntity!.commandNumber!,
+          );
         }
       },
       child: Scaffold(

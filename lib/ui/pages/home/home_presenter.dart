@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../ui/pages/pages.dart';
 import '../../helpers/helpers.dart';
 
@@ -7,19 +8,22 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  bool get isFixedCommandNumber;
   bool get isGeneratingVersionToRede;
   bool get isGeneratingVersionToGetNet;
   bool get isGeneratingVersionToTablet;
   bool get isGeneratingVersionToMicrosoftStore;
-  String? get commandNumber;
   int? get selectedPeoples;
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
   int? get updateMenu;
+  CommandEntity? get commandEntity;
 
-  void updateCommandNumber(String? value);
+  Future<void> updateCommandEntity({
+    required String? commandNumber,
+    required bool isFixedCommandNumber,
+    required PdvEntity? pdv,
+  });
 
   Future<void> clear();
 

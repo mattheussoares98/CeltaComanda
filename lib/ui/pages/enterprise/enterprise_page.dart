@@ -25,8 +25,8 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final commandNumberController = TextEditingController();
   bool isFixedCommandNumber = false;
+  final commandNumberController = TextEditingController();
   PdvNotUsingViewModel? selectedPdv;
 
   @override
@@ -39,8 +39,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
               Provider.of(context, listen: false);
           await enterprisePresenter.updateEnterpriseWithLocalData();
           if (EnterpriseBuilder.entity != null &&
-              EnterpriseBuilder.entity?.enterpriseName !=
-                  "") {
+              EnterpriseBuilder.entity?.enterpriseName != "") {
             enterpriseController.text =
                 EnterpriseBuilder.entity!.enterpriseName;
           }
@@ -144,71 +143,23 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                           homePresenter: homePresenter,
                           enterprisePresenter: enterprisePresenter,
                         );
+                        setState(() {
+                          selectedPdv = null;
+                        });
                       },
                     ),
                     if (homePresenter.isGeneratingVersionToGetNet ||
                         homePresenter.isGeneratingVersionToRede)
-                      StreamBuilder(
-                          stream: enterprisePresenter.pdvsNotUsingStream,
-                          builder: (context, snapshot) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: DropdownButtonFormField(
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                    isExpanded: true,
-                                    alignment: Alignment.center,
-                                    hint: Text(snapshot.data == null
-                                        ? "validate the enterprise first" + ""
-                                        : "select " + "pdv"),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: getStringSize(context),
-                                        color: Colors.black),
-                                    items: snapshot.data
-                                        ?.map(
-                                          (e) => DropdownMenuItem(
-                                            value: e,
-                                            onTap: () async {},
-                                            child: Center(
-                                              child: Text("PDV " + e.PdvNumber),
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                    onChanged: (value) async {
-                                      selectedPdv = value;
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8),
-                                  child: ElevatedButton(
-                                    onPressed: snapshot.data == null
-                                        ? null
-                                        : () async {
-                                            await enterprisePresenter
-                                                .registerPdvAndGoToHomePage(
-                                              selectedPdv: selectedPdv!,
-                                              commandNumber:
-                                                  commandNumberController
-                                                          .text.isEmpty
-                                                      ? null
-                                                      : commandNumberController
-                                                          .text,
-                                              isFixedCommandNumber:
-                                                  isFixedCommandNumber,
-                                            );
-                                          },
-                                    child: Text("Register " + "pdv number"),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
+                      PdvNotUsingDropdown(
+                        isFixedCommandNumber: isFixedCommandNumber,
+                        commandNumberController: commandNumberController,
+                        selectedPdv: selectedPdv,
+                        updateSelectedPdv: (value) {
+                          setState(() {
+                            selectedPdv = value;
+                          });
+                        },
+                      ),
                   ],
                 ),
               )

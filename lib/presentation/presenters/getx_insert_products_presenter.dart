@@ -323,8 +323,7 @@ class GetxInsertProductsPresenter extends GetxController
         CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
         IncrementValue:
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType:
-          EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
       );
 
       await updateSaleRequestTemp.update(
@@ -332,7 +331,9 @@ class GetxInsertProductsPresenter extends GetxController
         entity: entity,
       );
 
-      await cartPresenter.getSaleRequestTemp(homePresenter.commandNumber!);
+      await cartPresenter.getSaleRequestTemp(
+        homePresenter.commandEntity!.commandNumber!,
+      );
       return true;
     } on DomainError catch (e) {
       switch (e) {

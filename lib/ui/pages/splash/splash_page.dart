@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../home/home.dart';
 import './splash.dart';
 
 class SplashPage extends StatelessWidget {
@@ -9,7 +11,9 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    presenter.checkPageToGo();
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+
+    presenter.checkPageToGo(homePresenter: homePresenter);
 
     return Scaffold(
       body: Center(

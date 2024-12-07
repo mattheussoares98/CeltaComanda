@@ -410,14 +410,21 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     addNewPrintRequestInFirebase();
 
     try {
-      if (!homePresenter.isFixedCommandNumber && commandNumber == null) {
+      if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber == null) {
         throw DomainError.commandNumberObligatory;
-      } else if (!homePresenter.isFixedCommandNumber && commandNumber != null) {
-        homePresenter.updateCommandNumber(commandNumber.padLeft(3, "0"));
+      } else if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber != null) {
+        await homePresenter.updateCommandEntity(
+          commandNumber: commandNumber,
+          isFixedCommandNumber:
+              homePresenter.commandEntity?.isFixedCommandNumber == true,
+          pdv: homePresenter.commandEntity?.pdv,
+        );
       }
 
       bool isValid = await commandInformations.isValidDatetime(
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       if (!isValid) {
@@ -428,7 +435,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           await loadSaleRequestTemp.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: homePresenter.commandNumber!,
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
       _saleRequestTemp =
@@ -456,11 +463,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: EnterpriseBuilder
-                .entity?.serviceChargePercentageOrValue ??
-            0,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType ?? 0,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue ?? 0,
+        IncrementType: EnterpriseBuilder.entity?.serviceChargeType ?? 0,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -480,7 +485,9 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await confirmedCartProducts.updateValue(false);
       await cartInformations.clearCartProducts();
-      await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+      await printedProductsPresenter.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+      );
 
       _cartProducts.clear();
 
@@ -606,15 +613,11 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
   @override
   double calculateServiceChargeValue(double totalLiquidSaleRequest) {
-    if (EnterpriseBuilder
-            .entity?.serviceChargePercentageOrValue ==
-        null) {
+    if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null) {
       return 0;
     } else {
       return totalLiquidSaleRequest *
-          (EnterpriseBuilder
-                  .entity!.serviceChargePercentageOrValue! /
-              100);
+          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
     }
   }
 }

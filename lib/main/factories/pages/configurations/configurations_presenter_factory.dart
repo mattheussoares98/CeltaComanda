@@ -10,7 +10,7 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       persistent: makeAndroidPersistent(),
       updateMenu: makeRemoteUpdateMenu(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
-      localCommandData: makeLocalUseFixedCommandNumber(),
+      localCommandData: makeLocalCommandData(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
       changeSaleRequestPersonalizedCode: makeRemoteChangeSaleRequestPersonalizedCode(),
       changeSaleRequestPersonalizedCodeProducts: makeRemoteChangeSaleRequestPersonalizedCodeProducts(),

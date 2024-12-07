@@ -184,8 +184,10 @@ class GetxCovenantPresenter extends GetxController
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
-          commandNumberWithThreeNumbers:
-              homePresenter.commandNumber!.toString().padLeft(3, "0"),
+          commandNumberWithThreeNumbers: homePresenter
+              .commandEntity!.commandNumber!
+              .toString()
+              .padLeft(3, "0"),
           saleRequestId:
               printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );
@@ -194,7 +196,8 @@ class GetxCovenantPresenter extends GetxController
 
         _authorizationPendingModel = null;
 
-        await printedProductsPresenter.loadPrinted(homePresenter.commandNumber!);
+        await printedProductsPresenter
+            .loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
         closePagesUntilHomePage();
       }

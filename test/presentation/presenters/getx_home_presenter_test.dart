@@ -154,6 +154,7 @@ void main() {
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(EntityFactory.makePdvEntity());
   });
 
   group("Navigation", () {
@@ -219,7 +220,60 @@ void main() {
           )),
         ).called(1);
       });
+
+      test('Should load local command entity', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => localCommandData.load()).called(1);
+      });
+
+      test('Should unregister pdv when local commandEntity.pdv is not null',
+          () async {
+        final localEntity = EntityFactory.makeCommandEntity();
+        localCommandData.mockLoad(localEntity);
+
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => pdvRegistration.setPdvRegister(
+              pdvId: localEntity.pdv!.PdvId!,
+              imeiOrWindowsId: "",
+              versionNumber: "",
+              ip: "",
+              isUsing: false,
+            )).called(1);
+      });
+      test('Should not unregister pdv when local commandEntity.pdv is null',
+          () async {
+        final localEntity = EntityFactory.makeCommandEntity();
+        localCommandData.mockLoad(null);
+
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verifyNever(() => pdvRegistration.setPdvRegister(
+              pdvId: localEntity.pdv!.PdvId!,
+              imeiOrWindowsId: "",
+              versionNumber: "",
+              ip: "",
+              isUsing: false,
+            ));
+      });
     });
+
     test('Should go to PrintedProductsPage', () async {
       sut.goToPrintedProductsPage();
 

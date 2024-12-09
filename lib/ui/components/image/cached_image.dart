@@ -51,7 +51,6 @@ class CachedImageState extends State<CachedImage> {
 
   static final Set<String> _failedUrls = {};
   static final Set<String> _largeImages = {};
-  static final Set<String> _correctImages = {};
 
   Future<void> _imageHasAValidSize(String url) async {
     if (_largeImages.contains(url) || _failedUrls.contains(url)) {
@@ -76,7 +75,7 @@ class CachedImageState extends State<CachedImage> {
           }
         },
         onDone: () {
-          _correctImages.add(url);
+          // _correctImages.add(url);
           completer.complete();
         },
         onError: (error) {
@@ -96,10 +95,15 @@ class CachedImageState extends State<CachedImage> {
     String url =
         "${EnterpriseBuilder.entity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
 
-    if (_correctImages.contains(url)) {
+    if (_failedUrls.contains(url) || _largeImages.contains(url)) {
+      return _defaultImage(
+        height: widget.height,
+        width: widget.width,
+        cacheManager: _customCacheManager,
+      );
+    } else {
       return CachedNetworkImage(
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage
+        fit: EnterpriseBuilder.entity?.zoomImage == true && widget.zoomImage
             ? BoxFit.fitWidth
             : BoxFit.contain,
         cacheManager: _customCacheManager,
@@ -122,12 +126,6 @@ class CachedImageState extends State<CachedImage> {
             cacheManager: _customCacheManager,
           );
         },
-      );
-    } else {
-      return _defaultImage(
-        height: widget.height,
-        width: widget.width,
-        cacheManager: _customCacheManager,
       );
     }
   }

@@ -33,6 +33,7 @@ void main() {
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
   late LoadSaleRequestSpy loadSaleRequest;
+  late UpdateSaleRequestSpy updateSaleRequest;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -60,6 +61,7 @@ void main() {
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
     finishSaleRequestTempById = FinishSaleRequestTempByIdSpy();
+    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initPresenters() {
@@ -80,6 +82,7 @@ void main() {
       barcodeScanner: barcodeScanner,
       commandInformations: commandInformations,
       loadSaleRequest: loadSaleRequest,
+      updateSaleRequest: updateSaleRequest,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
@@ -1748,7 +1751,8 @@ void main() {
       verify(() => homePresenter.updateCommandEntity(
             commandNumber: newCommandNumber,
             isFixedCommandNumber:
-                homePresenter.commandEntityController?.isFixedCommandNumber == true,
+                homePresenter.commandEntityController?.isFixedCommandNumber ==
+                    true,
             pdv: homePresenter.commandEntityController?.pdv,
           )).called(1);
     });
@@ -1880,7 +1884,8 @@ void main() {
         waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
         pluServiceCharge: oldEnterprise.pluServiceCharge,
-        internalCodeOnErpServiceCharge: oldEnterprise.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            oldEnterprise.internalCodeOnErpServiceCharge,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

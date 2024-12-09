@@ -13,4 +13,5 @@ CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       barcodeScanner: makeCameraBarcodeScanner(),
       commandInformations: makeRemoteCommandInformations(),
       loadSaleRequest: makeRemoteLoadSaleRequest(),
+      updateSaleRequest: makeRemoteUpdateSaleRequest(),
     );

@@ -70,6 +70,8 @@ void main() {
           updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
           waitDaysToPreloadImages: enterpriseJsonData["waitDaysToPreloadImages"],
           secondsPreloadingImages: enterpriseJsonData["secondsPreloadingImages"],
+          pluServiceCharge: enterpriseJsonData["pluServiceCharge"],
+          internalCodeOnErpServiceCharge: enterpriseJsonData["internalCodeOnErpServiceCharge"],
         ),
       );
     });

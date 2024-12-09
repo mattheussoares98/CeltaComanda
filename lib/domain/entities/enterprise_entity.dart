@@ -23,6 +23,8 @@ class EnterpriseEntity extends Equatable {
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
   final int? secondsPreloadingImages;
+  final String? pluServiceCharge;
+  final int? internalCodeOnErpServiceCharge;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -44,6 +46,8 @@ class EnterpriseEntity extends Equatable {
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
     required this.secondsPreloadingImages,
+    required this.pluServiceCharge,
+    required this.internalCodeOnErpServiceCharge,
   });
 
   @override
@@ -67,5 +71,7 @@ class EnterpriseEntity extends Equatable {
         updatePendingDevices,
         waitDaysToPreloadImages,
         secondsPreloadingImages,
+        pluServiceCharge,
+        internalCodeOnErpServiceCharge,
       ];
 }

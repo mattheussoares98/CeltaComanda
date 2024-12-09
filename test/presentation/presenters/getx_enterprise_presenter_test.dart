@@ -106,6 +106,8 @@ void main() {
       updatePendingDevices: null,
       waitDaysToPreloadImages: null,
       secondsPreloadingImages: null,
+      pluServiceCharge: null,
+      internalCodeOnErpServiceCharge: null,
     );
 
     pdvsNotUsing = [
@@ -182,6 +184,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
+        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.validateEnterpriseByName(
@@ -223,6 +227,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
+        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -265,6 +271,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
+        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -307,6 +315,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
+        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.validateEnterpriseByName(
@@ -354,6 +364,8 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           secondsPreloadingImages: null,
+          pluServiceCharge: null,
+          internalCodeOnErpServiceCharge: null,
         ),
       );
     });
@@ -501,6 +513,8 @@ void main() {
           waitDaysToPreloadImages: newEnterprise.waitDaysToPreloadImages,
           secondsPreloadingImages: newEnterprise.secondsPreloadingImages,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
+          pluServiceCharge: newEnterprise.pluServiceCharge,
+          internalCodeOnErpServiceCharge: newEnterprise.internalCodeOnErpServiceCharge,
         ),
       );
     });
@@ -712,6 +726,8 @@ void main() {
             updatePendingDevices: null,
             waitDaysToPreloadImages: null,
             secondsPreloadingImages: null,
+            pluServiceCharge: null,
+            internalCodeOnErpServiceCharge: null,
           ));
     });
   });
@@ -764,6 +780,8 @@ void main() {
                 EnterpriseBuilder.entity!.waitDaysToPreloadImages,
             secondsPreloadingImages:
                 EnterpriseBuilder.entity!.secondsPreloadingImages,
+            pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
+            internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
           ));
     });
   });
@@ -794,6 +812,8 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           secondsPreloadingImages: null,
+          pluServiceCharge: null,
+          internalCodeOnErpServiceCharge: null,
         ),
       );
     });

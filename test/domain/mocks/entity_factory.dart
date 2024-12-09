@@ -33,6 +33,8 @@ class EntityFactory {
       updatePendingDevices: faker.randomGenerator.integer(100),
       waitDaysToPreloadImages: faker.randomGenerator.integer(100),
       secondsPreloadingImages: faker.randomGenerator.integer(100),
+      pluServiceCharge: faker.randomGenerator.string(10),
+      internalCodeOnErpServiceCharge: faker.randomGenerator.integer(100),
     );
   }
 

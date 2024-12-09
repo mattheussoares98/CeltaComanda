@@ -23,6 +23,8 @@ class EnterpriseValidationModel {
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
   final int? secondsPreloadingImages;
+  final String? pluServiceCharge;
+  final int? internalCodeOnErpServiceCharge;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -44,6 +46,8 @@ class EnterpriseValidationModel {
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
     required this.secondsPreloadingImages,
+    required this.pluServiceCharge,
+    required this.internalCodeOnErpServiceCharge,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -83,6 +87,8 @@ class EnterpriseValidationModel {
                   .toEntity(),
       waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
       secondsPreloadingImages: json["secondsPreloadingImages"],
+      pluServiceCharge: json["pluServiceCharge"],
+      internalCodeOnErpServiceCharge: json["internalCodeOnErpServiceCharge"],
     );
   }
 
@@ -109,6 +115,8 @@ class EnterpriseValidationModel {
         updatePendingDevices: entity.updatePendingDevices,
         waitDaysToPreloadImages: entity.waitDaysToPreloadImages,
         secondsPreloadingImages: entity.secondsPreloadingImages,
+        pluServiceCharge: entity.pluServiceCharge,
+        internalCodeOnErpServiceCharge: entity.internalCodeOnErpServiceCharge,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -132,6 +140,8 @@ class EnterpriseValidationModel {
         updatePendingDevices: updatePendingDevices,
         waitDaysToPreloadImages: waitDaysToPreloadImages,
         secondsPreloadingImages: secondsPreloadingImages,
+        pluServiceCharge: pluServiceCharge,
+        internalCodeOnErpServiceCharge: internalCodeOnErpServiceCharge,
       );
 
   Map<String, dynamic> toJson() => {
@@ -159,5 +169,7 @@ class EnterpriseValidationModel {
         'updatePendingDevices': updatePendingDevices,
         'waitDaysToPreloadImages': waitDaysToPreloadImages,
         'secondsPreloadingImages': secondsPreloadingImages,
+        'pluServiceCharge': pluServiceCharge,
+        'internalCodeOnErpServiceCharge': internalCodeOnErpServiceCharge,
       };
 }

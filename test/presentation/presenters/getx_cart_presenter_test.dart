@@ -1879,6 +1879,8 @@ void main() {
         updatePendingDevices: oldEnterprise.updatePendingDevices,
         waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
+        pluServiceCharge: oldEnterprise.pluServiceCharge,
+        internalCodeOnErpServiceCharge: oldEnterprise.internalCodeOnErpServiceCharge,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

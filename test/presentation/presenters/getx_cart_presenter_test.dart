@@ -34,6 +34,7 @@ void main() {
   late CommandInformationsSpy commandInformations;
   late LoadSaleRequestSpy loadSaleRequest;
   late UpdateSaleRequestSpy updateSaleRequest;
+  late RemovePrintedProductSpy removePrintedProduct;
 
   late SaleRequestTempEntity saleRequestTempEntity;
   late String comments;
@@ -62,6 +63,7 @@ void main() {
     commandInformations = CommandInformationsSpy();
     finishSaleRequestTempById = FinishSaleRequestTempByIdSpy();
     updateSaleRequest = UpdateSaleRequestSpy();
+    removePrintedProduct = RemovePrintedProductSpy();
   }
 
   void initPresenters() {
@@ -83,6 +85,7 @@ void main() {
       commandInformations: commandInformations,
       loadSaleRequest: loadSaleRequest,
       updateSaleRequest: updateSaleRequest,
+      removePrintedProduct: removePrintedProduct,
     );
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();

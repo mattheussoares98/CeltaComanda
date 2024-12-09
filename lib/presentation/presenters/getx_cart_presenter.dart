@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
 
+import '../../data/models/models.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -22,6 +23,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final CommandInformations commandInformations;
   final LoadSaleRequest loadSaleRequest;
   final UpdateSaleRequest updateSaleRequest;
+  final RemovePrintedProduct removePrintedProduct;
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
@@ -35,6 +37,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.commandInformations,
     required this.loadSaleRequest,
     required this.updateSaleRequest,
+    required this.removePrintedProduct,
   });
 
   @override
@@ -465,9 +468,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue ?? 0,
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType ?? 0,
+        IncrementValue: null,
+        IncrementType: null,
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -490,6 +492,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await printedProductsPresenter.loadPrinted(
         homePresenter.commandEntity!.commandNumber!,
       );
+
+      await insertServiceChargeProduct(printedProductsPresenter, homePresenter);
 
       _cartProducts.clear();
 
@@ -620,6 +624,81 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     } else {
       return totalLiquidSaleRequest *
           (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
+    }
+  }
+
+  @override
+  Future<void> insertServiceChargeProduct(
+    PrintedProductsPresenter printedProductsPresenter,
+    HomePresenter homePresenter,
+  ) async {
+    //não criei testes para essa função
+    try {
+      if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null ||
+          EnterpriseBuilder.entity?.pluServiceCharge == null ||
+          EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge == null) {
+        return;
+      }
+
+      final serviceChargeProduct = printedProductsPresenter.printed!.Products
+          .firstWhereOrNull((e) =>
+              e.ProductInternalCodeOnErp.toInt() ==
+              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
+
+      if (serviceChargeProduct != null) {
+        await removePrintedProduct
+            .remove(serviceChargeProduct.SaleRequestProductId);
+      }
+
+      double totalLiquid = 0;
+      for (var product in printedProductsPresenter.printed!.Products) {
+        if (product.ProductInternalCodeOnErp.toInt() ==
+            EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge) {
+          continue;
+        }
+        totalLiquid += product.TotalLiquid.toDouble();
+      }
+      final serviceChargeValue = totalLiquid *
+          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
+
+      await updateSaleRequest.update(
+        model: SaleRequestModel(
+          CovenantCode: null,
+          CustomerCode: null,
+          TotalLiquid: totalLiquid + serviceChargeValue,
+          Products: [
+            SaleRequestProductModel(
+              SaleMovementProductCompositionId: null,
+              ProductPriceLookUpCode:
+                  EnterpriseBuilder.entity!.pluServiceCharge,
+              ProductInternalCodeOnErp:
+                  EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
+              QuantityString: "1",
+              Comments: null,
+              DateHourOfCreation: DateTime.now().toIso8601String(),
+              IsCancelled: false,
+              IsDelivered: true,
+              IsPrinted: true,
+              SaleRequestProductId: null,
+              UserId: null,
+              ProductionStatus: null,
+              SaleRequestId:
+                  printedProductsPresenter.printed!.SaleRequestId.toInt(),
+              Value: serviceChargeValue,
+              Quantity: 1,
+              TotalLiquid: serviceChargeValue,
+            ),
+          ],
+        ),
+        commandNumberWithThreeNumbers:
+            homePresenter.commandEntity!.commandNumber!,
+        saleRequestId: printedProductsPresenter.printed!.SaleRequestId.toInt(),
+      );
+
+      await printedProductsPresenter
+          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

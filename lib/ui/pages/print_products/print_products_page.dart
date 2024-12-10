@@ -81,13 +81,16 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
           child: Column(
             children: [
               Text(
-                  "${R.string.conferenceOfTable} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
-                  style: textStyle()),
+                "${R.string.conferenceOfTable} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
+                style: textStyle(context),
+              ),
               Divider(thickness: 0.2),
               PrintProductsItems(),
               Divider(thickness: 0.2),
               SizedBox(height: 5),
               TotalSummary(),
+              Divider(thickness: 0.2),
+              PrintDate(),
               SizedBox(height: 10),
               DevelopedByCeltaware(),
             ],
@@ -98,4 +101,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
   }
 }
 
-TextStyle textStyle() => TextStyle(fontWeight: FontWeight.bold);
+TextStyle textStyle(BuildContext context) => TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: getStringSize(context) * 1.2,
+    );

@@ -21,7 +21,7 @@ class TotalSummary extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(R.string.subtotal),
+                  Text(R.string.subtotal, style: textStyle(context)),
                   FittedBox(
                     child: Text(
                       printedProductsPresenter
@@ -30,7 +30,7 @@ class TotalSummary extends StatelessWidget {
                           .toString()
                           .toBrazilianNumber()
                           .addBrazilianCoin(),
-                      style: textStyle(),
+                      style: textStyle(context),
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -40,7 +40,10 @@ class TotalSummary extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text(R.string.serviceChargeAbbreviated),
+                  Text(
+                    R.string.serviceChargeAbbreviated,
+                    style: textStyle(context),
+                  ),
                   FittedBox(
                     child: Text(
                       printedProductsPresenter
@@ -50,7 +53,7 @@ class TotalSummary extends StatelessWidget {
                           .toString()
                           .toBrazilianNumber()
                           .addBrazilianCoin(),
-                      style: textStyle(),
+                      style: textStyle(context),
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -61,7 +64,7 @@ class TotalSummary extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(R.string.total),
+                  Text(R.string.total, style: textStyle(context)),
                   FittedBox(
                     child: Text(
                       printedProductsPresenter
@@ -70,7 +73,7 @@ class TotalSummary extends StatelessWidget {
                           .toString()
                           .toBrazilianNumber()
                           .addBrazilianCoin(),
-                      style: textStyle(),
+                      style: textStyle(context),
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -85,7 +88,7 @@ class TotalSummary extends StatelessWidget {
               Expanded(
                 child: Text(
                   "${R.string.totalByPerson} (${printedProductsPresenter.peopleQuantity})",
-                  style: textStyle(),
+                  style: textStyle(context),
                 ),
               ),
               Text(
@@ -94,7 +97,7 @@ class TotalSummary extends StatelessWidget {
                     .toString()
                     .toBrazilianNumber()
                     .addBrazilianCoin(),
-                style: textStyle(),
+                style: textStyle(context),
               ),
             ],
           ),

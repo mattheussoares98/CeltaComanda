@@ -19,17 +19,21 @@ class PrintProductsItems extends StatelessWidget {
         if (index == 0) {
           return Row(
             children: [
-              // Expanded(child: Text(R.string.time, style: textStyle())),
+              // Expanded(child: Text(R.string.time, style: textStyle(context))),
               Expanded(
                 flex: 3,
-                child: Text(R.string.product, style: textStyle()),
+                child: Text(R.string.product, style: textStyle(context)),
               ),
               Expanded(
-                  child:
-                      Text(R.string.quantityAbbreviated, style: textStyle())),
+                  child: Text(R.string.quantityAbbreviated,
+                      style: textStyle(context))),
               Expanded(
-                  child: Text(R.string.total.addBrazilianCoin(),
-                      style: textStyle())),
+                child: Text(
+                  R.string.total.addBrazilianCoin(),
+                  style: textStyle(context),
+                  textAlign: TextAlign.end,
+                ),
+              ),
             ],
           );
         }
@@ -40,14 +44,14 @@ class PrintProductsItems extends StatelessWidget {
             // Expanded(child: RequestedAt(printedProduct: product)),
             Expanded(
               flex: 3,
-              child: Text(product.Product.Name, style: textStyle()),
+              child: Text(product.Product.Name, style: textStyle(context)),
             ),
-            Expanded(child: Text(product.Quantity)),
+            Expanded(child: Text(product.Quantity, style: textStyle(context))),
             Expanded(
                 child: Text(
               product.TotalLiquid,
-              style: textStyle(),
-              textAlign: TextAlign.center,
+              style: textStyle(context),
+              textAlign: TextAlign.end,
             )),
           ],
         );

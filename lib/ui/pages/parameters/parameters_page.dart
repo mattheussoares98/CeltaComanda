@@ -1,34 +1,96 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class ParametersPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/models/models.dart';
+import '../../mixins/mixins.dart';
+import '../pages.dart';
+
+class ParametersPage extends StatefulWidget {
   const ParametersPage({super.key});
 
   @override
+  State<ParametersPage> createState() => _ParametersPageState();
+}
+
+class _ParametersPageState extends State<ParametersPage>
+    with LoadingManager, UIErrorManager {
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? mainErrorSubscription;
+
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        ParametersPresenter parametersPresenter =
+            Provider.of(context, listen: false);
+
+        await parametersPresenter.loadParameters();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ParametersPresenter parametersPresenter =
+        Provider.of(context, listen: false);
+
+    loadingSubscription?.cancel();
+    mainErrorSubscription?.cancel();
+
+    handleLoading(context, parametersPresenter.isLoadingStream);
+    mainErrorSubscription =
+        handleMainError(context, parametersPresenter.mainErrorStream);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("parameters" + ""),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Expanded(child: Text("enable search of products" + "?")),
-                    Switch(
-                      value: false,
-                      onChanged: (_) {},
+      body: StreamBuilder<List<ParameterModel>?>(
+          stream: parametersPresenter.parametersStream,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return SizedBox();
+            }
+
+            return SafeArea(
+              child: ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final parameter = snapshot.data![index];
+
+                  return InkWell(
+                    onTap: () async {
+                      await parametersPresenter.changeParameter(index);
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(parameter.name),
+                        ),
+                        Switch(
+                          value: parameter.enabled,
+                          onChanged: (_) async {
+                            await parametersPresenter.changeParameter(index);
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 }

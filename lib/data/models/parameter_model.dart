@@ -25,14 +25,14 @@ class ParameterModel extends Equatable {
     return ParameterModel(
       name: json["name"],
       enabled: json["enabled"],
-      key: json["key"],
+      key: ParameterKey.values.firstWhere((e) => e.name == json["key"]),
     );
   }
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "enabled": enabled,
-        "key": key,
+        "key": key.name,
       };
 }
 

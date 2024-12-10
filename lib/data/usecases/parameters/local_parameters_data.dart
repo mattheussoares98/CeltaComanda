@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../../models/parameter_model.dart';
@@ -14,7 +16,11 @@ class LocalParametersData implements ParametersData {
   Future<void> update(List<ParameterModel> value) async {
     try {
       await hiveStorage.delete(CacheKeys.parameters.name);
-      await hiveStorage.put(CacheKeys.parameters.name, value);
+
+      final parametersEncoded =
+          jsonEncode(value.map((element) => element.toJson()).toList());
+
+      await hiveStorage.put(CacheKeys.parameters.name, parametersEncoded);
     } catch (e) {
       debugPrint(e.toString());
       throw Exception();
@@ -29,10 +35,11 @@ class LocalParametersData implements ParametersData {
       );
 
       if (response == null) {
-        throw Exception();
+        return [];
       }
 
-      return response
+      final responseDecoded = json.decode(response);
+      return responseDecoded
           .map((e) => ParameterModel.fromJson(e))
           .toList()
           .cast<ParameterModel>();

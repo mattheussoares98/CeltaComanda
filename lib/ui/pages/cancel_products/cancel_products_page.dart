@@ -47,55 +47,57 @@ class _CancelProductsPageState extends State<CancelProductsPage>
       appBar: AppBar(
         title: Text(R.string.cancel),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SelectCommandDropDown(
-            selectedCommandInDropDown: selectedCommandInDropDown,
-            updateSelectedCommandInDropDown: (value) {
-              setState(() {
-                selectedCommandInDropDown = value;
-              });
-            },
-          ),
-          StreamBuilder<PrintedViewModel?>(
-              stream: cancelProductsPresenter.printedProducts,
-              builder: (context, snapshot) {
-                if (selectedCommandInDropDown != null &&
-                    snapshot.data == null) {
-                  return Text(
-                    R.string.emptyTable,
-                    style: TextStyle(
-                      fontSize: getStringSize(context),
-                      fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SelectCommandDropDown(
+              selectedCommandInDropDown: selectedCommandInDropDown,
+              updateSelectedCommandInDropDown: (value) {
+                setState(() {
+                  selectedCommandInDropDown = value;
+                });
+              },
+            ),
+            StreamBuilder<PrintedViewModel?>(
+                stream: cancelProductsPresenter.printedProducts,
+                builder: (context, snapshot) {
+                  if (selectedCommandInDropDown != null &&
+                      snapshot.data == null) {
+                    return Text(
+                      R.string.emptyTable,
+                      style: TextStyle(
+                        fontSize: getStringSize(context),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }
+                  if (snapshot.data == null) {
+                    return SizedBox();
+                  }
+        
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        CancelProductsItems(
+                          selectedCommandInDropDown: selectedCommandInDropDown,
+                          printed: snapshot.data!,
+                        ),
+                        RequestSummary(
+                            showRemoveServiceChargeButton: true,
+                            requestUserAndPassword: false,
+                            printed: snapshot.data!,
+                            commandNumber: selectedCommandInDropDown!,
+                            loadPrintedAgain: () async {
+                              await cancelProductsPresenter
+                                  .loadProducts(selectedCommandInDropDown!);
+                            }),
+                      ],
                     ),
                   );
-                }
-                if (snapshot.data == null) {
-                  return SizedBox();
-                }
-
-                return Expanded(
-                  child: Column(
-                    children: [
-                      CancelProductsItems(
-                        selectedCommandInDropDown: selectedCommandInDropDown,
-                        printed: snapshot.data!,
-                      ),
-                      RequestSummary(
-                          showRemoveServiceChargeButton: true,
-                          requestUserAndPassword: false,
-                          printed: snapshot.data!,
-                          commandNumber: selectedCommandInDropDown!,
-                          loadPrintedAgain: () async {
-                            await cancelProductsPresenter
-                                .loadProducts(selectedCommandInDropDown!);
-                          }),
-                    ],
-                  ),
-                );
-              }),
-        ],
+                }),
+          ],
+        ),
       ),
     );
   }

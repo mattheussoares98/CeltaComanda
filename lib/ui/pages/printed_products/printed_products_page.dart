@@ -67,32 +67,34 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             LoadPrintedProductsAgainButton(),
           ],
         ),
-        body: SizedBox(
-          height: double.infinity,
-          child: Column(
-            children: [
-              Expanded(
-                child: printedProductsPresenter.printed != null
-                    ? PrintedItem(
-                        printed: printedProductsPresenter.printed!,
-                        formKey: formKey,
-                        passwordController: passwordController,
-                        personalizedCodeController: personalizedCodeController,
-                      )
-                    : const SearchDataByCommandNumber(),
-              ),
-              if (printedProductsPresenter.printed != null)
-                RequestSummary(
-                  showRemoveServiceChargeButton: false,
-                  requestUserAndPassword: true,
-                  printed: printedProductsPresenter.printed!,
-                  commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
-                  loadPrintedAgain: () async {
-                    await printedProductsPresenter
-                        .loadPrinted(homePresenter.commandEntity!.commandNumber!);
-                  },
+        body: SafeArea(
+          child: SizedBox(
+            height: double.infinity,
+            child: Column(
+              children: [
+                Expanded(
+                  child: printedProductsPresenter.printed != null
+                      ? PrintedItem(
+                          printed: printedProductsPresenter.printed!,
+                          formKey: formKey,
+                          passwordController: passwordController,
+                          personalizedCodeController: personalizedCodeController,
+                        )
+                      : const SearchDataByCommandNumber(),
                 ),
-            ],
+                if (printedProductsPresenter.printed != null)
+                  RequestSummary(
+                    showRemoveServiceChargeButton: false,
+                    requestUserAndPassword: true,
+                    printed: printedProductsPresenter.printed!,
+                    commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
+                    loadPrintedAgain: () async {
+                      await printedProductsPresenter
+                          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+                    },
+                  ),
+              ],
+            ),
           ),
         ),
       ),

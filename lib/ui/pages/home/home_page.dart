@@ -124,24 +124,26 @@ class _HomePageState extends State<HomePage>
               cartPresenter: cartPresenter,
               menuPresenter: menuPresenter,
             ),
-            body: StreamBuilder<ProductsViewModel?>(
-                stream: menuPresenter.atualSuggestionProductStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData &&
-                      snapshot.data != _lastShowedSuggestionProduct) {
-                    _lastShowedSuggestionProduct = snapshot.data;
-                    WidgetsBinding.instance.addPostFrameCallback((_) async {
-                      showSuggestionDialog(
-                        context,
-                        snapshot.data!,
-                        menuPresenter,
-                      );
-                    });
-                  }
-                  return MenuPage(
-                      homePresenter.commandEntity?.isFixedCommandNumber ==
-                          true);
-                }),
+            body: SafeArea(
+              child: StreamBuilder<ProductsViewModel?>(
+                  stream: menuPresenter.atualSuggestionProductStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData &&
+                        snapshot.data != _lastShowedSuggestionProduct) {
+                      _lastShowedSuggestionProduct = snapshot.data;
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
+                        showSuggestionDialog(
+                          context,
+                          snapshot.data!,
+                          menuPresenter,
+                        );
+                      });
+                    }
+                    return MenuPage(
+                        homePresenter.commandEntity?.isFixedCommandNumber ==
+                            true);
+                  }),
+            ),
           ),
         ),
       ),

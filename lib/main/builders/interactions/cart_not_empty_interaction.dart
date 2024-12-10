@@ -69,33 +69,35 @@ class CartNotEmptyInteraction {
           ),
         ),
       ],
-      page: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Seu pedido está pendente!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(
-                NavigatorKey.navigatorKey.currentState!.context,
-              ).primaryColorDark,
-              fontSize: getStringSize(
-                NavigatorKey.navigatorKey.currentState!.context,
+      page: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Seu pedido está pendente!",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(
+                  NavigatorKey.navigatorKey.currentState!.context,
+                ).primaryColorDark,
+                fontSize: getStringSize(
+                  NavigatorKey.navigatorKey.currentState!.context,
+                ),
+                fontWeight: FontWeight.bold,
               ),
-              fontWeight: FontWeight.bold,
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "Há produtos no carrinho que não foram enviados. Pode ser que você tenha esquecido de enviar",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(
-                NavigatorKey.navigatorKey.currentState!.context,
-              ).primaryColor,
+            const SizedBox(height: 10),
+            Text(
+              "Há produtos no carrinho que não foram enviados. Pode ser que você tenha esquecido de enviar",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(
+                  NavigatorKey.navigatorKey.currentState!.context,
+                ).primaryColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
     restartTime();

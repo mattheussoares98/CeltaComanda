@@ -14,6 +14,7 @@ class PersonalizedDialogPage {
 
     await showDialog(
       context: context,
+      useSafeArea: false,
       builder: (context) {
         return Scaffold(
           backgroundColor: Colors.transparent,

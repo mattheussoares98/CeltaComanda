@@ -16,7 +16,6 @@ class CartProductsItems extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return ListView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         itemCount: cartPresenter.cartProducts.length,
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];

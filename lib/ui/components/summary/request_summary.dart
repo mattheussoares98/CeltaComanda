@@ -26,7 +26,7 @@ class RequestSummary extends StatelessWidget {
 
     // double serviceChargeValue =
     //     printedProductsPresenter.getServiceChargeValue(printed);
-    double totalLiquid = printedProductsPresenter.getTotalLiquid(printed);
+    double totalLiquid = printedProductsPresenter.getSubtotal(printed);
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -72,7 +72,10 @@ class RequestSummary extends StatelessWidget {
           //     color: Theme.of(context).primaryColorLight,
           //     thickness: 1,
           //   ),
-          Total(totalLiquid: totalLiquid),
+          Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: Total(totalLiquid: totalLiquid),
+          ),
         ],
       ),
     );

@@ -10,6 +10,7 @@ export './expansible_group_from_products_complete_model.dart';
 export './expansible_group_schedule_model.dart';
 export './expansible_groups_model.dart';
 export './getnet_response_model.dart';
+export './parameters_model.dart';
 export './pdv_model.dart';
 export './print_request_model.dart';
 export './printed_products_model.dart';

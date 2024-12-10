@@ -6,6 +6,7 @@ export 'getx_expansible_group_from_product_presenter.dart';
 export './getx_enterprise_presenter.dart';
 export './getx_home_presenter.dart';
 export './getx_menu_presenter.dart';
+export './getx_parameters_presenter.dart';
 export './getx_payment_presenter.dart';
 export './getx_printed_products_presenter.dart';
 export 'getx_insert_products_presenter.dart';

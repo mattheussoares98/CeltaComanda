@@ -173,8 +173,8 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-      IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+      IncrementValue: null,
+      IncrementType: null,
     );
 
     cartProductViewModelWithChilds =
@@ -233,6 +233,9 @@ void main() {
     registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(UpdateSaleRequestTempEntity);
+    registerFallbackValue(
+      EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0),
+    );
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
   });
@@ -1103,9 +1106,8 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementValue: null,
+        IncrementType: null,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1133,7 +1135,7 @@ void main() {
             saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(
-          homePresenter.commandEntityController!.commandNumber!)).called(1);
+          homePresenter.commandEntityController!.commandNumber!)).called(2);
     });
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
@@ -1173,9 +1175,8 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementValue: null,
+        IncrementType: null,
         TotalLiquid: totalLiquid,
         Products: [...products],
       );

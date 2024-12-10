@@ -1116,7 +1116,9 @@ void main() {
       );
 
       verify(() => finishSaleRequestConcentrador.finish(
-            pdvNumber: 100,
+            pdvNumber: homePresenter.commandEntityController?.pdv?.PdvNumber
+                    ?.toInt() ??
+                100,
             commandNumber:
                 homePresenter.commandEntityController!.commandNumber!.toInt(),
             finalizations: sut.successfulPayments,

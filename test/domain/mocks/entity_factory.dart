@@ -692,10 +692,9 @@ class EntityFactory {
         Comments: faker.randomGenerator.string(10),
         CustomerCode: faker.randomGenerator.integer(3),
         CovenantCode: faker.randomGenerator.integer(3),
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType,
-        IncrementValue: EnterpriseBuilder
-            .entity?.serviceChargePercentageOrValue,
+        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>
@@ -857,7 +856,8 @@ class EntityFactory {
 
   static CommandEntity makeCommandEntity([bool? isFixedCommandNumber]) =>
       CommandEntity(
-        commandNumber: faker.randomGenerator.integer(10).toString().padLeft(3, "0"),
+        commandNumber:
+            faker.randomGenerator.integer(10).toString().padLeft(3, "0"),
         isFixedCommandNumber: isFixedCommandNumber == true,
         pdv: makePdvEntity(),
       );
@@ -1250,5 +1250,14 @@ class EntityFactory {
         SATStatusDateHourLastUpdate: faker.randomGenerator.string(10),
         SATStatusDateHourLastUpdateString: faker.randomGenerator.string(10),
         IsUsing: faker.randomGenerator.boolean(),
+      );
+
+  static ParameterModel makeParametersModel({
+    String? name,
+    bool? enabled,
+  }) =>
+      ParameterModel(
+        name: name ?? faker.randomGenerator.string(10),
+        enabled: enabled ?? faker.randomGenerator.boolean(),
       );
 }

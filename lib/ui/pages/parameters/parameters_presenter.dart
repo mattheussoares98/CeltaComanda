@@ -6,8 +6,8 @@ import '../../helpers/helpers.dart';
 abstract class ParametersPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<ParametersModel>?> get parametersStream;
+  Stream<List<ParameterModel>?> get parametersStream;
 
-  Future<void> enableSearchProducts();
-  //TODO na implementação do presenter, criar um usecase para carregar e escrever os dados dos parâmetros
+  Future<void> changeParameter(int index);
+  Future<void> loadParameters();
 }

@@ -1,20 +1,25 @@
-class ParametersModel {
+import 'package:equatable/equatable.dart';
+
+class ParameterModel extends Equatable {
   final String name;
   final bool enabled;
 
-  ParametersModel({
+  const ParameterModel({
     required this.name,
     required this.enabled,
   });
 
-  factory ParametersModel.fromJson(Map json) {
+  @override
+  List<Object?> get props => [name, enabled];
+
+  factory ParameterModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       'name',
       'enabled',
     ])) {
       throw Exception();
     }
-    return ParametersModel(
+    return ParameterModel(
       name: json["name"],
       enabled: json["enabled"],
     );

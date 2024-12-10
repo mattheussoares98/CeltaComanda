@@ -10,6 +10,7 @@ export './enterprise_data/enterprise_data.dart';
 export './login/login.dart';
 export './menu/menu.dart';
 export './navigation/navigation.dart';
+export './parameters/parameters.dart';
 export './payment/payment.dart';
 export './pdv/pdv.dart';
 export './platform/platform.dart';

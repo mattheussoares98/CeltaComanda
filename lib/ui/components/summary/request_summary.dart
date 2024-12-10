@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../pages/pages.dart';
-import 'service_charge.dart';
-import 'subtotal.dart';
 import 'total.dart';
 
 class RequestSummary extends StatelessWidget {
@@ -26,8 +24,8 @@ class RequestSummary extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    double serviceChargeValue =
-        printedProductsPresenter.getServiceChargeValue(printed);
+    // double serviceChargeValue =
+    //     printedProductsPresenter.getServiceChargeValue(printed);
     double totalLiquid = printedProductsPresenter.getTotalLiquid(printed);
 
     return Container(
@@ -45,41 +43,37 @@ class RequestSummary extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: IntrinsicHeight(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              flex: 3,
-              child: serviceChargeValue <= 0
-                  ? SizedBox()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Subtotal(totalLiquid: printedProductsPresenter.getSubtotal(printed)),
-                        const SizedBox(height: 10),
-                        ServiceCharge(
-                          printed: printed,
-                          loadPrintedAgain: loadPrintedAgain,
-                          validateUserAndPassword: requestUserAndPassword,
-                          commandNumber: commandNumber,
-                          showRemoveServiceChargeButton:
-                              showRemoveServiceChargeButton,
-                        ),
-                      ],
-                    ),
-            ),
-            if (serviceChargeValue > 0)
-              VerticalDivider(
-                color: Theme.of(context).primaryColorLight,
-                thickness: 1,
-              ),
-            Expanded(
-              child: Total(totalLiquid: totalLiquid),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // Expanded(
+          //   flex: 3,
+          //   child: serviceChargeValue <= 0
+          //       ? SizedBox()
+          //       : Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             Subtotal(totalLiquid: printedProductsPresenter.getSubtotal(printed)),
+          //             const SizedBox(height: 10),
+          //             ServiceCharge(
+          //               printed: printed,
+          //               loadPrintedAgain: loadPrintedAgain,
+          //               validateUserAndPassword: requestUserAndPassword,
+          //               commandNumber: commandNumber,
+          //               showRemoveServiceChargeButton:
+          //                   showRemoveServiceChargeButton,
+          //             ),
+          //           ],
+          //         ),
+          // ),
+          // if (serviceChargeValue > 0)
+          //   VerticalDivider(
+          //     color: Theme.of(context).primaryColorLight,
+          //     thickness: 1,
+          //   ),
+          Total(totalLiquid: totalLiquid),
+        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ export './cancel_products_or_remove_service_charge_button.dart';
 export './close_command_button.dart';
 export 'default_button.dart';
 export './do_logout_button.dart';
+export 'parameters_button.dart.dart';
 export './liberate_or_block_table_button.dart';
 export 'products_schedules_button.dart';
 export './reserve_table_button.dart';

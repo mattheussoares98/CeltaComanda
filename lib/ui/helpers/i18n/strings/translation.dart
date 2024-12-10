@@ -132,6 +132,7 @@ abstract class Translation {
   String get email;
   String get emptyCart;
   String get emptyTable;
+  String get enableSearchProducts;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
   String get environment;
@@ -164,6 +165,7 @@ abstract class Translation {
   String get optional;
   String get originTableIsEmpty;
   String get originTable;
+  String get parameters;
   String get password;
   String get pay;
   String get pdv;

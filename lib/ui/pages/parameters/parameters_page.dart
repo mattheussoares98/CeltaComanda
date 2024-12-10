@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/models.dart';
+import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -54,7 +55,7 @@ class _ParametersPageState extends State<ParametersPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("parameters" + ""),
+        title: FittedBox(child: Text(R.string.parameters)),
       ),
       body: StreamBuilder<List<ParameterModel>?>(
           stream: parametersPresenter.parametersStream,

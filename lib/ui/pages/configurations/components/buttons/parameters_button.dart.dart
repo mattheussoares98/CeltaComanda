@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class ParametersButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class ParametersButton extends StatelessWidget {
     return defaultButton(
       context: context,
       isNew: true,
-      name: "" + "parameters",
+      name: R.string.parameters,
       function: configurationsPresenter.goToParametersPage,
     );
   }

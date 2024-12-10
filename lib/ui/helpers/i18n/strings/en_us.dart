@@ -162,6 +162,7 @@ class EnUs implements Translation {
   String get email => 'Email';
   String get emptyCart => 'The cart is empty';
   String get emptyTable => 'The table is empty';
+  String get enableSearchProducts => 'Enable search products';
   String get enterprise => 'Enterprise';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
@@ -193,6 +194,7 @@ class EnUs implements Translation {
   String get optional => 'Optional';
   String get originTableIsEmpty => 'Oritin table is empty';
   String get originTable => 'Oritin table';
+  String get parameters => 'Parameters';
   String get password => 'Password';
   String get pay => 'Pay';
   String get pdv => 'Pdv';

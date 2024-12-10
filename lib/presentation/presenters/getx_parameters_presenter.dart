@@ -64,7 +64,7 @@ class GetxParametersPresenter extends GetxController
           null) {
         loadedParameters.add(
           ParameterModel(
-            name: "R.string.parameters", //TODO create string helper
+            name: R.string.enableSearchProducts,
             enabled: false,
             key: ParameterKey.enableSearchProducts,
           ),

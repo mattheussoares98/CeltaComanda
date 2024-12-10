@@ -161,6 +161,7 @@ class PtBr implements Translation {
   String get email => "E-mail";
   String get emptyCart => 'O carrinho está vazio';
   String get emptyTable => 'A mesa está vazia';
+  String get enableSearchProducts => 'Habilitar pesquisa de produtos';
   String get enterprise => 'Empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';
@@ -193,6 +194,7 @@ class PtBr implements Translation {
   String get optional => 'Opcional';
   String get originTableIsEmpty => 'A mesa de origem está vazia';
   String get originTable => 'Mesa de origem';
+  String get parameters => 'Parâmetros';
   String get password => 'Senha';
   String get pay => 'Pagar';
   String get pdv => 'Pdv';

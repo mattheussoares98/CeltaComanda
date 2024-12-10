@@ -82,6 +82,37 @@ void main() {
 
       verify(() => parametersData.load()).called(1);
     });
+    test("Should add parameter manually if dont exists", () async {
+      expectLater(
+          sut.parametersStream,
+          emitsInOrder([
+            null,
+            [
+              ParameterModel(
+                name: "R.string.parameters", //TODO create string helper
+                enabled: false,
+                key: ParameterKey.enableSearchProducts,
+              )
+            ]
+          ]));
+
+      parametersData.mockLoad([]);
+
+      await sut.loadParameters();
+    });
+    test("Should add parameter locally automatic if dont exists", () async {
+      parametersData.mockLoad([]);
+
+      await sut.loadParameters();
+
+      verify(() => parametersData.update([
+            ParameterModel(
+              name: "R.string.parameters", //TODO create string helper
+              enabled: false,
+              key: ParameterKey.enableSearchProducts,
+            )
+          ])).called(1);
+    });
   });
 
   group("Change parameter", () {
@@ -94,6 +125,7 @@ void main() {
             ParameterModel(
               name: parameters[0].name,
               enabled: !parameters[0].enabled,
+              key: parameters[0].key,
             ),
             parameters[1],
           ]));
@@ -118,6 +150,7 @@ void main() {
             ParameterModel(
               name: parameters[0].name,
               enabled: !parameters[0].enabled,
+              key: parameters[0].key,
             ),
             parameters[1],
           ])).called(1);

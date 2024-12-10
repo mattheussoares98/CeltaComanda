@@ -30,6 +30,7 @@ class GetxParametersPresenter extends GetxController
       final newParameter = ParameterModel(
         enabled: !oldParameter.enabled,
         name: oldParameter.name,
+        key: oldParameter.key,
       );
 
       newParameters[index] = newParameter;
@@ -56,7 +57,21 @@ class GetxParametersPresenter extends GetxController
     parameters = null;
 
     try {
-      final loadedParameters = await parametersData.load();
+      final loadedParameters = [...await parametersData.load()];
+
+      if (loadedParameters.firstWhereOrNull(
+              (e) => e.key == ParameterKey.enableSearchProducts) ==
+          null) {
+        loadedParameters.add(
+          ParameterModel(
+            name: "R.string.parameters", //TODO create string helper
+            enabled: false,
+            key: ParameterKey.enableSearchProducts,
+          ),
+        );
+
+        await parametersData.update(loadedParameters);
+      }
 
       parameters = loadedParameters;
     } catch (e) {

@@ -1255,9 +1255,11 @@ class EntityFactory {
   static ParameterModel makeParametersModel({
     String? name,
     bool? enabled,
+    ParameterKey? key,
   }) =>
       ParameterModel(
         name: name ?? faker.randomGenerator.string(10),
         enabled: enabled ?? faker.randomGenerator.boolean(),
+        key: key ?? ParameterKey.enableSearchProducts,
       );
 }

@@ -8,6 +8,7 @@ export 'expansible_group_from_product/expansible_group_from_product.dart';
 export './home/home.dart';
 export 'insert_products/insert_products.dart';
 export 'menus/menus.dart';
+export 'parameters/parameters.dart';
 export './payment/payment.dart';
 export './pre_load_images/pre_load_images.dart';
 export './print_products/print_products.dart';

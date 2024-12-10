@@ -278,4 +278,9 @@ class GetxConfigurationsPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> goToParametersPage() async {
+    await navigateTo.navigate(pageRoute: PageRoutes.parameters);
+  }
 }

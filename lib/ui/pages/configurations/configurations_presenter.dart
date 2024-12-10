@@ -45,4 +45,5 @@ abstract class ConfigurationsPresenter implements Listenable {
   void goToSendProductsToAnotherTablePage();
 
   Future<bool> closeCommand(int commandNumber);
+  Future<void> goToParametersPage();
 }

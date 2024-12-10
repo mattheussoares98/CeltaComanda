@@ -8,6 +8,7 @@ class PageRoutes {
   static const String home = "/home";
   static const String insertProducts = "/insert_product";
   static const String menus = "/menus";
+  static const String parameters = "/parameters";
   static const String payment = "/payment";
   static const String printedProducts = "/printed_products";
   static const String printProducts = "/print_products";

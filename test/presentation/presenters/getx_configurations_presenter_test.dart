@@ -664,4 +664,14 @@ void main() {
       expect(value, false);
     });
   });
+
+  group("Go to parameters page", () {
+    test("Should call navigate correctly", () async {
+      await sut.goToParametersPage();
+
+      verify(
+        () => navigateTo.navigate(pageRoute: PageRoutes.parameters),
+      ).called(1);
+    });
+  });
 }

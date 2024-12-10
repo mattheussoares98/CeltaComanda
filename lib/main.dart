@@ -87,6 +87,9 @@ class App extends StatelessWidget with HideNavigationBarManager {
           create: (_) => makeGetxMenuPresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxParametersPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxPaymentPresenter(),
         ),
         ListenableProvider(
@@ -140,6 +143,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
             GetPage(
               name: PageRoutes.insertProducts,
               page: makeInsertProductsPage,
+              transition: Transition.fadeIn,
+            ),
+            GetPage(
+              name: PageRoutes.parameters,
+              page: makeParametersPage,
               transition: Transition.fadeIn,
             ),
             GetPage(

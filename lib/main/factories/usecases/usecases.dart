@@ -9,6 +9,7 @@ export './expansible_groups/expansible_groups.dart';
 export './login_management/login_management.dart';
 export './menu/menu.dart';
 export './navigation/navigation.dart';
+export './parameters/parameters.dart';
 export './payment/payment.dart';
 export './pdv/pdv.dart';
 export './platform/platform.dart';

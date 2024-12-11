@@ -79,6 +79,8 @@ abstract class MenuPresenter implements Listenable {
     required HomePresenter homePresenter,
     required int? commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required double quantity,
     required String dateTime,
   });

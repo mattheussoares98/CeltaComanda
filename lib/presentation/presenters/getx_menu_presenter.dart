@@ -838,8 +838,10 @@ class GetxMenuPresenter extends GetxController
     required ProductsViewModel product,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required int? commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required int? commandNumber,
     required double quantity,
     required String dateTime,
   }) async {
@@ -858,6 +860,20 @@ class GetxMenuPresenter extends GetxController
           pdv: null,
         );
       }
+
+      await cartPresenter.addProductInCart(
+        product: CartProductEntity(
+          Product: product.toEntity(),
+          Comments: null, //TODO add comment option
+          TotalLiquid: product.SaleRetailPraticed.toDouble() * quantity,
+          Quantity: quantity,
+          Value: product.SaleRetailPraticed.toDouble(),
+          ProductPriceLookUpCode: product.PriceLookupCode,
+        ),
+        menuPresenter: this,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
 
       await printedProductsPresenter.loadPrinted(
         homePresenter.commandEntity!.commandNumber ?? commandNumber.toString(),

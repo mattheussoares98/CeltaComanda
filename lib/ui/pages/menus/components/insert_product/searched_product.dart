@@ -23,6 +23,7 @@ class SearchedProduct extends StatelessWidget {
     CartPresenter cartPresenter,
     HomePresenter homePresenter,
     PrintedProductsPresenter printedProductsPresenter,
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     ProductsViewModel product,
   ) async {
     bool? isValid = formKeyQuantity.currentState?.validate();
@@ -36,6 +37,8 @@ class SearchedProduct extends StatelessWidget {
             ? null
             : commandNumberController.text.toInt(),
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         quantity: quantityController.text.toDouble(),
         dateTime: DateTime.now().toIso8601String(),
       );
@@ -47,6 +50,8 @@ class SearchedProduct extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -123,6 +128,7 @@ class SearchedProduct extends StatelessWidget {
                                         cartPresenter,
                                         homePresenter,
                                         printedProductsPresenter,
+                                        expansibleGroupFromProductPresenter,
                                         product,
                                       );
                                     }
@@ -146,6 +152,7 @@ class SearchedProduct extends StatelessWidget {
                                   cartPresenter,
                                   homePresenter,
                                   printedProductsPresenter,
+                                  expansibleGroupFromProductPresenter,
                                   product,
                                 );
                               }
@@ -161,6 +168,7 @@ class SearchedProduct extends StatelessWidget {
                               cartPresenter,
                               homePresenter,
                               printedProductsPresenter,
+                              expansibleGroupFromProductPresenter,
                               product,
                             );
                           }

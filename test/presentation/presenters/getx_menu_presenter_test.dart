@@ -195,15 +195,19 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductScheduleEntity());
     registerFallbackValue(EntityFactory.makeExpansibleGroupScheduleEntity(0));
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 100,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(EntityFactory.makeSaleRequestModel(
       covenantCode: 0,
       customerCode: 0,
     ));
-    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
   });
 
   group("Get groups and products", () {
@@ -1421,6 +1425,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
         dateTime: dateTime,
@@ -1440,6 +1446,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
         dateTime: dateTime,
@@ -1462,6 +1470,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
         dateTime: dateTime,
@@ -1481,10 +1491,43 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: faker.randomGenerator.integer(100),
         quantity: quantityToAddProduct,
         dateTime: dateTime,
       );
+    });
+
+    test("Should add product in cart", () async {
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        commandNumber: null,
+        quantity: quantityToAddProduct,
+        dateTime: dateTime,
+      );
+
+      verify(
+        () => cartPresenter.addProductInCart(
+          product: CartProductEntity(
+            Product: productsViewModel.toEntity(),
+            Comments: null,
+            TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble() *
+                quantityToAddProduct,
+            Quantity: quantityToAddProduct,
+            Value: productsViewModel.SaleRetailPraticed.toDouble(),
+            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+          ),
+          menuPresenter: sut,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        ),
+      ).called(1);
     });
     test("Should call load printed products", () async {
       await sut.addProductInSaleRequest(
@@ -1492,6 +1535,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
         dateTime: dateTime,
@@ -1508,6 +1553,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
         dateTime: dateTime,
@@ -1536,6 +1583,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
         commandNumber: newCommandNumber,
         quantity: quantityToAddProduct,
         dateTime: dateTime,

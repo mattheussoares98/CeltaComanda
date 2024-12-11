@@ -23,7 +23,6 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
-  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -42,8 +41,6 @@ void main() {
   late List<ProductEntity> productsEntityThatIsPromoCombox;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
-  late double quantityToAddProduct;
-  late String dateTime;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -83,7 +80,6 @@ void main() {
     cartPresenter = CartPresenterSpy();
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
-    printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
@@ -162,8 +158,6 @@ void main() {
       EntityFactory.makeParametersModel(),
       EntityFactory.makeParametersModel(),
     ];
-    quantityToAddProduct = faker.randomGenerator.decimal();
-    dateTime = DateTime.now().toIso8601String();
   }
 
   void mockSuccess() {
@@ -1411,192 +1405,6 @@ void main() {
       await sut.addOrRemoveSearchProducts();
       expect(sut.loadedMenu[0].keys.first.Name,
           sut.getExpansibleGroupNameWithoutPipes(mockedExpansibleGroup.Name));
-    });
-  });
-
-  group("Add product in sale request", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.searchedProductStream, emits(null));
-
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-    });
-    test("Should emit correct values on unexpected error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
-
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-    });
-    test(
-        "Should emit correct values on not fixed command number and pass null command number value",
-        () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.commandNumberObligatory]),
-      );
-
-      homePresenter.commandEntityController =
-          EntityFactory.makeCommandEntity(false);
-
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-    });
-    test(
-        "Should emit correct values on not fixed command number and pass a command number value",
-        () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      homePresenter.commandEntityController =
-          EntityFactory.makeCommandEntity(false);
-
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: faker.randomGenerator.integer(100),
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-    });
-
-    test("Should add product in cart", () async {
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-
-      verify(
-        () => cartPresenter.addProductInCart(
-          product: CartProductEntity(
-            Product: productsViewModel.toEntity(),
-            Comments: null,
-            TotalLiquid: productsViewModel.SaleRetailPraticed.toDouble() *
-                quantityToAddProduct,
-            Quantity: quantityToAddProduct,
-            Value: productsViewModel.SaleRetailPraticed.toDouble(),
-            ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-          ),
-          menuPresenter: sut,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-        ),
-      ).called(1);
-    });
-    test("Should call load printed products", () async {
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-
-      verify(() => printedProductsPresenter.loadPrinted(
-            homePresenter.commandEntityController!.commandNumber!,
-          )).called(1);
-    });
-
-    test("Should call insert service charge product", () async {
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-
-      verify(
-        () => cartPresenter.insertServiceChargeProduct(
-          printedProductsPresenter,
-          homePresenter,
-        ),
-      ).called(1);
-    });
-    test(
-        "Should update command number if dont is fixed command number and pass a command number",
-        () async {
-      homePresenter.commandEntityController = CommandEntity(
-        commandNumber: null,
-        isFixedCommandNumber: false,
-        pdv: null,
-      );
-
-      final newCommandNumber = faker.randomGenerator.integer(10);
-
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: newCommandNumber,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-
-      verify(
-        () => homePresenter.updateCommandEntity(
-          commandNumber: newCommandNumber.toString(),
-          isFixedCommandNumber: false,
-          pdv: null,
-        ),
-      ).called(1);
     });
   });
 }

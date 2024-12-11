@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/entities/entities.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -29,19 +30,21 @@ class SearchedProduct extends StatelessWidget {
     bool? isValid = formKeyQuantity.currentState?.validate();
 
     if (isValid == true) {
-      await menuPresenter.addProductInSaleRequest(
-        product: product,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        commandNumber: commandNumberController.text.isEmpty
-            ? null
-            : commandNumberController.text.toInt(),
-        printedProductsPresenter: printedProductsPresenter,
+      await cartPresenter.addProductInCart(
+        product: CartProductEntity(
+          Product: product.toEntity(),
+          Comments: null,
+          TotalLiquid: product.SaleRetailPraticed.toDouble() *
+              quantityController.text.toDouble(),
+          Quantity: quantityController.text.toDouble(),
+          Value: product.SaleRetailPraticed.toDouble(),
+          ProductPriceLookUpCode: product.PriceLookupCode,
+        ),
+        menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        quantity: quantityController.text.toDouble(),
-        dateTime: DateTime.now().toIso8601String(),
       );
+      quantityController.clear();
     }
   }
 
@@ -100,78 +103,18 @@ class SearchedProduct extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                       onPressed: () async {
-                        commandNumberController.clear();
+                        bool? isValid =
+                            formKeyQuantity.currentState?.validate();
 
-                        if (formKeyQuantity.currentState?.validate() != true) {
-                          return;
-                        }
-                        if (homePresenter.commandEntity?.isFixedCommandNumber ==
-                            false) {
-                          await notificationDialog(
-                            context: context,
-                            titleMessage: R.string.msgWriteCommandNumber,
-                            confirmMessage: R.string.confirm,
-                            cancelMessage: R.string.cancel,
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextFormField(
-                                  controller: commandNumberController,
-                                  onFieldSubmitted: (_) async {
-                                    bool? isValid = formKeyCommandNumber
-                                        .currentState
-                                        ?.validate();
-
-                                    if (isValid == true) {
-                                      await addProduct(
-                                        menuPresenter,
-                                        cartPresenter,
-                                        homePresenter,
-                                        printedProductsPresenter,
-                                        expansibleGroupFromProductPresenter,
-                                        product,
-                                      );
-                                    }
-                                  },
-                                  decoration: formFieldDecoration(
-                                    context: context,
-                                    hintText: R.string.commandNumber,
-                                    labelText: R.string.commandNumber,
-                                    errorText: null,
-                                  ),
-                                )
-                              ],
-                            ),
-                            onPress: () async {
-                              bool? isValid =
-                                  formKeyCommandNumber.currentState?.validate();
-
-                              if (isValid == true) {
-                                await addProduct(
-                                  menuPresenter,
-                                  cartPresenter,
-                                  homePresenter,
-                                  printedProductsPresenter,
-                                  expansibleGroupFromProductPresenter,
-                                  product,
-                                );
-                              }
-                            },
+                        if (isValid == true) {
+                          await addProduct(
+                            menuPresenter,
+                            cartPresenter,
+                            homePresenter,
+                            printedProductsPresenter,
+                            expansibleGroupFromProductPresenter,
+                            product,
                           );
-                        } else {
-                          bool? isValid =
-                              formKeyQuantity.currentState?.validate();
-
-                          if (isValid == true) {
-                            await addProduct(
-                              menuPresenter,
-                              cartPresenter,
-                              homePresenter,
-                              printedProductsPresenter,
-                              expansibleGroupFromProductPresenter,
-                              product,
-                            );
-                          }
                         }
                       },
                       child: Text(

@@ -72,16 +72,4 @@ abstract class MenuPresenter implements Listenable {
   void cancelPreloadImage();
 
   Future<void> addOrRemoveSearchProducts();
-
-  Future<void> addProductInSaleRequest({
-    required ProductsViewModel product,
-    required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
-    required int? commandNumber,
-    required PrintedProductsPresenter printedProductsPresenter,
-    required ExpansibleGroupFromProductPresenter
-        expansibleGroupFromProductPresenter,
-    required double quantity,
-    required String dateTime,
-  });
 }

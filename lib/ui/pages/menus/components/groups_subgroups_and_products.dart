@@ -107,7 +107,7 @@ class _GroupsSubgroupsAndProductsState
           if (groupIsSelected(menuPresenter, R.string.searchProduct))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
-              child: SearchProduct(),
+              child: InsertProductBody(),
             ),
           if (!groupIsSelected(menuPresenter, R.string.detach) &&
               !groupIsSelected(menuPresenter, R.string.searchProduct))

@@ -883,7 +883,7 @@ class GetxMenuPresenter extends GetxController
                 ProductPriceLookUpCode:
                     EnterpriseBuilder.entity!.pluServiceCharge,
                 ProductInternalCodeOnErp:
-                    EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
+                    EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
                 QuantityString: quantity.toString(),
                 Comments: null,
                 DateHourOfCreation: null,

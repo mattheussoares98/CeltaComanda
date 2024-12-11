@@ -1,5 +1,5 @@
 export './evaluate/evaluate.dart';
-export './search/search.dart';
+export 'insert_product/insert_product.dart';
 export './detach_items.dart';
 export './group_item.dart';
 export './group_items.dart';

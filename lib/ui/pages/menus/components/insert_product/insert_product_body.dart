@@ -1,26 +1,31 @@
-import 'package:provider/provider.dart';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../pages.dart';
 
-class SearchProduct extends StatefulWidget {
-  const SearchProduct({super.key});
+class InsertProductBody extends StatefulWidget {
+  const InsertProductBody({super.key});
 
   @override
-  State<SearchProduct> createState() => _SearchProductState();
+  State<InsertProductBody> createState() => _InsertProductBodyState();
 }
 
-class _SearchProductState extends State<SearchProduct> {
-  FocusNode focusNode = FocusNode();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class _InsertProductBodyState extends State<InsertProductBody> {
+  final focusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
+  final productFormKey = GlobalKey<FormState>();
+  final commandNumberFormKey = GlobalKey<FormState>();
   final searchProductController = TextEditingController();
+  final commandNumberController = TextEditingController();
+  final quantityController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     focusNode.dispose();
     searchProductController.dispose();
+    commandNumberController.dispose();
+    quantityController.dispose();
   }
 
   void _requestFocusToFormField() {
@@ -29,9 +34,7 @@ class _SearchProductState extends State<SearchProduct> {
     });
   }
 
-  Future<void> _searchProduct(
-    MenuPresenter menuPresenter,
-  ) async {
+  Future<void> _searchProduct(MenuPresenter menuPresenter) async {
     if (!formKey.currentState!.validate()) {
       _requestFocusToFormField();
       return;
@@ -39,17 +42,13 @@ class _SearchProductState extends State<SearchProduct> {
 
     await menuPresenter.searchProduct(searchProductController.text);
 
-    // if (menuPresenter.selectedProductStream == null) {
-    //   _requestFocusToFormField();
-    // } else {
-    // }
     focusNode.unfocus();
     searchProductController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -70,10 +69,10 @@ class _SearchProductState extends State<SearchProduct> {
                 return SizedBox();
               }
 
-              return Column(
-                children: [
-                  Text(snapshot.data!.Name),
-                ],
+              return SearchedProduct(
+                product: snapshot.data!,
+                commandNumberController: commandNumberController,
+                quantityController: quantityController,
               );
             },
           ),

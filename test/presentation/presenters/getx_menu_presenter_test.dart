@@ -58,7 +58,6 @@ void main() {
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
   late UpdatedAllImagesSpy updatedAllImages;
   late ParametersDataSpy parametersData;
-  late UpdateSaleRequestSpy updateSaleRequest;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -77,7 +76,6 @@ void main() {
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
     updatedAllImages = UpdatedAllImagesSpy();
     parametersData = ParametersDataSpy();
-    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initPresenters() {
@@ -100,7 +98,6 @@ void main() {
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
       updatedAllImages: updatedAllImages,
       parametersData: parametersData,
-      updateSaleRequest: updateSaleRequest,
     );
   }
 
@@ -1502,58 +1499,6 @@ void main() {
 
       verify(() => printedProductsPresenter.loadPrinted(
             homePresenter.commandEntityController!.commandNumber!,
-          )).called(1);
-    });
-    test("Should update sale request with correct values", () async {
-      await sut.addProductInSaleRequest(
-        product: productsViewModel,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        commandNumber: null,
-        quantity: quantityToAddProduct,
-        dateTime: dateTime,
-      );
-
-      final totalLiquid =
-          printedProductsPresenter.printedProductsMock.TotalLiquid.toDouble() +
-              productsViewModel.SaleRetailPraticed.toDouble();
-
-      verify(() => updateSaleRequest.update(
-            commandNumberWithThreeNumbers:
-                homePresenter.commandEntityController!.commandNumber!,
-            saleRequestId: printedProductsPresenter
-                .printedProductsMock.SaleRequestId
-                .toInt(),
-            model: SaleRequestModel(
-                CovenantCode: null,
-                CustomerCode: null,
-                TotalLiquid: totalLiquid,
-                Products: [
-                  SaleRequestProductModel(
-                    SaleMovementProductCompositionId: null,
-                    ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
-                    ProductInternalCodeOnErp:
-                        productsViewModel.InternalCodeOnERP!.toInt(),
-                    QuantityString: quantityToAddProduct.toString(),
-                    Comments: null,
-                    DateHourOfCreation: dateTime,
-                    IsCancelled: false,
-                    IsDelivered: true,
-                    IsPrinted: true,
-                    SaleRequestProductId: null,
-                    UserId: null,
-                    ProductionStatus: null,
-                    SaleRequestId: printedProductsPresenter
-                        .printedProductsMock.SaleRequestId
-                        .toInt(),
-                    Value: productsViewModel.SaleRetailPraticed.toDouble(),
-                    Quantity: quantityToAddProduct,
-                    TotalLiquid:
-                        productsViewModel.SaleRetailPraticed.toDouble() *
-                            quantityToAddProduct,
-                  ),
-                ]),
           )).called(1);
     });
 

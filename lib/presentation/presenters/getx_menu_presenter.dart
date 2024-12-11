@@ -26,7 +26,6 @@ class GetxMenuPresenter extends GetxController
   final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
   final UpdatedAllImages updatedAllImages;
   final ParametersData parametersData;
-  final UpdateSaleRequest updateSaleRequest;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -41,7 +40,6 @@ class GetxMenuPresenter extends GetxController
     required this.manageExpansibleGroupSchedule,
     required this.updatedAllImages,
     required this.parametersData,
-    required this.updateSaleRequest,
   });
 
   @override
@@ -863,42 +861,6 @@ class GetxMenuPresenter extends GetxController
 
       await printedProductsPresenter.loadPrinted(
         homePresenter.commandEntity!.commandNumber ?? commandNumber.toString(),
-      );
-
-      final totalLiquid =
-          printedProductsPresenter.printed!.TotalLiquid.toDouble() +
-              product.SaleRetailPraticed.toDouble();
-
-      await updateSaleRequest.update(
-        commandNumberWithThreeNumbers:
-            homePresenter.commandEntity!.commandNumber ??
-                commandNumber.toString().padLeft(3, "0"),
-        saleRequestId: printedProductsPresenter.printed!.SaleRequestId.toInt(),
-        model: SaleRequestModel(
-            CovenantCode: null,
-            CustomerCode: null,
-            TotalLiquid: totalLiquid,
-            Products: [
-              SaleRequestProductModel(
-                SaleMovementProductCompositionId: null,
-                ProductPriceLookUpCode: product.PriceLookupCode,
-                ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
-                QuantityString: quantity.toString(),
-                Comments: null,
-                DateHourOfCreation: dateTime,
-                IsCancelled: false,
-                IsDelivered: true,
-                IsPrinted: true,
-                SaleRequestProductId: null,
-                UserId: null,
-                ProductionStatus: null,
-                SaleRequestId:
-                    printedProductsPresenter.printed!.SaleRequestId.toInt(),
-                Value: product.SaleRetailPraticed.toDouble(),
-                Quantity: quantity,
-                TotalLiquid: product.SaleRetailPraticed.toDouble() * quantity,
-              ),
-            ]),
       );
 
       await cartPresenter.insertServiceChargeProduct(

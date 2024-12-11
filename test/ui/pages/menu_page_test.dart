@@ -24,8 +24,7 @@ void main() {
     mockHiveBox = BoxSpy();
     hive.mockOpenBox(mockHiveBox);
     presenter = MenuPresenterSpy();
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
   });
 
   setUpAll(() {
@@ -33,7 +32,8 @@ void main() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempProductsViewModel());
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeProductCompositionViewModel(
       quantity: 0,
       salePrice: 0,
@@ -44,10 +44,14 @@ void main() {
       indexOfSelectedChild: 0,
       insertChilds: false,
     ));
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
   });
 

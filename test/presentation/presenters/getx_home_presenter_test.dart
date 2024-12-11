@@ -153,8 +153,14 @@ void main() {
     registerFallbackValue(EntityFactory.makeCommandEntity(true));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makePdvEntity());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
   });
 
   group("Navigation", () {

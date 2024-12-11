@@ -95,7 +95,8 @@ void main() {
     userValidations.mockIsValidPassword(true);
     userValidations.mockCanCancel(true);
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
-    barcodeScanner.mockRead(homePresenter.commandEntityController!.commandNumber!);
+    barcodeScanner
+        .mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
   }
 
@@ -111,14 +112,18 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
-    registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(
         EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0));
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(Uint8List(faker.randomGenerator.integer(100)));
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("Validate password", () {
@@ -377,7 +382,8 @@ void main() {
       verify(() => loadPrintedProducts.load(
             url: EnterpriseBuilder.entity!.url!,
             enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-            commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
+            commandNumber: int.parse(
+                homePresenter.commandEntityController!.commandNumber!),
           )).called(1);
     });
 
@@ -386,7 +392,8 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
+        commandNumber:
+            int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
 
       expect(result, printedEntity);
@@ -397,7 +404,8 @@ void main() {
       final result = await loadPrintedProducts.load(
         url: EnterpriseBuilder.entity!.url!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        commandNumber: int.parse(homePresenter.commandEntityController!.commandNumber!),
+        commandNumber:
+            int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
 
       expect(result, null);
@@ -451,7 +459,8 @@ void main() {
         () => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+          commandNumber:
+              homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),
       ).called(1);
       expect(sut.canCancelProducts, true);
@@ -519,7 +528,8 @@ void main() {
       verify(() => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt())).called(1);
+          commandNumber: homePresenter.commandEntityController!.commandNumber!
+              .toInt())).called(1);
     });
 
     test("Should emit correct values on removeProduct throws", () async {
@@ -754,8 +764,9 @@ void main() {
             TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
             EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
           ),
-          commandNumberWithThreeNumbers:
-              homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
+          commandNumberWithThreeNumbers: homePresenter
+              .commandEntityController!.commandNumber!
+              .padLeft(3, "0"),
           saleRequestId: sut.printed!.SaleRequestId.toInt(),
         ),
       ).called(1);
@@ -774,7 +785,8 @@ void main() {
         () => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
           enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+          commandNumber:
+              homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),
       ).called(2);
     });

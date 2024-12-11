@@ -19,12 +19,17 @@ void main() {
   setUpAll(() {
     registerFallbackValue(EntityFactory.makeSaleRequestTempEntity(0));
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

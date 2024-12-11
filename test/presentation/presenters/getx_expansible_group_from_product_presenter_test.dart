@@ -21,7 +21,8 @@ void main() {
       loadExpansibleGroupsFromProductsComplete;
 
   late List<ProductsViewModel> loadedProducts;
-  late List<ExpansibleGroupFromProductsCompleteEntity> expansibleGroupFromProductComplete;
+  late List<ExpansibleGroupFromProductsCompleteEntity>
+      expansibleGroupFromProductComplete;
   late List<int> allInternalCodes;
 
   void initUseCases() {
@@ -83,10 +84,17 @@ void main() {
       isOptionalItem: faker.randomGenerator.boolean(),
       insertChilds: faker.randomGenerator.boolean(),
     ));
-    registerFallbackValue(EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(
+        EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
-    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
   });
 

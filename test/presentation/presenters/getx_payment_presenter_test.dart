@@ -140,11 +140,6 @@ void main() {
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(PaymentMode.credit);
-    registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(Channels.getnet);
     registerFallbackValue(Channels.persistent);
     registerFallbackValue(Channels.rede);
@@ -152,6 +147,15 @@ void main() {
     registerFallbackValue(
       EntityFactory.makeSaleRequestModel(covenantCode: 1, customerCode: 1),
     );
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("Call payment", () {

@@ -234,11 +234,15 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("updateSelectedProduct", () {
@@ -794,8 +798,8 @@ void main() {
             ),
           ));
 
-      verifyNever(() =>
-          cartPresenter.getSaleRequestTemp(homePresenter.commandEntityController!.commandNumber!));
+      verifyNever(() => cartPresenter.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!));
     });
     test("Should call updateSaleRequestTemp on updateSaleRequest", () async {
       final case1 = EntityFactory.makeProductCompositionViewModel(
@@ -868,8 +872,8 @@ void main() {
             .toList(),
       );
 
-      verify(() => cartPresenter
-          .getSaleRequestTemp(homePresenter.commandEntityController!.commandNumber!)).called(1);
+      verify(() => cartPresenter.getSaleRequestTemp(
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test("Should emit correct values on cartPresenter.load throws unexpected",
         () async {

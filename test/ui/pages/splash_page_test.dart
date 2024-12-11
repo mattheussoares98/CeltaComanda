@@ -20,11 +20,15 @@ void main() {
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   Future<void> loadPage(WidgetTester tester) async {

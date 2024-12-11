@@ -20,11 +20,15 @@ void main() {
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   // ignore: unused_element

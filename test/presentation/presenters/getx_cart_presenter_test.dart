@@ -227,17 +227,20 @@ void main() {
     ));
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
-    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
-    registerFallbackValue(UpdateSaleRequestTempEntity);
     registerFallbackValue(
       EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0),
     );
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("CartInformations", () {

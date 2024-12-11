@@ -140,17 +140,21 @@ void main() {
   });
 
   setUpAll(() {
+    registerFallbackValue(EntityFactory.makeCartProductEntity(
+      maximumProductQuantity: 0,
+      minimumProductQuantity: 0,
+    ));
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeCommandEntity());
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
+    registerFallbackValue(EntityFactory.makePdvEntity());
+    registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(EntityFactory.makePdvEntity());
   });
 
   group("old tests", () {
@@ -185,7 +189,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.validateEnterpriseByName(
@@ -228,7 +233,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -272,7 +278,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -316,7 +323,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.validateEnterpriseByName(
@@ -514,7 +522,8 @@ void main() {
           secondsPreloadingImages: newEnterprise.secondsPreloadingImages,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
           pluServiceCharge: newEnterprise.pluServiceCharge,
-          internalCodeOnErpServiceCharge: newEnterprise.internalCodeOnErpServiceCharge,
+          internalCodeOnErpServiceCharge:
+              newEnterprise.internalCodeOnErpServiceCharge,
         ),
       );
     });
@@ -781,7 +790,8 @@ void main() {
             secondsPreloadingImages:
                 EnterpriseBuilder.entity!.secondsPreloadingImages,
             pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-            internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+            internalCodeOnErpServiceCharge:
+                EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
           ));
     });
   });

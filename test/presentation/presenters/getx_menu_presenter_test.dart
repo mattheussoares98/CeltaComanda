@@ -43,6 +43,7 @@ void main() {
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
   late double quantityToAddProduct;
+  late String dateTime;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -165,6 +166,7 @@ void main() {
       EntityFactory.makeParametersModel(),
     ];
     quantityToAddProduct = faker.randomGenerator.decimal();
+    dateTime = DateTime.now().toIso8601String();
   }
 
   void mockSuccess() {
@@ -1424,6 +1426,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
     });
     test("Should emit correct values on unexpected error", () async {
@@ -1442,6 +1445,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
     });
     test(
@@ -1463,6 +1467,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
     });
     test(
@@ -1481,6 +1486,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: faker.randomGenerator.integer(100),
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
     });
     test("Should call load printed products", () async {
@@ -1491,6 +1497,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
 
       verify(() => printedProductsPresenter.loadPrinted(
@@ -1505,6 +1512,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
 
       final totalLiquid =
@@ -1524,13 +1532,12 @@ void main() {
                 Products: [
                   SaleRequestProductModel(
                     SaleMovementProductCompositionId: null,
-                    ProductPriceLookUpCode:
-                        EnterpriseBuilder.entity!.pluServiceCharge,
-                    ProductInternalCodeOnErp: EnterpriseBuilder
-                        .entity!.internalCodeOnErpServiceCharge!,
+                    ProductPriceLookUpCode: productsViewModel.PriceLookupCode,
+                    ProductInternalCodeOnErp:
+                        productsViewModel.InternalCodeOnERP!.toInt(),
                     QuantityString: quantityToAddProduct.toString(),
                     Comments: null,
-                    DateHourOfCreation: null,
+                    DateHourOfCreation: dateTime,
                     IsCancelled: false,
                     IsDelivered: true,
                     IsPrinted: true,
@@ -1558,6 +1565,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
 
       verify(
@@ -1585,6 +1593,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: newCommandNumber,
         quantity: quantityToAddProduct,
+        dateTime: dateTime,
       );
 
       verify(

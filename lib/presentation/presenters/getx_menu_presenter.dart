@@ -843,6 +843,7 @@ class GetxMenuPresenter extends GetxController
     required int? commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required double quantity,
+    required String dateTime,
   }) async {
     isLoading = true;
     mainError = null;
@@ -880,13 +881,11 @@ class GetxMenuPresenter extends GetxController
             Products: [
               SaleRequestProductModel(
                 SaleMovementProductCompositionId: null,
-                ProductPriceLookUpCode:
-                    EnterpriseBuilder.entity!.pluServiceCharge,
-                ProductInternalCodeOnErp:
-                    EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+                ProductPriceLookUpCode: product.PriceLookupCode,
+                ProductInternalCodeOnErp: product.InternalCodeOnERP!.toInt(),
                 QuantityString: quantity.toString(),
                 Comments: null,
-                DateHourOfCreation: null,
+                DateHourOfCreation: dateTime,
                 IsCancelled: false,
                 IsDelivered: true,
                 IsPrinted: true,

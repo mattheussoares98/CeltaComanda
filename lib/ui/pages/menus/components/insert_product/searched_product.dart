@@ -37,6 +37,7 @@ class SearchedProduct extends StatelessWidget {
             : commandNumberController.text.toInt(),
         printedProductsPresenter: printedProductsPresenter,
         quantity: quantityController.text.toDouble(),
+        dateTime: DateTime.now().toIso8601String(),
       );
     }
   }

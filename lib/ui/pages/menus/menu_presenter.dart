@@ -80,5 +80,6 @@ abstract class MenuPresenter implements Listenable {
     required int? commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
     required double quantity,
+    required String dateTime,
   });
 }

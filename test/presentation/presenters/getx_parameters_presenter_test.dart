@@ -89,7 +89,7 @@ void main() {
             null,
             [
               ParameterModel(
-                name: R.string.parameters,
+                name: R.string.enableSearchProducts,
                 enabled: false,
                 key: ParameterKey.enableSearchProducts,
               )
@@ -107,7 +107,7 @@ void main() {
 
       verify(() => parametersData.update([
             ParameterModel(
-              name: R.string.parameters,
+              name: R.string.enableSearchProducts,
               enabled: false,
               key: ParameterKey.enableSearchProducts,
             )

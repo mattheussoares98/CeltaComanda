@@ -832,4 +832,22 @@ class GetxMenuPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> addProductInSaleRequest(
+    ProductsViewModel product,
+    CartPresenter cartPresenter,
+  ) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      
+      searchedProduct = null;
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

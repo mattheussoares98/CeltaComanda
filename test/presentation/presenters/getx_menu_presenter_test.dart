@@ -1399,4 +1399,23 @@ void main() {
           sut.getExpansibleGroupNameWithoutPipes(mockedExpansibleGroup.Name));
     });
   });
+
+  group("Add product in sale request", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.searchedProductStream, emits(null));
+
+      await sut.addProductInSaleRequest(productsViewModel, cartPresenter);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      await sut.addProductInSaleRequest(productsViewModel, cartPresenter);
+    });
+  });
 }

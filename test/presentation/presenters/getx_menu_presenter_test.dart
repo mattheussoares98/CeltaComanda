@@ -42,6 +42,7 @@ void main() {
   late List<ProductEntity> productsEntityThatIsPromoCombox;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
+  late double quantityToAddProduct;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -163,6 +164,7 @@ void main() {
       EntityFactory.makeParametersModel(),
       EntityFactory.makeParametersModel(),
     ];
+    quantityToAddProduct = faker.randomGenerator.decimal();
   }
 
   void mockSuccess() {
@@ -194,6 +196,10 @@ void main() {
     registerFallbackValue(EntityFactory.makeEnterpriseData());
     registerFallbackValue(EntityFactory.makeProductScheduleEntity());
     registerFallbackValue(EntityFactory.makeExpansibleGroupScheduleEntity(0));
+    registerFallbackValue(EntityFactory.makeSaleRequestModel(
+      covenantCode: 0,
+      customerCode: 0,
+    ));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
@@ -1417,6 +1423,7 @@ void main() {
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
+        quantity: quantityToAddProduct,
       );
     });
     test("Should emit correct values on unexpected error", () async {
@@ -1436,6 +1443,7 @@ void main() {
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
+        quantity: quantityToAddProduct,
       );
     });
     test(
@@ -1456,6 +1464,7 @@ void main() {
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
+        quantity: quantityToAddProduct,
       );
     });
     test(
@@ -1472,7 +1481,8 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
-        commandNumber: faker.randomGenerator.integer(100).toString(),
+        commandNumber: faker.randomGenerator.integer(100),
+        quantity: quantityToAddProduct,
       );
     });
     test("Should call load printed products", () async {
@@ -1485,10 +1495,66 @@ void main() {
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
+        quantity: quantityToAddProduct,
       );
 
       verify(() => printedProductsPresenter.loadPrinted(
             homePresenter.commandEntityController!.commandNumber!,
+          )).called(1);
+    });
+    test("Should update sale request with correct values", () async {
+      homePresenter.commandEntityController =
+          EntityFactory.makeCommandEntity(true);
+
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: null,
+        quantity: quantityToAddProduct,
+      );
+
+      final totalLiquid =
+          printedProductsPresenter.printedProductsMock.TotalLiquid.toDouble() +
+              productsViewModel.SaleRetailPraticed.toDouble();
+
+      verify(() => updateSaleRequest.update(
+            commandNumberWithThreeNumbers:
+                homePresenter.commandEntityController!.commandNumber!,
+            saleRequestId: printedProductsPresenter
+                .printedProductsMock.SaleRequestId
+                .toInt(),
+            model: SaleRequestModel(
+                CovenantCode: null,
+                CustomerCode: null,
+                TotalLiquid: totalLiquid,
+                Products: [
+                  SaleRequestProductModel(
+                    SaleMovementProductCompositionId: null,
+                    ProductPriceLookUpCode:
+                        EnterpriseBuilder.entity!.pluServiceCharge,
+                    ProductInternalCodeOnErp: EnterpriseBuilder
+                        .entity!.internalCodeOnErpServiceCharge!,
+                    QuantityString: quantityToAddProduct.toString(),
+                    Comments: null,
+                    DateHourOfCreation: null,
+                    IsCancelled: false,
+                    IsDelivered: true,
+                    IsPrinted: true,
+                    SaleRequestProductId: null,
+                    UserId: null,
+                    ProductionStatus: null,
+                    SaleRequestId: printedProductsPresenter
+                        .printedProductsMock.SaleRequestId
+                        .toInt(),
+                    Value: productsViewModel.SaleRetailPraticed.toDouble(),
+                    Quantity: quantityToAddProduct,
+                    TotalLiquid:
+                        productsViewModel.SaleRetailPraticed.toDouble() *
+                            quantityToAddProduct,
+                  ),
+                ]),
           )).called(1);
     });
   });

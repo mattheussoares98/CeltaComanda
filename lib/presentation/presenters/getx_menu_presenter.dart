@@ -840,8 +840,9 @@ class GetxMenuPresenter extends GetxController
     required ProductsViewModel product,
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
-    required String? commandNumber,
+    required int? commandNumber,
     required PrintedProductsPresenter printedProductsPresenter,
+    required double quantity,
   }) async {
     isLoading = true;
     mainError = null;
@@ -851,8 +852,48 @@ class GetxMenuPresenter extends GetxController
           commandNumber == null) {
         throw DomainError.commandNumberObligatory;
       }
+
+      //TODO change command number if dont is fixed command number and pass a command number value
+
       await printedProductsPresenter.loadPrinted(
         homePresenter.commandEntity!.commandNumber!,
+      );
+
+      final totalLiquid =
+          printedProductsPresenter.printed!.TotalLiquid.toDouble() +
+              product.SaleRetailPraticed.toDouble();
+
+      await updateSaleRequest.update(
+        commandNumberWithThreeNumbers:
+            homePresenter.commandEntity!.commandNumber!,
+        saleRequestId: printedProductsPresenter.printed!.SaleRequestId.toInt(),
+        model: SaleRequestModel(
+            CovenantCode: null,
+            CustomerCode: null,
+            TotalLiquid: totalLiquid,
+            Products: [
+              SaleRequestProductModel(
+                SaleMovementProductCompositionId: null,
+                ProductPriceLookUpCode:
+                    EnterpriseBuilder.entity!.pluServiceCharge,
+                ProductInternalCodeOnErp:
+                    EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
+                QuantityString: quantity.toString(),
+                Comments: null,
+                DateHourOfCreation: null,
+                IsCancelled: false,
+                IsDelivered: true,
+                IsPrinted: true,
+                SaleRequestProductId: null,
+                UserId: null,
+                ProductionStatus: null,
+                SaleRequestId:
+                    printedProductsPresenter.printed!.SaleRequestId.toInt(),
+                Value: product.SaleRetailPraticed.toDouble(),
+                Quantity: quantity,
+                TotalLiquid: product.SaleRetailPraticed.toDouble() * quantity,
+              ),
+            ]),
       );
 
       searchedProduct = null;

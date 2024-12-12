@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/entities.dart';
 
-class SaleRequestProductModel {
+class SaleRequestProductModel extends Equatable {
   final String? SaleMovementProductCompositionId;
   final String? ProductPriceLookUpCode;
   final String? QuantityString;
@@ -38,6 +40,26 @@ class SaleRequestProductModel {
     required this.Quantity,
     required this.TotalLiquid,
   });
+
+  @override
+  List<Object?> get props => [
+        SaleMovementProductCompositionId,
+        ProductPriceLookUpCode,
+        QuantityString,
+        Comments,
+        DateHourOfCreation,
+        IsCancelled,
+        IsDelivered,
+        IsPrinted,
+        SaleRequestProductId,
+        UserId,
+        ProductionStatus,
+        ProductInternalCodeOnErp,
+        SaleRequestId,
+        Value,
+        Quantity,
+        TotalLiquid,
+      ];
 
   factory SaleRequestProductModel.fromJson(Map json) => SaleRequestProductModel(
         SaleMovementProductCompositionId:

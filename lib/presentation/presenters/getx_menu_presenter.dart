@@ -46,12 +46,12 @@ class GetxMenuPresenter extends GetxController
   void clear() {
     _menu.subject.add([]);
     _loadedMenu.clear();
-    _searchedProduct = null;
+    searchedProduct = null;
   }
 
   @override
   Future<void> searchProduct(String value) async {
-    _searchedProduct = null;
+    searchedProduct = null;
     isLoading = true;
     mainError = null;
 
@@ -67,7 +67,7 @@ class GetxMenuPresenter extends GetxController
       );
 
       if (product != null) {
-        _searchedProduct = ProductsViewModel.fromEntity(product);
+        searchedProduct = ProductsViewModel.fromEntity(product);
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -96,7 +96,6 @@ class GetxMenuPresenter extends GetxController
 
   @override
   Future<String> readBarcodeAndSearchProduct() async {
-    
     mainError = null;
     isLoading = true;
 
@@ -429,9 +428,12 @@ class GetxMenuPresenter extends GetxController
     }
   }
 
-  ProductsViewModel? _searchedProduct;
+  final _searchedProduct = Rx<ProductsViewModel?>(null);
   @override
-  ProductsViewModel? get searchedProduct => _searchedProduct;
+  Stream<ProductsViewModel?> get searchedProductStream =>
+      _searchedProduct.stream;
+  set searchedProduct(ProductsViewModel? value) =>
+      _searchedProduct.value = value;
 
   final _showPreLoadImages = false.obs;
   @override

@@ -157,10 +157,6 @@ class ProductsViewModel extends Equatable {
   @override
   List<Object?> get props => [
         ProductsId,
-        SaleRetailPraticed,
-        PriceLookupCode,
-        PackingAbbreviation,
-        Name,
         InternalCodeOnERP,
         InternalCodeOfProductOnERP,
         EenterpriseId,
@@ -203,6 +199,7 @@ class ProductsViewModel extends Equatable {
         IsAlcoholicProduct,
         SaleRetailPrice,
         PercImpNBPTNational,
+        SaleRetailPraticed,
         CofinsPercentage,
         PisPercentage,
         CFOP,
@@ -215,14 +212,21 @@ class ProductsViewModel extends Equatable {
         DateOfLastChanged,
         GroupName,
         SaleRetailPraticedString,
+        PriceLookupCode,
         PersonalizedCode,
         EanCode,
+        Name,
         NameComplete,
         NameReduced,
-        productQuantity,
-        childsComposition,
+        ProductComplement,
+        PackingAbbreviation,
+        IsPromoCombox,
         MaximumQuantityForSale,
         Schedule,
+        childsComposition,
+        suggestions,
+        productQuantity,
+        subgroupName,
       ];
 
   factory ProductsViewModel.fromEntity(

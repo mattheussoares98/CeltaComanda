@@ -684,42 +684,49 @@ void main() {
     });
 
     test("Should return correct product on success", () async {
-      expect(sut.searchedProduct, null);
-      await sut.searchProduct(productEan);
+      expectLater(
+          sut.searchedProductStream,
+          emitsInOrder(
+            [null, productsViewModel],
+          ));
 
-      expect(sut.searchedProduct, productsViewModel);
+      await sut.searchProduct(productEan);
     });
 
     test("Should return null if product not found", () async {
       searchProductByCode.mockSearchProductByCode(null);
 
-      expect(sut.searchedProduct, null);
-      await sut.searchProduct(productEan);
+      expectLater(sut.searchedProductStream, emits(null));
 
-      expect(sut.searchedProduct, null);
+      await sut.searchProduct(productEan);
     });
 
     test("Should clear searchedProduct when search command data", () async {
-      expect(sut.searchedProduct, null);
+      expectLater(
+          sut.searchedProductStream,
+          emitsInOrder(
+            [null, productsViewModel, null],
+          ));
 
       await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, productsViewModel);
 
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
-      expect(sut.searchedProduct, null);
     });
 
     test("Should clear searchedProduct not found product", () async {
-      await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, productsViewModel);
+      expectLater(
+          sut.searchedProductStream,
+          emitsInOrder(
+            [null, productsViewModel, null],
+          ));
 
+      await sut.searchProduct(productEan);
       searchProductByCode.mockSearchProductByCode(null);
       await sut.searchProduct(productEan);
-      expect(sut.searchedProduct, null);
     });
   });
 

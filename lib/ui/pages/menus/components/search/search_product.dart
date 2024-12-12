@@ -63,6 +63,20 @@ class _SearchProductState extends State<SearchProduct> {
               await _searchProduct(menuPresenter);
             },
           ),
+          StreamBuilder<ProductsViewModel?>(
+            stream: menuPresenter.searchedProductStream,
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return SizedBox();
+              }
+
+              return Column(
+                children: [
+                  Text(snapshot.data!.Name),
+                ],
+              );
+            },
+          ),
         ],
       ),
     );

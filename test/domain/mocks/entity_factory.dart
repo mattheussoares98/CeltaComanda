@@ -193,14 +193,14 @@ class EntityFactory {
     final secondId = faker.randomGenerator.integer(999);
     return [
       ExpansibleGroupEntity(
-        Name: faker.randomGenerator.string(30),
+        Name: faker.guid.guid(),
         ExpansibleGroupId: firstId,
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),
         Schedule: makeExpansibleGroupScheduleEntity(firstId),
       ),
       ExpansibleGroupEntity(
-        Name: faker.randomGenerator.string(30),
+        Name: faker.guid.guid(),
         ExpansibleGroupId: secondId,
         ExpansibleGroupType: faker.randomGenerator.integer(999),
         OrderClassification: faker.randomGenerator.integer(999),

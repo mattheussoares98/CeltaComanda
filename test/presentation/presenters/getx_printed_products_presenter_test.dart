@@ -95,7 +95,7 @@ void main() {
     userValidations.mockIsValidPassword(true);
     userValidations.mockCanCancel(true);
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
-    barcodeScanner.mockBarcodeScanner(homePresenter.commandEntityController!.commandNumber!);
+    barcodeScanner.mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
   }
 

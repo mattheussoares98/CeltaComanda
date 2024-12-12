@@ -725,7 +725,7 @@ void main() {
 
   group("BarcodeScanner", () {
     test("Should search product if barcode is not empty", () async {
-      barcodeScanner.mockBarcodeScanner("1234567890123");
+      barcodeScanner.mockRead("1234567890123");
       await sut.readBarcodeAndSearchProduct();
 
       verify(() => barcodeScanner.read()).called(1);
@@ -737,7 +737,7 @@ void main() {
     });
 
     test("Should not search product if barcode is empty", () async {
-      barcodeScanner.mockBarcodeScanner("");
+      barcodeScanner.mockRead("");
       await sut.readBarcodeAndSearchProduct();
 
       verify(() => barcodeScanner.read()).called(1);
@@ -770,7 +770,7 @@ void main() {
     });
 
     test("Should emit correct events on barcodeScanner success", () async {
-      barcodeScanner.mockBarcodeScanner("1234567890123");
+      barcodeScanner.mockRead("1234567890123");
 
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -778,23 +778,20 @@ void main() {
       await sut.readBarcodeAndSearchProduct();
     });
 
-    test("Should update searchProductController correctly on success",
-        () async {
-      barcodeScanner.mockBarcodeScanner("1234567890123");
+    test("Should return correct value", () async {
+      barcodeScanner.mockRead("1234567890123");
 
-      await sut.readBarcodeAndSearchProduct();
+      final value = await sut.readBarcodeAndSearchProduct();
 
-      expect(sut.searchProductController.text, "");
+      expect(value, "1234567890123");
     });
 
-    test("Should update searchProductController correctly on error", () async {
-      expect(sut.searchProductController.text, "");
+    test("Should return correct value on error", () async {
+      barcodeScanner.mockError(DomainError.unexpected);
 
-      barcodeScanner.mockBarcodeScanner("1234567890123");
-      searchProductByCode.mockError(DomainError.unexpected);
-      await sut.readBarcodeAndSearchProduct();
+      final value = await sut.readBarcodeAndSearchProduct();
 
-      expect(sut.searchProductController.text, "1234567890123");
+      expect(value, "");
     });
   });
 
@@ -1334,6 +1331,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+
+      parametersData.mockLoad([
+        EntityFactory.makeParametersModel(
+            enabled: true, key: ParameterKey.enableSearchProducts),
+      ]);
       await sut.addOrRemoveSearchProducts();
 
       expect(sut.loadedMenu[0].keys.first.Name, R.string.detach.toUpperCase());
@@ -1347,6 +1349,11 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+
+      parametersData.mockLoad([
+        EntityFactory.makeParametersModel(
+            enabled: true, key: ParameterKey.enableSearchProducts),
+      ]);
       await sut.addOrRemoveSearchProducts();
 
       expect(sut.loadedMenu[0].keys.first.Name,
@@ -1368,6 +1375,9 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+
+      parametersData
+          .mockLoad([EntityFactory.makeParametersModel(enabled: true)]);
       await sut.addOrRemoveSearchProducts();
       expect(sut.loadedMenu[0].keys.first.Name,
           R.string.searchProduct.toUpperCase());
@@ -1375,7 +1385,8 @@ void main() {
       parametersData
           .mockLoad([EntityFactory.makeParametersModel(enabled: false)]);
       await sut.addOrRemoveSearchProducts();
-      expect(sut.loadedMenu[0].keys.first.Name, mockedExpansibleGroup.Name);
+      expect(sut.loadedMenu[0].keys.first.Name,
+          sut.getExpansibleGroupNameWithoutPipes(mockedExpansibleGroup.Name));
     });
   });
 }

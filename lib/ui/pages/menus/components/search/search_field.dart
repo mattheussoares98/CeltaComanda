@@ -28,7 +28,7 @@ class SearchField extends StatelessWidget {
             key: formKey,
             child: TextFormField(
               focusNode: focusNode,
-              controller: menuPresenter.searchProductController,
+              controller: searchProductController,
               maxLength: 13,
               keyboardType: TextInputType.number,
               onFieldSubmitted: (value) async {

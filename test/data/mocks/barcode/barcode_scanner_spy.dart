@@ -6,16 +6,16 @@ import 'package:mocktail/mocktail.dart';
 
 class BarcodeScannerSpy extends Mock implements BarcodeScanner {
   BarcodeScannerSpy() {
-    this.mockBarcodeScanner("");
+    this.mockRead("");
   }
 
-  When mockBarcodeScannerCall() => when(() => this.read());
+  When _mockRead() => when(() => this.read());
 
-  void mockBarcodeScanner(String barcode) {
-    this.mockBarcodeScannerCall().thenAnswer((_) async => barcode);
+  void mockRead(String barcode) {
+    this._mockRead().thenAnswer((_) async => barcode);
   }
 
   void mockError(DomainError error) {
-    this.mockBarcodeScannerCall().thenThrow(error);
+    this._mockRead().thenThrow(error);
   }
 }

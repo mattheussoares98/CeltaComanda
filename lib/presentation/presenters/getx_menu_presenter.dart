@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import 'package:flutter/material.dart';
-
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -70,7 +68,6 @@ class GetxMenuPresenter extends GetxController
 
       if (product != null) {
         _searchedProduct = ProductsViewModel.fromEntity(product);
-        searchProductController.clear();
       }
     } on DomainError catch (error) {
       switch (error) {
@@ -98,17 +95,20 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> readBarcodeAndSearchProduct() async {
+  Future<String> readBarcodeAndSearchProduct() async {
+    
     mainError = null;
     isLoading = true;
-    searchProductController.text = "";
 
+    String loadedBarcode = "";
     try {
-      searchProductController.text = await barcodeScanner.read();
+      loadedBarcode = await barcodeScanner.read();
 
-      if (searchProductController.text.isNotEmpty) {
-        await searchProduct(searchProductController.text);
+      if (loadedBarcode.isNotEmpty) {
+        await searchProduct(loadedBarcode);
       }
+
+      return loadedBarcode;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.productNotFound:
@@ -118,6 +118,7 @@ class GetxMenuPresenter extends GetxController
         default:
           mainError = UIError.unexpected;
       }
+      return loadedBarcode;
     } finally {
       isLoading = false;
     }
@@ -128,10 +129,6 @@ class GetxMenuPresenter extends GetxController
   @override
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       get loadedMenu => [..._loadedMenu];
-
-  final _searchProductController = TextEditingController();
-  @override
-  TextEditingController get searchProductController => _searchProductController;
 
   final _inexOfSelectedGroup = Rx<int>(0);
   @override

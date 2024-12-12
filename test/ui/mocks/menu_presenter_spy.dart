@@ -3,7 +3,6 @@
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'dart:async';
@@ -19,7 +18,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
-  TextEditingController searchProductControllerMock = TextEditingController();
 
   MenuPresenterSpy() {
     mockLoadCall().thenAnswer((any) async => any);
@@ -36,8 +34,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)
         .thenAnswer((_) => isLoadingController.stream);
-    when(() => this.searchProductController)
-        .thenAnswer((_) => searchProductControllerMock);
   }
 
   void mockGoToInsertProductPage(ProductsViewModel product) {

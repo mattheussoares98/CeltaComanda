@@ -109,7 +109,7 @@ void main() {
   mockSuccess() {
     pay.mockPay();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
-    barcodeScanner.mockBarcodeScanner(commandNumber);
+    barcodeScanner.mockRead(commandNumber);
     homePresenter.mockLoadCommandData();
     loadCustomer.mockLoadCustomer(
       SoapResponse(

@@ -198,7 +198,7 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
     cartInformations.mockGetCart([cartProductViewModelWithChilds]);
-    barcodeScanner.mockBarcodeScanner(
+    barcodeScanner.mockRead(
         homePresenter.commandEntityController!.commandNumber!);
     loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
   }

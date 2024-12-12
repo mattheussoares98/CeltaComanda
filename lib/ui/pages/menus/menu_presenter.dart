@@ -16,8 +16,6 @@ abstract class MenuPresenter implements Listenable {
   ProductsViewModel? get searchedProduct;
   List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
 
-  TextEditingController get searchProductController;
-
   Stream<ProductScheduleViewModel?> get productScheduleStream;
   Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream;
 
@@ -27,7 +25,7 @@ abstract class MenuPresenter implements Listenable {
         expansibleGroupFromProductPresenter,
   });
   Future<void> searchProduct(String value);
-  Future<void> readBarcodeAndSearchProduct();
+  Future<String> readBarcodeAndSearchProduct();
 
   void goToInsertProductPage(ProductsViewModel product);
   void clear();

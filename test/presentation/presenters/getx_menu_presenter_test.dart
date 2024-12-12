@@ -891,8 +891,9 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      final loadedProducts = sut.loadedMenu.first.entries.first.value;
+      final loadedProducts = sut.loadedMenu.first.values.first;
       loadedProducts[0].suggestions = mockedSuggestions;
+      suggestionsProductsViewModel[0].suggestions = mockedSuggestions;
 
       sut.updateSuggestionsProducts(loadedProducts[0]);
 
@@ -923,6 +924,8 @@ void main() {
       );
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
       loadedProducts[0].suggestions = mockedSuggestions;
+      suggestionsProductsViewModel[0].suggestions = mockedSuggestions;
+
       sut.updateSuggestionsProducts(loadedProducts[0]);
       expect(sut.suggestionsProductsViewModel, suggestionsProductsViewModel);
 

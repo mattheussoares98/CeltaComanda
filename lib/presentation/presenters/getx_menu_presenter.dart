@@ -352,22 +352,26 @@ class GetxMenuPresenter extends GetxController
     _suggestionsProductsViewModel.clear();
     _indexOfAtualSuggestion = -1;
 
-    if (selectedProduct.suggestions?.isNotEmpty == true &&
-        (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length) {
-      for (var suggestion in selectedProduct.suggestions!) {
-        for (var menu in _loadedMenu) {
-          for (var products in menu.values) {
-            int indexOfProduct = products.indexWhere((e) =>
-                e.InternalCodeOnERP ==
-                suggestion.ProductPackingCodeSuggestionForSale.toString());
+    bool verifySuggestions = selectedProduct.suggestions?.isNotEmpty == true &&
+        (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length;
 
-            if (indexOfProduct != -1) {
-              if (!_suggestionsProductsViewModel
-                  .contains(products[indexOfProduct])) {
-                _suggestionsProductsViewModel.add(products[indexOfProduct]);
-              }
-            }
-          }
+    if (verifySuggestions) {
+      final allProducts = _loadedMenu
+          .expand((map) => map.values)
+          .expand((lista) => lista)
+          .toList();
+
+      for (var suggestion in selectedProduct.suggestions!) {
+        final suggestionProduct = allProducts.firstWhereOrNull((e) =>
+            e.InternalCodeOnERP ==
+            suggestion.ProductPackingCodeSuggestionForSale.toString());
+
+        if (suggestionProduct == null) {
+          continue;
+        }
+
+        if (!_suggestionsProductsViewModel.contains(suggestionProduct)) {
+          _suggestionsProductsViewModel.add(suggestionProduct);
         }
       }
     }

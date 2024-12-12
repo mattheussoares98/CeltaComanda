@@ -1416,12 +1416,16 @@ void main() {
         commandNumber: null,
       );
     });
-    test("Should emit correct values on error", () async {
+    test("Should emit correct values on unexpected error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
         sut.mainErrorStream,
         emitsInOrder([null, UIError.unexpected]),
       );
+
+      homePresenter.commandEntityController =
+          EntityFactory.makeCommandEntity(true);
+      printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
       await sut.addProductInSaleRequest(
         product: productsViewModel,
@@ -1431,7 +1435,44 @@ void main() {
         commandNumber: null,
       );
     });
-    test("Should load printed products", () async {
+    test(
+        "Should emit correct values on not fixed command number and pass null command number value",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.commandNumberObligatory]),
+      );
+
+      homePresenter.commandEntityController =
+          EntityFactory.makeCommandEntity(false);
+
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: null,
+      );
+    });
+    test(
+        "Should emit correct values on not fixed command number and pass a command number value",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      homePresenter.commandEntityController =
+          EntityFactory.makeCommandEntity(false);
+
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: faker.randomGenerator.integer(100).toString(),
+      );
+    });
+    test("Should call load printed products", () async {
       homePresenter.commandEntityController =
           EntityFactory.makeCommandEntity(true);
 

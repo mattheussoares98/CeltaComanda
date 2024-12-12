@@ -853,10 +853,15 @@ class GetxMenuPresenter extends GetxController
         homePresenter.commandEntity!.commandNumber!,
       );
 
-      //TODO obrigar informar número da comanda se não for fixo
       searchedProduct = null;
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.commandNumberObligatory:
+          mainError = UIError.commandNumberObligatory;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

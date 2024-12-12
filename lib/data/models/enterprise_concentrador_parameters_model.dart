@@ -313,7 +313,9 @@ class EnterpriseConcentradorParametersModel {
     showPortionsNumberWithGride = json['ShowPortionsNumberWithGride'];
     celtaBSUrlCCS = json['CeltaBSUrlCCS'];
     celtaBSUrlBSF = json['CeltaBSUrlBSF'];
-    celtaBSCrossIdentity = _getCrossId(json['CeltaBSCrossIdentity']);
+    celtaBSCrossIdentity = json['CeltaBSCrossIdentity'] == null
+        ? null
+        : _getCrossId(json['CeltaBSCrossIdentity']);
     mercaFacilDiscountsTokenApi = json['MercaFacilDiscountsTokenApi'];
     mercaFacilDiscountsIsEnabled = json['MercaFacilDiscountsIsEnabled'];
     bonifiQUser = json['BonifiQUser'];

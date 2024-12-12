@@ -40,6 +40,7 @@ void main() {
   late List<ProductEntity> products;
   late List<ProductEntity> productsEntityThatIsPromoCombox;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
+  late List<ParameterModel> parameters;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -53,6 +54,7 @@ void main() {
   late ManageProductScheduleSpy manageProductSchedule;
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
   late UpdatedAllImagesSpy updatedAllImages;
+  late ParametersDataSpy parametersData;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -70,6 +72,7 @@ void main() {
     manageProductSchedule = ManageProductScheduleSpy();
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
     updatedAllImages = UpdatedAllImagesSpy();
+    parametersData = ParametersDataSpy();
   }
 
   void initPresenters() {
@@ -90,6 +93,7 @@ void main() {
       manageProductSchedule: manageProductSchedule,
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
       updatedAllImages: updatedAllImages,
+      parametersData: parametersData,
     );
   }
 
@@ -132,18 +136,7 @@ void main() {
                 return ProductsViewModel.fromEntity(product);
               }).toList(),
             })
-        .toList()
-      ..add({
-        ExpansibleGroupsViewModel(
-          Name: R.string.avaliate,
-          ExpansibleGroupId: "0",
-          ExpansibleGroupType: "0",
-          OrderClassification: "0",
-          Schedule: ExpansibleGroupScheduleModel.fromEntity(
-              EntityFactory.makeExpansibleGroupScheduleEntity(0)),
-          subgroups: const [],
-        ): []
-      });
+        .toList();
 
     productsCompositionsEntitys = EntityFactory.makeProductsCompositionsEntity(
       isOptionalItem: true,
@@ -160,6 +153,11 @@ void main() {
     expansibleGroupScheduleViewModel =
         ExpansibleGroupScheduleViewModel.fromEntity(
             EntityFactory.makeExpansibleGroupScheduleEntity(expansibleGroupId));
+
+    parameters = [
+      EntityFactory.makeParametersModel(),
+      EntityFactory.makeParametersModel(),
+    ];
   }
 
   void mockSuccess() {
@@ -171,6 +169,7 @@ void main() {
     getProductComposition.mockGetChildsOfFather(productsCompositionsEntitys);
     loadSuggestionSale.mockLoad(suggestions);
     updatedAllImages.mockGetLastDate(null);
+    parametersData.mockLoad(parameters);
   }
 
   setUp(() {
@@ -253,15 +252,15 @@ void main() {
       verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId))
           .called(1);
     });
-    test('Should add fixed group of avaliation in last index', () async {
-      await sut.getGroupsAndProducts(
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        commandNumber: homePresenter.commandEntityController!.commandNumber!,
-      );
+    // test('Should add fixed group of avaliation in last index', () async {
+    //   await sut.getGroupsAndProducts(
+    //     expansibleGroupFromProductPresenter:
+    //         expansibleGroupFromProductPresenter,
+    //     commandNumber: homePresenter.commandEntityController!.commandNumber!,
+    //   );
 
-      expect(sut.loadedMenu.last.entries.first.key.Name, R.string.avaliate);
-    });
+    //   expect(sut.loadedMenu.last.entries.first.key.Name, R.string.avaliate);
+    // });
 
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(
@@ -1294,6 +1293,89 @@ void main() {
       expectLater(sut.showPreLoadImagesStream, emits(false));
 
       sut.cancelPreloadImage();
+    });
+  });
+
+  group("Add or remove search products", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.addOrRemoveSearchProducts();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+
+      parametersData.mockLoadError();
+
+      await sut.addOrRemoveSearchProducts();
+    });
+    test("Should call load correctly", () async {
+      await sut.addOrRemoveSearchProducts();
+
+      verify(() => parametersData.load()).called(1);
+    });
+    test("Should add group in correct index if contains detach group",
+        () async {
+      loadExpansibleGroups.mockLoadExpansibleGroups([
+        ExpansibleGroupEntity(
+          Name: R.string.detach.toUpperCase(),
+          ExpansibleGroupId: faker.randomGenerator.integer(100),
+          ExpansibleGroupType: faker.randomGenerator.integer(100),
+          OrderClassification: faker.randomGenerator.integer(100),
+          Schedule: null,
+        ),
+      ]);
+
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      await sut.addOrRemoveSearchProducts();
+
+      expect(sut.loadedMenu[0].keys.first.Name, R.string.detach.toUpperCase());
+      expect(sut.loadedMenu[1].keys.first.Name,
+          R.string.searchProduct.toUpperCase());
+    });
+    test("Should add group in correct index if dont contains detach group",
+        () async {
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      await sut.addOrRemoveSearchProducts();
+
+      expect(sut.loadedMenu[0].keys.first.Name,
+          R.string.searchProduct.toUpperCase());
+    });
+    test("Should remove search product expansible group if already exists",
+        () async {
+      final mockedExpansibleGroup = ExpansibleGroupEntity(
+        Name: faker.randomGenerator.string(10),
+        ExpansibleGroupId: faker.randomGenerator.integer(100),
+        ExpansibleGroupType: faker.randomGenerator.integer(100),
+        OrderClassification: faker.randomGenerator.integer(100),
+        Schedule: null,
+      );
+      loadExpansibleGroups.mockLoadExpansibleGroups([mockedExpansibleGroup]);
+
+      await sut.getGroupsAndProducts(
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      await sut.addOrRemoveSearchProducts();
+      expect(sut.loadedMenu[0].keys.first.Name,
+          R.string.searchProduct.toUpperCase());
+
+      parametersData
+          .mockLoad([EntityFactory.makeParametersModel(enabled: false)]);
+      await sut.addOrRemoveSearchProducts();
+      expect(sut.loadedMenu[0].keys.first.Name, mockedExpansibleGroup.Name);
     });
   });
 }

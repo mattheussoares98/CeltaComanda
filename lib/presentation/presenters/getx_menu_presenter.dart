@@ -27,6 +27,7 @@ class GetxMenuPresenter extends GetxController
   final ManageProductSchedule manageProductSchedule;
   final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
   final UpdatedAllImages updatedAllImages;
+  final ParametersData parametersData;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -40,6 +41,7 @@ class GetxMenuPresenter extends GetxController
     required this.manageProductSchedule,
     required this.manageExpansibleGroupSchedule,
     required this.updatedAllImages,
+    required this.parametersData,
   });
 
   @override
@@ -272,9 +274,7 @@ class GetxMenuPresenter extends GetxController
       final lastDate = await updatedAllImages.getLastDate();
       if (lastDate == null ||
           (lastDate.day - DateTime.now().day).abs() >=
-              (EnterpriseBuilder
-                      .entity?.waitDaysToPreloadImages ??
-                  1)) {
+              (EnterpriseBuilder.entity?.waitDaysToPreloadImages ?? 1)) {
         showPreLoadImage = true;
         await updatedAllImages.updateLastDate(DateTime.now());
       } else {
@@ -783,5 +783,46 @@ class GetxMenuPresenter extends GetxController
   @override
   void cancelPreloadImage() {
     showPreLoadImage = false;
+  }
+
+  @override
+  Future<void> addOrRemoveSearchProducts() async {
+    isLoading = true;
+    mainError = null;
+    try {
+      final parameters = await parametersData.load();
+
+      final searchProductsEnabled = parameters.firstWhereOrNull(
+              (e) => e.key == ParameterKey.enableSearchProducts && e.enabled) !=
+          null;
+
+      if (searchProductsEnabled) {
+        int index = 0;
+        if (_loadedMenu.isNotEmpty &&
+            _loadedMenu[0].keys.first.Name.toUpperCase() ==
+                R.string.detach.toUpperCase()) {
+          index = 1;
+        }
+
+        _loadedMenu.insert(index, {
+          ExpansibleGroupsViewModel(
+            Name: R.string.searchProduct.toUpperCase(),
+            ExpansibleGroupId: "0",
+            ExpansibleGroupType: "0",
+            OrderClassification: "0",
+            Schedule: null,
+            subgroups: [],
+          ): [],
+        });
+      } else if (!searchProductsEnabled) {
+        _loadedMenu.removeWhere((e) =>
+            e.entries.first.key.Name.toUpperCase() ==
+            R.string.searchProduct.toUpperCase());
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
   }
 }

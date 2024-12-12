@@ -78,5 +78,6 @@ abstract class MenuPresenter implements Listenable {
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
     required String? commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
   });
 }

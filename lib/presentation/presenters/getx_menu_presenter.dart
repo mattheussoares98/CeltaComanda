@@ -839,15 +839,20 @@ class GetxMenuPresenter extends GetxController
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
     required String? commandNumber,
+    required PrintedProductsPresenter printedProductsPresenter,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      // if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
-      //     commandNumber == null) {
-      //   throw DomainError.commandNumberObligatory;
-      // }
+      if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber == null) {
+        throw DomainError.commandNumberObligatory;
+      }
+      await printedProductsPresenter.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+      );
+
       //TODO obrigar informar número da comanda se não for fixo
       searchedProduct = null;
     } catch (e) {

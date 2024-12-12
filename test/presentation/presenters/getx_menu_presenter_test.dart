@@ -23,6 +23,7 @@ void main() {
   late CartPresenterSpy cartPresenter;
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
+  late PrintedProductsPresenterSpy printedProductsPresenter;
 
   late List<ExpansibleGroupEntity> expansibleGroups;
   late List<ExpansibleGroupsViewModel> expansibleGroupsViewModel;
@@ -80,6 +81,7 @@ void main() {
     cartPresenter = CartPresenterSpy();
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
+    printedProductsPresenter = PrintedProductsPresenterSpy();
 
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
@@ -1410,6 +1412,7 @@ void main() {
         product: productsViewModel,
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
       );
     });
@@ -1424,8 +1427,25 @@ void main() {
         product: productsViewModel,
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
         commandNumber: null,
       );
+    });
+    test("Should load printed products", () async {
+      homePresenter.commandEntityController =
+          EntityFactory.makeCommandEntity(true);
+
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: null,
+      );
+
+      verify(() => printedProductsPresenter.loadPrinted(
+            homePresenter.commandEntityController!.commandNumber!,
+          )).called(1);
     });
   });
 }

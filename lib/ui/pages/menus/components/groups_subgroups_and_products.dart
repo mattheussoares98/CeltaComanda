@@ -22,23 +22,13 @@ class _GroupsSubgroupsAndProductsState
   final productsScrollController = ScrollController();
   int firstVisibleProductIndex = 0;
 
-  bool isDetachSelected(MenuPresenter menuPresenter) {
-    if (menuPresenter
-        .treatSchedules<ExpansibleGroupsViewModel>()
-        .where((e) => e.Name.toLowerCase() == R.string.detach.toLowerCase())
-        .toList()
-        .isEmpty) {
-      return false;
-    }
-    for (var menu in menuPresenter.loadedMenu) {
-      for (var group in menu.keys) {
-        if (group.Name.toLowerCase() == R.string.detach.toLowerCase() &&
-            (widget.selectedIndex == 0 || widget.selectedIndex == null)) {
-          return true;
-        }
-      }
-    }
-    return false;
+  bool groupIsSelected(MenuPresenter menuPresenter, String groupName) {
+    return menuPresenter
+            .treatSchedules<ExpansibleGroupsViewModel>()[
+                widget.selectedIndex ?? 0]
+            .Name
+            .toLowerCase() ==
+        groupName.toLowerCase();
   }
 
   Future<void> _scrollUp({
@@ -109,12 +99,18 @@ class _GroupsSubgroupsAndProductsState
               },
             ),
           ),
-          if (isDetachSelected(menuPresenter))
+          if (groupIsSelected(menuPresenter, R.string.detach))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
               child: const DetachItems(),
             ),
-          if (!isDetachSelected(menuPresenter))
+          if (groupIsSelected(menuPresenter, R.string.searchProduct))
+            Expanded(
+              flex: hasMinWidth(context) ? 90 : 75,
+              child: SearchProduct(),
+            ),
+          if (!groupIsSelected(menuPresenter, R.string.detach) &&
+              !groupIsSelected(menuPresenter, R.string.searchProduct))
             Expanded(
               flex: hasMinWidth(context) ? 90 : 75,
               child: Column(

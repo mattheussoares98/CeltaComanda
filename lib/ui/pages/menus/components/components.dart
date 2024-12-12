@@ -1,4 +1,5 @@
 export './evaluate/evaluate.dart';
+export './search/search.dart';
 export './detach_items.dart';
 export './group_item.dart';
 export './group_items.dart';
@@ -8,4 +9,3 @@ export 'open_insert_product_page.dart';
 export 'portrait_product_item.dart';
 export 'landscape_product_item.dart';
 export './products_items.dart';
-export './search_product.dart';

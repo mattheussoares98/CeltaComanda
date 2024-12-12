@@ -45,6 +45,7 @@ class _ParametersPageState extends State<ParametersPage>
   Widget build(BuildContext context) {
     ParametersPresenter parametersPresenter =
         Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -73,6 +74,7 @@ class _ParametersPageState extends State<ParametersPage>
                   return InkWell(
                     onTap: () async {
                       await parametersPresenter.changeParameter(index);
+                      await menuPresenter.addOrRemoveSearchProducts();
                     },
                     child: Row(
                       children: [
@@ -83,6 +85,7 @@ class _ParametersPageState extends State<ParametersPage>
                           value: parameter.enabled,
                           onChanged: (_) async {
                             await parametersPresenter.changeParameter(index);
+                            await menuPresenter.addOrRemoveSearchProducts();
                           },
                         ),
                       ],

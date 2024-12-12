@@ -815,9 +815,13 @@ class GetxMenuPresenter extends GetxController
           ): [],
         });
       } else if (!searchProductsEnabled) {
-        _loadedMenu.removeWhere((e) =>
-            e.entries.first.key.Name.toUpperCase() ==
+        int index = _loadedMenu.indexWhere((e) =>
+            e.keys.first.Name.toUpperCase() ==
             R.string.searchProduct.toUpperCase());
+
+        if (index != -1) {
+          _loadedMenu.removeAt(index);
+        }
       }
     } catch (e) {
       mainError = UIError.unexpected;

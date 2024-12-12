@@ -134,6 +134,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
             expansibleGroupFromProductPresenter,
       );
 
+      await menuPresenter.addOrRemoveSearchProducts();
+
       if (commandEntity?.isFixedCommandNumber == true &&
           commandEntity?.commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(

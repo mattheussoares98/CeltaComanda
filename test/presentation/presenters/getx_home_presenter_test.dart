@@ -803,7 +803,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -850,7 +851,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -894,7 +896,8 @@ void main() {
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
         pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge: EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.loadCommandData(
@@ -906,6 +909,18 @@ void main() {
       );
 
       verify(() => persistent.makeNotPersistent()).called(1);
+    });
+
+    test("Should call add or remove search products", () async {
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => menuPresenter.addOrRemoveSearchProducts()).called(1);
     });
   });
 

@@ -28,6 +28,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     when(() => this.showPreLoadImagesStream)
         .thenAnswer((_) => showPreLoadImageController.stream);
     when(() => this.clear()).thenAnswer((any) async => any);
+    when(() => this.addOrRemoveSearchProducts()).thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))
         .thenAnswer((any) async => any);
 
@@ -54,7 +55,8 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
 
   When mockLoadCall() => when(() => this.getGroupsAndProducts(
         commandNumber: any(named: "commandNumber"),
-        expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
+        expansibleGroupFromProductPresenter:
+            any(named: "expansibleGroupFromProductPresenter"),
       ));
 
   void mockExpansibleGroupStreamError(DomainError error) {

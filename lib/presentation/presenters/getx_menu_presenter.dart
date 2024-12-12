@@ -834,15 +834,21 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> addProductInSaleRequest(
-    ProductsViewModel product,
-    CartPresenter cartPresenter,
-  ) async {
+  Future<void> addProductInSaleRequest({
+    required ProductsViewModel product,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
+    required String? commandNumber,
+  }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      
+      // if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+      //     commandNumber == null) {
+      //   throw DomainError.commandNumberObligatory;
+      // }
+      //TODO obrigar informar número da comanda se não for fixo
       searchedProduct = null;
     } catch (e) {
       mainError = UIError.unexpected;

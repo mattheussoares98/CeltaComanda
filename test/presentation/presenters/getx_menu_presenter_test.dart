@@ -1406,7 +1406,12 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.searchedProductStream, emits(null));
 
-      await sut.addProductInSaleRequest(productsViewModel, cartPresenter);
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        commandNumber: null,
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -1415,7 +1420,12 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
-      await sut.addProductInSaleRequest(productsViewModel, cartPresenter);
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        commandNumber: null,
+      );
     });
   });
 }

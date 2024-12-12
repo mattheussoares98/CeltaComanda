@@ -73,5 +73,10 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> addOrRemoveSearchProducts();
 
-  Future<void> addProductInSaleRequest(ProductsViewModel product, CartPresenter cartPresenter);
+  Future<void> addProductInSaleRequest({
+    required ProductsViewModel product,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
+    required String? commandNumber,
+  });
 }

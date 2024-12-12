@@ -56,6 +56,7 @@ void main() {
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
   late UpdatedAllImagesSpy updatedAllImages;
   late ParametersDataSpy parametersData;
+  late UpdateSaleRequestSpy updateSaleRequest;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -74,6 +75,7 @@ void main() {
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
     updatedAllImages = UpdatedAllImagesSpy();
     parametersData = ParametersDataSpy();
+    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initPresenters() {
@@ -96,6 +98,7 @@ void main() {
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
       updatedAllImages: updatedAllImages,
       parametersData: parametersData,
+      updateSaleRequest: updateSaleRequest,
     );
   }
 

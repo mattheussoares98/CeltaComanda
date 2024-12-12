@@ -451,6 +451,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         insertProductPresenter: insertProductPresenter,
       );
 
+      bool usingProductServiceCharge =
+          EnterpriseBuilder.entity?.pluServiceCharge != null &&
+              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null;
+
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
@@ -468,8 +472,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: null,
-        IncrementType: null,
+        IncrementValue: usingProductServiceCharge
+            ? null
+            : EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
+        IncrementType: usingProductServiceCharge ? null : 2,
       );
 
       bool? cartProductsAlreadyConfirmed =

@@ -198,8 +198,8 @@ void main() {
     localPrintRequest.mockGetMergedPrinted(null);
     cartInformations.mockSaveCart([cartProductViewModelWithChilds]);
     cartInformations.mockGetCart([cartProductViewModelWithChilds]);
-    barcodeScanner.mockRead(
-        homePresenter.commandEntityController!.commandNumber!);
+    barcodeScanner
+        .mockRead(homePresenter.commandEntityController!.commandNumber!);
     loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
   }
 
@@ -1758,6 +1758,144 @@ void main() {
                 homePresenter.commandEntityController?.isFixedCommandNumber ==
                     true,
             pdv: homePresenter.commandEntityController?.pdv,
+          )).called(1);
+    });
+
+    test(
+        "Should update saleRequest with correct value if dont is using product service charge",
+        () async {
+      cartProductViewModelWithChilds.Product.childsComposition = null;
+
+      sut.cartProducts.add(cartProductViewModelWithChilds);
+      confirmedCartProducts.mockIsConfirmed(false);
+
+      final enterprise = EnterpriseBuilder.entity;
+      EnterpriseBuilder.entity = EnterpriseEntity(
+        enterpriseName: enterprise!.enterpriseName,
+        url: enterprise.url,
+        enterpriseId: enterprise.enterpriseId,
+        concentradorUrl: enterprise.concentradorUrl,
+        persistApp: enterprise.persistApp,
+        urlCCS: enterprise.urlCCS,
+        useCovenant: enterprise.useCovenant,
+        enterpriseConcentradorParametersEntity:
+            enterprise.enterpriseConcentradorParametersEntity,
+        updateMenu: enterprise.updateMenu,
+        updateConcentratorEnterpriseData:
+            enterprise.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue:
+            enterprise.serviceChargePercentageOrValue,
+        serviceChargeType: enterprise.serviceChargeType,
+        updateDevicesInformations: enterprise.updateDevicesInformations,
+        updateEnterprise: enterprise.updateEnterprise,
+        zoomImage: enterprise.zoomImage,
+        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
+        updatePendingDevices: enterprise.updatePendingDevices,
+        waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
+        secondsPreloadingImages: enterprise.secondsPreloadingImages,
+        pluServiceCharge: null,
+        internalCodeOnErpServiceCharge: null,
+      );
+
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
+      );
+
+      final teste = UpdateSaleRequestTempEntity(
+        Peoples: updateSaleRequestTempEntity.Peoples,
+        SellerCode: updateSaleRequestTempEntity.SellerCode,
+        Comments: updateSaleRequestTempEntity.Comments,
+        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        CovenantCode: updateSaleRequestTempEntity.CovenantCode,
+        CustomerCode: updateSaleRequestTempEntity.CustomerCode,
+        TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+        IncrementValue:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        IncrementType: 2,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp: cartProductViewModelWithChilds
+                .Product.InternalCodeOnERP!
+                .toInt(),
+            ProductPriceLookUpCode:
+                cartProductViewModelWithChilds.ProductPriceLookUpCode,
+            Quantity: cartProductViewModelWithChilds.Quantity.toDouble(),
+            SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+            TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+            Value: cartProductViewModelWithChilds.Value.toDouble(),
+            Comments: cartProductViewModelWithChilds.Comments,
+            SaleRequestProductIdOfFather: null,
+            ProductIsFatherComposition: false,
+          )
+        ],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseBuilder.entity!.url!,
+            entity: teste,
+          )).called(1);
+    });
+    test(
+        "Should update saleRequest with correct value if is using product service charge",
+        () async {
+      cartProductViewModelWithChilds.Product.childsComposition = null;
+
+      sut.cartProducts.add(cartProductViewModelWithChilds);
+      confirmedCartProducts.mockIsConfirmed(false);
+
+      await sut.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber,
+      );
+
+      final teste = UpdateSaleRequestTempEntity(
+        Peoples: updateSaleRequestTempEntity.Peoples,
+        SellerCode: updateSaleRequestTempEntity.SellerCode,
+        Comments: updateSaleRequestTempEntity.Comments,
+        DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
+        EnterpriseId: updateSaleRequestTempEntity.EnterpriseId,
+        PersonalizedCode: updateSaleRequestTempEntity.PersonalizedCode,
+        SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+        CovenantCode: updateSaleRequestTempEntity.CovenantCode,
+        CustomerCode: updateSaleRequestTempEntity.CustomerCode,
+        TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+        IncrementValue: null,
+        IncrementType: null,
+        Products: [
+          UpdateSaleRequestTempProductEntity(
+            ProductInternalCodeOnErp: cartProductViewModelWithChilds
+                .Product.InternalCodeOnERP!
+                .toInt(),
+            ProductPriceLookUpCode:
+                cartProductViewModelWithChilds.ProductPriceLookUpCode,
+            Quantity: cartProductViewModelWithChilds.Quantity.toDouble(),
+            SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
+            TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
+            Value: cartProductViewModelWithChilds.Value.toDouble(),
+            Comments: cartProductViewModelWithChilds.Comments,
+            SaleRequestProductIdOfFather: null,
+            ProductIsFatherComposition: false,
+          )
+        ],
+      );
+
+      verify(() => updateSaleRequestTemp.update(
+            url: EnterpriseBuilder.entity!.url!,
+            entity: teste,
           )).called(1);
     });
   });

@@ -18,6 +18,8 @@ class CartPresenterSpy extends Mock implements CartPresenter {
     when(() => this.saleRequestTemp).thenAnswer((_) => saleRequestTempMock);
     when(() => this.cartProducts).thenAnswer((_) => cartProductsController);
     when(() => this.getLocalCartProductsData()).thenAnswer((any) async => any);
+    when(() => this.insertServiceChargeProduct(any(), any()))
+        .thenAnswer((any) async => any);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

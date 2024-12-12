@@ -896,6 +896,11 @@ class GetxMenuPresenter extends GetxController
             ]),
       );
 
+      await cartPresenter.insertServiceChargeProduct(
+        printedProductsPresenter,
+        homePresenter,
+      );
+
       searchedProduct = null;
     } on DomainError catch (e) {
       switch (e) {

@@ -109,7 +109,7 @@ void main() {
     homePresenter.commandEntityController = CommandEntity(
       commandNumber:
           faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      isFixedCommandNumber: faker.randomGenerator.boolean(),
+      isFixedCommandNumber: true,
       pdv: EntityFactory.makePdvEntity(),
     );
     expansibleGroupsViewModel = expansibleGroups
@@ -1433,8 +1433,6 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
-      homePresenter.commandEntityController =
-          EntityFactory.makeCommandEntity(true);
       printedProductsPresenter.mockLoadPrintedError(DomainError.unexpected);
 
       await sut.addProductInSaleRequest(
@@ -1486,9 +1484,6 @@ void main() {
       );
     });
     test("Should call load printed products", () async {
-      homePresenter.commandEntityController =
-          EntityFactory.makeCommandEntity(true);
-
       await sut.addProductInSaleRequest(
         product: productsViewModel,
         cartPresenter: cartPresenter,
@@ -1503,9 +1498,6 @@ void main() {
           )).called(1);
     });
     test("Should update sale request with correct values", () async {
-      homePresenter.commandEntityController =
-          EntityFactory.makeCommandEntity(true);
-
       await sut.addProductInSaleRequest(
         product: productsViewModel,
         cartPresenter: cartPresenter,
@@ -1556,6 +1548,24 @@ void main() {
                   ),
                 ]),
           )).called(1);
+    });
+
+    test("Should call insert service charge product", () async {
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: null,
+        quantity: quantityToAddProduct,
+      );
+
+      verify(
+        () => cartPresenter.insertServiceChargeProduct(
+          printedProductsPresenter,
+          homePresenter,
+        ),
+      ).called(1);
     });
   });
 }

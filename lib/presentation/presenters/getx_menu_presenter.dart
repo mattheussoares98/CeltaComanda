@@ -851,12 +851,17 @@ class GetxMenuPresenter extends GetxController
       if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
           commandNumber == null) {
         throw DomainError.commandNumberObligatory;
+      } else if (homePresenter.commandEntity?.isFixedCommandNumber == false &&
+          commandNumber != null) {
+        await homePresenter.updateCommandEntity(
+          commandNumber: commandNumber.toString(),
+          isFixedCommandNumber: false,
+          pdv: null,
+        );
       }
 
-      //TODO change command number if dont is fixed command number and pass a command number value
-
       await printedProductsPresenter.loadPrinted(
-        homePresenter.commandEntity!.commandNumber!,
+        homePresenter.commandEntity!.commandNumber ?? commandNumber.toString(),
       );
 
       final totalLiquid =
@@ -865,7 +870,8 @@ class GetxMenuPresenter extends GetxController
 
       await updateSaleRequest.update(
         commandNumberWithThreeNumbers:
-            homePresenter.commandEntity!.commandNumber!,
+            homePresenter.commandEntity!.commandNumber ??
+                commandNumber.toString().padLeft(3, "0"),
         saleRequestId: printedProductsPresenter.printed!.SaleRequestId.toInt(),
         model: SaleRequestModel(
             CovenantCode: null,

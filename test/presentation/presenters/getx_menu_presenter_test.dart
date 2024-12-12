@@ -1567,5 +1567,33 @@ void main() {
         ),
       ).called(1);
     });
+    test(
+        "Should update command number if dont is fixed command number and pass a command number",
+        () async {
+      homePresenter.commandEntityController = CommandEntity(
+        commandNumber: null,
+        isFixedCommandNumber: false,
+        pdv: null,
+      );
+
+      final newCommandNumber = faker.randomGenerator.integer(10);
+
+      await sut.addProductInSaleRequest(
+        product: productsViewModel,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        commandNumber: newCommandNumber,
+        quantity: quantityToAddProduct,
+      );
+
+      verify(
+        () => homePresenter.updateCommandEntity(
+          commandNumber: newCommandNumber.toString(),
+          isFixedCommandNumber: false,
+          pdv: null,
+        ),
+      ).called(1);
+    });
   });
 }

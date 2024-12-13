@@ -22,7 +22,7 @@ class PrintProductsItems extends StatelessWidget {
               // Expanded(child: Text(R.string.time, style: textStyle(context))),
               Expanded(
                 flex: 3,
-                child: Text(R.string.product, style: textStyle(context)),
+                child: Text(R.string.products, style: textStyle(context)),
               ),
               Expanded(
                   child: Text(R.string.quantityAbbreviated,

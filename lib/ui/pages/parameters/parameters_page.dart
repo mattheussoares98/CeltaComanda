@@ -58,43 +58,55 @@ class _ParametersPageState extends State<ParametersPage>
       appBar: AppBar(
         title: FittedBox(child: Text(R.string.parameters)),
       ),
-      body: StreamBuilder<List<ParameterModel>?>(
-          stream: parametersPresenter.parametersStream,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return SizedBox();
-            }
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: StreamBuilder<List<ParameterModel>?>(
+            stream: parametersPresenter.parametersStream,
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return SizedBox();
+              }
 
-            return SafeArea(
-              child: ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final parameter = snapshot.data![index];
+              return SafeArea(
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final parameter = snapshot.data![index];
 
-                  return InkWell(
-                    onTap: () async {
-                      await parametersPresenter.changeParameter(index);
-                      await menuPresenter.addOrRemoveSearchProducts();
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(parameter.name),
+                    return InkWell(
+                      onTap: () async {
+                        await parametersPresenter.changeParameter(index);
+                        await menuPresenter.addOrRemoveSearchProducts();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                parameter.name,
+                                style: TextStyle(
+                                  fontSize: getStringSize(context),
+                                ),
+                              ),
+                            ),
+                            Switch(
+                              value: parameter.enabled,
+                              onChanged: (_) async {
+                                await parametersPresenter
+                                    .changeParameter(index);
+                                await menuPresenter.addOrRemoveSearchProducts();
+                              },
+                            ),
+                          ],
                         ),
-                        Switch(
-                          value: parameter.enabled,
-                          onChanged: (_) async {
-                            await parametersPresenter.changeParameter(index);
-                            await menuPresenter.addOrRemoveSearchProducts();
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            );
-          }),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
+      ),
     );
   }
 }

@@ -107,12 +107,21 @@ class SearchedProduct extends StatelessWidget {
                 "EAN ${product.EanCode!}",
                 style: TextStyle(fontSize: getStringSize(context)),
               ),
+            if (product.IsPromoCombox == "true")
+              Text(
+                R.string.msgCantAddCombox,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: getStringSize(context),
+                ),
+              ),
             Row(
               children: [
                 Expanded(
                   child: Column(
                     children: [
                       TextFormField(
+                        enabled: product.IsPromoCombox != "true",
                         controller: quantityController,
                         validator: (value) {
                           if (value == null || value.toDouble() == -1) {
@@ -132,6 +141,7 @@ class SearchedProduct extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       TextFormField(
+                        enabled: product.IsPromoCombox != "true",
                         focusNode: commentFocusNode,
                         controller: commentController,
                         onFieldSubmitted: (_) async {
@@ -160,17 +170,19 @@ class SearchedProduct extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        await addProduct(
-                          menuPresenter,
-                          cartPresenter,
-                          homePresenter,
-                          printedProductsPresenter,
-                          expansibleGroupFromProductPresenter,
-                          product,
-                          context,
-                        );
-                      },
+                      onPressed: product.IsPromoCombox == "true"
+                          ? null
+                          : () async {
+                              await addProduct(
+                                menuPresenter,
+                                cartPresenter,
+                                homePresenter,
+                                printedProductsPresenter,
+                                expansibleGroupFromProductPresenter,
+                                product,
+                                context,
+                              );
+                            },
                       child: Text(R.string.confirm),
                     ),
                   ),

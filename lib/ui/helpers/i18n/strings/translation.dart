@@ -3,6 +3,7 @@ abstract class Translation {
   String get msgBarcodeNotRead;
   String get msgBlockedCommand;
   String get msgEmailInUse;
+  String get msgCantAddCombox;
   String get msgClearCartOnLogout;
   String get msgClearConfirmedPayments;
   String get msgCloseApplication;

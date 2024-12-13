@@ -6,7 +6,7 @@ class PtBr implements Translation {
   String get msgAuthorizationIsPendant => "Autorização pendente";
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
-  String get msgEmailInUse => 'O email já está em uso.';
+  String get msgCantAddCombox => 'Não é permitido adicionar combo por aqui';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgClearConfirmedPayments => "Limpar pagamentos confirmados";
@@ -24,6 +24,7 @@ class PtBr implements Translation {
   String get msgConsultCommandToViewProducts =>
       "Consulte alguma comanda para visualizar os produtos solicitados";
   String get msgDontHaveUnusedPdvs => "Não há PDVs liberados para registro";
+  String get msgEmailInUse => 'O email já está em uso.';
   String get msgEvaluateFood => "Avalie a comida";
   String get msgEvaluateDrink => "Avalie a bebida";
   String get msgEvaluateEnvironment => "Avalie o ambiente";

@@ -6,7 +6,7 @@ class EnUs implements Translation {
   String get msgAuthorizationIsPendant => "Pendant authotization";
   String get msgBarcodeNotRead => 'Barcode not read';
   String get msgBlockedCommand => 'Command blocked';
-  String get msgEmailInUse => 'Email already in use';
+  String get msgCantAddCombox => "Can't add combox here";
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgClearConfirmedPayments => 'Clear all confirmed payments';
   String get msgCloseApplication => 'Close application';
@@ -23,6 +23,7 @@ class EnUs implements Translation {
       "Search command to view products";
   String get msgDontHaveUnusedPdvs =>
       "There are no PDVs released for registration";
+  String get msgEmailInUse => 'Email already in use';
   String get msgEvaluateFood => 'Rate the food';
   String get msgEvaluateDrink => 'Rate the drink';
   String get msgEvaluateEnvironment => 'Rate the environment';

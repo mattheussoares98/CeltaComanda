@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -13,6 +15,29 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
     super.key,
   });
 
+  bool allProductsAreSelected(
+      SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter) {
+    if (printedViewModel == null) {
+      return false;
+    }
+
+    final serviceChargeProduct = printedViewModel!.Products.firstWhereOrNull(
+      (e) =>
+          e.ProductInternalCodeOnErp.toInt() ==
+          EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
+    );
+
+    if (serviceChargeProduct != null) {
+      return sendProductsToAnotherTablePresenter
+              .selectedsSaleRequestProductsIds.length >=
+          (printedViewModel!.Products.length - 1);
+    } else {
+      return printedViewModel?.Products.length ==
+          sendProductsToAnotherTablePresenter
+              .selectedsSaleRequestProductsIds.length;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
@@ -20,9 +45,7 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
 
     return ElevatedButton(
       onPressed: () {
-        if (printedViewModel?.Products.length ==
-            sendProductsToAnotherTablePresenter
-                .selectedsSaleRequestProductsIds.length) {
+        if (allProductsAreSelected(sendProductsToAnotherTablePresenter)) {
           sendProductsToAnotherTablePresenter
               .clearAllSelectedsSaleRequestProductsIds();
           callSetState();
@@ -33,9 +56,7 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
         }
       },
       child: Text(
-        printedViewModel?.Products.length ==
-                sendProductsToAnotherTablePresenter
-                    .selectedsSaleRequestProductsIds.length
+        allProductsAreSelected(sendProductsToAnotherTablePresenter)
             ? R.string.unselectAllProducts
             : R.string.selectAllProducts,
       ),

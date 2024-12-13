@@ -670,7 +670,12 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           e.ProductInternalCodeOnErp.toInt() ==
           EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
 
-      if (serviceChargeProduct != null) {
+      if (printed.Products.length == 1 && serviceChargeProduct != null) {
+        //contém somente a taxa de serviço, melhor remover e não adicionar novamente
+        await removePrintedProduct
+            .remove(serviceChargeProduct.SaleRequestProductId.toString());
+        return;
+      } else if (serviceChargeProduct != null) {
         await removePrintedProduct
             .remove(serviceChargeProduct.SaleRequestProductId.toString());
       }

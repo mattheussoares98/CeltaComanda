@@ -7,10 +7,12 @@ InputDecoration formFieldDecoration({
   required String labelText,
   required String? errorText,
   Widget? suffixIcon,
+  Widget? prefixIcon,
   bool? showCounterText = true,
 }) =>
     InputDecoration(
       labelText: labelText,
+      prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       errorText: errorText,
       hintText: hintText,

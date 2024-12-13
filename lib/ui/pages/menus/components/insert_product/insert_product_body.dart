@@ -19,6 +19,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
   final commandNumberController = TextEditingController();
   final quantityController = TextEditingController();
   final commentController = TextEditingController();
+  bool searchedProduct = false;
 
   @override
   void dispose() {
@@ -43,6 +44,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
     }
 
     await menuPresenter.searchProduct(searchProductController.text);
+    searchedProduct = true;
 
     focusNode.unfocus();
     searchProductController.clear();
@@ -64,12 +66,22 @@ class _InsertProductBodyState extends State<InsertProductBody> {
             searchProduct: () async {
               await _searchProduct(menuPresenter);
             },
+            changeSearchedProduct: () {
+              searchedProduct = true;
+            },
           ),
           StreamBuilder<ProductsViewModel?>(
             stream: menuPresenter.searchedProductStream,
             builder: (context, snapshot) {
               if (snapshot.data == null) {
                 return SizedBox();
+              }
+
+              if (searchedProduct && searchProductController.text.isNotEmpty) {
+                Future.delayed(Duration.zero, () {
+                  searchedProduct = false;
+                  searchProductController.text = "";
+                });
               }
 
               return SearchedProduct(

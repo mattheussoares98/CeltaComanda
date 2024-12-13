@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,11 +12,13 @@ class SearchField extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final Future<void> Function() searchProduct;
   final TextEditingController searchProductController;
+  final void Function() changeSearchedProduct;
   const SearchField({
     required this.focusNode,
     required this.formKey,
     required this.searchProduct,
     required this.searchProductController,
+    required this.changeSearchedProduct,
     super.key,
   });
 
@@ -48,24 +52,44 @@ class SearchField extends StatelessWidget {
                 labelText: R.string.searchProduct,
                 errorText: null,
                 showCounterText: false,
-                suffixIcon: IconButton(
-                  onPressed: () async =>
-                      await menuPresenter.readBarcodeAndSearchProduct(),
+                prefixIcon: IconButton(
+                  onPressed: () {
+                    searchProductController.clear();
+                  },
                   icon: Icon(
-                    Icons.camera_alt,
-                    color: Theme.of(context).colorScheme.primary,
+                    Icons.delete,
+                    color: Colors.red,
                   ),
                 ),
+                suffixIcon: Platform.isWindows
+                    ? null
+                    : IconButton(
+                        onPressed: () async {
+                          searchProductController.text =
+                              await menuPresenter.readBarcodeAndSearchProduct();
+                          changeSearchedProduct();
+                        },
+                        icon: Icon(
+                          Icons.camera_alt,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
               ),
             ),
           ),
         ),
-        TextButton.icon(
-          onPressed: () async {
-            await searchProduct();
-          },
-          icon: Icon(Icons.search),
-          label: Text(R.string.searchProduct),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () async {
+                await searchProduct();
+              },
+              icon: Icon(
+                Icons.search,
+              ),
+            ),
+            if (hasMinWidth(context)) Text(R.string.searchProduct),
+          ],
         ),
       ],
     );

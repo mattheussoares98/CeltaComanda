@@ -178,8 +178,6 @@ class GetxConfigurationsPresenter extends GetxController
       );
 
       final saleRequestTempEntity = await loadSaleRequestTemp.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 

@@ -69,8 +69,6 @@ class GetxPrintedProductsPresenter
 
     try {
       PrintedEntity? printedProducts = await loadPrintedProducts.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber.toInt(),
       );
 
@@ -275,7 +273,7 @@ class GetxPrintedProductsPresenter
 
       await updateSaleRequest.update(
         model: model,
-        commandNumberWithThreeNumbers: commandNumber.padLeft(3, "0"),
+        commandNumber: commandNumber.padLeft(3, "0"),
         saleRequestId: printed.SaleRequestId.toInt(),
       );
 

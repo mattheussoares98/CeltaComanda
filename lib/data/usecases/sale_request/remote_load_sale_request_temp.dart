@@ -1,3 +1,4 @@
+import '../../../main/builders/builders.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
@@ -13,11 +14,11 @@ class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
 
   @override
   Future<SaleRequestTempEntity> load({
-    required String url,
-    required int enterpriseId,
     required String commandNumber,
   }) async {
     try {
+      final url = EnterpriseBuilder.entity!.url;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
       final saleRequestTemp = await httpAdapter.request(
         url:
             "$url/api/apiSaleRequest/GetTemp?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber",

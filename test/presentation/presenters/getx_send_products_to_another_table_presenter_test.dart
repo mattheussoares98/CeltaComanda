@@ -198,8 +198,6 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: oldPersonalizedCode,
         ),
       ).called(1);

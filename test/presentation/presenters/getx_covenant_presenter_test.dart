@@ -583,7 +583,7 @@ void main() {
               CovenantCode: sut.selectedCovenant.values.first!.toInt(),
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
-            commandNumberWithThreeNumbers:
+            commandNumber:
                 homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId

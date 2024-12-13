@@ -394,7 +394,7 @@ class GetxPaymentPresenter extends GetxController
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
-          commandNumberWithThreeNumbers:
+          commandNumber:
               homePresenter.commandEntity!.commandNumber!,
           saleRequestId:
               printedProductsPresenter.printed!.SaleRequestId.toInt(),

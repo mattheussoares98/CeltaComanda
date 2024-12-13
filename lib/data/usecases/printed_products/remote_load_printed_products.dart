@@ -1,3 +1,4 @@
+import '../../../main/builders/builders.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
@@ -13,11 +14,12 @@ class RemoteLoadPrintedProducts implements LoadPrintedProducts {
 
   @override
   Future<PrintedEntity?> load({
-    required String url,
-    required int enterpriseId,
     required int commandNumber,
   }) async {
     try {
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
+      final url = EnterpriseBuilder.entity!.url;
+
       final printedProducts = await httpAdapter.request(
         url:
             "$url/api/apiSaleRequest/Get?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",

@@ -494,8 +494,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: newFixedCommandNumber.toString().padLeft(3, "0"),
         ),
       ).called(1);

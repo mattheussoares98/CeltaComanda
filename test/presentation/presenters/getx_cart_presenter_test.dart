@@ -688,8 +688,6 @@ void main() {
           homePresenter.commandEntityController!.commandNumber!);
 
       verify(() => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
@@ -1167,8 +1165,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
@@ -1217,7 +1213,7 @@ void main() {
             saleRequestTempEntity.SaleRequestTempId,
           )).called(1);
       verify(() => printedProductsPresenter.loadPrinted(
-          homePresenter.commandEntityController!.commandNumber!)).called(2);
+          homePresenter.commandEntityController!.commandNumber!)).called(1);
     });
     test(
         "Should convert correctly combox products to UpdateSaleRequestTempProductEntity on saveProducts",
@@ -1350,8 +1346,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
@@ -1400,8 +1394,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
@@ -1454,8 +1446,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
@@ -1504,8 +1494,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       ).called(1);
@@ -1784,8 +1772,6 @@ void main() {
 
       verifyNever(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!,
         ),
       );

@@ -48,8 +48,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
     try {
       SaleRequestTempEntity? saleRequestTemp = await loadSaleRequestTemp.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber,
       );
 
@@ -444,8 +442,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       SaleRequestTempEntity saleRequestTempResult =
           await loadSaleRequestTemp.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
       );
 
@@ -656,9 +652,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       }
 
       final printed = await loadPrintedProducts.load(
-        url: EnterpriseBuilder
-            .entity!.url!, //TODO remove parameters related to enterprise
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: commandNumber.toInt(),
       );
 
@@ -719,8 +712,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             ),
           ],
         ),
-        commandNumberWithThreeNumbers:
-            homePresenter.commandEntity!.commandNumber!, //TODO confirm sending 3 numbers in command number
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
         saleRequestId: printed.SaleRequestId.toInt(),
       );
     } catch (e) {

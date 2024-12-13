@@ -7,8 +7,6 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadSaleRequestTempSpy extends Mock implements LoadSaleRequestTemp {
   When _mockLoadSaleRequestTempCall() => when(() => this.load(
-        enterpriseId: any(named: "enterpriseId"),
-        url: any(named: "url"),
         commandNumber: any(named: "commandNumber"),
       ));
 

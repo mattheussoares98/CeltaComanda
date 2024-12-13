@@ -517,8 +517,6 @@ void main() {
           ));
       verifyNever(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: notFixedCommandEntity.commandNumber!,
         ),
       );
@@ -656,8 +654,6 @@ void main() {
 
       verify(
         () => loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               fixedCommandEntity.commandNumber.toString().padLeft(3, "0"),
         ),

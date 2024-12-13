@@ -380,8 +380,6 @@ void main() {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       verify(() => loadPrintedProducts.load(
-            url: EnterpriseBuilder.entity!.url!,
-            enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
             commandNumber: int.parse(
                 homePresenter.commandEntityController!.commandNumber!),
           )).called(1);
@@ -390,8 +388,6 @@ void main() {
     test("Should return correct printedProducts on LoadPrintedProducts",
         () async {
       final result = await loadPrintedProducts.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber:
             int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
@@ -402,8 +398,6 @@ void main() {
     test("Should return null on loadPrintedProducts", () async {
       loadPrintedProducts.mockLoadPrintedProducts(null);
       final result = await loadPrintedProducts.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber:
             int.parse(homePresenter.commandEntityController!.commandNumber!),
       );
@@ -457,8 +451,6 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),
@@ -526,8 +518,6 @@ void main() {
       );
 
       verify(() => loadPrintedProducts.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: homePresenter.commandEntityController!.commandNumber!
               .toInt())).called(1);
     });
@@ -764,7 +754,7 @@ void main() {
             TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
             EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
           ),
-          commandNumberWithThreeNumbers: homePresenter
+          commandNumber: homePresenter
               .commandEntityController!.commandNumber!
               .padLeft(3, "0"),
           saleRequestId: sut.printed!.SaleRequestId.toInt(),
@@ -783,8 +773,6 @@ void main() {
 
       verify(
         () => loadPrintedProducts.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber:
               homePresenter.commandEntityController!.commandNumber!.toInt(),
         ),

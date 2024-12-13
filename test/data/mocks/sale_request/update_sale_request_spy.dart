@@ -10,8 +10,8 @@ class UpdateSaleRequestSpy extends Mock implements UpdateSaleRequest {
   }
   When mocUpdateSaleRequestCall() => when(() => this.update(
         model: any(named: "model"),
-        commandNumberWithThreeNumbers:
-            any(named: "commandNumberWithThreeNumbers"),
+        commandNumber:
+            any(named: "commandNumber"),
         saleRequestId: any(named: "saleRequestId"),
       ));
 

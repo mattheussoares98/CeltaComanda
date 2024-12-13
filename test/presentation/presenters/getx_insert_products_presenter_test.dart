@@ -913,8 +913,6 @@ void main() {
     test('Should return correct entity on success to loadSaleRequestTemp',
         () async {
       final value = await loadSaleRequestTemp.load(
-        url: EnterpriseBuilder.entity!.url!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 

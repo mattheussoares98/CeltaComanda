@@ -10,8 +10,6 @@ class LoadPrintedProductsSpy extends Mock implements LoadPrintedProducts {
     mockLoadPrintedProducts(null);
   }
   When mockLoadPrintedProductsCall() => when(() => this.load(
-        enterpriseId: any(named: "enterpriseId"),
-        url: any(named: "url"),
         commandNumber: any(named: "commandNumber"),
       ));
 

@@ -139,8 +139,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (commandEntity?.isFixedCommandNumber == true &&
           commandEntity?.commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
-          url: EnterpriseBuilder.entity!.url!,
-          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: commandEntity!.commandNumber!.padLeft(3, "0"),
         );
 

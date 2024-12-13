@@ -184,7 +184,7 @@ class GetxCovenantPresenter extends GetxController
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
-          commandNumberWithThreeNumbers: homePresenter
+          commandNumber: homePresenter
               .commandEntity!.commandNumber!
               .toString()
               .padLeft(3, "0"),

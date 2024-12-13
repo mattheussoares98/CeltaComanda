@@ -104,9 +104,11 @@ class App extends StatelessWidget with HideNavigationBarManager {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           UserInteraction.restartTimes();
+          FocusScope.of(context).unfocus();
         },
         onPanDown: (_) {
           UserInteraction.restartTimes();
+          FocusScope.of(context).unfocus();
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

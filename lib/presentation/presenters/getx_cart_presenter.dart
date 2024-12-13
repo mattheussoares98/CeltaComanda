@@ -24,6 +24,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   final LoadSaleRequest loadSaleRequest;
   final UpdateSaleRequest updateSaleRequest;
   final RemovePrintedProduct removePrintedProduct;
+  final LoadPrintedProducts loadPrintedProducts;
 
   GetxCartPresenter({
     required this.loadSaleRequestTemp,
@@ -38,6 +39,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required this.loadSaleRequest,
     required this.updateSaleRequest,
     required this.removePrintedProduct,
+    required this.loadPrintedProducts,
   });
 
   @override

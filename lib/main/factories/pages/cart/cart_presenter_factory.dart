@@ -15,4 +15,5 @@ CartPresenter makeGetxCartPresenter() => GetxCartPresenter(
       loadSaleRequest: makeRemoteLoadSaleRequest(),
       updateSaleRequest: makeRemoteUpdateSaleRequest(),
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
+      loadPrintedProducts: makeRemoteLoadPrintedProducts(),
     );

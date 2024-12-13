@@ -147,5 +147,16 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     _selectedSaleRequestProductsIds.addAll(_printedProducts.value!.Products
         .map((e) => e.SaleRequestProductId.toInt())
         .toList());
+
+    final serviceChargeProduct = _printedProducts.value!.Products
+        .firstWhereOrNull((e) =>
+            e.ProductInternalCodeOnErp.toInt() ==
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge);
+    if (serviceChargeProduct != null &&
+        _selectedSaleRequestProductsIds
+            .contains(serviceChargeProduct.SaleRequestProductId.toInt())) {
+      _selectedSaleRequestProductsIds.removeWhere(
+          (e) => e == serviceChargeProduct.SaleRequestProductId.toInt());
+    }
   }
 }

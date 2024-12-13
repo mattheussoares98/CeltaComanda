@@ -30,6 +30,8 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     CancelProductsPresenter cancelProductsPresenter =
         Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
@@ -117,6 +119,8 @@ class ProductItem extends StatelessWidget {
                       ),
                       onPress: () async {
                         await cancelProductsPresenter.cancelProduct(
+                            cartPresenter: cartPresenter,
+                            homePresenter: homePresenter,
                             productId: product.SaleRequestProductId,
                             commandNumber: commandNumber!,
                             showSuccessMessage: () {

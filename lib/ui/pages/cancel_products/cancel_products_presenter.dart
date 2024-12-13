@@ -12,6 +12,8 @@ abstract class CancelProductsPresenter implements Listenable {
     required String productId,
     required int commandNumber,
     required void Function() showSuccessMessage,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
   });
   Future<void> loadProducts(int commandNumber);
 }

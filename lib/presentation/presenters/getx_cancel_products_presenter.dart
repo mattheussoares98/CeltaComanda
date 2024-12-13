@@ -24,12 +24,18 @@ class GetxCancelProductsPresenter extends GetxController
     required String productId,
     required int commandNumber,
     required void Function() showSuccessMessage,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
       await removePrintedProduct.remove(productId);
+      await cartPresenter.insertServiceChargeProduct(
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
       await loadProducts(commandNumber);
       showSuccessMessage();
     } catch (e) {

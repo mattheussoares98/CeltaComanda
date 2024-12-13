@@ -11,9 +11,12 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxCancelProductsPresenter sut;
+  late CartPresenterSpy cartPresenter;
+  late HomePresenterSpy homePresenter;
 
   late RemovePrintedProductSpy removePrintedProduct;
   late LoadPrintedProductsSpy loadPrintedProducts;
@@ -28,6 +31,8 @@ void main() {
   }
 
   void initPresenters() {
+    cartPresenter = CartPresenterSpy();
+    homePresenter = HomePresenterSpy();
     sut = GetxCancelProductsPresenter(
       removePrintedProduct: removePrintedProduct,
       loadPrintedProducts: loadPrintedProducts,
@@ -35,8 +40,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(100);
     printedEntity = EntityFactory.makePrintedProductsEntity();
     printedViewModel = PrintedViewModel.fromEntity(printedEntity);
@@ -52,7 +56,24 @@ void main() {
     initEntitys();
     initMockSuccess();
   });
-  setUpAll(() {});
+
+  setUpAll(() {
+    registerFallbackValue(
+      EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 0,
+        minimumProductQuantity: 0,
+      ),
+    );
+    registerFallbackValue(
+      EntityFactory.makeExpansibleGroupFromProductViewModel(),
+    );
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
+  });
 
   group("Load printed products", () {
     test("Should emit correct values on success", () async {
@@ -90,6 +111,8 @@ void main() {
         productId: faker.randomGenerator.string(10),
         commandNumber: commandNumber,
         showSuccessMessage: () {},
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
     });
     test("Should emit correct values on error", () async {
@@ -103,6 +126,8 @@ void main() {
         productId: faker.randomGenerator.string(10),
         commandNumber: commandNumber,
         showSuccessMessage: () {},
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
     });
     test("Should call removePrintedProduct with correct value", () async {
@@ -112,9 +137,25 @@ void main() {
         productId: id,
         commandNumber: commandNumber,
         showSuccessMessage: () {},
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
 
       verify(() => removePrintedProduct.remove(id)).called(1);
+    });
+    test("Should call cartPresenter.insertServiceChargeProduct", () async {
+      await sut.cancelProduct(
+        productId: faker.randomGenerator.string(10),
+        commandNumber: commandNumber,
+        showSuccessMessage: () {},
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => cartPresenter.insertServiceChargeProduct(
+            commandNumber: commandNumber.toString(),
+            homePresenter: homePresenter,
+          )).called(1);
     });
   });
 }

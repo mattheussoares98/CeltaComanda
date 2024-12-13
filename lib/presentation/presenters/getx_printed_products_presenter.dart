@@ -224,7 +224,6 @@ class GetxPrintedProductsPresenter
         EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null) {
       value = printed.TotalLiquid.toDouble() *
           (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
-      //TODO create tests
     } else if (printed.IncrementType.toInt() == 1) {
       //value
       value = printed.IncrementValue.toDouble();
@@ -299,8 +298,9 @@ class GetxPrintedProductsPresenter
       await printBitmap.print(bitmap);
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
     }
-    isLoading = false;
   }
 
   @override

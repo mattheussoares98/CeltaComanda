@@ -8,12 +8,15 @@ import io.flutter.plugin.common.MethodChannel
 import rede.smartrede.commons.callback.IPrinterCallback
 import rede.smartrede.commons.contract.IConnectorPrinter
 
+import android.os.Handler
+import android.os.Looper
 
 class RedePrinter(
     private val flutterEngine: FlutterEngine,
     private val connectorPrinter: IConnectorPrinter,
 ) {
     private val channel: String = "redePrinter"
+    private val mainHandler = Handler(Looper.getMainLooper())
 
     fun setupMethodChannel() {
         MethodChannel(
@@ -40,8 +43,20 @@ class RedePrinter(
         }
     }
 
+    private fun sendMessageToFlutter(message: String) {
+        mainHandler.post {
+            try {
+                val methodChannel =
+                    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
+                methodChannel.invokeMethod("printerResult", message)
+            } catch (exception: Exception) {
+                Log.e(javaClass.simpleName, exception.message.orEmpty())
+            }
+        }
+    }
+
     private fun print(bitmap: Bitmap) {
-        postToWorkerThread {
+        mainHandler.post {
             try {
                 val callback: IPrinterCallback =
                     PrinterCallbackImpl(
@@ -52,24 +67,25 @@ class RedePrinter(
                     setPrinterCallback(callback)
                     printBitmap(bitmap)
                 }
+                sendMessageToFlutter("Success")
             } catch (exception: Exception) {
                 Log.e(javaClass.simpleName, exception.message.orEmpty())
+                sendMessageToFlutter("Error")
             }
         }
     }
-
-    private fun postToWorkerThread(command: Runnable) {
-        Thread(command).start()
-    }
-
 
     class PrinterCallbackImpl(
         private val channel: String = "redePrinter",
         private val flutterEngine: FlutterEngine,
     ) : IPrinterCallback {
+        private val mainHandler = Handler(Looper.getMainLooper())
+
         private fun sendMessageToFlutter(message: String) {
-            val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
-            methodChannel.invokeMethod("printerResult", message)
+            mainHandler.post {
+                val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
+                methodChannel.invokeMethod("printerResult", message)
+            }
         }
 
         override fun onCompleted() {
@@ -82,7 +98,4 @@ class RedePrinter(
             sendMessageToFlutter("Error")
         }
     }
-
-
 }
-

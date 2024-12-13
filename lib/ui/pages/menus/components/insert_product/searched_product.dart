@@ -83,10 +83,9 @@ class SearchedProduct extends StatelessWidget {
       child: Form(
         key: formKeyQuantity,
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              product.Name,
+              "${product.Name} (${product.PackingAbbreviation})",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: getStringSize(context),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +12,18 @@ class SearchedProduct extends StatelessWidget {
   final ProductsViewModel product;
   final TextEditingController commandNumberController;
   final TextEditingController quantityController;
+  final TextEditingController commentController;
+
   const SearchedProduct({
     required this.product,
     required this.commandNumberController,
     required this.quantityController,
+    required this.commentController,
     super.key,
   });
   static final formKeyQuantity = GlobalKey<FormState>();
   static final formKeyCommandNumber = GlobalKey<FormState>();
+  static final commentFocusNode = FocusNode();
 
   Future<void> addProduct(
     MenuPresenter menuPresenter,
@@ -26,6 +32,7 @@ class SearchedProduct extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter,
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
     ProductsViewModel product,
+    BuildContext context,
   ) async {
     bool? isValid = formKeyQuantity.currentState?.validate();
 
@@ -33,7 +40,7 @@ class SearchedProduct extends StatelessWidget {
       await cartPresenter.addProductInCart(
         product: CartProductEntity(
           Product: product.toEntity(),
-          Comments: null,
+          Comments: commentController.text,
           TotalLiquid: product.SaleRetailPraticed.toDouble() *
               quantityController.text.toDouble(),
           Quantity: quantityController.text.toDouble(),
@@ -45,6 +52,11 @@ class SearchedProduct extends StatelessWidget {
             expansibleGroupFromProductPresenter,
       );
       quantityController.clear();
+      commentController.clear();
+      PersonalizedDialogPage.open(
+        context: context,
+        page: CartPage(),
+      );
     }
   }
 
@@ -70,31 +82,77 @@ class SearchedProduct extends StatelessWidget {
       child: Form(
         key: formKeyQuantity,
         child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(product.Name),
+            Text(
+              product.Name,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: getStringSize(context),
+              ),
+            ),
             Text(
               product.SaleRetailPraticed.toDouble()
                   .toString()
                   .toBrazilianNumber()
                   .addBrazilianCoin(),
+              style: TextStyle(fontSize: getStringSize(context)),
             ),
+            Text(
+              "PLU ${product.PriceLookupCode}",
+              style: TextStyle(fontSize: getStringSize(context)),
+            ),
+            if (product.EanCode != null && product.EanCode!.isNotEmpty)
+              Text(
+                "EAN ${product.EanCode!}",
+                style: TextStyle(fontSize: getStringSize(context)),
+              ),
             Row(
               children: [
                 Expanded(
-                  child: TextFormField(
-                    controller: quantityController,
-                    validator: (value) {
-                      if (value == null || value.toDouble() == -1) {
-                        return R.string.msgInvalidNumber;
-                      }
-                      return null;
-                    },
-                    decoration: formFieldDecoration(
-                      context: context,
-                      hintText: R.string.quantity,
-                      labelText: R.string.quantity,
-                      errorText: null,
-                    ),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: quantityController,
+                        validator: (value) {
+                          if (value == null || value.toDouble() == -1) {
+                            return R.string.msgInvalidNumber;
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (_) {
+                          commentFocusNode.requestFocus();
+                        },
+                        decoration: formFieldDecoration(
+                          context: context,
+                          hintText: R.string.quantity,
+                          labelText: R.string.quantity,
+                          errorText: null,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        focusNode: commentFocusNode,
+                        controller: commentController,
+                        onFieldSubmitted: (_) async {
+                          await addProduct(
+                            menuPresenter,
+                            cartPresenter,
+                            homePresenter,
+                            printedProductsPresenter,
+                            expansibleGroupFromProductPresenter,
+                            product,
+                            context,
+                          );
+                        },
+                        decoration: formFieldDecoration(
+                          context: context,
+                          hintText: R.string.comment,
+                          labelText: R.string.comment,
+                          errorText: null,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Form(
@@ -103,23 +161,17 @@ class SearchedProduct extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                       onPressed: () async {
-                        bool? isValid =
-                            formKeyQuantity.currentState?.validate();
-
-                        if (isValid == true) {
-                          await addProduct(
-                            menuPresenter,
-                            cartPresenter,
-                            homePresenter,
-                            printedProductsPresenter,
-                            expansibleGroupFromProductPresenter,
-                            product,
-                          );
-                        }
+                        await addProduct(
+                          menuPresenter,
+                          cartPresenter,
+                          homePresenter,
+                          printedProductsPresenter,
+                          expansibleGroupFromProductPresenter,
+                          product,
+                          context,
+                        );
                       },
-                      child: Text(
-                        R.string.confirm,
-                      ),
+                      child: Text(R.string.confirm),
                     ),
                   ),
                 ),

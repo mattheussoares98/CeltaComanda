@@ -2,5 +2,6 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
 double getStringSize(BuildContext context) {
+  //TODO update to use a static method
   return hasMinWidth(context) ? 22 : 15;
 }

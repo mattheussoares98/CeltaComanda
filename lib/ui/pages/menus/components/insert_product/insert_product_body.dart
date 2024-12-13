@@ -18,6 +18,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
   final searchProductController = TextEditingController();
   final commandNumberController = TextEditingController();
   final quantityController = TextEditingController();
+  final commentController = TextEditingController();
 
   @override
   void dispose() {
@@ -26,6 +27,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
     searchProductController.dispose();
     commandNumberController.dispose();
     quantityController.dispose();
+    commentController.dispose();
   }
 
   void _requestFocusToFormField() {
@@ -44,6 +46,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
 
     focusNode.unfocus();
     searchProductController.clear();
+    quantityController.clear();
   }
 
   @override
@@ -73,6 +76,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
                 product: snapshot.data!,
                 commandNumberController: commandNumberController,
                 quantityController: quantityController,
+                commentController: commentController,
               );
             },
           ),

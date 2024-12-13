@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../mixins/mixins.dart';
 import '../../../pages.dart';
 
 class InsertProductBody extends StatefulWidget {
@@ -10,7 +13,8 @@ class InsertProductBody extends StatefulWidget {
   State<InsertProductBody> createState() => _InsertProductBodyState();
 }
 
-class _InsertProductBodyState extends State<InsertProductBody> {
+class _InsertProductBodyState extends State<InsertProductBody>
+    with LoadingManager {
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   final productFormKey = GlobalKey<FormState>();
@@ -20,6 +24,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
   final quantityController = TextEditingController();
   final commentController = TextEditingController();
   bool searchedProduct = false;
+  StreamSubscription? loadingSubscription;
 
   @override
   void dispose() {
@@ -29,6 +34,7 @@ class _InsertProductBodyState extends State<InsertProductBody> {
     commandNumberController.dispose();
     quantityController.dispose();
     commentController.dispose();
+    loadingSubscription?.cancel();
   }
 
   void _requestFocusToFormField() {
@@ -47,13 +53,15 @@ class _InsertProductBodyState extends State<InsertProductBody> {
     searchedProduct = true;
 
     focusNode.unfocus();
-    searchProductController.clear();
     quantityController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
+    loadingSubscription?.cancel();
+    loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),

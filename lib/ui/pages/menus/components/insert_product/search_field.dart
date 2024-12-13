@@ -54,7 +54,8 @@ class SearchField extends StatelessWidget {
                 showCounterText: false,
                 prefixIcon: IconButton(
                   onPressed: () {
-                    searchProductController.clear();
+                    searchProductController.text = "";
+                    focusNode.requestFocus();
                   },
                   icon: Icon(
                     Icons.delete,

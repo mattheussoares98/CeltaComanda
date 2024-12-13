@@ -96,7 +96,8 @@ class LoadedProductsItems extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            if (product.Comments != null)
+                            if (product.Comments != null &&
+                                product.Comments!.isNotEmpty)
                               FittedBox(
                                 child: Comment(comment: product.Comments!),
                               ),

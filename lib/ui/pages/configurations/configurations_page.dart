@@ -59,6 +59,9 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
             homePresenter.commandEntity!.commandNumber!,
           );
         }
+        Future.delayed(Duration.zero, () {
+          setState(() {});
+        });
       },
       child: Scaffold(
         appBar: AppBar(

@@ -59,8 +59,8 @@ abstract class CartPresenter implements ChangeNotifier {
   });
   double calculateServiceChargeValue(double totalLiquidSaleRequest);
 
-  Future<void> insertServiceChargeProduct(
-    PrintedProductsPresenter printedProductsPresenter,
-    HomePresenter homePresenter,
-  );
+  Future<void> insertServiceChargeProduct({
+    required String commandNumber,
+    required HomePresenter homePresenter,
+  });
 }

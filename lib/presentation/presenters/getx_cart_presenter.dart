@@ -501,11 +501,14 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await confirmedCartProducts.updateValue(false);
       await cartInformations.clearCartProducts();
-      await printedProductsPresenter.loadPrinted(
-        homePresenter.commandEntity!.commandNumber!,
+
+      await insertServiceChargeProduct(
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        homePresenter: homePresenter,
       );
 
-      await insertServiceChargeProduct(printedProductsPresenter, homePresenter);
+      await printedProductsPresenter
+          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       _cartProducts.clear();
 
@@ -640,10 +643,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<void> insertServiceChargeProduct(
-    PrintedProductsPresenter printedProductsPresenter,
-    HomePresenter homePresenter,
-  ) async {
+  Future<void> insertServiceChargeProduct({
+    required String commandNumber,
+    required HomePresenter homePresenter,
+  }) async {
     //não criei testes para essa função
     try {
       if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null ||
@@ -652,18 +655,28 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         return;
       }
 
-      final serviceChargeProduct = printedProductsPresenter.printed!.Products
-          .firstWhereOrNull((e) =>
-              e.ProductInternalCodeOnErp.toInt() ==
-              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
+      final printed = await loadPrintedProducts.load(
+        url: EnterpriseBuilder
+            .entity!.url!, //TODO remove parameters related to enterprise
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        commandNumber: commandNumber.toInt(),
+      );
+
+      if (printed == null) {
+        throw Exception();
+      }
+
+      final serviceChargeProduct = printed.Products.firstWhereOrNull((e) =>
+          e.ProductInternalCodeOnErp.toInt() ==
+          EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
 
       if (serviceChargeProduct != null) {
         await removePrintedProduct
-            .remove(serviceChargeProduct.SaleRequestProductId);
+            .remove(serviceChargeProduct.SaleRequestProductId.toString());
       }
 
       double totalLiquid = 0;
-      for (var product in printedProductsPresenter.printed!.Products) {
+      for (var product in printed.Products) {
         if (product.ProductInternalCodeOnErp.toInt() ==
             EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge) {
           continue;
@@ -694,8 +707,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
               SaleRequestProductId: null,
               UserId: null,
               ProductionStatus: null,
-              SaleRequestId:
-                  printedProductsPresenter.printed!.SaleRequestId.toInt(),
+              SaleRequestId: printed.SaleRequestId.toInt(),
               Value: serviceChargeValue,
               Quantity: 1,
               TotalLiquid: serviceChargeValue,
@@ -704,11 +716,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         ),
         commandNumberWithThreeNumbers:
             homePresenter.commandEntity!.commandNumber!,
-        saleRequestId: printedProductsPresenter.printed!.SaleRequestId.toInt(),
+        saleRequestId: printed.SaleRequestId.toInt(),
       );
-
-      await printedProductsPresenter
-          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
     } catch (e) {
       debugPrint(e.toString());
     }

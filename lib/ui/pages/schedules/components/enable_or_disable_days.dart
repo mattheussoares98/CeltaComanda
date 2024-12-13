@@ -88,39 +88,10 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: FittedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.isUpdatingProduct
-                                    ? widget.product?.Name ?? ""
-                                    : widget.expansibleGroup.Name,
-                                style: TextStyle(
-                                  fontSize: StringSize.size * 1.5,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(width: 20),
-                              Text(
-                                widget.isUpdatingProduct
-                                    ? widget.product?.childsComposition !=
-                                                null &&
-                                            widget.product!.childsComposition!
-                                                .isNotEmpty
-                                        ? " (${R.string.combox})"
-                                        : "(${R.string.product})"
-                                    : "(${R.string.expansibleGroup})",
-                                style: TextStyle(
-                                  fontSize: StringSize.size,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      TitleName(
+                        isUpdatingProduct: widget.isUpdatingProduct,
+                        product: widget.product,
+                        expansibleGroup: widget.expansibleGroup,
                       ),
                       PersonalizedsCheckBox(
                         isUpdatingProduct: widget.isUpdatingProduct,

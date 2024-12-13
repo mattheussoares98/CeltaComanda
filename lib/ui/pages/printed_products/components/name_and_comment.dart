@@ -22,7 +22,7 @@ class NameAndComment extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
         if (comments != null)

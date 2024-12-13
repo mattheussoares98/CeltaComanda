@@ -23,7 +23,7 @@ class SearchDataOfOtherCommandNumber extends StatelessWidget {
             child: Text(
               R.string.searchDataOfOtherCommandNumber,
               style: TextStyle(
-                fontSize: getStringSize(context),
+                fontSize: StringSize.size,
               ),
             ),
           ),

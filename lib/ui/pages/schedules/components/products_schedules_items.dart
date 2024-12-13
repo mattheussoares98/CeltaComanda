@@ -59,7 +59,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                           text: product.Name,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: getStringSize(context)),
+                              fontSize: StringSize.size),
                         ),
                         if (product.childsComposition != null &&
                             product.childsComposition!.isNotEmpty)
@@ -67,7 +67,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                             text: " (${R.string.combox})",
                             style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: getStringSize(context)),
+                                fontSize: StringSize.size),
                           )
                       ]),
                     )),

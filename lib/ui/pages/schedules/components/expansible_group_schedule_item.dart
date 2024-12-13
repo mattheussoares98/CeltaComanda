@@ -38,7 +38,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
               child: Text(
                 expansibleGroup.Name,
                 style: TextStyle(
-                  fontSize: getStringSize(context) * 1.5,
+                  fontSize: StringSize.size * 1.5,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                 ),

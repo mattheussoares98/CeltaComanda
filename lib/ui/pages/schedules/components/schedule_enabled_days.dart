@@ -32,7 +32,7 @@ class ScheduleEnabledDays extends StatelessWidget {
         firstLetterOfDay,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: getStringSize(context),
+          fontSize: StringSize.size,
           color: enabled == false ? Colors.red : Colors.green,
         ),
       ),

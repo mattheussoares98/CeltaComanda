@@ -150,7 +150,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                     ? widget.product?.Name ?? ""
                                     : widget.expansibleGroup.Name,
                                 style: TextStyle(
-                                  fontSize: getStringSize(context) * 1.5,
+                                  fontSize: StringSize.size * 1.5,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -165,7 +165,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                                         : "(${R.string.product})"
                                     : "(${R.string.expansibleGroup})",
                                 style: TextStyle(
-                                  fontSize: getStringSize(context),
+                                  fontSize: StringSize.size,
                                   fontStyle: FontStyle.italic,
                                 ),
                               ),

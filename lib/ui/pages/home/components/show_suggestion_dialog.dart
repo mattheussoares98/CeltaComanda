@@ -34,7 +34,7 @@ void showSuggestionDialog(
                 product.Name,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                 ),
               ),
               const SizedBox(height: 20),

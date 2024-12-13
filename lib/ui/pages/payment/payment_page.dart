@@ -115,7 +115,7 @@ class _PaymentPageState extends State<PaymentPage>
             content: Text(
               R.string.msgConfirmClearTotalPaid,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: getStringSize(context)),
+              style: TextStyle(fontSize: StringSize.size),
             ),
             onPress: () async {
               paymentPresenter.clearPayments();
@@ -146,7 +146,7 @@ class _PaymentPageState extends State<PaymentPage>
                       padding: const EdgeInsets.only(right: 8),
                       child: Text(
                         "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
-                        style: TextStyle(fontSize: getStringSize(context)),
+                        style: TextStyle(fontSize: StringSize.size),
                       ),
                     ),
                   const Icon(Icons.refresh),

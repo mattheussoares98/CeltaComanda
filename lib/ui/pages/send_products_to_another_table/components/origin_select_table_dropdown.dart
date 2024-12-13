@@ -20,7 +20,7 @@ class OriginSelectTableDropdown extends StatelessWidget {
           R.string.originTable,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
         SelectTableDropDown(

@@ -48,7 +48,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             Text(
               R.string.peopleQuantity,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: getStringSize(context)),
+              style: TextStyle(fontSize: StringSize.size),
             ),
             const SizedBox(height: 10),
             FittedBox(
@@ -74,7 +74,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             Text(
               "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: getStringSize(context)),
+              style: TextStyle(fontSize: StringSize.size),
             ),
             if (homePresenter.commandEntity?.isFixedCommandNumber == false)
               Padding(
@@ -92,7 +92,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
                       child: Text(
                         R.string.searchDataOfOtherCommandNumber,
                         style: TextStyle(
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                         ),
                       ),
                     ),

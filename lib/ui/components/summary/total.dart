@@ -27,7 +27,7 @@ class Total extends StatelessWidget {
           textAlign: TextAlign.end,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
       ],

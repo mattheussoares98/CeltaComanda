@@ -36,7 +36,7 @@ class LoadedProductsItems extends StatelessWidget {
           child: Text(
             R.string.originTableIsEmpty,
             style: TextStyle(
-              fontSize: getStringSize(context),
+              fontSize: StringSize.size,
               fontWeight: FontWeight.bold,
               color: Colors.red,
             ),
@@ -92,7 +92,7 @@ class LoadedProductsItems extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: getStringSize(context),
+                                  fontSize: StringSize.size,
                                 ),
                               ),
                             ),

@@ -69,7 +69,7 @@ class ProductDetails extends StatelessWidget {
                           text: TextSpan(
                             text: child.Product.Name,
                             style: TextStyle(
-                              fontSize: getStringSize(context) * 0.9,
+                              fontSize: StringSize.size * 0.9,
                               color: Colors.black,
                               fontStyle: FontStyle.italic,
                             ),
@@ -82,7 +82,7 @@ class ProductDetails extends StatelessWidget {
                                         color:
                                             Theme.of(context).primaryColorLight,
                                         fontStyle: FontStyle.italic,
-                                        fontSize: getStringSize(context) * 0.9,
+                                        fontSize: StringSize.size * 0.9,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

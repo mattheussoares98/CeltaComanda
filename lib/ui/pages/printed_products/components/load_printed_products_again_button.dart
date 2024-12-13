@@ -27,7 +27,7 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8),
               child: Text(
                 "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
-                style: TextStyle(fontSize: getStringSize(context)),
+                style: TextStyle(fontSize: StringSize.size),
               ),
             ),
           const Icon(Icons.refresh),

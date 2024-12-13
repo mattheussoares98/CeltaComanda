@@ -110,7 +110,7 @@ class _CovenantPageState extends State<CovenantPage>
                                       child: Text(
                                         R.string.searchByPersonalizedCode,
                                         style: TextStyle(
-                                          fontSize: getStringSize(context),
+                                          fontSize: StringSize.size,
                                         ),
                                       ),
                                     ),
@@ -125,7 +125,7 @@ class _CovenantPageState extends State<CovenantPage>
                                   child: Text(
                                     "${R.string.missing}: ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
                                     style: TextStyle(
-                                      fontSize: getStringSize(context),
+                                      fontSize: StringSize.size,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

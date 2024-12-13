@@ -38,7 +38,7 @@ class CovenantRadioListTile extends StatelessWidget {
       title: Text(
         covenant!.Name,
         style: TextStyle(
-          fontSize: getStringSize(context),
+          fontSize: StringSize.size,
         ),
       ),
       value: covenant!.Code.toString(),

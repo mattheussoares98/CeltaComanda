@@ -77,7 +77,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
                     child: Text(
                       R.string.insert,
                       style: TextStyle(
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                   ),
@@ -89,7 +89,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
                           .toBrazilianNumber()
                           .addBrazilianCoin(),
                       style: TextStyle(
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                   ),

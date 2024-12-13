@@ -120,7 +120,7 @@ class _LandScapeInsertProductsPageBodyState
                           .getLastSelectedFather(widget.indexOfAtualOption)!
                           .ChildName!,
                       style: TextStyle(
-                        fontSize: getStringSize(context) * 1.4,
+                        fontSize: StringSize.size * 1.4,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).secondaryHeaderColor,
                       ),

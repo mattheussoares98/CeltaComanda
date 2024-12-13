@@ -21,7 +21,7 @@ class PaymentDetails extends StatelessWidget {
         Text(
           "${R.string.total}: ${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed).toDouble().toString().toBrazilianNumber()} R\$",
           style: TextStyle(
-            fontSize: getStringSize(context) * 2,
+            fontSize: StringSize.size * 2,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -32,14 +32,14 @@ class PaymentDetails extends StatelessWidget {
               Text(
                 "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                 style: TextStyle(
-                  fontSize: getStringSize(context) * 2,
+                  fontSize: StringSize.size * 2,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
                 style: TextStyle(
-                  fontSize: getStringSize(context) * 2,
+                  fontSize: StringSize.size * 2,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -55,7 +55,7 @@ class PaymentDetails extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontStyle: FontStyle.italic,
-              fontSize: getStringSize(context),
+              fontSize: StringSize.size,
             ),
           ),
         ),

@@ -52,7 +52,7 @@ class ProductItem extends StatelessWidget {
                   product.Product.Name,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -65,7 +65,7 @@ class ProductItem extends StatelessWidget {
                       .toBrazilianNumber(0),
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                   ),
                 ),
               ),
@@ -77,7 +77,7 @@ class ProductItem extends StatelessWidget {
                       product.TotalLiquid,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                   ],
@@ -99,7 +99,7 @@ class ProductItem extends StatelessWidget {
                             Text(
                               product.Product.Name,
                               style: TextStyle(
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -110,7 +110,7 @@ class ProductItem extends StatelessWidget {
                                   .addBrazilianCoin(),
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -157,7 +157,7 @@ class ProductItem extends StatelessWidget {
                         text: TextSpan(
                           text: child.Product.Name,
                           style: TextStyle(
-                            fontSize: getStringSize(context) * 0.9,
+                            fontSize: StringSize.size * 0.9,
                             color: Colors.black,
                             fontStyle: FontStyle.italic,
                           ),
@@ -170,7 +170,7 @@ class ProductItem extends StatelessWidget {
                                       color:
                                           Theme.of(context).primaryColorLight,
                                       fontStyle: FontStyle.italic,
-                                      fontSize: getStringSize(context) * 0.9,
+                                      fontSize: StringSize.size * 0.9,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -121,7 +121,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
                 R.string.sendRequest,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                 ),
               ),
             ),
@@ -131,7 +131,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
                 cartPresenter
                     .getTotalSaleRequestTempPrice(insertProductPresenter),
                 style: TextStyle(
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                 ),
               ),
             ),

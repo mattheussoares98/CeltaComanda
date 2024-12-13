@@ -26,7 +26,7 @@ class LiquidateCommand extends StatelessWidget {
           R.string.msgCommandAlreadyPaid,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
         const SizedBox(height: 10),
@@ -54,7 +54,7 @@ class LiquidateCommand extends StatelessWidget {
           child: Text(
             R.string.liquidateCommand,
             style: TextStyle(
-              fontSize: getStringSize(context) * 1.4,
+              fontSize: StringSize.size * 1.4,
             ),
           ),
         ),

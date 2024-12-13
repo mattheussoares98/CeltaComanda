@@ -190,7 +190,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
               child: Text(
                 R.string.serviceCharge,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: getStringSize(context)),
+                style: TextStyle(fontSize: StringSize.size),
               ),
             ),
             Expanded(
@@ -205,7 +205,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                     ),
                   ),
                   if (widget.showRemoveServiceChargeButton)
@@ -223,7 +223,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                               style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                               ),
                             ),
                             Icon(

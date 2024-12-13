@@ -105,7 +105,7 @@ Widget _generateEvaluateItem({
                 text,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                   height: 1,
                 ),
               ),

@@ -1,7 +1,17 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
-double getStringSize(BuildContext context) {
-  //TODO update to use a static method
-  return hasMinWidth(context) ? 22 : 15;
+import '../../../ui/helpers/helpers.dart';
+
+class StringSize {
+  StringSize._();
+
+  static double _size = 15;
+  static double get size => _size;
+  static void updateStringSize(BuildContext context) {
+    if (hasMinWidth(context)) {
+      _size = 22;
+    } else {
+      _size = 15;
+    }
+  }
 }

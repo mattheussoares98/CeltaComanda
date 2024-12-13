@@ -32,7 +32,7 @@ class SelectTableDropdown extends StatelessWidget {
             : "${R.string.table} $selectedCommandInDropDown"),
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: getStringSize(context),
+          fontSize: StringSize.size,
           color: Colors.black,
         ),
         items: List<int>.generate(

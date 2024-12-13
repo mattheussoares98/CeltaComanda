@@ -126,5 +126,5 @@ class PaymentButtons extends StatelessWidget {
 
 TextStyle _buttonStyle(BuildContext context) => TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: getStringSize(context),
+      fontSize: StringSize.size,
     );

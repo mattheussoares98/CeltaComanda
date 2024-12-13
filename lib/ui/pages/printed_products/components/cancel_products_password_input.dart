@@ -35,10 +35,10 @@ class CancelProductsPasswordInput extends StatelessWidget {
       controller: passwordController,
       decoration: InputDecoration(
         labelStyle: TextStyle(
-          fontSize: getStringSize(context),
+          fontSize: StringSize.size,
         ),
         hintStyle: TextStyle(
-          fontSize: getStringSize(context),
+          fontSize: StringSize.size,
         ),
         labelText: "Senha do usuário",
         hintText: "Senha do usuário",

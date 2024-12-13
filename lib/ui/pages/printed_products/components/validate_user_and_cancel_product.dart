@@ -99,7 +99,7 @@ void validateUserAndCancelProductDialog({
                   child: Text(
                     "Liberar cancelamento",
                     style: TextStyle(
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                     ),
                   ),
                 )

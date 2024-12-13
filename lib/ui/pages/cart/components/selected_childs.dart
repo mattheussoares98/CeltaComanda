@@ -39,7 +39,7 @@ class SelectedChilds extends StatelessWidget {
                       : R.string.productsAndComments,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                   ),
                 ),
               ),
@@ -52,7 +52,7 @@ class SelectedChilds extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class SelectedChilds extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                   ),
                 ),
               ),
@@ -100,7 +100,7 @@ class SelectedChilds extends StatelessWidget {
                               childName,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                               ),
                             ),
                             if (child.commentFather != null)
@@ -114,7 +114,7 @@ class SelectedChilds extends StatelessWidget {
                             child.Quantity!.toBrazilianNumber(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: getStringSize(context) * 0.9,
+                              fontSize: StringSize.size * 0.9,
                             ),
                           )),
                       Expanded(
@@ -129,7 +129,7 @@ class SelectedChilds extends StatelessWidget {
                               .addBrazilianCoin(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: getStringSize(context) * 0.9,
+                            fontSize: StringSize.size * 0.9,
                           ),
                         ),
                       ),

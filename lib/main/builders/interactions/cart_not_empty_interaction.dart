@@ -80,9 +80,7 @@ class CartNotEmptyInteraction {
                 color: Theme.of(
                   NavigatorKey.navigatorKey.currentState!.context,
                 ).primaryColorDark,
-                fontSize: getStringSize(
-                  NavigatorKey.navigatorKey.currentState!.context,
-                ),
+                fontSize: StringSize.size,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -45,7 +45,7 @@ class _CovenantsState extends State<Covenants> {
                 R.string.covenants,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                 ),
               ),
             ),

@@ -23,7 +23,7 @@ class AddMoreCartItensButton extends StatelessWidget {
           R.string.addMoreItens,
           style: TextStyle(
             color: Colors.white,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
       ),

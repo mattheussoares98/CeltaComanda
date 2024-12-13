@@ -67,7 +67,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                     return Text(
                       R.string.emptyTable,
                       style: TextStyle(
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                         fontWeight: FontWeight.bold,
                       ),
                     );

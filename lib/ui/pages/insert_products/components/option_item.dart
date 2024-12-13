@@ -147,7 +147,7 @@ class OptionItem extends StatelessWidget {
                                 text: getOptionItemTitle(atualOption),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: getStringSize(context),
+                                  fontSize: StringSize.size,
                                 ),
                                 children: lastSelectedFather == null ||
                                         atualOption ==
@@ -163,7 +163,7 @@ class OptionItem extends StatelessWidget {
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.yellow,
-                                            fontSize: getStringSize(context),
+                                            fontSize: StringSize.size,
                                           ),
                                         ),
                                       ],
@@ -179,7 +179,7 @@ class OptionItem extends StatelessWidget {
                                   expansibleGroupFromProductPresenter),
                               style: TextStyle(
                                 color: Colors.grey[200],
-                                fontSize: getStringSize(context) * 0.7,
+                                fontSize: StringSize.size * 0.7,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -195,7 +195,7 @@ class OptionItem extends StatelessWidget {
                                     expansibleGroupFromProductPresenter),
                                 style: TextStyle(
                                   color: Colors.grey[200],
-                                  fontSize: getStringSize(context) * 0.7,
+                                  fontSize: StringSize.size * 0.7,
                                 ),
                                 maxLines: 1,
                               ),

@@ -70,7 +70,7 @@ class _CartPageState extends State<CartPage>
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: getStringSize(context),
+                                  fontSize: StringSize.size,
                                 ),
                               ),
                             )),

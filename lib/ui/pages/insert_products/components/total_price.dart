@@ -27,7 +27,7 @@ class TotalPrice extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context) * 1.2,
+                  fontSize: StringSize.size * 1.2,
                 ),
               ),
             ),
@@ -37,7 +37,7 @@ class TotalPrice extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: getStringSize(context) * 1.2,
+                  fontSize: StringSize.size * 1.2,
                 ),
               ),
             ),

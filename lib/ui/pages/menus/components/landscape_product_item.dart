@@ -75,7 +75,7 @@ class LandscapeProductItem extends StatelessWidget {
                         productsViewModel.Name,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -87,7 +87,7 @@ class LandscapeProductItem extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),

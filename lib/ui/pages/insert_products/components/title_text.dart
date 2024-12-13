@@ -87,7 +87,7 @@ class TitleText extends StatelessWidget {
       ),
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: getStringSize(context) * 1.4,
+        fontSize: StringSize.size * 1.4,
         fontWeight: FontWeight.bold,
       ),
     );

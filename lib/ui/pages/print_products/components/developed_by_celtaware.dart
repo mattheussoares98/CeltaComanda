@@ -22,7 +22,7 @@ class DevelopedByCeltaware extends StatelessWidget {
               R.string.developedByCeltaware,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
-                fontSize: getStringSize(context) * 1.5,
+                fontSize: StringSize.size * 1.5,
               ),
             ),
           ),

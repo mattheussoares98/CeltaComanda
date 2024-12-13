@@ -86,7 +86,7 @@ class _ParametersPageState extends State<ParametersPage>
                               child: Text(
                                 parameter.name,
                                 style: TextStyle(
-                                  fontSize: getStringSize(context),
+                                  fontSize: StringSize.size,
                                 ),
                               ),
                             ),

@@ -137,7 +137,7 @@ class _PortraitInsertProductsPageBodyState
                                       .addBrazilianCoin(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: getStringSize(context) * 1.5,
+                                    fontSize: StringSize.size * 1.5,
                                   ),
                                 ),
                               ],

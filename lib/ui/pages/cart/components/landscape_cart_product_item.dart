@@ -102,7 +102,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                     if (widget.cartProduct.Comments != null)

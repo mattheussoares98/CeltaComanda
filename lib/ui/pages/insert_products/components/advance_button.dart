@@ -164,7 +164,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(_getButtonText(),
                     style: TextStyle(
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                     )),
               ),
             ),

@@ -103,5 +103,5 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
 
 TextStyle textStyle(BuildContext context) => TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: getStringSize(context) * 1.2,
+      fontSize: StringSize.size * 1.2,
     );

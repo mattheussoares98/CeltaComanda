@@ -17,7 +17,7 @@ class SelectTableDropDown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double stringSize = getStringSize(context);
+    final double stringSize = StringSize.size;
 
     return Row(
       children: [

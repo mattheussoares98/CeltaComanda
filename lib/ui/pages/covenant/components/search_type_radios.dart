@@ -35,7 +35,7 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
                   child: RadioListTile<int>(
                     title: Text(R.string.internalcodeNameOrCpf,
                         style: TextStyle(
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         )),
                     contentPadding: EdgeInsets.all(0),
@@ -48,7 +48,7 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
                   child: RadioListTile<int>(
                     title: Text(R.string.personalizedCode,
                         style: TextStyle(
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         )),
                     dense: true,
@@ -70,7 +70,7 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
               padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Text(
                 R.string.searchType,
-                style: TextStyle(fontSize: getStringSize(context)),
+                style: TextStyle(fontSize: StringSize.size),
               ),
             ),
           ),

@@ -62,7 +62,7 @@ class PortraitProductItem extends StatelessWidget {
                         maxLines: 6,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -74,7 +74,7 @@ class PortraitProductItem extends StatelessWidget {
                         style: TextStyle(
                           color: Theme.of(context).primaryColorLight,
                           fontWeight: FontWeight.bold,
-                          fontSize: getStringSize(context) * 1.2,
+                          fontSize: StringSize.size * 1.2,
                         ),
                       ),
                     ),

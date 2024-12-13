@@ -22,7 +22,7 @@ class DestinySelectTableDropdown extends StatelessWidget {
           R.string.destinyTable,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
         SelectTableDropDown(

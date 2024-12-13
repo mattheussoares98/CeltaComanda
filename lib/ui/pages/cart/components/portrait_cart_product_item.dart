@@ -70,7 +70,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                     if (expansibleGroupFromProductPresenter.productHasComment(

@@ -28,7 +28,7 @@ class ContactItemDrawer extends StatelessWidget {
                 Center(
                     child: Text(
                   phoneNumber,
-                  style: TextStyle(fontSize: getStringSize(context)),
+                  style: TextStyle(fontSize: StringSize.size),
                 )),
                 IconButton(
                   onPressed: () {

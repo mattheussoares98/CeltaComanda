@@ -29,7 +29,7 @@ class ProductsHeader extends StatelessWidget {
                 R.string.time,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -40,7 +40,7 @@ class ProductsHeader extends StatelessWidget {
                 R.string.products,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -51,7 +51,7 @@ class ProductsHeader extends StatelessWidget {
                 R.string.quantityAbbreviated,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -62,7 +62,7 @@ class ProductsHeader extends StatelessWidget {
                 R.string.total.addBrazilianCoin(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: getStringSize(context),
+                  fontSize: StringSize.size,
                   fontWeight: FontWeight.bold,
                 ),
               ),

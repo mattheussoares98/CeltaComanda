@@ -45,21 +45,21 @@ class _CustomersState extends State<Customers> {
                           Text(
                             "${R.string.code}: ${customer.Code}",
                             style: TextStyle(
-                              fontSize: getStringSize(context),
+                              fontSize: StringSize.size,
                             ),
                           ),
                           if (customer.CpfCnpjNumber!.length >= 11)
                             Text(
                               'CPF/CNPJ: ${customer.CpfCnpjNumber!.substring(0, 4)}...${customer.CpfCnpjNumber!.substring(customer.CpfCnpjNumber!.length - 4)}',
                               style: TextStyle(
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                               ),
                             ),
                           if (customer.CpfCnpjNumber!.length < 11)
                             Text(
                               'CPF/CNPJ: ${customer.CpfCnpjNumber}',
                               style: TextStyle(
-                                fontSize: getStringSize(context),
+                                fontSize: StringSize.size,
                               ),
                             ),
                         ],
@@ -70,7 +70,7 @@ class _CustomersState extends State<Customers> {
                         customer.Name!,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: getStringSize(context),
+                          fontSize: StringSize.size,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -80,7 +80,7 @@ class _CustomersState extends State<Customers> {
                 Text(
                   "${R.string.personalizedCode}: ${customer.PersonalizedCode}",
                   style: TextStyle(
-                    fontSize: getStringSize(context),
+                    fontSize: StringSize.size,
                   ),
                 ),
                 if (customer.CustomerCovenants == null ||
@@ -89,7 +89,7 @@ class _CustomersState extends State<Customers> {
                     R.string.withoutCovenant.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
                     ),

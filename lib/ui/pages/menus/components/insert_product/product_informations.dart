@@ -18,7 +18,7 @@ class ProductInformations extends StatelessWidget {
           "${product.Name} (${product.PackingAbbreviation})",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: getStringSize(context),
+            fontSize: StringSize.size,
           ),
         ),
         Text(
@@ -26,23 +26,23 @@ class ProductInformations extends StatelessWidget {
               .toString()
               .toBrazilianNumber()
               .addBrazilianCoin(),
-          style: TextStyle(fontSize: getStringSize(context)),
+          style: TextStyle(fontSize: StringSize.size),
         ),
         Text(
           "PLU ${product.PriceLookupCode}",
-          style: TextStyle(fontSize: getStringSize(context)),
+          style: TextStyle(fontSize: StringSize.size),
         ),
         if (product.EanCode != null && product.EanCode!.isNotEmpty)
           Text(
             "EAN ${product.EanCode!}",
-            style: TextStyle(fontSize: getStringSize(context)),
+            style: TextStyle(fontSize: StringSize.size),
           ),
         if (product.IsPromoCombox == "true")
           Text(
             R.string.msgCantAddCombox,
             style: TextStyle(
               color: Colors.red,
-              fontSize: getStringSize(context),
+              fontSize: StringSize.size,
             ),
           ),
       ],

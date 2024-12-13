@@ -43,8 +43,8 @@ class UserInput extends StatelessWidget {
       decoration: InputDecoration(
         labelText: R.string.userCode,
         hintText: R.string.userCode,
-        labelStyle: TextStyle(fontSize: getStringSize(context)),
-        hintStyle: TextStyle(fontSize: getStringSize(context)),
+        labelStyle: TextStyle(fontSize: StringSize.size),
+        hintStyle: TextStyle(fontSize: StringSize.size),
       ),
       keyboardType: TextInputType.number,
     );

@@ -58,7 +58,7 @@ class _PriceAndUpdateProductQuantityState
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: getStringSize(context),
+                        fontSize: StringSize.size,
                       ),
                     ),
                   ),
@@ -78,7 +78,7 @@ class _PriceAndUpdateProductQuantityState
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
-              fontSize: getStringSize(context),
+              fontSize: StringSize.size,
             ),
           ),
         ),

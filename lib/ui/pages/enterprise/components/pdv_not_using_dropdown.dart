@@ -46,7 +46,7 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                       : R.string.selectPdv),
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                       color: Colors.black),
                   items: snapshot.data
                       ?.map(

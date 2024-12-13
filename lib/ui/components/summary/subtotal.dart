@@ -17,7 +17,7 @@ class Subtotal extends StatelessWidget {
           child: Text(
             R.string.subtotal,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: getStringSize(context)),
+            style: TextStyle(fontSize: StringSize.size),
           ),
         ),
         Expanded(
@@ -30,7 +30,7 @@ class Subtotal extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: getStringSize(context),
+              fontSize: StringSize.size,
             ),
           ),
         ),

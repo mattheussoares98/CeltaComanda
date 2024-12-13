@@ -106,7 +106,7 @@ class ChildsRadios extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).primaryColor,
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                     ),
                   ),
                 ),
@@ -117,7 +117,7 @@ class ChildsRadios extends StatelessWidget {
                     "+ ${incrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      fontSize: getStringSize(context),
+                      fontSize: StringSize.size,
                       fontWeight: FontWeight.w300,
                       fontStyle: FontStyle.italic,
                     ),

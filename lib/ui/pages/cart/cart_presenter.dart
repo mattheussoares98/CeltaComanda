@@ -25,6 +25,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required MenuPresenter menuPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required String? writtedComment,
   });
   Future<void> removeProductFromCart(int index);
   Future<void> updateCommentOfProductCart({
@@ -54,6 +55,7 @@ abstract class CartPresenter implements ChangeNotifier {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required CartProductEntity product,
+    required String? writtedComment,
   });
   double calculateServiceChargeValue(double totalLiquidSaleRequest);
 

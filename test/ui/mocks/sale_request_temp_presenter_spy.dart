@@ -20,6 +20,7 @@ class CartPresenterSpy extends Mock implements CartPresenter {
     when(() => this.getLocalCartProductsData()).thenAnswer((any) async => any);
     when(() => this.addProductInCart(
           product: any(named: "product"),
+          writtedComment: any(named: "writtedComment"),
           expansibleGroupFromProductPresenter:
               any(named: "expansibleGroupFromProductPresenter"),
           menuPresenter: any(named: "menuPresenter"),

@@ -38,6 +38,7 @@ class SearchedProduct extends StatelessWidget {
 
     if (isValid == true) {
       await cartPresenter.addProductInCart(
+        writtedComment: commentController.text,
         product: CartProductEntity(
           Product: product.toEntity(),
           Comments: commentController.text,

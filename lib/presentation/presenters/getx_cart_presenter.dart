@@ -146,11 +146,13 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required CartProductEntity product,
+    required String? writtedComment,
   }) {
     return CartProductEntity(
-      Comments: expansibleGroupFromProductPresenter
-          .getConcatenateSelectedCommentsAndObligatoryOptions(
-              product.Product.InternalCodeOnERP!),
+      Comments: writtedComment ??
+          expansibleGroupFromProductPresenter
+              .getConcatenateSelectedCommentsAndObligatoryOptions(
+                  product.Product.InternalCodeOnERP!),
       Product: product.Product,
       TotalLiquid: product.TotalLiquid,
       Quantity: product.Quantity,
@@ -165,6 +167,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     required MenuPresenter menuPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required String? writtedComment,
   }) async {
     isLoading = true;
     mainError = null;
@@ -174,6 +177,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         product: product,
+        writtedComment: writtedComment,
       );
 
       final newCartList = [..._cartProducts];

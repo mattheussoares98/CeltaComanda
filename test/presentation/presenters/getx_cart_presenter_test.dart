@@ -248,6 +248,7 @@ void main() {
         "Should call updateCartInformations on addProductInCart with correct quantity",
         () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -265,6 +266,7 @@ void main() {
       cartInformations.mockSaveError();
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -278,6 +280,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -291,6 +294,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -302,6 +306,7 @@ void main() {
         "Should call cartInformations.update when removeProductFromCart succeeds",
         () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -586,6 +591,36 @@ void main() {
         newComment: comments,
       );
     });
+
+    test("Should add writted comment instead of expansible group comment",
+        () async {
+      final writtedComment = faker.randomGenerator.string(10);
+      final product = EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 0,
+        minimumProductQuantity: 0,
+      );
+
+      await sut.addProductInCart(
+        writtedComment: writtedComment,
+        product: product,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.cartProducts, [
+        CartProductsViewModel.fromEntity(
+          CartProductEntity(
+            Product: product.Product,
+            Comments: writtedComment,
+            TotalLiquid: product.TotalLiquid,
+            Quantity: product.Quantity,
+            Value: product.Value,
+            ProductPriceLookUpCode: product.ProductPriceLookUpCode,
+          ),
+        ),
+      ]);
+    });
   });
 
   group("LoadSaleRequestTemp", () {
@@ -768,6 +803,7 @@ void main() {
       expect(sut.cartProducts, []);
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -784,12 +820,14 @@ void main() {
       );
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProduct1,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -863,12 +901,14 @@ void main() {
 
     test("Should reduce quantity correctly", () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductWithOneQuantity,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -885,6 +925,7 @@ void main() {
 
     test("Should update totalLiquid correctly when reduce quantity", () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -904,6 +945,7 @@ void main() {
 
     test("Should add quantity correctly", () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -918,6 +960,7 @@ void main() {
 
     test("Should update totalLiquid correctly when add quantity", () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -937,6 +980,7 @@ void main() {
 
     test("Should clear indexOfSelectedProduct when add a product", () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -954,6 +998,7 @@ void main() {
 //o comentário que é adicionado, é o que retorna nessa função do
 //expansibleGroupFromProductPresenter, por isso precisa mockar o retorno da função
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -963,6 +1008,7 @@ void main() {
       expansibleGroupFromProductPresenter
           .mockGetConcatenateSelectedComments(faker.randomGenerator.string(10));
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -976,6 +1022,7 @@ void main() {
         "Should add new product in cart if already contains equal PLU in cart but the value is differente",
         () async {
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -992,6 +1039,7 @@ void main() {
             cartProductEntityWithChilds.ProductPriceLookUpCode,
       );
       await sut.addProductInCart(
+        writtedComment: null,
         product: productWithNewComment,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -1006,6 +1054,7 @@ void main() {
           "${commentViewModel.GroupName}\n${commentViewModel.GroupName}");
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -1576,6 +1625,7 @@ void main() {
     });
     test("Should clear cartProducts on saveProducts succeeds", () async {
       sut.addProductInCart(
+        writtedComment: null,
         product: cartProductEntityWithChilds,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
@@ -1920,6 +1970,7 @@ void main() {
           cartProductViewModelWithChilds.Product.childsComposition![1];
 
       await sut.addProductInCart(
+        writtedComment: null,
         product: cartProductViewModelWithChilds.toEntity(),
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:

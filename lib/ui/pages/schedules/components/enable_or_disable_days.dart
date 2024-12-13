@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 import 'components.dart';
@@ -71,8 +70,6 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ConfigurationsPresenter configurationsPresenter =
-        Provider.of(context, listen: false);
 
     return StreamBuilder<ExpansibleGroupScheduleViewModel?>(
         stream: menuPresenter.expansibleGroupScheduleStream,
@@ -139,94 +136,18 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         groupSchedule: groupSchedule,
                         productSchedule: productSchedule,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(R.string.cancel),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: (widget.isUpdatingProduct &&
-                                            productSchedule == null) ||
-                                        (groupSchedule == null &&
-                                            !widget.isUpdatingProduct)
-                                    ? null
-                                    : () async {
-                                        await onPressed(
-                                          expansibleGroupId: widget
-                                              .expansibleGroup.ExpansibleGroupId
-                                              .toInt(),
-                                          menuPresenter: menuPresenter,
-                                          configurationsPresenter:
-                                              configurationsPresenter,
-                                          callSetState: () {
-                                            widget.callSetState();
-                                          },
-                                        );
-                                      },
-                                child: Text(R.string.confirm),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      ConfirmAndCancelButtons(
+                        isUpdatingProduct: widget.isUpdatingProduct,
+                        expansibleGroup: widget.expansibleGroup,
+                        callSetState: widget.callSetState,
+                        groupSchedule: groupSchedule,
+                        productSchedule: productSchedule,
+                      ),
                     ],
                   ),
                 );
               });
         });
-  }
-
-  Future<void> onPressed({
-    required MenuPresenter menuPresenter,
-    required ConfigurationsPresenter configurationsPresenter,
-    required void Function() callSetState,
-    required int expansibleGroupId,
-  }) async {
-    bool updated = false;
-    notificationDialog(
-      context: context,
-      titleMessage: R.string.confirmSchedule,
-      content: null,
-      onPress: () async {
-        if (widget.isUpdatingProduct && widget.product != null) {
-          updated = await menuPresenter.insertUpdateProductSchedule(
-            internalCodeOnErp: widget.product!.InternalCodeOnERP!.toInt(),
-            expansibleGroupId: expansibleGroupId,
-          );
-        } else if (!widget.isUpdatingProduct) {
-          updated = await menuPresenter
-              .insertUpdateExpansibleGroupSchedule(expansibleGroupId);
-        }
-
-        if (updated) {
-          Navigator.of(context).pop();
-
-          callSetState();
-          await notificationDialog(
-              context: context,
-              titleMessage: R.string.msgSuccessToUpdateSchedule,
-              content: Text(
-                R.string.msgWantUpdateMenuInAllDevices,
-                textAlign: TextAlign.center,
-              ),
-              onPress: () async {
-                await configurationsPresenter.loadMenuAgain();
-              });
-        }
-      },
-    );
   }
 
   void updateAllowDays(

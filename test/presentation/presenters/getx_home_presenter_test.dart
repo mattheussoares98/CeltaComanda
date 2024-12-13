@@ -372,9 +372,15 @@ void main() {
 
       verify(() => localCommandData.load()).called(1);
     });
-    test("Should update command entity locally when dont return a null value",
+    test(
+        "Should update command entity locally correctly when dont return a null value and is fixed command",
         () async {
-      localCommandData.mockLoad(commandEntity);
+      final entity = CommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: true,
+        pdv: commandEntity.pdv,
+      );
+      localCommandData.mockLoad(entity);
 
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -384,7 +390,31 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verify(() => localCommandData.update(commandEntity)).called(1);
+      verify(() => localCommandData.update(entity)).called(1);
+    });
+    test(
+        "Should update command entity locally correctly when dont return a null value and dont is fixed command",
+        () async {
+      final entity = CommandEntity(
+        commandNumber: commandEntity.commandNumber,
+        isFixedCommandNumber: false,
+        pdv: commandEntity.pdv,
+      );
+      localCommandData.mockLoad(entity);
+
+      await sut.loadCommandData(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => localCommandData.update(CommandEntity(
+            commandNumber: null,
+            isFixedCommandNumber: false,
+            pdv: commandEntity.pdv,
+          ))).called(1);
     });
     test("Should not update local command data when return a null value",
         () async {
@@ -446,18 +476,20 @@ void main() {
       );
       expect(sut.commandEntity?.isFixedCommandNumber, false);
     });
-    test("Should update sut.commandEntity!.commandNumber correctly", () async {
+    test(
+        "Should update sut.commandEntity!.commandNumber correctly if is fixed command number",
+        () async {
       final entity1 = CommandEntity(
         commandNumber:
             faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        isFixedCommandNumber: true,
         pdv: null,
       );
 
       final entity2 = CommandEntity(
         commandNumber:
             faker.randomGenerator.integer(999).toString().padLeft(3, "0"),
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        isFixedCommandNumber: true,
         pdv: null,
       );
 

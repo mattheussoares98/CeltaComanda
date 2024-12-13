@@ -122,7 +122,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (loadedCommand != null) {
         await updateCommandEntity(
-          commandNumber: loadedCommand.commandNumber,
+          commandNumber: loadedCommand.isFixedCommandNumber
+              ? loadedCommand.commandNumber
+              : null,
           isFixedCommandNumber: loadedCommand.isFixedCommandNumber,
           pdv: loadedCommand.pdv,
         );

@@ -59,6 +59,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
   Future<void> sendProductsToAnotherTable({
     required int oldPersonalizedCode,
     required int newPersonalizedCode,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -74,6 +76,14 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
             _selectedSaleRequestProductsIds.map((e) => e).toList(),
       );
 
+      await cartPresenter.insertServiceChargeProduct(
+        commandNumber: oldPersonalizedCode.toString(),
+        homePresenter: homePresenter,
+      );
+      await cartPresenter.insertServiceChargeProduct(
+        commandNumber: newPersonalizedCode.toString(),
+        homePresenter: homePresenter,
+      );
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {

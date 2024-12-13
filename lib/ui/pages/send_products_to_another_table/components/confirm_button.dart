@@ -20,11 +20,13 @@ class ConfirmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
+    CartPresenter cartPresenter = Provider.of(context, listen: false);
 
     return ElevatedButton(
       onPressed: () async {
         bool? isValid = formKey.currentState?.validate();
-    
+
         if (isValid == true) {
           notificationDialog(
               context: context,
@@ -35,6 +37,8 @@ class ConfirmButton extends StatelessWidget {
                     .sendProductsToAnotherTable(
                   oldPersonalizedCode: oldPersonalizedCode!,
                   newPersonalizedCode: newPersonalizedCode!,
+                  cartPresenter: cartPresenter,
+                  homePresenter: homePresenter,
                 );
               });
         }

@@ -11,9 +11,12 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
+import '../../ui/mocks/mocks.dart';
 
 void main() {
   late GetxSendProductsToAnotherTablePresenter sut;
+  late CartPresenterSpy cartPresenter;
+  late HomePresenterSpy homePresenter;
 
   late LoadPrintedProductsSpy loadPrintedProducts;
   late ChangeSaleRequestPersonalizedCodeProductsSpy
@@ -30,6 +33,9 @@ void main() {
   }
 
   void initPresenters() {
+    homePresenter = HomePresenterSpy();
+    cartPresenter = CartPresenterSpy();
+
     sut = GetxSendProductsToAnotherTablePresenter(
       loadPrintedProducts: loadPrintedProducts,
       changeSaleRequestPersonalizedCodeProducts:
@@ -38,8 +44,7 @@ void main() {
   }
 
   void initEntitys() {
-    EnterpriseBuilder.entity =
-        EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(100);
     printedEntity = EntityFactory.makePrintedProductsEntity();
     printedViewModel = PrintedViewModel.fromEntity(printedEntity);
@@ -55,7 +60,24 @@ void main() {
     initEntitys();
     initMockSuccess();
   });
-  setUpAll(() {});
+
+  setUpAll(() {
+    registerFallbackValue(
+      EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 0,
+        minimumProductQuantity: 0,
+      ),
+    );
+    registerFallbackValue(
+      EntityFactory.makeExpansibleGroupFromProductViewModel(),
+    );
+    registerFallbackValue(EntityFactory.makeProductsViewModel());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
+  });
 
   group("Load printed products", () {
     test("Should emit correct values on success", () async {
@@ -103,6 +125,8 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
     });
 
@@ -119,6 +143,8 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
     });
 
@@ -130,6 +156,8 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
     });
     test(
@@ -144,6 +172,8 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
 
       verify(
@@ -162,14 +192,56 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
       );
 
       verify(
         () => loadPrintedProducts.load(
           url: EnterpriseBuilder.entity!.url!,
-          enterpriseId:
-              EnterpriseBuilder.entity!.enterpriseId!,
+          enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
           commandNumber: oldPersonalizedCode,
+        ),
+      ).called(1);
+    });
+
+    test(
+        "Should call cartPresenter.insertServiceChargeProduct with in old command number",
+        () async {
+      int firstSelected = faker.randomGenerator.integer(100);
+      sut.updateProductIsSelected(firstSelected);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => cartPresenter.insertServiceChargeProduct(
+          commandNumber: oldPersonalizedCode.toString(),
+          homePresenter: homePresenter,
+        ),
+      ).called(1);
+    });
+    test(
+        "Should call cartPresenter.insertServiceChargeProduct with in new command number",
+        () async {
+      int firstSelected = faker.randomGenerator.integer(100);
+      sut.updateProductIsSelected(firstSelected);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(
+        () => cartPresenter.insertServiceChargeProduct(
+          commandNumber: newPersonalizedCode.toString(),
+          homePresenter: homePresenter,
         ),
       ).called(1);
     });

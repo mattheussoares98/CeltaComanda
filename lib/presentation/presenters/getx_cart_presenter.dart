@@ -720,7 +720,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           ],
         ),
         commandNumberWithThreeNumbers:
-            homePresenter.commandEntity!.commandNumber!,
+            homePresenter.commandEntity!.commandNumber!, //TODO confirm sending 3 numbers in command number
         saleRequestId: printed.SaleRequestId.toInt(),
       );
     } catch (e) {

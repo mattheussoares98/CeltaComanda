@@ -28,8 +28,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-        Provider.of(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 5, right: 2, left: 2),
@@ -73,11 +71,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                         fontSize: StringSize.size,
                       ),
                     ),
-                    if (expansibleGroupFromProductPresenter.productHasComment(
-                      product: widget.cartProduct.Product,
-                      indexOfChild: 0,
-                    ))
-                      Comment(comment: widget.cartProduct.Comments ?? ""),
+                    Comment(comment: widget.cartProduct.Comments),
                   ],
                 ),
               ),

@@ -3,6 +3,7 @@ enum DomainError {
   addComment,
   barcodeNotRead,
   blockedCommand,
+  cantSendServiceChargeProduct,
   commandAlreadyPaid,
   commandNotAvailable,
   commandNumberObligatory,

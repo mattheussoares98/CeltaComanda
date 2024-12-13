@@ -5,6 +5,7 @@ enum UIError {
   addComment,
   barcodeNotRead,
   blockedCommand,
+  cantSendServiceChargeProduct,
   commandAlreadyPaid,
   commandNotAvailable,
   commandNumberObligatory,
@@ -44,6 +45,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgBarcodeNotRead;
       case UIError.blockedCommand:
         return R.string.msgCommandBlocked;
+      case UIError.cantSendServiceChargeProduct:
+        return R.string.msgCantSendServiceChargeProduct;
       case UIError.commandAlreadyPaid:
         return R.string.msgCommandAlreadyPaid;
       case UIError.commandNotAvailable:

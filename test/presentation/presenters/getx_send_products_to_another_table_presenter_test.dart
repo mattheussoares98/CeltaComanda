@@ -245,6 +245,67 @@ void main() {
         ),
       ).called(1);
     });
+    test("Should emit correct error if try to send service charge product",
+        () async {
+      final saleRequestProductId = faker.randomGenerator.integer(100);
+      final serviceChargeProduct = PrintedProductsEntity(
+        ProductInternalCodeOnErp:
+            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
+        SaleRequestProductId: saleRequestProductId,
+        Product: EntityFactory.makeProductsEntitys()[0],
+        ProductPriceLookUpCode: faker.randomGenerator.string(10),
+        Value: faker.randomGenerator.decimal(),
+        Quantity: faker.randomGenerator.decimal(),
+        QuantityString: faker.randomGenerator.string(10),
+        Comments: faker.randomGenerator.string(10),
+        UserId: faker.randomGenerator.integer(100),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsDelivered: faker.randomGenerator.boolean(),
+        IsPrinted: faker.randomGenerator.boolean(),
+        ProductionStatus: faker.randomGenerator.integer(100),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        SaleRequestId: faker.randomGenerator.integer(100),
+        ProductIsFatherComposition: faker.randomGenerator.boolean(),
+        childs: [],
+        SaleRequestProductIdOfFather: faker.randomGenerator.integer(100),
+      );
+      final printedEntity = PrintedEntity(
+        Products: [serviceChargeProduct],
+        PersonalizedCode: faker.randomGenerator.string(10),
+        DateOfCreation: faker.randomGenerator.string(10),
+        DateHourOfCreation: faker.randomGenerator.string(10),
+        FlagStatus: faker.randomGenerator.string(10),
+        EnterpriseId: faker.randomGenerator.integer(100),
+        RequestType: faker.randomGenerator.string(10),
+        IsCancelled: faker.randomGenerator.boolean(),
+        IsUsing: faker.randomGenerator.boolean(),
+        TotalLiquid: faker.randomGenerator.decimal(),
+        Peoples: faker.randomGenerator.integer(100),
+        SaleRequestId: faker.randomGenerator.integer(100),
+        FlagOrigin: faker.randomGenerator.integer(100),
+        DeliveryControl: faker.randomGenerator.integer(100),
+        IncrementType: faker.randomGenerator.integer(100),
+        IncrementValue: faker.randomGenerator.decimal(),
+      );
+
+      loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.cantSendServiceChargeProduct]),
+      );
+
+      await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(saleRequestProductId);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+    });
   });
 
   group("Update product is selected", () {

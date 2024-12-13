@@ -69,6 +69,19 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       if (_selectedSaleRequestProductsIds.isEmpty) {
         throw DomainError.selectProducts;
       }
+
+      final serviceChargeProduct = _printedProducts.value?.Products
+          .firstWhereOrNull((e) =>
+              e.ProductInternalCodeOnErp.toInt() ==
+              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
+      final saleRequestProductIdServiceCharge =
+          _selectedSaleRequestProductsIds.firstWhereOrNull(
+              (e) => e == serviceChargeProduct?.SaleRequestProductId.toInt());
+
+      if (serviceChargeProduct != null &&
+          saleRequestProductIdServiceCharge != null) {
+        throw DomainError.cantSendServiceChargeProduct;
+      }
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
@@ -87,6 +100,9 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
+        case DomainError.cantSendServiceChargeProduct:
+          mainError = UIError.cantSendServiceChargeProduct;
+          break;
         case DomainError.selectProducts:
           mainError = UIError.selectProducts;
           break;

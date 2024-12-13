@@ -4,6 +4,7 @@ abstract class Translation {
   String get msgBlockedCommand;
   String get msgEmailInUse;
   String get msgCantAddCombox;
+  String get msgCantSendServiceChargeProduct;
   String get msgClearCartOnLogout;
   String get msgClearConfirmedPayments;
   String get msgCloseApplication;

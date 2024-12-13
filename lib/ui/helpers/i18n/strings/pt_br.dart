@@ -7,6 +7,7 @@ class PtBr implements Translation {
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgCantAddCombox => 'Não é permitido adicionar combo por aqui';
+  String get msgCantSendServiceChargeProduct => 'Não é permitido enviar o produto de taxa de serviço';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgClearConfirmedPayments => "Limpar pagamentos confirmados";

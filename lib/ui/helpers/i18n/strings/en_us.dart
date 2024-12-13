@@ -7,6 +7,8 @@ class EnUs implements Translation {
   String get msgBarcodeNotRead => 'Barcode not read';
   String get msgBlockedCommand => 'Command blocked';
   String get msgCantAddCombox => "Can't add combox here";
+  String get msgCantSendServiceChargeProduct =>
+      "Can't send service charge product";
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
   String get msgClearConfirmedPayments => 'Clear all confirmed payments';
   String get msgCloseApplication => 'Close application';

@@ -61,7 +61,11 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
             await image.toByteData(format: ui.ImageByteFormat.png);
         final bitmap = byteData!.buffer.asUint8List();
 
-        await printedProductsPresenter.printPrintedProducts(bitmap);
+        await printedProductsPresenter.printPrintedProducts(
+            bitmap: bitmap,
+            closePage: () {
+              Navigator.of(context).pop();
+            });
       });
     } catch (e) {
       debugPrint(e.toString());

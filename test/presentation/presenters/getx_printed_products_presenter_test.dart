@@ -754,8 +754,7 @@ void main() {
             TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
             EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
           ),
-          commandNumber: homePresenter
-              .commandEntityController!.commandNumber!
+          commandNumber: homePresenter.commandEntityController!.commandNumber!
               .padLeft(3, "0"),
           saleRequestId: sut.printed!.SaleRequestId.toInt(),
         ),
@@ -806,7 +805,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.printPrintedProducts(bitmap);
+      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -815,10 +814,10 @@ void main() {
 
       printBitmap.mockPrintBitmapError();
 
-      await sut.printPrintedProducts(bitmap);
+      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
     });
     test("Should call printBitmap with correct values", () async {
-      await sut.printPrintedProducts(bitmap);
+      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
 
       verify(() => printBitmap.print(bitmap)).called(1);
     });

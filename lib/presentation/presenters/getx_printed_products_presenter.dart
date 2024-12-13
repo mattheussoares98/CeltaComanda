@@ -290,7 +290,10 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> printPrintedProducts(Uint8List bitmap) async {
+  Future<void> printPrintedProducts({
+    required Uint8List bitmap,
+    required void Function() closePage,
+  }) async {
     isLoading = true;
     mainError = null;
 
@@ -298,6 +301,7 @@ class GetxPrintedProductsPresenter
       await printBitmap.print(bitmap);
     } catch (e) {
       mainError = UIError.unexpected;
+      closePage();
     } finally {
       isLoading = false;
     }

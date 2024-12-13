@@ -47,7 +47,10 @@ abstract class PrintedProductsPresenter
     required bool validateUserAndPassword,
   });
 
-  Future<void> printPrintedProducts(Uint8List bitmap);
+  Future<void> printPrintedProducts({
+    required Uint8List bitmap,
+    required void Function() closePage,
+  });
 
   void goToPrintProductsPage();
   void updatePeopleQuantity({required bool isAdding});

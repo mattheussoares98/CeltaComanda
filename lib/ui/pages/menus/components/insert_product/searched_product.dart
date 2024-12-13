@@ -84,67 +84,23 @@ class SearchedProduct extends StatelessWidget {
         key: formKeyQuantity,
         child: Column(
           children: [
-            Text(
-              "${product.Name} (${product.PackingAbbreviation})",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: getStringSize(context),
-              ),
-            ),
-            Text(
-              product.SaleRetailPraticed.toDouble()
-                  .toString()
-                  .toBrazilianNumber()
-                  .addBrazilianCoin(),
-              style: TextStyle(fontSize: getStringSize(context)),
-            ),
-            Text(
-              "PLU ${product.PriceLookupCode}",
-              style: TextStyle(fontSize: getStringSize(context)),
-            ),
-            if (product.EanCode != null && product.EanCode!.isNotEmpty)
-              Text(
-                "EAN ${product.EanCode!}",
-                style: TextStyle(fontSize: getStringSize(context)),
-              ),
-            if (product.IsPromoCombox == "true")
-              Text(
-                R.string.msgCantAddCombox,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: getStringSize(context),
-                ),
-              ),
+            ProductInformations(product: product),
             Row(
               children: [
                 Expanded(
                   child: Column(
                     children: [
-                      TextFormField(
-                        enabled: product.IsPromoCombox != "true",
-                        controller: quantityController,
-                        validator: (value) {
-                          if (value == null || value.toDouble() == -1) {
-                            return R.string.msgInvalidNumber;
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (_) {
-                          commentFocusNode.requestFocus();
-                        },
-                        decoration: formFieldDecoration(
-                          context: context,
-                          hintText: R.string.quantity,
-                          labelText: R.string.quantity,
-                          errorText: null,
-                        ),
+                      QuantityField(
+                        product: product,
+                        quantityController: quantityController,
+                        commentFocusNode: commentFocusNode,
                       ),
                       const SizedBox(height: 8),
-                      TextFormField(
-                        enabled: product.IsPromoCombox != "true",
-                        focusNode: commentFocusNode,
-                        controller: commentController,
-                        onFieldSubmitted: (_) async {
+                      CommentField(
+                        product: product,
+                        commentFocusNode: commentFocusNode,
+                        commentController: commentController,
+                        addProduct: () async {
                           await addProduct(
                             menuPresenter,
                             cartPresenter,
@@ -155,12 +111,6 @@ class SearchedProduct extends StatelessWidget {
                             context,
                           );
                         },
-                        decoration: formFieldDecoration(
-                          context: context,
-                          hintText: R.string.comment,
-                          labelText: R.string.comment,
-                          errorText: null,
-                        ),
                       ),
                     ],
                   ),

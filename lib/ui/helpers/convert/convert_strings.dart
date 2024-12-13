@@ -1,5 +1,5 @@
 extension StringModifier on String {
-  String toBrazilianNumber([decimalHouses = 2]) {
+  String toBrazilianNumber([int decimalHouses = 2]) {
     double value = double.parse(this);
     String formatted = value.toStringAsFixed(decimalHouses);
 

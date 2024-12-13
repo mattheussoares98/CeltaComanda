@@ -54,7 +54,8 @@ class _PriceAndUpdateProductQuantityState
                     child: Text(
                       widget.product.productQuantity
                           .toString()
-                          .toBrazilianNumber(),
+                          .toBrazilianNumber(
+                              widget.product.productQuantity < 0.01 ? 3 : 2),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

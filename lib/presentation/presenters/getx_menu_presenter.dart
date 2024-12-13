@@ -594,7 +594,7 @@ class GetxMenuPresenter extends GetxController
       _productSchedule.value = value;
 
   @override
-  void updateProductSchedule({
+  void updateProductScheduleStream({
     required int internalCodeOnErp,
     bool? monday,
     bool? tuesday,
@@ -751,7 +751,7 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  void updateExpansibleGroupSchedule({
+  void updateExpansibleGroupScheduleStream({
     required int expansibleGroupId,
     bool? monday,
     bool? tuesday,

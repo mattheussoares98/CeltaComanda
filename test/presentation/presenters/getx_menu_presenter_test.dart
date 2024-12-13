@@ -1116,7 +1116,7 @@ void main() {
     });
     test("Should call manageProductSchedule.insertUpdate with correct values",
         () async {
-      sut.updateProductSchedule(
+      sut.updateProductScheduleStream(
         internalCodeOnErp: internalCodeOnErp,
         friday: productScheduleViewModel.AllowFriday,
         monday: productScheduleViewModel.AllowMonday,
@@ -1137,7 +1137,7 @@ void main() {
     });
     test("Should call manageProductSchedule.delete if all days are true",
         () async {
-      sut.updateProductSchedule(
+      sut.updateProductScheduleStream(
         internalCodeOnErp: internalCodeOnErp,
         friday: true,
         monday: true,
@@ -1166,7 +1166,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      sut.updateProductSchedule(internalCodeOnErp: internalCodeOnErp);
+      sut.updateProductScheduleStream(internalCodeOnErp: internalCodeOnErp);
 
       final updated = await sut.insertUpdateProductSchedule(
           internalCodeOnErp: products.first.InternalCodeOnERP!,
@@ -1191,7 +1191,7 @@ void main() {
       expectLater(sut.productScheduleStream,
           emitsInOrder([null, productScheduleViewModel]));
 
-      sut.updateProductSchedule(
+      sut.updateProductScheduleStream(
         internalCodeOnErp: internalCodeOnErp,
         friday: productScheduleViewModel.AllowFriday,
         monday: productScheduleViewModel.AllowMonday,
@@ -1223,7 +1223,7 @@ void main() {
     test(
         "Should call manageExpansibleGroupSchedule.insertUpdate with correct values",
         () async {
-      sut.updateExpansibleGroupSchedule(
+      sut.updateExpansibleGroupScheduleStream(
         expansibleGroupId: expansibleGroupId,
         friday: expansibleGroupScheduleViewModel.AllowFriday,
         monday: expansibleGroupScheduleViewModel.AllowMonday,
@@ -1242,7 +1242,7 @@ void main() {
     test(
         "Should call manageExpansibleGroupSchedule.delete if all days are true",
         () async {
-      sut.updateExpansibleGroupSchedule(
+      sut.updateExpansibleGroupScheduleStream(
         expansibleGroupId: expansibleGroupId,
         friday: true,
         monday: true,
@@ -1268,7 +1268,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateExpansibleGroupSchedule(expansibleGroupId: expansibleGroupId);
+      sut.updateExpansibleGroupScheduleStream(expansibleGroupId: expansibleGroupId);
 
       final updated = await sut.insertUpdateExpansibleGroupSchedule(
           expansibleGroups.first.ExpansibleGroupId);
@@ -1290,7 +1290,7 @@ void main() {
       expectLater(sut.expansibleGroupScheduleStream,
           emitsInOrder([null, expansibleGroupScheduleViewModel]));
 
-      sut.updateExpansibleGroupSchedule(
+      sut.updateExpansibleGroupScheduleStream(
         expansibleGroupId: expansibleGroupId,
         friday: expansibleGroupScheduleViewModel.AllowFriday,
         monday: expansibleGroupScheduleViewModel.AllowMonday,

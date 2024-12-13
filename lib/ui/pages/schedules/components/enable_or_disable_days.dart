@@ -32,7 +32,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
       if (mounted) {
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
         if (widget.isUpdatingProduct && widget.product != null) {
-          menuPresenter.updateProductSchedule(
+          menuPresenter.updateProductScheduleStream(
             internalCodeOnErp:
                 widget.product!.InternalCodeOfProductOnERP!.toInt(),
             monday: widget.product!.Schedule?.AllowMonday != false,
@@ -44,7 +44,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             sunday: widget.product!.Schedule?.AllowSunday != false,
           );
         } else {
-          menuPresenter.updateExpansibleGroupSchedule(
+          menuPresenter.updateExpansibleGroupScheduleStream(
             expansibleGroupId: widget.expansibleGroup.ExpansibleGroupId.toInt(),
             monday: widget.expansibleGroup.Schedule?.AllowMonday != false,
             tuesday: widget.expansibleGroup.Schedule?.AllowTuesday != false,
@@ -59,7 +59,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
     });
   }
 
-  void updateSchedule({
+  void updateScheduleStream({
     required MenuPresenter menuPresenter,
     required ExpansibleGroupScheduleViewModel? groupSchedule,
     required ProductScheduleViewModel? productSchedule,
@@ -72,7 +72,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
     bool? sunday,
   }) {
     if (widget.isUpdatingProduct && widget.product != null) {
-      menuPresenter.updateProductSchedule(
+      menuPresenter.updateProductScheduleStream(
         internalCodeOnErp: widget.product!.InternalCodeOnERP!.toInt(),
         monday: monday ?? productSchedule?.AllowMonday,
         tuesday: tuesday ?? productSchedule?.AllowTuesday,
@@ -83,7 +83,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
         sunday: sunday ?? productSchedule?.AllowSunday,
       );
     } else {
-      menuPresenter.updateExpansibleGroupSchedule(
+      menuPresenter.updateExpansibleGroupScheduleStream(
         expansibleGroupId: widget.expansibleGroup.ExpansibleGroupId.toInt(),
         monday: monday ?? groupSchedule?.AllowMonday,
         tuesday: tuesday ?? groupSchedule?.AllowTuesday,
@@ -177,7 +177,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowMonday,
                         dayName: R.string.monday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -189,7 +189,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowTuesday,
                         dayName: R.string.tuesday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -201,7 +201,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowWednesday,
                         dayName: R.string.wednesday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -213,7 +213,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowThursday,
                         dayName: R.string.thursday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -225,7 +225,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowFriday,
                         dayName: R.string.friday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -237,7 +237,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowSaturday,
                         dayName: R.string.saturday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,
@@ -249,7 +249,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         dayEnabled: allowSunday,
                         dayName: R.string.sunday,
                         onChanged: (value) {
-                          updateSchedule(
+                          updateScheduleStream(
                             menuPresenter: menuPresenter,
                             groupSchedule: groupSchedule,
                             productSchedule: productSchedule,

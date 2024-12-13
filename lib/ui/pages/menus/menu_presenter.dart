@@ -44,7 +44,7 @@ abstract class MenuPresenter implements Listenable {
     required int internalCodeOnErp,
     required int expansibleGroupId,
   });
-  void updateProductSchedule({
+  void updateProductScheduleStream({
     required int internalCodeOnErp,
     bool? monday,
     bool? tuesday,
@@ -56,7 +56,7 @@ abstract class MenuPresenter implements Listenable {
   });
 
   Future<bool> insertUpdateExpansibleGroupSchedule(int expansibleGroupId);
-  void updateExpansibleGroupSchedule({
+  void updateExpansibleGroupScheduleStream({
     required int expansibleGroupId,
     bool? monday,
     bool? tuesday,

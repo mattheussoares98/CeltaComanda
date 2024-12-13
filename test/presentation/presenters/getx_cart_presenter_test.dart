@@ -621,6 +621,33 @@ void main() {
         ),
       ]);
     });
+    test("Should not add writed comment if is empty value", () async {
+      final product = EntityFactory.makeCartProductEntity(
+        maximumProductQuantity: 0,
+        minimumProductQuantity: 0,
+      );
+
+      await sut.addProductInCart(
+        writtedComment: "",
+        product: product,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.cartProducts, [
+        CartProductsViewModel.fromEntity(
+          CartProductEntity(
+            Product: product.Product,
+            Comments: null,
+            TotalLiquid: product.TotalLiquid,
+            Quantity: product.Quantity,
+            Value: product.Value,
+            ProductPriceLookUpCode: product.ProductPriceLookUpCode,
+          ),
+        ),
+      ]);
+    });
   });
 
   group("LoadSaleRequestTemp", () {

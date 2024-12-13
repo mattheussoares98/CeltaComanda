@@ -177,7 +177,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         product: product,
-        writtedComment: writtedComment,
+        writtedComment: writtedComment == "" ? null : writtedComment,
       );
 
       final newCartList = [..._cartProducts];

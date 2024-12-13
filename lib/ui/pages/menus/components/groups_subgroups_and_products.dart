@@ -63,6 +63,11 @@ class _GroupsSubgroupsAndProductsState
     super.initState();
 
     productsScrollController.addListener(_checkFirstVisibleItem);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   void _checkFirstVisibleItem() {

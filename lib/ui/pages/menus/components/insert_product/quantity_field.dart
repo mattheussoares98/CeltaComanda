@@ -23,6 +23,8 @@ class QuantityField extends StatelessWidget {
       validator: (value) {
         if (value == null || value.toDouble() == -1) {
           return R.string.msgInvalidNumber;
+        } else if (value.toDouble() < 0.001) {
+          return R.string.msgInvalidNumber;
         }
         return null;
       },

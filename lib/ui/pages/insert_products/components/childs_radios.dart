@@ -18,6 +18,56 @@ class ChildsRadios extends StatelessWidget {
 
   final Map<int, bool> _alreadyUpdated = {};
 
+  final Map<int, String> daysOfWeek = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday',
+  };
+
+  String getDayOfWeek() {
+    DateTime now = DateTime.now();
+    String dayOfWeek = daysOfWeek[now.weekday]!;
+
+    return dayOfWeek;
+  }
+
+  bool isEnabledToday(ProductCompositionViewModel child) {
+    final dayOfWeek = getDayOfWeek();
+
+    if (child.Schedule == null) {
+      return true;
+    } else if (dayOfWeek == daysOfWeek[1]) {
+      return child.Schedule!.AllowMonday == true;
+    } else if (dayOfWeek == daysOfWeek[2]) {
+      return child.Schedule!.AllowTuesday == true;
+    } else if (dayOfWeek == daysOfWeek[3]) {
+      return child.Schedule!.AllowWednesday == true;
+    } else if (dayOfWeek == daysOfWeek[4]) {
+      return child.Schedule!.AllowThursday == true;
+    } else if (dayOfWeek == daysOfWeek[5]) {
+      return child.Schedule!.AllowFriday == true;
+    } else if (dayOfWeek == daysOfWeek[6]) {
+      return child.Schedule!.AllowSaturday == true;
+    } else if (dayOfWeek == daysOfWeek[7]) {
+      return child.Schedule!.AllowSunday == true;
+    } else {
+      return false;
+    }
+  }
+
+  int getItemCount() {
+    if (selectedFather.childs == null ||
+        selectedFather.childs!.isEmpty == true) {
+      return 1;
+    } else {
+      return selectedFather.childs!.length;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
@@ -27,10 +77,7 @@ class ChildsRadios extends StatelessWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: selectedFather.childs == null ||
-              selectedFather.childs?.isEmpty == true
-          ? 1
-          : selectedFather.childs!.length,
+      itemCount: getItemCount(),
       itemBuilder: (context, i) {
         _alreadyUpdated.putIfAbsent(i, () => false);
 
@@ -39,6 +86,9 @@ class ChildsRadios extends StatelessWidget {
 
         if (hasChilds) {
           child = selectedFather.childs![i];
+          if (!isEnabledToday(child)) {
+            return SizedBox();
+          }
         } else {
           child = selectedFather;
           Future.delayed(Duration.zero, () {

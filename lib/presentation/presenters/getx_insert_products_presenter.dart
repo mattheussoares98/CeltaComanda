@@ -392,7 +392,9 @@ class GetxInsertProductsPresenter extends GetxController
       father.indexOfSelectedChild = index;
     }
 
-    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+    updateCanAdvanceIndex(
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+    );
   }
 
   @override
@@ -405,7 +407,9 @@ class GetxInsertProductsPresenter extends GetxController
       selectedOptionIndex = newIndex;
       doScroll = true;
     }
-    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+    updateCanAdvanceIndex(
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+    );
   }
 
   @override
@@ -464,13 +468,25 @@ class GetxInsertProductsPresenter extends GetxController
       }
     }
 
-    updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+    updateCanAdvanceIndex(
+      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+    );
   }
 
   @override
-  void updateCanAdvanceIndex(
-    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
-  ) {
+  void updateCanAdvanceIndex({
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    bool? value,
+  }) {
+    if (value == true) {
+      canAdvanceIndex = true;
+      return;
+    } else if (value == false) {
+      canAdvanceIndex = false;
+      return;
+    }
+
     final atualOption = _insertProductsViewModel
         .value![_selectedOptionIndex.value].selectedOptions.keys.first;
     final atualValue = _insertProductsViewModel

@@ -1112,6 +1112,24 @@ void main() {
   });
 
   group("Update can advance index", () {
+    test("Should emit only true if pass a true value", () {
+      expectLater(sut.canAdvanceIndexStream, emits(true));
+
+      sut.updateCanAdvanceIndex(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        value: true,
+      );
+    });
+    test("Should emit only false if pass a false value", () {
+      expectLater(sut.canAdvanceIndexStream, emits(false));
+
+      sut.updateCanAdvanceIndex(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        value: false,
+      );
+    });
     test("Should emit true if atual option is quantity", () async {
       expansibleGroupFromProductPresenter.mockProductHasComment(false);
       expansibleGroupFromProductPresenter
@@ -1125,7 +1143,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(true));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
 
     test("Should emit true if atual option is optionalExpansibleGroup",
@@ -1139,7 +1159,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(true));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
     test(
         "Should emit true if atual option is fatherComposition and has a valid father",
@@ -1153,7 +1175,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(true));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
     test(
         "Should emit false if atual option is fatherComposition and has a invalid father",
@@ -1167,7 +1191,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(false));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
     test(
         "Should emit true if atual option is obligatoryExpansibleGroup and has a ooption selected",
@@ -1185,7 +1211,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(true));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
     test(
         "Should emit false if atual option is obligatoryExpansibleGroup and has a ooption selected",
@@ -1203,7 +1231,9 @@ void main() {
       );
       expectLater(sut.canAdvanceIndexStream, emits(false));
 
-      sut.updateCanAdvanceIndex(expansibleGroupFromProductPresenter);
+      sut.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter);
     });
   });
 

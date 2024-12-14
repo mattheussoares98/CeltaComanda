@@ -103,7 +103,9 @@ class GetxExpansibleGroupFromProductPresenter
       obligatoryOptionsShowing[selectedIndex].selected = true;
     }
 
-    insertProductPresenter.updateCanAdvanceIndex(this);
+    insertProductPresenter.updateCanAdvanceIndex(
+      expansibleGroupFromProductPresenter: this,
+    );
   }
 
   final _isLoading = false.obs;

@@ -89,6 +89,13 @@ class ChildsRadios extends StatelessWidget {
         Provider.of(context, listen: false);
 
     if (!haveAnActiveChild()) {
+      Future.delayed(Duration.zero, () {
+        insertProductsPresenter.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          value: false,
+        );
+      });
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

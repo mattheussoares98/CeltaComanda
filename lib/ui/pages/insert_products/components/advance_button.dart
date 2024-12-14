@@ -136,13 +136,6 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     return StreamBuilder<bool>(
         stream: insertProductsPresenter.canAdvanceIndexStream,
         builder: (context, snapshot) {
-          Future.delayed(Duration.zero, () {
-            insertProductsPresenter.updateCanAdvanceIndex(
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-            );
-          });
-
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: snapshot.data == true

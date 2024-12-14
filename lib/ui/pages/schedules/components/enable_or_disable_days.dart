@@ -54,6 +54,19 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             saturday: widget.product!.Schedule?.AllowSaturday != false,
             sunday: widget.product!.Schedule?.AllowSunday != false,
           );
+        } else if (widget.scheduleType == ScheduleType.child &&
+            widget.child != null) {
+          menuPresenter.updateProductScheduleStream(
+            internalCodeOnErp:
+                widget.child!.InternalCodeOnERPCodeChild!.toInt(),
+            monday: widget.child!.Schedule?.AllowMonday != false,
+            tuesday: widget.child!.Schedule?.AllowTuesday != false,
+            wednesday: widget.child!.Schedule?.AllowWednesday != false,
+            thursday: widget.child!.Schedule?.AllowThursday != false,
+            friday: widget.child!.Schedule?.AllowFriday != false,
+            saturday: widget.child!.Schedule?.AllowSaturday != false,
+            sunday: widget.child!.Schedule?.AllowSunday != false,
+          );
         } else {
           menuPresenter.updateExpansibleGroupScheduleStream(
             expansibleGroupId: widget.expansibleGroup.ExpansibleGroupId.toInt(),
@@ -84,8 +97,9 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                     groupSnapshot.data;
                 ProductScheduleViewModel? productSchedule =
                     productSnapshot.data;
+                ProductScheduleViewModel? child = productSnapshot.data;
 
-                updateAllowDays(groupSchedule, productSchedule);
+                updateAllowDays(groupSchedule, productSchedule, child);
 
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
@@ -95,10 +109,11 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         scheduleType: widget.scheduleType,
                         product: widget.product,
                         expansibleGroup: widget.expansibleGroup,
+                        child: widget.child,
                       ),
                       PersonalizedsCheckBox(
-                        isUpdatingProduct:
-                            widget.scheduleType == ScheduleType.product,
+                        child: widget.child,
+                        scheduleType: widget.scheduleType,
                         product: widget.product,
                         expansibleGroup: widget.expansibleGroup,
                         allowMonday: allowMonday,
@@ -112,8 +127,9 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         productSchedule: productSchedule,
                       ),
                       ConfirmAndCancelButtons(
-                        isUpdatingProduct:
-                            widget.scheduleType == ScheduleType.product,
+                        scheduleType: widget.scheduleType,
+                        child: widget.child,
+                        product: widget.product,
                         expansibleGroup: widget.expansibleGroup,
                         callSetState: widget.callSetState,
                         groupSchedule: groupSchedule,
@@ -129,27 +145,32 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
   void updateAllowDays(
     ExpansibleGroupScheduleViewModel? groupSchedule,
     ProductScheduleViewModel? productSchedule,
+    ProductScheduleViewModel? child,
   ) {
-    allowMonday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowMonday != false
-        : groupSchedule?.AllowMonday != false;
-    allowTuesday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowTuesday != false
-        : groupSchedule?.AllowTuesday != false;
-    allowWednesday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowWednesday != false
-        : groupSchedule?.AllowWednesday != false;
-    allowThursday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowThursday != false
-        : groupSchedule?.AllowThursday != false;
-    allowFriday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowFriday != false
-        : groupSchedule?.AllowFriday != false;
-    allowSaturday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowSaturday != false
-        : groupSchedule?.AllowSaturday != false;
-    allowSunday = widget.scheduleType == ScheduleType.product
-        ? productSchedule?.AllowSunday != false
-        : groupSchedule?.AllowSunday != false;
+    if (widget.scheduleType == ScheduleType.product) {
+      allowMonday = productSchedule?.AllowMonday != false;
+      allowTuesday = productSchedule?.AllowTuesday != false;
+      allowWednesday = productSchedule?.AllowWednesday != false;
+      allowThursday = productSchedule?.AllowThursday != false;
+      allowFriday = productSchedule?.AllowFriday != false;
+      allowSaturday = productSchedule?.AllowSaturday != false;
+      allowSunday = productSchedule?.AllowSunday != false;
+    } else if (widget.scheduleType == ScheduleType.expansibleGroup) {
+      allowMonday = groupSchedule?.AllowMonday != false;
+      allowTuesday = groupSchedule?.AllowTuesday != false;
+      allowWednesday = groupSchedule?.AllowWednesday != false;
+      allowThursday = groupSchedule?.AllowThursday != false;
+      allowFriday = groupSchedule?.AllowFriday != false;
+      allowSaturday = groupSchedule?.AllowSaturday != false;
+      allowSunday = groupSchedule?.AllowSunday != false;
+    } else {
+      allowMonday = child?.AllowMonday != false;
+      allowTuesday = child?.AllowTuesday != false;
+      allowWednesday = child?.AllowWednesday != false;
+      allowThursday = child?.AllowThursday != false;
+      allowFriday = child?.AllowFriday != false;
+      allowSaturday = child?.AllowSaturday != false;
+      allowSunday = child?.AllowSunday != false;
+    }
   }
 }

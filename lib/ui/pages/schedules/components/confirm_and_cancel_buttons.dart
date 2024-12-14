@@ -8,19 +8,36 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class ConfirmAndCancelButtons extends StatelessWidget {
-  final bool isUpdatingProduct;
+  final ScheduleType scheduleType;
   final ExpansibleGroupScheduleViewModel? groupSchedule;
   final ProductScheduleViewModel? productSchedule;
   final ExpansibleGroupsViewModel expansibleGroup;
+  final ProductCompositionViewModel? child;
   final void Function() callSetState;
+  final ProductsViewModel? product;
   const ConfirmAndCancelButtons({
-    required this.isUpdatingProduct,
+    required this.scheduleType,
     required this.groupSchedule,
     required this.productSchedule,
     required this.expansibleGroup,
+    required this.child,
     required this.callSetState,
+    required this.product,
     super.key,
   });
+
+  bool canConfirm() {
+    if (scheduleType == ScheduleType.product && productSchedule == null) {
+      return false;
+    } else if (scheduleType == ScheduleType.expansibleGroup &&
+        groupSchedule == null) {
+      return false;
+    } else if (scheduleType == ScheduleType.child && productSchedule == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +63,12 @@ class ConfirmAndCancelButtons extends StatelessWidget {
           const SizedBox(width: 20),
           Expanded(
             child: ElevatedButton(
-              onPressed: (isUpdatingProduct && productSchedule == null) ||
-                      (groupSchedule == null && !isUpdatingProduct)
-                  ? null
-                  : () async {
+              onPressed: canConfirm()
+                  ? () async {
                       await onPressed(
+                        child: child,
+                        product: product,
+                        scheduleType: scheduleType,
                         context: context,
                         expansibleGroupId:
                             expansibleGroup.ExpansibleGroupId.toInt(),
@@ -60,7 +78,8 @@ class ConfirmAndCancelButtons extends StatelessWidget {
                           callSetState();
                         },
                       );
-                    },
+                    }
+                  : null,
               child: Text(R.string.confirm),
             ),
           ),
@@ -75,7 +94,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
     required void Function() callSetState,
     required int expansibleGroupId,
     required BuildContext context,
-    final ProductsViewModel? product,
+    required ProductsViewModel? product,
+    required ScheduleType scheduleType,
+    required ProductCompositionViewModel? child,
   }) async {
     bool updated = false;
     notificationDialog(
@@ -83,14 +104,19 @@ class ConfirmAndCancelButtons extends StatelessWidget {
       titleMessage: R.string.confirmSchedule,
       content: null,
       onPress: () async {
-        if (isUpdatingProduct && product != null) {
+        if (scheduleType == ScheduleType.product && product != null) {
           updated = await menuPresenter.insertUpdateProductSchedule(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
             expansibleGroupId: expansibleGroupId,
           );
-        } else if (!isUpdatingProduct) {
+        } else if (scheduleType == ScheduleType.expansibleGroup) {
           updated = await menuPresenter
               .insertUpdateExpansibleGroupSchedule(expansibleGroupId);
+        } else if (scheduleType == ScheduleType.child && child != null) {
+          updated = await menuPresenter.insertUpdateProductSchedule(
+            internalCodeOnErp: child.InternalCodeOnERPCodeChild!.toInt(),
+            expansibleGroupId: expansibleGroupId,
+          );
         }
 
         if (updated) {

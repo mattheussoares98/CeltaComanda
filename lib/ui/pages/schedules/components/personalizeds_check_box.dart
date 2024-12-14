@@ -5,9 +5,10 @@ import 'package:provider/provider.dart';
 import '../../pages.dart';
 
 class PersonalizedsCheckBox extends StatelessWidget {
-  final bool isUpdatingProduct;
+  final ScheduleType scheduleType;
   final ProductsViewModel? product;
   final ExpansibleGroupsViewModel expansibleGroup;
+  final ProductCompositionViewModel? child;
   final bool allowMonday;
   final bool allowTuesday;
   final bool allowWednesday;
@@ -18,9 +19,10 @@ class PersonalizedsCheckBox extends StatelessWidget {
   final ExpansibleGroupScheduleViewModel? groupSchedule;
   final ProductScheduleViewModel? productSchedule;
   const PersonalizedsCheckBox({
-    required this.isUpdatingProduct,
+    required this.scheduleType,
     required this.product,
     required this.expansibleGroup,
+    required this.child,
     required this.allowMonday,
     required this.allowTuesday,
     required this.allowWednesday,
@@ -45,7 +47,7 @@ class PersonalizedsCheckBox extends StatelessWidget {
     bool? saturday,
     bool? sunday,
   }) {
-    if (isUpdatingProduct && product != null) {
+    if (scheduleType == ScheduleType.product && product != null) {
       menuPresenter.updateProductScheduleStream(
         internalCodeOnErp: product!.InternalCodeOnERP!.toInt(),
         monday: monday ?? productSchedule?.AllowMonday,
@@ -56,7 +58,7 @@ class PersonalizedsCheckBox extends StatelessWidget {
         saturday: saturday ?? productSchedule?.AllowSaturday,
         sunday: sunday ?? productSchedule?.AllowSunday,
       );
-    } else {
+    } else if (scheduleType == ScheduleType.expansibleGroup) {
       menuPresenter.updateExpansibleGroupScheduleStream(
         expansibleGroupId: expansibleGroup.ExpansibleGroupId.toInt(),
         monday: monday ?? groupSchedule?.AllowMonday,
@@ -66,6 +68,17 @@ class PersonalizedsCheckBox extends StatelessWidget {
         friday: friday ?? groupSchedule?.AllowFriday,
         saturday: saturday ?? groupSchedule?.AllowSaturday,
         sunday: sunday ?? groupSchedule?.AllowSunday,
+      );
+    } else {
+      menuPresenter.updateProductScheduleStream(
+        internalCodeOnErp: child!.InternalCodeOnERPCodeChild!.toInt(),
+        monday: monday ?? productSchedule?.AllowMonday,
+        tuesday: tuesday ?? productSchedule?.AllowTuesday,
+        wednesday: wednesday ?? productSchedule?.AllowWednesday,
+        thursday: thursday ?? productSchedule?.AllowThursday,
+        friday: friday ?? productSchedule?.AllowFriday,
+        saturday: saturday ?? productSchedule?.AllowSaturday,
+        sunday: sunday ?? productSchedule?.AllowSunday,
       );
     }
   }

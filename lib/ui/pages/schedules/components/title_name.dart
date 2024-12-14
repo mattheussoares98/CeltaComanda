@@ -6,13 +6,42 @@ import '../../pages.dart';
 class TitleName extends StatelessWidget {
   final ScheduleType scheduleType;
   final ProductsViewModel? product;
+  final ProductCompositionViewModel? child;
   final ExpansibleGroupsViewModel expansibleGroup;
   const TitleName({
     required this.scheduleType,
     required this.product,
+    required this.child,
     required this.expansibleGroup,
     super.key,
   });
+
+  String getName() {
+    if (scheduleType == ScheduleType.product && product != null) {
+      return product?.Name ?? "";
+    } else if (scheduleType == ScheduleType.expansibleGroup) {
+      return expansibleGroup.Name;
+    } else if (child != null) {
+      return child!.ChildName!;
+    } else {
+      return "";
+    }
+  }
+
+  String getType() {
+    if (scheduleType == ScheduleType.product &&
+        product != null &&
+        product!.childsComposition != null &&
+        product!.childsComposition!.isNotEmpty) {
+      return " (${R.string.combox})";
+    } else if (scheduleType == ScheduleType.product && product != null) {
+      return " (${R.string.product})";
+    } else if (scheduleType == ScheduleType.expansibleGroup) {
+      return " (${R.string.expansibleGroup})";
+    } else {
+      return " (${R.string.child})";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +52,7 @@ class TitleName extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              scheduleType == ScheduleType.product
-                  ? product?.Name ?? ""
-                  : expansibleGroup.Name,
+              getName(),
               style: TextStyle(
                 fontSize: StringSize.size * 1.5,
                 fontWeight: FontWeight.bold,
@@ -33,12 +60,7 @@ class TitleName extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             Text(
-              scheduleType == ScheduleType.product
-                  ? product?.childsComposition != null &&
-                          product!.childsComposition!.isNotEmpty
-                      ? " (${R.string.combox})"
-                      : "(${R.string.product})"
-                  : "(${R.string.expansibleGroup})",
+              getType(),
               style: TextStyle(
                 fontSize: StringSize.size,
                 fontStyle: FontStyle.italic,

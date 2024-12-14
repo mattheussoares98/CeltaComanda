@@ -130,6 +130,7 @@ class EnUs implements Translation {
   String get cancelProduct => 'Cancel product';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
+  String get child => 'Child';
   String get clearCart => 'Clear cart';
   String get closeApplication => 'Close APP';
   String get closeTable => 'Close table';

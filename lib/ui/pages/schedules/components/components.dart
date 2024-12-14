@@ -1,3 +1,4 @@
+export './childs_items.dart';
 export './confirm_and_cancel_buttons.dart';
 export './enable_or_disable_days.dart';
 export './expansible_group_schedule_item.dart';

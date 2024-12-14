@@ -1098,6 +1098,9 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.insertUpdateProductSchedule(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         internalCodeOnErp: internalCodeOnErp,
         expansibleGroupId: expansibleGroupId,
       );
@@ -1110,6 +1113,9 @@ void main() {
       manageProductSchedule.mockInsertError();
 
       await sut.insertUpdateProductSchedule(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         internalCodeOnErp: internalCodeOnErp,
         expansibleGroupId: expansibleGroupId,
       );
@@ -1128,6 +1134,9 @@ void main() {
       );
 
       await sut.insertUpdateProductSchedule(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         internalCodeOnErp: internalCodeOnErp,
         expansibleGroupId: expansibleGroupId,
       );
@@ -1149,6 +1158,9 @@ void main() {
       );
 
       await sut.insertUpdateProductSchedule(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         internalCodeOnErp: internalCodeOnErp,
         expansibleGroupId: expansibleGroupId,
       );
@@ -1169,6 +1181,9 @@ void main() {
       sut.updateProductScheduleStream(internalCodeOnErp: internalCodeOnErp);
 
       final updated = await sut.insertUpdateProductSchedule(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          homePresenter: homePresenter,
           internalCodeOnErp: products.first.InternalCodeOnERP!,
           expansibleGroupId: expansibleGroups.first.ExpansibleGroupId);
 
@@ -1178,6 +1193,9 @@ void main() {
       manageProductSchedule.mockInsertError();
 
       final updated = await sut.insertUpdateProductSchedule(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         internalCodeOnErp: internalCodeOnErp,
         expansibleGroupId: expansibleGroupId,
       );
@@ -1268,7 +1286,8 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateExpansibleGroupScheduleStream(expansibleGroupId: expansibleGroupId);
+      sut.updateExpansibleGroupScheduleStream(
+          expansibleGroupId: expansibleGroupId);
 
       final updated = await sut.insertUpdateExpansibleGroupSchedule(
           expansibleGroups.first.ExpansibleGroupId);

@@ -44,6 +44,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -66,6 +69,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
               onPressed: canConfirm()
                   ? () async {
                       await onPressed(
+                        expansibleGroupFromProductPresenter:
+                            expansibleGroupFromProductPresenter,
+                        homePresenter: homePresenter,
                         child: child,
                         product: product,
                         scheduleType: scheduleType,
@@ -91,6 +97,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
   Future<void> onPressed({
     required MenuPresenter menuPresenter,
     required ConfigurationsPresenter configurationsPresenter,
+    required HomePresenter homePresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
     required void Function() callSetState,
     required int expansibleGroupId,
     required BuildContext context,
@@ -108,6 +117,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
           updated = await menuPresenter.insertUpdateProductSchedule(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
             expansibleGroupId: expansibleGroupId,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            homePresenter: homePresenter,
           );
         } else if (scheduleType == ScheduleType.expansibleGroup) {
           updated = await menuPresenter
@@ -116,6 +128,9 @@ class ConfirmAndCancelButtons extends StatelessWidget {
           updated = await menuPresenter.insertUpdateProductSchedule(
             internalCodeOnErp: child.InternalCodeOnERPCodeChild!.toInt(),
             expansibleGroupId: expansibleGroupId,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            homePresenter: homePresenter,
           );
         }
 

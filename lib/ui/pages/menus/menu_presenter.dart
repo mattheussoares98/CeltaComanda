@@ -43,6 +43,9 @@ abstract class MenuPresenter implements Listenable {
   Future<bool> insertUpdateProductSchedule({
     required int internalCodeOnErp,
     required int expansibleGroupId,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
   });
   void updateProductScheduleStream({
     required int internalCodeOnErp,

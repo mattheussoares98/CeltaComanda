@@ -476,6 +476,9 @@ class GetxMenuPresenter extends GetxController
   Future<bool> insertUpdateProductSchedule({
     required int internalCodeOnErp,
     required int expansibleGroupId,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -493,90 +496,11 @@ class GetxMenuPresenter extends GetxController
             .insertUpdate(_productSchedule.value!.toEntity());
       }
 
-      final int indexOfGroup = _loadedMenu.indexWhere(
-          (e) => e.keys.first.ExpansibleGroupId.toInt() == expansibleGroupId);
-      final int indexOfProduct = _loadedMenu[indexOfGroup]
-          .values
-          .first
-          .indexWhere((e) => e.InternalCodeOnERP!.toInt() == internalCodeOnErp);
-      final oldProduct = _loadedMenu[indexOfGroup].values.first[indexOfProduct];
-
-      final newProduct = ProductsViewModel(
-        subgroupName: oldProduct.subgroupName,
-        MaximumQuantityForSale: oldProduct.MaximumQuantityForSale,
-        IsPromoCombox: oldProduct.IsPromoCombox,
-        ProductComplement: oldProduct.ProductComplement,
-        ProductsId: oldProduct.ProductsId,
-        SaleRetailPraticed: oldProduct.SaleRetailPraticed,
-        PriceLookupCode: oldProduct.PriceLookupCode,
-        Name: oldProduct.Name,
-        PackingAbbreviation: oldProduct.PackingAbbreviation,
-        InternalCodeOnERP: oldProduct.InternalCodeOnERP,
-        InternalCodeOfProductOnERP: oldProduct.InternalCodeOfProductOnERP,
-        EenterpriseId: oldProduct.EenterpriseId,
-        PackingQuantity: oldProduct.PackingQuantity,
-        OfferRetailPrice: oldProduct.OfferRetailPrice,
-        WholeSalePrice: oldProduct.WholeSalePrice,
-        WholeOfferPrice: oldProduct.WholeOfferPrice,
-        OfferECommercePrice: oldProduct.OfferECommercePrice,
-        SaleECommercePrice: oldProduct.SaleECommercePrice,
-        LiquidCost: oldProduct.LiquidCost,
-        LiquidCostMiddle: oldProduct.LiquidCostMiddle,
-        LiquidCostReal: oldProduct.LiquidCostReal,
-        RepositionCost: oldProduct.RepositionCost,
-        RepositionCostMiddle: oldProduct.RepositionCostMiddle,
-        RepositionCostReal: oldProduct.RepositionCostReal,
-        IcmsAliquot: oldProduct.IcmsAliquot,
-        IcmsIVAMargin: oldProduct.IcmsIVAMargin,
-        IcmsReductionMargin: oldProduct.IcmsReductionMargin,
-        IcmsStave: oldProduct.IcmsStave,
-        PercImpNBPTState: oldProduct.PercImpNBPTState,
-        PercImpNBPTMunicipal: oldProduct.PercImpNBPTMunicipal,
-        CofinsType: oldProduct.CofinsType,
-        PisType: oldProduct.PisType,
-        ProductIsFatherComposition: oldProduct.ProductIsFatherComposition,
-        QuantityMinimumWholeSale: oldProduct.QuantityMinimumWholeSale,
-        QuantityMinimumWholeSaleByClass:
-            oldProduct.QuantityMinimumWholeSaleByClass,
-        BalanceTare: oldProduct.BalanceTare,
-        FamilyCode: oldProduct.FamilyCode,
-        DepartmentCode: oldProduct.DepartmentCode,
-        SectionCode: oldProduct.SectionCode,
-        GroupCode: oldProduct.GroupCode,
-        SubGroupCode: oldProduct.SubGroupCode,
-        StockQuantity: oldProduct.StockQuantity,
-        AllowFractionate: oldProduct.AllowFractionate,
-        IsBalance: oldProduct.IsBalance,
-        CanBeWeightyInPdv: oldProduct.CanBeWeightyInPdv,
-        QuantityInBalance: oldProduct.QuantityInBalance,
-        AllowQuantityInPdv: oldProduct.AllowQuantityInPdv,
-        GoesForFastTable: oldProduct.GoesForFastTable,
-        IsAlcoholicProduct: oldProduct.IsAlcoholicProduct,
-        SaleRetailPrice: oldProduct.SaleRetailPrice,
-        PercImpNBPTNational: oldProduct.PercImpNBPTNational,
-        CofinsPercentage: oldProduct.CofinsPercentage,
-        PisPercentage: oldProduct.PisPercentage,
-        CFOP: oldProduct.CFOP,
-        FiscalClassificationNCM: oldProduct.FiscalClassificationNCM,
-        TributarySituationCode: oldProduct.TributarySituationCode,
-        CSTPisCofins: oldProduct.CSTPisCofins,
-        CodeClass: oldProduct.CodeClass,
-        DepartmentName: oldProduct.DepartmentName,
-        SectionName: oldProduct.SectionName,
-        DateOfLastChanged: oldProduct.DateOfLastChanged,
-        GroupName: oldProduct.GroupName,
-        SaleRetailPraticedString: oldProduct.SaleRetailPraticedString,
-        PersonalizedCode: oldProduct.PersonalizedCode,
-        EanCode: oldProduct.EanCode,
-        NameComplete: oldProduct.NameComplete,
-        NameReduced: oldProduct.NameReduced,
-        childsComposition: oldProduct.childsComposition,
-        suggestions: oldProduct.suggestions,
-        Schedule:
-            ProductScheduleModel.fromEntity(_productSchedule.value!.toEntity()),
+      await getGroupsAndProducts(
+        commandNumber: homePresenter.commandEntity?.commandNumber ?? "001",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
       );
-
-      _loadedMenu[indexOfGroup].values.first[indexOfProduct] = newProduct;
       return true;
     } catch (e) {
       mainError = UIError.unexpected;

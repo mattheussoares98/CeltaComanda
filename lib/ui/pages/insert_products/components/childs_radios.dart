@@ -68,6 +68,19 @@ class ChildsRadios extends StatelessWidget {
     }
   }
 
+  bool haveAnActiveChild() {
+    if (selectedFather.childs == null) {
+      return true;
+    }
+
+    for (var child in selectedFather.childs!) {
+      if (isEnabledToday(child)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductsPresenter =
@@ -75,6 +88,21 @@ class ChildsRadios extends StatelessWidget {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
+    if (!haveAnActiveChild()) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            R.string.msgAllChildsAreDisabled,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: StringSize.size,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
     return ListView.builder(
       shrinkWrap: true,
       itemCount: getItemCount(),

@@ -1,5 +1,6 @@
 abstract class Translation {
   String get msgAuthorizationIsPendant;
+  String get msgAllChildsAreDisabled;
   String get msgBarcodeNotRead;
   String get msgBlockedCommand;
   String get msgEmailInUse;

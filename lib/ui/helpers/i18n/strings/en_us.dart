@@ -4,6 +4,8 @@ import './translation.dart';
 
 class EnUs implements Translation {
   String get msgAuthorizationIsPendant => "Pendant authotization";
+  String get msgAllChildsAreDisabled =>
+      "Please, call the waiter to relate this problem\nAll childs are disabled, enable a child";
   String get msgBarcodeNotRead => 'Barcode not read';
   String get msgBlockedCommand => 'Command blocked';
   String get msgCantAddCombox => "Can't add combox here";

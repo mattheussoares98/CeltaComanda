@@ -59,15 +59,20 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                         TextSpan(
                           text: product.Name,
                           style: TextStyle(
-                              color: Colors.black, fontSize: StringSize.size),
+                            color: Colors.black,
+                            fontSize: StringSize.size,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         if (product.childsComposition != null &&
                             product.childsComposition!.isNotEmpty)
                           TextSpan(
                             text: " (${R.string.combox})",
                             style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                fontSize: StringSize.size),
+                              color: Theme.of(context).secondaryHeaderColor,
+                              fontSize: StringSize.size,
+                              fontWeight: FontWeight.bold,
+                            ),
                           )
                       ]),
                     )),

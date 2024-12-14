@@ -4,11 +4,11 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class TitleName extends StatelessWidget {
-  final bool isUpdatingProduct;
+  final ScheduleType scheduleType;
   final ProductsViewModel? product;
   final ExpansibleGroupsViewModel expansibleGroup;
   const TitleName({
-    required this.isUpdatingProduct,
+    required this.scheduleType,
     required this.product,
     required this.expansibleGroup,
     super.key,
@@ -23,7 +23,9 @@ class TitleName extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              isUpdatingProduct ? product?.Name ?? "" : expansibleGroup.Name,
+              scheduleType == ScheduleType.product
+                  ? product?.Name ?? ""
+                  : expansibleGroup.Name,
               style: TextStyle(
                 fontSize: StringSize.size * 1.5,
                 fontWeight: FontWeight.bold,
@@ -31,7 +33,7 @@ class TitleName extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             Text(
-              isUpdatingProduct
+              scheduleType == ScheduleType.product
                   ? product?.childsComposition != null &&
                           product!.childsComposition!.isNotEmpty
                       ? " (${R.string.combox})"

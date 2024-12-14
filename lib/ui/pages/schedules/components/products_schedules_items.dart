@@ -29,9 +29,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
       itemCount: widget.products.length,
       itemBuilder: (context, productIndex) {
         final product = widget.products[productIndex];
-        final color = productIndex % 2 == 0
-            ? Colors.grey[300]
-            : Colors.white;
+        final color = productIndex % 2 == 0 ? Colors.grey[300] : Colors.white;
 
         return Container(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
@@ -45,7 +43,8 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                     page: EnableOrDisableDays(
                       product: product,
                       expansibleGroup: widget.expansibleGroup,
-                      isUpdatingProduct: true,
+                      child: null,
+                      scheduleType: ScheduleType.product,
                       callSetState: () {
                         widget.callSetState();
                       },

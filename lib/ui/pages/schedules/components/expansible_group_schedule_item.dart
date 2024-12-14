@@ -22,8 +22,9 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
           context: context,
           page: EnableOrDisableDays(
             product: null,
+            child: null,
             expansibleGroup: expansibleGroup,
-            isUpdatingProduct: false,
+            scheduleType: ScheduleType.expansibleGroup,
             callSetState: () {
               callSetSate();
             },

@@ -52,7 +52,8 @@ class ChildsItems extends StatelessWidget {
                         page: EnableOrDisableDays(
                           product: product,
                           expansibleGroup: expansibleGroup,
-                          isUpdatingProduct: true,
+                          scheduleType: ScheduleType.child,
+                          child: child,
                           callSetState: () {
                             callSetState();
                           },
@@ -63,7 +64,9 @@ class ChildsItems extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
                         children: [
-                          Expanded(child: Text("- ${child.ChildName!}   (${R.string.child.toUpperCase()})")),
+                          Expanded(
+                              child: Text(
+                                  "- ${child.ChildName!}   (${R.string.child.toUpperCase()})")),
                           ScheduleEnabledDays(
                             allowMonday: child.Schedule?.AllowMonday != false,
                             allowTuesday: child.Schedule?.AllowTuesday != false,

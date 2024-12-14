@@ -10,13 +10,15 @@ import 'components.dart';
 class EnableOrDisableDays extends StatefulWidget {
   final ProductsViewModel? product;
   final ExpansibleGroupsViewModel expansibleGroup;
-  final bool isUpdatingProduct;
   final void Function() callSetState;
+  final ScheduleType scheduleType;
+  final ProductCompositionViewModel? child;
   const EnableOrDisableDays({
     required this.product,
     required this.expansibleGroup,
-    required this.isUpdatingProduct,
     required this.callSetState,
+    required this.scheduleType,
+    required this.child,
     super.key,
   });
 
@@ -39,7 +41,8 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
-        if (widget.isUpdatingProduct && widget.product != null) {
+        if (widget.scheduleType == ScheduleType.product &&
+            widget.product != null) {
           menuPresenter.updateProductScheduleStream(
             internalCodeOnErp:
                 widget.product!.InternalCodeOfProductOnERP!.toInt(),
@@ -89,12 +92,13 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                   child: Column(
                     children: [
                       TitleName(
-                        isUpdatingProduct: widget.isUpdatingProduct,
+                        scheduleType: widget.scheduleType,
                         product: widget.product,
                         expansibleGroup: widget.expansibleGroup,
                       ),
                       PersonalizedsCheckBox(
-                        isUpdatingProduct: widget.isUpdatingProduct,
+                        isUpdatingProduct:
+                            widget.scheduleType == ScheduleType.product,
                         product: widget.product,
                         expansibleGroup: widget.expansibleGroup,
                         allowMonday: allowMonday,
@@ -108,7 +112,8 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
                         productSchedule: productSchedule,
                       ),
                       ConfirmAndCancelButtons(
-                        isUpdatingProduct: widget.isUpdatingProduct,
+                        isUpdatingProduct:
+                            widget.scheduleType == ScheduleType.product,
                         expansibleGroup: widget.expansibleGroup,
                         callSetState: widget.callSetState,
                         groupSchedule: groupSchedule,
@@ -125,25 +130,25 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
     ExpansibleGroupScheduleViewModel? groupSchedule,
     ProductScheduleViewModel? productSchedule,
   ) {
-    allowMonday = widget.isUpdatingProduct
+    allowMonday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowMonday != false
         : groupSchedule?.AllowMonday != false;
-    allowTuesday = widget.isUpdatingProduct
+    allowTuesday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowTuesday != false
         : groupSchedule?.AllowTuesday != false;
-    allowWednesday = widget.isUpdatingProduct
+    allowWednesday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowWednesday != false
         : groupSchedule?.AllowWednesday != false;
-    allowThursday = widget.isUpdatingProduct
+    allowThursday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowThursday != false
         : groupSchedule?.AllowThursday != false;
-    allowFriday = widget.isUpdatingProduct
+    allowFriday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowFriday != false
         : groupSchedule?.AllowFriday != false;
-    allowSaturday = widget.isUpdatingProduct
+    allowSaturday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowSaturday != false
         : groupSchedule?.AllowSaturday != false;
-    allowSunday = widget.isUpdatingProduct
+    allowSunday = widget.scheduleType == ScheduleType.product
         ? productSchedule?.AllowSunday != false
         : groupSchedule?.AllowSunday != false;
   }

@@ -45,7 +45,7 @@ class CachedImageState extends State<CachedImage> {
     Config(
       CacheKeys.images.name,
       maxNrOfCacheObjects: 1000,
-      stalePeriod: Duration(hours: 1),
+      stalePeriod: Duration(days: 1),
     ),
   );
 

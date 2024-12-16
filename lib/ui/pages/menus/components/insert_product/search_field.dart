@@ -85,11 +85,21 @@ class SearchField extends StatelessWidget {
               onPressed: () async {
                 await searchProduct();
               },
-              icon: Icon(
-                Icons.search,
+              icon: Row(
+                children: [
+                  Icon(
+                    Icons.search,
+                  ),
+                  if (hasMinWidth(context))
+                    Row(
+                      children: [
+                        const SizedBox(width: 4),
+                        Text(R.string.searchProduct),
+                      ],
+                    ),
+                ],
               ),
             ),
-            if (hasMinWidth(context)) Text(R.string.searchProduct),
           ],
         ),
       ],

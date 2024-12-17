@@ -228,6 +228,7 @@ class PtBr implements Translation {
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
   String get saturday => "Sábado";
+  String get search => "Pesquisar";
   String get searchByPersonalizedCode => "Pesquisar pelo código personalizado";
   String get searchDataOfOtherCommandNumber =>
       "Consultar dados de outra comanda";

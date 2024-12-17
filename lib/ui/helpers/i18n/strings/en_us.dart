@@ -228,6 +228,7 @@ class EnUs implements Translation {
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
   String get saturday => "Saturday";
+  String get search => "Search";
   String get searchByPersonalizedCode => "Search by personalized code";
   String get searchDataOfOtherCommandNumber =>
       'Search data of other command number';

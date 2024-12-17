@@ -14,6 +14,16 @@ class CommandField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("${R.string.minimumAbbreviated}: 1"),
+              Text("${R.string.maximumAbbreviated}: 1000"),
+            ],
+          ),
+        ),
         TextFormField(
           controller: commandNumberController,
           textAlign: TextAlign.center,
@@ -61,16 +71,6 @@ class CommandField extends StatelessWidget {
               },
               icon: Icon(Icons.add),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("${R.string.minimumAbbreviated}: 1"),
-              Text("${R.string.maximumAbbreviated}: 1000"),
-            ],
           ),
         ),
       ],

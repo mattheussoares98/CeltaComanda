@@ -196,6 +196,7 @@ abstract class Translation {
   String get reserved;
   String get reserveTable;
   String get saturday;
+  String get search;
   String get searchByPersonalizedCode;
   String get searchCommandData;
   String get searchDataOfOtherCommandNumber;

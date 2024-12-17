@@ -21,7 +21,8 @@ class _CancelProductsPageState extends State<CancelProductsPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  int? selectedCommandInDropDown;
+  final commandNumberController = TextEditingController();
+  bool searchedCommandData = false;
 
   @override
   dispose() {
@@ -29,6 +30,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    commandNumberController.dispose();
   }
 
   @override
@@ -48,55 +50,62 @@ class _CancelProductsPageState extends State<CancelProductsPage>
         title: Text(R.string.cancel),
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SelectCommandDropDown(
-              selectedCommandInDropDown: selectedCommandInDropDown,
-              updateSelectedCommandInDropDown: (value) {
-                setState(() {
-                  selectedCommandInDropDown = value;
-                });
-              },
-            ),
-            StreamBuilder<PrintedViewModel?>(
-                stream: cancelProductsPresenter.printedProducts,
-                builder: (context, snapshot) {
-                  if (selectedCommandInDropDown != null &&
-                      snapshot.data == null) {
-                    return Text(
-                      R.string.emptyTable,
-                      style: TextStyle(
-                        fontSize: StringSize.size,
-                        fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SearchCommandField(
+                commandNumberController: commandNumberController,
+                searchData: () async {
+                  await cancelProductsPresenter.loadProducts(
+                    commandNumberController.text.toInt(),
+                  );
+                  setState(() {
+                    searchedCommandData = true;
+                  });
+                },
+              ),
+              StreamBuilder<PrintedViewModel?>(
+                  stream: cancelProductsPresenter.printedProducts,
+                  builder: (context, snapshot) {
+                    if (searchedCommandData == true && snapshot.data == null) {
+                      return Text(
+                        R.string.emptyTable,
+                        style: TextStyle(
+                          fontSize: StringSize.size,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
+                    if (snapshot.data == null) {
+                      return SizedBox();
+                    }
+
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          CancelProductsItems(
+                            selectedCommandInDropDown:
+                                commandNumberController.text.toInt(),
+                            printed: snapshot.data!,
+                          ),
+                          RequestSummary(
+                              showRemoveServiceChargeButton: true,
+                              requestUserAndPassword: false,
+                              printed: snapshot.data!,
+                              commandNumber:
+                                  commandNumberController.text.toInt(),
+                              loadPrintedAgain: () async {
+                                await cancelProductsPresenter.loadProducts(
+                                    commandNumberController.text.toInt());
+                              }),
+                        ],
                       ),
                     );
-                  }
-                  if (snapshot.data == null) {
-                    return SizedBox();
-                  }
-        
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        CancelProductsItems(
-                          selectedCommandInDropDown: selectedCommandInDropDown,
-                          printed: snapshot.data!,
-                        ),
-                        RequestSummary(
-                            showRemoveServiceChargeButton: true,
-                            requestUserAndPassword: false,
-                            printed: snapshot.data!,
-                            commandNumber: selectedCommandInDropDown!,
-                            loadPrintedAgain: () async {
-                              await cancelProductsPresenter
-                                  .loadProducts(selectedCommandInDropDown!);
-                            }),
-                      ],
-                    ),
-                  );
-                }),
-          ],
+                  }),
+            ],
+          ),
         ),
       ),
     );

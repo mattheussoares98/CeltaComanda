@@ -6,11 +6,11 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class BlockOrLiberateButton extends StatelessWidget {
-  final int? commandNumber;
+  final TextEditingController commandNumberController;
   final GlobalKey<FormState> formKey;
   final bool isLiberating;
   const BlockOrLiberateButton({
-    required this.commandNumber,
+    required this.commandNumberController,
     required this.formKey,
     required this.isLiberating,
     super.key,
@@ -30,7 +30,7 @@ class BlockOrLiberateButton extends StatelessWidget {
         }
 
         final updated = await configurationsPresenter.openOrBlockadeCommand(
-          commandNumber: commandNumber!,
+          commandNumber: commandNumberController.text.toInt(),
           isOpen: isLiberating,
         );
 

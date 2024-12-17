@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../components/components.dart';
-import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class BlockOrLiberateCommandPage extends StatefulWidget {
@@ -38,7 +37,7 @@ class _BlockOrLiberateCommandPageState
                 children: [
                   Expanded(
                     child: BlockOrLiberateButton(
-                      commandNumber: commandNumberController.text.toInt(),
+                      commandNumberController: commandNumberController,
                       formKey: formKey,
                       isLiberating: false,
                     ),
@@ -46,7 +45,7 @@ class _BlockOrLiberateCommandPageState
                   const SizedBox(width: 10),
                   Expanded(
                     child: BlockOrLiberateButton(
-                      commandNumber: commandNumberController.text.toInt(),
+                      commandNumberController: commandNumberController,
                       formKey: formKey,
                       isLiberating: true,
                     ),

@@ -84,6 +84,10 @@ ThemeData makeAppTheme(BuildContext context) {
     foregroundColor: Colors.white,
   ));
 
+  AppBarTheme appBarTheme = AppBarTheme(
+    backgroundColor: primaryColorLight.withAlpha(15),
+  );
+
   return ThemeData(
     primaryColor: primaryColor,
     primaryColorDark: primaryColorDark,
@@ -98,5 +102,6 @@ ThemeData makeAppTheme(BuildContext context) {
     inputDecorationTheme: inputDecorationTheme,
     buttonTheme: buttonTheme,
     elevatedButtonTheme: elevatedButtonTheme,
+    appBarTheme: appBarTheme,
   );
 }

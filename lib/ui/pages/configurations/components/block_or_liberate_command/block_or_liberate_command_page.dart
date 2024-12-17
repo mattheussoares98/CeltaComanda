@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class BlockOrLiberateCommandPage extends StatefulWidget {
@@ -12,46 +13,47 @@ class BlockOrLiberateCommandPage extends StatefulWidget {
 
 class _BlockOrLiberateCommandPageState
     extends State<BlockOrLiberateCommandPage> {
-  int? selectedCommandInDropDown;
   final formKey = GlobalKey<FormState>();
+  final commandNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    commandNumberController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            SelectTableDropdown(
-              updateSelectedCommand: (value) {
-                setState(() {
-                  selectedCommandInDropDown = value;
-                });
-              },
-              formKey: formKey,
-              selectedCommandInDropDown: selectedCommandInDropDown,
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: [
-                Expanded(
-                  child: BlockOrLiberateButton(
-                    commandNumber: selectedCommandInDropDown,
-                    formKey: formKey,
-                    isLiberating: false,
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              CommandField(commandNumberController: commandNumberController),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  Expanded(
+                    child: BlockOrLiberateButton(
+                      commandNumber: commandNumberController.text.toInt(),
+                      formKey: formKey,
+                      isLiberating: false,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: BlockOrLiberateButton(
-                    commandNumber: selectedCommandInDropDown,
-                    formKey: formKey,
-                    isLiberating: true,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: BlockOrLiberateButton(
+                      commandNumber: commandNumberController.text.toInt(),
+                      formKey: formKey,
+                      isLiberating: true,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

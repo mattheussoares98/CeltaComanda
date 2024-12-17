@@ -190,6 +190,8 @@ class EnUs implements Translation {
   String get liquidateCommandSucceeds => 'Command successfully liquidated';
   String get loadMenu => 'Load menu';
   String get login => 'Login';
+  String get maximumAbbreviated => "Max";
+  String get minimumAbbreviated => "Min";
   String get missing => 'Missing';
   String get monday => 'Monday';
   String get name => 'Name';

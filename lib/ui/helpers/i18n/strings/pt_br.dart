@@ -4,11 +4,13 @@ import './translation.dart';
 
 class PtBr implements Translation {
   String get msgAuthorizationIsPendant => "Autorização pendente";
-  String get msgAllChildsAreDisabled => "Por favor, chame o garçom para arrumar esse problema.\nTodos os filhos estão desativados no agendamento, habilite pelo menos um";
+  String get msgAllChildsAreDisabled =>
+      "Por favor, chame o garçom para arrumar esse problema.\nTodos os filhos estão desativados no agendamento, habilite pelo menos um";
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgCantAddCombox => 'Não é permitido adicionar combo por aqui';
-  String get msgCantSendServiceChargeProduct => 'Não é permitido enviar o produto de taxa de serviço';
+  String get msgCantSendServiceChargeProduct =>
+      'Não é permitido enviar o produto de taxa de serviço';
   String get msgClearCartOnLogout =>
       'Ao fazer o logout, o carrinho será limpo!';
   String get msgClearConfirmedPayments => "Limpar pagamentos confirmados";
@@ -188,6 +190,8 @@ class PtBr implements Translation {
   String get liquidateCommandSucceeds => "Comanda liquidada com sucesso";
   String get loadMenu => 'Carregar menu';
   String get login => 'Login';
+  String get maximumAbbreviated => "Máx";
+  String get minimumAbbreviated => "Mín";
   String get missing => 'Faltando';
   String get monday => 'Segunda';
   String get name => 'Nome';

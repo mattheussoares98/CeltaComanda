@@ -159,6 +159,8 @@ abstract class Translation {
   String get liquidateCommandSucceeds;
   String get loadMenu;
   String get login;
+  String get maximumAbbreviated;
+  String get minimumAbbreviated;
   String get missing;
   String get monday;
   String get name;

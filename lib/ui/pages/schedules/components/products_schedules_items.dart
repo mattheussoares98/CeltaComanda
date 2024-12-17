@@ -32,8 +32,16 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
         final color = productIndex % 2 == 0 ? Colors.grey[300] : Colors.white;
 
         return Container(
+          margin: EdgeInsets.all(3),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-          color: color,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.5,
+              color: Theme.of(context).primaryColorDark,
+            ),
+            borderRadius: BorderRadius.circular(10),
+            color: color!,
+          ),
           child: Column(
             children: [
               InkWell(
@@ -95,7 +103,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                   product: product,
                   expansibleGroup: widget.expansibleGroup,
                   callSetState: widget.callSetState,
-                  backgroundColor: color!,
+                  backgroundColor: color,
                 ),
             ],
           ),

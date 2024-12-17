@@ -84,7 +84,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: Theme.of(context).primaryColorLight,
+                      color: Theme.of(context).secondaryHeaderColor,
                     )),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),

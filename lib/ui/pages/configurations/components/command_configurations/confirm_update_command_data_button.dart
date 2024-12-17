@@ -7,8 +7,10 @@ import '../../../pages.dart';
 
 class ConfirmUpdateCommandDataButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
+  final TextEditingController commandNumberController;
   const ConfirmUpdateCommandDataButton({
     required this.formKey,
+    required this.commandNumberController,
     super.key,
   });
 
@@ -32,7 +34,7 @@ class ConfirmUpdateCommandDataButton extends StatelessWidget {
 
           final updated = await configurationsPresenter.updateCommandData(
             newFixedCommandNumber: configurationsPresenter.selectedCommand ??
-                homePresenter.commandEntity!.commandNumber!.toInt(),
+                commandNumberController.text.toInt(),
             printedProductsPresenter: printedProductsPresenter,
             peoples: configurationsPresenter.selectedPeoples,
             sellerCode:

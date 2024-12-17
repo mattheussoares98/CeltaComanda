@@ -46,6 +46,7 @@ PreferredSize homeAppBar({
               onPress: homePresenter.goToPrintedProductsPage,
               buttonName: R.string.requested,
               icon: Icons.list,
+              isPrice: false,
               quantityString:
                   (printedProductsPresenter.printed?.Products.length ?? 0)
                       .toString(),

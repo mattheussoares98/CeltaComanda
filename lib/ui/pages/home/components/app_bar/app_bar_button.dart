@@ -31,6 +31,7 @@ class AppBarButton extends StatelessWidget {
                 Flexible(
                   child: Icon(
                     icon,
+                    color: Colors.white,
                     size: hasMinWidth(context) ? 30 : 17,
                   ),
                 ),

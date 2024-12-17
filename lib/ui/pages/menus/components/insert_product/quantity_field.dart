@@ -8,10 +8,12 @@ class QuantityField extends StatelessWidget {
   final ProductsViewModel product;
   final TextEditingController quantityController;
   final FocusNode commentFocusNode;
+  final FocusNode quantityFocusNode;
   const QuantityField({
     required this.product,
     required this.quantityController,
     required this.commentFocusNode,
+    required this.quantityFocusNode,
     super.key,
   });
 
@@ -20,6 +22,9 @@ class QuantityField extends StatelessWidget {
     return TextFormField(
       enabled: product.IsPromoCombox != "true",
       controller: quantityController,
+      focusNode: quantityFocusNode,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
       validator: (value) {
         if (value == null || value.toDouble() == -1) {
           return R.string.msgInvalidNumber;
@@ -29,7 +34,11 @@ class QuantityField extends StatelessWidget {
         return null;
       },
       onFieldSubmitted: (_) {
-        commentFocusNode.requestFocus();
+        if (quantityController.text.isNotEmpty) {
+          commentFocusNode.requestFocus();
+        } else {
+          quantityFocusNode.requestFocus();
+        }
       },
       decoration: formFieldDecoration(
         context: context,

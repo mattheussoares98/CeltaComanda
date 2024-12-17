@@ -8,7 +8,7 @@ import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
-class SearchedProduct extends StatelessWidget {
+class SearchedProduct extends StatefulWidget {
   final ProductsViewModel product;
   final TextEditingController commandNumberController;
   final TextEditingController quantityController;
@@ -21,9 +21,16 @@ class SearchedProduct extends StatelessWidget {
     required this.commentController,
     super.key,
   });
-  static final formKeyQuantity = GlobalKey<FormState>();
-  static final formKeyCommandNumber = GlobalKey<FormState>();
-  static final commentFocusNode = FocusNode();
+
+  @override
+  State<SearchedProduct> createState() => _SearchedProductState();
+}
+
+class _SearchedProductState extends State<SearchedProduct> {
+  final formKeyQuantity = GlobalKey<FormState>();
+  final formKeyCommandNumber = GlobalKey<FormState>();
+  final commentFocusNode = FocusNode();
+  final quantityFocusNode = FocusNode();
 
   Future<void> addProduct(
     MenuPresenter menuPresenter,
@@ -38,13 +45,13 @@ class SearchedProduct extends StatelessWidget {
 
     if (isValid == true) {
       await cartPresenter.addProductInCart(
-        writtedComment: commentController.text,
+        writtedComment: widget.commentController.text,
         product: CartProductEntity(
           Product: product.toEntity(),
-          Comments: commentController.text,
+          Comments: widget.commentController.text,
           TotalLiquid: product.SaleRetailPraticed.toDouble() *
-              quantityController.text.toDouble(),
-          Quantity: quantityController.text.toDouble(),
+              widget.quantityController.text.toDouble(),
+          Quantity: widget.quantityController.text.toDouble(),
           Value: product.SaleRetailPraticed.toDouble(),
           ProductPriceLookUpCode: product.PriceLookupCode,
         ),
@@ -52,13 +59,21 @@ class SearchedProduct extends StatelessWidget {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      quantityController.clear();
-      commentController.clear();
+      widget.quantityController.clear();
+      widget.commentController.clear();
       PersonalizedDialogPage.open(
         context: context,
         page: CartPage(),
       );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    commentFocusNode.dispose();
+    quantityFocusNode.dispose();
   }
 
   @override
@@ -84,60 +99,51 @@ class SearchedProduct extends StatelessWidget {
         key: formKeyQuantity,
         child: Column(
           children: [
-            ProductInformations(product: product),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      QuantityField(
-                        product: product,
-                        quantityController: quantityController,
-                        commentFocusNode: commentFocusNode,
-                      ),
-                      const SizedBox(height: 8),
-                      CommentField(
-                        product: product,
-                        commentFocusNode: commentFocusNode,
-                        commentController: commentController,
-                        addProduct: () async {
+            ProductInformations(product: widget.product),
+            QuantityField(
+              product: widget.product,
+              quantityController: widget.quantityController,
+              commentFocusNode: commentFocusNode,
+              quantityFocusNode: quantityFocusNode,
+            ),
+            const SizedBox(height: 8),
+            CommentField(
+              product: widget.product,
+              commentFocusNode: commentFocusNode,
+              commentController: widget.commentController,
+              addProduct: () async {
+                await addProduct(
+                  menuPresenter,
+                  cartPresenter,
+                  homePresenter,
+                  printedProductsPresenter,
+                  expansibleGroupFromProductPresenter,
+                  widget.product,
+                  context,
+                );
+              },
+            ),
+            Form(
+              key: formKeyCommandNumber,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: ElevatedButton(
+                  onPressed: widget.product.IsPromoCombox == "true"
+                      ? null
+                      : () async {
                           await addProduct(
                             menuPresenter,
                             cartPresenter,
                             homePresenter,
                             printedProductsPresenter,
                             expansibleGroupFromProductPresenter,
-                            product,
+                            widget.product,
                             context,
                           );
                         },
-                      ),
-                    ],
-                  ),
+                  child: Text(R.string.confirm),
                 ),
-                Form(
-                  key: formKeyCommandNumber,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: product.IsPromoCombox == "true"
-                          ? null
-                          : () async {
-                              await addProduct(
-                                menuPresenter,
-                                cartPresenter,
-                                homePresenter,
-                                printedProductsPresenter,
-                                expansibleGroupFromProductPresenter,
-                                product,
-                                context,
-                              );
-                            },
-                      child: Text(R.string.confirm),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),

@@ -63,44 +63,46 @@ class _InsertProductBodyState extends State<InsertProductBody>
     loadingSubscription?.cancel();
     loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-      child: Column(
-        children: [
-          SearchField(
-            focusNode: focusNode,
-            formKey: formKey,
-            searchProductController: searchProductController,
-            searchProduct: () async {
-              await _searchProduct(menuPresenter);
-            },
-            changeSearchedProduct: () {
-              searchedProduct = true;
-            },
-          ),
-          StreamBuilder<ProductsViewModel?>(
-            stream: menuPresenter.searchedProductStream,
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return SizedBox();
-              }
-
-              if (searchedProduct && searchProductController.text.isNotEmpty) {
-                Future.delayed(Duration.zero, () {
-                  searchedProduct = false;
-                  searchProductController.text = "";
-                });
-              }
-
-              return SearchedProduct(
-                product: snapshot.data!,
-                commandNumberController: commandNumberController,
-                quantityController: quantityController,
-                commentController: commentController,
-              );
-            },
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+        child: Column(
+          children: [
+            SearchField(
+              focusNode: focusNode,
+              formKey: formKey,
+              searchProductController: searchProductController,
+              searchProduct: () async {
+                await _searchProduct(menuPresenter);
+              },
+              changeSearchedProduct: () {
+                searchedProduct = true;
+              },
+            ),
+            StreamBuilder<ProductsViewModel?>(
+              stream: menuPresenter.searchedProductStream,
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return SizedBox();
+                }
+      
+                if (searchedProduct && searchProductController.text.isNotEmpty) {
+                  Future.delayed(Duration.zero, () {
+                    searchedProduct = false;
+                    searchProductController.text = "";
+                  });
+                }
+      
+                return SearchedProduct(
+                  product: snapshot.data!,
+                  commandNumberController: commandNumberController,
+                  quantityController: quantityController,
+                  commentController: commentController,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

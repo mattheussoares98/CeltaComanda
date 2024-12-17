@@ -5,8 +5,12 @@ import '../helpers/helpers.dart';
 
 class CommandField extends StatelessWidget {
   final TextEditingController commandNumberController;
+  final String? hintText;
+  final String? labelText;
   const CommandField({
     required this.commandNumberController,
+    this.hintText,
+    this.labelText,
     super.key,
   });
 
@@ -41,8 +45,8 @@ class CommandField extends StatelessWidget {
           },
           decoration: formFieldDecoration(
             context: context,
-            hintText: R.string.commandNumber,
-            labelText: R.string.commandNumber,
+            hintText: hintText ?? R.string.commandNumber,
+            labelText: labelText ?? R.string.commandNumber,
             errorText: null,
             prefixIcon: IconButton(
               color: Theme.of(context).primaryColor,

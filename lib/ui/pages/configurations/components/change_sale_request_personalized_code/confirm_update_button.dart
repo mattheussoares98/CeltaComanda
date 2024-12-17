@@ -8,12 +8,12 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class ConfirmUpdateButton extends StatelessWidget {
-  final int? oldPersonalizedCode;
-  final int? newPersonalizedCode;
+  final TextEditingController oldCommandNumberController;
+  final TextEditingController newCommandNumberController;
   final GlobalKey<FormState> formKey;
   const ConfirmUpdateButton({
-    required this.oldPersonalizedCode,
-    required this.newPersonalizedCode,
+    required this.oldCommandNumberController,
+    required this.newCommandNumberController,
     required this.formKey,
     super.key,
   });
@@ -30,8 +30,8 @@ class ConfirmUpdateButton extends StatelessWidget {
         if (isValid == true) {
           final updated =
               await configurationsPresenter.updateSaleRequestPersonalizedCode(
-            oldPersonalizedCode: oldPersonalizedCode!,
-            newPersonalizedCode: newPersonalizedCode!,
+            oldPersonalizedCode: oldCommandNumberController.text.toInt(),
+            newPersonalizedCode: newCommandNumberController.text.toInt(),
           );
 
           if (updated) {

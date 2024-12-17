@@ -20,7 +20,7 @@ class EnterpriseValidationPage extends StatefulWidget {
 }
 
 class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
-    with KeyboardManager, LoadingManager, UIErrorManager {
+    with LoadingManager, UIErrorManager {
   final enterpriseController = TextEditingController();
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -92,79 +92,76 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
         handleMainError(context, enterprisePresenter.mainErrorStream);
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => hideKeyboard(context),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const LoginHeader(),
-              Headline1(text: R.string.validateEnterprise),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Column(
-                  children: [
-                    EnterpriseInput(
-                      enterpriseController: enterpriseController,
-                      commandNumberController: commandNumberController,
-                      isFixedCommandNumber: isFixedCommandNumber,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Column(
-                        children: [
-                          FixedNumberCommandSwitch(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const LoginHeader(),
+            Headline1(text: R.string.validateEnterprise),
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                children: [
+                  EnterpriseInput(
+                    enterpriseController: enterpriseController,
+                    commandNumberController: commandNumberController,
+                    isFixedCommandNumber: isFixedCommandNumber,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Column(
+                      children: [
+                        FixedNumberCommandSwitch(
+                          isFixedCommandNumber: isFixedCommandNumber,
+                          updateIsFixedCommandNumber: () {
+                            setState(() {
+                              isFixedCommandNumber = !isFixedCommandNumber;
+                            });
+                          },
+                        ),
+                        if (isFixedCommandNumber)
+                          FixedCommandNumberInput(
                             isFixedCommandNumber: isFixedCommandNumber,
-                            updateIsFixedCommandNumber: () {
-                              setState(() {
-                                isFixedCommandNumber = !isFixedCommandNumber;
-                              });
+                            commandNumberController: commandNumberController,
+                            formKey: _formKey,
+                            validateEnterprise: () async {
+                              await _validateEnterprise(
+                                homePresenter: homePresenter,
+                                enterprisePresenter: enterprisePresenter,
+                              );
                             },
                           ),
-                          if (isFixedCommandNumber)
-                            FixedCommandNumberInput(
-                              isFixedCommandNumber: isFixedCommandNumber,
-                              commandNumberController: commandNumberController,
-                              formKey: _formKey,
-                              validateEnterprise: () async {
-                                await _validateEnterprise(
-                                  homePresenter: homePresenter,
-                                  enterprisePresenter: enterprisePresenter,
-                                );
-                              },
-                            ),
-                        ],
-                      ),
+                      ],
                     ),
-                    const SizedBox(height: 10),
-                    EnterpriseValidateButton(
-                      validateEnterprise: () async {
-                        await _validateEnterprise(
-                          homePresenter: homePresenter,
-                          enterprisePresenter: enterprisePresenter,
-                        );
+                  ),
+                  const SizedBox(height: 10),
+                  EnterpriseValidateButton(
+                    validateEnterprise: () async {
+                      await _validateEnterprise(
+                        homePresenter: homePresenter,
+                        enterprisePresenter: enterprisePresenter,
+                      );
+                      setState(() {
+                        selectedPdv = null;
+                      });
+                    },
+                  ),
+                  if (homePresenter.isGeneratingVersionToGetNet ||
+                      homePresenter.isGeneratingVersionToRede)
+                    PdvNotUsingDropdown(
+                      isFixedCommandNumber: isFixedCommandNumber,
+                      commandNumberController: commandNumberController,
+                      selectedPdv: selectedPdv,
+                      updateSelectedPdv: (value) {
                         setState(() {
-                          selectedPdv = null;
+                          selectedPdv = value;
                         });
                       },
                     ),
-                    if (homePresenter.isGeneratingVersionToGetNet ||
-                        homePresenter.isGeneratingVersionToRede)
-                      PdvNotUsingDropdown(
-                        isFixedCommandNumber: isFixedCommandNumber,
-                        commandNumberController: commandNumberController,
-                        selectedPdv: selectedPdv,
-                        updateSelectedPdv: (value) {
-                          setState(() {
-                            selectedPdv = value;
-                          });
-                        },
-                      ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

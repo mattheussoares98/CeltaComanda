@@ -46,7 +46,8 @@ void main() async {
   runApp(const App());
 }
 
-class App extends StatelessWidget with HideNavigationBarManager {
+class App extends StatelessWidget
+    with HideNavigationBarManager, KeyboardManager {
   const App({super.key});
 
   @override
@@ -105,10 +106,12 @@ class App extends StatelessWidget with HideNavigationBarManager {
         onTap: () {
           UserInteraction.restartTimes();
           FocusScope.of(context).unfocus();
+          hideKeyboard(context);
         },
         onPanDown: (_) {
           UserInteraction.restartTimes();
           FocusScope.of(context).unfocus();
+          hideKeyboard(context);
         },
         child: GetMaterialApp(
           navigatorKey: NavigatorKey.navigatorKey,

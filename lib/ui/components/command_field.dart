@@ -112,7 +112,7 @@ class CommandField extends StatelessWidget {
             },
             icon: Row(
               children: [
-                Icon(Icons.refresh),
+                Icon(Icons.search),
                 if (hasMinWidth(context))
                   Padding(
                     padding: const EdgeInsets.only(left: 8),

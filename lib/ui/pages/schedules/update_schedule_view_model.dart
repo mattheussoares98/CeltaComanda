@@ -41,8 +41,6 @@ extension ScheduleTypeExtension on ScheduleType {
         return ProductScheduleViewModel;
       case ScheduleType.expansibleGroup:
         return ExpansibleGroupScheduleViewModel;
-      default:
-        return ProductScheduleViewModel;
     }
   }
 }

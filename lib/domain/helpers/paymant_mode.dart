@@ -29,9 +29,7 @@ extension PaymentModeExtension on PaymentMode {
       case PaymentMode.pix:
         return 3;
       case PaymentMode.voucher:
-        return 10;
-      default:
-        return 1;
+        return 5;
     }
   }
 }

@@ -26,7 +26,7 @@ class PepperBadge extends StatelessWidget {
       child: CircleAvatar(
         minRadius: _getSize(height: height, width: width),
         maxRadius: _getSize(height: height, width: width),
-        backgroundColor: Colors.grey.withOpacity(0.3),
+        backgroundColor: Colors.grey.withAlpha(76),
         child: Row(
           children: List.generate(
             _getPepperQuantity(product?.ProductComplement),

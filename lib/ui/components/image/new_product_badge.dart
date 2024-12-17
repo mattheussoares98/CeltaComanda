@@ -24,7 +24,7 @@ class NewProductBadge extends StatelessWidget {
           borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(10),
           ),
-          color: Colors.red.withOpacity(0.7),
+          color: Colors.red.withAlpha(178),
         ),
         child: Padding(
           padding:

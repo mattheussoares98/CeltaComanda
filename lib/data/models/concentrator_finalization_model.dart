@@ -139,8 +139,6 @@ extension FinalizationIdentificationExtension on FinalizationIdentification {
         return 9;
       case FinalizationIdentification.financialCredits:
         return 10;
-      default:
-        return 1;
     }
   }
 }

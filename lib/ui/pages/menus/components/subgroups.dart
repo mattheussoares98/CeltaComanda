@@ -48,7 +48,9 @@ class Subgroups extends StatelessWidget {
       String subgroupName,
     ) async {
       if (!productsScrollController.hasClients ||
-          firstIndexIsGreaterThanAtualProductsLength()) return;
+          firstIndexIsGreaterThanAtualProductsLength()) {
+        return;
+      }
 
       List<ProductsViewModel> products =
           menuPresenter.treatSchedules<ProductsViewModel>();
@@ -65,7 +67,9 @@ class Subgroups extends StatelessWidget {
     Future<void> scrollSubgroup(List<String?> subgroups, int index) async {
       if (!productsScrollController.hasClients ||
           hasMinWidth(context) ||
-          firstIndexIsGreaterThanAtualProductsLength()) return;
+          firstIndexIsGreaterThanAtualProductsLength()) {
+        return;
+      }
 
       final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
           .elementAt(firstVisibleProductIndex);

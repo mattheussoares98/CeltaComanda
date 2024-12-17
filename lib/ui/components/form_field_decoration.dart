@@ -27,18 +27,18 @@ InputDecoration formFieldDecoration({
       ),
       hintStyle: TextStyle(
         color: Colors.grey,
-        fontSize: StringSize.size * 0.6,
+        fontSize: StringSize.size,
       ),
       labelStyle: TextStyle(
         color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.italic,
-        fontSize: StringSize.size * 0.6,
+        fontSize: StringSize.size,
       ),
       floatingLabelStyle: TextStyle(
         color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.normal,
-        fontSize: StringSize.size * 0.6,
+        fontSize: StringSize.size,
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),

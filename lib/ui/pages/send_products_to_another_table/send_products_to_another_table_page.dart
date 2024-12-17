@@ -20,8 +20,6 @@ class SendProductsToAnotherTablePage extends StatefulWidget {
 class _SendProductsToAnotherTablePageState
     extends State<SendProductsToAnotherTablePage>
     with LoadingManager, UIErrorManager {
-  int? selectedOriginCommand;
-  int? selectedDestinyCommand;
   final formKey = GlobalKey<FormState>();
   bool tableIsEmpty = true;
   StreamSubscription? loadingSubscription;
@@ -29,6 +27,8 @@ class _SendProductsToAnotherTablePageState
 
   final originCommandNumberController = TextEditingController();
   final destinyCommandNumberController = TextEditingController();
+  final originFocusNode = FocusNode();
+  final destinyFocusNode = FocusNode();
 
   @override
   dispose() {
@@ -37,6 +37,13 @@ class _SendProductsToAnotherTablePageState
     mainErrorSubscription?.cancel();
     originCommandNumberController.dispose();
     destinyCommandNumberController.dispose();
+    originFocusNode.dispose();
+    destinyFocusNode.dispose();
+  }
+
+  void unfocus() {
+    originFocusNode.unfocus();
+    destinyFocusNode.unfocus();
   }
 
   @override
@@ -61,9 +68,9 @@ class _SendProductsToAnotherTablePageState
           child: Text(R.string.sendOneOrMoreProductsToAnotherTable),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SafeArea(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Form(
             key: formKey,
             child: StreamBuilder<PrintedViewModel?>(
@@ -79,20 +86,20 @@ class _SendProductsToAnotherTablePageState
                                   originCommandNumberController,
                               hintText: R.string.msgOldTable,
                               labelText: R.string.msgOldTable,
+                              focusNode: originFocusNode,
+                              loadData: () async {
+                                bool? isValid =
+                                    formKey.currentState?.validate();
+                
+                                if (isValid == true) {
+                                  await sendProductsToAnotherTablePresenter
+                                      .loadProducts(
+                                          originCommandNumberController.text
+                                              .toInt());
+                                }
+                                unfocus();
+                              },
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () async {
-                              bool? isValid = formKey.currentState?.validate();
-
-                              if (isValid == true) {
-                                await sendProductsToAnotherTablePresenter
-                                    .loadProducts(originCommandNumberController
-                                        .text
-                                        .toInt());
-                              }
-                            },
-                            icon: Icon(Icons.refresh),
                           ),
                         ],
                       ),
@@ -100,6 +107,8 @@ class _SendProductsToAnotherTablePageState
                         commandNumberController: destinyCommandNumberController,
                         hintText: R.string.msgNewTable,
                         labelText: R.string.msgNewTable,
+                        validateField: false,
+                        focusNode: destinyFocusNode,
                       ),
                       Expanded(
                         child: LoadedProductsItems(
@@ -109,31 +118,28 @@ class _SendProductsToAnotherTablePageState
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: SelectOrUnselectAllProducts(
-                                printedViewModel: snapshot.data,
-                                callSetState: () {
-                                  setState(() {});
-                                },
-                              ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: SelectOrUnselectAllProducts(
+                              printedViewModel: snapshot.data,
+                              callSetState: () {
+                                setState(() {});
+                              },
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: ConfirmButton(
-                                formKey: formKey,
-                                originCommandNumberController:
-                                    originCommandNumberController,
-                                destinyCommandNumberController:
-                                    destinyCommandNumberController,
-                              ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: ConfirmButton(
+                              formKey: formKey,
+                              originCommandNumberController:
+                                  originCommandNumberController,
+                              destinyCommandNumberController:
+                                  destinyCommandNumberController,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   );

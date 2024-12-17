@@ -202,6 +202,7 @@ abstract class Translation {
   String get searchDataOfOtherCommandNumber;
   String get searchProduct;
   String get searchType;
+  String get selectAll;
   String get selectAllProducts;
   String get selectOneComment;
   String get selectedProductsAndComments;
@@ -236,6 +237,7 @@ abstract class Translation {
   String get totalPaid;
   String get tuesday;
   String get turnBack;
+  String get unselectAll;
   String get unselectAllProducts;
   String get updateConfigurations;
   String get updateMenu;

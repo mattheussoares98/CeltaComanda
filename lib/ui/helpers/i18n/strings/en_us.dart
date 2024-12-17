@@ -235,6 +235,7 @@ class EnUs implements Translation {
   String get searchCommandData => 'Search command data';
   String get searchProduct => 'Search product';
   String get searchType => 'Search type';
+  String get selectAll => "Select all";
   String get selectAllProducts => "Select all products";
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
@@ -271,6 +272,7 @@ class EnUs implements Translation {
   String get totalByPerson => 'Total by person';
   String get tuesday => 'Tuesday';
   String get turnBack => 'Go back';
+  String get unselectAll => 'Unselect all';
   String get unselectAllProducts => 'Unselect all products';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';

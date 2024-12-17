@@ -235,6 +235,7 @@ class PtBr implements Translation {
   String get searchCommandData => "Consultar dados da comanda";
   String get searchProduct => "Consultar produto";
   String get searchType => "Tipo de pesquisa";
+  String get selectAll => "Selecionar todos";
   String get selectAllProducts => "Selecionar todos produtos";
   String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>
@@ -272,6 +273,7 @@ class PtBr implements Translation {
   String get totalByPerson => 'Total por pessoa';
   String get tuesday => 'Terça';
   String get turnBack => 'Voltar';
+  String get unselectAll => "Desselecionar todos";
   String get unselectAllProducts => "Desselecionar todos produtos";
   String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";

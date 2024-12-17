@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
 
-class SearchCommandField extends StatelessWidget {
+class SearchCommandField extends StatefulWidget {
   final TextEditingController commandNumberController;
   final Future<void> Function() searchData;
   const SearchCommandField({
@@ -12,40 +11,29 @@ class SearchCommandField extends StatelessWidget {
     super.key,
   });
 
-  static final _formKey = GlobalKey<FormState>();
+  @override
+  State<SearchCommandField> createState() => _SearchCommandFieldState();
+}
+
+class _SearchCommandFieldState extends State<SearchCommandField> {
+  final _formKey = GlobalKey<FormState>();
+  final focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Expanded(
-            child: CommandField(
-              commandNumberController: commandNumberController,
-            ),
-          ),
-          IconButton(
-            onPressed: () async {
-              bool? isValid = _formKey.currentState?.validate();
-
-              if (isValid == true) {
-                await searchData();
-              }
-            },
-            icon: Row(
-              children: [
-                Icon(Icons.refresh),
-                if (hasMinWidth(context))
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(R.string.search),
-                  )
-              ],
-            ),
-          ),
-        ],
+      child: CommandField(
+        commandNumberController: widget.commandNumberController,
+        focusNode: focusNode,
+        loadData: () async {
+          bool? isValid = _formKey.currentState?.validate();
+      
+          if (isValid == true) {
+            await widget.searchData();
+            focusNode.unfocus();
+          }
+        },
       ),
     );
   }

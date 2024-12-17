@@ -59,9 +59,9 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         child: Text(
           allProductsAreSelected(sendProductsToAnotherTablePresenter)
-              ? R.string.unselectAllProducts
-              : R.string.selectAllProducts,
-              textAlign: TextAlign.center,
+              ? R.string.unselectAll
+              : R.string.selectAll,
+          textAlign: TextAlign.center,
         ),
       ),
     );

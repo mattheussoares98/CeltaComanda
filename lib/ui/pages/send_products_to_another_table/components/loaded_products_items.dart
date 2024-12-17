@@ -46,25 +46,19 @@ class LoadedProductsItems extends StatelessWidget {
       if (printedViewModel == null) {
         return SizedBox();
       }
-      return Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: hasMinWidth(context) ? 2 : 1,
-            childAspectRatio: 8,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-          ),
-          itemCount: printedViewModel!.Products.length,
-          itemBuilder: (context, index) {
-            final product = printedViewModel!.Products[index];
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: printedViewModel!.Products.length,
+        itemBuilder: (context, index) {
+          final product = printedViewModel!.Products[index];
 
-            DateTime data = DateTime.parse(product.DateHourOfCreation);
-            String horasEMinutos =
-                "${data.hour.toString().padLeft(2, '0')}:${data.minute.toString().padLeft(2, '0')}";
+          DateTime data = DateTime.parse(product.DateHourOfCreation);
+          String horasEMinutos =
+              "${data.hour.toString().padLeft(2, '0')}:${data.minute.toString().padLeft(2, '0')}";
 
-            return InkWell(
+          return Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: InkWell(
               onTap: () {
                 updateProductIsSelected(
                   sendProductsToAnotherTablePresenter:
@@ -74,66 +68,69 @@ class LoadedProductsItems extends StatelessWidget {
               },
               child: Container(
                 color: Theme.of(context).primaryColorLight.withAlpha(30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(horasEMinutos),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                product.Product.Name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: StringSize.size,
-                                ),
-                              ),
-                            ),
-                            if (product.Comments != null &&
-                                product.Comments!.isNotEmpty)
-                              FittedBox(
-                                child: Comment(comment: product.Comments!),
-                              ),
-                          ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(horasEMinutos),
                         ),
-                      ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                              children: [
+                                Text(
+                                  product.Product.Name,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: StringSize.size,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Text(
+                            product.TotalLiquid.toDouble()
+                                .toString()
+                                .toBrazilianNumber()
+                                .addBrazilianCoin(),
+                          ),
+                        ),
+                        Checkbox(
+                          value: sendProductsToAnotherTablePresenter
+                              .selectedsSaleRequestProductsIds
+                              .contains(
+                            product.SaleRequestProductId.toInt(),
+                          ),
+                          onChanged: (value) {
+                            updateProductIsSelected(
+                              sendProductsToAnotherTablePresenter:
+                                  sendProductsToAnotherTablePresenter,
+                              product: product,
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Text(
-                        product.TotalLiquid.toDouble()
-                            .toString()
-                            .toBrazilianNumber()
-                            .addBrazilianCoin(),
+                    if (product.Comments != null &&
+                        product.Comments!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Comment(comment: product.Comments!),
                       ),
-                    ),
-                    Checkbox(
-                      value: sendProductsToAnotherTablePresenter
-                          .selectedsSaleRequestProductsIds
-                          .contains(
-                        product.SaleRequestProductId.toInt(),
-                      ),
-                      onChanged: (value) {
-                        updateProductIsSelected(
-                          sendProductsToAnotherTablePresenter:
-                              sendProductsToAnotherTablePresenter,
-                          product: product,
-                        );
-                      },
-                    ),
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       );
     });
   }

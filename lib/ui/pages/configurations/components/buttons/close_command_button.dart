@@ -15,8 +15,14 @@ class CloseCommandButton extends StatefulWidget {
 }
 
 class _CloseCommandButtonState extends State<CloseCommandButton> {
-  int? selectedCommandInDropDown;
+  final commandNumberController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    commandNumberController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +39,8 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
             closeDialogOnConfirmPress: false,
             content: Form(
               key: formKey,
-              child: SelectTableDropDown(
-                selectedCommandInDropDown: selectedCommandInDropDown,
-                updateSelectedCommandInDropDown: (value) {
-                  setState(() {
-                    selectedCommandInDropDown = value;
-                  });
-                },
-                hintText: R.string.msgSelectCommand,
-                validator: (value) {
-                  if (value == null) {
-                    return R.string.msgSelectCommand;
-                  }
-                  return null;
-                },
+              child: CommandField(
+                commandNumberController: commandNumberController,
               ),
             ),
             onPress: () async {
@@ -54,7 +48,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
 
               if (isValid == true) {
                 bool confirmed = await configurationsPresenter
-                    .closeCommand(selectedCommandInDropDown!);
+                    .closeCommand(commandNumberController.text.toInt());
 
                 Navigator.of(context).pop();
 
@@ -63,7 +57,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
                 }
               }
             });
-        selectedCommandInDropDown = null;
+        commandNumberController.text = "";
       },
     );
   }

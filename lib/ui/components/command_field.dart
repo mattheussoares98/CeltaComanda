@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../components/components.dart';
-import '../../../helpers/helpers.dart';
+import 'components.dart';
+import '../helpers/helpers.dart';
 
 class CommandField extends StatelessWidget {
   final TextEditingController commandNumberController;

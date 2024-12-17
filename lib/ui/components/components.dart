@@ -1,6 +1,7 @@
 export './drawer/drawer.dart';
-export './summary/summary.dart';
 export "./app_theme.dart";
+export './summary/summary.dart';
+export './command_field.dart';
 export './comment.dart';
 export 'drawer/drawer_items.dart';
 export './error_message.dart';

@@ -49,6 +49,7 @@ class CommandField extends StatelessWidget {
                 textAlign: TextAlign.center,
                 focusNode: focusNode,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                keyboardType: TextInputType.numberWithOptions(decimal: false),
                 onFieldSubmitted: (_) async {
                   if (loadData != null) {
                     await loadData!();

@@ -7,12 +7,12 @@ import '../../pages.dart';
 
 class ConfirmButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final int? oldPersonalizedCode;
-  final int? newPersonalizedCode;
+  final TextEditingController originCommandNumberController;
+  final TextEditingController destinyCommandNumberController;
   const ConfirmButton({
     required this.formKey,
-    required this.oldPersonalizedCode,
-    required this.newPersonalizedCode,
+    required this.originCommandNumberController,
+    required this.destinyCommandNumberController,
     super.key,
   });
 
@@ -35,8 +35,8 @@ class ConfirmButton extends StatelessWidget {
               onPress: () async {
                 await sendProductsToAnotherTablePresenter
                     .sendProductsToAnotherTable(
-                  oldPersonalizedCode: oldPersonalizedCode!,
-                  newPersonalizedCode: newPersonalizedCode!,
+                  oldPersonalizedCode: originCommandNumberController.text.toInt(),
+                  newPersonalizedCode: destinyCommandNumberController.text.toInt(),
                   cartPresenter: cartPresenter,
                   homePresenter: homePresenter,
                 );

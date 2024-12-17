@@ -7,10 +7,12 @@ class CommandField extends StatelessWidget {
   final TextEditingController commandNumberController;
   final String? hintText;
   final String? labelText;
+  final bool? validateField;
   const CommandField({
     required this.commandNumberController,
     this.hintText,
     this.labelText,
+    this.validateField = true,
     super.key,
   });
 
@@ -23,8 +25,8 @@ class CommandField extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("${R.string.minimumAbbreviated}: 1"),
-              Text("${R.string.maximumAbbreviated}: 1000"),
+              Expanded(child: Text("${R.string.minimumAbbreviated}: 1")),
+              Expanded(child: Text("${R.string.maximumAbbreviated}: 1000")),
             ],
           ),
         ),
@@ -33,7 +35,9 @@ class CommandField extends StatelessWidget {
           textAlign: TextAlign.center,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
-            if (value == null || value.isEmpty) {
+            if (validateField == false) {
+              return null;
+            } else if (value == null || value.isEmpty) {
               return R.string.msgWriteCommandNumber;
             } else if (int.tryParse(value) == null) {
               return R.string.msgInvalidNumber;

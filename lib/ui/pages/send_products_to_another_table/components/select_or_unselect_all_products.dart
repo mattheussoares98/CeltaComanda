@@ -55,10 +55,14 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
           callSetState();
         }
       },
-      child: Text(
-        allProductsAreSelected(sendProductsToAnotherTablePresenter)
-            ? R.string.unselectAllProducts
-            : R.string.selectAllProducts,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          allProductsAreSelected(sendProductsToAnotherTablePresenter)
+              ? R.string.unselectAllProducts
+              : R.string.selectAllProducts,
+              textAlign: TextAlign.center,
+        ),
       ),
     );
   }

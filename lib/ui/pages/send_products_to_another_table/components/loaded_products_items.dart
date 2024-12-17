@@ -47,7 +47,7 @@ class LoadedProductsItems extends StatelessWidget {
         return SizedBox();
       }
       return Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.only(top: 8),
         child: GridView.builder(
           shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

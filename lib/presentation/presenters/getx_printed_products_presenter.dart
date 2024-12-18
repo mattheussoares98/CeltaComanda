@@ -218,19 +218,16 @@ class GetxPrintedProductsPresenter
 
     double value;
 
-    if (printed.IncrementType.isEmpty &&
-        EnterpriseBuilder.entity?.pluServiceCharge != null &&
-        EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null &&
-        EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null) {
-      value = printed.TotalLiquid.toDouble() *
-          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
-    } else if (printed.IncrementType.toInt() == 1) {
+    if (printed.IncrementType.toInt() == 1) {
       //value
       value = printed.IncrementValue.toDouble();
     } else if (printed.IncrementType.toInt() == 2) {
       //percentage
       value = printed.TotalLiquid.toDouble() *
-          (printed.IncrementValue.toDouble() / 100);
+          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
+    } else if (EnterpriseBuilder.entity?.pluServiceCharge != null &&
+        EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null) {
+      return 0;
     } else {
       return 0;
     }

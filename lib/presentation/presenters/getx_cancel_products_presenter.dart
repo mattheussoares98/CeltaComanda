@@ -1,6 +1,7 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -20,7 +21,7 @@ class GetxCancelProductsPresenter extends GetxController
 
   @override
   Future<void> cancelProduct({
-    required String productId,
+    required PrintedProductsViewModel product,
     required int commandNumber,
     required void Function() showSuccessMessage,
     required CartPresenter cartPresenter,
@@ -30,11 +31,15 @@ class GetxCancelProductsPresenter extends GetxController
     mainError = null;
 
     try {
-      await removePrintedProduct.remove(productId);
-      await cartPresenter.insertServiceChargeProduct(
-        commandNumber: commandNumber.toString(),
-        homePresenter: homePresenter,
-      );
+      await removePrintedProduct.remove(product.SaleRequestProductId);
+
+      if (EnterpriseBuilder.entity?.pluServiceCharge !=
+          product.ProductPriceLookUpCode) {
+        await cartPresenter.insertServiceChargeProduct(
+          commandNumber: commandNumber.toString(),
+          homePresenter: homePresenter,
+        );
+      }
       await loadProducts(commandNumber);
       showSuccessMessage();
     } catch (e) {

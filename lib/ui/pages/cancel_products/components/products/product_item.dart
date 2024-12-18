@@ -121,7 +121,7 @@ class ProductItem extends StatelessWidget {
                         await cancelProductsPresenter.cancelProduct(
                             cartPresenter: cartPresenter,
                             homePresenter: homePresenter,
-                            productId: product.SaleRequestProductId,
+                            product: product,
                             commandNumber: commandNumber!,
                             showSuccessMessage: () {
                               snackBarMessage(

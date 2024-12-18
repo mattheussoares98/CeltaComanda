@@ -108,7 +108,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.cancelProduct(
-        productId: faker.randomGenerator.string(10),
+        product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
         cartPresenter: cartPresenter,
@@ -123,7 +123,7 @@ void main() {
       removePrintedProduct.mockError();
 
       await sut.cancelProduct(
-        productId: faker.randomGenerator.string(10),
+        product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
         cartPresenter: cartPresenter,
@@ -131,10 +131,10 @@ void main() {
       );
     });
     test("Should call removePrintedProduct with correct value", () async {
-      final id = faker.randomGenerator.string(10);
+      final id = printedViewModel.Products[0].SaleRequestProductId;
 
       await sut.cancelProduct(
-        productId: id,
+        product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
         cartPresenter: cartPresenter,
@@ -145,7 +145,7 @@ void main() {
     });
     test("Should call cartPresenter.insertServiceChargeProduct", () async {
       await sut.cancelProduct(
-        productId: faker.randomGenerator.string(10),
+        product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
         cartPresenter: cartPresenter,
@@ -156,6 +156,55 @@ void main() {
             commandNumber: commandNumber.toString(),
             homePresenter: homePresenter,
           )).called(1);
+    });
+    test(
+        "Should not call insertServiceChargeProduct if removed product is serviceCharge",
+        () async {
+      EnterpriseBuilder.entity = EnterpriseEntity(
+        pluServiceCharge: printedViewModel.Products[0]
+            .ProductPriceLookUpCode, //putting the same PLU that call to remove product
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        url: EnterpriseBuilder.entity?.url,
+        enterpriseId: EnterpriseBuilder.entity?.enterpriseId,
+        concentradorUrl: EnterpriseBuilder.entity?.concentradorUrl,
+        persistApp: EnterpriseBuilder.entity?.persistApp,
+        urlCCS: EnterpriseBuilder.entity?.urlCCS,
+        useCovenant: EnterpriseBuilder.entity?.useCovenant,
+        enterpriseConcentradorParametersEntity:
+            EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
+        updateMenu: EnterpriseBuilder.entity?.updateMenu,
+        updateConcentratorEnterpriseData:
+            EnterpriseBuilder.entity?.updateConcentratorEnterpriseData,
+        serviceChargePercentageOrValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
+        serviceChargeType: EnterpriseBuilder.entity?.serviceChargeType,
+        updateDevicesInformations:
+            EnterpriseBuilder.entity?.updateDevicesInformations,
+        updateEnterprise: EnterpriseBuilder.entity?.updateEnterprise,
+        zoomImage: EnterpriseBuilder.entity?.zoomImage,
+        pendingDevicesToUpdate:
+            EnterpriseBuilder.entity?.pendingDevicesToUpdate,
+        updatePendingDevices: EnterpriseBuilder.entity?.updatePendingDevices,
+        waitDaysToPreloadImages:
+            EnterpriseBuilder.entity?.waitDaysToPreloadImages,
+        secondsPreloadingImages:
+            EnterpriseBuilder.entity?.secondsPreloadingImages,
+        internalCodeOnErpServiceCharge:
+            EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge,
+      );
+
+      await sut.cancelProduct(
+        product: printedViewModel.Products[0],
+        commandNumber: commandNumber,
+        showSuccessMessage: () {},
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verifyNever(() => cartPresenter.insertServiceChargeProduct(
+            commandNumber: commandNumber.toString(),
+            homePresenter: homePresenter,
+          ));
     });
   });
 }

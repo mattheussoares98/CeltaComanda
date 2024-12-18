@@ -9,7 +9,7 @@ abstract class CancelProductsPresenter implements Listenable {
   Stream<PrintedViewModel?> get printedProducts;
 
   Future<void> cancelProduct({
-    required String productId,
+    required PrintedProductsViewModel product,
     required int commandNumber,
     required void Function() showSuccessMessage,
     required CartPresenter cartPresenter,

@@ -53,6 +53,7 @@ class QuantityField extends StatelessWidget {
                     focusNode: quantityFocusNode,
                     enabled: product.IsPromoCombox != "true",
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    maxLength: 10,
                     onTap: () {
                       quantityController.selection = TextSelection(
                         baseOffset: 0,
@@ -81,6 +82,7 @@ class QuantityField extends StatelessWidget {
                       return null;
                     },
                     decoration: formFieldDecoration(
+                      showCounterText: false,
                       context: context,
                       hintText: R.string.quantity,
                       labelText: R.string.quantity,
@@ -104,7 +106,7 @@ class QuantityField extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         onPressed: () {
                           if (quantityController.text.isEmpty) {
-                            quantityController.text = "1";
+                            quantityController.text = "1,000";
                             return;
                           }
 

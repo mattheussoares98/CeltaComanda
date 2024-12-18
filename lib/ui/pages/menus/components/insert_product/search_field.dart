@@ -25,6 +25,7 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     return Row(
       children: [
         Expanded(
@@ -62,7 +63,9 @@ class SearchField extends StatelessWidget {
                     color: Colors.red,
                   ),
                 ),
-                suffixIcon: Platform.isWindows
+                suffixIcon: Platform.isWindows ||
+                        homePresenter.isGeneratingVersionToGetNet ||
+                        homePresenter.isGeneratingVersionToRede
                     ? null
                     : IconButton(
                         onPressed: () async {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +44,9 @@ class CancelProductsPasswordInput extends StatelessWidget {
         ),
         labelText: "Senha do usuário",
         hintText: "Senha do usuário",
-        suffixIcon: homePresenter.isGeneratingVersionToRede
+        suffixIcon: homePresenter.isGeneratingVersionToRede ||
+                homePresenter.isGeneratingVersionToGetNet ||
+                Platform.isWindows
             ? null
             : IconButton(
                 onPressed: () async {

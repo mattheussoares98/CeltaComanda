@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "br.com.celtaware.comanda"
-    compileSdk 34
+    compileSdk 35
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -57,7 +57,7 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         multiDexEnabled true
         minSdkVersion 23
-        targetSdk 34
+        targetSdk 35
         versionCode 67
         versionName flutterVersionName
         ndkVersion "26.2.11394342"

@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage>
             drawerEnableOpenDragGesture: false,
             //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
             drawer: !homePresenter.isGeneratingVersionToTablet ||
-                    homePresenter.commandEntity!.commandNumber == null
+                    homePresenter.commandEntity?.commandNumber == null
                 ? const DrawerItems()
                 : null,
             appBar: homeAppBar(

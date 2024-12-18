@@ -387,14 +387,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_barcode_scanner:
+  flutter_barcode_scanner_plus:
     dependency: "direct main"
     description:
-      name: flutter_barcode_scanner
-      sha256: a4ba37daf9933f451a5e812c753ddd045d6354e4a3280342d895b07fecaab3fa
+      name: flutter_barcode_scanner_plus
+      sha256: "4c7f1ceb93ff52caa6cf0d5e8a331b5cc1b3a25918433d28795f17dee33a5ce8"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "3.0.2"
   flutter_cache_manager:
     dependency: "direct main"
     description:

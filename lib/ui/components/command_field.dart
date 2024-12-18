@@ -50,6 +50,12 @@ class CommandField extends StatelessWidget {
                 focusNode: focusNode,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 keyboardType: TextInputType.numberWithOptions(decimal: false),
+                onTap: () {
+                  commandNumberController.selection = TextSelection(
+                    baseOffset: 0,
+                    extentOffset: commandNumberController.text.length,
+                  );
+                },
                 onFieldSubmitted: (_) async {
                   if (loadData != null) {
                     await loadData!();

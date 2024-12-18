@@ -60,7 +60,7 @@ android {
         targetSdk 35
         versionCode 68
         versionName flutterVersionName
-        ndkVersion "26.2.11394342"
+        ndkVersion "27.1.12297006"
     }
 
     signingConfigs {
@@ -84,9 +84,10 @@ android {
         debug {
             //bloco de homologação getnet
             debuggable true
-            testCoverageEnabled true
             signingConfig signingConfigs.config
             crunchPngs false
+            enableUnitTestCoverage true
+            enableAndroidTestCoverage true
         }
         release {
             minifyEnabled false
@@ -102,7 +103,7 @@ flutter {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:33.4.0')
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
     implementation 'com.google.firebase:firebase-analytics'
     
     //adding getnet library
@@ -115,8 +116,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect:2.0.20'
     implementation 'org.apache.commons:commons-lang3:3.17.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.activity:activity-ktx:1.9.2'
-    implementation 'androidx.fragment:fragment-ktx:1.8.3'
+    implementation 'androidx.activity:activity-ktx:1.9.3'
+    implementation 'androidx.fragment:fragment-ktx:1.8.5'
     implementation 'io.insert-koin:koin-android:3.5.6'
     implementation 'io.insert-koin:koin-core:3.5.6'
 }

@@ -22,6 +22,31 @@ class OptionItems extends StatefulWidget {
 class _OptionItemsState extends State<OptionItems> {
   final _scrollController = ScrollController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        InsertProductPresenter insertProductPresenter =
+            Provider.of(context, listen: false);
+        ExpansibleGroupFromProductPresenter
+            expansibleGroupFromProductPresenter =
+            Provider.of(context, listen: false);
+        insertProductPresenter.updateCanAdvanceIndex(
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+      }
+    });
+  }
+
   Color getItemColor(int index, BuildContext context) {
     if (index < widget.insertProductIndex) {
       return Theme.of(context).primaryColorDark;
@@ -46,12 +71,6 @@ class _OptionItemsState extends State<OptionItems> {
       duration: const Duration(milliseconds: 200),
       curve: Curves.linear,
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
   }
 
   bool _doScrollExecuted = false;

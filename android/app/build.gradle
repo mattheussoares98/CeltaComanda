@@ -58,7 +58,7 @@ android {
         multiDexEnabled true
         minSdkVersion 23
         targetSdk 35
-        versionCode 67
+        versionCode 68
         versionName flutterVersionName
         ndkVersion "26.2.11394342"
     }
@@ -126,3 +126,4 @@ dependencies {
 //         exclude group: 'androidx.profileinstaller', module: 'profileinstaller'
 //     }
 // }
+

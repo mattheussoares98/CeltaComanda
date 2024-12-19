@@ -1,0 +1,1 @@
+export './load_sale_movement_concentrator.dart';

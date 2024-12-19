@@ -18,6 +18,7 @@ export './print/print.dart';
 export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
 export './products/products.dart';
+export './sale_movement_concentrator/sale_movement_concentrator.dart';
 export './sale_request_concentrador/sale_request_concentrador.dart';
 export 'sale_request/sale_request.dart';
 export './schedule/schedule.dart';

@@ -218,8 +218,7 @@ void main() {
 
       verify(
         () => cartPresenter.insertServiceChargeProduct(
-          commandNumber: oldPersonalizedCode.toString(),
-          homePresenter: homePresenter,
+          oldPersonalizedCode.toString(),
         ),
       ).called(1);
     });
@@ -238,8 +237,7 @@ void main() {
 
       verify(
         () => cartPresenter.insertServiceChargeProduct(
-          commandNumber: newPersonalizedCode.toString(),
-          homePresenter: homePresenter,
+          newPersonalizedCode.toString(),
         ),
       ).called(1);
     });

@@ -153,8 +153,7 @@ void main() {
       );
 
       verify(() => cartPresenter.insertServiceChargeProduct(
-            commandNumber: commandNumber.toString(),
-            homePresenter: homePresenter,
+            commandNumber.toString(),
           )).called(1);
     });
     test(
@@ -202,8 +201,7 @@ void main() {
       );
 
       verifyNever(() => cartPresenter.insertServiceChargeProduct(
-            commandNumber: commandNumber.toString(),
-            homePresenter: homePresenter,
+            commandNumber.toString(),
           ));
     });
   });

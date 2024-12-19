@@ -88,12 +88,10 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       );
 
       await cartPresenter.insertServiceChargeProduct(
-        commandNumber: oldPersonalizedCode.toString(),
-        homePresenter: homePresenter,
+        oldPersonalizedCode.toString(),
       );
       await cartPresenter.insertServiceChargeProduct(
-        commandNumber: newPersonalizedCode.toString(),
-        homePresenter: homePresenter,
+        newPersonalizedCode.toString(),
       );
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {

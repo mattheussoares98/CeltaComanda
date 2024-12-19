@@ -499,8 +499,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.clearCartProducts();
 
       await insertServiceChargeProduct(
-        commandNumber: homePresenter.commandEntity!.commandNumber!,
-        homePresenter: homePresenter,
+        homePresenter.commandEntity!.commandNumber!,
       );
 
       await printedProductsPresenter
@@ -639,10 +638,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   }
 
   @override
-  Future<void> insertServiceChargeProduct({
-    required String commandNumber,
-    required HomePresenter homePresenter,
-  }) async {
+  Future<void> insertServiceChargeProduct(String commandNumber) async {
     //não criei testes para essa função
     try {
       if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null ||
@@ -712,7 +708,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             ),
           ],
         ),
-        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        commandNumber: commandNumber,
         saleRequestId: printed.SaleRequestId.toInt(),
       );
     } catch (e) {

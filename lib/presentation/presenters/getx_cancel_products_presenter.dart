@@ -36,8 +36,7 @@ class GetxCancelProductsPresenter extends GetxController
       if (EnterpriseBuilder.entity?.pluServiceCharge !=
           product.ProductPriceLookUpCode) {
         await cartPresenter.insertServiceChargeProduct(
-          commandNumber: commandNumber.toString(),
-          homePresenter: homePresenter,
+          commandNumber.toString(),
         );
       }
       await loadProducts(commandNumber);

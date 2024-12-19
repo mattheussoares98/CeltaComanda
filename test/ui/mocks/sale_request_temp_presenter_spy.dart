@@ -25,10 +25,8 @@ class CartPresenterSpy extends Mock implements CartPresenter {
               any(named: "expansibleGroupFromProductPresenter"),
           menuPresenter: any(named: "menuPresenter"),
         )).thenAnswer((any) async => any);
-    when(() => this.insertServiceChargeProduct(
-          commandNumber: any(named: "commandNumber"),
-          homePresenter: any(named: "homePresenter"),
-        )).thenAnswer((any) async => any);
+    when(() => this.insertServiceChargeProduct(any()))
+        .thenAnswer((any) async => any);
     when(() => this.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
     when(() => this.isLoadingStream)

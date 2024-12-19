@@ -73,32 +73,40 @@ class _ParametersPageState extends State<ParametersPage>
                   itemBuilder: (context, index) {
                     final parameter = snapshot.data![index];
 
-                    return InkWell(
-                      onTap: () async {
-                        await parametersPresenter.changeParameter(index);
-                        await menuPresenter.addOrRemoveSearchProducts();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                parameter.name,
-                                style: TextStyle(
-                                  fontSize: StringSize.size,
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color:
+                            Theme.of(context).primaryColorLight.withAlpha(30),
+                      ),
+                      child: InkWell(
+                        onTap: () async {
+                          await parametersPresenter.changeParameter(index);
+                          await menuPresenter.addOrRemoveSearchProducts();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  parameter.name,
+                                  style: TextStyle(
+                                    fontSize: StringSize.size,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Switch(
-                              value: parameter.enabled,
-                              onChanged: (_) async {
-                                await parametersPresenter
-                                    .changeParameter(index);
-                                await menuPresenter.addOrRemoveSearchProducts();
-                              },
-                            ),
-                          ],
+                              Switch(
+                                value: parameter.enabled,
+                                onChanged: (_) async {
+                                  await parametersPresenter
+                                      .changeParameter(index);
+                                  await menuPresenter
+                                      .addOrRemoveSearchProducts();
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

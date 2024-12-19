@@ -31,14 +31,23 @@ class GetxCancelProductsPresenter extends GetxController
     mainError = null;
 
     try {
+      bool containsServiceChargeProduct = _products.value?.Products
+              .firstWhereOrNull((e) =>
+                  e.ProductPriceLookUpCode ==
+                  EnterpriseBuilder.entity?.pluServiceCharge) !=
+          null;
+      bool removingServiceChargeProduct =
+          EnterpriseBuilder.entity?.pluServiceCharge ==
+              product.ProductPriceLookUpCode;
+
       await removePrintedProduct.remove(product.SaleRequestProductId);
 
-      if (EnterpriseBuilder.entity?.pluServiceCharge !=
-          product.ProductPriceLookUpCode) {
+      if (containsServiceChargeProduct && !removingServiceChargeProduct) {
         await cartPresenter.insertServiceChargeProduct(
           commandNumber.toString(),
         );
       }
+
       await loadProducts(commandNumber);
       showSuccessMessage();
     } catch (e) {

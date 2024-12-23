@@ -120,16 +120,18 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                           },
                         ),
                         if (isFixedCommandNumber)
-                          FixedCommandNumberInput(
-                            isFixedCommandNumber: isFixedCommandNumber,
-                            commandNumberController: commandNumberController,
-                            formKey: _formKey,
-                            validateEnterprise: () async {
-                              await _validateEnterprise(
-                                homePresenter: homePresenter,
-                                enterprisePresenter: enterprisePresenter,
-                              );
-                            },
+                          Form(
+                            key: _formKey,
+                            child: CommandField(
+                              commandNumberController: commandNumberController,
+                              validateField: true,
+                              onFieldSubmitted: (_) async {
+                                await _validateEnterprise(
+                                  homePresenter: homePresenter,
+                                  enterprisePresenter: enterprisePresenter,
+                                );
+                              },
+                            ),
                           ),
                       ],
                     ),

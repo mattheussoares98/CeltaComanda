@@ -10,6 +10,7 @@ class CommandField extends StatelessWidget {
   final bool? validateField;
   final FocusNode? focusNode;
   final Future<void> Function()? loadData;
+  final void Function(String)? onFieldSubmitted;
   const CommandField({
     required this.commandNumberController,
     this.hintText,
@@ -17,6 +18,7 @@ class CommandField extends StatelessWidget {
     this.validateField = true,
     this.focusNode,
     this.loadData,
+    this.onFieldSubmitted,
     super.key,
   });
 
@@ -56,9 +58,13 @@ class CommandField extends StatelessWidget {
                     extentOffset: commandNumberController.text.length,
                   );
                 },
-                onFieldSubmitted: (_) async {
+                onFieldSubmitted: (any) async {
                   if (loadData != null) {
                     await loadData!();
+                  }
+
+                  if (onFieldSubmitted != null) {
+                    onFieldSubmitted!(any);
                   }
                 },
                 validator: (value) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../ui/helpers/helpers.dart';
+import '../../../components/components.dart';
 import '../../pages.dart';
 
 class PrintedItem extends StatefulWidget {

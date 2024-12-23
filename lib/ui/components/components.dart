@@ -21,5 +21,6 @@ export './requested_at.dart';
 export './search_command_icon.dart';
 export './select_table_drop_down.dart';
 export './search_data_by_command_number.dart';
+export './total_by_person.dart';
 export 'snack_bar_message.dart';
 export './update_quantity.dart';

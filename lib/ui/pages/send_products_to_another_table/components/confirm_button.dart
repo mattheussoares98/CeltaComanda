@@ -27,6 +27,16 @@ class ConfirmButton extends StatelessWidget {
       onPressed: () async {
         bool? isValid = formKey.currentState?.validate();
 
+        if (sendProductsToAnotherTablePresenter
+            .selectedsSaleRequestProductsIds.isEmpty) {
+          snackBarMessage(
+            context,
+            R.string.selectProduct,
+            backgroundColor: Colors.red,
+          );
+          return;
+        }
+
         if (isValid == true) {
           notificationDialog(
               context: context,
@@ -35,8 +45,10 @@ class ConfirmButton extends StatelessWidget {
               onPress: () async {
                 await sendProductsToAnotherTablePresenter
                     .sendProductsToAnotherTable(
-                  oldPersonalizedCode: originCommandNumberController.text.toInt(),
-                  newPersonalizedCode: destinyCommandNumberController.text.toInt(),
+                  oldPersonalizedCode:
+                      originCommandNumberController.text.toInt(),
+                  newPersonalizedCode:
+                      destinyCommandNumberController.text.toInt(),
                   cartPresenter: cartPresenter,
                   homePresenter: homePresenter,
                 );

@@ -70,8 +70,14 @@ class ChildsItems extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: Text(
-                                      "- ${child.ChildName!}   (${R.string.child.toUpperCase()})")),
+                                child: Text(
+                                  "- ${child.ChildName!}   (${R.string.child.toUpperCase()})",
+                                  style: TextStyle(
+                                    color: Colors.deepPurple,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                               ScheduleEnabledDays(
                                 allowMonday:
                                     child.Schedule?.AllowMonday != false,
@@ -108,6 +114,7 @@ class ChildsItems extends StatelessWidget {
                     backgroundColor: backgroundColor,
                     fontWeight: FontWeight.bold,
                     fontSize: StringSize.size,
+                    color: Colors.red,
                   ),
                 ),
               ),

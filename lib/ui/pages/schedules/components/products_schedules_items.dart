@@ -37,7 +37,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.5,
-              color: Theme.of(context).primaryColorDark,
+              color: Colors.blue,
             ),
             borderRadius: BorderRadius.circular(10),
             color: color!,

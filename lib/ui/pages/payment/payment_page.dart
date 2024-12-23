@@ -155,52 +155,54 @@ class _PaymentPageState extends State<PaymentPage>
             ),
           ],
         ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (paymentPresenter
-                        .getTotalPendingValue(printedProductsPresenter) >
-                    0)
-                  PaymentDetails(),
-                if (printedProductsPresenter.printed != null &&
-                    paymentPresenter
-                            .getTotalPendingValue(printedProductsPresenter) >
-                        0)
-                  Column(
-                    children: [
-                      if (homePresenter.isGeneratingVersionToGetNet ||
-                          homePresenter.isGeneratingVersionToRede)
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: WriteAmoutValueToPay(
-                            formKey: formKey,
-                            paymentController: paymentController,
-                            paymentFocusNode: paymentFocusNode,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (paymentPresenter
+                          .getTotalPendingValue(printedProductsPresenter) >
+                      0)
+                    PaymentDetails(),
+                  if (printedProductsPresenter.printed != null &&
+                      paymentPresenter
+                              .getTotalPendingValue(printedProductsPresenter) >
+                          0)
+                    Column(
+                      children: [
+                        if (homePresenter.isGeneratingVersionToGetNet ||
+                            homePresenter.isGeneratingVersionToRede)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: WriteAmoutValueToPay(
+                              formKey: formKey,
+                              paymentController: paymentController,
+                              paymentFocusNode: paymentFocusNode,
+                            ),
                           ),
+                        PaymentButtons(
+                          paymentController: paymentController,
+                          formKey: formKey,
                         ),
-                      PaymentButtons(
-                        paymentController: paymentController,
-                        formKey: formKey,
-                      ),
-                    ],
-                  ),
-                if (paymentPresenter.totalPaidValue.toStringAsFixed(2) ==
-                        totalLiquid.toStringAsFixed(2) &&
-                    totalLiquid > 0)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: LiquidateCommand(
-                      callSetState: () {
-                        setState(() {});
-                      },
+                      ],
                     ),
-                  ),
-                if (printedProductsPresenter.printed == null ||
-                    homePresenter.commandEntity?.isFixedCommandNumber == false)
-                  const SearchDataByCommandNumber(),
-              ],
+                  if (paymentPresenter.totalPaidValue.toStringAsFixed(2) ==
+                          totalLiquid.toStringAsFixed(2) &&
+                      totalLiquid > 0)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: LiquidateCommand(
+                        callSetState: () {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  Divider(height: 40),
+                  TotalByPerson(),
+                ],
+              ),
             ),
           ),
         ),

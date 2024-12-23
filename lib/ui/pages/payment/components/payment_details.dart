@@ -18,29 +18,35 @@ class PaymentDetails extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
-          "${R.string.total}: ${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed).toDouble().toString().toBrazilianNumber()} R\$",
-          style: TextStyle(
-            fontSize: StringSize.size * 2,
-            fontWeight: FontWeight.bold,
+        FittedBox(
+          child: Text(
+            "${R.string.total}: ${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed).toDouble().toString().toBrazilianNumber()} R\$",
+            style: TextStyle(
+              fontSize: StringSize.size * 2,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         if (homePresenter.isGeneratingVersionToGetNet ||
             homePresenter.isGeneratingVersionToRede)
           Column(
             children: [
-              Text(
-                "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                style: TextStyle(
-                  fontSize: StringSize.size * 2,
-                  fontWeight: FontWeight.bold,
+              FittedBox(
+                child: Text(
+                  "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                  style: TextStyle(
+                    fontSize: StringSize.size * 2,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              Text(
-                "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
-                style: TextStyle(
-                  fontSize: StringSize.size * 2,
-                  fontWeight: FontWeight.bold,
+              FittedBox(
+                child: Text(
+                  "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
+                  style: TextStyle(
+                    fontSize: StringSize.size * 2,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

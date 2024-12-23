@@ -299,7 +299,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   set mainError(UIError? value) => _mainError.value = value;
 
   @override
-  bool get isGeneratingVersionToRede => false;
+  bool get isGeneratingVersionToRede => true;
   @override
   bool get isGeneratingVersionToGetNet => false;
   @override

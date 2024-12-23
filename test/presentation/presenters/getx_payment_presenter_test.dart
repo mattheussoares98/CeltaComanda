@@ -87,7 +87,7 @@ void main() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     longAmountValue = faker.randomGenerator.decimal();
     portionQuantity = faker.randomGenerator.integer(99);
-    printedEntity = EntityFactory.makePrintedProductsEntity();
+    printedEntity = EntityFactory.makePrintedEntity();
     homePresenter.commandEntityController = CommandEntity(
       commandNumber:
           faker.randomGenerator.integer(100).toString().padLeft(3, "0"),

@@ -75,7 +75,7 @@ void main() {
     personalizedCode = faker.randomGenerator.integer(5);
     password = faker.randomGenerator.string(5);
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
-    printedEntity = EntityFactory.makePrintedProductsEntity();
+    printedEntity = EntityFactory.makePrintedEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
     loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
@@ -616,7 +616,7 @@ void main() {
     });
 
     test("Should return correct value if incrementType is 1", () async {
-      final printed = EntityFactory.makePrintedProductsEntity(incrementType: 1);
+      final printed = EntityFactory.makePrintedEntity(incrementType: 1);
 
       loadPrintedProducts.mockLoadPrintedProducts(printed);
 
@@ -628,7 +628,7 @@ void main() {
       expect(sut.getTotalLiquid(sut.printed), value);
     });
     test("Should return correct value if incrementType is 2", () async {
-      final printed = EntityFactory.makePrintedProductsEntity(incrementType: 2);
+      final printed = EntityFactory.makePrintedEntity(incrementType: 2);
 
       loadPrintedProducts.mockLoadPrintedProducts(printed);
 
@@ -640,7 +640,7 @@ void main() {
       );
     });
     test("Should return correct value if incrementType is invalid", () async {
-      final printed = EntityFactory.makePrintedProductsEntity(
+      final printed = EntityFactory.makePrintedEntity(
         incrementType: faker.randomGenerator.integer(100, min: 3),
       );
 

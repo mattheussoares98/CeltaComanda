@@ -87,9 +87,14 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
             _selectedSaleRequestProductsIds.map((e) => e).toList(),
       );
 
-      await cartPresenter.insertServiceChargeProduct(
-        oldPersonalizedCode.toString(),
-      );
+      if (_printedProducts.value?.Products.firstWhereOrNull((e) =>
+              e.ProductPriceLookUpCode ==
+              EnterpriseBuilder.entity!.pluServiceCharge) !=
+          null) {
+        await cartPresenter.insertServiceChargeProduct(
+          oldPersonalizedCode.toString(),
+        );
+      }
       await cartPresenter.insertServiceChargeProduct(
         newPersonalizedCode.toString(),
       );

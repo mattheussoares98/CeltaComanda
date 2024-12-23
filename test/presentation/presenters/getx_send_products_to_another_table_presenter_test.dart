@@ -46,7 +46,7 @@ void main() {
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(100);
-    printedEntity = EntityFactory.makePrintedProductsEntity();
+    printedEntity = EntityFactory.makePrintedEntity();
     printedViewModel = PrintedViewModel.fromEntity(printedEntity);
   }
 
@@ -204,8 +204,15 @@ void main() {
     });
 
     test(
-        "Should call cartPresenter.insertServiceChargeProduct with in old command number",
+        "Should call cartPresenter.insertServiceChargeProduct with in old command number when has service charge product",
         () async {
+      final entityWithServiceChargeProduct = EntityFactory.makePrintedEntity(
+        productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
+      );
+      loadPrintedProducts
+          .mockLoadPrintedProducts(entityWithServiceChargeProduct);
+      await sut.loadProducts(commandNumber);
+
       int firstSelected = faker.randomGenerator.integer(100);
       sut.updateProductIsSelected(firstSelected);
 
@@ -221,6 +228,25 @@ void main() {
           oldPersonalizedCode.toString(),
         ),
       ).called(1);
+    });
+    test(
+        "Should not call cartPresenter.insertServiceChargeProduct with in old command number when dont has service charge product",
+        () async {
+      int firstSelected = faker.randomGenerator.integer(100);
+      sut.updateProductIsSelected(firstSelected);
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verifyNever(
+        () => cartPresenter.insertServiceChargeProduct(
+          oldPersonalizedCode.toString(),
+        ),
+      );
     });
     test(
         "Should call cartPresenter.insertServiceChargeProduct with in new command number",

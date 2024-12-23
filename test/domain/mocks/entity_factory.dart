@@ -575,14 +575,16 @@ class EntityFactory {
     );
   }
 
-  static PrintedEntity makePrintedProductsEntity({
+  static PrintedEntity makePrintedEntity({
     int? incrementType,
+    String? productPriceLookUpCode,
   }) {
     return PrintedEntity(
       Products: [
         PrintedProductsEntity(
           Product: makeProductsEntitys()[0],
-          ProductPriceLookUpCode: faker.randomGenerator.string(7),
+          ProductPriceLookUpCode:
+              productPriceLookUpCode ?? faker.randomGenerator.string(7),
           DateHourOfCreation: faker.date.dateTime().toIso8601String(),
           Comments: faker.randomGenerator.string(10),
           UserId: faker.randomGenerator.integer(10),

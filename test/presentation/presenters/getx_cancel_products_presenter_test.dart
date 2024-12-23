@@ -42,7 +42,7 @@ void main() {
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     commandNumber = faker.randomGenerator.integer(100);
-    printedEntity = EntityFactory.makePrintedProductsEntity();
+    printedEntity = EntityFactory.makePrintedEntity();
     printedViewModel = PrintedViewModel.fromEntity(printedEntity);
   }
 

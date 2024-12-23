@@ -77,7 +77,7 @@ void main() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     printedEntity = EntityFactory.makePrintedEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
-    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
     saleRequestTempEntity = EntityFactory.makeSaleRequestTempEntity(0);
     cartPresenter.saleRequestTempMock =
         SaleRequestTempViewModel.fromEntity(saleRequestTempEntity);
@@ -94,7 +94,7 @@ void main() {
     finishSaleRequestTemp.mockFinishSaleRequestTemp();
     userValidations.mockIsValidPassword(true);
     userValidations.mockCanCancel(true);
-    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
     barcodeScanner
         .mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
@@ -371,7 +371,7 @@ void main() {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       expect(sut.printed, PrintedViewModel.fromEntity(printedEntity));
 
-      loadPrintedProducts.mockLoadPrintedProducts(null);
+      loadPrintedProducts.mockLoadPrintedEntity(null);
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       expect(sut.printed, null);
     });
@@ -396,7 +396,7 @@ void main() {
     });
 
     test("Should return null on loadPrintedProducts", () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
+      loadPrintedProducts.mockLoadPrintedEntity(null);
       final result = await loadPrintedProducts.load(
         commandNumber:
             int.parse(homePresenter.commandEntityController!.commandNumber!),
@@ -558,7 +558,7 @@ void main() {
 
     test("Should not update printedProducts if the list of products is empty",
         () async {
-      loadPrintedProducts.mockLoadPrintedProducts(PrintedEntity(
+      loadPrintedProducts.mockLoadPrintedEntity(PrintedEntity(
         Products: [],
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),
@@ -609,7 +609,7 @@ void main() {
 
   group("Get total liquid", () {
     test("Should return 0 if printed products is null", () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
+      loadPrintedProducts.mockLoadPrintedEntity(null);
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.getTotalLiquid(sut.printed), 0);
@@ -618,7 +618,7 @@ void main() {
     test("Should return correct value if incrementType is 1", () async {
       final printed = EntityFactory.makePrintedEntity(incrementType: 1);
 
-      loadPrintedProducts.mockLoadPrintedProducts(printed);
+      loadPrintedProducts.mockLoadPrintedEntity(printed);
 
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
@@ -630,7 +630,7 @@ void main() {
     test("Should return correct value if incrementType is 2", () async {
       final printed = EntityFactory.makePrintedEntity(incrementType: 2);
 
-      loadPrintedProducts.mockLoadPrintedProducts(printed);
+      loadPrintedProducts.mockLoadPrintedEntity(printed);
 
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
@@ -644,7 +644,7 @@ void main() {
         incrementType: faker.randomGenerator.integer(100, min: 3),
       );
 
-      loadPrintedProducts.mockLoadPrintedProducts(printed);
+      loadPrintedProducts.mockLoadPrintedEntity(printed);
 
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
@@ -658,7 +658,7 @@ void main() {
 
   group("Get sub total", () {
     test("Should return 0 if printed products is null", () async {
-      loadPrintedProducts.mockLoadPrintedProducts(null);
+      loadPrintedProducts.mockLoadPrintedEntity(null);
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       expect(sut.getSubtotal(sut.printed), 0);

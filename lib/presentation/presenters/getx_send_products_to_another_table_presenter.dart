@@ -95,9 +95,18 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
           oldPersonalizedCode.toString(),
         );
       }
-      await cartPresenter.insertServiceChargeProduct(
-        newPersonalizedCode.toString(),
+
+      final destinyPrinted = await loadPrintedProducts.load(
+        commandNumber: newPersonalizedCode,
       );
+      if (destinyPrinted?.Products.firstWhereOrNull((e) =>
+              e.ProductPriceLookUpCode ==
+              EnterpriseBuilder.entity!.pluServiceCharge) !=
+          null) {
+        await cartPresenter.insertServiceChargeProduct(
+          newPersonalizedCode.toString(),
+        );
+      }
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {

@@ -47,7 +47,7 @@ void main() {
   }
 
   void initMockSuccess() {
-    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
   }
 
   setUp(() {

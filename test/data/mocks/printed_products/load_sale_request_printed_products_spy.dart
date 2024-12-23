@@ -7,13 +7,13 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadPrintedProductsSpy extends Mock implements LoadPrintedProducts {
   LoadPrintedProductsSpy() {
-    mockLoadPrintedProducts(null);
+    mockLoadPrintedEntity(null);
   }
   When mockLoadPrintedProductsCall() => when(() => this.load(
         commandNumber: any(named: "commandNumber"),
       ));
 
-  void mockLoadPrintedProducts(PrintedEntity? entity) {
+  void mockLoadPrintedEntity(PrintedEntity? entity) {
     this.mockLoadPrintedProductsCall().thenAnswer((_) async => entity);
   }
 

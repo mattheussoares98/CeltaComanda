@@ -51,7 +51,7 @@ void main() {
   }
 
   void initMockSuccess() {
-    loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+    loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
   }
 
   setUp(() {
@@ -209,8 +209,7 @@ void main() {
       final entityWithServiceChargeProduct = EntityFactory.makePrintedEntity(
         productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
       );
-      loadPrintedProducts
-          .mockLoadPrintedProducts(entityWithServiceChargeProduct);
+      loadPrintedProducts.mockLoadPrintedEntity(entityWithServiceChargeProduct);
       await sut.loadProducts(commandNumber);
 
       int firstSelected = faker.randomGenerator.integer(100);
@@ -311,7 +310,7 @@ void main() {
         IncrementValue: faker.randomGenerator.decimal(),
       );
 
-      loadPrintedProducts.mockLoadPrintedProducts(printedEntity);
+      loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
 
       expectLater(
         sut.mainErrorStream,
@@ -327,6 +326,58 @@ void main() {
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       );
+    });
+
+    test("Should load printed products from new command", () async {
+      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => loadPrintedProducts.load(commandNumber: newPersonalizedCode))
+          .called(1);
+    });
+    test(
+        "Should not add service charge product in destiny command if doesnt already exists",
+        () async {
+      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verifyNever(() => cartPresenter.insertServiceChargeProduct(
+            newPersonalizedCode.toString(),
+          ));
+    });
+    test(
+        "Should add service charge product in destiny command if already exists service charge product",
+        () async {
+      loadPrintedProducts.mockLoadPrintedEntity(
+        EntityFactory.makePrintedEntity(
+          productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
+        ),
+      );
+
+      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => cartPresenter.insertServiceChargeProduct(
+            newPersonalizedCode.toString(),
+          )).called(1);
     });
   });
 

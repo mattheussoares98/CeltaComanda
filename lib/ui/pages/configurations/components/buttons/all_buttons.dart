@@ -20,5 +20,6 @@ List<Widget> allButtons(BuildContext context) {
     if (!homePresenter.isGeneratingVersionToRede &&
         !homePresenter.isGeneratingVersionToGetNet)
       ReserveTableButton(),
+    SaleMovementButton()
   ];
 }

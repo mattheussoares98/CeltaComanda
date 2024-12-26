@@ -227,6 +227,7 @@ class EnUs implements Translation {
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';
+  String get sales => "Sales";
   String get saturday => "Saturday";
   String get search => "Search";
   String get searchByPersonalizedCode => "Search by personalized code";

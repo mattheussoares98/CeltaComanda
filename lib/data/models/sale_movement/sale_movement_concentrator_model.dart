@@ -6,104 +6,104 @@ import '../../../domain/entities/entities.dart';
 import '../models.dart';
 
 class SaleMovementConcentratorModel extends Equatable {
-  final int? SaleMovementId;
-  final int? PdvId;
   final String? PdvNumber;
-  final int? CashierMovementId;
-  final int? EnterpriseId;
-  final int? EnterpriseCode;
   final String? PersonalizedCode;
-  final int? CouponFiscalNumber;
   final String? DateOfCreation;
   final String? DateHourOfCreation;
   final String? CpfCnpj;
-  final int? DiscountType;
-  final double? DiscountValue;
-  final int? UserIdOfDiscount;
-  final double? DiscountFinalizationValue;
   final String? CRMDiscountTransactionId;
   final String? CRMCpfCnpj;
-  final int? CRMDiscountType;
-  final double? CRMDiscountValue;
-  final int? IncrementType;
-  final double? IncrementValue;
-  final double? FidelityControlsPoints;
   final String? XmlSatNfce;
   final String? XmlSatNfceCancel;
   final String? EletronicAccessKey;
   final String? SaleRequestPersonalizedCode;
+  final String? SaleFiscalTypeString;
+  final String? DateHourOfDelivery;
+  final String? MotiveJustificationName;
+  final String? MotiveJustificationSaleDiscountName;
+  final String? SellerName;
+  final int? SaleMovementId;
+  final int? PdvId;
+  final int? CashierMovementId;
+  final int? EnterpriseId;
+  final int? EnterpriseCode;
+  final int? CouponFiscalNumber;
+  final int? DiscountType;
+  final int? UserIdOfDiscount;
+  final int? CRMDiscountType;
+  final int? IncrementType;
   final int? SaleFiscalType;
   final int? SalePricePraticed;
-  final String? SaleFiscalTypeString;
   final int? UserIdOfCancellation;
-  final bool? IsCancelled;
   final int? IsToDelivery;
-  final bool? IsForTravel;
-  final String? DateHourOfDelivery;
   final int? DeliveryControl;
-  final bool? WasPrinted;
   final int? MotiveJustificationId;
-  final String? MotiveJustificationName;
   final int? MotiveJustificationSaleDiscountId;
-  final String? MotiveJustificationSaleDiscountName;
-  final bool? IsDelivery;
   final int? CovenantCode;
   final int? CustomerCode;
   final int? CustomerAdditionalCode;
   final int? SellerCode;
-  final String? SellerName;
+  final double? DiscountValue;
+  final double? DiscountFinalizationValue;
+  final double? CRMDiscountValue;
+  final double? IncrementValue;
+  final double? FidelityControlsPoints;
   final double? TotalLiquid;
+  final bool? IsCancelled;
+  final bool? IsForTravel;
+  final bool? WasPrinted;
+  final bool? IsDelivery;
   final List<SaleMovementProductConcentratorModel> Products;
   final List<SaleMovementConcentratorFinalizationModel> Finalizations;
 
   const SaleMovementConcentratorModel({
-    required this.SaleMovementId,
-    required this.PdvId,
     required this.PdvNumber,
-    required this.CashierMovementId,
-    required this.EnterpriseId,
-    required this.EnterpriseCode,
     required this.PersonalizedCode,
-    required this.CouponFiscalNumber,
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.CpfCnpj,
-    required this.DiscountType,
-    required this.DiscountValue,
-    required this.UserIdOfDiscount,
-    required this.DiscountFinalizationValue,
     required this.CRMDiscountTransactionId,
     required this.CRMCpfCnpj,
-    required this.CRMDiscountType,
-    required this.CRMDiscountValue,
-    required this.IncrementType,
-    required this.IncrementValue,
-    required this.FidelityControlsPoints,
     required this.XmlSatNfce,
     required this.XmlSatNfceCancel,
     required this.EletronicAccessKey,
     required this.SaleRequestPersonalizedCode,
+    required this.SaleFiscalTypeString,
+    required this.DateHourOfDelivery,
+    required this.MotiveJustificationName,
+    required this.MotiveJustificationSaleDiscountName,
+    required this.SellerName,
+    required this.SaleMovementId,
+    required this.PdvId,
+    required this.CashierMovementId,
+    required this.EnterpriseId,
+    required this.EnterpriseCode,
+    required this.CouponFiscalNumber,
+    required this.DiscountType,
+    required this.UserIdOfDiscount,
+    required this.CRMDiscountType,
+    required this.IncrementType,
     required this.SaleFiscalType,
     required this.SalePricePraticed,
-    required this.SaleFiscalTypeString,
     required this.UserIdOfCancellation,
-    required this.IsCancelled,
     required this.IsToDelivery,
-    required this.IsForTravel,
-    required this.DateHourOfDelivery,
     required this.DeliveryControl,
-    required this.WasPrinted,
     required this.MotiveJustificationId,
-    required this.MotiveJustificationName,
     required this.MotiveJustificationSaleDiscountId,
-    required this.MotiveJustificationSaleDiscountName,
-    required this.IsDelivery,
     required this.CovenantCode,
     required this.CustomerCode,
     required this.CustomerAdditionalCode,
     required this.SellerCode,
-    required this.SellerName,
+    required this.DiscountValue,
+    required this.DiscountFinalizationValue,
+    required this.CRMDiscountValue,
+    required this.IncrementValue,
+    required this.FidelityControlsPoints,
     required this.TotalLiquid,
+    required this.IsCancelled,
+    required this.IsForTravel,
+    required this.WasPrinted,
+    required this.IsDelivery,
     required this.Products,
     required this.Finalizations,
   });

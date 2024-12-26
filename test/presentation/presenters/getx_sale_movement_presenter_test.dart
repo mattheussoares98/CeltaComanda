@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -15,6 +17,8 @@ void main() {
   late LoadSaleMovementConcentratorSpy loadSaleMovementConcentrator;
 
   late String date;
+  late List<SaleMovementConcentratorEntity> salesEntitys;
+  late List<SaleMovementConcentratorModel> salesModels;
 
   void initUseCases() {
     loadSaleMovementConcentrator = LoadSaleMovementConcentratorSpy();
@@ -29,9 +33,15 @@ void main() {
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     date = DateTime.now().toIso8601String();
+    salesEntitys = [EntityFactory.makeSaleMovementConcentratorEntity()];
+    salesModels = salesEntitys
+        .map((e) => SaleMovementConcentratorModel.fromEntity(e))
+        .toList();
   }
 
-  void mockSuccess() {}
+  void mockSuccess() {
+    loadSaleMovementConcentrator.mockLoad(salesEntitys);
+  }
 
   setUp(() {
     initUseCases();
@@ -62,6 +72,7 @@ void main() {
     test("Should emit correct values on success", () async {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.salesStream, emitsInOrder([null, salesModels]));
 
       await sut.loadSales(date: date);
     });
@@ -69,6 +80,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.salesStream, emits(null));
 
       loadSaleMovementConcentrator.mockError();
 

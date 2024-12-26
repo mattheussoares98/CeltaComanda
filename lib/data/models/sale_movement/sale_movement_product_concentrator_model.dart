@@ -8,41 +8,31 @@ class SaleMovementProductConcentratorModel extends Equatable {
   final int? SaleMovementProductId;
   final int? Position;
   final int? SaleRequestProductInternalCodeOnERP;
-  final double? UnitValue;
-  final double? Quantity;
-  final bool? IsCancelled;
-  final bool? IsToDelivery;
-  final bool? IsPrinted;
-  final String? Comments;
   final int? MotiveJustificationId;
-  final String? MotiveJustificationName;
   final int? MotiveJustificationSaleDiscountId;
-  final String? MotiveJustificationSaleDiscountName;
   final int? UserIdOfCancellation;
   final int? DiscountType;
-  final double? DiscountValue;
   final int? UserIdOfDiscount;
   final int? SaleNegotiationDiscountType;
-  final double? SaleNegotiationDiscountValue;
   final int? CRMDiscountType;
-  final double? CRMDiscountValue;
   final int? IncrementType;
-  final double? IncrementValue;
   final int? DeliveryTaxType;
+  final int? PisType;
+  final int? CofinsType;
+  final int? IcmsFiscalAdjustObservationCode;
+  final int? SaleOfferCode;
+  final int? SaleOfferDiscountType;
+  final double? UnitValue;
+  final double? Quantity;
+  final double? DiscountValue;
+  final double? SaleNegotiationDiscountValue;
+  final double? CRMDiscountValue;
+  final double? IncrementValue;
   final double? DeliveryTaxValue;
-  final String? ProductPluCode;
-  final String? ProductEan;
-  final String? ProductInternalCodeOnERP;
-  final String? ProductName;
-  final bool? ProductIsFatherComposition;
-  final String? SaleMovementProductCompositionId;
-  final String? IcmsTributarySituationCode;
   final double? IcmsAliquot;
   final double? IcmsStave;
   final double? IcmsReductionMargin;
   final double? IcmsIVAMargin;
-  final int? PisType;
-  final int? CofinsType;
   final double? PisPercentage;
   final double? CofinsPercentage;
   final double? SaleRetailPrice;
@@ -57,58 +47,58 @@ class SaleMovementProductConcentratorModel extends Equatable {
   final double? LiquidCostMiddle;
   final double? RepositionCostReal;
   final double? LiquidCostReal;
+  final double? IcmsFiscalOriginalAliquot;
+  final double? SaleOfferQuantity;
+  final double? SaleOfferDiscountValue;
+  final String? Comments;
+  final String? MotiveJustificationName;
+  final String? MotiveJustificationSaleDiscountName;
+  final String? ProductPluCode;
+  final String? ProductEan;
+  final String? ProductInternalCodeOnERP;
+  final String? ProductName;
+  final String? SaleMovementProductCompositionId;
+  final String? IcmsTributarySituationCode;
   final String? CFOP;
   final String? CSTPisCofins;
   final String? NatureOperationCodePisCofins;
   final String? SocialContributionCodePisCofins;
   final String? IcmsFiscalAdjustCode;
-  final int? IcmsFiscalAdjustObservationCode;
-  final double? IcmsFiscalOriginalAliquot;
   final String? IcmsFiscalBenefitCode;
-  final int? SaleOfferCode;
-  final double? SaleOfferQuantity;
-  final int? SaleOfferDiscountType;
-  final double? SaleOfferDiscountValue;
+  final bool? IsCancelled;
+  final bool? IsToDelivery;
+  final bool? IsPrinted;
+  final bool? ProductIsFatherComposition;
 
   const SaleMovementProductConcentratorModel({
     required this.SaleMovementProductId,
     required this.Position,
     required this.SaleRequestProductInternalCodeOnERP,
-    required this.UnitValue,
-    required this.Quantity,
-    required this.IsCancelled,
-    required this.IsToDelivery,
-    required this.IsPrinted,
-    required this.Comments,
     required this.MotiveJustificationId,
-    required this.MotiveJustificationName,
     required this.MotiveJustificationSaleDiscountId,
-    required this.MotiveJustificationSaleDiscountName,
     required this.UserIdOfCancellation,
     required this.DiscountType,
-    required this.DiscountValue,
     required this.UserIdOfDiscount,
     required this.SaleNegotiationDiscountType,
-    required this.SaleNegotiationDiscountValue,
     required this.CRMDiscountType,
-    required this.CRMDiscountValue,
     required this.IncrementType,
-    required this.IncrementValue,
     required this.DeliveryTaxType,
+    required this.PisType,
+    required this.CofinsType,
+    required this.IcmsFiscalAdjustObservationCode,
+    required this.SaleOfferCode,
+    required this.SaleOfferDiscountType,
+    required this.UnitValue,
+    required this.Quantity,
+    required this.DiscountValue,
+    required this.SaleNegotiationDiscountValue,
+    required this.CRMDiscountValue,
+    required this.IncrementValue,
     required this.DeliveryTaxValue,
-    required this.ProductPluCode,
-    required this.ProductEan,
-    required this.ProductInternalCodeOnERP,
-    required this.ProductName,
-    required this.ProductIsFatherComposition,
-    required this.SaleMovementProductCompositionId,
-    required this.IcmsTributarySituationCode,
     required this.IcmsAliquot,
     required this.IcmsStave,
     required this.IcmsReductionMargin,
     required this.IcmsIVAMargin,
-    required this.PisType,
-    required this.CofinsType,
     required this.PisPercentage,
     required this.CofinsPercentage,
     required this.SaleRetailPrice,
@@ -123,18 +113,28 @@ class SaleMovementProductConcentratorModel extends Equatable {
     required this.LiquidCostMiddle,
     required this.RepositionCostReal,
     required this.LiquidCostReal,
+    required this.IcmsFiscalOriginalAliquot,
+    required this.SaleOfferQuantity,
+    required this.SaleOfferDiscountValue,
+    required this.Comments,
+    required this.MotiveJustificationName,
+    required this.MotiveJustificationSaleDiscountName,
+    required this.ProductPluCode,
+    required this.ProductEan,
+    required this.ProductInternalCodeOnERP,
+    required this.ProductName,
+    required this.SaleMovementProductCompositionId,
+    required this.IcmsTributarySituationCode,
     required this.CFOP,
     required this.CSTPisCofins,
     required this.NatureOperationCodePisCofins,
     required this.SocialContributionCodePisCofins,
     required this.IcmsFiscalAdjustCode,
-    required this.IcmsFiscalAdjustObservationCode,
-    required this.IcmsFiscalOriginalAliquot,
     required this.IcmsFiscalBenefitCode,
-    required this.SaleOfferCode,
-    required this.SaleOfferQuantity,
-    required this.SaleOfferDiscountType,
-    required this.SaleOfferDiscountValue,
+    required this.IsCancelled,
+    required this.IsToDelivery,
+    required this.IsPrinted,
+    required this.ProductIsFatherComposition,
   });
 
   @override

@@ -20,9 +20,18 @@ class GetxSaleMovementPresenter extends GetxController
     try {
       isLoading = true;
       mainError = null;
-      final sales = await loadSaleMovementConcentrator.load(date: date);
+      sales = null;
 
-      sales.map((e) => SaleMovementConcentratorModel.fromEntity(e)).toList();
+      final loadedSales = await loadSaleMovementConcentrator.load(date: date);
+
+      if (loadedSales == null) {
+        //TODO see what is returned when dont has sales
+        throw Exception();
+      }
+
+      sales = loadedSales
+          .map((e) => SaleMovementConcentratorModel.fromEntity(e))
+          .toList();
     } catch (error) {
       mainError = UIError.unexpected;
     } finally {

@@ -212,8 +212,17 @@ class SaleMovementConcentratorModel extends Equatable {
         SellerCode: data["SellerCode"],
         SellerName: data["SellerName"],
         TotalLiquid: data["TotalLiquid"],
-        Products: data["Products"],
-        Finalizations: data["Finalizations"],
+        Products: data["Products"] != null
+            ? (data["Products"] as List)
+                .map((e) => SaleMovementProductConcentratorModel.fromJson(e))
+                .toList()
+            : [],
+        Finalizations: data["Finalizations"] != null
+            ? (data["Finalizations"] as List)
+                .map((e) =>
+                    SaleMovementConcentratorFinalizationModel.fromJson(e))
+                .toList()
+            : [],
       );
 
   Map<String, dynamic> toJson() => {

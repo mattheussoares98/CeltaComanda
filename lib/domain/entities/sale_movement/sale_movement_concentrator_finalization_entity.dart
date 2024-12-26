@@ -6,7 +6,7 @@ class SaleMovementConcentratorFinalizationEntity extends Equatable {
   final int? SaleMovementFinalizationId;
   final int? FinalizationId;
   final double? Value;
-  final double PayBackValue;
+  final double? PayBackValue;
   final double? ValueLiquid;
   final String? AuthorizationCode;
   final int? AuthorizationType;

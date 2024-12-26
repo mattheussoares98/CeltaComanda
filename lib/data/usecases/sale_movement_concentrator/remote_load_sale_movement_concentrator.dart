@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:date_format/date_format.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -27,17 +25,17 @@ class RemoteLoadSaleMovementConcentrator
           formatDate(dateTime, [yyyy, '-', mm, '-', dd]);
 
       final url =
-          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Search?enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&d$formatedDate&onlyCancelled=false";
+          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Search?enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&date=$formatedDate&onlyCancelled=false";
       final response = await httpAdapter.request(
         url: url,
-        method: "put",
+        method: "get",
         headers: headers,
       );
       if (response == null) {
         throw Error();
       }
 
-      return (json.decode(response) as List)
+      return (response as List)
           .map((e) => SaleMovementConcentratorModel.fromJson(e).toEntity())
           .toList();
     } catch (error) {

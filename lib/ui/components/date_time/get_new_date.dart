@@ -21,8 +21,8 @@ class GetNewDate {
 
     DateTime? validityDate = await showDatePicker(
       context: NavigatorKey.navigatorKey.currentState!.context,
-      firstDate: now,
-      initialDate: initialDate,
+      firstDate: initialDate,
+      initialDate: now,
       lastDate: now.add(const Duration(days: 1825)),
       locale: const Locale('pt', 'BR'),
     );

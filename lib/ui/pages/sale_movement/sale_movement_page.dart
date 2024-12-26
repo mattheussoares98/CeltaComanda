@@ -7,7 +7,18 @@ class SaleMovementPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Text("Vendas")),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              // ignore: avoid_print
+              print('loadSales');
+            },
+            child: const Text('Load Sales'),
+          ),
+        ],
+      ),
     );
   }
 }

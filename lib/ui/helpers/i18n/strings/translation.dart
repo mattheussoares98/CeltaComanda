@@ -125,6 +125,7 @@ abstract class Translation {
   String get covenant;
   String get covenants;
   String get customer;
+  String get dateNotUpdated;
   String get debit;
   String get destinyTable;
   String get detach;

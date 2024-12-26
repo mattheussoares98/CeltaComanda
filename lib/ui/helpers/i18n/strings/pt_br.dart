@@ -156,6 +156,7 @@ class PtBr implements Translation {
   String get covenant => "Convênio";
   String get covenants => "Convênios";
   String get customer => "Cliente";
+  String get dateNotUpdated => "Data não atualizada";
   String get debit => "Débito";
   String get destinyTable => "Mesa de destino";
   String get detach => "Destaques";

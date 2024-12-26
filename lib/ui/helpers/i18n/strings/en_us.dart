@@ -157,6 +157,7 @@ class EnUs implements Translation {
   String get covenant => 'Covenant';
   String get covenants => 'Covenants';
   String get customer => 'Customer';
+  String get dateNotUpdated => 'Date not updated';
   String get debit => 'Debit';
   String get destinyTable => 'Destiny table';
   String get detach => 'Highlights';

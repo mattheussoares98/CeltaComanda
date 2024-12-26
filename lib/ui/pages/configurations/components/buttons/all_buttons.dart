@@ -16,9 +16,9 @@ List<Widget> allButtons(BuildContext context) {
     DoLogoutButton(),
     CloseCommandButton(),
     LiberateOrBlockTableButton(),
+    ParametersButton(),
     if (!homePresenter.isGeneratingVersionToRede &&
         !homePresenter.isGeneratingVersionToGetNet)
       ReserveTableButton(),
-    ParametersButton(),
   ];
 }

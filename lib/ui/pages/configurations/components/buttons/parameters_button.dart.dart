@@ -14,7 +14,6 @@ class ParametersButton extends StatelessWidget {
 
     return defaultButton(
       context: context,
-      isNew: true,
       name: R.string.parameters,
       function: configurationsPresenter.goToParametersPage,
     );

@@ -95,6 +95,9 @@ class App extends StatelessWidget
           create: (_) => makeGetxPaymentPresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxSaleMovementPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxSendProductsToAnotherTablePresenter(),
         ),
         ListenableProvider(
@@ -170,6 +173,11 @@ class App extends StatelessWidget
               name: PageRoutes.printProducts,
               page: makePrintProductsPage,
               transition: Transition.fadeIn,
+            ),
+            GetPage(
+              name: PageRoutes.saleMovements,
+              page: makeSaleMovementPage,
+              transition: Transition.fade,
             ),
             GetPage(
               name: PageRoutes.schedules,

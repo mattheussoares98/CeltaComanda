@@ -29,4 +29,11 @@ class GetxSaleMovementPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  final _salesStream = Rx<List<SaleMovementConcentratorModel>?>(null);
+  @override
+  Stream<List<SaleMovementConcentratorModel>?> get salesStream =>
+      _salesStream.stream;
+  set sales(List<SaleMovementConcentratorModel>? value) =>
+      _salesStream.value = value;
 }

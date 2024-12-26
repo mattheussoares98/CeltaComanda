@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:date_format/date_format.dart';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -20,8 +22,12 @@ class RemoteLoadSaleMovementConcentrator
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
+      final dateTime = DateTime.parse(date);
+      final String formatedDate =
+          formatDate(dateTime, [yyyy, '-', mm, '-', dd]);
+
       final url =
-          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Search?enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&date=2024-12-19&onlyCancelled=false";
+          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Search?enterpriseId=${EnterpriseBuilder.entity!.enterpriseId}&d$formatedDate&onlyCancelled=false";
       final response = await httpAdapter.request(
         url: url,
         method: "put",

@@ -239,6 +239,8 @@ class EnUs implements Translation {
   String get searchType => 'Search type';
   String get selectAll => "Select all";
   String get selectAllProducts => "Select all products";
+  String get selectDate => "Select one date";
+  String get selectedDate => "Selected date";
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';
   String get selectPaymentOption => 'Select a payment option';

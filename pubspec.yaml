@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   get: ^4.6.6
   equatable: ^2.0.5
   flutter_secure_storage: ^9.1.1

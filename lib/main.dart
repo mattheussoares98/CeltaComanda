@@ -1,7 +1,7 @@
-import 'package:clean_celta_mobile/main/factories/pages/web_login/web_login_presenter_factory.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
@@ -123,6 +123,11 @@ class App extends StatelessWidget
           theme: makeAppTheme(context),
           navigatorObservers: [routeObserver],
           initialRoute: PageRoutes.splash,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
           getPages: [
             GetPage(
               name: PageRoutes.cancelProducts,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../helpers/helpers.dart';
 import '../components.dart';
 
@@ -9,7 +10,6 @@ class GetNewDate {
   GetNewDate._();
 
   static Future<DateTime?> get({
-    required BuildContext context,
     bool? canInsertDateBeforeNow = false,
     bool insertHoursAndMinutes = true,
     int? reduceDaysFromInitialDate,
@@ -20,7 +20,7 @@ class GetNewDate {
     );
 
     DateTime? validityDate = await showDatePicker(
-      context: context,
+      context: NavigatorKey.navigatorKey.currentState!.context,
       firstDate: now,
       initialDate: initialDate,
       lastDate: now.add(const Duration(days: 1825)),
@@ -33,12 +33,13 @@ class GetNewDate {
 
     if (validityDate != null) {
       TimeOfDay? newTime = await showTimePicker(
-        context: context,
+        context: NavigatorKey.navigatorKey.currentState!.context,
         initialTime: TimeOfDay.now(),
       );
 
       if (newTime == null) {
-        snackBarMessage(context, R.string.dateNotUpdated);
+        snackBarMessage(NavigatorKey.navigatorKey.currentState!.context,
+            R.string.dateNotUpdated);
       } else {
         DateTime selectedDateTime = DateTime(
           validityDate.year,
@@ -50,7 +51,8 @@ class GetNewDate {
 
         if (selectedDateTime.isBefore(initialDate) &&
             canInsertDateBeforeNow == false) {
-          snackBarMessage(context, R.string.dateNotUpdated);
+          snackBarMessage(NavigatorKey.navigatorKey.currentState!.context,
+              R.string.dateNotUpdated);
 
           return null;
         } else {

@@ -206,6 +206,8 @@ abstract class Translation {
   String get searchType;
   String get selectAll;
   String get selectAllProducts;
+  String get selectDate;
+  String get selectedDate;
   String get selectOneComment;
   String get selectedProductsAndComments;
   String get selectPaymentOption;

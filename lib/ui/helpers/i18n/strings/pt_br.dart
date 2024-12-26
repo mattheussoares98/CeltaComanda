@@ -239,6 +239,8 @@ class PtBr implements Translation {
   String get searchType => "Tipo de pesquisa";
   String get selectAll => "Selecionar todos";
   String get selectAllProducts => "Selecionar todos produtos";
+  String get selectDate => "Selecione uma data";
+  String get selectedDate => "Data selecionada";
   String get selectOneComment => "Selecione um comentário";
   String get selectedProductsAndComments =>
       'Produtos selecionados e comentários';

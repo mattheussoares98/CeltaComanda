@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/entities.dart';
+
 class SaleMovementConcentratorFinalizationModel extends Equatable {
   final int? SaleMovementFinalizationId;
   final int? FinalizationId;
@@ -120,4 +122,28 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         "TEFModalityDescription": TEFModalityDescription,
         "TEFPlanCardCode": TEFPlanCardCode,
       };
+
+  SaleMovementConcentratorFinalizationEntity toEntity() =>
+      SaleMovementConcentratorFinalizationEntity(
+        SaleMovementFinalizationId: SaleMovementFinalizationId,
+        FinalizationId: FinalizationId,
+        Value: Value,
+        PayBackValue: PayBackValue,
+        ValueLiquid: ValueLiquid,
+        AuthorizationCode: AuthorizationCode,
+        AuthorizationType: AuthorizationType,
+        PortionQuantity: PortionQuantity,
+        FinalizationPdvId: FinalizationPdvId,
+        TEFNSUSitef: TEFNSUSitef,
+        TEFNSUHost: TEFNSUHost,
+        TEFAuthorizationCode: TEFAuthorizationCode,
+        TEFBinCode: TEFBinCode,
+        TEFCardLastNumbers: TEFCardLastNumbers,
+        TEFNetWorkCode: TEFNetWorkCode,
+        TEFFlagCode: TEFFlagCode,
+        TEFFlagDescription: TEFFlagDescription,
+        TEFModalityPaymentCode: TEFModalityPaymentCode,
+        TEFModalityDescription: TEFModalityDescription,
+        TEFPlanCardCode: TEFPlanCardCode,
+      );
 }

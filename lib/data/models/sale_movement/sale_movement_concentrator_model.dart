@@ -2,6 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../models.dart';
 
 class SaleMovementConcentratorModel extends Equatable {
@@ -267,4 +268,57 @@ class SaleMovementConcentratorModel extends Equatable {
         "Products": Products,
         "Finalizations": Finalizations,
       };
+
+  SaleMovementConcentratorEntity toEntity() => SaleMovementConcentratorEntity(
+        SaleMovementId: SaleMovementId,
+        PdvId: PdvId,
+        PdvNumber: PdvNumber,
+        CashierMovementId: CashierMovementId,
+        EnterpriseId: EnterpriseId,
+        EnterpriseCode: EnterpriseCode,
+        PersonalizedCode: PersonalizedCode,
+        CouponFiscalNumber: CouponFiscalNumber,
+        DateOfCreation: DateOfCreation,
+        DateHourOfCreation: DateHourOfCreation,
+        CpfCnpj: CpfCnpj,
+        DiscountType: DiscountType,
+        DiscountValue: DiscountValue,
+        UserIdOfDiscount: UserIdOfDiscount,
+        DiscountFinalizationValue: DiscountFinalizationValue,
+        CRMDiscountTransactionId: CRMDiscountTransactionId,
+        CRMCpfCnpj: CRMCpfCnpj,
+        CRMDiscountType: CRMDiscountType,
+        CRMDiscountValue: CRMDiscountValue,
+        IncrementType: IncrementType,
+        IncrementValue: IncrementValue,
+        FidelityControlsPoints: FidelityControlsPoints,
+        XmlSatNfce: XmlSatNfce,
+        XmlSatNfceCancel: XmlSatNfceCancel,
+        EletronicAccessKey: EletronicAccessKey,
+        SaleRequestPersonalizedCode: SaleRequestPersonalizedCode,
+        SaleFiscalType: SaleFiscalType,
+        SalePricePraticed: SalePricePraticed,
+        SaleFiscalTypeString: SaleFiscalTypeString,
+        UserIdOfCancellation: UserIdOfCancellation,
+        IsCancelled: IsCancelled,
+        IsToDelivery: IsToDelivery,
+        IsForTravel: IsForTravel,
+        DateHourOfDelivery: DateHourOfDelivery,
+        DeliveryControl: DeliveryControl,
+        WasPrinted: WasPrinted,
+        MotiveJustificationId: MotiveJustificationId,
+        MotiveJustificationName: MotiveJustificationName,
+        MotiveJustificationSaleDiscountId: MotiveJustificationSaleDiscountId,
+        MotiveJustificationSaleDiscountName:
+            MotiveJustificationSaleDiscountName,
+        IsDelivery: IsDelivery,
+        CovenantCode: CovenantCode,
+        CustomerCode: CustomerCode,
+        CustomerAdditionalCode: CustomerAdditionalCode,
+        SellerCode: SellerCode,
+        SellerName: SellerName,
+        TotalLiquid: TotalLiquid,
+        Products: Products.map((e) => e.toEntity()).toList(),
+        Finalizations: Finalizations.map((e) => e.toEntity()).toList(),
+      );
 }

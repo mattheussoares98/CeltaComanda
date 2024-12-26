@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/entities.dart';
+
 class SaleMovementProductConcentratorModel extends Equatable {
   final int? SaleMovementProductId;
   final int? Position;
@@ -345,4 +347,74 @@ class SaleMovementProductConcentratorModel extends Equatable {
         "SaleOfferDiscountType": SaleOfferDiscountType,
         "SaleOfferDiscountValue": SaleOfferDiscountValue,
       };
+
+  SaleMovementProductConcentratorEntity toEntity() =>
+      SaleMovementProductConcentratorEntity(
+        SaleMovementProductId: SaleMovementProductId,
+        Position: Position,
+        SaleRequestProductInternalCodeOnERP:
+            SaleRequestProductInternalCodeOnERP,
+        UnitValue: UnitValue,
+        Quantity: Quantity,
+        IsCancelled: IsCancelled,
+        IsToDelivery: IsToDelivery,
+        IsPrinted: IsPrinted,
+        Comments: Comments,
+        MotiveJustificationId: MotiveJustificationId,
+        MotiveJustificationName: MotiveJustificationName,
+        MotiveJustificationSaleDiscountId: MotiveJustificationSaleDiscountId,
+        MotiveJustificationSaleDiscountName:
+            MotiveJustificationSaleDiscountName,
+        UserIdOfCancellation: UserIdOfCancellation,
+        DiscountType: DiscountType,
+        DiscountValue: DiscountValue,
+        UserIdOfDiscount: UserIdOfDiscount,
+        SaleNegotiationDiscountType: SaleNegotiationDiscountType,
+        SaleNegotiationDiscountValue: SaleNegotiationDiscountValue,
+        CRMDiscountType: CRMDiscountType,
+        CRMDiscountValue: CRMDiscountValue,
+        IncrementType: IncrementType,
+        IncrementValue: IncrementValue,
+        DeliveryTaxType: DeliveryTaxType,
+        DeliveryTaxValue: DeliveryTaxValue,
+        ProductPluCode: ProductPluCode,
+        ProductEan: ProductEan,
+        ProductInternalCodeOnERP: ProductInternalCodeOnERP,
+        ProductName: ProductName,
+        ProductIsFatherComposition: ProductIsFatherComposition,
+        SaleMovementProductCompositionId: SaleMovementProductCompositionId,
+        IcmsTributarySituationCode: IcmsTributarySituationCode,
+        IcmsAliquot: IcmsAliquot,
+        IcmsStave: IcmsStave,
+        IcmsReductionMargin: IcmsReductionMargin,
+        IcmsIVAMargin: IcmsIVAMargin,
+        PisType: PisType,
+        CofinsType: CofinsType,
+        PisPercentage: PisPercentage,
+        CofinsPercentage: CofinsPercentage,
+        SaleRetailPrice: SaleRetailPrice,
+        OfferRetailPrice: OfferRetailPrice,
+        WholeSalePrice: WholeSalePrice,
+        WholeOfferPrice: WholeOfferPrice,
+        SaleECommercePrice: SaleECommercePrice,
+        OfferECommercePrice: OfferECommercePrice,
+        RepositionCost: RepositionCost,
+        RepositionCostMiddle: RepositionCostMiddle,
+        LiquidCost: LiquidCost,
+        LiquidCostMiddle: LiquidCostMiddle,
+        RepositionCostReal: RepositionCostReal,
+        LiquidCostReal: LiquidCostReal,
+        CFOP: CFOP,
+        CSTPisCofins: CSTPisCofins,
+        NatureOperationCodePisCofins: NatureOperationCodePisCofins,
+        SocialContributionCodePisCofins: SocialContributionCodePisCofins,
+        IcmsFiscalAdjustCode: IcmsFiscalAdjustCode,
+        IcmsFiscalAdjustObservationCode: IcmsFiscalAdjustObservationCode,
+        IcmsFiscalOriginalAliquot: IcmsFiscalOriginalAliquot,
+        IcmsFiscalBenefitCode: IcmsFiscalBenefitCode,
+        SaleOfferCode: SaleOfferCode,
+        SaleOfferQuantity: SaleOfferQuantity,
+        SaleOfferDiscountType: SaleOfferDiscountType,
+        SaleOfferDiscountValue: SaleOfferDiscountValue,
+      );
 }

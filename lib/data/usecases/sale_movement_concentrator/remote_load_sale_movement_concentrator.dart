@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../models/models.dart';
 
 class RemoteLoadSaleMovementConcentrator
     implements LoadSaleMovementConcentrator {
@@ -28,8 +31,9 @@ class RemoteLoadSaleMovementConcentrator
         throw Error();
       }
 
-      // return (json.decode(response) as List).map((e) => ).toList();
-      return []; //TODO create SaleMovementConcentratorModel to convert to entity
+      return (json.decode(response) as List)
+          .map((e) => SaleMovementConcentratorModel.fromJson(e).toEntity())
+          .toList();
     } catch (error) {
       throw DomainError.unexpected;
     }

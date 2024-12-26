@@ -678,4 +678,13 @@ void main() {
       ).called(1);
     });
   });
+
+  group("Go to sale movement page", () {
+    test("Should call navigateTo with correct value", () async {
+      sut.goToSaleMovementsPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.saleMovements))
+          .called(1);
+    });
+  });
 }

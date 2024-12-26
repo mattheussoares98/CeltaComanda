@@ -27,6 +27,9 @@ abstract class ConfigurationsPresenter implements Listenable {
 
   Future<void> goToCancelProductsPage();
   Future<void> goToSchedulesPage();
+  void goToSendProductsToAnotherTablePage();
+  Future<void> goToParametersPage();
+  void goToSaleMovementsPage();
 
   Future<bool> loadMenuAgain();
 
@@ -42,8 +45,5 @@ abstract class ConfigurationsPresenter implements Listenable {
     required int newPersonalizedCode,
   });
 
-  void goToSendProductsToAnotherTablePage();
-
   Future<bool> closeCommand(int commandNumber);
-  Future<void> goToParametersPage();
 }

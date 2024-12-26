@@ -281,4 +281,9 @@ class GetxConfigurationsPresenter extends GetxController
   Future<void> goToParametersPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.parameters);
   }
+
+  @override
+  void goToSaleMovementsPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.saleMovements);
+  }
 }

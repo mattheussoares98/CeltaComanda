@@ -23,12 +23,13 @@ class _SaleMovementPageState extends State<SaleMovementPage> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () async {
@@ -40,23 +41,25 @@ class _SaleMovementPageState extends State<SaleMovementPage> {
                   },
                   child: Text(R.string.selectDate),
                 ),
+                const SizedBox(width: 20),
                 Text(selectedDate == null
-                    ? R.string.selectDate
-                    : formatDate(selectedDate!, [yyyy, '-', mm, '-', dd])),
+                    ? ""
+                    : formatDate(selectedDate!, [dd, '/', mm, '/', yyyy])),
               ],
             ),
-          ),
-          ElevatedButton(
-            onPressed: selectedDate == null
-                ? null
-                : () async {
-                    await saleMovementPresenter.loadSales(
-                      date: selectedDate!.toIso8601String(),
-                    );
-                  },
-            child: const Text('Load Sales'),
-          ),
-        ],
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: selectedDate == null
+                  ? null
+                  : () async {
+                      await saleMovementPresenter.loadSales(
+                        date: selectedDate!.toIso8601String(),
+                      );
+                    },
+              child: Text(R.string.loadSales),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -190,6 +190,7 @@ class PtBr implements Translation {
   String get liquidateCommand => 'Liquidar comanda';
   String get liquidateCommandSucceeds => "Comanda liquidada com sucesso";
   String get loadMenu => 'Carregar menu';
+  String get loadSales => 'Pesquisar vendas';
   String get login => 'Login';
   String get maximumAbbreviated => "Máx";
   String get minimumAbbreviated => "Mín";

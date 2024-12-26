@@ -146,4 +146,29 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         TEFModalityDescription: TEFModalityDescription,
         TEFPlanCardCode: TEFPlanCardCode,
       );
+
+  factory SaleMovementConcentratorFinalizationModel.fromEntity(
+          SaleMovementConcentratorFinalizationEntity entity) =>
+      SaleMovementConcentratorFinalizationModel(
+        SaleMovementFinalizationId: entity.SaleMovementFinalizationId,
+        FinalizationId: entity.FinalizationId,
+        Value: entity.Value,
+        PayBackValue: entity.PayBackValue,
+        ValueLiquid: entity.ValueLiquid,
+        AuthorizationCode: entity.AuthorizationCode,
+        AuthorizationType: entity.AuthorizationType,
+        PortionQuantity: entity.PortionQuantity,
+        FinalizationPdvId: entity.FinalizationPdvId,
+        TEFNSUSitef: entity.TEFNSUSitef,
+        TEFNSUHost: entity.TEFNSUHost,
+        TEFAuthorizationCode: entity.TEFAuthorizationCode,
+        TEFBinCode: entity.TEFBinCode,
+        TEFCardLastNumbers: entity.TEFCardLastNumbers,
+        TEFNetWorkCode: entity.TEFNetWorkCode,
+        TEFFlagCode: entity.TEFFlagCode,
+        TEFFlagDescription: entity.TEFFlagDescription,
+        TEFModalityPaymentCode: entity.TEFModalityPaymentCode,
+        TEFModalityDescription: entity.TEFModalityDescription,
+        TEFPlanCardCode: entity.TEFPlanCardCode,
+      );
 }

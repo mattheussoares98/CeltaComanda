@@ -1,3 +1,4 @@
+import '../../data/models/models.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -20,6 +21,8 @@ class GetxSaleMovementPresenter extends GetxController
       isLoading = true;
       mainError = null;
       final sales = await loadSaleMovementConcentrator.load(date: date);
+
+      sales.map((e) => SaleMovementConcentratorModel.fromEntity(e)).toList();
     } catch (error) {
       mainError = UIError.unexpected;
     } finally {

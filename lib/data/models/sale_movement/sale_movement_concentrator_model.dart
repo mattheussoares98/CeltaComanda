@@ -330,4 +330,63 @@ class SaleMovementConcentratorModel extends Equatable {
         Products: Products.map((e) => e.toEntity()).toList(),
         Finalizations: Finalizations.map((e) => e.toEntity()).toList(),
       );
+
+  factory SaleMovementConcentratorModel.fromEntity(
+          SaleMovementConcentratorEntity entity) =>
+      SaleMovementConcentratorModel(
+        SaleMovementId: entity.SaleMovementId,
+        PdvId: entity.PdvId,
+        PdvNumber: entity.PdvNumber,
+        CashierMovementId: entity.CashierMovementId,
+        EnterpriseId: entity.EnterpriseId,
+        EnterpriseCode: entity.EnterpriseCode,
+        PersonalizedCode: entity.PersonalizedCode,
+        CouponFiscalNumber: entity.CouponFiscalNumber,
+        DateOfCreation: entity.DateOfCreation,
+        DateHourOfCreation: entity.DateHourOfCreation,
+        CpfCnpj: entity.CpfCnpj,
+        DiscountType: entity.DiscountType,
+        DiscountValue: entity.DiscountValue,
+        UserIdOfDiscount: entity.UserIdOfDiscount,
+        DiscountFinalizationValue: entity.DiscountFinalizationValue,
+        CRMDiscountTransactionId: entity.CRMDiscountTransactionId,
+        CRMCpfCnpj: entity.CRMCpfCnpj,
+        CRMDiscountType: entity.CRMDiscountType,
+        CRMDiscountValue: entity.CRMDiscountValue,
+        IncrementType: entity.IncrementType,
+        IncrementValue: entity.IncrementValue,
+        FidelityControlsPoints: entity.FidelityControlsPoints,
+        XmlSatNfce: entity.XmlSatNfce,
+        XmlSatNfceCancel: entity.XmlSatNfceCancel,
+        EletronicAccessKey: entity.EletronicAccessKey,
+        SaleRequestPersonalizedCode: entity.SaleRequestPersonalizedCode,
+        SaleFiscalType: entity.SaleFiscalType,
+        SalePricePraticed: entity.SalePricePraticed,
+        SaleFiscalTypeString: entity.SaleFiscalTypeString,
+        UserIdOfCancellation: entity.UserIdOfCancellation,
+        IsCancelled: entity.IsCancelled,
+        IsToDelivery: entity.IsToDelivery,
+        IsForTravel: entity.IsForTravel,
+        DateHourOfDelivery: entity.DateHourOfDelivery,
+        DeliveryControl: entity.DeliveryControl,
+        WasPrinted: entity.WasPrinted,
+        MotiveJustificationId: entity.MotiveJustificationId,
+        MotiveJustificationName: entity.MotiveJustificationName,
+        MotiveJustificationSaleDiscountId:
+            entity.MotiveJustificationSaleDiscountId,
+        MotiveJustificationSaleDiscountName:
+            entity.MotiveJustificationSaleDiscountName,
+        IsDelivery: entity.IsDelivery,
+        CovenantCode: entity.CovenantCode,
+        CustomerCode: entity.CustomerCode,
+        CustomerAdditionalCode: entity.CustomerAdditionalCode,
+        SellerCode: entity.SellerCode,
+        SellerName: entity.SellerName,
+        TotalLiquid: entity.TotalLiquid,
+        Products: entity.Products.map(
+            (e) => SaleMovementProductConcentratorModel.fromEntity(e)).toList(),
+        Finalizations: entity.Finalizations.map(
+                (e) => SaleMovementConcentratorFinalizationModel.fromEntity(e))
+            .toList(),
+      );
 }

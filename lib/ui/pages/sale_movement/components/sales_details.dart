@@ -52,8 +52,6 @@ class _SalesDetailsState extends State<SalesDetails> {
               final salesByPdv =
                   snapshot.data!.where((e) => e.PdvNumber == pdv).toList();
 
-              final finalizationsByPdv =
-                  salesByPdv.map((x) => x.Finalizations).toList();
               return Column(
                 children: [
                   TotalByPdv(
@@ -63,29 +61,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                     sales: snapshot.data!,
                   ),
                   if (index == selectedIndex)
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: finalizationsByPdv.length,
-                      itemBuilder: (context, finalizationsByPdvIndex) {
-                        final finalizations =
-                            finalizationsByPdv[finalizationsByPdvIndex];
-
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: finalizations.length,
-                          itemBuilder: (context, finalizationsIndex) {
-                            final finalization =
-                                finalizations[finalizationsIndex];
-
-                            return Text(
-                              (finalization.ValueLiquid! -
-                                      (finalization.PayBackValue ?? 0))
-                                  .toString(),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                    SalesByFinalizations(salesByPdv: salesByPdv),
                   if (index == pdvs.length - 1)
                     TotalAddingAllPdvs(sales: snapshot.data!),
                 ],

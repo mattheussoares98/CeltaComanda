@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../data/models/models.dart';
 import '../../pages.dart';
 
 class SalesDetails extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SalesDetailsState extends State<SalesDetails> {
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
-      child: StreamBuilder(
+      child: StreamBuilder<List<SaleMovementConcentratorModel>?>(
         stream: saleMovementPresenter.salesStream,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
@@ -48,6 +49,11 @@ class _SalesDetailsState extends State<SalesDetails> {
             itemBuilder: (context, index) {
               final pdv = pdvs[index];
 
+              final salesByPdv =
+                  snapshot.data!.where((e) => e.PdvNumber == pdv).toList();
+
+              final finalizationsByPdv =
+                  salesByPdv.map((x) => x.Finalizations).toList();
               return Column(
                 children: [
                   TotalByPdv(
@@ -57,8 +63,28 @@ class _SalesDetailsState extends State<SalesDetails> {
                     sales: snapshot.data!,
                   ),
                   if (index == selectedIndex)
-                    Text(
-                      "initializate view of informations about one determinated pdv",
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: finalizationsByPdv.length,
+                      itemBuilder: (context, finalizationsByPdvIndex) {
+                        final finalizations =
+                            finalizationsByPdv[finalizationsByPdvIndex];
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: finalizations.length,
+                          itemBuilder: (context, finalizationsIndex) {
+                            final finalization =
+                                finalizations[finalizationsIndex];
+
+                            return Text(
+                              (finalization.ValueLiquid! -
+                                      (finalization.PayBackValue ?? 0))
+                                  .toString(),
+                            );
+                          },
+                        );
+                      },
                     ),
                   if (index == pdvs.length - 1)
                     TotalAddingAllPdvs(sales: snapshot.data!),

@@ -7,6 +7,7 @@ import '../../../domain/entities/entities.dart';
 class SaleMovementConcentratorFinalizationModel extends Equatable {
   final int? SaleMovementFinalizationId;
   final int? FinalizationId;
+  final FinalizationType finalizationType;
   final double? Value;
   final double? PayBackValue;
   final double? ValueLiquid;
@@ -32,6 +33,7 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
   const SaleMovementConcentratorFinalizationModel({
     required this.SaleMovementFinalizationId,
     required this.FinalizationId,
+    required this.finalizationType,
     required this.Value,
     required this.PayBackValue,
     required this.ValueLiquid,
@@ -80,6 +82,7 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
       SaleMovementConcentratorFinalizationModel(
         SaleMovementFinalizationId: data["SaleMovementFinalizationId"],
         FinalizationId: data["FinalizationId"],
+        finalizationType: (data["FinalizationId"] as int).id,
         Value: data["Value"],
         PayBackValue: data["PayBackValue"],
         ValueLiquid: data["ValueLiquid"],
@@ -152,6 +155,7 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
       SaleMovementConcentratorFinalizationModel(
         SaleMovementFinalizationId: entity.SaleMovementFinalizationId,
         FinalizationId: entity.FinalizationId,
+        finalizationType: entity.FinalizationId!.id,
         Value: entity.Value,
         PayBackValue: entity.PayBackValue,
         ValueLiquid: entity.ValueLiquid,
@@ -171,4 +175,46 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         TEFModalityDescription: entity.TEFModalityDescription,
         TEFPlanCardCode: entity.TEFPlanCardCode,
       );
+}
+
+enum FinalizationType {
+  money, // == 1
+  check, // == 2
+  pix, // == 3
+  purchaseVale, // == 4
+  debitCard, // == 5
+  creditCard, // == 6
+  covenant, // == 7
+  pos, // == 8
+  portion, // == 9
+  financialCredits, // == 10
+}
+
+extension FinalizationTypeExtension on int {
+  FinalizationType get id {
+    switch (this) {
+      case 1:
+        return FinalizationType.money;
+      case 2:
+        return FinalizationType.check;
+      case 3:
+        return FinalizationType.pix;
+      case 4:
+        return FinalizationType.purchaseVale;
+      case 5:
+        return FinalizationType.debitCard;
+      case 6:
+        return FinalizationType.creditCard;
+      case 7:
+        return FinalizationType.covenant;
+      case 8:
+        return FinalizationType.pos;
+      case 9:
+        return FinalizationType.portion;
+      case 10:
+        return FinalizationType.financialCredits;
+      default:
+        return FinalizationType.money;
+    }
+  }
 }

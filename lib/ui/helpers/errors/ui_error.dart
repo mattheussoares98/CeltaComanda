@@ -11,6 +11,7 @@ enum UIError {
   commandNumberObligatory,
   dontHaveUnusedPdvs,
   emailInUse,
+  emptySales,
   enterpriseOrUrlNotFound,
   invalidCombox,
   invalidCredentials,
@@ -57,6 +58,8 @@ extension UIErrorExtension on UIError {
         return R.string.msgDontHaveUnusedPdvs;
       case UIError.emailInUse:
         return R.string.msgEmailInUse;
+      case UIError.emptySales:
+        return R.string.emptySales;
       case UIError.enterpriseOrUrlNotFound:
         return R.string.enterpriseOrUrlNotFound;
       case UIError.invalidCombox:

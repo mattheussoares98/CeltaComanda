@@ -136,6 +136,7 @@ abstract class Translation {
   String get eanOrPlu;
   String get email;
   String get emptyCart;
+  String get emptySales;
   String get emptyTable;
   String get enableSearchProducts;
   String get enterpriseOrUrlNotFound;

@@ -1,4 +1,5 @@
 import '../../data/models/models.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -25,15 +26,20 @@ class GetxSaleMovementPresenter extends GetxController
       final loadedSales = await loadSaleMovementConcentrator.load(date: date);
 
       if (loadedSales == null) {
-        //TODO see what is returned when dont has sales
-        throw Exception();
+        throw DomainError.emptySales;
       }
 
       sales = loadedSales
           .map((e) => SaleMovementConcentratorModel.fromEntity(e))
           .toList();
-    } catch (error) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.emptySales:
+          mainError = UIError.emptySales;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

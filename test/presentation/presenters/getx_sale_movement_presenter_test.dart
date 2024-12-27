@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -76,13 +77,23 @@ void main() {
 
       await sut.loadSales(date: date);
     });
-    test("Should emit correct values on error", () async {
+    test("Should emit correct values on unexpected error", () async {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.salesStream, emits(null));
 
-      loadSaleMovementConcentrator.mockError();
+      loadSaleMovementConcentrator.mockError(DomainError.unexpected);
+
+      await sut.loadSales(date: date);
+    });
+    test("Should emit correct values on empty sales error", () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.emptySales]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.salesStream, emits(null));
+
+      loadSaleMovementConcentrator.mockError(DomainError.emptySales);
 
       await sut.loadSales(date: date);
     });

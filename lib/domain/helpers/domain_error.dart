@@ -9,6 +9,7 @@ enum DomainError {
   commandNumberObligatory,
   dontHaveUnusedPdvs,
   enterpriseOrUrlNotFound,
+  emptySales,
   invalidCombox,
   invalidCredentials,
   invalidCredentialsOrAccessDenied,

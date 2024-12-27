@@ -33,13 +33,15 @@ class RemoteLoadSaleMovementConcentrator
       );
       if (response == null) {
         throw Error();
+      } else if (response.isEmpty == true) {
+        throw DomainError.emptySales;
       }
 
       return (response as List)
           .map((e) => SaleMovementConcentratorModel.fromJson(e).toEntity())
           .toList();
     } catch (error) {
-      throw DomainError.unexpected;
+      rethrow;
     }
   }
 }

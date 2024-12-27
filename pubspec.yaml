@@ -59,6 +59,7 @@ dependencies:
   device_info_plus: ^11.1.1
   flutter_barcode_scanner_plus: ^3.0.2
   date_format: ^2.0.9
+  flutter_esc_pos_utils: ^1.0.1
 
 icons_launcher:
   image_path: "lib/ui/assets/dev_assets/celta_restaurant.png"

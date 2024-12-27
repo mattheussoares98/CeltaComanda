@@ -64,6 +64,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             if (homePresenter.isGeneratingVersionToRede)
               PrintPrintedProductsButton(),
+            //TODO create new button and options with new downloaded dependence
             LoadPrintedProductsAgainButton(),
           ],
         ),
@@ -78,7 +79,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                           printed: printedProductsPresenter.printed!,
                           formKey: formKey,
                           passwordController: passwordController,
-                          personalizedCodeController: personalizedCodeController,
+                          personalizedCodeController:
+                              personalizedCodeController,
                         )
                       : const SearchDataByCommandNumber(),
                 ),
@@ -87,10 +89,11 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     showRemoveServiceChargeButton: false,
                     requestUserAndPassword: true,
                     printed: printedProductsPresenter.printed!,
-                    commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
+                    commandNumber:
+                        homePresenter.commandEntity!.commandNumber!.toInt(),
                     loadPrintedAgain: () async {
-                      await printedProductsPresenter
-                          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+                      await printedProductsPresenter.loadPrinted(
+                          homePresenter.commandEntity!.commandNumber!);
                     },
                   ),
               ],

@@ -48,11 +48,16 @@ class _UpdateDateAndSearchSalesButtonsState
         Expanded(
           child: ElevatedButton(
             onPressed: () async {
-              selectedDate = await GetNewDate.get(
+              final date = await GetNewDate.get(
                 insertHoursAndMinutes: false,
                 reduceDaysFromInitialDate: 90,
               );
-              setState(() {});
+
+              if (date != null) {
+                setState(() {
+                  selectedDate = date;
+                });
+              }
             },
             child: Text(
               "${formatedDate()}   ${R.string.changeDate}",

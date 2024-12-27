@@ -40,11 +40,14 @@ class _SaleMovementPageState extends State<SaleMovementPage>
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            UpdateDateAndSearchSalesButtons(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              UpdateDateAndSearchSalesButtons(),
+              SalesDetails(),
+            ],
+          ),
         ),
       ),
     );

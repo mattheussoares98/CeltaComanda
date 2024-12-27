@@ -5,8 +5,10 @@ import '../../../../ui/helpers/helpers.dart';
 
 class SalesByFinalizations extends StatelessWidget {
   final List<SaleMovementConcentratorModel> salesByPdv;
+  final int pdvIndex;
   const SalesByFinalizations({
     required this.salesByPdv,
+    required this.pdvIndex,
     super.key,
   });
 
@@ -18,32 +20,38 @@ class SalesByFinalizations extends StatelessWidget {
     final finalizationsTypes =
         finalizationsByPdv.map((e) => e.finalizationType).toSet().toList();
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: finalizationsTypes.length,
-      itemBuilder: (context, finalizationsTypesIndex) {
-        final finalizationType = finalizationsTypes[finalizationsTypesIndex];
+    return Container(
+      padding: EdgeInsets.all(5),
+      color: pdvIndex % 2 == 0
+          ? Theme.of(context).primaryColor.withAlpha(35)
+          : Theme.of(context).primaryColor.withAlpha(15),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: finalizationsTypes.length,
+        itemBuilder: (context, finalizationsTypesIndex) {
+          final finalizationType = finalizationsTypes[finalizationsTypesIndex];
 
-        final finalizationsByType = finalizationsByPdv
-            .where((e) => e.finalizationType == finalizationType)
-            .toList();
+          final finalizationsByType = finalizationsByPdv
+              .where((e) => e.finalizationType == finalizationType)
+              .toList();
 
-        return Row(
-          children: [
-            Expanded(child: Text(finalizationType.name)),
-            Text(
-              finalizationsByType
-                  .map((e) => e.ValueLiquid!)
-                  .fold(0.0, (previous, element) {
-                    return previous += element;
-                  })
-                  .toString()
-                  .toBrazilianNumber()
-                  .addBrazilianCoin(),
-            ),
-          ],
-        );
-      },
+          return Row(
+            children: [
+              Expanded(child: Text(finalizationType.name)),
+              Text(
+                finalizationsByType
+                    .map((e) => e.ValueLiquid!)
+                    .fold(0.0, (previous, element) {
+                      return previous += element;
+                    })
+                    .toString()
+                    .toBrazilianNumber()
+                    .addBrazilianCoin(),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

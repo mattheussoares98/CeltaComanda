@@ -26,9 +26,7 @@ class TotalByPdv extends StatelessWidget {
     });
 
     return Container(
-      margin: EdgeInsets.only(bottom: 4),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
         color: index % 2 == 0
             ? Theme.of(context).primaryColor.withAlpha(35)
             : Theme.of(context).primaryColor.withAlpha(15),

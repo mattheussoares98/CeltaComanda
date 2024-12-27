@@ -28,6 +28,7 @@ class _SaleMovementPageState extends State<SaleMovementPage>
   Widget build(BuildContext context) {
     SaleMovementPresenter saleMovementPresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     errorSubscription?.cancel();
@@ -37,7 +38,11 @@ class _SaleMovementPageState extends State<SaleMovementPage>
         handleMainError(context, saleMovementPresenter.mainErrorStream);
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(homePresenter.commandEntity?.pdv?.PdvNumber != null
+            ? homePresenter.commandEntity!.pdv!.PdvNumber!
+            : ""),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(

@@ -52,19 +52,25 @@ class _SalesDetailsState extends State<SalesDetails> {
               final salesByPdv =
                   snapshot.data!.where((e) => e.PdvNumber == pdv).toList();
 
-              return Column(
-                children: [
-                  TotalByPdv(
-                    index: index,
-                    updateSelectedIndex: updateSelectedIndex,
-                    pdv: pdv,
-                    sales: snapshot.data!,
-                  ),
-                  if (index == selectedIndex)
-                    SalesByFinalizations(salesByPdv: salesByPdv),
-                  if (index == pdvs.length - 1)
-                    TotalAddingAllPdvs(sales: snapshot.data!),
-                ],
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Column(
+                  children: [
+                    TotalByPdv(
+                      index: index,
+                      updateSelectedIndex: updateSelectedIndex,
+                      pdv: pdv,
+                      sales: snapshot.data!,
+                    ),
+                    if (index == selectedIndex)
+                      SalesByFinalizations(
+                        salesByPdv: salesByPdv,
+                        pdvIndex: index,
+                      ),
+                    if (index == pdvs.length - 1)
+                      TotalAddingAllPdvs(sales: snapshot.data!),
+                  ],
+                ),
               );
             },
           );

@@ -224,7 +224,7 @@ class GetxPrintedProductsPresenter
     } else if (printed.IncrementType.toInt() == 2) {
       //percentage
       value = printed.TotalLiquid.toDouble() *
-          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
+          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue ?? 0 / 100);
     } else if (EnterpriseBuilder.entity?.pluServiceCharge != null &&
         EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null) {
       return 0;

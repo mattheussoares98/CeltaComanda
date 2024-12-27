@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -39,9 +40,8 @@ class _SaleMovementPageState extends State<SaleMovementPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(homePresenter.commandEntity?.pdv?.PdvNumber != null
-            ? homePresenter.commandEntity!.pdv!.PdvNumber!
-            : ""),
+        title: Text(
+            "${R.string.sales}  ${homePresenter.commandEntity?.pdv?.PdvNumber != null ? "${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!}" : ""}"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

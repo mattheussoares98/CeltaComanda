@@ -22,6 +22,12 @@ class TotalByPdv extends StatelessWidget {
     final salesByPdv = sales.where((e) => e.PdvNumber == pdv).toList();
 
     final totalByPdv = salesByPdv.fold<double>(0.0, (previous, element) {
+      if (element.IncrementType == 1) {
+        return previous += (element.TotalLiquid! + element.IncrementValue!);
+      } else if (element.IncrementType == 2) {
+        return previous +=
+            (element.TotalLiquid! * (1 + element.IncrementValue! / 100));
+      }
       return previous += element.TotalLiquid!;
     });
 

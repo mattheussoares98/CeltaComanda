@@ -250,6 +250,12 @@ void main() {
     test(
         "Should call cartPresenter.insertServiceChargeProduct with in new command number",
         () async {
+      final entityWithServiceChargeProduct = EntityFactory.makePrintedEntity(
+        productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
+      );
+      loadPrintedProducts.mockLoadPrintedEntity(entityWithServiceChargeProduct);
+      await sut.loadProducts(commandNumber);
+
       int firstSelected = faker.randomGenerator.integer(100);
       sut.updateProductIsSelected(firstSelected);
 

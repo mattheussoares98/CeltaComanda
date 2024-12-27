@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/components.dart';
-import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
@@ -18,7 +14,6 @@ class SaleMovementPage extends StatefulWidget {
 
 class _SaleMovementPageState extends State<SaleMovementPage>
     with UIErrorManager, LoadingManager {
-  DateTime? selectedDate;
   StreamSubscription? loadingSubscription;
   StreamSubscription? errorSubscription;
 
@@ -48,36 +43,7 @@ class _SaleMovementPageState extends State<SaleMovementPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    selectedDate = await GetNewDate.get(
-                      insertHoursAndMinutes: false,
-                      reduceDaysFromInitialDate: 90,
-                    );
-                    setState(() {});
-                  },
-                  child: Text(R.string.selectDate),
-                ),
-                const SizedBox(width: 20),
-                Text(selectedDate == null
-                    ? ""
-                    : formatDate(selectedDate!, [dd, '/', mm, '/', yyyy])),
-              ],
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: selectedDate == null
-                  ? null
-                  : () async {
-                      await saleMovementPresenter.loadSales(
-                        date: selectedDate!.toIso8601String(),
-                      );
-                    },
-              child: Text(R.string.loadSales),
-            ),
+            UpdateDateAndSearchSalesButtons(),
           ],
         ),
       ),

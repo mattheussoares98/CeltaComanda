@@ -101,6 +101,8 @@ abstract class Translation {
   String get cart;
   String get cashCredit;
   String get cellPhone;
+  String get change;
+  String get changeDate;
   String get child;
   String get clearCart;
   String get close;

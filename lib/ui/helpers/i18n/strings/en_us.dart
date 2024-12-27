@@ -134,6 +134,7 @@ class EnUs implements Translation {
   String get cellPhone => 'Cell phone';
   String get change => 'Change';
   String get changeDate => 'Change date';
+  String get check => 'Check';
   String get child => 'Child';
   String get clearCart => 'Clear cart';
   String get closeApplication => 'Close APP';
@@ -158,6 +159,7 @@ class EnUs implements Translation {
   String get costBenefit => 'Cost-benefit';
   String get covenant => 'Covenant';
   String get covenants => 'Covenants';
+  String get credit => 'Credit';
   String get customer => 'Customer';
   String get dateNotUpdated => 'Date not updated';
   String get debit => 'Debit';
@@ -179,6 +181,7 @@ class EnUs implements Translation {
   String get exit => 'Exit';
   String get expansibleGroup => 'Expansible group';
   String get father => 'Father';
+  String get financialCredits => 'Finalcial credits';
   String get friday => 'Friday';
   String get getCustomer => 'Get customer';
   String get insertInCart => 'Add to cart';
@@ -199,6 +202,7 @@ class EnUs implements Translation {
   String get minimumAbbreviated => "Min";
   String get missing => 'Missing';
   String get monday => 'Monday';
+  String get money => 'Money';
   String get name => 'Name';
   String get neww => 'New';
   String get no => 'No';
@@ -215,12 +219,16 @@ class EnUs implements Translation {
   String get peopleQuantity => 'Number of people';
   String get per => 'Per';
   String get personalizedCode => 'Personalized code';
+  String get pix => 'Pix';
+  String get portion => 'Portion';
+  String get pos => 'Pos';
   String get price => 'Price';
   String get productsAndComments => 'Products and comments';
   String get productsSchedules => 'Products schedules';
   String get products => 'Products';
   String get product => 'Product';
   String get promotionWithoutPoints => 'Promotion without points';
+  String get purchaseVale => 'Purchase vale';
   String get quantity => 'Quantity';
   String get quantityAbbreviated => 'Qty';
   String get register => 'Register';

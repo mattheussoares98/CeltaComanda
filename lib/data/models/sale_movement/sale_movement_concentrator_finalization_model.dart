@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../ui/helpers/helpers.dart';
 
 class SaleMovementConcentratorFinalizationModel extends Equatable {
   final int? SaleMovementFinalizationId;
@@ -190,7 +191,7 @@ enum FinalizationType {
   financialCredits, // == 10
 }
 
-extension FinalizationTypeExtension on int {
+extension FinalizationTypeExtensionInt on int {
   FinalizationType get id {
     switch (this) {
       case 1:
@@ -215,6 +216,33 @@ extension FinalizationTypeExtension on int {
         return FinalizationType.financialCredits;
       default:
         return FinalizationType.money;
+    }
+  }
+}
+
+extension FinalizationTypeExtensionName on FinalizationType {
+  String get name {
+    switch (this) {
+      case FinalizationType.money:
+        return R.string.money;
+      case FinalizationType.check:
+        return R.string.check;
+      case FinalizationType.pix:
+        return R.string.pix;
+      case FinalizationType.purchaseVale:
+        return R.string.purchaseVale;
+      case FinalizationType.debitCard:
+        return R.string.debit;
+      case FinalizationType.creditCard:
+        return R.string.credit;
+      case FinalizationType.covenant:
+        return R.string.covenant;
+      case FinalizationType.pos:
+        return R.string.pos;
+      case FinalizationType.portion: //boleto
+        return R.string.portion; //boleto
+      case FinalizationType.financialCredits:
+        return R.string.financialCredits;
     }
   }
 }

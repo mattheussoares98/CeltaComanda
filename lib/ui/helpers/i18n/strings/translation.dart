@@ -103,6 +103,7 @@ abstract class Translation {
   String get cellPhone;
   String get change;
   String get changeDate;
+  String get check;
   String get child;
   String get clearCart;
   String get close;
@@ -126,6 +127,7 @@ abstract class Translation {
   String get costBenefit;
   String get covenant;
   String get covenants;
+  String get credit;
   String get customer;
   String get dateNotUpdated;
   String get debit;
@@ -147,6 +149,7 @@ abstract class Translation {
   String get exit;
   String get expansibleGroup;
   String get father;
+  String get financialCredits;
   String get friday;
   String get getCustomer;
   String get insertInCart;
@@ -168,6 +171,7 @@ abstract class Translation {
   String get minimumAbbreviated;
   String get missing;
   String get monday;
+  String get money;
   String get name;
   String get neww;
   String get no;
@@ -184,12 +188,16 @@ abstract class Translation {
   String get peopleQuantity;
   String get per;
   String get personalizedCode;
+  String get pix;
+  String get portion;
+  String get pos;
   String get price;
   String get productsAndComments;
   String get productsSchedules;
   String get products;
   String get product;
   String get promotionWithoutPoints;
+  String get purchaseVale;
   String get quantity;
   String get quantityAbbreviated;
   String get register;

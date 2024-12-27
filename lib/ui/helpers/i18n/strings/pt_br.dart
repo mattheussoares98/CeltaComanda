@@ -134,6 +134,7 @@ class PtBr implements Translation {
   String get cellPhone => "Celular";
   String get change => "Alterar";
   String get changeDate => "Alterar data";
+  String get check => "Cheque";
   String get child => "Filho";
   String get clearCart => "Limpar carrinho";
   String get close => "Fechar";
@@ -157,6 +158,7 @@ class PtBr implements Translation {
   String get costBenefit => 'Custo benefício';
   String get covenant => "Convênio";
   String get covenants => "Convênios";
+  String get credit => "Crédito";
   String get customer => "Cliente";
   String get dateNotUpdated => "Data não atualizada";
   String get debit => "Débito";
@@ -178,6 +180,7 @@ class PtBr implements Translation {
   String get exit => 'Sair';
   String get expansibleGroup => 'Grupo expansível';
   String get father => 'Pai';
+  String get financialCredits => 'Créditos financeiros';
   String get friday => 'Sexta';
   String get getCustomer => 'Pesquisar cliente';
   String get insertInCart => 'Inserir no carrinho';
@@ -199,6 +202,7 @@ class PtBr implements Translation {
   String get minimumAbbreviated => "Mín";
   String get missing => 'Faltando';
   String get monday => 'Segunda';
+  String get money => 'Dinheiro';
   String get name => 'Nome';
   String get neww => 'Novo';
   String get no => 'Não';
@@ -215,12 +219,16 @@ class PtBr implements Translation {
   String get peopleQuantity => 'Quantidade de pessoas';
   String get per => 'Por';
   String get personalizedCode => 'Código personalizado';
+  String get pix => 'Pix';
+  String get portion => 'Boleto';
+  String get pos => 'Pos';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';
   String get productsSchedules => 'Agendamento de produtos';
   String get products => 'Produtos';
   String get product => 'Produto';
   String get promotionWithoutPoints => 'Promocao';
+  String get purchaseVale => 'Vale compra';
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';
   String get register => 'Registrar';

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
+import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class SaleMovementPage extends StatefulWidget {
@@ -13,13 +16,30 @@ class SaleMovementPage extends StatefulWidget {
   State<SaleMovementPage> createState() => _SaleMovementPageState();
 }
 
-class _SaleMovementPageState extends State<SaleMovementPage> {
+class _SaleMovementPageState extends State<SaleMovementPage>
+    with UIErrorManager, LoadingManager {
   DateTime? selectedDate;
+  StreamSubscription? loadingSubscription;
+  StreamSubscription? errorSubscription;
+
+  @override
+  void dispose() {
+    super.dispose();
+    loadingSubscription?.cancel();
+    errorSubscription?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
     SaleMovementPresenter saleMovementPresenter =
         Provider.of(context, listen: false);
+
+    loadingSubscription?.cancel();
+    errorSubscription?.cancel();
+    loadingSubscription =
+        handleLoading(context, saleMovementPresenter.isLoadingStream);
+    errorSubscription =
+        handleMainError(context, saleMovementPresenter.mainErrorStream);
 
     return Scaffold(
       appBar: AppBar(),

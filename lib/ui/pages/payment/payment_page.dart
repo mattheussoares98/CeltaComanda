@@ -199,7 +199,10 @@ class _PaymentPageState extends State<PaymentPage>
                         },
                       ),
                     ),
-                  Divider(height: 40),
+                  if (paymentPresenter
+                          .getTotalPendingValue(printedProductsPresenter) >
+                      0)
+                    Divider(height: 40),
                   TotalByPerson(),
                 ],
               ),

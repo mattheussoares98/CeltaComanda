@@ -348,14 +348,87 @@ class GetxPrintedProductsPresenter
   @override
   Future<void> newPrintProducts({
     required void Function() closePage,
-    required List<PrintParametersModel> columnsParameters,
   }) async {
     try {
       isLoading = true;
       mainError = null;
 
-      final bytes =
-          await generateBytes.generateRowWithColumns(columnsParameters);
+      List<int> bytes = await generateBytes.generateRowWithColumns([
+        PrintParametersModel(
+          alignCenter: true,
+          bold: true,
+          text: R.string.time,
+          width: 2,
+        ),
+        PrintParametersModel(
+          alignCenter: false,
+          bold: false,
+          text: R.string.product,
+          width: 5,
+        ),
+        PrintParametersModel(
+          alignCenter: true,
+          bold: true,
+          text: R.string.price,
+          width: 2,
+        ),
+        PrintParametersModel(
+          alignCenter: true,
+          bold: true,
+          text: R.string.quantityAbbreviated,
+          width: 1,
+        ),
+        PrintParametersModel(
+          alignCenter: true,
+          bold: true,
+          text: R.string.total,
+          width: 2,
+        ),
+      ]);
+
+      if (printed == null) {
+        throw Exception();
+      }
+
+      for (var product in printed!.Products) {
+        bytes += await generateBytes.generateRowWithColumns(
+          [
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: product.Product.DateOfLastChanged.toString(),
+              width: 2,
+            ),
+            PrintParametersModel(
+              alignCenter: false,
+              bold: false,
+              text: product.Product.Name,
+              width: 5,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: product.Product.SaleRetailPraticed,
+              width: 2,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: product.Product.productQuantity.toString(),
+              width: 1,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: (product.Product.SaleRetailPraticed.toDouble() *
+                      product.Product.productQuantity)
+                  .toString(),
+              width: 2,
+            ),
+          ],
+        );
+      }
+
       Uint8List byteList = Uint8List.fromList(bytes);
 
       await printBitmap.print(byteList);

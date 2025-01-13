@@ -42,7 +42,6 @@ void main() {
   late String password;
   late String saleRequestProductId;
   late Uint8List bitmap;
-  late List<PrintParametersModel> columnsParameters;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -92,10 +91,6 @@ void main() {
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       pdv: EntityFactory.makePdvEntity(),
     );
-    columnsParameters = [
-      EntityFactory.makePrintParametersModel(),
-      EntityFactory.makePrintParametersModel(),
-    ];
   }
 
   void mockSuccess() {
@@ -879,7 +874,6 @@ void main() {
 
       await sut.newPrintProducts(
         closePage: () {},
-        columnsParameters: [],
       );
     });
     test("Should emit correct values on error", () async {
@@ -893,31 +887,45 @@ void main() {
 
       await sut.newPrintProducts(
         closePage: () {},
-        columnsParameters: [],
       );
     });
     test("Should call generate bytes with correct values", () async {
       await sut.newPrintProducts(
         closePage: () {},
-        columnsParameters: columnsParameters,
       );
 
-      verify(() => generateBytes.generateRowWithColumns(columnsParameters))
-          .called(1);
-    });
-    test("Should call print with correct bytes", () async {
-      final bytes = [
-        faker.randomGenerator.integer(100),
-        faker.randomGenerator.integer(100),
-      ];
-      generateBytes.mockGenerateBytes(bytes);
-
-      await sut.newPrintProducts(
-        closePage: () {},
-        columnsParameters: columnsParameters,
-      );
-
-      verify(() => printBitmap.print(Uint8List.fromList(bytes))).called(1);
+      verify(() => generateBytes.generateRowWithColumns([
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: R.string.time,
+              width: 2,
+            ),
+            PrintParametersModel(
+              alignCenter: false,
+              bold: false,
+              text: R.string.product,
+              width: 5,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: R.string.price,
+              width: 2,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: R.string.quantityAbbreviated,
+              width: 1,
+            ),
+            PrintParametersModel(
+              alignCenter: true,
+              bold: true,
+              text: R.string.total,
+              width: 2,
+            ),
+          ])).called(1);
     });
   });
 }

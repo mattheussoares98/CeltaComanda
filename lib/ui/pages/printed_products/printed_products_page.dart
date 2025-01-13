@@ -60,15 +60,21 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: FittedBox(child: Text(R.string.requested)),
+          title: GestureDetector(
+            onLongPress: () async {
+              await printedProductsPresenter.newPrintProducts(
+                closePage: () {
+                  Navigator.of(context).pop();
+                },
+              );
+            },
+            child: FittedBox(
+              child: Text(R.string.requested),
+            ),
+          ),
           actions: [
             if (homePresenter.isGeneratingVersionToRede)
-              Row(
-                children: [
-                  PrintProductsTestButton(),
-                  PrintPrintedProductsButton(),
-                ],
-              ),
+              PrintPrintedProductsButton(),
             LoadPrintedProductsAgainButton(),
           ],
         ),

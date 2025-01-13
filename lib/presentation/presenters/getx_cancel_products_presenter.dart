@@ -31,6 +31,7 @@ class GetxCancelProductsPresenter extends GetxController
 
     try {
       await removePrintedProduct.remove(product.SaleRequestProductId);
+      await cartPresenter.updateIncrementValue(commandNumber.toString());
 
       await loadProducts(commandNumber);
       showSuccessMessage();

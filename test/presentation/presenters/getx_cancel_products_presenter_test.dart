@@ -143,50 +143,18 @@ void main() {
 
       verify(() => removePrintedProduct.remove(id)).called(1);
     });
+  });
 
-    test(
-        "Should not call insertServiceChargeProduct if removed product is serviceCharge",
-        () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity?.url,
-        enterpriseId: EnterpriseBuilder.entity?.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity?.concentradorUrl,
-        persistApp: EnterpriseBuilder.entity?.persistApp,
-        urlCCS: EnterpriseBuilder.entity?.urlCCS,
-        useCovenant: EnterpriseBuilder.entity?.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity?.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity?.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity?.serviceChargeType,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity?.updateDevicesInformations,
-        updateEnterprise: EnterpriseBuilder.entity?.updateEnterprise,
-        zoomImage: EnterpriseBuilder.entity?.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity?.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity?.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity?.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity?.secondsPreloadingImages,
-      );
+  test("Should update increment value", () async {
+    await sut.cancelProduct(
+      product: printedViewModel.Products[0],
+      commandNumber: commandNumber,
+      showSuccessMessage: () {},
+      cartPresenter: cartPresenter,
+      homePresenter: homePresenter,
+    );
 
-      await sut.cancelProduct(
-        product: printedViewModel.Products[0],
-        commandNumber: commandNumber,
-        showSuccessMessage: () {},
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verifyNever(() => cartPresenter.updateIncrementValue(
-            commandNumber.toString(),
-          ));
-    });
+    verify(() => cartPresenter.updateIncrementValue(commandNumber.toString()))
+        .called(1);
   });
 }

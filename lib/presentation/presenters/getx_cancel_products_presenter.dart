@@ -1,7 +1,6 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -31,22 +30,7 @@ class GetxCancelProductsPresenter extends GetxController
     mainError = null;
 
     try {
-      bool containsServiceChargeProduct = _products.value?.Products
-              .firstWhereOrNull((e) =>
-                  e.ProductPriceLookUpCode ==
-                  EnterpriseBuilder.entity?.pluServiceCharge) !=
-          null;
-      bool removingServiceChargeProduct =
-          EnterpriseBuilder.entity?.pluServiceCharge ==
-              product.ProductPriceLookUpCode;
-
       await removePrintedProduct.remove(product.SaleRequestProductId);
-
-      if (containsServiceChargeProduct && !removingServiceChargeProduct) {
-        await cartPresenter.insertServiceChargeProduct(
-          commandNumber.toString(),
-        );
-      }
 
       await loadProducts(commandNumber);
       showSuccessMessage();

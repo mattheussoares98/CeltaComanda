@@ -204,31 +204,6 @@ void main() {
     });
 
     test(
-        "Should call cartPresenter.insertServiceChargeProduct with in old command number when has service charge product",
-        () async {
-      final entityWithServiceChargeProduct = EntityFactory.makePrintedEntity(
-        productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
-      );
-      loadPrintedProducts.mockLoadPrintedEntity(entityWithServiceChargeProduct);
-      await sut.loadProducts(commandNumber);
-
-      int firstSelected = faker.randomGenerator.integer(100);
-      sut.updateProductIsSelected(firstSelected);
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => cartPresenter.insertServiceChargeProduct(
-          oldPersonalizedCode.toString(),
-        ),
-      ).called(1);
-    });
-    test(
         "Should not call cartPresenter.insertServiceChargeProduct with in old command number when dont has service charge product",
         () async {
       int firstSelected = faker.randomGenerator.integer(100);
@@ -247,106 +222,7 @@ void main() {
         ),
       );
     });
-    test(
-        "Should call cartPresenter.insertServiceChargeProduct with in new command number",
-        () async {
-      final entityWithServiceChargeProduct = EntityFactory.makePrintedEntity(
-        productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
-      );
-      loadPrintedProducts.mockLoadPrintedEntity(entityWithServiceChargeProduct);
-      await sut.loadProducts(commandNumber);
 
-      int firstSelected = faker.randomGenerator.integer(100);
-      sut.updateProductIsSelected(firstSelected);
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verify(
-        () => cartPresenter.insertServiceChargeProduct(
-          newPersonalizedCode.toString(),
-        ),
-      ).called(1);
-    });
-    test("Should emit correct error if try to send service charge product",
-        () async {
-      final saleRequestProductId = faker.randomGenerator.integer(100);
-      final serviceChargeProduct = PrintedProductsEntity(
-        ProductInternalCodeOnErp:
-            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
-        SaleRequestProductId: saleRequestProductId,
-        Product: EntityFactory.makeProductsEntitys()[0],
-        ProductPriceLookUpCode: faker.randomGenerator.string(10),
-        Value: faker.randomGenerator.decimal(),
-        Quantity: faker.randomGenerator.decimal(),
-        QuantityString: faker.randomGenerator.string(10),
-        Comments: faker.randomGenerator.string(10),
-        UserId: faker.randomGenerator.integer(100),
-        DateHourOfCreation: faker.randomGenerator.string(10),
-        IsCancelled: faker.randomGenerator.boolean(),
-        IsDelivered: faker.randomGenerator.boolean(),
-        IsPrinted: faker.randomGenerator.boolean(),
-        ProductionStatus: faker.randomGenerator.integer(100),
-        TotalLiquid: faker.randomGenerator.decimal(),
-        SaleRequestId: faker.randomGenerator.integer(100),
-        ProductIsFatherComposition: faker.randomGenerator.boolean(),
-        childs: [],
-        SaleRequestProductIdOfFather: faker.randomGenerator.integer(100),
-      );
-      final printedEntity = PrintedEntity(
-        Products: [serviceChargeProduct],
-        PersonalizedCode: faker.randomGenerator.string(10),
-        DateOfCreation: faker.randomGenerator.string(10),
-        DateHourOfCreation: faker.randomGenerator.string(10),
-        FlagStatus: faker.randomGenerator.string(10),
-        EnterpriseId: faker.randomGenerator.integer(100),
-        RequestType: faker.randomGenerator.string(10),
-        IsCancelled: faker.randomGenerator.boolean(),
-        IsUsing: faker.randomGenerator.boolean(),
-        TotalLiquid: faker.randomGenerator.decimal(),
-        Peoples: faker.randomGenerator.integer(100),
-        SaleRequestId: faker.randomGenerator.integer(100),
-        FlagOrigin: faker.randomGenerator.integer(100),
-        DeliveryControl: faker.randomGenerator.integer(100),
-        IncrementType: faker.randomGenerator.integer(100),
-        IncrementValue: faker.randomGenerator.decimal(),
-      );
-
-      loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
-
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.cantSendServiceChargeProduct]),
-      );
-
-      await sut.loadProducts(commandNumber);
-      sut.updateProductIsSelected(saleRequestProductId);
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-    });
-
-    test("Should load printed products from new command", () async {
-      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => loadPrintedProducts.load(commandNumber: newPersonalizedCode))
-          .called(1);
-    });
     test(
         "Should not add service charge product in destiny command if doesnt already exists",
         () async {
@@ -362,28 +238,6 @@ void main() {
       verifyNever(() => cartPresenter.insertServiceChargeProduct(
             newPersonalizedCode.toString(),
           ));
-    });
-    test(
-        "Should add service charge product in destiny command if already exists service charge product",
-        () async {
-      loadPrintedProducts.mockLoadPrintedEntity(
-        EntityFactory.makePrintedEntity(
-          productPriceLookUpCode: EnterpriseBuilder.entity!.pluServiceCharge,
-        ),
-      );
-
-      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verify(() => cartPresenter.insertServiceChargeProduct(
-            newPersonalizedCode.toString(),
-          )).called(1);
     });
   });
 

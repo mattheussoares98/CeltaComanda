@@ -163,21 +163,29 @@ void main() {
       ),
     ];
 
+    double totalLiquid = cartSaleRequestTempProductsEntity.fold(
+        0.0, (previousValue, element) => element.TotalLiquid + previousValue);
+
     updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
       DeliveryControl: saleRequestTempEntity.DeliveryControl,
       EnterpriseId: saleRequestTempEntity.EnterpriseId,
       PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
       SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
-      TotalLiquid: cartSaleRequestTempProductsEntity.fold(
-          0.0, (previousValue, element) => element.TotalLiquid + previousValue),
+      TotalLiquid: totalLiquid,
       Products: cartSaleRequestTempProductsEntity,
       Comments: saleRequestTempEntity.Comments,
       Peoples: saleRequestTempEntity.Peoples,
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue: null,
-      IncrementType: null,
+      IncrementValue:
+          EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
+              ? totalLiquid *
+                  (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                      100)
+              : null,
+      IncrementType:
+          EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
     );
 
     cartProductViewModelWithChilds =
@@ -1184,8 +1192,14 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue: null,
-        IncrementType: null,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
+                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
+                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                        100)
+                : null,
+        IncrementType:
+            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1253,8 +1267,14 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue: null,
-        IncrementType: null,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
+                ? totalLiquid *
+                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                        100)
+                : null,
+        IncrementType:
+            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
         TotalLiquid: totalLiquid,
         Products: [...products],
       );
@@ -1862,8 +1882,6 @@ void main() {
         updatePendingDevices: enterprise.updatePendingDevices,
         waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: enterprise.secondsPreloadingImages,
-        pluServiceCharge: null,
-        internalCodeOnErpServiceCharge: null,
       );
 
       await sut.saveProducts(
@@ -1888,8 +1906,13 @@ void main() {
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
         IncrementValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        IncrementType: 2,
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
+                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
+                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                        100)
+                : null,
+        IncrementType:
+            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1942,8 +1965,14 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue: null,
-        IncrementType: null,
+        IncrementValue:
+            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
+                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
+                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                        100)
+                : null,
+        IncrementType:
+            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -2095,9 +2124,6 @@ void main() {
         updatePendingDevices: oldEnterprise.updatePendingDevices,
         waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
-        pluServiceCharge: oldEnterprise.pluServiceCharge,
-        internalCodeOnErpServiceCharge:
-            oldEnterprise.internalCodeOnErpServiceCharge,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import 'package:flutter/foundation.dart';
 
-import '../../data/models/models.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -453,31 +452,35 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         insertProductPresenter: insertProductPresenter,
       );
 
-      bool usingProductServiceCharge =
-          EnterpriseBuilder.entity?.pluServiceCharge != null &&
-              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null;
+      bool usingServiceCharge =
+          EnterpriseBuilder.entity?.serviceChargeType != null &&
+              EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null;
+
+      double totalLiquid = productsEntitys
+          .where((e) => e.ProductIsFatherComposition == false)
+          .fold(0.0,
+              (previousValue, element) => element.TotalLiquid + previousValue);
 
       final entity = UpdateSaleRequestTempEntity(
         DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
-        TotalLiquid: productsEntitys
-            .where((e) => e.ProductIsFatherComposition == false)
-            .fold(
-                0.0,
-                (previousValue, element) =>
-                    element.TotalLiquid + previousValue),
+        TotalLiquid: totalLiquid,
         Products: productsEntitys,
         Comments: _saleRequestTemp?.Comments,
         SellerCode: _saleRequestTemp?.SellerCode,
         Peoples: _saleRequestTemp?.Peoples?.toInt(),
         CovenantCode: _saleRequestTemp?.CovenantCode?.toInt(),
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
-        IncrementValue: usingProductServiceCharge
-            ? null
-            : EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType: usingProductServiceCharge ? null : 2,
+        IncrementValue: usingServiceCharge
+            ? totalLiquid *
+                (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
+                    100)
+            : null,
+        IncrementType:
+            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+        //1 == value 2 == percentage
       );
 
       bool? cartProductsAlreadyConfirmed =
@@ -640,79 +643,80 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
   @override
   Future<void> insertServiceChargeProduct(String commandNumber) async {
     //não criei testes para essa função
-    try {
-      if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null ||
-          EnterpriseBuilder.entity?.pluServiceCharge == null ||
-          EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge == null) {
-        return;
-      }
+    //TODO remove this function
+    // try {
+    //   if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null ||
+    //       EnterpriseBuilder.entity?.pluServiceCharge == null ||
+    //       EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge == null) {
+    //     return;
+    //   }
 
-      final printed = await loadPrintedProducts.load(
-        commandNumber: commandNumber.toInt(),
-      );
+    //   final printed = await loadPrintedProducts.load(
+    //     commandNumber: commandNumber.toInt(),
+    //   );
 
-      if (printed == null) {
-        throw Exception();
-      }
+    //   if (printed == null) {
+    //     throw Exception();
+    //   }
 
-      final serviceChargeProduct = printed.Products.firstWhereOrNull((e) =>
-          e.ProductInternalCodeOnErp.toInt() ==
-          EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
+    //   final serviceChargeProduct = printed.Products.firstWhereOrNull((e) =>
+    //       e.ProductInternalCodeOnErp.toInt() ==
+    //       EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
 
-      if (printed.Products.length == 1 && serviceChargeProduct != null) {
-        //contém somente a taxa de serviço, melhor remover e não adicionar novamente
-        await removePrintedProduct
-            .remove(serviceChargeProduct.SaleRequestProductId.toString());
-        return;
-      } else if (serviceChargeProduct != null) {
-        await removePrintedProduct
-            .remove(serviceChargeProduct.SaleRequestProductId.toString());
-      }
+    //   if (printed.Products.length == 1 && serviceChargeProduct != null) {
+    //     //contém somente a taxa de serviço, melhor remover e não adicionar novamente
+    //     await removePrintedProduct
+    //         .remove(serviceChargeProduct.SaleRequestProductId.toString());
+    //     return;
+    //   } else if (serviceChargeProduct != null) {
+    //     await removePrintedProduct
+    //         .remove(serviceChargeProduct.SaleRequestProductId.toString());
+    //   }
 
-      double totalLiquid = 0;
-      for (var product in printed.Products) {
-        if (product.ProductInternalCodeOnErp.toInt() ==
-            EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge) {
-          continue;
-        }
-        totalLiquid += product.TotalLiquid.toDouble();
-      }
-      final serviceChargeValue = totalLiquid *
-          (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
+    //   double totalLiquid = 0;
+    //   for (var product in printed.Products) {
+    //     if (product.ProductInternalCodeOnErp.toInt() ==
+    //         EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge) {
+    //       continue;
+    //     }
+    //     totalLiquid += product.TotalLiquid.toDouble();
+    //   }
+    //   final serviceChargeValue = totalLiquid *
+    //       (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);
 
-      await updateSaleRequest.update(
-        model: SaleRequestModel(
-          CovenantCode: null,
-          CustomerCode: null,
-          TotalLiquid: totalLiquid + serviceChargeValue,
-          Products: [
-            SaleRequestProductModel(
-              SaleMovementProductCompositionId: null,
-              ProductPriceLookUpCode:
-                  EnterpriseBuilder.entity!.pluServiceCharge,
-              ProductInternalCodeOnErp:
-                  EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
-              QuantityString: "1",
-              Comments: null,
-              DateHourOfCreation: DateTime.now().toIso8601String(),
-              IsCancelled: false,
-              IsDelivered: true,
-              IsPrinted: true,
-              SaleRequestProductId: null,
-              UserId: null,
-              ProductionStatus: null,
-              SaleRequestId: printed.SaleRequestId.toInt(),
-              Value: serviceChargeValue,
-              Quantity: 1,
-              TotalLiquid: serviceChargeValue,
-            ),
-          ],
-        ),
-        commandNumber: commandNumber,
-        saleRequestId: printed.SaleRequestId.toInt(),
-      );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    //   await updateSaleRequest.update(
+    //     model: SaleRequestModel(
+    //       CovenantCode: null,
+    //       CustomerCode: null,
+    //       TotalLiquid: totalLiquid + serviceChargeValue,
+    //       Products: [
+    //         SaleRequestProductModel(
+    //           SaleMovementProductCompositionId: null,
+    //           ProductPriceLookUpCode:
+    //               EnterpriseBuilder.entity!.pluServiceCharge,
+    //           ProductInternalCodeOnErp:
+    //               EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge!,
+    //           QuantityString: "1",
+    //           Comments: null,
+    //           DateHourOfCreation: DateTime.now().toIso8601String(),
+    //           IsCancelled: false,
+    //           IsDelivered: true,
+    //           IsPrinted: true,
+    //           SaleRequestProductId: null,
+    //           UserId: null,
+    //           ProductionStatus: null,
+    //           SaleRequestId: printed.SaleRequestId.toInt(),
+    //           Value: serviceChargeValue,
+    //           Quantity: 1,
+    //           TotalLiquid: serviceChargeValue,
+    //         ),
+    //       ],
+    //     ),
+    //     commandNumber: commandNumber,
+    //     saleRequestId: printed.SaleRequestId.toInt(),
+    //   );
+    // } catch (e) {
+    //   debugPrint(e.toString());
+    // }
   }
 }

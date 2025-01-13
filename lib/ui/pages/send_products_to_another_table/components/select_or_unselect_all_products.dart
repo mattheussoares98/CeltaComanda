@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../main/builders/builders.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -21,21 +19,9 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
       return false;
     }
 
-    final serviceChargeProduct = printedViewModel!.Products.firstWhereOrNull(
-      (e) =>
-          e.ProductInternalCodeOnErp.toInt() ==
-          EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
-    );
-
-    if (serviceChargeProduct != null) {
-      return sendProductsToAnotherTablePresenter
-              .selectedsSaleRequestProductsIds.length >=
-          (printedViewModel!.Products.length - 1);
-    } else {
-      return printedViewModel?.Products.length ==
-          sendProductsToAnotherTablePresenter
-              .selectedsSaleRequestProductsIds.length;
-    }
+    return printedViewModel?.Products.length ==
+        sendProductsToAnotherTablePresenter
+            .selectedsSaleRequestProductsIds.length;
   }
 
   @override

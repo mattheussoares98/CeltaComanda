@@ -225,9 +225,6 @@ class GetxPrintedProductsPresenter
       //percentage
       value = printed.TotalLiquid.toDouble() *
           (EnterpriseBuilder.entity!.serviceChargePercentageOrValue ?? 0 / 100);
-    } else if (EnterpriseBuilder.entity?.pluServiceCharge != null &&
-        EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge != null) {
-      return 0;
     } else {
       return 0;
     }

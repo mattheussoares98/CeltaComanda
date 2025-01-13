@@ -836,9 +836,6 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
-        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge:
-            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -884,9 +881,6 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
-        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge:
-            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -929,9 +923,6 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
-        pluServiceCharge: EnterpriseBuilder.entity!.pluServiceCharge,
-        internalCodeOnErpServiceCharge:
-            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge,
       );
 
       await sut.loadCommandData(
@@ -1310,8 +1301,6 @@ void main() {
           updatePendingDevices: faker.randomGenerator.integer(100),
           waitDaysToPreloadImages: faker.randomGenerator.integer(100),
           secondsPreloadingImages: faker.randomGenerator.integer(100),
-          pluServiceCharge: faker.randomGenerator.string(10),
-          internalCodeOnErpServiceCharge: faker.randomGenerator.integer(100),
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1351,8 +1340,6 @@ void main() {
           updatePendingDevices: faker.randomGenerator.integer(100),
           waitDaysToPreloadImages: faker.randomGenerator.integer(100),
           secondsPreloadingImages: faker.randomGenerator.integer(100),
-          pluServiceCharge: faker.randomGenerator.string(10),
-          internalCodeOnErpServiceCharge: faker.randomGenerator.integer(100),
         );
 
         await sut.doOnRemoteEnterpriseChanges(

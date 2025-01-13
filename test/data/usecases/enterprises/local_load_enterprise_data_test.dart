@@ -58,7 +58,8 @@ void main() {
           enterpriseConcentradorParametersEntity:
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
           updateMenu: enterpriseJsonData["updateMenu"],
-          updateConcentratorEnterpriseData: enterpriseJsonData["updateConcentratorEnterpriseData"],
+          updateConcentratorEnterpriseData:
+              enterpriseJsonData["updateConcentratorEnterpriseData"],
           serviceChargePercentageOrValue:
               enterpriseJsonData["serviceChargePercentageOrValue"],
           updateDevicesInformations:
@@ -68,10 +69,10 @@ void main() {
           zoomImage: enterpriseJsonData["zoomImage"],
           pendingDevicesToUpdate: enterpriseJsonData["pendingDevicesToUpdate"],
           updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
-          waitDaysToPreloadImages: enterpriseJsonData["waitDaysToPreloadImages"],
-          secondsPreloadingImages: enterpriseJsonData["secondsPreloadingImages"],
-          pluServiceCharge: enterpriseJsonData["pluServiceCharge"],
-          internalCodeOnErpServiceCharge: enterpriseJsonData["internalCodeOnErpServiceCharge"],
+          waitDaysToPreloadImages:
+              enterpriseJsonData["waitDaysToPreloadImages"],
+          secondsPreloadingImages:
+              enterpriseJsonData["secondsPreloadingImages"],
         ),
       );
     });

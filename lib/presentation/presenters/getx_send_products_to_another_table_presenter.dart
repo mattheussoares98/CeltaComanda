@@ -1,7 +1,6 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -68,18 +67,6 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
         throw DomainError.selectProducts;
       }
 
-      final serviceChargeProduct = _printedProducts.value?.Products
-          .firstWhereOrNull((e) =>
-              e.ProductInternalCodeOnErp.toInt() ==
-              EnterpriseBuilder.entity?.internalCodeOnErpServiceCharge);
-      final saleRequestProductIdServiceCharge =
-          _selectedSaleRequestProductsIds.firstWhereOrNull(
-              (e) => e == serviceChargeProduct?.SaleRequestProductId.toInt());
-
-      if (serviceChargeProduct != null &&
-          saleRequestProductIdServiceCharge != null) {
-        throw DomainError.cantSendServiceChargeProduct;
-      }
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
@@ -87,26 +74,6 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
             _selectedSaleRequestProductsIds.map((e) => e).toList(),
       );
 
-      if (_printedProducts.value?.Products.firstWhereOrNull((e) =>
-              e.ProductPriceLookUpCode ==
-              EnterpriseBuilder.entity!.pluServiceCharge) !=
-          null) {
-        await cartPresenter.insertServiceChargeProduct(
-          oldPersonalizedCode.toString(),
-        );
-      }
-
-      final destinyPrinted = await loadPrintedProducts.load(
-        commandNumber: newPersonalizedCode,
-      );
-      if (destinyPrinted?.Products.firstWhereOrNull((e) =>
-              e.ProductPriceLookUpCode ==
-              EnterpriseBuilder.entity!.pluServiceCharge) !=
-          null) {
-        await cartPresenter.insertServiceChargeProduct(
-          newPersonalizedCode.toString(),
-        );
-      }
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
@@ -157,16 +124,5 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     _selectedSaleRequestProductsIds.addAll(_printedProducts.value!.Products
         .map((e) => e.SaleRequestProductId.toInt())
         .toList());
-
-    final serviceChargeProduct = _printedProducts.value!.Products
-        .firstWhereOrNull((e) =>
-            e.ProductInternalCodeOnErp.toInt() ==
-            EnterpriseBuilder.entity!.internalCodeOnErpServiceCharge);
-    if (serviceChargeProduct != null &&
-        _selectedSaleRequestProductsIds
-            .contains(serviceChargeProduct.SaleRequestProductId.toInt())) {
-      _selectedSaleRequestProductsIds.removeWhere(
-          (e) => e == serviceChargeProduct.SaleRequestProductId.toInt());
-    }
   }
 }

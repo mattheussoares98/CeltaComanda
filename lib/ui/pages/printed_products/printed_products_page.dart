@@ -63,8 +63,12 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           title: FittedBox(child: Text(R.string.requested)),
           actions: [
             if (homePresenter.isGeneratingVersionToRede)
-              PrintPrintedProductsButton(),
-            //TODO create new button and options with new downloaded dependence
+              Row(
+                children: [
+                  PrintProductsTestButton(),
+                  PrintPrintedProductsButton(),
+                ],
+              ),
             LoadPrintedProductsAgainButton(),
           ],
         ),

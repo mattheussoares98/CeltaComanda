@@ -16,12 +16,11 @@ class RemoteLoadCustomer implements LoadCustomer {
     required int searchTypeInt,
   }) async {
     try {
-      if (EnterpriseBuilder
-              .entity!
-              .enterpriseConcentradorParametersEntity!
-              .celtaBSCrossIdentity!
-              .isEmpty ==
-          true) {
+      if (EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity ==
+              null ||
+          EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity!
+                  .celtaBSCrossIdentity!.isEmpty ==
+              true) {
         throw DomainError.unexpected;
       }
       final soapResponse = await soapAdapter.post(
@@ -31,8 +30,7 @@ class RemoteLoadCustomer implements LoadCustomer {
                 .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity,
             "customerData": value,
             "customerDataType": searchTypeInt,
-            "enterpriseCode":
-                EnterpriseBuilder.entity!.enterpriseId!,
+            "enterpriseCode": EnterpriseBuilder.entity!.enterpriseId!,
           }),
         },
         typeOfResponse: "GetCustomerJsonResponse",

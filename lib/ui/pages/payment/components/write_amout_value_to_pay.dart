@@ -33,13 +33,22 @@ class WriteAmoutValueToPay extends StatelessWidget {
           focusNode: paymentFocusNode,
           keyboardType: TextInputType.number,
           autovalidateMode: AutovalidateMode.onUserInteraction,
+          onTap: () {
+            paymentController.selection = TextSelection(
+              baseOffset: 0,
+              extentOffset: paymentController.text.length,
+            );
+          },
           validator: (value) {
             if (value == null || value.isEmpty) {
               return R.string.msgWritePaymentValue;
             } else if (value.toDouble() == -1.0) {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() >
-                paymentPresenter.getTotalPendingValue(printedProductsPresenter).toStringAsFixed(2).toDouble()) {
+                paymentPresenter
+                    .getTotalPendingValue(printedProductsPresenter)
+                    .toStringAsFixed(2)
+                    .toDouble()) {
               return R.string.msgInvalidNumber;
             } else if (value.toDouble() < 0.01) {
               return R.string.msgInvalidNumber;

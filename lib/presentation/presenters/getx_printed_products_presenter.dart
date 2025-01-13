@@ -354,7 +354,11 @@ class GetxPrintedProductsPresenter
       isLoading = true;
       mainError = null;
 
-      await generateBytes.generateRowWithColumns(columnsParameters);
+      final bytes =
+          await generateBytes.generateRowWithColumns(columnsParameters);
+      Uint8List byteList = Uint8List.fromList(bytes);
+
+      await printBitmap.print(byteList);
       closePage();
     } catch (e) {
       mainError = UIError.unexpected;

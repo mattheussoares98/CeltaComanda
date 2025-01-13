@@ -905,5 +905,19 @@ void main() {
       verify(() => generateBytes.generateRowWithColumns(columnsParameters))
           .called(1);
     });
+    test("Should call print with correct bytes", () async {
+      final bytes = [
+        faker.randomGenerator.integer(100),
+        faker.randomGenerator.integer(100),
+      ];
+      generateBytes.mockGenerateBytes(bytes);
+
+      await sut.newPrintProducts(
+        closePage: () {},
+        columnsParameters: columnsParameters,
+      );
+
+      verify(() => printBitmap.print(Uint8List.fromList(bytes))).called(1);
+    });
   });
 }

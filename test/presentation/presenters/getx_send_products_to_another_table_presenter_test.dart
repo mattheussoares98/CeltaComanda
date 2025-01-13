@@ -239,6 +239,22 @@ void main() {
             newPersonalizedCode.toString(),
           ));
     });
+    test("Should update increment value in old and new personalized codes",
+        () async {
+      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
+
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => cartPresenter.updateIncrementValue(
+          oldPersonalizedCode.toString().padLeft(3, "0"))).called(1);
+      verify(() => cartPresenter.updateIncrementValue(
+          newPersonalizedCode.toString().padLeft(3, "0"))).called(1);
+    });
   });
 
   group("Update product is selected", () {

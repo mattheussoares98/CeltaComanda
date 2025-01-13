@@ -217,7 +217,7 @@ void main() {
       );
 
       verifyNever(
-        () => cartPresenter.insertServiceChargeProduct(
+        () => cartPresenter.updateIncrementValue(
           oldPersonalizedCode.toString(),
         ),
       );
@@ -235,7 +235,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verifyNever(() => cartPresenter.insertServiceChargeProduct(
+      verifyNever(() => cartPresenter.updateIncrementValue(
             newPersonalizedCode.toString(),
           ));
     });

@@ -184,7 +184,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verifyNever(() => cartPresenter.insertServiceChargeProduct(
+      verifyNever(() => cartPresenter.updateIncrementValue(
             commandNumber.toString(),
           ));
     });

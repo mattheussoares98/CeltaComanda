@@ -178,14 +178,8 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
-      IncrementValue:
-          EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
-              ? totalLiquid *
-                  (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
-                      100)
-              : null,
-      IncrementType:
-          EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+      IncrementValue: 0,
+      IncrementType: 0,
     );
 
     cartProductViewModelWithChilds =
@@ -1192,14 +1186,8 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
-                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
-                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
-                        100)
-                : null,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+        IncrementValue: 0,
+        IncrementType: 0,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1267,14 +1255,8 @@ void main() {
         SaleRequestTempId: updateSaleRequestTempEntity.SaleRequestTempId,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
-                ? totalLiquid *
-                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
-                        100)
-                : null,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+        IncrementValue: 0,
+        IncrementType: 0,
         TotalLiquid: totalLiquid,
         Products: [...products],
       );
@@ -1905,14 +1887,8 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
-                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
-                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
-                        100)
-                : null,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+        IncrementValue: 0,
+        IncrementType: 0,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds
@@ -1965,14 +1941,8 @@ void main() {
         CovenantCode: updateSaleRequestTempEntity.CovenantCode,
         CustomerCode: updateSaleRequestTempEntity.CustomerCode,
         TotalLiquid: cartProductViewModelWithChilds.TotalLiquid.toDouble(),
-        IncrementValue:
-            EnterpriseBuilder.entity?.serviceChargePercentageOrValue != null
-                ? cartProductViewModelWithChilds.TotalLiquid.toDouble() *
-                    (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! /
-                        100)
-                : null,
-        IncrementType:
-            EnterpriseBuilder.entity?.serviceChargeType != null ? 1 : null,
+        IncrementValue: 0,
+        IncrementType: 0,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: cartProductViewModelWithChilds

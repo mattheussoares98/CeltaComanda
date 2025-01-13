@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -53,19 +55,23 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
     final buttons = allButtons(context);
 
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) async {
-        if (homePresenter.commandEntity?.commandNumber != null) {
-          await printedProductsPresenter.loadPrinted(
-            homePresenter.commandEntity!.commandNumber!,
-          );
-        }
-        Future.delayed(Duration.zero, () {
-          setState(() {});
-        });
-      },
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {},
       child: Scaffold(
         appBar: AppBar(
           title: Text(R.string.configurations),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () async {
+              if (homePresenter.commandEntity?.commandNumber != null) {
+                await printedProductsPresenter.loadPrinted(
+                  homePresenter.commandEntity!.commandNumber!,
+                );
+              }
+              Navigator.of(context).pop();
+              Future.delayed(Duration.zero, () => setState(() {}));
+            },
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

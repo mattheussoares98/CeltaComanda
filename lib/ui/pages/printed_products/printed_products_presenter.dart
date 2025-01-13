@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import '../../../data/models/models.dart';
 import '../../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
@@ -50,6 +51,11 @@ abstract class PrintedProductsPresenter
   Future<void> printPrintedProducts({
     required Uint8List bitmap,
     required void Function() closePage,
+  });
+
+  Future<void> newPrintProducts({
+    required void Function() closePage,
+    required List<PrintParametersModel> columnsParameters,
   });
 
   void goToPrintProductsPage();

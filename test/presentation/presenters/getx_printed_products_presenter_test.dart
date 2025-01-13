@@ -42,6 +42,7 @@ void main() {
   late String password;
   late String saleRequestProductId;
   late Uint8List bitmap;
+  late List<PrintParametersModel> columnsParameters;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -91,6 +92,10 @@ void main() {
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       pdv: EntityFactory.makePdvEntity(),
     );
+    columnsParameters = [
+      EntityFactory.makePrintParametersModel(),
+      EntityFactory.makePrintParametersModel(),
+    ];
   }
 
   void mockSuccess() {
@@ -864,6 +869,41 @@ void main() {
 
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
+    });
+  });
+
+  group("New print products", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.newPrintProducts(
+        closePage: () {},
+        columnsParameters: [],
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      generateBytes.mockGenerateBytesError();
+
+      await sut.newPrintProducts(
+        closePage: () {},
+        columnsParameters: [],
+      );
+    });
+    test("Should call generate bytes with correct values", () async {
+      await sut.newPrintProducts(
+        closePage: () {},
+        columnsParameters: columnsParameters,
+      );
+
+      verify(() => generateBytes.generateRowWithColumns(columnsParameters))
+          .called(1);
     });
   });
 }

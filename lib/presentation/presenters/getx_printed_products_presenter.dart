@@ -344,4 +344,22 @@ class GetxPrintedProductsPresenter
   void disposePrinterHandler() {
     _channel?.setMethodCallHandler(null);
   }
+
+  @override
+  Future<void> newPrintProducts({
+    required void Function() closePage,
+    required List<PrintParametersModel> columnsParameters,
+  }) async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      await generateBytes.generateRowWithColumns(columnsParameters);
+      closePage();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

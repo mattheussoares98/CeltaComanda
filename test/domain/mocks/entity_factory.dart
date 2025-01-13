@@ -1414,4 +1414,12 @@ class EntityFactory {
             TEFModalityDescription: faker.randomGenerator.string(10),
             TEFPlanCardCode: faker.randomGenerator.string(10),
           );
+
+  static PrintParametersModel makePrintParametersModel() =>
+      PrintParametersModel(
+        alignCenter: faker.randomGenerator.boolean(),
+        bold: faker.randomGenerator.boolean(),
+        text: faker.randomGenerator.string(10),
+        width: faker.randomGenerator.integer(10),
+      );
 }

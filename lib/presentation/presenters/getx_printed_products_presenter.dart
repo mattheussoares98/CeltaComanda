@@ -19,6 +19,7 @@ class GetxPrintedProductsPresenter
   final UpdateSaleRequest updateSaleRequest;
   final PrintBitmap printBitmap;
   final NavigateTo navigateTo;
+  final GenerateBytes generateBytes;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
@@ -27,6 +28,7 @@ class GetxPrintedProductsPresenter
     required this.updateSaleRequest,
     required this.printBitmap,
     required this.navigateTo,
+    required this.generateBytes,
   });
 
   @override

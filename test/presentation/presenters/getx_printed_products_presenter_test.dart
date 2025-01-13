@@ -33,6 +33,7 @@ void main() {
   late UpdateSaleRequestSpy updateSaleRequest;
   late PrintBitmapSpy printBitmap;
   late NavigateToSpy navigateTo;
+  late GenerateBytesSpy generateBytes;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -57,6 +58,7 @@ void main() {
       updateSaleRequest: updateSaleRequest,
       printBitmap: printBitmap,
       navigateTo: navigateTo,
+      generateBytes: generateBytes,
     );
   }
 
@@ -69,6 +71,7 @@ void main() {
     updateSaleRequest = UpdateSaleRequestSpy();
     printBitmap = PrintBitmapSpy();
     navigateTo = NavigateToSpy();
+    generateBytes = GenerateBytesSpy();
   }
 
   void initEntitys() {

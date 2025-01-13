@@ -636,10 +636,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
     //não criei testes para essa função
 
     try {
-      if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null) {
-        return;
-      }
-
       final printed = await loadPrintedProducts.load(
         commandNumber: commandNumber.toInt(),
       );
@@ -652,6 +648,21 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         0,
         (previous, element) => element.TotalLiquid.toDouble() + previous,
       );
+
+      if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null) {
+        await updateSaleRequest.update(
+          model: SaleRequestModel(
+            CovenantCode: null,
+            CustomerCode: null,
+            IncrementType: 0,
+            IncrementValue: 0,
+            TotalLiquid: totalLiquid,
+          ),
+          commandNumber: commandNumber,
+          saleRequestId: printed.SaleRequestId.toInt(),
+        );
+        return;
+      }
 
       final serviceChargeValue = totalLiquid *
           (EnterpriseBuilder.entity!.serviceChargePercentageOrValue! / 100);

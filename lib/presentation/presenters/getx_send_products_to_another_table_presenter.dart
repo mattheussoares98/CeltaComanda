@@ -74,13 +74,13 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
             _selectedSaleRequestProductsIds.map((e) => e).toList(),
       );
 
-      await loadProducts(oldPersonalizedCode);
       await cartPresenter.updateIncrementValue(
         oldPersonalizedCode.toString().padLeft(3, "0"),
       );
       await cartPresenter.updateIncrementValue(
         newPersonalizedCode.toString().padLeft(3, "0"),
       );
+      await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.cantSendServiceChargeProduct:

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../ui/components/components.dart';
 import '../../pages.dart';
 
-class WriteAmoutValueToPay extends StatelessWidget {
+class WriteAmoutValueToPay extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController paymentController;
   final FocusNode paymentFocusNode;
@@ -15,6 +15,29 @@ class WriteAmoutValueToPay extends StatelessWidget {
     required this.paymentFocusNode,
     super.key,
   });
+
+  @override
+  State<WriteAmoutValueToPay> createState() => _WriteAmoutValueToPayState();
+}
+
+class _WriteAmoutValueToPayState extends State<WriteAmoutValueToPay> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+      PrintedProductsPresenter printedProductsPresenter =
+          Provider.of(context, listen: false);
+      if (mounted &&
+          paymentPresenter.getTotalPendingValue(printedProductsPresenter) > 0) {
+        widget.paymentController.text = paymentPresenter
+            .getTotalPendingValue(printedProductsPresenter)
+            .toStringAsFixed(2)
+            .toBrazilianNumber();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +50,16 @@ class WriteAmoutValueToPay extends StatelessWidget {
           ? MediaQuery.of(context).size.width * 0.3
           : MediaQuery.of(context).size.width * 0.6,
       child: Form(
-        key: formKey,
+        key: widget.formKey,
         child: TextFormField(
-          controller: paymentController,
-          focusNode: paymentFocusNode,
+          controller: widget.paymentController,
+          focusNode: widget.paymentFocusNode,
           keyboardType: TextInputType.number,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           onTap: () {
-            paymentController.selection = TextSelection(
+            widget.paymentController.selection = TextSelection(
               baseOffset: 0,
-              extentOffset: paymentController.text.length,
+              extentOffset: widget.paymentController.text.length,
             );
           },
           validator: (value) {
@@ -74,8 +97,8 @@ class WriteAmoutValueToPay extends StatelessWidget {
             errorText: null,
             suffixIcon: IconButton(
               onPressed: () {
-                paymentController.clear();
-                paymentFocusNode.requestFocus();
+                widget.paymentController.clear();
+                widget.paymentFocusNode.requestFocus();
               },
               icon: const Icon(
                 Icons.delete,

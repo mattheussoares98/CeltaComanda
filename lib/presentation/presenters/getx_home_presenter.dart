@@ -502,13 +502,18 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<bool> applicationIsInLatestVersion() async {
     try {
-      final remoteVersion = EnterpriseBuilder.entity?.latestCompatibleVersion;
+      final remoteVersion = EnterpriseBuilder.entity?.latestCompatibleVersion
+          ?.replaceAll(RegExp(r'\.'), '')
+          .toInt();
 
       if (remoteVersion == null) {
         return true;
       }
 
-      return remoteVersion == await loadDeviceData.getApplicationVersion();
+      var localVersion = await loadDeviceData.getApplicationVersion();
+
+      return localVersion.replaceAll(RegExp(r'\.'), '').toInt() >=
+          remoteVersion;
     } catch (e) {
       return true;
     }

@@ -7,33 +7,66 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 class EntityFactory {
-  static EnterpriseEntity makeEnterpriseData() {
+  static EnterpriseEntity makeEnterpriseData({
+    String? enterpriseName,
+    String? url,
+    int? enterpriseId,
+    String? concentradorUrl,
+    bool? persistApp,
+    String? urlCCS,
+    bool? useCovenant,
+    int? updateMenu,
+    int? updateConcentratorEnterpriseData,
+    int? updateDevicesInformations,
+    int? updateEnterprise,
+    EnterpriseConcentradorParametersEntity?
+        enterpriseConcentradorParametersEntity,
+    double? serviceChargePercentageOrValue,
+    int? serviceChargeType,
+    bool? zoomImage,
+    List<String>? pendingDevicesToUpdate,
+    int? updatePendingDevices,
+    int? waitDaysToPreloadImages,
+    int? secondsPreloadingImages,
+    String? latestCompatibleVersion,
+  }) {
     return EnterpriseEntity(
-      url: faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
-      urlCCS: faker.internet.httpUrl(),
-      enterpriseId: faker.randomGenerator.integer(3),
-      enterpriseName: faker.company.name().toLowerCase().removeWhiteSpaces(),
-      concentradorUrl:
+      url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
+      urlCCS: urlCCS ?? faker.internet.httpUrl(),
+      enterpriseId: enterpriseId ?? faker.randomGenerator.integer(3),
+      enterpriseName: enterpriseName ??
+          faker.company.name().toLowerCase().removeWhiteSpaces(),
+      concentradorUrl: concentradorUrl ??
           faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
-      persistApp: faker.randomGenerator.boolean(),
-      useCovenant: faker.randomGenerator.boolean(),
+      persistApp: persistApp ?? faker.randomGenerator.boolean(),
+      useCovenant: useCovenant ?? faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
-          makeEnterpriseConcentradorParametersEntity(),
-      updateMenu: faker.randomGenerator.integer(100),
-      updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
-      updateEnterprise: faker.randomGenerator.integer(100),
-      updateDevicesInformations: faker.randomGenerator.integer(100),
-      serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-      serviceChargeType: faker.randomGenerator.integer(2, min: 1),
-      zoomImage: faker.randomGenerator.boolean(),
-      pendingDevicesToUpdate: [
-        faker.randomGenerator.string(10),
-        faker.randomGenerator.string(10),
-      ],
-      updatePendingDevices: faker.randomGenerator.integer(100),
-      waitDaysToPreloadImages: faker.randomGenerator.integer(100),
-      secondsPreloadingImages: faker.randomGenerator.integer(100),
-      latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
+          enterpriseConcentradorParametersEntity ??
+              makeEnterpriseConcentradorParametersEntity(),
+      updateMenu: updateMenu ?? faker.randomGenerator.integer(100),
+      updateConcentratorEnterpriseData: updateConcentratorEnterpriseData ??
+          faker.randomGenerator.integer(100),
+      updateEnterprise: updateEnterprise ?? faker.randomGenerator.integer(100),
+      updateDevicesInformations:
+          updateDevicesInformations ?? faker.randomGenerator.integer(100),
+      serviceChargePercentageOrValue:
+          serviceChargePercentageOrValue ?? faker.randomGenerator.decimal(),
+      serviceChargeType:
+          serviceChargeType ?? faker.randomGenerator.integer(2, min: 1),
+      zoomImage: zoomImage ?? faker.randomGenerator.boolean(),
+      pendingDevicesToUpdate: pendingDevicesToUpdate ??
+          [
+            faker.randomGenerator.string(10),
+            faker.randomGenerator.string(10),
+          ],
+      updatePendingDevices:
+          updatePendingDevices ?? faker.randomGenerator.integer(100),
+      waitDaysToPreloadImages:
+          waitDaysToPreloadImages ?? faker.randomGenerator.integer(100),
+      secondsPreloadingImages:
+          secondsPreloadingImages ?? faker.randomGenerator.integer(100),
+      latestCompatibleVersion:
+          latestCompatibleVersion ?? faker.randomGenerator.decimal().toString(),
     );
   }
 

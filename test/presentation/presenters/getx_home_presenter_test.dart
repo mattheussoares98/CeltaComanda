@@ -1760,5 +1760,19 @@ void main() {
 
       expect(result, true);
     });
+    test("Should return true if local version is greater than remote version",
+        () async {
+      loadDeviceData.mockGetApplicationVersion(
+        faker.randomGenerator.integer(1000, min: 101).toString(),
+      );
+
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        latestCompatibleVersion: faker.randomGenerator.integer(100).toString(),
+      );
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, true);
+    });
   });
 }

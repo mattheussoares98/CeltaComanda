@@ -71,6 +71,7 @@ class _HomePageState extends State<HomePage>
   Future<void> verifyNeedUpdateApp(HomePresenter homePresenter) async {
     bool isLatestVersion = await homePresenter.applicationIsInLatestVersion();
     if (!isLatestVersion) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
       notificationDialog(
         context: context,
         titleMessage: R.string.msgNeedUpdateApplication,

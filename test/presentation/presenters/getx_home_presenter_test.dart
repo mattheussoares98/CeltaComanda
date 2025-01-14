@@ -1589,6 +1589,50 @@ void main() {
             .called(1);
       });
     });
+
+    group("Update last compatible version", () {
+      test(
+          "Should update enterprise data when last compatible version is different",
+          () async {
+        enterpriseJson["latestCompatibleVersion"] =
+            faker.randomGenerator.decimal().toString();
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        expect(
+          EnterpriseBuilder.entity,
+          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+        );
+      });
+      test(
+          "Should update enterprice locally when last compatible version is different",
+          () async {
+        enterpriseJson["latestCompatibleVersion"] =
+            faker.randomGenerator.decimal().toString();
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => localEnterpriseData.add(
+                EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
+            .called(1);
+      });
+    });
   });
 
   group("Navigate to configurations page", () {

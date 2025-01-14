@@ -1840,33 +1840,6 @@ void main() {
       sut.cartProducts.add(cartProductViewModelWithChilds);
       confirmedCartProducts.mockIsConfirmed(false);
 
-      final enterprise = EnterpriseBuilder.entity;
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: enterprise!.enterpriseName,
-        url: enterprise.url,
-        enterpriseId: enterprise.enterpriseId,
-        concentradorUrl: enterprise.concentradorUrl,
-        persistApp: enterprise.persistApp,
-        urlCCS: enterprise.urlCCS,
-        useCovenant: enterprise.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            enterprise.enterpriseConcentradorParametersEntity,
-        updateMenu: enterprise.updateMenu,
-        updateConcentratorEnterpriseData:
-            enterprise.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            enterprise.serviceChargePercentageOrValue,
-        serviceChargeType: enterprise.serviceChargeType,
-        updateDevicesInformations: enterprise.updateDevicesInformations,
-        updateEnterprise: enterprise.updateEnterprise,
-        zoomImage: enterprise.zoomImage,
-        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
-        updatePendingDevices: enterprise.updatePendingDevices,
-        waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
-        secondsPreloadingImages: enterprise.secondsPreloadingImages,
-        latestCompatibleVersion: enterprise.latestCompatibleVersion,
-      );
-
       await sut.saveProducts(
         insertProductPresenter: insertProductPresenter,
         expansibleGroupFromProductPresenter:
@@ -2072,30 +2045,9 @@ void main() {
                   100));
     });
     test("Should return correct value", () {
-      final oldEnterprise = EnterpriseBuilder.entity;
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: oldEnterprise!.enterpriseName,
-        url: oldEnterprise.url,
-        enterpriseId: oldEnterprise.enterpriseId,
-        concentradorUrl: oldEnterprise.concentradorUrl,
-        persistApp: oldEnterprise.persistApp,
-        urlCCS: oldEnterprise.urlCCS,
-        useCovenant: oldEnterprise.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            oldEnterprise.enterpriseConcentradorParametersEntity,
-        updateMenu: oldEnterprise.updateMenu,
-        updateConcentratorEnterpriseData:
-            oldEnterprise.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue: null,
-        serviceChargeType: null,
-        updateDevicesInformations: oldEnterprise.updateDevicesInformations,
-        updateEnterprise: oldEnterprise.updateEnterprise,
-        zoomImage: oldEnterprise.zoomImage,
-        pendingDevicesToUpdate: oldEnterprise.pendingDevicesToUpdate,
-        updatePendingDevices: oldEnterprise.updatePendingDevices,
-        waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
-        secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
-        latestCompatibleVersion: oldEnterprise.latestCompatibleVersion,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        serviceChargePercentageOrValue: 0,
+        serviceChargeType: 0,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

@@ -33,7 +33,6 @@ void main() {
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
-  late EnterpriseEntity enterpriseEntity;
   late EnterpriseConcentradorParametersEntity
       enterpriseConcentradorParametersEntity;
   late EnterpriseEntity clearedEnterprise;
@@ -76,8 +75,7 @@ void main() {
   }
 
   void initEntitys() {
-    enterpriseEntity = EntityFactory.makeEnterpriseData();
-    EnterpriseBuilder.entity = enterpriseEntity;
+    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
     ticketIsPermittedEntity = EntityFactory.makeTicketIsPermittedEntity();
     commandEntity = EntityFactory.makeCommandEntity();
     enterpriseConcentradorParametersEntity =
@@ -160,35 +158,8 @@ void main() {
     test(
         "Should make persist app when go to home page and enterprise.persist app is true",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: true,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.validateEnterpriseByName(
@@ -203,35 +174,8 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: true,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -247,35 +191,8 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: true,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -291,35 +208,8 @@ void main() {
     test(
         "Should make NOT persist app when go to home page and enterprise.persist app is false",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: false,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.validateEnterpriseByName(

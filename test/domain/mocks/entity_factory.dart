@@ -7,6 +7,75 @@ import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
 
 class EntityFactory {
+  static EnterpriseEntity makeEnterpriseWithNullValue({
+    required EnterpriseEntity atualEntity,
+    bool? enterpriseName,
+    bool? url,
+    bool? enterpriseId,
+    bool? concentradorUrl,
+    bool? persistApp,
+    bool? urlCCS,
+    bool? useCovenant,
+    bool? updateMenu,
+    bool? updateConcentratorEnterpriseData,
+    bool? updateDevicesInformations,
+    bool? updateEnterprise,
+    bool? enterpriseConcentradorParametersEntity,
+    bool? serviceChargePercentageOrValue,
+    bool? serviceChargeType,
+    bool? zoomImage,
+    bool? pendingDevicesToUpdate,
+    bool? updatePendingDevices,
+    bool? waitDaysToPreloadImages,
+    bool? secondsPreloadingImages,
+    bool? latestCompatibleVersion,
+  }) {
+    return EnterpriseEntity(
+      enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
+      url: url == true ? null : atualEntity.url,
+      enterpriseId: enterpriseId == true ? null : atualEntity.enterpriseId,
+      concentradorUrl:
+          concentradorUrl == true ? null : atualEntity.concentradorUrl,
+      persistApp: persistApp == true ? null : atualEntity.persistApp,
+      urlCCS: urlCCS == true ? null : atualEntity.urlCCS,
+      useCovenant: useCovenant == true ? null : atualEntity.useCovenant,
+      updateMenu: updateMenu == true ? null : atualEntity.updateMenu,
+      updateConcentratorEnterpriseData: updateConcentratorEnterpriseData == true
+          ? null
+          : atualEntity.updateConcentratorEnterpriseData,
+      updateDevicesInformations: updateDevicesInformations == true
+          ? null
+          : atualEntity.updateDevicesInformations,
+      updateEnterprise:
+          updateEnterprise == true ? null : atualEntity.updateEnterprise,
+      enterpriseConcentradorParametersEntity:
+          enterpriseConcentradorParametersEntity == true
+              ? null
+              : atualEntity.enterpriseConcentradorParametersEntity,
+      serviceChargePercentageOrValue: serviceChargePercentageOrValue == true
+          ? null
+          : atualEntity.serviceChargePercentageOrValue,
+      serviceChargeType:
+          serviceChargeType == true ? null : atualEntity.serviceChargeType,
+      zoomImage: zoomImage == true ? null : atualEntity.zoomImage,
+      pendingDevicesToUpdate: pendingDevicesToUpdate == true
+          ? null
+          : atualEntity.pendingDevicesToUpdate,
+      updatePendingDevices: updatePendingDevices == true
+          ? null
+          : atualEntity.updatePendingDevices,
+      waitDaysToPreloadImages: waitDaysToPreloadImages == true
+          ? null
+          : atualEntity.waitDaysToPreloadImages,
+      secondsPreloadingImages: secondsPreloadingImages == true
+          ? null
+          : atualEntity.secondsPreloadingImages,
+      latestCompatibleVersion: latestCompatibleVersion == true
+          ? null
+          : atualEntity.latestCompatibleVersion,
+    );
+  }
+
   static EnterpriseEntity makeEnterpriseData({
     String? enterpriseName,
     String? url,

@@ -809,35 +809,8 @@ void main() {
     test(
         "Should make persist when Enterprise.persist is true and is not generating version to rede",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: true,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -856,35 +829,8 @@ void main() {
     test(
         "Should make NOT persist when is generating version to rede and Enterprise.persist is true",
         () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: true,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -900,35 +846,8 @@ void main() {
       verify(() => persistent.makeNotPersistent()).called(1);
     });
     test("Should make NOT persist Enterprise.persist is false", () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
-        urlCCS: EnterpriseBuilder.entity!.urlCCS,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         persistApp: false,
-        enterpriseConcentradorParametersEntity:
-            EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity,
-        updateMenu: EnterpriseBuilder.entity!.updateMenu,
-        updateConcentratorEnterpriseData:
-            EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
-        serviceChargePercentageOrValue:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
-        updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-        updateDevicesInformations:
-            EnterpriseBuilder.entity!.updateDevicesInformations,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        pendingDevicesToUpdate:
-            EnterpriseBuilder.entity!.pendingDevicesToUpdate,
-        updatePendingDevices: EnterpriseBuilder.entity!.updatePendingDevices,
-        waitDaysToPreloadImages:
-            EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        secondsPreloadingImages:
-            EnterpriseBuilder.entity!.secondsPreloadingImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.loadCommandData(
@@ -1284,30 +1203,9 @@ void main() {
 
     group("Never change data", () {
       test("Should not call functions if enterpriseId is null", () async {
-        EnterpriseBuilder.entity = EnterpriseEntity(
-          enterpriseName: faker.randomGenerator.string(10),
-          url: faker.randomGenerator.string(10),
-          enterpriseId: null,
-          concentradorUrl: faker.randomGenerator.string(10),
-          persistApp: faker.randomGenerator.boolean(),
-          urlCCS: faker.randomGenerator.string(10),
-          useCovenant: faker.randomGenerator.boolean(),
-          enterpriseConcentradorParametersEntity: null,
-          updateMenu: faker.randomGenerator.integer(100),
-          updateDevicesInformations: faker.randomGenerator.integer(100),
-          updateEnterprise: faker.randomGenerator.integer(100),
-          updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
-          serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-          serviceChargeType: faker.randomGenerator.integer(2),
-          zoomImage: faker.randomGenerator.boolean(),
-          pendingDevicesToUpdate: [
-            faker.randomGenerator.string(10),
-            faker.randomGenerator.string(10),
-          ],
-          updatePendingDevices: faker.randomGenerator.integer(100),
-          waitDaysToPreloadImages: faker.randomGenerator.integer(100),
-          secondsPreloadingImages: faker.randomGenerator.integer(100),
-          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
+        EnterpriseBuilder.entity = EntityFactory.makeEnterpriseWithNullValue(
+          atualEntity: EnterpriseBuilder.entity!,
+          enterpriseId: true,
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1324,30 +1222,9 @@ void main() {
             .load()); //first abstract called function when dont return because id or url is null
       });
       test("Should not call functions if enterpriseUrl is null", () async {
-        EnterpriseBuilder.entity = EnterpriseEntity(
-          enterpriseName: faker.randomGenerator.string(10),
-          url: null,
-          enterpriseId: faker.randomGenerator.integer(100),
-          concentradorUrl: faker.randomGenerator.string(10),
-          persistApp: faker.randomGenerator.boolean(),
-          urlCCS: faker.randomGenerator.string(10),
-          useCovenant: faker.randomGenerator.boolean(),
-          enterpriseConcentradorParametersEntity: null,
-          updateMenu: faker.randomGenerator.integer(100),
-          updateDevicesInformations: faker.randomGenerator.integer(100),
-          updateEnterprise: faker.randomGenerator.integer(100),
-          updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
-          serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-          serviceChargeType: faker.randomGenerator.integer(2),
-          zoomImage: faker.randomGenerator.boolean(),
-          pendingDevicesToUpdate: [
-            faker.randomGenerator.string(10),
-            faker.randomGenerator.string(10),
-          ],
-          updatePendingDevices: faker.randomGenerator.integer(100),
-          waitDaysToPreloadImages: faker.randomGenerator.integer(100),
-          secondsPreloadingImages: faker.randomGenerator.integer(100),
-          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
+        EnterpriseBuilder.entity = EntityFactory.makeEnterpriseWithNullValue(
+          atualEntity: EnterpriseBuilder.entity!,
+          url: true,
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1709,50 +1586,16 @@ void main() {
 
   group("Application is in latest version", () {
     test("Should return true if remote data is null", () async {
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: faker.randomGenerator.string(10),
-        url: faker.randomGenerator.string(10),
-        enterpriseId: faker.randomGenerator.integer(100),
-        concentradorUrl: faker.randomGenerator.string(10),
-        persistApp: faker.randomGenerator.boolean(),
-        urlCCS: faker.randomGenerator.string(10),
-        useCovenant: faker.randomGenerator.boolean(),
-        enterpriseConcentradorParametersEntity: null,
-        updateMenu: faker.randomGenerator.integer(100),
-        updateDevicesInformations: faker.randomGenerator.integer(100),
-        updateEnterprise: faker.randomGenerator.integer(100),
-        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
-        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-        serviceChargeType: faker.randomGenerator.integer(2),
-        zoomImage: faker.randomGenerator.boolean(),
-        pendingDevicesToUpdate: [
-          faker.randomGenerator.string(10),
-          faker.randomGenerator.string(10),
-        ],
-        updatePendingDevices: faker.randomGenerator.integer(100),
-        waitDaysToPreloadImages: faker.randomGenerator.integer(100),
-        secondsPreloadingImages: faker.randomGenerator.integer(100),
-        latestCompatibleVersion: null,
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseWithNullValue(
+        atualEntity: EnterpriseBuilder.entity!,
+        latestCompatibleVersion: true,
       );
 
       final result = await sut.applicationIsInLatestVersion();
 
       expect(result, true);
     });
-    test("Should return false versions are differently", () async {
-      final result = await sut.applicationIsInLatestVersion();
 
-      expect(result, false);
-    });
-    test("Should return true versions are equals", () async {
-      loadDeviceData.mockGetApplicationVersion(
-        EnterpriseBuilder.entity!.latestCompatibleVersion!,
-      );
-
-      final result = await sut.applicationIsInLatestVersion();
-
-      expect(result, true);
-    });
     test("Should return true if throws", () async {
       loadDeviceData.mockGetApplicationVersionError();
 
@@ -1768,6 +1611,30 @@ void main() {
 
       EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         latestCompatibleVersion: faker.randomGenerator.integer(100).toString(),
+      );
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, true);
+    });
+    test("Should return false if remote version is greater than local version",
+        () async {
+      loadDeviceData.mockGetApplicationVersion(
+        faker.randomGenerator.integer(100).toString(),
+      );
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        latestCompatibleVersion:
+            faker.randomGenerator.integer(1000, min: 101).toString(),
+      );
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, false);
+    });
+
+    test("Should return true versions are equals", () async {
+      loadDeviceData.mockGetApplicationVersion(
+        EnterpriseBuilder.entity!.latestCompatibleVersion!,
       );
 
       final result = await sut.applicationIsInLatestVersion();

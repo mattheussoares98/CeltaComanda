@@ -366,7 +366,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     }
 
     try {
-      final enterprise = EnterpriseValidationModel.fromJson(data).toEntity();
+      final enterprise = EnterpriseValidationModel.fromJson(
+        data,
+        enterpriseConcentradorParametersEntity:
+            EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
+      ).toEntity();
 
       if (_updateMenu == -1) {
         _updateMenu = enterprise.updateMenu;

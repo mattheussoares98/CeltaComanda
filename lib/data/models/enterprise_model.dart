@@ -48,7 +48,11 @@ class EnterpriseValidationModel {
     required this.latestCompatibleVersion,
   });
 
-  factory EnterpriseValidationModel.fromJson(Map json) {
+  factory EnterpriseValidationModel.fromJson(
+    Map json, {
+    EnterpriseConcentradorParametersEntity?
+        enterpriseConcentradorParametersEntity,
+  }) {
     if (!json.keys.toSet().containsAll([
       'url',
       'enterpriseId',
@@ -78,11 +82,12 @@ class EnterpriseValidationModel {
           json["pendingDevicesToUpdate"]?.map((e) => e).toList().cast<String>(),
       updatePendingDevices: json["updatePendingDevices"],
       enterpriseConcentradorParametersEntity:
-          json["enterpriseConcentradorParametersEntity"] == null
-              ? null
-              : EnterpriseConcentradorParametersModel.fromJson(
-                      json["enterpriseConcentradorParametersEntity"])
-                  .toEntity(),
+          enterpriseConcentradorParametersEntity ??
+              (json["enterpriseConcentradorParametersEntity"] == null
+                  ? null
+                  : EnterpriseConcentradorParametersModel.fromJson(
+                          json["enterpriseConcentradorParametersEntity"])
+                      .toEntity()),
       waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
       secondsPreloadingImages: json["secondsPreloadingImages"],
       latestCompatibleVersion: json["latestCompatibleVersion"],

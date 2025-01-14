@@ -23,4 +23,5 @@ export './sale_request_concentrador/sale_request_concentrador.dart';
 export 'sale_request/sale_request.dart';
 export './schedule/schedule.dart';
 export './sellers/sellers.dart';
+export './url/url.dart';
 export './users/users.dart';

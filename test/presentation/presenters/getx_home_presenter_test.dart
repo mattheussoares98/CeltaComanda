@@ -1706,4 +1706,59 @@ void main() {
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations));
     });
   });
+
+  group("Application is in latest version", () {
+    test("Should return true if remote data is null", () async {
+      EnterpriseBuilder.entity = EnterpriseEntity(
+        enterpriseName: faker.randomGenerator.string(10),
+        url: faker.randomGenerator.string(10),
+        enterpriseId: faker.randomGenerator.integer(100),
+        concentradorUrl: faker.randomGenerator.string(10),
+        persistApp: faker.randomGenerator.boolean(),
+        urlCCS: faker.randomGenerator.string(10),
+        useCovenant: faker.randomGenerator.boolean(),
+        enterpriseConcentradorParametersEntity: null,
+        updateMenu: faker.randomGenerator.integer(100),
+        updateDevicesInformations: faker.randomGenerator.integer(100),
+        updateEnterprise: faker.randomGenerator.integer(100),
+        updateConcentratorEnterpriseData: faker.randomGenerator.integer(100),
+        serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
+        serviceChargeType: faker.randomGenerator.integer(2),
+        zoomImage: faker.randomGenerator.boolean(),
+        pendingDevicesToUpdate: [
+          faker.randomGenerator.string(10),
+          faker.randomGenerator.string(10),
+        ],
+        updatePendingDevices: faker.randomGenerator.integer(100),
+        waitDaysToPreloadImages: faker.randomGenerator.integer(100),
+        secondsPreloadingImages: faker.randomGenerator.integer(100),
+        latestCompatibleVersion: null,
+      );
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, true);
+    });
+    test("Should return false versions are differently", () async {
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, false);
+    });
+    test("Should return true versions are equals", () async {
+      loadDeviceData.mockGetApplicationVersion(
+        EnterpriseBuilder.entity!.latestCompatibleVersion!,
+      );
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, true);
+    });
+    test("Should return true if throws", () async {
+      loadDeviceData.mockGetApplicationVersionError();
+
+      final result = await sut.applicationIsInLatestVersion();
+
+      expect(result, true);
+    });
+  });
 }

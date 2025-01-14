@@ -84,4 +84,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required int userPersonalizedCode,
     required String password,
   });
+
+  Future<bool> applicationIsInLatestVersion();
 }

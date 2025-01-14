@@ -47,6 +47,8 @@ class EnUs implements Translation {
   String get msgLowBatteryChargeDevice =>
       'Charge the device. It is running low on battery';
   String get msgMaximumQuantityAchieved => "Maximum quantity achivied";
+  String get msgNeedUpdateApplication =>
+      "Please, call the waiter to update the application";
   String get msgNewCommandMustBeEmpty => "The new table must be empty";
   String get msgNewTable => "New table";
   String get msgNotFound => "Value not found";

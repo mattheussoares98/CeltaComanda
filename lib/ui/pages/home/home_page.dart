@@ -1,4 +1,6 @@
 // import 'package:battery_plus/battery_plus.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -23,12 +25,20 @@ class _HomePageState extends State<HomePage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   ProductsViewModel? _lastShowedSuggestionProduct;
-  Timer? timer;
+  Timer? loadPrintedTimer;
+  Timer? needUpdateAppTimer;
 
   @override
   initState() {
     super.initState();
     startTimer();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+        await verifyNeedUpdateApp(homePresenter);
+      }
+    });
   }
 
   @override
@@ -36,14 +46,15 @@ class _HomePageState extends State<HomePage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    timer?.cancel();
+    loadPrintedTimer?.cancel();
+    needUpdateAppTimer?.cancel();
   }
 
   void startTimer() {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    timer = Timer.periodic(Duration(minutes: 1), (_) async {
+    loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
       if (homePresenter.commandEntity?.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
           homePresenter.commandEntity!.commandNumber!,
@@ -51,6 +62,25 @@ class _HomePageState extends State<HomePage>
         );
       }
     });
+
+    needUpdateAppTimer = Timer.periodic(Duration(hours: 1), (_) async {
+      await verifyNeedUpdateApp(homePresenter);
+    });
+  }
+
+  Future<void> verifyNeedUpdateApp(HomePresenter homePresenter) async {
+    bool isLatestVersion = await homePresenter.applicationIsInLatestVersion();
+    if (!isLatestVersion) {
+      notificationDialog(
+        context: context,
+        titleMessage: R.string.msgNeedUpdateApplication,
+        content: null,
+        showCancelAndConfirmMessage: false,
+        showCloseAction: true,
+        onPress: () async {},
+        canPop: false,
+      );
+    }
   }
 
   @override

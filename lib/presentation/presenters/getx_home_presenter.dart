@@ -498,4 +498,19 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   CommandEntity? _commandEntity;
   @override
   CommandEntity? get commandEntity => _commandEntity;
+
+  @override
+  Future<bool> applicationIsInLatestVersion() async {
+    try {
+      final remoteVersion = EnterpriseBuilder.entity?.latestCompatibleVersion;
+
+      if (remoteVersion == null) {
+        return true;
+      }
+
+      return remoteVersion == await loadDeviceData.getApplicationVersion();
+    } catch (e) {
+      return true;
+    }
+  }
 }

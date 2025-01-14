@@ -836,6 +836,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       sut.changeIsGeneratingVersionToRede(false);
@@ -881,6 +883,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       sut.changeIsGeneratingVersionToRede(true);
@@ -923,6 +927,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.loadCommandData(
@@ -1301,6 +1307,7 @@ void main() {
           updatePendingDevices: faker.randomGenerator.integer(100),
           waitDaysToPreloadImages: faker.randomGenerator.integer(100),
           secondsPreloadingImages: faker.randomGenerator.integer(100),
+          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
         );
 
         await sut.doOnRemoteEnterpriseChanges(
@@ -1340,6 +1347,7 @@ void main() {
           updatePendingDevices: faker.randomGenerator.integer(100),
           waitDaysToPreloadImages: faker.randomGenerator.integer(100),
           secondsPreloadingImages: faker.randomGenerator.integer(100),
+          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
         );
 
         await sut.doOnRemoteEnterpriseChanges(

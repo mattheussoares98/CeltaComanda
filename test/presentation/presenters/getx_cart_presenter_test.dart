@@ -1864,6 +1864,7 @@ void main() {
         updatePendingDevices: enterprise.updatePendingDevices,
         waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: enterprise.secondsPreloadingImages,
+        latestCompatibleVersion: enterprise.latestCompatibleVersion,
       );
 
       await sut.saveProducts(
@@ -2094,6 +2095,7 @@ void main() {
         updatePendingDevices: oldEnterprise.updatePendingDevices,
         waitDaysToPreloadImages: oldEnterprise.waitDaysToPreloadImages,
         secondsPreloadingImages: oldEnterprise.secondsPreloadingImages,
+        latestCompatibleVersion: oldEnterprise.latestCompatibleVersion,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

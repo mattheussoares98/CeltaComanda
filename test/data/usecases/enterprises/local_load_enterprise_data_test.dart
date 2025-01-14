@@ -73,6 +73,8 @@ void main() {
               enterpriseJsonData["waitDaysToPreloadImages"],
           secondsPreloadingImages:
               enterpriseJsonData["secondsPreloadingImages"],
+          latestCompatibleVersion:
+              enterpriseJsonData["latestCompatibleVersion"],
         ),
       );
     });

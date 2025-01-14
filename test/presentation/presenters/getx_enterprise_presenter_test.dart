@@ -106,6 +106,7 @@ void main() {
       updatePendingDevices: null,
       waitDaysToPreloadImages: null,
       secondsPreloadingImages: null,
+      latestCompatibleVersion: null,
     );
 
     pdvsNotUsing = [
@@ -186,6 +187,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.validateEnterpriseByName(
@@ -227,6 +230,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
       homePresenter.isGeneratingVersionToRedeMock = true;
 
@@ -269,6 +274,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
@@ -311,6 +318,8 @@ void main() {
             EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         secondsPreloadingImages:
             EnterpriseBuilder.entity!.secondsPreloadingImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
       );
 
       await sut.validateEnterpriseByName(
@@ -358,6 +367,7 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           secondsPreloadingImages: null,
+          latestCompatibleVersion: null,
         ),
       );
     });
@@ -504,6 +514,7 @@ void main() {
           updatePendingDevices: newEnterprise.updatePendingDevices,
           waitDaysToPreloadImages: newEnterprise.waitDaysToPreloadImages,
           secondsPreloadingImages: newEnterprise.secondsPreloadingImages,
+          latestCompatibleVersion: newEnterprise.latestCompatibleVersion,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
         ),
       );
@@ -716,6 +727,7 @@ void main() {
             updatePendingDevices: null,
             waitDaysToPreloadImages: null,
             secondsPreloadingImages: null,
+            latestCompatibleVersion: null,
           ));
     });
   });
@@ -768,6 +780,8 @@ void main() {
                 EnterpriseBuilder.entity!.waitDaysToPreloadImages,
             secondsPreloadingImages:
                 EnterpriseBuilder.entity!.secondsPreloadingImages,
+            latestCompatibleVersion:
+                EnterpriseBuilder.entity!.latestCompatibleVersion,
           ));
     });
   });
@@ -798,6 +812,7 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           secondsPreloadingImages: null,
+          latestCompatibleVersion: null,
         ),
       );
     });

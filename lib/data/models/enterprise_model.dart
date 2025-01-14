@@ -23,6 +23,7 @@ class EnterpriseValidationModel {
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
   final int? secondsPreloadingImages;
+  final String? latestCompatibleVersion;
 
   EnterpriseValidationModel({
     required this.enterpriseName,
@@ -44,6 +45,7 @@ class EnterpriseValidationModel {
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
     required this.secondsPreloadingImages,
+    required this.latestCompatibleVersion,
   });
 
   factory EnterpriseValidationModel.fromJson(Map json) {
@@ -83,6 +85,7 @@ class EnterpriseValidationModel {
                   .toEntity(),
       waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
       secondsPreloadingImages: json["secondsPreloadingImages"],
+      latestCompatibleVersion: json["latestCompatibleVersion"],
     );
   }
 
@@ -109,6 +112,7 @@ class EnterpriseValidationModel {
         updatePendingDevices: entity.updatePendingDevices,
         waitDaysToPreloadImages: entity.waitDaysToPreloadImages,
         secondsPreloadingImages: entity.secondsPreloadingImages,
+        latestCompatibleVersion: entity.latestCompatibleVersion,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -132,6 +136,7 @@ class EnterpriseValidationModel {
         updatePendingDevices: updatePendingDevices,
         waitDaysToPreloadImages: waitDaysToPreloadImages,
         secondsPreloadingImages: secondsPreloadingImages,
+        latestCompatibleVersion: latestCompatibleVersion,
       );
 
   Map<String, dynamic> toJson() => {
@@ -159,5 +164,6 @@ class EnterpriseValidationModel {
         'updatePendingDevices': updatePendingDevices,
         'waitDaysToPreloadImages': waitDaysToPreloadImages,
         'secondsPreloadingImages': secondsPreloadingImages,
+        'latestCompatibleVersion': latestCompatibleVersion,
       };
 }

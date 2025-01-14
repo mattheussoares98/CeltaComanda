@@ -112,7 +112,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
     try {
       if (EnterpriseBuilder.entity?.persistApp == true &&
-          !_isGeneratingVersionToTablet) {
+          _isGeneratingVersionToTablet) {
         await persistent.makePersistent();
       } else {
         await persistent.makeNotPersistent();
@@ -309,6 +309,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 
+  @override
+  void changeIsGeneratingVersionToTablet(bool value) {
+    _isGeneratingVersionToTablet = value;
+  }
+
   List<SellersViewModel> _sellers = [];
   @override
   List<SellersViewModel> get sellers => _sellers;
@@ -343,11 +348,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<void> closeApp() async {
     await persistent.closeApp();
-  }
-
-  @override
-  void changeIsGeneratingVersionToRede(bool value) {
-    _isGeneratingVersionToTablet = value;
   }
 
   @override
@@ -502,6 +502,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<bool> applicationIsInLatestVersion() async {
     try {
+      if (!isGeneratingVersionToTablet) {
+        return true;
+      }
+
       final remoteVersion = EnterpriseBuilder.entity?.latestCompatibleVersion
           ?.replaceAll(RegExp(r'\.'), '')
           .toInt();

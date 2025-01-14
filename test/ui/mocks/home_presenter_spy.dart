@@ -31,6 +31,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
           pdv: any(named: "pdv"),
         )).thenAnswer((any) async => any);
     when(() => this.clear()).thenAnswer((any) async => any);
+    mockApplicationIsInLatestVersion(true);
   }
 
   void mockGoToSplashPage() {
@@ -66,5 +67,10 @@ class HomePresenterSpy extends Mock implements HomePresenter {
 
   void emitLoading([bool show = true]) {
     isLoadingController.add(show);
+  }
+
+  void mockApplicationIsInLatestVersion(bool value) {
+    when(() => this.applicationIsInLatestVersion())
+        .thenAnswer((_) async => value);
   }
 }

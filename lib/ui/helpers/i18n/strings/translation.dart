@@ -256,6 +256,7 @@ abstract class Translation {
   String get turnBack;
   String get unselectAll;
   String get unselectAllProducts;
+  String get updateApplication;
   String get updateConfigurations;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;

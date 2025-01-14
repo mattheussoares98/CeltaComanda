@@ -293,6 +293,7 @@ class PtBr implements Translation {
   String get turnBack => 'Voltar';
   String get unselectAll => "Desselecionar todos";
   String get unselectAllProducts => "Desselecionar todos produtos";
+  String get updateApplication => "Atualizar aplicativo";
   String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>

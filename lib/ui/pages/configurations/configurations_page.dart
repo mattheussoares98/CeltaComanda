@@ -24,6 +24,21 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
   StreamSubscription? mainErrorSubscription;
   StreamSubscription? homeLoadingSubscription;
 
+  bool applicationIsInLatestVersion = true;
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+        applicationIsInLatestVersion =
+            await homePresenter.applicationIsInLatestVersion();
+        setState(() {});
+      }
+    });
+  }
+
   @override
   dispose() {
     super.dispose();
@@ -75,19 +90,25 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: hasMinWidth(context) ? 3 : 2,
-              childAspectRatio: hasMinWidth(context) ? 5 : 3,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-            ),
-            itemCount: buttons.length,
-            itemBuilder: (context, index) {
-              return buttons[index];
-            },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (!applicationIsInLatestVersion) UpdateApplicationButton(),
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: hasMinWidth(context) ? 3 : 2,
+                  childAspectRatio: hasMinWidth(context) ? 5 : 3,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                ),
+                itemCount: buttons.length,
+                itemBuilder: (context, index) {
+                  return buttons[index];
+                },
+              ),
+            ],
           ),
         ),
       ),

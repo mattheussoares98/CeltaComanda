@@ -292,6 +292,7 @@ class EnUs implements Translation {
   String get turnBack => 'Go back';
   String get unselectAll => 'Unselect all';
   String get unselectAllProducts => 'Unselect all products';
+  String get updateApplication => 'Update application';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>

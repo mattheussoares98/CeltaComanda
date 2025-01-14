@@ -49,5 +49,10 @@
 	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Precisamos de acesso ao microfone</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	  <string>sms</string>
+	  <string>tel</string>
+	</array>
 </dict>
 </plist>

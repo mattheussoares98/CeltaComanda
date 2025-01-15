@@ -7,5 +7,5 @@ abstract class WebAddOrEditEnterprisePresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  void updateEnterprise(EnterpriseEntity enterprise);
+  Future<void> updateEnterprise(EnterpriseEntity enterprise);
 }

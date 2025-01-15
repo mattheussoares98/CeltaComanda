@@ -16,7 +16,7 @@ import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
 import '../ui/mixins/mixins.dart';
 import '../firebase_options.dart';
-import '../main/factories/factories.dart';
+import 'main/components/components.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,53 +60,7 @@ class App extends StatelessWidget
     debugPrint("altura: ${MediaQuery.of(context).size.height}");
 
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => makeGetxCartPresenter(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => makeGetxHomePresenter(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => makeGetxPrintedProductsPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxCancelProductsPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxConfigurationsPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxEnterprisePresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxExpansibleGroupFromProductPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxInsertProductsPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxMenuPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxParametersPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxPaymentPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxSaleMovementPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxSendProductsToAnotherTablePresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxWebAllEnterprisesPresenter(),
-        ),
-        ListenableProvider(
-          create: (_) => makeGetxWebLoginPresenter(),
-        ),
-      ],
+      providers: Providers.providers,
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -131,88 +85,7 @@ class App extends StatelessWidget
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          getPages: [
-            GetPage(
-              name: PageRoutes.cancelProducts,
-              page: makeCancelProductsPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.covenant,
-              page: makeCovenantPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.configurations,
-              page: makeConfigurationsPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.enterpriseValidation,
-              page: makeEnterpriseValidationPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.home,
-              page: makeHomePage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.insertProducts,
-              page: makeInsertProductsPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.parameters,
-              page: makeParametersPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.payment,
-              page: makePaymentPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.printedProducts,
-              page: makePrintedProductsPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.printProducts,
-              page: makePrintProductsPage,
-              transition: Transition.fadeIn,
-            ),
-            GetPage(
-              name: PageRoutes.saleMovements,
-              page: makeSaleMovementPage,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.schedules,
-              page: makeSchedulesPage,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.sendProductsToAnotherTable,
-              page: makeSendProductsToAnotherPageFactory,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.splash,
-              page: makeSplashPage,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.webAllEnterprises,
-              page: makeWebAllEnterprisesPage,
-              transition: Transition.fade,
-            ),
-            GetPage(
-              name: PageRoutes.webLogin,
-              page: makeWebLoginPage,
-              transition: Transition.fade,
-            ),
-          ],
+          getPages: GetPages.getPages,
         ),
       ),
     );

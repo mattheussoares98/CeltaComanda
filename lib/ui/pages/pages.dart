@@ -19,6 +19,5 @@ export 'schedules/schedules.dart';
 export './send_products_to_another_table/send_products_to_another_table.dart';
 export './splash/splash.dart';
 export './support/support.dart';
-export './web_add_or_edit_enterprise/web_add_or_edit_enterprise.dart';
 export './web_all_enterprises/web_all_enterprises.dart';
 export './web_login/web_login.dart';

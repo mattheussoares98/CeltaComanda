@@ -10,17 +10,17 @@ class Enterprises extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WebAllEnterprisesPresenter webAllEnterprisesPresenter =
+    WebEnterprisesPresenter webEnterprisesPresenter =
         Provider.of(context, listen: false);
 
     return StreamBuilder<List<EnterpriseEntity>?>(
-        stream: webAllEnterprisesPresenter.enterprisesStream,
+        stream: webEnterprisesPresenter.enterprisesStream,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Center(
               child: TextButton(
                 onPressed: () async {
-                  await webAllEnterprisesPresenter.loadEnterprises();
+                  await webEnterprisesPresenter.loadEnterprises();
                 },
                 child: Text(R.string.search),
               ),

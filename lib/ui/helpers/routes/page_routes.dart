@@ -17,6 +17,6 @@ class PageRoutes {
   static const String schedules = "/products_schedules";
   static const String splash = "/splash";
   static const String webAddOrEditEnterprise = "/web_add_or_edit_enterprise";
-  static const String webAllEnterprises = "/web_all_enterprises";
+  static const String webEnterprises = "/web_enterprises";
   static const String webLogin = "/web_login";
 }

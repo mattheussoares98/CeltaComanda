@@ -12,7 +12,7 @@ import '../../domain/mocks/mocks.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  late GetxWebAllEnterprisesPresenter sut;
+  late GetxWebEnterprisesPresenter sut;
 
   late LoadAllEnterprisesSpy loadAllEnterprises;
   late NavigateToSpy navigateTo;
@@ -23,7 +23,7 @@ void main() {
   }
 
   void initPresenters() {
-    sut = GetxWebAllEnterprisesPresenter(
+    sut = GetxWebEnterprisesPresenter(
       loadAllEnterprises: loadAllEnterprises,
       navigateTo: navigateTo,
     );

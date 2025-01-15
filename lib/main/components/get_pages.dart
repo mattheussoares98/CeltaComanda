@@ -78,8 +78,8 @@ class GetPages {
       transition: Transition.fade,
     ),
     GetPage(
-      name: PageRoutes.webAllEnterprises,
-      page: makeWebAllEnterprisesPage,
+      name: PageRoutes.webEnterprises,
+      page: makeWebEnterprisesPage,
       transition: Transition.fade,
     ),
     GetPage(

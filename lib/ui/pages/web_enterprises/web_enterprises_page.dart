@@ -8,14 +8,14 @@ import '../../mixins/mixins.dart';
 import '../pages.dart';
 import 'components/components.dart';
 
-class WebAllEnterprisesPage extends StatefulWidget {
-  const WebAllEnterprisesPage({super.key});
+class WebEnterprisesPage extends StatefulWidget {
+  const WebEnterprisesPage({super.key});
 
   @override
-  State<WebAllEnterprisesPage> createState() => _WebAllEnterprisesPageState();
+  State<WebEnterprisesPage> createState() => _WebEnterprisesPageState();
 }
 
-class _WebAllEnterprisesPageState extends State<WebAllEnterprisesPage>
+class _WebEnterprisesPageState extends State<WebEnterprisesPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -29,18 +29,18 @@ class _WebAllEnterprisesPageState extends State<WebAllEnterprisesPage>
 
   @override
   Widget build(BuildContext context) {
-    WebAllEnterprisesPresenter webAllEnterprisesPresenter =
+    WebEnterprisesPresenter webEnterprisesPresenter =
         Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     loadingSubscription = handleLoading(
       context,
-      webAllEnterprisesPresenter.isLoadingStream,
+      webEnterprisesPresenter.isLoadingStream,
     );
     mainErrorSubscription = handleMainError(
       context,
-      webAllEnterprisesPresenter.mainErrorStream,
+      webEnterprisesPresenter.mainErrorStream,
     );
 
     return Scaffold(
@@ -58,7 +58,7 @@ class _WebAllEnterprisesPageState extends State<WebAllEnterprisesPage>
           ),
           IconButton(
             onPressed: () async {
-              await webAllEnterprisesPresenter.loadEnterprises();
+              await webEnterprisesPresenter.loadEnterprises();
             },
             icon: Icon(Icons.refresh),
           ),

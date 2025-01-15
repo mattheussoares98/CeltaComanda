@@ -46,7 +46,7 @@ class Providers {
       create: (_) => makeGetxSendProductsToAnotherTablePresenter(),
     ),
     ListenableProvider(
-      create: (_) => makeGetxWebAllEnterprisesPresenter(),
+      create: (_) => makeGetxWebEnterprisesPresenter(),
     ),
     ListenableProvider(
       create: (_) => makeGetxWebLoginPresenter(),

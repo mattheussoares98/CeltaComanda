@@ -9,6 +9,7 @@ InputDecoration formFieldDecoration({
   Widget? suffixIcon,
   Widget? prefixIcon,
   bool? showCounterText = true,
+  double? fontSize,
 }) =>
     InputDecoration(
       labelText: labelText,
@@ -27,18 +28,18 @@ InputDecoration formFieldDecoration({
       ),
       hintStyle: TextStyle(
         color: Colors.grey,
-        fontSize: StringSize.size,
+        fontSize: fontSize ?? StringSize.size,
       ),
       labelStyle: TextStyle(
         color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.normal,
         fontStyle: FontStyle.italic,
-        fontSize: StringSize.size,
+        fontSize: fontSize ?? StringSize.size,
       ),
       floatingLabelStyle: TextStyle(
         color: Theme.of(context).primaryColor,
         fontWeight: FontWeight.normal,
-        fontSize: StringSize.size,
+        fontSize: fontSize ?? StringSize.size,
       ),
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),

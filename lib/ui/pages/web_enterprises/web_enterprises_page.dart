@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
-import 'components/components.dart';
+import 'web_enterprises_components/web_enterprises_components.dart';
 
 class WebEnterprisesPage extends StatefulWidget {
   const WebEnterprisesPage({super.key});

@@ -100,6 +100,8 @@ class PtBr implements Translation {
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantCloseTable => "Deseja realmente fechar a mesa?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
+  String get msgWantUpdateConcentratorEnterpriseParameters =>
+      "Essa opção vai atualizar os parâmetros do concentrador em todos dispositivos.\nVocê deve usar essa opção somente quando alterar o cross nos parâmetros do concentrador.\nDeseja continuar?";
   String get msgWantUpdateMenuInAllDevices =>
       "Deseja atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -112,6 +114,7 @@ class PtBr implements Translation {
   String get msgWritePaymentValue => "Digite o valor a pagar";
   String get msgWriteTableNumber => "Digite o número da mesa";
   String get msgWriteThreeNumbers => "Digite 3 números";
+  String get msgWriteUrl => "Digite a url";
   String get msgWriteUserCode => "Digite o código do usuário";
 
   String get accessConfigurations => 'Acessar configurações';
@@ -132,6 +135,7 @@ class PtBr implements Translation {
   String get cancelProductsOrRemoveServiceCharge =>
       "Cancelar produtos ou remover taxa de serviço";
   String get cancelProduct => "Cancelar produto";
+  String get ccsUrl => "Url do CCS";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get change => "Alterar";
@@ -150,6 +154,7 @@ class PtBr implements Translation {
   String get commentsOfProduct => "Comentários do produto";
   String get comments => "Comentários";
   String get comment => "Comentário";
+  String get concentratorUrl => "Url do concentrador";
   String get conferenceOfTable => "Conferência da mesa";
   String get configurations => "Configurações";
   String get confirmFlag => "Confirmar bandeira";
@@ -175,10 +180,12 @@ class PtBr implements Translation {
   String get emptyCart => 'O carrinho está vazio';
   String get emptySales => 'Não há vendas nessa data';
   String get emptyTable => 'A mesa está vazia';
+  String get enableCovenant => 'Habilitar convênio';
   String get enableSearchProducts => 'Habilitar pesquisa de produtos';
   String get enterprise => 'Empresa';
-  String get enterprises => 'Empresas';
+  String get enterpriseId => 'Id da empresa';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
+  String get enterprises => 'Empresas';
   String get environment => 'Ambiente';
   String get exit => 'Sair';
   String get expansibleGroup => 'Grupo expansível';
@@ -192,6 +199,7 @@ class PtBr implements Translation {
   String get ifWantSelectComments => 'Se desejar, selecione comentários';
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
+  String get latestCompatibleVersion => 'Última versão compatível';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';
   String get liberateOrBlockTable => "Liberar ou bloquear mesa";
@@ -207,6 +215,7 @@ class PtBr implements Translation {
   String get monday => 'Segunda';
   String get money => 'Dinheiro';
   String get name => 'Nome';
+  String get navsUrl => 'Url do navs';
   String get neww => 'Novo';
   String get no => 'Não';
   String get obligatory => 'Obrigatório';
@@ -276,6 +285,7 @@ class PtBr implements Translation {
   String get service => 'Atendimento';
   String get serviceCharge => 'Taxa de serviço';
   String get serviceChargeAbbreviated => 'Serviço';
+  String get serviceChargePercentage => 'Porcetagem da taxa de serviço';
   String get subtotal => "Subtotal";
   String get suggestionCriticalOrPraise => "Sugestão, crítica ou elogio";
   String get sunday => "Domingo";
@@ -295,6 +305,7 @@ class PtBr implements Translation {
   String get unselectAll => "Desselecionar todos";
   String get unselectAllProducts => "Desselecionar todos produtos";
   String get updateApplication => "Atualizar aplicativo";
+  String get updateConcentratorParameters => "Atualizar parâmetros do concentrador";
   String get updateConfigurations => "Alterar configurações";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>
@@ -306,9 +317,11 @@ class PtBr implements Translation {
   String get validateEnterprise => 'Validar empresa';
   String get voucher => 'Voucher';
   String get wait => 'Aguarde...';
+  String get waitDaysPreloadImage => 'Dias para pré-carregar imagens';
   String get wantRemoveRequestedProduct =>
       'Deseja realmente remover o produto dos produtos solicitados?';
   String get wednesday => "Quarta";
   String get withoutCovenant => "Sem convênio";
   String get yes => "Sim";
+  String get zoomImage => "Dar zoom na imagem";
 }

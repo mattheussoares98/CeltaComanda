@@ -72,6 +72,7 @@ abstract class Translation {
   String get msgWantCloseTable;
   String get msgWantDoLogout;
   String get msgWantUpdateMenuInAllDevices;
+  String get msgWantUpdateConcentratorEnterpriseParameters;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
   String get msgWriteCommandNumber;
   String get msgWriteEanOrPlu;
@@ -81,6 +82,7 @@ abstract class Translation {
   String get msgWritePaymentValue;
   String get msgWriteTableNumber;
   String get msgWriteThreeNumbers;
+  String get msgWriteUrl;
   String get msgWriteUserCode;
 
   String get accessConfigurations;
@@ -100,6 +102,7 @@ abstract class Translation {
   String get cancelProductsOrRemoveServiceCharge;
   String get cancelProduct;
   String get cart;
+  String get ccsUrl;
   String get cashCredit;
   String get cellPhone;
   String get change;
@@ -118,6 +121,7 @@ abstract class Translation {
   String get commentsOfProduct;
   String get comments;
   String get comment;
+  String get concentratorUrl;
   String get conferenceOfTable;
   String get configurations;
   String get confirmFlag;
@@ -143,9 +147,11 @@ abstract class Translation {
   String get emptyCart;
   String get emptySales;
   String get emptyTable;
+  String get enableCovenant;
   String get enableSearchProducts;
-  String get enterpriseOrUrlNotFound;
   String get enterprise;
+  String get enterpriseId;
+  String get enterpriseOrUrlNotFound;
   String get enterprises;
   String get environment;
   String get exit;
@@ -160,6 +166,7 @@ abstract class Translation {
   String get ifWantSelectComments;
   String get ifWantSelectProducts;
   String get jump;
+  String get latestCompatibleVersion;
   String get liberateCancelProducts;
   String get liberateCommand;
   String get liberateOrBlockTable;
@@ -175,6 +182,7 @@ abstract class Translation {
   String get monday;
   String get money;
   String get name;
+  String get navsUrl;
   String get neww;
   String get no;
   String get obligatory;
@@ -239,6 +247,7 @@ abstract class Translation {
   String get service;
   String get serviceCharge;
   String get serviceChargeAbbreviated;
+  String get serviceChargePercentage;
   String get subtotal;
   String get suggestionCriticalOrPraise;
   String get sunday;
@@ -258,6 +267,7 @@ abstract class Translation {
   String get unselectAll;
   String get unselectAllProducts;
   String get updateApplication;
+  String get updateConcentratorParameters;
   String get updateConfigurations;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;
@@ -268,8 +278,10 @@ abstract class Translation {
   String get validateEnterprise;
   String get voucher;
   String get wait;
+  String get waitDaysPreloadImage;
   String get wantRemoveRequestedProduct;
   String get wednesday;
   String get withoutCovenant;
   String get yes;
+  String get zoomImage;
 }

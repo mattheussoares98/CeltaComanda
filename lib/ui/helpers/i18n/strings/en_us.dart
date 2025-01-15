@@ -100,6 +100,8 @@ class EnUs implements Translation {
       'Do you really want to close the application?';
   String get msgWantCloseTable => "Do you really want close the table?";
   String get msgWantDoLogout => 'Do you really want to log out?';
+  String get msgWantUpdateConcentratorEnterpriseParameters =>
+      "This option will update the concentrator parameters in all devices. Do you want to continue?\nYou need use this only when change the cross parameter in concentrator";
   String get msgWantUpdateMenuInAllDevices =>
       "Do you want update the menu in all devices?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -112,6 +114,7 @@ class EnUs implements Translation {
   String get msgWritePaymentValue => 'Write the payment value';
   String get msgWriteTableNumber => 'Enter the table number';
   String get msgWriteThreeNumbers => 'Enter 3 numbers';
+  String get msgWriteUrl => 'Write the url';
   String get msgWriteUserCode => 'Enter the user code';
 
   String get accessConfigurations => 'Access configurations';
@@ -132,6 +135,7 @@ class EnUs implements Translation {
   String get cancelProductsOrRemoveServiceCharge =>
       'Cancel products or remove service charge';
   String get cancelProduct => 'Cancel product';
+  String get ccsUrl => 'CCS URL';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
   String get change => 'Change';
@@ -151,6 +155,7 @@ class EnUs implements Translation {
   String get commentsOfProduct => 'Product comments';
   String get comments => 'Comments';
   String get comment => 'Comment';
+  String get concentratorUrl => 'Concentrator URL';
   String get conferenceOfTable => 'Conference of table';
   String get configurations => 'Configurations';
   String get confirmFlag => 'Confirm flag';
@@ -176,10 +181,12 @@ class EnUs implements Translation {
   String get emptyCart => 'The cart is empty';
   String get emptySales => "Don't has sales in this date";
   String get emptyTable => 'The table is empty';
+  String get enableCovenant => 'Enable covenant';
   String get enableSearchProducts => 'Enable search products';
   String get enterprise => 'Enterprise';
-  String get enterprises => 'Enterprises';
+  String get enterpriseId => 'Enterprise id';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
+  String get enterprises => 'Enterprises';
   String get environment => 'Environment';
   String get exit => 'Exit';
   String get expansibleGroup => 'Expansible group';
@@ -192,6 +199,7 @@ class EnUs implements Translation {
   String get ifWantSelectComments => 'If desired, select comments';
   String get ifWantSelectProducts => 'If desired, select a product';
   String get jump => 'Skip';
+  String get latestCompatibleVersion => 'Latest compatible version';
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';
   String get liberateOrBlockTable => "Liberate or block table";
@@ -207,6 +215,7 @@ class EnUs implements Translation {
   String get monday => 'Monday';
   String get money => 'Money';
   String get name => 'Name';
+  String get navsUrl => 'Url of navs';
   String get neww => 'New';
   String get no => 'No';
   String get obligatory => 'Mandatory';
@@ -275,6 +284,7 @@ class EnUs implements Translation {
   String get service => 'Service';
   String get serviceCharge => 'Service charge';
   String get serviceChargeAbbreviated => 'Service';
+  String get serviceChargePercentage => 'Service charge percentage';
   String get subtotal => 'Subtotal';
   String get suggestionCriticalOrPraise => 'Suggestion, criticism, or praise';
   String get sunday => 'Sunday';
@@ -294,6 +304,7 @@ class EnUs implements Translation {
   String get unselectAll => 'Unselect all';
   String get unselectAllProducts => 'Unselect all products';
   String get updateApplication => 'Update application';
+  String get updateConcentratorParameters => 'Update concentrator parameters';
   String get updateConfigurations => 'Update configurations';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>
@@ -305,9 +316,11 @@ class EnUs implements Translation {
   String get validateEnterprise => 'Validate enterprise';
   String get voucher => 'Voucher';
   String get wait => 'Please wait...';
+  String get waitDaysPreloadImage => 'Wait days to preload image';
   String get wantRemoveRequestedProduct =>
       'Do you really want to remove the product from the requested products?';
   String get wednesday => "Wednesday";
   String get yes => "yes";
   String get withoutCovenant => "Without covenant";
+  String get zoomImage => "Zoom image";
 }

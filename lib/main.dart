@@ -101,6 +101,9 @@ class App extends StatelessWidget
           create: (_) => makeGetxSendProductsToAnotherTablePresenter(),
         ),
         ListenableProvider(
+          create: (_) => makeGetxWebAllEnterprisesPresenter(),
+        ),
+        ListenableProvider(
           create: (_) => makeGetxWebLoginPresenter(),
         ),
       ],

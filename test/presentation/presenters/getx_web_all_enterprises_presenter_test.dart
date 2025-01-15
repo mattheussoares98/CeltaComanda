@@ -15,14 +15,17 @@ void main() {
   late GetxWebAllEnterprisesPresenter sut;
 
   late LoadAllEnterprisesSpy loadAllEnterprises;
+  late NavigateToSpy navigateTo;
 
   void initUseCases() {
     loadAllEnterprises = LoadAllEnterprisesSpy();
+    navigateTo = NavigateToSpy();
   }
 
   void initPresenters() {
     sut = GetxWebAllEnterprisesPresenter(
       loadAllEnterprises: loadAllEnterprises,
+      navigateTo: navigateTo,
     );
   }
 
@@ -71,6 +74,36 @@ void main() {
       await sut.loadEnterprises();
 
       verify(() => loadAllEnterprises.loadAll()).called(1);
+    });
+  });
+
+  group("Go to add or edit enterprise", () {
+    test("Should emit correct values on success", () {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
+    });
+    test("Should emit correct values on failure", () {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      navigateTo.mockNavigateError();
+
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
+    });
+
+    test("Should call navigate to with correct values", () {
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
+
+      verify(
+        () => navigateTo.navigate(
+          pageRoute: PageRoutes.webAddOrEditEnterprise,
+        ),
+      ).called(1);
     });
   });
 }

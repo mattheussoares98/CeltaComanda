@@ -9,4 +9,5 @@ abstract class WebAllEnterprisesPresenter implements Listenable {
   Stream<List<EnterpriseEntity>?> get enterprisesStream;
 
   Future<void> loadEnterprises();
+  void goToAddOrEditEnterprise(EnterpriseEntity? enterprise);
 }

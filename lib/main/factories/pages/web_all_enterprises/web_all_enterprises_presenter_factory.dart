@@ -5,4 +5,5 @@ import '../../usecases/usecases.dart';
 WebAllEnterprisesPresenter makeGetxWebAllEnterprisesPresenter() =>
     GetxWebAllEnterprisesPresenter(
       loadAllEnterprises: makeRemoteLoadAllEnterprises(),
+      navigateTo: makeNavigateTo(),
     );

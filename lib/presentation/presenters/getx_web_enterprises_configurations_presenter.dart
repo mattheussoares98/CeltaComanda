@@ -10,9 +10,11 @@ class GetxWebAllEnterprisesPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements WebAllEnterprisesPresenter {
   final LoadAllEnterprises loadAllEnterprises;
+  final NavigateTo navigateTo;
 
   GetxWebAllEnterprisesPresenter({
     required this.loadAllEnterprises,
+    required this.navigateTo,
   });
 
   @override
@@ -36,4 +38,18 @@ class GetxWebAllEnterprisesPresenter extends GetxController
   @override
   Stream<List<EnterpriseEntity>?> get enterprisesStream => _enterprises.stream;
   set enterprises(List<EnterpriseEntity>? value) => _enterprises.value = value;
+
+  @override
+  void goToAddOrEditEnterprise(EnterpriseEntity? enterprise) {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

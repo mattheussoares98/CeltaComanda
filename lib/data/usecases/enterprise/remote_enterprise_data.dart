@@ -50,10 +50,6 @@ class RemoteLoadEnterpriseData
     try {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,
-        fieldToSearch: FirebaseKeys.enterpriseName.name,
-        valueToSearch: EnterpriseBuilder.entity!.enterpriseName
-            .toLowerCase()
-            .removeWhiteSpaces(),
       );
 
       if (querySnapshot.docs.isEmpty) {

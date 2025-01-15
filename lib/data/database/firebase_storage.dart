@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 abstract class FirebaseStorage {
   Future<QuerySnapshot<Map<String, dynamic>>> get({
     required String collection,
-    required String fieldToSearch,
-    required String valueToSearch,
+    String? fieldToSearch,
+    String? valueToSearch,
   });
 
   Future<void> addNewPrintRequest(PrintRequestEntity entity);

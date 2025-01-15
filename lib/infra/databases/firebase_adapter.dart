@@ -14,13 +14,17 @@ class FirebaseAdapter implements FirebaseStorage {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> get({
     required String collection,
-    required String fieldToSearch,
-    required String valueToSearch,
+    String? fieldToSearch,
+    String? valueToSearch,
   }) async {
-    return await firestore
-        .collection(collection)
-        .where(fieldToSearch, isEqualTo: valueToSearch)
-        .get();
+    if (fieldToSearch == null || valueToSearch == null) {
+      return await firestore.collection(collection).get();
+    } else {
+      return await firestore
+          .collection(collection)
+          .where(fieldToSearch, isEqualTo: valueToSearch)
+          .get();
+    }
   }
 
   @override

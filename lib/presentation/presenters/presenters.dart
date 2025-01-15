@@ -13,4 +13,5 @@ export 'getx_insert_products_presenter.dart';
 export './getx_splash_presenter.dart';
 export './getx_sale_movement_presenter.dart';
 export './getx_send_products_to_another_table_presenter.dart';
+export './getx_web_enterprises_configurations_presenter.dart';
 export './getx_web_login_presenter.dart';

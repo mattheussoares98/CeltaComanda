@@ -105,5 +105,12 @@ void main() {
         ),
       ).called(1);
     });
+    test("Should update selected enterprise correctly", () {
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
+      expect(sut.selectedEnterprise, EnterpriseBuilder.entity);
+
+      sut.goToAddOrEditEnterprise(null);
+      expect(sut.selectedEnterprise, null);
+    });
   });
 }

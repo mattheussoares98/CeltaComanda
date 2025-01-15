@@ -45,6 +45,7 @@ class GetxWebAllEnterprisesPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
+      _selectedEnterprise = enterprise;
       navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
     } catch (e) {
       mainError = UIError.unexpected;
@@ -52,4 +53,8 @@ class GetxWebAllEnterprisesPresenter extends GetxController
       isLoading = false;
     }
   }
+
+  EnterpriseEntity? _selectedEnterprise;
+  @override
+  EnterpriseEntity? get selectedEnterprise => _selectedEnterprise;
 }

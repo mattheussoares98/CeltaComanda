@@ -79,13 +79,11 @@ void main() {
 
   group("Go to add or edit enterprise", () {
     test("Should emit correct values on success", () {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
       sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
     });
     test("Should emit correct values on failure", () {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
         sut.mainErrorStream,
         emitsInOrder([null, UIError.unexpected]),

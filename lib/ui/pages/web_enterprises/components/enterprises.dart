@@ -36,7 +36,10 @@ class Enterprises extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      webEnterprisesPresenter
+                          .goToAddOrEditEnterprise(enterprise);
+                    },
                     child: Container(
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(

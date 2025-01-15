@@ -42,15 +42,12 @@ class GetxWebEnterprisesPresenter extends GetxController
   @override
   void goToAddOrEditEnterprise(EnterpriseEntity? enterprise) {
     try {
-      isLoading = true;
       mainError = null;
 
       _selectedEnterprise = enterprise;
       navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
     } catch (e) {
       mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
     }
   }
 

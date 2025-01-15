@@ -19,8 +19,10 @@ class GetxWebEnterprisesConfigurationsPresenter extends GetxController
     try {
       isLoading = true;
       mainError = null;
+
+      final result = await loadAllEnterprises.loadAll();
     } catch (error) {
-      mainError = UIError.unexpected;
+      mainError = UIError.notFound;
     } finally {
       isLoading = false;
     }

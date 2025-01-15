@@ -37,7 +37,7 @@ void main() {
       changeSaleRequestPersonalizedCodeProducts;
   late CloseSaleRequestSpy closeSaleRequest;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
-  late LoadDeviceDataSpy loadimeiOrWindowsId;
+  late LoadDeviceDataSpy loadDeviceData;
   late LaunchUrlSpy launchUrl;
 
   late int newFixedCommandNumber;
@@ -70,7 +70,7 @@ void main() {
           changeSaleRequestPersonalizedCodeProducts,
       closeSaleRequest: closeSaleRequest,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
-      loadDeviceData: loadimeiOrWindowsId,
+      loadDeviceData: loadDeviceData,
       launchUrl: launchUrl,
     );
   }
@@ -89,14 +89,14 @@ void main() {
         ChangeSaleRequestPersonalizedCodeProductsSpy();
     closeSaleRequest = CloseSaleRequestSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
-    loadimeiOrWindowsId = LoadDeviceDataSpy();
+    loadDeviceData = LoadDeviceDataSpy();
     launchUrl = LaunchUrlSpy();
   }
 
   void initMocks() {
     localCommandData.mockLoad(fixedCommandEntity);
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
-    loadimeiOrWindowsId.mockGetImeiOrWindowsId(identifier);
+    loadDeviceData.mockGetImeiOrWindowsId(identifier);
     addPendingDeviceToUpdate.mockAdd(identifier);
   }
 
@@ -360,7 +360,7 @@ void main() {
     test("Should call load pending device", () async {
       await sut.loadMenuAgain();
 
-      verify(() => loadimeiOrWindowsId.getImeiOrWindowsId()).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
   });
 
@@ -688,6 +688,47 @@ void main() {
 
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.saleMovements))
           .called(1);
+    });
+  });
+
+  group("Go to update application", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.goToUpdateApplication();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      launchUrl.mockLaunchError();
+
+      await sut.goToUpdateApplication();
+    });
+    test("Should verify platform", () async {
+      await sut.goToUpdateApplication();
+
+      verify(() => loadDeviceData.isAndroidPlatform()).called(1);
+    });
+    test("Should launch correct url if is android", () async {
+      await sut.goToUpdateApplication();
+
+      verify(() => launchUrl.launch(
+            "https://play.google.com/store/apps/details?id=br.com.celtaware.comanda",
+          )).called(1);
+    });
+    test("Should launch correct url if is iOS", () async {
+      loadDeviceData.mockIsAndroidPlatform(false);
+
+      await sut.goToUpdateApplication();
+
+      verify(() => launchUrl.launch(
+            "https://apps.apple.com/br/app/celta-comanda/id6504995969?l=en-GB",
+          )).called(1);
     });
   });
 }

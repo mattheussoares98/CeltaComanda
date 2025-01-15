@@ -288,4 +288,27 @@ class GetxConfigurationsPresenter extends GetxController
   void goToSaleMovementsPage() {
     navigateTo.navigate(pageRoute: PageRoutes.saleMovements);
   }
+
+  @override
+  Future<void> goToUpdateApplication() async {
+    try {
+      isLoading = true;
+      mainError = null;
+      bool isAndroid = loadDeviceData.isAndroidPlatform();
+
+      if (isAndroid) {
+        await launchUrl.launch(
+          "https://play.google.com/store/apps/details?id=br.com.celtaware.comanda",
+        );
+      } else {
+        await launchUrl.launch(
+          "https://apps.apple.com/br/app/celta-comanda/id6504995969?l=en-GB",
+        );
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

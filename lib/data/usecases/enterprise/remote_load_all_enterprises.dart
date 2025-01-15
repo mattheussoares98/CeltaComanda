@@ -4,6 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../database/database.dart';
+import '../../models/models.dart';
 
 class RemoteLoadAllEnterprises implements LoadAllEnterprises {
   final FirebaseStorage firebaseStorage;
@@ -28,11 +29,9 @@ class RemoteLoadAllEnterprises implements LoadAllEnterprises {
       if (querySnapshot.docs.isEmpty) {
         throw Exception();
       } else {
-        // Map<String, dynamic> data = querySnapshot.docs[0].data();
-
-        // return EnterpriseValidationModel.fromJson(data).toEntity();
-        //TODO treat this
-        return [];
+        return querySnapshot.docs
+            .map((e) => EnterpriseValidationModel.fromJson(e.data()).toEntity())
+            .toList();
       }
     } catch (error) {
       throw DomainError.notFound;

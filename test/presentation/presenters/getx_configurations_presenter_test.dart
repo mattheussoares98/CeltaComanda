@@ -38,6 +38,7 @@ void main() {
   late CloseSaleRequestSpy closeSaleRequest;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadimeiOrWindowsId;
+  late LaunchUrlSpy launchUrl;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -70,6 +71,7 @@ void main() {
       closeSaleRequest: closeSaleRequest,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadimeiOrWindowsId,
+      launchUrl: launchUrl,
     );
   }
 
@@ -88,6 +90,7 @@ void main() {
     closeSaleRequest = CloseSaleRequestSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadimeiOrWindowsId = LoadDeviceDataSpy();
+    launchUrl = LaunchUrlSpy();
   }
 
   void initMocks() {

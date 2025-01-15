@@ -12,9 +12,12 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       localCommandData: makeLocalCommandData(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
-      changeSaleRequestPersonalizedCode: makeRemoteChangeSaleRequestPersonalizedCode(),
-      changeSaleRequestPersonalizedCodeProducts: makeRemoteChangeSaleRequestPersonalizedCodeProducts(),
+      changeSaleRequestPersonalizedCode:
+          makeRemoteChangeSaleRequestPersonalizedCode(),
+      changeSaleRequestPersonalizedCodeProducts:
+          makeRemoteChangeSaleRequestPersonalizedCodeProducts(),
       closeSaleRequest: makeRemoteCloseSaleRequest(),
       addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
       loadDeviceData: makeLocalLoadDeviceData(),
+      launchUrl: makeRemoteLaunchUrl(),
     );

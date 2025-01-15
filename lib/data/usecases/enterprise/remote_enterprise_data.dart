@@ -8,7 +8,8 @@ import '../../../ui/helpers/helpers.dart';
 import '../../database/database.dart';
 import '../../models/models.dart';
 
-class RemoteLoadEnterpriseData implements LoadEnterpriseData {
+class RemoteLoadEnterpriseData
+    implements LoadEnterpriseData, LoadAllEnterprises {
   final FirebaseStorage firebaseStorage;
 
   RemoteLoadEnterpriseData({
@@ -41,6 +42,31 @@ class RemoteLoadEnterpriseData implements LoadEnterpriseData {
       }
     } catch (error) {
       throw DomainError.enterpriseOrUrlNotFound;
+    }
+  }
+
+  @override
+  Future<List<EnterpriseEntity>> loadAll() async {
+    try {
+      final querySnapshot = await firebaseStorage.get(
+        collection: FirebaseCollections.clients.name,
+        fieldToSearch: FirebaseKeys.enterpriseName.name,
+        valueToSearch: EnterpriseBuilder.entity!.enterpriseName
+            .toLowerCase()
+            .removeWhiteSpaces(),
+      );
+
+      if (querySnapshot.docs.isEmpty) {
+        throw Exception();
+      } else {
+        // Map<String, dynamic> data = querySnapshot.docs[0].data();
+
+        // return EnterpriseValidationModel.fromJson(data).toEntity();
+        //TODO treat this
+        return [];
+      }
+    } catch (error) {
+      throw DomainError.notFound;
     }
   }
 }

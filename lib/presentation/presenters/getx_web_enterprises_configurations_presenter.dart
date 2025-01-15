@@ -6,12 +6,12 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
-class GetxWebEnterprisesConfigurationsPresenter extends GetxController
+class GetxWebAllEnterprisesPresenter extends GetxController
     with LoadingManager, UIErrorManager
-    implements WebEnterprisesConfigurationsPresenter {
+    implements WebAllEnterprisesPresenter {
   final LoadAllEnterprises loadAllEnterprises;
 
-  GetxWebEnterprisesConfigurationsPresenter({
+  GetxWebAllEnterprisesPresenter({
     required this.loadAllEnterprises,
   });
 

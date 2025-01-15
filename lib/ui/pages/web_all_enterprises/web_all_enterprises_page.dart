@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/helpers.dart';
 
-class WebEnterprisesConfigurationsPage extends StatelessWidget {
-  const WebEnterprisesConfigurationsPage({super.key});
+class WebAllEnterprisesPage extends StatelessWidget {
+  const WebAllEnterprisesPage({super.key});
 
   @override
   Widget build(BuildContext context) {

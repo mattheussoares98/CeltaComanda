@@ -16,6 +16,6 @@ class PageRoutes {
   static const String sendProductsToAnotherTable = "/send_products_to_another_table";
   static const String schedules = "/products_schedules";
   static const String splash = "/splash";
-  static const String webEnterprisesConfigurations = "/web_enterprises_configurations";
+  static const String webAllEnterprises = "/web_all_enterprises";
   static const String webLogin = "/web_login";
 }

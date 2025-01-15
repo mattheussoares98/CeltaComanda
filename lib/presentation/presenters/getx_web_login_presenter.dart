@@ -26,7 +26,7 @@ class GetxWebLoginPresenter extends GetxController
     try {
       await loginManagement.login(email: email, password: password);
       await navigateTo.navigate(
-        pageRoute: PageRoutes.webEnterprisesConfigurations,
+        pageRoute: PageRoutes.webAllEnterprises,
         clear: true,
       );
     } catch (e) {
@@ -55,7 +55,7 @@ class GetxWebLoginPresenter extends GetxController
     bool isLogged = await loginManagement.isLoggedIn();
     if (isLogged) {
       navigateTo.navigate(
-          pageRoute: PageRoutes.webEnterprisesConfigurations, clear: true);
+          pageRoute: PageRoutes.webAllEnterprises, clear: true);
     }
     isLoading = false;
   }

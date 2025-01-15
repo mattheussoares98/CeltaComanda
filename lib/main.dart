@@ -200,8 +200,8 @@ class App extends StatelessWidget
               transition: Transition.fade,
             ),
             GetPage(
-              name: PageRoutes.webEnterprisesConfigurations,
-              page: makeWebEnterprisesConfigurationsPage,
+              name: PageRoutes.webAllEnterprises,
+              page: makeWebAllEnterprisesPage,
               transition: Transition.fade,
             ),
             GetPage(

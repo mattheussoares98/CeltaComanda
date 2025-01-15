@@ -73,7 +73,7 @@ void main() {
     test("Should call load all enterprises", () async {
       await sut.loadEnterprises();
 
-      verify(() => loadAllEnterprises.loadAll()).called(1);
+      verify(() => loadAllEnterprises.load()).called(1);
     });
   });
 

@@ -24,7 +24,7 @@ class GetxWebAllEnterprisesPresenter extends GetxController
       mainError = null;
       enterprises = null;
 
-      final result = await loadAllEnterprises.loadAll();
+      final result = await loadAllEnterprises.load();
 
       enterprises = result;
     } catch (error) {

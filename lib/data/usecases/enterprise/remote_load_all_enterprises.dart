@@ -20,7 +20,7 @@ class RemoteLoadAllEnterprises implements LoadAllEnterprises {
   );
 
   @override
-  Future<List<EnterpriseEntity>?> loadAll() async {
+  Future<List<EnterpriseEntity>?> load() async {
     try {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,

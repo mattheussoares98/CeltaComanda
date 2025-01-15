@@ -21,6 +21,18 @@ class _WebEnterprisesPageState extends State<WebEnterprisesPage>
   StreamSubscription? mainErrorSubscription;
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        await Provider.of<WebEnterprisesPresenter>(context, listen: false)
+            .loadEnterprises();
+      }
+    });
+  }
+
+  @override
   dispose() {
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();

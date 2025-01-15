@@ -178,6 +178,7 @@ class EnUs implements Translation {
   String get emptyTable => 'The table is empty';
   String get enableSearchProducts => 'Enable search products';
   String get enterprise => 'Enterprise';
+  String get enterprises => 'Enterprises';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get environment => 'Environment';
   String get exit => 'Exit';

@@ -146,6 +146,7 @@ abstract class Translation {
   String get enableSearchProducts;
   String get enterpriseOrUrlNotFound;
   String get enterprise;
+  String get enterprises;
   String get environment;
   String get exit;
   String get expansibleGroup;

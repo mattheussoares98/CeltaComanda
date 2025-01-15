@@ -177,6 +177,7 @@ class PtBr implements Translation {
   String get emptyTable => 'A mesa está vazia';
   String get enableSearchProducts => 'Habilitar pesquisa de produtos';
   String get enterprise => 'Empresa';
+  String get enterprises => 'Empresas';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get environment => 'Ambiente';
   String get exit => 'Sair';

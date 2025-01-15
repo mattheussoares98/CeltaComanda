@@ -30,4 +30,9 @@ class LocalLoadimeiOrWindowsId implements LoadDeviceData {
       return "unrecognized";
     }
   }
+
+  @override
+  bool isAndroidPlatform() {
+    return Platform.isAndroid;
+  }
 }

@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
+import 'components/components.dart';
 
 class WebAllEnterprisesPage extends StatefulWidget {
   const WebAllEnterprisesPage({super.key});
@@ -46,28 +46,25 @@ class _WebAllEnterprisesPageState extends State<WebAllEnterprisesPage>
     return Scaffold(
       appBar: AppBar(
         title: Text(R.string.enterprises),
-      ),
-      body: StreamBuilder<List<EnterpriseEntity>?>(
-          stream: webAllEnterprisesPresenter.enterprisesStream,
-          builder: (context, snapshot) {
-            if (snapshot.data == null) {
-              return Center(
-                child: TextButton(
-                    onPressed: () async {
-                      await webAllEnterprisesPresenter.loadEnterprises();
-                    },
-                    child: Text(R.string.search)),
-              );
-            }
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final enterprise = snapshot.data![index];
-
-                return Text(enterprise.enterpriseName);
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              onPressed: () async {
+                //TODO create option to add new enterprise
               },
-            );
-          }),
+              icon: Icon(Icons.add),
+            ),
+          ),
+          IconButton(
+            onPressed: () async {
+              await webAllEnterprisesPresenter.loadEnterprises();
+            },
+            icon: Icon(Icons.refresh),
+          ),
+        ],
+      ),
+      body: Enterprises(),
     );
   }
 }

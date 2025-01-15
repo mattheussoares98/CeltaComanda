@@ -30,7 +30,9 @@ void main() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
   }
 
-  void mockSuccess() {}
+  void mockSuccess() {
+    loadAllEnterprises.mockLoadAll([EnterpriseBuilder.entity!]);
+  }
 
   setUp(() {
     initUseCases();
@@ -45,6 +47,12 @@ void main() {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
+      expectLater(
+          sut.enterprisesStream,
+          emitsInOrder([
+            null,
+            [EnterpriseBuilder.entity!]
+          ]));
 
       await sut.loadEnterprises();
     });
@@ -52,6 +60,7 @@ void main() {
     test("Should emit correct values on failure", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.notFound]));
+      expectLater(sut.enterprisesStream, emits(null));
 
       loadAllEnterprises.mockLoadAllError();
 

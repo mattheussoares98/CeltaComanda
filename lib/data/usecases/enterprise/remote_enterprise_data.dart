@@ -46,7 +46,7 @@ class RemoteLoadEnterpriseData
   }
 
   @override
-  Future<List<EnterpriseEntity>> loadAll() async {
+  Future<List<EnterpriseEntity>?> loadAll() async {
     try {
       final querySnapshot = await firebaseStorage.get(
         collection: FirebaseCollections.clients.name,

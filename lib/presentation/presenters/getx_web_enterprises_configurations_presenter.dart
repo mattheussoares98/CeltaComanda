@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/enterprise_entity.dart';
 import 'package:get/get.dart';
 
 import '../../domain/usecases/usecases.dart';
@@ -19,12 +20,20 @@ class GetxWebEnterprisesConfigurationsPresenter extends GetxController
     try {
       isLoading = true;
       mainError = null;
+      enterprises = null;
 
       final result = await loadAllEnterprises.loadAll();
+
+      enterprises = result;
     } catch (error) {
       mainError = UIError.notFound;
     } finally {
       isLoading = false;
     }
   }
+
+  final _enterprises = Rx<List<EnterpriseEntity>?>(null);
+  @override
+  Stream<List<EnterpriseEntity>?> get enterprisesStream => _enterprises.stream;
+  set enterprises(List<EnterpriseEntity>? value) => _enterprises.value = value;
 }

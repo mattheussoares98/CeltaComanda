@@ -94,7 +94,6 @@ void main() {
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
       updateMenu: null,
-      updateConcentratorEnterpriseData: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
       updateDevicesInformations: null,
@@ -246,7 +245,6 @@ void main() {
           useCovenant: null,
           enterpriseConcentradorParametersEntity: null,
           updateMenu: null,
-          updateConcentratorEnterpriseData: null,
           serviceChargePercentageOrValue: null,
           serviceChargeType: null,
           updateDevicesInformations: null,
@@ -390,8 +388,6 @@ void main() {
           urlCCS: newEnterprise.urlCCS,
           useCovenant: newEnterprise.useCovenant,
           updateMenu: newEnterprise.updateMenu,
-          updateConcentratorEnterpriseData:
-              newEnterprise.updateConcentratorEnterpriseData,
           serviceChargePercentageOrValue:
               newEnterprise.serviceChargePercentageOrValue,
           serviceChargeType: newEnterprise.serviceChargeType,
@@ -604,7 +600,6 @@ void main() {
             useCovenant: null,
             updateMenu: null,
             enterpriseConcentradorParametersEntity: null,
-            updateConcentratorEnterpriseData: null,
             serviceChargePercentageOrValue: null,
             serviceChargeType: null,
             updateDevicesInformations: null,
@@ -649,8 +644,6 @@ void main() {
             urlCCS: EnterpriseBuilder.entity!.urlCCS,
             useCovenant: EnterpriseBuilder.entity!.useCovenant,
             updateMenu: EnterpriseBuilder.entity!.updateMenu,
-            updateConcentratorEnterpriseData:
-                EnterpriseBuilder.entity!.updateConcentratorEnterpriseData,
             serviceChargePercentageOrValue:
                 EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
             serviceChargeType: EnterpriseBuilder.entity!.serviceChargeType,
@@ -686,7 +679,6 @@ void main() {
           useCovenant: null,
           enterpriseConcentradorParametersEntity: null,
           updateMenu: null,
-          updateConcentratorEnterpriseData: null,
           serviceChargePercentageOrValue: null,
           serviceChargeType: null,
           updateDevicesInformations: null,

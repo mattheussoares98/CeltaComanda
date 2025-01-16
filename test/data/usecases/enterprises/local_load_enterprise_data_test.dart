@@ -58,8 +58,6 @@ void main() {
           enterpriseConcentradorParametersEntity:
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
           updateMenu: enterpriseJsonData["updateMenu"],
-          updateConcentratorEnterpriseData:
-              enterpriseJsonData["updateConcentratorEnterpriseData"],
           serviceChargePercentageOrValue:
               enterpriseJsonData["serviceChargePercentageOrValue"],
           updateDevicesInformations:

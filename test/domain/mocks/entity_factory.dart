@@ -40,9 +40,6 @@ class EntityFactory {
       urlCCS: urlCCS == true ? null : atualEntity.urlCCS,
       useCovenant: useCovenant == true ? null : atualEntity.useCovenant,
       updateMenu: updateMenu == true ? null : atualEntity.updateMenu,
-      updateConcentratorEnterpriseData: updateConcentratorEnterpriseData == true
-          ? null
-          : atualEntity.updateConcentratorEnterpriseData,
       updateDevicesInformations: updateDevicesInformations == true
           ? null
           : atualEntity.updateDevicesInformations,
@@ -110,8 +107,6 @@ class EntityFactory {
           enterpriseConcentradorParametersEntity ??
               makeEnterpriseConcentradorParametersEntity(),
       updateMenu: updateMenu ?? faker.randomGenerator.integer(100),
-      updateConcentratorEnterpriseData: updateConcentratorEnterpriseData ??
-          faker.randomGenerator.integer(100),
       updateEnterprise: updateEnterprise ?? faker.randomGenerator.integer(100),
       updateDevicesInformations:
           updateDevicesInformations ?? faker.randomGenerator.integer(100),

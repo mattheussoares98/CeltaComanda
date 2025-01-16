@@ -11,7 +11,6 @@ class EnterpriseValidationModel {
   final String? urlCCS;
   final bool? useCovenant;
   final int? updateMenu;
-  final int? updateConcentratorEnterpriseData;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
@@ -34,7 +33,6 @@ class EnterpriseValidationModel {
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenu,
-    required this.updateConcentratorEnterpriseData,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
     required this.updateDevicesInformations,
@@ -69,8 +67,6 @@ class EnterpriseValidationModel {
       updateEnterprise: json["updateEnterprise"],
       useCovenant: json["useCovenant"],
       updateMenu: json["updateMenu"],
-      updateConcentratorEnterpriseData:
-          json["updateConcentratorEnterpriseData"],
       serviceChargePercentageOrValue:
           json["serviceChargePercentageOrValue"]?.toDouble(),
       serviceChargeType: json["serviceChargeType"],
@@ -102,8 +98,6 @@ class EnterpriseValidationModel {
         urlCCS: entity.urlCCS,
         useCovenant: entity.useCovenant,
         updateMenu: entity.updateMenu,
-        updateConcentratorEnterpriseData:
-            entity.updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
         serviceChargeType: entity.serviceChargeType,
         updateDevicesInformations: entity.updateDevicesInformations,
@@ -125,7 +119,6 @@ class EnterpriseValidationModel {
         persistApp: persistApp,
         useCovenant: useCovenant,
         updateMenu: updateMenu,
-        updateConcentratorEnterpriseData: updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
         serviceChargeType: serviceChargeType,
         updateDevicesInformations: updateDevicesInformations,
@@ -149,7 +142,6 @@ class EnterpriseValidationModel {
         'useCovenant': useCovenant,
         'updateMenu': updateMenu,
         'updateEnterprise': updateEnterprise,
-        'updateConcentratorEnterpriseData': updateConcentratorEnterpriseData,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
         'updateDevicesInformations': updateDevicesInformations,
         'serviceChargeType': serviceChargeType,

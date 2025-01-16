@@ -11,7 +11,6 @@ class EnterpriseEntity extends Equatable {
   final String? urlCCS;
   final bool? useCovenant;
   final int? updateMenu;
-  final int? updateConcentratorEnterpriseData;
   final int? updateDevicesInformations;
   final int? updateEnterprise;
   final EnterpriseConcentradorParametersEntity?
@@ -34,7 +33,6 @@ class EnterpriseEntity extends Equatable {
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
     required this.updateMenu,
-    required this.updateConcentratorEnterpriseData,
     required this.serviceChargePercentageOrValue,
     required this.serviceChargeType,
     required this.updateDevicesInformations,
@@ -57,7 +55,6 @@ class EnterpriseEntity extends Equatable {
         useCovenant,
         enterpriseConcentradorParametersEntity,
         updateMenu,
-        updateConcentratorEnterpriseData,
         serviceChargePercentageOrValue,
         serviceChargeType,
         updateDevicesInformations,

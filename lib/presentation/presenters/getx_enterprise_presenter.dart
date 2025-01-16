@@ -83,8 +83,6 @@ class GetxEnterprisePresenter extends GetxController
             useCovenant: firebaseData.useCovenant,
             enterpriseConcentradorParametersEntity: concentradorData,
             updateMenu: firebaseData.updateMenu,
-            updateConcentratorEnterpriseData:
-                firebaseData.updateConcentratorEnterpriseData,
             updateDevicesInformations: firebaseData.updateDevicesInformations,
             serviceChargePercentageOrValue:
                 firebaseData.serviceChargePercentageOrValue,
@@ -169,7 +167,6 @@ class GetxEnterprisePresenter extends GetxController
       useCovenant: null,
       enterpriseConcentradorParametersEntity: null,
       updateMenu: null,
-      updateConcentratorEnterpriseData: null,
       serviceChargePercentageOrValue: null,
       serviceChargeType: null,
       updateDevicesInformations: null,
@@ -231,8 +228,6 @@ class GetxEnterprisePresenter extends GetxController
         useCovenant: enterprise.useCovenant,
         enterpriseConcentradorParametersEntity: concentradorData,
         updateMenu: enterprise.updateMenu,
-        updateConcentratorEnterpriseData:
-            enterprise.updateConcentratorEnterpriseData,
         updateDevicesInformations: enterprise.updateDevicesInformations,
         serviceChargePercentageOrValue:
             enterprise.serviceChargePercentageOrValue,
@@ -266,7 +261,6 @@ class GetxEnterprisePresenter extends GetxController
         useCovenant: null,
         enterpriseConcentradorParametersEntity: null,
         updateMenu: null,
-        updateConcentratorEnterpriseData: null,
         serviceChargePercentageOrValue: null,
         serviceChargeType: null,
         updateDevicesInformations: null,

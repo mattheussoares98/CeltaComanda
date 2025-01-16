@@ -30,18 +30,18 @@ class _WebAddOrEditEnterprisePageState
   final daysPreloadImageFocusNode = FocusNode();
   final latestCompatibleVersionFocusNode = FocusNode();
   final serviceChargePercentageFocusNode = FocusNode();
-  bool zoomImage = false;
-  bool useCovenant = false;
+  bool? zoomImage = false;
+  bool? useCovenant = false;
 
   void changeZoom() {
     setState(() {
-      zoomImage = !zoomImage;
+      zoomImage = !(zoomImage ?? false);
     });
   }
 
   void changeUseCovenant() {
     setState(() {
-      useCovenant = !useCovenant;
+      useCovenant = !(useCovenant ?? false);
     });
   }
 
@@ -75,6 +75,10 @@ class _WebAddOrEditEnterprisePageState
         WebEnterprisesPresenter webEnterprisesPresenter =
             Provider.of(context, listen: false);
 
+        daysPreloadImageController.text = (webEnterprisesPresenter
+                    .selectedEnterprise?.waitDaysToPreloadImages ??
+                1)
+            .toString();
         if (webEnterprisesPresenter.selectedEnterprise != null) {
           setState(() {
             enterpriseNameController.text =
@@ -89,10 +93,6 @@ class _WebAddOrEditEnterprisePageState
             enterpriseIdController.text =
                 (webEnterprisesPresenter.selectedEnterprise!.enterpriseId ?? 0)
                     .toString();
-            daysPreloadImageController.text = (webEnterprisesPresenter
-                        .selectedEnterprise!.waitDaysToPreloadImages ??
-                    1)
-                .toString();
             latestCompatibleVersionController.text = webEnterprisesPresenter
                 .selectedEnterprise!.latestCompatibleVersion
                 .toString();
@@ -202,14 +202,14 @@ class _WebAddOrEditEnterprisePageState
                       children: [
                         Expanded(
                           child: ZoomImageSwitch(
-                            zoomImage: zoomImage,
+                            zoomImage: zoomImage ?? false,
                             changeZoom: changeZoom,
                           ),
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: UseCovenantSwitch(
-                            useCovenant: useCovenant,
+                            useCovenant: useCovenant ?? false,
                             changeUseCovenant: changeUseCovenant,
                           ),
                         ),
@@ -239,6 +239,7 @@ class _WebAddOrEditEnterprisePageState
                   serviceChargePercentageController,
               zoomImage: zoomImage,
               useCovenant: useCovenant,
+              formKey: _formKey,
             ),
           ],
         ),

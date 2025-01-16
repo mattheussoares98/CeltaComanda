@@ -30,7 +30,7 @@ class NavsUrlInput extends StatelessWidget {
           hintText: R.string.navsUrl,
           labelText: R.string.navsUrl,
           errorText: null,
-          suffixIcon: Icon(Icons.public),
+          suffixIcon: Icon(Icons.public, color: Theme.of(context).primaryColor),
           fontSize: 14,
         ),
         onFieldSubmitted: (_) {

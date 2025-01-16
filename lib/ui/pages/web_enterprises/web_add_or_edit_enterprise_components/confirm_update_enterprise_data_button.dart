@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
+import '../../pages.dart';
 
 class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final TextEditingController enterpriseNameController;
@@ -14,6 +16,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final TextEditingController serviceChargePercentageController;
   final bool? zoomImage;
   final bool? useCovenant;
+  final GlobalKey<FormState> formKey;
 
   const ConfirmUpdateEnterpriseDataButton({
     required this.enterpriseNameController,
@@ -26,13 +29,14 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.serviceChargePercentageController,
     required this.zoomImage,
     required this.useCovenant,
+    required this.formKey,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    // EnterprisePresenter enterprisePresenter =
-    //     Provider.of(context, listen: false);
+    WebEnterprisesPresenter webEnterprisesPresenter =
+        Provider.of(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.only(top: 15),
@@ -49,8 +53,24 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             onPress: () async {
-              //enterprisePresenter.updateEnterpriseData(EnterpriseEntity)
-              //TODO create function to update enterprise data
+              bool? isValid = formKey.currentState?.validate();
+
+              if (isValid != true) {
+                return;
+              }
+
+              await webEnterprisesPresenter.updateEnterprise(
+                navsUrl: navsUrlController.text,
+                concentratorUrl: concentratorUrlController.text,
+                ccsUrl: ccsUrlController.text,
+                enterpriseId: enterpriseIdController.text.toInt(),
+                daysPreloadImage: daysPreloadImageController.text.toInt(),
+                latestCompatibleVersion: latestCompatibleVersionController.text,
+                serviceChargePercentage:
+                    serviceChargePercentageController.text.toDouble(),
+                zoomImage: zoomImage,
+                useCovenant: useCovenant,
+              );
             },
           );
         },

@@ -31,7 +31,7 @@ class ConcentratorUrlInput extends StatelessWidget {
           labelText: R.string.concentratorUrl,
           errorText: null,
           fontSize: 14,
-          suffixIcon: Icon(Icons.public),
+          suffixIcon: Icon(Icons.public, color: Theme.of(context).primaryColor),
         ),
         onFieldSubmitted: (_) {
           ccsFocusNode.requestFocus();

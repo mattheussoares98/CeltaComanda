@@ -51,6 +51,8 @@ class EnterpriseIdInput extends StatelessWidget {
             return R.string.enterpriseId;
           } else if (int.tryParse(value) == null) {
             return R.string.msgInvalidNumber;
+          } else if (value.toInt() == 0) {
+            return R.string.msgInvalidNumber;
           }
           return null;
         },

@@ -43,6 +43,9 @@ class LatestCompatibleVersionInput extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return R.string.latestCompatibleVersion;
+          } else if (int.tryParse(value.replaceAll(RegExp(r'\.'), '')) ==
+              null) {
+            return R.string.msgInvalidField;
           }
           return null;
         },

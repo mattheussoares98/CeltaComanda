@@ -13,4 +13,15 @@ abstract class WebEnterprisesPresenter implements Listenable {
   Future<void> loadEnterprises();
   void goToAddOrEditEnterprise(EnterpriseEntity? enterprise);
   Future<void> updateDevicesData();
+  Future<void> updateEnterprise({
+    required String navsUrl,
+    required String concentratorUrl,
+    required String ccsUrl,
+    required int enterpriseId,
+    required int? daysPreloadImage,
+    required String? latestCompatibleVersion,
+    required double? serviceChargePercentage,
+    required bool? zoomImage,
+    required bool? useCovenant,
+  });
 }

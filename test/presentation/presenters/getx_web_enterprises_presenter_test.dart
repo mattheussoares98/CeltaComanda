@@ -51,7 +51,9 @@ void main() {
     mockSuccess();
   });
 
-  setUpAll(() {});
+  setUpAll(() {
+    registerFallbackValue(EntityFactory.makeEnterpriseData());
+  });
 
   group("Load all enterprises", () {
     test("Should emit correct values on success", () async {
@@ -147,6 +149,171 @@ void main() {
       );
 
       await sut.updateDevicesData();
+    });
+  });
+
+  group("Update enterprise parameters", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateEnterprise(
+        navsUrl: EnterpriseBuilder.entity!.url!,
+        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
+        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
+        serviceChargePercentage:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      updateEnterpriseParameters.mockUpdateError();
+
+      await sut.updateEnterprise(
+        navsUrl: EnterpriseBuilder.entity!.url!,
+        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
+        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
+        serviceChargePercentage:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      );
+    });
+    test("Should emit error if selected enterprise is null", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      await sut.updateEnterprise(
+        navsUrl: EnterpriseBuilder.entity!.url!,
+        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
+        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
+        serviceChargePercentage:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      );
+    });
+    test("Should update enterprise with correct values", () async {
+      final enterprise = EnterpriseBuilder.entity!;
+      sut.goToAddOrEditEnterprise(enterprise);
+
+      await sut.updateEnterprise(
+        navsUrl: enterprise.url!,
+        concentratorUrl: enterprise.concentradorUrl!,
+        ccsUrl: enterprise.urlCCS!,
+        enterpriseId: enterprise.enterpriseId!,
+        daysPreloadImage: enterprise.waitDaysToPreloadImages,
+        latestCompatibleVersion: enterprise.latestCompatibleVersion,
+        serviceChargePercentage: enterprise.serviceChargePercentageOrValue,
+        zoomImage: enterprise.zoomImage,
+        useCovenant: enterprise.useCovenant,
+      );
+
+      var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
+        updateMenu: enterprise.updateMenu! + 1,
+        serviceChargeType: 1,
+        updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
+        updateEnterprise: enterprise.updateEnterprise! + 1,
+        serviceChargePercentageOrValue:
+            enterprise.serviceChargePercentageOrValue,
+        enterpriseName: enterprise.enterpriseName,
+        url: enterprise.url,
+        enterpriseId: enterprise.enterpriseId,
+        concentradorUrl: enterprise.concentradorUrl,
+        persistApp: false,
+        urlCCS: enterprise.urlCCS,
+        useCovenant: enterprise.useCovenant,
+        enterpriseConcentradorParametersEntity:
+            enterprise.enterpriseConcentradorParametersEntity,
+        zoomImage: enterprise.zoomImage,
+        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
+        updatePendingDevices: enterprise.updatePendingDevices,
+        waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
+        latestCompatibleVersion: enterprise.latestCompatibleVersion,
+      );
+      enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
+        atualEntity: enterpriseWithCorrectValues,
+        enterpriseConcentradorParametersEntity: true,
+      );
+
+      verify(() =>
+              updateEnterpriseParameters.update(enterpriseWithCorrectValues))
+          .called(1);
+    });
+    test("Should update enterprise with correct values when pass null values",
+        () async {
+      final enterprise = EnterpriseBuilder.entity!;
+      sut.goToAddOrEditEnterprise(enterprise);
+
+      await sut.updateEnterprise(
+        navsUrl: enterprise.url!,
+        concentratorUrl: enterprise.concentradorUrl!,
+        ccsUrl: enterprise.urlCCS!,
+        enterpriseId: enterprise.enterpriseId!,
+        daysPreloadImage: null,
+        latestCompatibleVersion: null,
+        serviceChargePercentage: null,
+        zoomImage: null,
+        useCovenant: null,
+      );
+
+      var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
+        updateMenu: enterprise.updateMenu! + 1,
+        serviceChargeType: null,
+        updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
+        updateEnterprise: enterprise.updateEnterprise! + 1,
+        persistApp: false,
+        serviceChargePercentageOrValue: null,
+        waitDaysToPreloadImages: null,
+        latestCompatibleVersion: null,
+        zoomImage: null,
+        useCovenant: null,
+        enterpriseName: enterprise.enterpriseName,
+        url: enterprise.url,
+        enterpriseId: enterprise.enterpriseId,
+        concentradorUrl: enterprise.concentradorUrl,
+        urlCCS: enterprise.urlCCS,
+        enterpriseConcentradorParametersEntity:
+            enterprise.enterpriseConcentradorParametersEntity,
+        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
+        updatePendingDevices: enterprise.updatePendingDevices,
+      );
+      enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
+        atualEntity: enterpriseWithCorrectValues,
+        enterpriseConcentradorParametersEntity: true,
+        waitDaysToPreloadImages: true,
+        latestCompatibleVersion: true,
+        serviceChargePercentageOrValue: true,
+        zoomImage: true,
+        useCovenant: true,
+        serviceChargeType: true,
+      );
+
+      verify(() =>
+              updateEnterpriseParameters.update(enterpriseWithCorrectValues))
+          .called(1);
     });
   });
 }

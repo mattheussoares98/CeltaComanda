@@ -53,6 +53,8 @@ class ServiceChargePercentageInput extends StatelessWidget {
             return R.string.msgInvalidNumber;
           } else if (value.toInt() > 99) {
             return R.string.msgInvalidNumber;
+          } else if (value.toInt() == 0) {
+            return R.string.msgInvalidNumber;
           }
           return null;
         },

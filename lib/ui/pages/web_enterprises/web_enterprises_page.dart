@@ -63,7 +63,7 @@ class _WebEnterprisesPageState extends State<WebEnterprisesPage>
             padding: const EdgeInsets.only(right: 20),
             child: IconButton(
               onPressed: () async {
-                //TODO create option to add new enterprise
+                webEnterprisesPresenter.goToAddOrEditEnterprise(null);
               },
               icon: Icon(Icons.add),
             ),

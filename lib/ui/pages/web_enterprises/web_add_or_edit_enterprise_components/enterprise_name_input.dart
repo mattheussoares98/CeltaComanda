@@ -40,7 +40,7 @@ class EnterpriseNameInput extends StatelessWidget {
               labelText: R.string.enterprise,
               errorText: null,
               fontSize: 14,
-              suffixIcon: Icon(Icons.business),
+              suffixIcon: Icon(Icons.business, color: Theme.of(context).primaryColor),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {

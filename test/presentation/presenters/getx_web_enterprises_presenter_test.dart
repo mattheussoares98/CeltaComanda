@@ -18,11 +18,13 @@ void main() {
   late LoadAllEnterprisesSpy loadAllEnterprises;
   late NavigateToSpy navigateTo;
   late UpdateDeviceInformationsSpy updateDeviceInformations;
+  late UpdateEnterpriseParametersSpy updateEnterpriseParameters;
 
   void initUseCases() {
     loadAllEnterprises = LoadAllEnterprisesSpy();
     navigateTo = NavigateToSpy();
     updateDeviceInformations = UpdateDeviceInformationsSpy();
+    updateEnterpriseParameters = UpdateEnterpriseParametersSpy();
   }
 
   void initPresenters() {
@@ -30,6 +32,7 @@ void main() {
       loadAllEnterprises: loadAllEnterprises,
       navigateTo: navigateTo,
       updateDeviceInformations: updateDeviceInformations,
+      updateEnterpriseParameters: updateEnterpriseParameters,
     );
   }
 

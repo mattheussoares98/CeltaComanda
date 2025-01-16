@@ -12,11 +12,13 @@ class GetxWebEnterprisesPresenter extends GetxController
   final LoadAllEnterprises loadAllEnterprises;
   final NavigateTo navigateTo;
   final UpdateDeviceInformations updateDeviceInformations;
+  final UpdateEnterpriseParameters updateEnterpriseParameters;
 
   GetxWebEnterprisesPresenter({
     required this.loadAllEnterprises,
     required this.navigateTo,
     required this.updateDeviceInformations,
+    required this.updateEnterpriseParameters,
   });
 
   @override

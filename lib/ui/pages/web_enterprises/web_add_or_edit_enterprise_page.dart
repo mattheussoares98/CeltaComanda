@@ -16,8 +16,8 @@ class _WebAddOrEditEnterprisePageState
     extends State<WebAddOrEditEnterprisePage> {
   final enterpriseNameController = TextEditingController();
   final navsUrlController = TextEditingController();
-  final concentratorController = TextEditingController();
-  final ccsController = TextEditingController();
+  final concentratorUrlController = TextEditingController();
+  final ccsUrlController = TextEditingController();
   final enterpriseIdController = TextEditingController();
   final daysPreloadImageController = TextEditingController();
   final latestCompatibleVersionController = TextEditingController();
@@ -51,8 +51,8 @@ class _WebAddOrEditEnterprisePageState
 
     enterpriseNameController.dispose();
     navsUrlController.dispose();
-    concentratorController.dispose();
-    ccsController.dispose();
+    concentratorUrlController.dispose();
+    ccsUrlController.dispose();
     enterpriseIdController.dispose();
     daysPreloadImageController.dispose();
     latestCompatibleVersionController.dispose();
@@ -81,10 +81,10 @@ class _WebAddOrEditEnterprisePageState
                 webEnterprisesPresenter.selectedEnterprise!.enterpriseName;
             navsUrlController.text =
                 webEnterprisesPresenter.selectedEnterprise!.url ?? "";
-            concentratorController.text =
+            concentratorUrlController.text =
                 webEnterprisesPresenter.selectedEnterprise!.concentradorUrl ??
                     "";
-            ccsController.text =
+            ccsUrlController.text =
                 webEnterprisesPresenter.selectedEnterprise!.urlCCS ?? "";
             enterpriseIdController.text =
                 (webEnterprisesPresenter.selectedEnterprise!.enterpriseId ?? 0)
@@ -143,12 +143,12 @@ class _WebAddOrEditEnterprisePageState
                       concentratorFocusNode: concentratorFocusNode,
                     ),
                     ConcentratorUrlInput(
-                      concentratorController: concentratorController,
+                      concentratorController: concentratorUrlController,
                       concentratorFocusNode: concentratorFocusNode,
                       ccsFocusNode: ccsFocusNode,
                     ),
                     CcsUrlInput(
-                      ccsController: ccsController,
+                      ccsController: ccsUrlController,
                       ccsFocusNode: ccsFocusNode,
                       enterpriseIdFocusNode: enterpriseIdFocusNode,
                     ),
@@ -226,7 +226,20 @@ class _WebAddOrEditEnterprisePageState
                 ),
               ),
             ),
-            ConfirmUpdateEnterpriseDataButton(),
+            ConfirmUpdateEnterpriseDataButton(
+              enterpriseNameController: enterpriseNameController,
+              navsUrlController: navsUrlController,
+              concentratorUrlController: concentratorUrlController,
+              ccsUrlController: ccsUrlController,
+              enterpriseIdController: enterpriseIdController,
+              daysPreloadImageController: daysPreloadImageController,
+              latestCompatibleVersionController:
+                  latestCompatibleVersionController,
+              serviceChargePercentageController:
+                  serviceChargePercentageController,
+              zoomImage: zoomImage,
+              useCovenant: useCovenant,
+            ),
           ],
         ),
       ),

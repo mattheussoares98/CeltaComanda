@@ -4,7 +4,30 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 
 class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
-  const ConfirmUpdateEnterpriseDataButton({super.key});
+  final TextEditingController enterpriseNameController;
+  final TextEditingController navsUrlController;
+  final TextEditingController concentratorUrlController;
+  final TextEditingController ccsUrlController;
+  final TextEditingController enterpriseIdController;
+  final TextEditingController daysPreloadImageController;
+  final TextEditingController latestCompatibleVersionController;
+  final TextEditingController serviceChargePercentageController;
+  final bool? zoomImage;
+  final bool? useCovenant;
+
+  const ConfirmUpdateEnterpriseDataButton({
+    required this.enterpriseNameController,
+    required this.navsUrlController,
+    required this.concentratorUrlController,
+    required this.ccsUrlController,
+    required this.enterpriseIdController,
+    required this.daysPreloadImageController,
+    required this.latestCompatibleVersionController,
+    required this.serviceChargePercentageController,
+    required this.zoomImage,
+    required this.useCovenant,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

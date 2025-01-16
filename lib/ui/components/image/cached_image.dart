@@ -60,7 +60,7 @@ class CachedImageState extends State<CachedImage> {
       final maxSizeInBytes = 1 * 1024 * 1024;
       final client = http.Client();
       final request = http.Request('GET', Uri.parse(url));
-      final response = await client.send(request);
+      final response = await client.send(request).timeout(Duration(seconds: 2));
       StreamSubscription<List<int>>? subscription;
       int totalBytes = 0;
       final completer = Completer<void>();

@@ -117,4 +117,20 @@ class FirebaseAdapter implements FirebaseStorage {
       throw Exception();
     }
   }
+
+  @override
+  Future<void> updateDeviceInformations(String enterpriseName) async {
+    try {
+      var docRef = firestore.collection('clients').doc(enterpriseName);
+
+      await docRef.set(
+        {
+          "updateDevicesInformations": FieldValue.increment(1),
+        },
+        SetOptions(merge: true),
+      );
+    } catch (e) {
+      throw Exception();
+    }
+  }
 }

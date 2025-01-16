@@ -158,6 +158,7 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.updateEnterprise(
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         navsUrl: EnterpriseBuilder.entity!.url!,
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
@@ -181,6 +182,7 @@ void main() {
       updateEnterpriseParameters.mockUpdateError();
 
       await sut.updateEnterprise(
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         navsUrl: EnterpriseBuilder.entity!.url!,
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
@@ -194,32 +196,13 @@ void main() {
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
       );
     });
-    test("Should emit error if selected enterprise is null", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
 
-      await sut.updateEnterprise(
-        navsUrl: EnterpriseBuilder.entity!.url!,
-        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
-        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
-        serviceChargePercentage:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-      );
-    });
     test("Should update enterprise with correct values", () async {
       final enterprise = EnterpriseBuilder.entity!;
       sut.goToAddOrEditEnterprise(enterprise);
 
       await sut.updateEnterprise(
+        enterpriseName: enterprise.enterpriseName,
         navsUrl: enterprise.url!,
         concentratorUrl: enterprise.concentradorUrl!,
         ccsUrl: enterprise.urlCCS!,
@@ -268,6 +251,7 @@ void main() {
       sut.goToAddOrEditEnterprise(enterprise);
 
       await sut.updateEnterprise(
+        enterpriseName: enterprise.enterpriseName,
         navsUrl: enterprise.url!,
         concentratorUrl: enterprise.concentradorUrl!,
         ccsUrl: enterprise.urlCCS!,

@@ -60,14 +60,19 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
               }
 
               await webEnterprisesPresenter.updateEnterprise(
+                enterpriseName: enterpriseNameController.text,
                 navsUrl: navsUrlController.text,
                 concentratorUrl: concentratorUrlController.text,
                 ccsUrl: ccsUrlController.text,
                 enterpriseId: enterpriseIdController.text.toInt(),
-                daysPreloadImage: daysPreloadImageController.text.toInt(),
+                daysPreloadImage: daysPreloadImageController.text.isEmpty
+                    ? null
+                    : daysPreloadImageController.text.toInt(),
                 latestCompatibleVersion: latestCompatibleVersionController.text,
                 serviceChargePercentage:
-                    serviceChargePercentageController.text.toDouble(),
+                    serviceChargePercentageController.text.isEmpty
+                        ? null
+                        : serviceChargePercentageController.text.toDouble(),
                 zoomImage: zoomImage,
                 useCovenant: useCovenant,
               );

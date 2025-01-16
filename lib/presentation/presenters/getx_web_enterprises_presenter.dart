@@ -89,17 +89,14 @@ class GetxWebEnterprisesPresenter extends GetxController
     required double? serviceChargePercentage,
     required bool? zoomImage,
     required bool? useCovenant,
+    required String enterpriseName,
   }) async {
     try {
       isLoading = true;
       mainError = null;
 
-      if (_selectedEnterprise == null) {
-        throw Exception();
-      }
-
       final enterprise = EnterpriseEntity(
-        enterpriseName: _selectedEnterprise!.enterpriseName
+        enterpriseName: (_selectedEnterprise?.enterpriseName ?? enterpriseName)
             .toLowerCase()
             .removeWhiteSpaces(),
         url: navsUrl.toLowerCase().removeWhiteSpaces(),
@@ -109,16 +106,19 @@ class GetxWebEnterprisesPresenter extends GetxController
         urlCCS: ccsUrl.toLowerCase().removeWhiteSpaces(),
         useCovenant: useCovenant,
         enterpriseConcentradorParametersEntity: null,
-        updateMenu: (_selectedEnterprise!.updateMenu ?? 0) + 1,
+        updateMenu: (_selectedEnterprise?.updateMenu ?? 0) + 1,
         serviceChargePercentageOrValue: serviceChargePercentage,
         serviceChargeType: serviceChargePercentage == null ? null : 1,
         updateDevicesInformations:
-            (_selectedEnterprise!.updateDevicesInformations ?? 0) + 1,
+            _selectedEnterprise?.updateDevicesInformations == null
+                ? null
+                : (_selectedEnterprise!.updateDevicesInformations! +
+                    1), //TODO clean devices before insert new devices
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
         waitDaysToPreloadImages: daysPreloadImage,
         zoomImage: zoomImage,
-        pendingDevicesToUpdate: _selectedEnterprise!.pendingDevicesToUpdate,
-        updatePendingDevices: _selectedEnterprise!.updatePendingDevices,
+        pendingDevicesToUpdate: _selectedEnterprise?.pendingDevicesToUpdate,
+        updatePendingDevices: _selectedEnterprise?.updatePendingDevices,
         latestCompatibleVersion: latestCompatibleVersion,
       );
 

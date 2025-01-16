@@ -42,7 +42,7 @@ class LatestCompatibleVersionInput extends StatelessWidget {
         keyboardType: TextInputType.text,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return R.string.latestCompatibleVersion;
+            return null;
           } else if (int.tryParse(value.replaceAll(RegExp(r'\.'), '')) ==
               null) {
             return R.string.msgInvalidField;

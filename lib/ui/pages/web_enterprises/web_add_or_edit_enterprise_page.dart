@@ -82,29 +82,33 @@ class _WebAddOrEditEnterprisePageState
         if (webEnterprisesPresenter.selectedEnterprise != null) {
           setState(() {
             enterpriseNameController.text =
-                webEnterprisesPresenter.selectedEnterprise!.enterpriseName;
+                webEnterprisesPresenter.selectedEnterprise?.enterpriseName ??
+                    "ERROR";
             navsUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise!.url ?? "";
+                webEnterprisesPresenter.selectedEnterprise?.url ?? "";
             concentratorUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise!.concentradorUrl ??
+                webEnterprisesPresenter.selectedEnterprise?.concentradorUrl ??
                     "";
             ccsUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise!.urlCCS ?? "";
+                webEnterprisesPresenter.selectedEnterprise?.urlCCS ?? "";
             enterpriseIdController.text =
-                (webEnterprisesPresenter.selectedEnterprise!.enterpriseId ?? 0)
+                (webEnterprisesPresenter.selectedEnterprise?.enterpriseId ?? 0)
                     .toString();
             latestCompatibleVersionController.text = webEnterprisesPresenter
-                .selectedEnterprise!.latestCompatibleVersion
-                .toString();
-            serviceChargePercentageController.text = (webEnterprisesPresenter
-                        .selectedEnterprise!.serviceChargePercentageOrValue ??
-                    0)
-                .toInt()
-                .toString();
+                    .selectedEnterprise?.latestCompatibleVersion ??
+                "".toString();
+            serviceChargePercentageController.text = webEnterprisesPresenter
+                        .selectedEnterprise?.serviceChargePercentageOrValue ==
+                    null
+                ? ""
+                : webEnterprisesPresenter
+                    .selectedEnterprise!.serviceChargePercentageOrValue!
+                    .toInt()
+                    .toString();
             zoomImage =
-                webEnterprisesPresenter.selectedEnterprise!.zoomImage == true;
+                webEnterprisesPresenter.selectedEnterprise?.zoomImage == true;
             useCovenant =
-                webEnterprisesPresenter.selectedEnterprise!.useCovenant == true;
+                webEnterprisesPresenter.selectedEnterprise?.useCovenant == true;
           });
         }
       }

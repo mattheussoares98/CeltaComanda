@@ -23,5 +23,6 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required double? serviceChargePercentage,
     required bool? zoomImage,
     required bool? useCovenant,
+    required String enterpriseName,
   });
 }

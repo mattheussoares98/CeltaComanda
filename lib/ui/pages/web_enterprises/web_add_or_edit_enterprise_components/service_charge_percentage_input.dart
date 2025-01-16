@@ -48,7 +48,7 @@ class ServiceChargePercentageInput extends StatelessWidget {
         keyboardType: TextInputType.numberWithOptions(decimal: false),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return R.string.serviceChargePercentage;
+            return null;
           } else if (int.tryParse(value) == null) {
             return R.string.msgInvalidNumber;
           } else if (value.toInt() > 99) {

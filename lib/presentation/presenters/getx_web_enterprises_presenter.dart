@@ -112,8 +112,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         updateDevicesInformations:
             _selectedEnterprise?.updateDevicesInformations == null
                 ? null
-                : (_selectedEnterprise!.updateDevicesInformations! +
-                    1), //TODO clean devices before insert new devices
+                : (_selectedEnterprise!.updateDevicesInformations! + 1),
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
         waitDaysToPreloadImages: daysPreloadImage,
         zoomImage: zoomImage,

@@ -122,6 +122,8 @@ class FirebaseAdapter implements FirebaseStorage {
   Future<void> updateDeviceInformations(String enterpriseName) async {
     try {
       var docRef = firestore.collection('clients').doc(enterpriseName);
+      var devicesRef = docRef.collection("devices").doc("loadedDevices");
+      await devicesRef.delete();
 
       await docRef.set(
         {

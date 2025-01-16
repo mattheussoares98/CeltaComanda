@@ -67,9 +67,6 @@ class EntityFactory {
       waitDaysToPreloadImages: waitDaysToPreloadImages == true
           ? null
           : atualEntity.waitDaysToPreloadImages,
-      secondsPreloadingImages: secondsPreloadingImages == true
-          ? null
-          : atualEntity.secondsPreloadingImages,
       latestCompatibleVersion: latestCompatibleVersion == true
           ? null
           : atualEntity.latestCompatibleVersion,
@@ -132,8 +129,6 @@ class EntityFactory {
           updatePendingDevices ?? faker.randomGenerator.integer(100),
       waitDaysToPreloadImages:
           waitDaysToPreloadImages ?? faker.randomGenerator.integer(100),
-      secondsPreloadingImages:
-          secondsPreloadingImages ?? faker.randomGenerator.integer(100),
       latestCompatibleVersion:
           latestCompatibleVersion ?? faker.randomGenerator.decimal().toString(),
     );

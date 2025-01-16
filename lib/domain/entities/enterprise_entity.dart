@@ -22,7 +22,6 @@ class EnterpriseEntity extends Equatable {
   final List<String>? pendingDevicesToUpdate;
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
-  final int? secondsPreloadingImages;
   final String? latestCompatibleVersion;
 
   const EnterpriseEntity({
@@ -44,7 +43,6 @@ class EnterpriseEntity extends Equatable {
     required this.pendingDevicesToUpdate,
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
-    required this.secondsPreloadingImages,
     required this.latestCompatibleVersion,
   });
 
@@ -68,7 +66,6 @@ class EnterpriseEntity extends Equatable {
         pendingDevicesToUpdate,
         updatePendingDevices,
         waitDaysToPreloadImages,
-        secondsPreloadingImages,
         latestCompatibleVersion,
       ];
 }

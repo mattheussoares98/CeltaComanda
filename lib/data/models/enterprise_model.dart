@@ -22,7 +22,6 @@ class EnterpriseValidationModel {
   final List<String>? pendingDevicesToUpdate;
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
-  final int? secondsPreloadingImages;
   final String? latestCompatibleVersion;
 
   EnterpriseValidationModel({
@@ -44,7 +43,6 @@ class EnterpriseValidationModel {
     required this.pendingDevicesToUpdate,
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
-    required this.secondsPreloadingImages,
     required this.latestCompatibleVersion,
   });
 
@@ -89,7 +87,6 @@ class EnterpriseValidationModel {
                           json["enterpriseConcentradorParametersEntity"])
                       .toEntity()),
       waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
-      secondsPreloadingImages: json["secondsPreloadingImages"],
       latestCompatibleVersion: json["latestCompatibleVersion"],
     );
   }
@@ -116,7 +113,6 @@ class EnterpriseValidationModel {
         pendingDevicesToUpdate: entity.pendingDevicesToUpdate,
         updatePendingDevices: entity.updatePendingDevices,
         waitDaysToPreloadImages: entity.waitDaysToPreloadImages,
-        secondsPreloadingImages: entity.secondsPreloadingImages,
         latestCompatibleVersion: entity.latestCompatibleVersion,
       );
 
@@ -140,7 +136,6 @@ class EnterpriseValidationModel {
         pendingDevicesToUpdate: pendingDevicesToUpdate,
         updatePendingDevices: updatePendingDevices,
         waitDaysToPreloadImages: waitDaysToPreloadImages,
-        secondsPreloadingImages: secondsPreloadingImages,
         latestCompatibleVersion: latestCompatibleVersion,
       );
 
@@ -168,7 +163,6 @@ class EnterpriseValidationModel {
         'pendingDevicesToUpdate': pendingDevicesToUpdate,
         'updatePendingDevices': updatePendingDevices,
         'waitDaysToPreloadImages': waitDaysToPreloadImages,
-        'secondsPreloadingImages': secondsPreloadingImages,
         'latestCompatibleVersion': latestCompatibleVersion,
       };
 }

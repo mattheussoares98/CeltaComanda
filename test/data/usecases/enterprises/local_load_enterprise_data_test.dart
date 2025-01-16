@@ -71,8 +71,6 @@ void main() {
           updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
           waitDaysToPreloadImages:
               enterpriseJsonData["waitDaysToPreloadImages"],
-          secondsPreloadingImages:
-              enterpriseJsonData["secondsPreloadingImages"],
           latestCompatibleVersion:
               enterpriseJsonData["latestCompatibleVersion"],
         ),

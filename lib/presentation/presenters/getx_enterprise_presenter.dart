@@ -94,7 +94,6 @@ class GetxEnterprisePresenter extends GetxController
             pendingDevicesToUpdate: firebaseData.pendingDevicesToUpdate,
             updatePendingDevices: firebaseData.updatePendingDevices,
             waitDaysToPreloadImages: firebaseData.waitDaysToPreloadImages,
-            secondsPreloadingImages: firebaseData.secondsPreloadingImages,
             latestCompatibleVersion: firebaseData.latestCompatibleVersion,
           );
 
@@ -179,7 +178,6 @@ class GetxEnterprisePresenter extends GetxController
       pendingDevicesToUpdate: null,
       updatePendingDevices: null,
       waitDaysToPreloadImages: null,
-      secondsPreloadingImages: null,
       latestCompatibleVersion: null,
     );
 
@@ -244,7 +242,6 @@ class GetxEnterprisePresenter extends GetxController
         pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
         updatePendingDevices: enterprise.updatePendingDevices,
         waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
-        secondsPreloadingImages: enterprise.secondsPreloadingImages,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
       );
 
@@ -278,7 +275,6 @@ class GetxEnterprisePresenter extends GetxController
         pendingDevicesToUpdate: null,
         updatePendingDevices: null,
         waitDaysToPreloadImages: null,
-        secondsPreloadingImages: null,
         latestCompatibleVersion: null,
       );
 

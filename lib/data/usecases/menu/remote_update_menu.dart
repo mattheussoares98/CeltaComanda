@@ -9,9 +9,9 @@ class RemoteUpdateMenu implements UpdateMenu {
   });
 
   @override
-  Future<void> update() async {
+  Future<void> update(String enterpriseName) async {
     try {
-      await firebaseAdapter.updateMenu();
+      await firebaseAdapter.updateMenu(enterpriseName);
     } catch (e) {
       throw Exception();
     }

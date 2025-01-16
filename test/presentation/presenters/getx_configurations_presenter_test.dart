@@ -323,7 +323,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.loadMenuAgain();
+      await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -332,33 +332,36 @@ void main() {
 
       updateMenu.mockUpdateError();
 
-      await sut.loadMenuAgain();
+      await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
     });
     test("Should call updateMenu.update", () async {
-      await sut.loadMenuAgain();
+      await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
-      verify(() => updateMenu.update()).called(1);
+      verify(() => updateMenu.update(EnterpriseBuilder.entity!.enterpriseName))
+          .called(1);
     });
     test("Should return true on success", () async {
-      final value = await sut.loadMenuAgain();
+      final value = await sut
+          .loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
       expect(value, true);
     });
     test("Should return false on error", () async {
       updateMenu.mockUpdateError();
 
-      final value = await sut.loadMenuAgain();
+      final value = await sut
+          .loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
       expect(value, false);
     });
 
     test("Should call addPendingDeviceToUpdate.add", () async {
-      await sut.loadMenuAgain();
+      await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
       verify(() => addPendingDeviceToUpdate.add(identifier)).called(1);
     });
     test("Should call load pending device", () async {
-      await sut.loadMenuAgain();
+      await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
       verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });

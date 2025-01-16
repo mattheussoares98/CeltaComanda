@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../main/builders/builders.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -22,7 +23,8 @@ class UpdateMenuButton extends StatelessWidget {
               titleMessage: R.string.updateMenu,
               content: Text(R.string.msgWantUpdateMenuInAllDevices),
               onPress: () async {
-                final updated = await configurationsPresenter.loadMenuAgain();
+                final updated = await configurationsPresenter.loadMenuAgain(
+                    EnterpriseBuilder.entity?.enterpriseName ?? "");
 
                 if (updated) {
                   snackBarMessage(

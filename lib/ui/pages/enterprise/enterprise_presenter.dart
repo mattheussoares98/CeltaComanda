@@ -22,7 +22,7 @@ abstract class EnterprisePresenter implements Listenable {
     required HomePresenter homePresenter,
   });
 
-  Future<void> updateConcentratorEnterpriseParameters();//TODO pass the enterprise name to update parameters
+  Future<void> updateConcentratorEnterpriseParameters();
   Future<void> updateEnterpriseWithLocalData();
 
   Future<void> clearEnterpriseData();

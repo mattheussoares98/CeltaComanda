@@ -31,7 +31,7 @@ abstract class ConfigurationsPresenter implements Listenable {
   Future<void> goToParametersPage();
   void goToSaleMovementsPage();
 
-  Future<bool> loadMenuAgain();
+  Future<bool> loadMenuAgain(String enterpriseName);
 
   Future<bool> updateCommandData({
     required int newFixedCommandNumber,

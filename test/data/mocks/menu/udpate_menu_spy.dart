@@ -6,10 +6,12 @@ import 'package:mocktail/mocktail.dart';
 
 class UpdateMenuSpy extends Mock implements UpdateMenu {
   UpdateMenuSpy() {
-    when(() => this.update()).thenAnswer((any) async => any);
+    _updateCall().thenAnswer((any) async => any);
   }
 
   void mockUpdateError() {
-    when(() => this.update()).thenThrow(DomainError.unexpected);
+    _updateCall().thenThrow(DomainError.unexpected);
   }
+
+  When _updateCall() => when(() => this.update(any()));
 }

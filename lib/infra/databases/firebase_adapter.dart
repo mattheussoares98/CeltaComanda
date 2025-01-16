@@ -69,10 +69,8 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> updateMenu() async {
-    var docRef = firestore
-        .collection('clients')
-        .doc(EnterpriseBuilder.entity!.enterpriseName);
+  Future<void> updateMenu(String enterpriseName) async {
+    var docRef = firestore.collection('clients').doc(enterpriseName);
 
     await docRef.set(
       {

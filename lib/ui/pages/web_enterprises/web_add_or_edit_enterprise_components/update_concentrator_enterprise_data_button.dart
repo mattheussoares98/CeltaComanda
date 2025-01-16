@@ -24,7 +24,7 @@ class UpdateConcentratorEnterpriseDataButton extends StatelessWidget {
                 Text(R.string.msgWantUpdateConcentratorEnterpriseParameters),
             onPress: () async {
               await enterprisePresenter
-                  .updateConcentratorEnterpriseParameters(); //TODO pass the enterprise name to update menu
+                  .updateConcentratorEnterpriseParameters();
             },
           );
         },

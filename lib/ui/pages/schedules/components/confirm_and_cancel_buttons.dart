@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -146,7 +147,8 @@ class ConfirmAndCancelButtons extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               onPress: () async {
-                await configurationsPresenter.loadMenuAgain();
+                await configurationsPresenter.loadMenuAgain(
+                    EnterpriseBuilder.entity?.enterpriseName ?? "");
               });
         }
       },

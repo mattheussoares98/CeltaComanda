@@ -1,3 +1,3 @@
 abstract class UpdateMenu {
-  Future<void> update();
+  Future<void> update(String enterpriseName);
 }

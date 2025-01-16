@@ -12,7 +12,7 @@ abstract class FirebaseStorage {
 
   Future<void> addDeviceInfo(DeviceInfoEntity entity);
 
-  Future<void> updateMenu(); //TODO pass the enterprise name as parameter
+  Future<void> updateMenu(String enterpriseName);
 
   Future<void> addPendingDeviceToUpdate(String imeiOrWindowsId);
 

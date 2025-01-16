@@ -1242,29 +1242,6 @@ void main() {
       });
     });
 
-    group("Update concentrator enterprise parameters", () {
-      test(
-          "Should call updateConcentratorEnterpriseParameters when value is different",
-          () async {
-        enterpriseJson["updateConcentratorEnterpriseData"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() =>
-                enterprisePresenter.updateConcentratorEnterpriseParameters())
-            .called(1);
-      });
-    });
-
     group("Update devices informations", () {
       test("Should call add device info on updateDevicesInformations changes",
           () async {
@@ -1365,6 +1342,26 @@ void main() {
           EnterpriseBuilder.entity,
           EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
         );
+      });
+      test(
+          "Should update concentrador parameters data when updateEnterprise is different",
+          () async {
+        enterpriseJson["updateEnterprise"] =
+            faker.randomGenerator.integer(1000, min: 500);
+
+        await sut.doOnRemoteEnterpriseChanges(
+          data: enterpriseJson,
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() =>
+                enterprisePresenter.updateConcentratorEnterpriseParameters())
+            .called(1);
       });
       test(
           "Should update locally enterprise data when updateEnterprise is different",

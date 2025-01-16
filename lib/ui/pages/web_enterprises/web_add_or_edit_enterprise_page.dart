@@ -76,14 +76,36 @@ class _WebAddOrEditEnterprisePageState
             Provider.of(context, listen: false);
 
         if (webEnterprisesPresenter.selectedEnterprise != null) {
-          enterpriseNameController.text =
-              webEnterprisesPresenter.selectedEnterprise!.enterpriseName;
-          navsUrlController.text =
-              webEnterprisesPresenter.selectedEnterprise!.url ?? "";
-          concentratorController.text =
-              webEnterprisesPresenter.selectedEnterprise!.concentradorUrl ?? "";
-          ccsController.text =
-              webEnterprisesPresenter.selectedEnterprise!.urlCCS ?? "";
+          setState(() {
+            enterpriseNameController.text =
+                webEnterprisesPresenter.selectedEnterprise!.enterpriseName;
+            navsUrlController.text =
+                webEnterprisesPresenter.selectedEnterprise!.url ?? "";
+            concentratorController.text =
+                webEnterprisesPresenter.selectedEnterprise!.concentradorUrl ??
+                    "";
+            ccsController.text =
+                webEnterprisesPresenter.selectedEnterprise!.urlCCS ?? "";
+            enterpriseIdController.text =
+                (webEnterprisesPresenter.selectedEnterprise!.enterpriseId ?? 0)
+                    .toString();
+            daysPreloadImageController.text = (webEnterprisesPresenter
+                        .selectedEnterprise!.waitDaysToPreloadImages ??
+                    1)
+                .toString();
+            latestCompatibleVersionController.text = webEnterprisesPresenter
+                .selectedEnterprise!.latestCompatibleVersion
+                .toString();
+            serviceChargePercentageController.text = (webEnterprisesPresenter
+                        .selectedEnterprise!.serviceChargePercentageOrValue ??
+                    0)
+                .toInt()
+                .toString();
+            zoomImage =
+                webEnterprisesPresenter.selectedEnterprise!.zoomImage == true;
+            useCovenant =
+                webEnterprisesPresenter.selectedEnterprise!.useCovenant == true;
+          });
         }
       }
     });

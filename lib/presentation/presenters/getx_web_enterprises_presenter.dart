@@ -99,12 +99,14 @@ class GetxWebEnterprisesPresenter extends GetxController
       }
 
       final enterprise = EnterpriseEntity(
-        enterpriseName: _selectedEnterprise!.enterpriseName,
-        url: navsUrl,
+        enterpriseName: _selectedEnterprise!.enterpriseName
+            .toLowerCase()
+            .removeWhiteSpaces(),
+        url: navsUrl.toLowerCase().removeWhiteSpaces(),
         enterpriseId: enterpriseId,
-        concentradorUrl: concentratorUrl,
+        concentradorUrl: concentratorUrl.toLowerCase().removeWhiteSpaces(),
         persistApp: false,
-        urlCCS: ccsUrl,
+        urlCCS: ccsUrl.toLowerCase().removeWhiteSpaces(),
         useCovenant: useCovenant,
         enterpriseConcentradorParametersEntity: null,
         updateMenu: (_selectedEnterprise!.updateMenu ?? 0) + 1,

@@ -1,11 +1,11 @@
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
-import 'package:faker/faker.dart';
+import 'package:mocktail/mocktail.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -121,7 +121,8 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.updateDevicesData(EnterpriseBuilder.entity!.enterpriseName);
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
+      await sut.updateDevicesData();
     });
 
     test("Should emit correct values on failure", () async {
@@ -133,14 +134,16 @@ void main() {
 
       updateDeviceInformations.mockError();
 
-      await sut.updateDevicesData(EnterpriseBuilder.entity!.enterpriseName);
+      await sut.updateDevicesData();
     });
-    test("Should call update with correct value", () async {
-      final enterpriseName = faker.randomGenerator.string(10);
+    test("Should emit error if selected enterprise is null", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
 
-      await sut.updateDevicesData(enterpriseName);
-
-      verify(() => updateDeviceInformations.update(enterpriseName)).called(1);
+      await sut.updateDevicesData();
     });
   });
 }

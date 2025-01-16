@@ -58,12 +58,17 @@ class GetxWebEnterprisesPresenter extends GetxController
   EnterpriseEntity? get selectedEnterprise => _selectedEnterprise;
 
   @override
-  Future<void> updateDevicesData(String enterpriseName) async {
+  Future<void> updateDevicesData() async {
     try {
       isLoading = true;
       mainError = null;
 
-      await updateDeviceInformations.update(enterpriseName);
+      if (_selectedEnterprise == null) {
+        throw Exception();
+      }
+
+      await updateDeviceInformations
+          .update(_selectedEnterprise!.enterpriseName);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

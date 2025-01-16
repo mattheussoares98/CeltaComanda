@@ -102,6 +102,8 @@ class PtBr implements Translation {
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
   String get msgWantUpdateConcentratorEnterpriseParameters =>
       "Essa opção vai atualizar os parâmetros do concentrador em todos dispositivos.\nVocê deve usar essa opção somente quando alterar o cross nos parâmetros do concentrador.\nDeseja continuar?";
+  String get msgWantUpdateDeviceInformations =>
+      "Deseja realmente atualizar os dados dos dispositivos?\nSomente os dispositivos que estiverem online enviarão seus dados para o firebase. Esse procedimento pode demorar alguns segundos";
   String get msgWantUpdateMenuInAllDevices =>
       "Deseja atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -305,8 +307,10 @@ class PtBr implements Translation {
   String get unselectAll => "Desselecionar todos";
   String get unselectAllProducts => "Desselecionar todos produtos";
   String get updateApplication => "Atualizar aplicativo";
-  String get updateConcentratorParameters => "Atualizar parâmetros do concentrador";
+  String get updateConcentratorParameters =>
+      "Atualizar parâmetros do concentrador";
   String get updateConfigurations => "Alterar configurações";
+  String get updateDevicesData => "Atualizar dados dos dispositivos";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";

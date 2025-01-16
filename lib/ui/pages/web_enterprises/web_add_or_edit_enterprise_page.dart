@@ -190,6 +190,7 @@ class _WebAddOrEditEnterprisePageState
                 children: [
                   Expanded(child: UpdateMenuInDevicesButton()),
                   const SizedBox(width: 8),
+                  Expanded(child: UpdateDeviceInformationsButton()),
                 ],
               ),
             ],

@@ -104,6 +104,8 @@ class EnUs implements Translation {
       "This option will update the concentrator parameters in all devices. Do you want to continue?\nYou need use this only when change the cross parameter in concentrator";
   String get msgWantUpdateDeviceInformations =>
       "Do you really want update the device informations?\nOnly the online devices will send your data to firebase. This process can while a few seconds";
+  String get msgWantUpdateEnterpriseData =>
+      "Do you really want update enterprise data?";
   String get msgWantUpdateMenuInAllDevices =>
       "Do you want update the menu in all devices?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -309,6 +311,7 @@ class EnUs implements Translation {
   String get updateConcentratorParameters => 'Update concentrator parameters';
   String get updateConfigurations => 'Update configurations';
   String get updateDevicesData => 'Update devices data';
+  String get updateEnterprise => 'Update enterprise';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>
       'Update table and number of people';

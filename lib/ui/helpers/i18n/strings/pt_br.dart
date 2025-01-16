@@ -104,6 +104,8 @@ class PtBr implements Translation {
       "Essa opção vai atualizar os parâmetros do concentrador em todos dispositivos.\nVocê deve usar essa opção somente quando alterar o cross nos parâmetros do concentrador.\nDeseja continuar?";
   String get msgWantUpdateDeviceInformations =>
       "Deseja realmente atualizar os dados dos dispositivos?\nSomente os dispositivos que estiverem online enviarão seus dados para o firebase. Esse procedimento pode demorar alguns segundos";
+  String get msgWantUpdateEnterpriseData =>
+      "Deseja realmente atualizar os dados da empresa?";
   String get msgWantUpdateMenuInAllDevices =>
       "Deseja atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -311,6 +313,7 @@ class PtBr implements Translation {
       "Atualizar parâmetros do concentrador";
   String get updateConfigurations => "Alterar configurações";
   String get updateDevicesData => "Atualizar dados dos dispositivos";
+  String get updateEnterprise => "Atualizar empresa";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";

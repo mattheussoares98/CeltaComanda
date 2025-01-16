@@ -72,6 +72,7 @@ abstract class Translation {
   String get msgWantCloseTable;
   String get msgWantDoLogout;
   String get msgWantUpdateDeviceInformations;
+  String get msgWantUpdateEnterpriseData;
   String get msgWantUpdateMenuInAllDevices;
   String get msgWantUpdateConcentratorEnterpriseParameters;
   String get msgWhenConfirmProductsAreRequestAndSoonIncome;
@@ -271,6 +272,7 @@ abstract class Translation {
   String get updateConcentratorParameters;
   String get updateConfigurations;
   String get updateDevicesData;
+  String get updateEnterprise;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;
   String get updateTableNumber;

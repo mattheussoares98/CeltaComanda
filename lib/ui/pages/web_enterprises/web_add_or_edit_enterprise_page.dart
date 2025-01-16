@@ -101,100 +101,111 @@ class _WebAddOrEditEnterprisePageState
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              EnterpriseNameInput(
-                enterpriseNameController: enterpriseNameController,
-                navsFocusNode: navsFocusNode,
-              ),
-              NavsUrlInput(
-                navsUrlController: navsUrlController,
-                navsFocusNode: navsFocusNode,
-                concentratorFocusNode: concentratorFocusNode,
-              ),
-              ConcentratorUrlInput(
-                concentratorController: concentratorController,
-                concentratorFocusNode: concentratorFocusNode,
-                ccsFocusNode: ccsFocusNode,
-              ),
-              CcsUrlInput(
-                ccsController: ccsController,
-                ccsFocusNode: ccsFocusNode,
-                enterpriseIdFocusNode: enterpriseIdFocusNode,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: EnterpriseIdInput(
-                      enterpriseIdController: enterpriseIdController,
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    EnterpriseNameInput(
+                      enterpriseNameController: enterpriseNameController,
+                      navsFocusNode: navsFocusNode,
+                    ),
+                    NavsUrlInput(
+                      navsUrlController: navsUrlController,
+                      navsFocusNode: navsFocusNode,
+                      concentratorFocusNode: concentratorFocusNode,
+                    ),
+                    ConcentratorUrlInput(
+                      concentratorController: concentratorController,
+                      concentratorFocusNode: concentratorFocusNode,
+                      ccsFocusNode: ccsFocusNode,
+                    ),
+                    CcsUrlInput(
+                      ccsController: ccsController,
+                      ccsFocusNode: ccsFocusNode,
                       enterpriseIdFocusNode: enterpriseIdFocusNode,
-                      daysPreloadImageFocusNode: daysPreloadImageFocusNode,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: DaysPreLoadImageInput(
-                      daysPreloadImageController: daysPreloadImageController,
-                      daysPreloadImageFocusNode: daysPreloadImageFocusNode,
-                      latestCompatibleVersionFocusNode:
-                          latestCompatibleVersionFocusNode,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: EnterpriseIdInput(
+                            enterpriseIdController: enterpriseIdController,
+                            enterpriseIdFocusNode: enterpriseIdFocusNode,
+                            daysPreloadImageFocusNode:
+                                daysPreloadImageFocusNode,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: DaysPreLoadImageInput(
+                            daysPreloadImageController:
+                                daysPreloadImageController,
+                            daysPreloadImageFocusNode:
+                                daysPreloadImageFocusNode,
+                            latestCompatibleVersionFocusNode:
+                                latestCompatibleVersionFocusNode,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    Row(
+                      children: [
+                        Expanded(
+                          child: LatestCompatibleVersionInput(
+                            latestCompatibleVersionController:
+                                latestCompatibleVersionController,
+                            latestCompatibleVersionFocusNode:
+                                latestCompatibleVersionFocusNode,
+                            serviceChargePercentageFocusNode:
+                                serviceChargePercentageFocusNode,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: ServiceChargePercentageInput(
+                            serviceChargePercentageController:
+                                serviceChargePercentageController,
+                            serviceChargePercentageFocusNode:
+                                serviceChargePercentageFocusNode,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ZoomImageSwitch(
+                            zoomImage: zoomImage,
+                            changeZoom: changeZoom,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: UseCovenantSwitch(
+                            useCovenant: useCovenant,
+                            changeUseCovenant: changeUseCovenant,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: UpdateMenuInDevicesButton()),
+                        const SizedBox(width: 8),
+                        Expanded(child: UpdateDeviceInformationsButton()),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: LatestCompatibleVersionInput(
-                      latestCompatibleVersionController:
-                          latestCompatibleVersionController,
-                      latestCompatibleVersionFocusNode:
-                          latestCompatibleVersionFocusNode,
-                      serviceChargePercentageFocusNode:
-                          serviceChargePercentageFocusNode,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: ServiceChargePercentageInput(
-                      serviceChargePercentageController:
-                          serviceChargePercentageController,
-                      serviceChargePercentageFocusNode:
-                          serviceChargePercentageFocusNode,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ZoomImageSwitch(
-                      zoomImage: zoomImage,
-                      changeZoom: changeZoom,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: UseCovenantSwitch(
-                      useCovenant: useCovenant,
-                      changeUseCovenant: changeUseCovenant,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(child: UpdateMenuInDevicesButton()),
-                  const SizedBox(width: 8),
-                  Expanded(child: UpdateDeviceInformationsButton()),
-                ],
-              ),
-            ],
-          ),
+            ),
+            ConfirmUpdateEnterpriseDataButton(),
+          ],
         ),
       ),
     );

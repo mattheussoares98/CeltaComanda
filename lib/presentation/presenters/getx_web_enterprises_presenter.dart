@@ -79,7 +79,7 @@ class GetxWebEnterprisesPresenter extends GetxController
   }
 
   @override
-  Future<void> updateEnterprise({
+  Future<bool> updateEnterprise({
     required String navsUrl,
     required String concentratorUrl,
     required String ccsUrl,
@@ -123,8 +123,10 @@ class GetxWebEnterprisesPresenter extends GetxController
       );
 
       await updateEnterpriseParameters.update(enterprise);
+      return true;
     } catch (e) {
       mainError = UIError.unexpected;
+      return false;
     } finally {
       isLoading = false;
     }

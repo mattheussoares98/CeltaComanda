@@ -299,5 +299,45 @@ void main() {
               updateEnterpriseParameters.update(enterpriseWithCorrectValues))
           .called(1);
     });
+
+    test("Should return true on success", () async {
+      final result = await sut.updateEnterprise(
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        navsUrl: EnterpriseBuilder.entity!.url!,
+        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
+        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
+        serviceChargePercentage:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      );
+
+      expect(result, true);
+    });
+
+    test("Should return false on error", () async {
+      updateEnterpriseParameters.mockUpdateError();
+
+      final result = await sut.updateEnterprise(
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        navsUrl: EnterpriseBuilder.entity!.url!,
+        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
+        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
+        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
+        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+        latestCompatibleVersion:
+            EnterpriseBuilder.entity!.latestCompatibleVersion,
+        serviceChargePercentage:
+            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
+        zoomImage: EnterpriseBuilder.entity!.zoomImage,
+        useCovenant: EnterpriseBuilder.entity!.useCovenant,
+      );
+
+      expect(result, false);
+    });
   });
 }

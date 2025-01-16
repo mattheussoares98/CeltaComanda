@@ -26,6 +26,12 @@ class DaysPreLoadImageInput extends StatelessWidget {
         inputFormatters: [
           LengthLimitingTextInputFormatter(3),
         ],
+        onTap: () {
+          daysPreloadImageController.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: daysPreloadImageController.text.length,
+          );
+        },
         onFieldSubmitted: (_) {
           latestCompatibleVersionFocusNode.requestFocus();
         },

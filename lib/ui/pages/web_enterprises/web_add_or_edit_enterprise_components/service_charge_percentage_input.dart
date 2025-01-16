@@ -23,6 +23,12 @@ class ServiceChargePercentageInput extends StatelessWidget {
       child: TextFormField(
         controller: serviceChargePercentageController,
         focusNode: serviceChargePercentageFocusNode,
+        onTap: () {
+          serviceChargePercentageController.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: serviceChargePercentageController.text.length,
+          );
+        },
         inputFormatters: [
           LengthLimitingTextInputFormatter(2),
         ],

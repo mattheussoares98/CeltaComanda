@@ -23,6 +23,12 @@ class EnterpriseIdInput extends StatelessWidget {
       child: TextFormField(
         controller: enterpriseIdController,
         focusNode: enterpriseIdFocusNode,
+        onTap: () {
+          enterpriseIdController.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: enterpriseIdController.text.length,
+          );
+        },
         inputFormatters: [
           LengthLimitingTextInputFormatter(3),
         ],

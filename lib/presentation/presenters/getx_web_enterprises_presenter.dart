@@ -11,10 +11,12 @@ class GetxWebEnterprisesPresenter extends GetxController
     implements WebEnterprisesPresenter {
   final LoadAllEnterprises loadAllEnterprises;
   final NavigateTo navigateTo;
+  final UpdateDeviceInformations updateDeviceInformations;
 
   GetxWebEnterprisesPresenter({
     required this.loadAllEnterprises,
     required this.navigateTo,
+    required this.updateDeviceInformations,
   });
 
   @override
@@ -54,4 +56,18 @@ class GetxWebEnterprisesPresenter extends GetxController
   EnterpriseEntity? _selectedEnterprise;
   @override
   EnterpriseEntity? get selectedEnterprise => _selectedEnterprise;
+
+  @override
+  Future<void> updateDevicesData(String enterpriseName) async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      await updateDeviceInformations.update(enterpriseName);
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

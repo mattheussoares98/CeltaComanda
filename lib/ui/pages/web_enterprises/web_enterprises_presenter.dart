@@ -12,4 +12,5 @@ abstract class WebEnterprisesPresenter implements Listenable {
 
   Future<void> loadEnterprises();
   void goToAddOrEditEnterprise(EnterpriseEntity? enterprise);
+  Future<void> updateDevicesData(String enterpriseName);
 }

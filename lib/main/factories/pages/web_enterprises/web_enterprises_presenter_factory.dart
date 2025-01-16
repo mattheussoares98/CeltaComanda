@@ -6,4 +6,5 @@ WebEnterprisesPresenter makeGetxWebEnterprisesPresenter() =>
     GetxWebEnterprisesPresenter(
       loadAllEnterprises: makeRemoteLoadAllEnterprises(),
       navigateTo: makeNavigateTo(),
+      updateDeviceInformations: makeRemoteUpdateDeviceInformations(),
     );

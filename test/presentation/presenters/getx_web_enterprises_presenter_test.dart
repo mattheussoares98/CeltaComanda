@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/widgets.dart';
 
@@ -16,16 +17,19 @@ void main() {
 
   late LoadAllEnterprisesSpy loadAllEnterprises;
   late NavigateToSpy navigateTo;
+  late UpdateDeviceInformationsSpy updateDeviceInformations;
 
   void initUseCases() {
     loadAllEnterprises = LoadAllEnterprisesSpy();
     navigateTo = NavigateToSpy();
+    updateDeviceInformations = UpdateDeviceInformationsSpy();
   }
 
   void initPresenters() {
     sut = GetxWebEnterprisesPresenter(
       loadAllEnterprises: loadAllEnterprises,
       navigateTo: navigateTo,
+      updateDeviceInformations: updateDeviceInformations,
     );
   }
 
@@ -109,6 +113,34 @@ void main() {
 
       sut.goToAddOrEditEnterprise(null);
       expect(sut.selectedEnterprise, null);
+    });
+  });
+
+  group("Update device informations", () {
+    test("Should emit correct values", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.updateDevicesData(EnterpriseBuilder.entity!.enterpriseName);
+    });
+
+    test("Should emit correct values on failure", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      updateDeviceInformations.mockError();
+
+      await sut.updateDevicesData(EnterpriseBuilder.entity!.enterpriseName);
+    });
+    test("Should call update with correct value", () async {
+      final enterpriseName = faker.randomGenerator.string(10);
+
+      await sut.updateDevicesData(enterpriseName);
+
+      verify(() => updateDeviceInformations.update(enterpriseName)).called(1);
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
+import 'web_add_or_edit_enterprise_components.dart';
 
 class LatestCompatibleVersionInput extends StatelessWidget {
   final TextEditingController latestCompatibleVersionController;
@@ -30,7 +31,9 @@ class LatestCompatibleVersionInput extends StatelessWidget {
           hintText: R.string.latestCompatibleVersion,
           labelText: R.string.latestCompatibleVersion,
           errorText: null,
-          suffixIcon: Icon(Icons.radar_outlined),
+          suffixIcon: InfoIconButton(
+            toltipMessage: R.string.msgCompatibleVersion,
+          ),
           fontSize: 14,
         ),
         onFieldSubmitted: (_) {

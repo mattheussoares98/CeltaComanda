@@ -5,6 +5,7 @@ abstract class Translation {
   String get msgBlockedCommand;
   String get msgEmailInUse;
   String get msgCantAddCombox;
+  String get msgCantChangeEnterpriseName;
   String get msgCantSendServiceChargeProduct;
   String get msgClearCartOnLogout;
   String get msgClearConfirmedPayments;
@@ -13,9 +14,11 @@ abstract class Translation {
   String get msgCommandBlocked;
   String get msgCommandDontHaveOpenValues;
   String get msgCommandDontHaveProducts;
+  String get msgCompatibleVersion;
   String get msgConfirmClearTotalPaid;
   String get msgConfirmSendProducts;
   String get msgConsultCommandToViewProducts;
+  String get msgDaysToPreloadImage;
   String get msgDontHaveUnusedPdvs;
   String get msgEvaluateFood;
   String get msgEvaluateDrink;
@@ -57,6 +60,7 @@ abstract class Translation {
   String get msgSelectProducts;
   String get msgSelectSeller;
   String get msgSelectTable;
+  String get msgServiceChargeValueInfo;
   String get msgSuccessToCancelProducts;
   String get msgSuccessToUpdateCommandNumberProducts;
   String get msgSuccessToUpdateSchedule;
@@ -153,6 +157,7 @@ abstract class Translation {
   String get enableSearchProducts;
   String get enterprise;
   String get enterpriseId;
+  String get enterpriseIdInMysql;
   String get enterpriseOrUrlNotFound;
   String get enterprises;
   String get environment;

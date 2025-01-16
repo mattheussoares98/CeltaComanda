@@ -9,6 +9,8 @@ class PtBr implements Translation {
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgCantAddCombox => 'Não é permitido adicionar combo por aqui';
+  String get msgCantChangeEnterpriseName =>
+      "Não é permitido alterar o nome da empresa";
   String get msgCantSendServiceChargeProduct =>
       'Não é permitido enviar o produto de taxa de serviço';
   String get msgClearCartOnLogout =>
@@ -22,11 +24,15 @@ class PtBr implements Translation {
       "Essa comanda não possui valores em aberto";
   String get msgCommandDontHaveProducts =>
       "Não há produtos solicitados nessa mesa";
+  String get msgCompatibleVersion =>
+      "Se o dispositivo estiver com uma versão menor do que a digitada, aparecerá uma mensagem a cada hora para atualizar o aplicativo. Na página de configurações aparecerá uma opção para atualizar o aplicativo também";
   String get msgConfirmClearTotalPaid =>
       "Ao sair da tela, o total pago será limpo";
   String get msgConfirmSendProducts => "Deseja realmente enviar os produtos?";
   String get msgConsultCommandToViewProducts =>
       "Consulte alguma comanda para visualizar os produtos solicitados";
+  String get msgDaysToPreloadImage =>
+      "O aplicativo pré carrega as imagens uma vez por dia. Se quiser aumentar a quantidade de dias, digite um valor maior";
   String get msgDontHaveUnusedPdvs => "Não há PDVs liberados para registro";
   String get msgEmailInUse => 'O email já está em uso.';
   String get msgEvaluateFood => "Avalie a comida";
@@ -80,6 +86,8 @@ class PtBr implements Translation {
   String get msgSelectProducts => 'Selecione produtos';
   String get msgSelectSeller => 'Selecione o vendedor';
   String get msgSelectTable => 'Selecione a mesa';
+  String get msgServiceChargeValueInfo =>
+      'Valor em porcentagem para adicionar um acréscimo no valor total do pedido';
   String get msgSuccessToCancelProducts => 'Produto cancelado com sucesso';
   String get msgSuccessToUpdateCommandNumberProducts =>
       "Os produtos foram enviados para a nova comanda";
@@ -188,6 +196,7 @@ class PtBr implements Translation {
   String get enableSearchProducts => 'Habilitar pesquisa de produtos';
   String get enterprise => 'Empresa';
   String get enterpriseId => 'Id da empresa';
+  String get enterpriseIdInMysql => 'Id da empresa no MySQL';
   String get enterpriseOrUrlNotFound => 'Empresa e URL não encontrados';
   String get enterprises => 'Empresas';
   String get environment => 'Ambiente';

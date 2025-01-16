@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
+import 'web_add_or_edit_enterprise_components.dart';
 
 class ServiceChargePercentageInput extends StatelessWidget {
   final TextEditingController serviceChargePercentageController;
@@ -33,7 +34,9 @@ class ServiceChargePercentageInput extends StatelessWidget {
           hintText: R.string.serviceChargePercentage,
           labelText: R.string.serviceChargePercentage,
           errorText: null,
-          suffixIcon: Icon(Icons.numbers),
+          suffixIcon: InfoIconButton(
+            toltipMessage: R.string.msgServiceChargeValueInfo,
+          ),
           fontSize: 14,
         ),
         keyboardType: TextInputType.numberWithOptions(decimal: false),

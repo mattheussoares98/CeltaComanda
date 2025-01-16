@@ -9,6 +9,7 @@ class EnUs implements Translation {
   String get msgBarcodeNotRead => 'Barcode not read';
   String get msgBlockedCommand => 'Command blocked';
   String get msgCantAddCombox => "Can't add combox here";
+  String get msgCantChangeEnterpriseName => "Can't change enterprise name";
   String get msgCantSendServiceChargeProduct =>
       "Can't send service charge product";
   String get msgClearCartOnLogout => 'Upon logout, the cart will be cleared!';
@@ -20,11 +21,15 @@ class EnUs implements Translation {
   String get msgCommandDontHaveOpenValues => 'This command has no open values';
   String get msgCommandDontHaveProducts =>
       "This command has no products inserted";
+  String get msgCompatibleVersion =>
+      "If this version greater than the version in the device, a message will appear for each one hour to update the application. In configurations will appears one button to update the application as well";
   String get msgConfirmClearTotalPaid =>
       "If you exit the page, the paid value will be cleared";
   String get msgConfirmSendProducts => "Do you want confirm send products?";
   String get msgConsultCommandToViewProducts =>
       "Search command to view products";
+  String get msgDaysToPreloadImage =>
+      "The application pre load the images at least one time a day. If you change this value, the application will pre load according the paramter";
   String get msgDontHaveUnusedPdvs =>
       "There are no PDVs released for registration";
   String get msgEmailInUse => 'Email already in use';
@@ -76,7 +81,9 @@ class EnUs implements Translation {
   String get msgSelectPeopleNumbers => 'Select the number of people';
   String get msgSelectProducts => 'Select products';
   String get msgSelectSeller => 'Select the seller';
-  String get msgSelectTable => 'Select the tabls';
+  String get msgSelectTable => 'Select the table';
+  String get msgServiceChargeValueInfo =>
+      'Value in percentage to add an service charge in the total of sale request';
   String get msgSuccessToCancelProducts => 'Product cancelled';
   String get msgSuccessToUpdateCommandNumberProducts =>
       "The products were sent to the new command";
@@ -189,6 +196,7 @@ class EnUs implements Translation {
   String get enableSearchProducts => 'Enable search products';
   String get enterprise => 'Enterprise';
   String get enterpriseId => 'Enterprise id';
+  String get enterpriseIdInMysql => 'Enterprise id in MySQL';
   String get enterpriseOrUrlNotFound => 'Enterprise and URL not found';
   String get enterprises => 'Enterprises';
   String get environment => 'Environment';

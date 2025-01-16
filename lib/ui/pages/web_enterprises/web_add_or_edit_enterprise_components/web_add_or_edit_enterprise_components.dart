@@ -4,6 +4,7 @@ export './confirm_update_enterprise_data_button.dart';
 export './days_pre_load_image_input.dart';
 export './enterprise_id_input.dart';
 export './enterprise_name_input.dart';
+export './info_icon_button.dart';
 export './latest_compatible_version_input.dart';
 export './navs_url_input.dart';
 export './service_charge_percentage_input.dart';

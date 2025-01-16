@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
+import '../../pages.dart';
+import 'web_add_or_edit_enterprise_components.dart';
 
 class EnterpriseNameInput extends StatelessWidget {
   final TextEditingController enterpriseNameController;
@@ -15,29 +18,43 @@ class EnterpriseNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: enterpriseNameController,
-      keyboardType: TextInputType.text,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(20),
+    WebEnterprisesPresenter webEnterprisesPresenter =
+        Provider.of(context, listen: false);
+
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            enabled: webEnterprisesPresenter.selectedEnterprise == null,
+            controller: enterpriseNameController,
+            keyboardType: TextInputType.text,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(20),
+            ],
+            onFieldSubmitted: (_) {
+              navsFocusNode.requestFocus();
+            },
+            decoration: formFieldDecoration(
+              context: context,
+              hintText: R.string.enterprise,
+              labelText: R.string.enterprise,
+              errorText: null,
+              fontSize: 14,
+              suffixIcon: Icon(Icons.business),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return R.string.msgWriteName;
+              }
+              return null;
+            },
+          ),
+        ),
+        if (webEnterprisesPresenter.selectedEnterprise != null)
+          InfoIconButton(
+            toltipMessage: R.string.msgCantChangeEnterpriseName,
+          ),
       ],
-      onFieldSubmitted: (_) {
-        navsFocusNode.requestFocus();
-      },
-      decoration: formFieldDecoration(
-        context: context,
-        hintText: R.string.enterprise,
-        labelText: R.string.enterprise,
-        errorText: null,
-        suffixIcon: Icon(Icons.business),
-        fontSize: 14,
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return R.string.msgWriteName;
-        }
-        return null;
-      },
     );
   }
 }

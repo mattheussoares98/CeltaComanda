@@ -115,7 +115,7 @@ class PtBr implements Translation {
   String get msgWantUpdateDeviceInformations =>
       "Deseja realmente atualizar os dados dos dispositivos?\nSomente os dispositivos que estiverem online enviarão seus dados para o firebase. Esse procedimento pode demorar alguns segundos";
   String get msgWantUpdateEnterpriseData =>
-      "Deseja realmente atualizar os dados da empresa?";
+      "Deseja realmente atualizar os dados da empresa?\nOs dispositivos atualizarão os dados da empresa automaticamente";
   String get msgWantUpdateMenuInAllDevices =>
       "Deseja atualizar o menu em todos dispositivos?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>
@@ -329,7 +329,8 @@ class PtBr implements Translation {
       "Atualizar parâmetros do concentrador";
   String get updateConfigurations => "Alterar configurações";
   String get updateDevicesData => "Atualizar dados dos dispositivos";
-  String get updateDevicesDataInFirebase => "Atualizar dados dos dispositivos no firebase";
+  String get updateDevicesDataInFirebase =>
+      "Atualizar dados dos dispositivos no firebase";
   String get updateEnterprise => "Atualizar empresa";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>

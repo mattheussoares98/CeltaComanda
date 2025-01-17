@@ -115,7 +115,7 @@ class EnUs implements Translation {
   String get msgWantUpdateDeviceInformations =>
       "Do you really want update the device informations?\nOnly the online devices will send your data to firebase. This process can while a few seconds";
   String get msgWantUpdateEnterpriseData =>
-      "Do you really want update enterprise data?";
+      "Do you really want update enterprise data?\nThe data will be updated in all devices automatically";
   String get msgWantUpdateMenuInAllDevices =>
       "Do you want update the menu in all devices?";
   String get msgWhenConfirmProductsAreRequestAndSoonIncome =>

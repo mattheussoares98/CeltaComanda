@@ -326,6 +326,7 @@ class PtBr implements Translation {
       "Atualizar parâmetros do concentrador";
   String get updateConfigurations => "Alterar configurações";
   String get updateDevicesData => "Atualizar dados dos dispositivos";
+  String get updateDevicesDataInFirebase => "Atualizar dados dos dispositivos no firebase";
   String get updateEnterprise => "Atualizar empresa";
   String get updateMenu => "Atualizar menu";
   String get updateTableNumberAndPeopleNumbers =>

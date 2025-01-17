@@ -19,7 +19,7 @@ class UpdateDeviceInformationsButton extends StatelessWidget {
         onPressed: () {
           notificationDialog(
             context: context,
-            titleMessage: R.string.updateDevicesData,
+            titleMessage: R.string.updateDevicesDataInFirebase,
             content: Text(
               R.string.msgWantUpdateDeviceInformations,
               textAlign: TextAlign.center,
@@ -29,7 +29,7 @@ class UpdateDeviceInformationsButton extends StatelessWidget {
             },
           );
         },
-        child: Text(R.string.updateDevicesData),
+        child: Text(R.string.updateDevicesDataInFirebase),
       ),
     );
   }

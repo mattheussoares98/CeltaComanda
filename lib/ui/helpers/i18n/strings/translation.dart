@@ -281,6 +281,7 @@ abstract class Translation {
   String get updateConcentratorParameters;
   String get updateConfigurations;
   String get updateDevicesData;
+  String get updateDevicesDataInFirebase;
   String get updateEnterprise;
   String get updateMenu;
   String get updateTableNumberAndPeopleNumbers;

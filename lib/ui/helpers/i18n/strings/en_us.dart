@@ -324,6 +324,7 @@ class EnUs implements Translation {
   String get updateConcentratorParameters => 'Update concentrator parameters';
   String get updateConfigurations => 'Update configurations';
   String get updateDevicesData => 'Update devices data';
+  String get updateDevicesDataInFirebase => 'Update devices data in firebase';
   String get updateEnterprise => 'Update enterprise';
   String get updateMenu => 'Update menu';
   String get updateTableNumberAndPeopleNumbers =>

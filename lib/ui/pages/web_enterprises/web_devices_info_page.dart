@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
 import '../pages.dart';
+import 'web_add_or_edit_enterprise_components/web_add_or_edit_enterprise_components.dart';
 
 class WebDevicesInfoPage extends StatefulWidget {
   const WebDevicesInfoPage({super.key});
@@ -46,7 +47,26 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Center(
-              child: Text(R.string.msgNotFound),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  UpdateDeviceInformationsButton(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: TextButton.icon(
+                      onPressed: () async {
+                        await webEnterprisesPresenter.getDevicesInfo();
+                      },
+                      label: Text(
+                        R.string.reload,
+                        style: TextStyle(fontSize: StringSize.size),
+                      ),
+                      icon: Icon(Icons.refresh, size: 25),
+                      iconAlignment: IconAlignment.end,
+                    ),
+                  ),
+                ],
+              ),
             );
           }
 

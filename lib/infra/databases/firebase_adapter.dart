@@ -78,6 +78,10 @@ class FirebaseAdapter implements FirebaseStorage {
 
       final value = await docRef.get();
 
+      if (value.data() == null) {
+        throw Exception();
+      }
+
       return (value.data()! as List)
           .map((e) => DeviceInfoModel.fromJson(e).toEntity())
           .toList();

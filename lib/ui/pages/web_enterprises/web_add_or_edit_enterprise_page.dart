@@ -251,6 +251,13 @@ class _WebAddOrEditEnterprisePageState
                         Expanded(child: UpdateDeviceInformationsButton()),
                       ],
                     ),
+                    Row(
+                      children: [
+                        Expanded(child: SizedBox()),
+                        const SizedBox(width: 8),
+                        Expanded(child: GoToDevicesInfoPageButton()),
+                      ],
+                    ),
                   ],
                 ),
               ),

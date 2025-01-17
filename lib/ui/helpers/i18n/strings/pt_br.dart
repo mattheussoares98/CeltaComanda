@@ -60,6 +60,7 @@ class PtBr implements Translation {
   String get msgNewCommandMustBeEmpty => "A mesa nova precisa estar vazia";
   String get msgNewTable => "Mesa nova";
   String get msgNotFound => "Valor não encontrado";
+  String get msgNotFoundData => "Não foram encontrados dados";
   String get msgNumberCopiedSuccessfully => "Número copiado com sucesso";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
@@ -186,6 +187,7 @@ class PtBr implements Translation {
   String get destinyTable => "Mesa de destino";
   String get detach => "Destaques";
   String get developedByCeltaware => "Desenvolvido por Celtaware";
+  String get devicesInformations => "Informações dos dispositivos";
   String get doLogout => "Fazer logout";
   String get doYouWantToAdd => "Deseja adicionar?";
   String get drink => "Bebida";

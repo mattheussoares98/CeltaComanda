@@ -39,6 +39,7 @@ abstract class Translation {
   String get msgNewCommandMustBeEmpty;
   String get msgNewTable;
   String get msgNotFound;
+  String get msgNotFoundData;
   String get msgNumberCopiedSuccessfully;
   String get msgObligatoryFixedCommandNumber;
   String get msgOldCommandIsEmpty;
@@ -147,6 +148,7 @@ abstract class Translation {
   String get destinyTable;
   String get detach;
   String get developedByCeltaware;
+  String get devicesInformations;
   String get doLogout;
   String get doYouWantToAdd;
   String get drink;

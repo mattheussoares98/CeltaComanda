@@ -161,13 +161,18 @@ class GetxWebEnterprisesPresenter extends GetxController
   set devices(List<DeviceInfoViewModel>? value) => _devicesStream.value = value;
 
   @override
-  Future<void> getDevicesInfo(String enterpriseName) async {
+  Future<void> getDevicesInfo() async {
     try {
       isLoading = true;
       mainError = null;
       devices = null;
 
-      final result = await loadDevicesInfo.load(enterpriseName);
+      if (_selectedEnterprise == null) {
+        throw Exception();
+      }
+
+      final result =
+          await loadDevicesInfo.load(_selectedEnterprise!.enterpriseName);
 
       devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
     } catch (e) {
@@ -175,5 +180,10 @@ class GetxWebEnterprisesPresenter extends GetxController
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  void goToDevicesInfoPage() {
+    navigateTo.navigate(pageRoute: PageRoutes.webDevicesInfo);
   }
 }

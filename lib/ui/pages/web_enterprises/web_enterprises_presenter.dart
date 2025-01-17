@@ -29,5 +29,7 @@ abstract class WebEnterprisesPresenter implements Listenable {
   });
 
   Future<bool> deleteEnterpriseData();
-  Future<void> getDevicesInfo(String enterpriseName);
+  Future<void> getDevicesInfo();
+
+  void goToDevicesInfoPage();
 }

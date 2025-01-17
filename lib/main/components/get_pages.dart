@@ -83,6 +83,11 @@ class GetPages {
       transition: Transition.fade,
     ),
     GetPage(
+      name: PageRoutes.webDevicesInfo,
+      page: makeWebDevicesInfoPage,
+      transition: Transition.fade,
+    ),
+    GetPage(
       name: PageRoutes.webEnterprises,
       page: makeWebEnterprisesPage,
       transition: Transition.fade,

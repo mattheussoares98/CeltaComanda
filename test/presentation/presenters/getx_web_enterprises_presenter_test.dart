@@ -418,7 +418,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
       expectLater(sut.devicesStream, emitsInOrder([null, devices]));
 
-      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+      await sut.getDevicesInfo();
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -430,13 +431,34 @@ void main() {
 
       loadDevicesInfo.mockLoadError();
 
-      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+      await sut.getDevicesInfo();
+    });
+
+    test("Should emit correct values on selected enterprise is null", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.devicesStream, emits(null));
+
+      await sut.getDevicesInfo();
     });
     test("Should call loadDevicesInfo with correct parameter", () async {
-      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+
+      await sut.getDevicesInfo();
 
       verify(() =>
               loadDevicesInfo.load(EnterpriseBuilder.entity!.enterpriseName))
+          .called(1);
+    });
+  });
+
+  group("Go to device informations page", () {
+    test("Should call navigate to with correct route", () {
+      sut.goToDevicesInfoPage();
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.webDevicesInfo))
           .called(1);
     });
   });

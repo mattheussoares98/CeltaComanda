@@ -57,6 +57,7 @@ class EnUs implements Translation {
   String get msgNewCommandMustBeEmpty => "The new table must be empty";
   String get msgNewTable => "New table";
   String get msgNotFound => "Value not found";
+  String get msgNotFoundData => "Data not found";
   String get msgNumberCopiedSuccessfully => "Number copied successfully";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
@@ -106,7 +107,8 @@ class EnUs implements Translation {
   String get msgWantCloseApplication =>
       'Do you really want to close the application?';
   String get msgWantCloseTable => "Do you really want close the table?";
-  String get msgWantDeleteEnterprise => "Do you really want delete the enterprise?";
+  String get msgWantDeleteEnterprise =>
+      "Do you really want delete the enterprise?";
   String get msgWantDoLogout => 'Do you really want to log out?';
   String get msgWantUpdateConcentratorEnterpriseParameters =>
       "This option will update the concentrator parameters in all devices. Do you want to continue?\nYou need use this only when change the cross parameter in concentrator";
@@ -186,6 +188,7 @@ class EnUs implements Translation {
   String get destinyTable => 'Destiny table';
   String get detach => 'Highlights';
   String get developedByCeltaware => 'Developed by Celtaware';
+  String get devicesInformations => 'Devices informations';
   String get doLogout => 'Log out';
   String get doYouWantToAdd => 'Do you want add?';
   String get drink => 'Drink';

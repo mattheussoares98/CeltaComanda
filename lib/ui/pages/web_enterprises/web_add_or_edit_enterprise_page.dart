@@ -159,99 +159,101 @@ class _WebAddOrEditEnterprisePageState
             Expanded(
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    EnterpriseNameInput(
-                      enterpriseNameController: enterpriseNameController,
-                      navsFocusNode: navsFocusNode,
-                    ),
-                    NavsUrlInput(
-                      navsUrlController: navsUrlController,
-                      navsFocusNode: navsFocusNode,
-                      concentratorFocusNode: concentratorFocusNode,
-                    ),
-                    ConcentratorUrlInput(
-                      concentratorController: concentratorUrlController,
-                      concentratorFocusNode: concentratorFocusNode,
-                      ccsFocusNode: ccsFocusNode,
-                    ),
-                    CcsUrlInput(
-                      ccsController: ccsUrlController,
-                      ccsFocusNode: ccsFocusNode,
-                      enterpriseIdFocusNode: enterpriseIdFocusNode,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: EnterpriseIdInput(
-                            enterpriseIdController: enterpriseIdController,
-                            enterpriseIdFocusNode: enterpriseIdFocusNode,
-                            daysPreloadImageFocusNode:
-                                daysPreloadImageFocusNode,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      EnterpriseNameInput(
+                        enterpriseNameController: enterpriseNameController,
+                        navsFocusNode: navsFocusNode,
+                      ),
+                      NavsUrlInput(
+                        navsUrlController: navsUrlController,
+                        navsFocusNode: navsFocusNode,
+                        concentratorFocusNode: concentratorFocusNode,
+                      ),
+                      ConcentratorUrlInput(
+                        concentratorController: concentratorUrlController,
+                        concentratorFocusNode: concentratorFocusNode,
+                        ccsFocusNode: ccsFocusNode,
+                      ),
+                      CcsUrlInput(
+                        ccsController: ccsUrlController,
+                        ccsFocusNode: ccsFocusNode,
+                        enterpriseIdFocusNode: enterpriseIdFocusNode,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: EnterpriseIdInput(
+                              enterpriseIdController: enterpriseIdController,
+                              enterpriseIdFocusNode: enterpriseIdFocusNode,
+                              daysPreloadImageFocusNode:
+                                  daysPreloadImageFocusNode,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: DaysPreLoadImageInput(
-                            daysPreloadImageController:
-                                daysPreloadImageController,
-                            daysPreloadImageFocusNode:
-                                daysPreloadImageFocusNode,
-                            latestCompatibleVersionFocusNode:
-                                latestCompatibleVersionFocusNode,
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: DaysPreLoadImageInput(
+                              daysPreloadImageController:
+                                  daysPreloadImageController,
+                              daysPreloadImageFocusNode:
+                                  daysPreloadImageFocusNode,
+                              latestCompatibleVersionFocusNode:
+                                  latestCompatibleVersionFocusNode,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: LatestCompatibleVersionInput(
-                            latestCompatibleVersionController:
-                                latestCompatibleVersionController,
-                            latestCompatibleVersionFocusNode:
-                                latestCompatibleVersionFocusNode,
-                            serviceChargePercentageFocusNode:
-                                serviceChargePercentageFocusNode,
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: LatestCompatibleVersionInput(
+                              latestCompatibleVersionController:
+                                  latestCompatibleVersionController,
+                              latestCompatibleVersionFocusNode:
+                                  latestCompatibleVersionFocusNode,
+                              serviceChargePercentageFocusNode:
+                                  serviceChargePercentageFocusNode,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: ServiceChargePercentageInput(
-                            serviceChargePercentageController:
-                                serviceChargePercentageController,
-                            serviceChargePercentageFocusNode:
-                                serviceChargePercentageFocusNode,
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: ServiceChargePercentageInput(
+                              serviceChargePercentageController:
+                                  serviceChargePercentageController,
+                              serviceChargePercentageFocusNode:
+                                  serviceChargePercentageFocusNode,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ZoomImageSwitch(
-                            zoomImage: zoomImage ?? false,
-                            changeZoom: changeZoom,
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ZoomImageSwitch(
+                              zoomImage: zoomImage ?? false,
+                              changeZoom: changeZoom,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: UseCovenantSwitch(
-                            useCovenant: useCovenant ?? false,
-                            changeUseCovenant: changeUseCovenant,
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: UseCovenantSwitch(
+                              useCovenant: useCovenant ?? false,
+                              changeUseCovenant: changeUseCovenant,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: UpdateMenuInDevicesButton()),
-                        const SizedBox(width: 8),
-                        Expanded(child: GoToDevicesInfoPageButton()),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: UpdateMenuInDevicesButton()),
+                          const SizedBox(width: 8),
+                          Expanded(child: GoToDevicesInfoPageButton()),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

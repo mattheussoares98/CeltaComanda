@@ -19,26 +19,28 @@ class OrganizeUpOrDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {
-                sortDown(data);
-              },
-              icon: Icon(Icons.arrow_downward),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: Text(title),
-            ),
-            IconButton(
-              onPressed: () {
-                sortUp(data);
-              },
-              icon: Icon(Icons.arrow_upward),
-            ),
-          ],
+        child: FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  sortDown(data);
+                },
+                icon: Icon(Icons.arrow_downward),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3),
+                child: Text(title),
+              ),
+              IconButton(
+                onPressed: () {
+                  sortUp(data);
+                },
+                icon: Icon(Icons.arrow_upward),
+              ),
+            ],
+          ),
         ),
       ),
     );

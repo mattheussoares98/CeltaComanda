@@ -13,12 +13,14 @@ class GetxWebEnterprisesPresenter extends GetxController
   final NavigateTo navigateTo;
   final UpdateDeviceInformations updateDeviceInformations;
   final UpdateEnterpriseParameters updateEnterpriseParameters;
+  final DeleteEnterprise deleteEnterprise;
 
   GetxWebEnterprisesPresenter({
     required this.loadAllEnterprises,
     required this.navigateTo,
     required this.updateDeviceInformations,
     required this.updateEnterpriseParameters,
+    required this.deleteEnterprise,
   });
 
   @override
@@ -122,6 +124,26 @@ class GetxWebEnterprisesPresenter extends GetxController
       );
 
       await updateEnterpriseParameters.update(enterprise);
+      return true;
+    } catch (e) {
+      mainError = UIError.unexpected;
+      return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<bool> deleteEnterpriseData() async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      if (_selectedEnterprise == null) {
+        throw Exception();
+      }
+
+      await deleteEnterprise.delete(_selectedEnterprise!.enterpriseName);
       return true;
     } catch (e) {
       mainError = UIError.unexpected;

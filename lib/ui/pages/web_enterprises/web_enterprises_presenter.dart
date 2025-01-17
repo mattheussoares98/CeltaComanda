@@ -25,4 +25,6 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required bool? useCovenant,
     required String enterpriseName,
   });
+
+  Future<bool> deleteEnterpriseData();
 }

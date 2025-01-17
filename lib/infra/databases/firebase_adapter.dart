@@ -135,4 +135,14 @@ class FirebaseAdapter implements FirebaseStorage {
       throw Exception();
     }
   }
+
+  @override
+  Future<void> deleteEnterprise(String enterpriseName) async {
+    try {
+      var docRef = firestore.collection('clients').doc(enterpriseName);
+      await docRef.delete();
+    } catch (e) {
+      throw Exception();
+    }
+  }
 }

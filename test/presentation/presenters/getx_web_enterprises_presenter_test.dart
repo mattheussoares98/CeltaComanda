@@ -19,12 +19,14 @@ void main() {
   late NavigateToSpy navigateTo;
   late UpdateDeviceInformationsSpy updateDeviceInformations;
   late UpdateEnterpriseParametersSpy updateEnterpriseParameters;
+  late DeleteEnterpriseSpy deleteEnterprise;
 
   void initUseCases() {
     loadAllEnterprises = LoadAllEnterprisesSpy();
     navigateTo = NavigateToSpy();
     updateDeviceInformations = UpdateDeviceInformationsSpy();
     updateEnterpriseParameters = UpdateEnterpriseParametersSpy();
+    deleteEnterprise = DeleteEnterpriseSpy();
   }
 
   void initPresenters() {
@@ -33,6 +35,7 @@ void main() {
       navigateTo: navigateTo,
       updateDeviceInformations: updateDeviceInformations,
       updateEnterpriseParameters: updateEnterpriseParameters,
+      deleteEnterprise: deleteEnterprise,
     );
   }
 
@@ -336,6 +339,63 @@ void main() {
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
       );
+
+      expect(result, false);
+    });
+  });
+
+  group("Delete enterprise", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+
+      await sut.deleteEnterpriseData();
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      deleteEnterprise.mockDeleteError();
+
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+
+      await sut.deleteEnterpriseData();
+    });
+    test("Should emit error on selected enterprise is null", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      await sut.deleteEnterpriseData();
+    });
+    test("Should call deleteEnterprise with correct value", () async {
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+
+      await sut.deleteEnterpriseData();
+
+      verify(
+        () => deleteEnterprise.delete(sut.selectedEnterprise!.enterpriseName),
+      ).called(1);
+    });
+    test("Should return true on success", () async {
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+
+      final result = await sut.deleteEnterpriseData();
+
+      expect(result, true);
+    });
+    test("Should return false on error", () async {
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+      deleteEnterprise.mockDeleteError();
+
+      final result = await sut.deleteEnterpriseData();
 
       expect(result, false);
     });

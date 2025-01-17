@@ -19,4 +19,6 @@ abstract class FirebaseStorage {
   Future<void> updateEnterpriseParameters(EnterpriseEntity enterprise);
 
   Future<void> updateDeviceInformations(String enterpriseName);
+
+  Future<void> deleteEnterprise(String enterpriseName);
 }

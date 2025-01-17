@@ -74,6 +74,7 @@ abstract class Translation {
   String get msgVeryShortField;
   String get msgWantCloseApplication;
   String get msgWantCloseTable;
+  String get msgWantDeleteEnterprise;
   String get msgWantDoLogout;
   String get msgWantUpdateDeviceInformations;
   String get msgWantUpdateEnterpriseData;
@@ -142,6 +143,7 @@ abstract class Translation {
   String get customer;
   String get dateNotUpdated;
   String get debit;
+  String get deleteEnterprise;
   String get destinyTable;
   String get detach;
   String get developedByCeltaware;

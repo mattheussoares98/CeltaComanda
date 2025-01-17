@@ -106,6 +106,7 @@ class EnUs implements Translation {
   String get msgWantCloseApplication =>
       'Do you really want to close the application?';
   String get msgWantCloseTable => "Do you really want close the table?";
+  String get msgWantDeleteEnterprise => "Do you really want delete the enterprise?";
   String get msgWantDoLogout => 'Do you really want to log out?';
   String get msgWantUpdateConcentratorEnterpriseParameters =>
       "This option will update the concentrator parameters in all devices. Do you want to continue?\nYou need use this only when change the cross parameter in concentrator";
@@ -181,6 +182,7 @@ class EnUs implements Translation {
   String get customer => 'Customer';
   String get dateNotUpdated => 'Date not updated';
   String get debit => 'Debit';
+  String get deleteEnterprise => 'Delete enterprise';
   String get destinyTable => 'Destiny table';
   String get detach => 'Highlights';
   String get developedByCeltaware => 'Developed by Celtaware';

@@ -107,6 +107,7 @@ class PtBr implements Translation {
   String get msgVeryShortField => 'Campo muito curto';
   String get msgWantCloseApplication => "Deseja realmente fechar o aplicativo?";
   String get msgWantCloseTable => "Deseja realmente fechar a mesa?";
+  String get msgWantDeleteEnterprise => "Deseja realmente excluir a empresa?";
   String get msgWantDoLogout => "Deseja realmente fazer o logout?";
   String get msgWantUpdateConcentratorEnterpriseParameters =>
       "Essa opção vai atualizar os parâmetros do concentrador em todos dispositivos.\nVocê deve usar essa opção somente quando alterar o cross nos parâmetros do concentrador.\nDeseja continuar?";
@@ -181,6 +182,7 @@ class PtBr implements Translation {
   String get customer => "Cliente";
   String get dateNotUpdated => "Data não atualizada";
   String get debit => "Débito";
+  String get deleteEnterprise => "Excluir empresa";
   String get destinyTable => "Mesa de destino";
   String get detach => "Destaques";
   String get developedByCeltaware => "Desenvolvido por Celtaware";

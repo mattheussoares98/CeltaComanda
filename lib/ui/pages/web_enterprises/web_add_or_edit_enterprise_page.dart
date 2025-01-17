@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/components.dart';
+import '../../helpers/helpers.dart';
 import '../pages.dart';
 import 'web_add_or_edit_enterprise_components/web_add_or_edit_enterprise_components.dart';
 
@@ -125,6 +127,29 @@ class _WebAddOrEditEnterprisePageState
         title: Text(
           webEnterprisesPresenter.selectedEnterprise?.enterpriseName ?? '',
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              notificationDialog(
+                context: context,
+                titleMessage: R.string.deleteEnterprise,
+                content: Text(
+                  R.string.msgWantDeleteEnterprise,
+                  textAlign: TextAlign.center,
+                ),
+                onPress: () async {
+                  final deleted =
+                      await webEnterprisesPresenter.deleteEnterpriseData();
+                  if (deleted) {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    await webEnterprisesPresenter.loadEnterprises();
+                  }
+                },
+              );
+            },
+            icon: Icon(Icons.delete, color: Colors.red),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),

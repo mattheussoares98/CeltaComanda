@@ -73,7 +73,7 @@ class FirebaseAdapter implements FirebaseStorage {
     try {
       var docRef = firestore
           .collection('clients')
-          .doc(EnterpriseBuilder.entity!.enterpriseName)
+          .doc(enterpriseName)
           .collection("devices")
           .doc("loadedDevices");
 
@@ -83,9 +83,13 @@ class FirebaseAdapter implements FirebaseStorage {
         throw DomainError.notFound;
       }
 
-      return (value.data()! as List)
-          .map((e) => DeviceInfoModel.fromJson(e).toEntity())
+      List<DeviceInfoEntity> devices = value
+          .data()!
+          .values
+          .map((data) => DeviceInfoModel.fromJson(data).toEntity())
           .toList();
+
+      return devices;
     } catch (e) {
       rethrow;
     }

@@ -96,12 +96,13 @@ abstract class Translation {
   String get accessConfigurations;
   String get accessDenied;
   String get advance;
-  String get alwaysUseSameTable;
   String get addAccount;
   String get addCommentError;
   String get addFlagOrTable;
   String get addItens;
   String get addMoreItens;
+  String get alwaysUseSameTable;
+  String get applicationVersion;
   String get avaliate;
   String get blockCommand;
   String get blockTable;
@@ -146,6 +147,7 @@ abstract class Translation {
   String get debit;
   String get deleteEnterprise;
   String get destinyTable;
+  String get deviceId;
   String get detach;
   String get developedByCeltaware;
   String get devicesInformations;
@@ -177,6 +179,7 @@ abstract class Translation {
   String get ifWantSelectComments;
   String get ifWantSelectProducts;
   String get jump;
+  String get lastDateUpdated;
   String get latestCompatibleVersion;
   String get liberateCancelProducts;
   String get liberateCommand;

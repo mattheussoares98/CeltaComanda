@@ -27,7 +27,7 @@ class DeviceInfoModel {
         commandNumber: data['commandNumber'],
         lastUpdatedDate: data['lastUpdatedDate'],
         applicationVersion: data['applicationVersion'],
-        imeiOrWindowsId: data['imeiOrWindowsId'],
+        imeiOrWindowsId: data['imeiOrWindowsId'] ?? "",
       );
 
   DeviceInfoEntity toEntity() => DeviceInfoEntity(

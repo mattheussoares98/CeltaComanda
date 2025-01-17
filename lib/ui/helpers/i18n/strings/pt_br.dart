@@ -140,6 +140,7 @@ class PtBr implements Translation {
   String get addItens => "Adicionar itens";
   String get addMoreItens => "Adicionar mais itens";
   String get alwaysUseSameTable => "Usar sempre a mesma mesa";
+  String get applicationVersion => "Versão do aplicativo";
   String get avaliate => 'Avaliar';
   String get blockCommand => 'Bloquear comanda';
   String get blockTable => 'Bloquear mesa';
@@ -185,6 +186,7 @@ class PtBr implements Translation {
   String get debit => "Débito";
   String get deleteEnterprise => "Excluir empresa";
   String get destinyTable => "Mesa de destino";
+  String get deviceId => "ID do dispositivo";
   String get detach => "Destaques";
   String get developedByCeltaware => "Desenvolvido por Celtaware";
   String get devicesInformations => "Informações dos dispositivos";
@@ -216,6 +218,7 @@ class PtBr implements Translation {
   String get ifWantSelectComments => 'Se desejar, selecione comentários';
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
+  String get lastDateUpdated => 'Último dia atualizado';
   String get latestCompatibleVersion => 'Última versão compatível';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';

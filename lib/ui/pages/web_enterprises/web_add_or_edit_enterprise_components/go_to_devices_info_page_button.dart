@@ -18,7 +18,10 @@ class GoToDevicesInfoPageButton extends StatelessWidget {
         onPressed: () {
           webEnterprisesPresenter.goToDevicesInfoPage();
         },
-        child: Text(R.string.devicesInformations),
+        child: Text(
+          R.string.devicesInformations,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

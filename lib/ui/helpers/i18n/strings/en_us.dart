@@ -140,6 +140,7 @@ class EnUs implements Translation {
   String get addItens => 'Add items';
   String get addMoreItens => 'Add more items';
   String get alwaysUseSameTable => 'Always use the same table';
+  String get applicationVersion => 'Application version';
   String get avaliate => 'Evaluate';
   String get blockCommand => 'Block command';
   String get blockTable => 'Block table';
@@ -186,6 +187,7 @@ class EnUs implements Translation {
   String get debit => 'Debit';
   String get deleteEnterprise => 'Delete enterprise';
   String get destinyTable => 'Destiny table';
+  String get deviceId => 'Device ID';
   String get detach => 'Highlights';
   String get developedByCeltaware => 'Developed by Celtaware';
   String get devicesInformations => 'Devices informations';
@@ -216,6 +218,7 @@ class EnUs implements Translation {
   String get ifWantSelectComments => 'If desired, select comments';
   String get ifWantSelectProducts => 'If desired, select a product';
   String get jump => 'Skip';
+  String get lastDateUpdated => 'Last date updated';
   String get latestCompatibleVersion => 'Latest compatible version';
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';

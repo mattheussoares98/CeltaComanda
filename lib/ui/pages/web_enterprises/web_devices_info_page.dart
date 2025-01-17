@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 import 'web_add_or_edit_enterprise_components/web_add_or_edit_enterprise_components.dart';
+import 'web_devices_info_components/web_devices_info_components.dart';
 
 class WebDevicesInfoPage extends StatefulWidget {
   const WebDevicesInfoPage({super.key});
@@ -25,6 +26,56 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
     });
   }
 
+  void sortDownCommand(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => a.commandNumber.compareTo(b.commandNumber));
+    });
+  }
+
+  void sortUpCommand(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => b.commandNumber.compareTo(a.commandNumber));
+    });
+  }
+
+  void sortDownApplicationVersion(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!
+          .sort((a, b) => a.applicationVersion.compareTo(b.applicationVersion));
+    });
+  }
+
+  void sortUpApplicationVersion(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!
+          .sort((a, b) => b.applicationVersion.compareTo(a.applicationVersion));
+    });
+  }
+
+  void sortDownVersionDate(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => a.lastUpdatedDate.compareTo(b.lastUpdatedDate));
+    });
+  }
+
+  void sortUpVersionDate(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => b.lastUpdatedDate.compareTo(a.lastUpdatedDate));
+    });
+  }
+
+  void sortDownDeviceId(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => a.imeiOrWindowsId.compareTo(b.imeiOrWindowsId));
+    });
+  }
+
+  void sortUpDeviceId(List<DeviceInfoViewModel>? data) {
+    setState(() {
+      data!.sort((a, b) => b.imeiOrWindowsId.compareTo(a.imeiOrWindowsId));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     WebEnterprisesPresenter webEnterprisesPresenter =
@@ -32,7 +83,7 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(R.string.devicesInformations),
+        title: FittedBox(child: Text(R.string.devicesInformations)),
         actions: [
           IconButton(
             onPressed: () async {
@@ -42,7 +93,7 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
           ),
         ],
       ),
-      body: StreamBuilder(
+      body: StreamBuilder<List<DeviceInfoViewModel>?>(
         stream: webEnterprisesPresenter.devicesStream,
         builder: (context, snapshot) {
           if (snapshot.data == null) {
@@ -70,27 +121,84 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
             );
           }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final device = snapshot.data![index];
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Row(
+                          children: [
+                            OrganizeUpOrDown(
+                              data: snapshot.data!,
+                              sortDown: sortDownCommand,
+                              sortUp: sortUpCommand,
+                              title: R.string.command,
+                            ),
+                            OrganizeUpOrDown(
+                              sortDown: sortDownApplicationVersion,
+                              sortUp: sortUpApplicationVersion,
+                              title: R.string.applicationVersion,
+                              data: snapshot.data!,
+                            ),
+                            OrganizeUpOrDown(
+                              sortDown: sortDownDeviceId,
+                              sortUp: sortUpDeviceId,
+                              title: R.string.deviceId,
+                              data: snapshot.data!,
+                            ),
+                            OrganizeUpOrDown(
+                              sortDown: sortDownVersionDate,
+                              sortUp: sortUpVersionDate,
+                              title: R.string.lastDateUpdated,
+                              data: snapshot.data!,
+                            ),
+                          ],
+                        );
+                      }
 
-              return Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColorLight.withAlpha(30),
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10),
+                      final DeviceInfoViewModel device =
+                          snapshot.data![index - 1];
+
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColorLight.withAlpha(20),
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Center(child: Text(device.commandNumber)),
+                            ),
+                            Expanded(
+                              child: Center(
+                                  child: Text(device.applicationVersion)),
+                            ),
+                            Expanded(
+                              child:
+                                  Center(child: Text(device.imeiOrWindowsId)),
+                            ),
+                            Expanded(
+                              child:
+                                  Center(child: Text(device.lastUpdatedDate)),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    Text(device.commandNumber),
-                    Text(device.applicationVersion),
-                    Text(device.imeiOrWindowsId),
-                    Text(device.lastUpdatedDate),
-                  ],
-                ),
-              );
-            },
+                UpdateDeviceInformationsButton(),
+              ],
+            ),
           );
         },
       ),

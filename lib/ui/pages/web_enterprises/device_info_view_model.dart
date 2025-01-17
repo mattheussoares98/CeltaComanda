@@ -23,10 +23,12 @@ class DeviceInfoViewModel extends Equatable {
       DeviceInfoViewModel(
         commandNumber: entity.commandNumber.toString(),
         applicationVersion: entity.applicationVersion.toString(),
-        lastUpdatedDate: formatDate(
-          DateTime.parse(entity.lastUpdatedDate!.toIso8601String()),
-          [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn, ':', ss],
-        ),
+        lastUpdatedDate: entity.lastUpdatedDate == null
+            ? ""
+            : formatDate(
+                DateTime.parse(entity.lastUpdatedDate!.toIso8601String()),
+                [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn, ':', ss],
+              ),
         imeiOrWindowsId: entity.imeiOrWindowsId,
       );
 

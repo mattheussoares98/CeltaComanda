@@ -14,6 +14,7 @@ class GetxWebEnterprisesPresenter extends GetxController
   final UpdateDeviceInformations updateDeviceInformations;
   final UpdateEnterpriseParameters updateEnterpriseParameters;
   final DeleteEnterprise deleteEnterprise;
+  final LoadDevicesInfo loadDevicesInfo;
 
   GetxWebEnterprisesPresenter({
     required this.loadAllEnterprises,
@@ -21,6 +22,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required this.updateDeviceInformations,
     required this.updateEnterpriseParameters,
     required this.deleteEnterprise,
+    required this.loadDevicesInfo,
   });
 
   @override
@@ -148,6 +150,28 @@ class GetxWebEnterprisesPresenter extends GetxController
     } catch (e) {
       mainError = UIError.unexpected;
       return false;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  final _devicesStream = Rx<List<DeviceInfoViewModel>?>(null);
+  @override
+  Stream<List<DeviceInfoViewModel>?> get devicesStream => _devicesStream.stream;
+  set devices(List<DeviceInfoViewModel>? value) => _devicesStream.value = value;
+
+  @override
+  Future<void> getDevicesInfo(String enterpriseName) async {
+    try {
+      isLoading = true;
+      mainError = null;
+      devices = null;
+
+      final result = await loadDevicesInfo.load(enterpriseName);
+
+      devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
+    } catch (e) {
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

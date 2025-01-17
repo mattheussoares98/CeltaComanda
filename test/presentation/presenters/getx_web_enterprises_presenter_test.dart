@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -20,6 +21,9 @@ void main() {
   late UpdateDeviceInformationsSpy updateDeviceInformations;
   late UpdateEnterpriseParametersSpy updateEnterpriseParameters;
   late DeleteEnterpriseSpy deleteEnterprise;
+  late LoadDevicesInfoSpy loadDevicesInfo;
+
+  late List<DeviceInfoViewModel> devices;
 
   void initUseCases() {
     loadAllEnterprises = LoadAllEnterprisesSpy();
@@ -27,6 +31,7 @@ void main() {
     updateDeviceInformations = UpdateDeviceInformationsSpy();
     updateEnterpriseParameters = UpdateEnterpriseParametersSpy();
     deleteEnterprise = DeleteEnterpriseSpy();
+    loadDevicesInfo = LoadDevicesInfoSpy();
   }
 
   void initPresenters() {
@@ -36,15 +41,21 @@ void main() {
       updateDeviceInformations: updateDeviceInformations,
       updateEnterpriseParameters: updateEnterpriseParameters,
       deleteEnterprise: deleteEnterprise,
+      loadDevicesInfo: loadDevicesInfo,
     );
   }
 
   void initEntitys() {
     EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
+    devices = [
+      DeviceInfoViewModel.fromEntity(EntityFactory.makeDeviceInfoEntity()),
+      DeviceInfoViewModel.fromEntity(EntityFactory.makeDeviceInfoEntity()),
+    ];
   }
 
   void mockSuccess() {
     loadAllEnterprises.mockLoadAll([EnterpriseBuilder.entity!]);
+    loadDevicesInfo.mockLoad(devices.map((e) => e.toEntity()).toList());
   }
 
   setUp(() {
@@ -398,6 +409,35 @@ void main() {
       final result = await sut.deleteEnterpriseData();
 
       expect(result, false);
+    });
+  });
+
+  group("Get devices info", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.devicesStream, emitsInOrder([null, devices]));
+
+      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+      expectLater(sut.devicesStream, emits(null));
+
+      loadDevicesInfo.mockLoadError();
+
+      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+    });
+    test("Should call loadDevicesInfo with correct parameter", () async {
+      await sut.getDevicesInfo(EnterpriseBuilder.entity!.enterpriseName);
+
+      verify(() =>
+              loadDevicesInfo.load(EnterpriseBuilder.entity!.enterpriseName))
+          .called(1);
     });
   });
 }

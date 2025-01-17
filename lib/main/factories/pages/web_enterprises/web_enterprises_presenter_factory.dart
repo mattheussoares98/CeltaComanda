@@ -9,4 +9,5 @@ WebEnterprisesPresenter makeGetxWebEnterprisesPresenter() =>
       updateDeviceInformations: makeRemoteUpdateDeviceInformations(),
       updateEnterpriseParameters: makeRemoteUpdateEnterpriseParameters(),
       deleteEnterprise: makeRemoteDeleteEnterprise(),
+      loadDevicesInfo: makeRemoteLoadDevicesInfo(),
     );

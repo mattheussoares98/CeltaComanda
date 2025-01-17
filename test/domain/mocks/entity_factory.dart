@@ -1515,4 +1515,11 @@ class EntityFactory {
         text: faker.randomGenerator.string(10),
         width: faker.randomGenerator.integer(10),
       );
+
+  static DeviceInfoEntity makeDeviceInfoEntity() => DeviceInfoEntity(
+        commandNumber: faker.randomGenerator.integer(100),
+        lastUpdatedDate: faker.date.dateTime(),
+        applicationVersion: faker.randomGenerator.string(10),
+        imeiOrWindowsId: faker.randomGenerator.string(10),
+      );
 }

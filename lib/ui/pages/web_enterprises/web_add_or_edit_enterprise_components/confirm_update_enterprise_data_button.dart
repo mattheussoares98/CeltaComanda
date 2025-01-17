@@ -59,7 +59,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                 return;
               }
 
-              await webEnterprisesPresenter.updateEnterprise(
+              bool updated = await webEnterprisesPresenter.updateEnterprise(
                 enterpriseName: enterpriseNameController.text,
                 navsUrl: navsUrlController.text,
                 concentratorUrl: concentratorUrlController.text,
@@ -76,6 +76,11 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                 zoomImage: zoomImage,
                 useCovenant: useCovenant,
               );
+
+              if (updated) {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                await webEnterprisesPresenter.loadEnterprises();
+              }
             },
           );
         },

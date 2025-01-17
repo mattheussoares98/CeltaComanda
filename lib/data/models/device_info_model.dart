@@ -23,6 +23,13 @@ class DeviceInfoModel {
         imeiOrWindowsId: entity.imeiOrWindowsId,
       );
 
+  factory DeviceInfoModel.fromJson(Map data) => DeviceInfoModel(
+        commandNumber: data['commandNumber'],
+        lastUpdatedDate: data['lastUpdatedDate'],
+        applicationVersion: data['applicationVersion'],
+        imeiOrWindowsId: data['imeiOrWindowsId'],
+      );
+
   DeviceInfoEntity toEntity() => DeviceInfoEntity(
         commandNumber: commandNumber,
         applicationVersion: applicationVersion,

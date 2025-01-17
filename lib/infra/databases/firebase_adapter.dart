@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/database/database.dart';
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
-import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 
 class FirebaseAdapter implements FirebaseStorage {
@@ -47,7 +46,7 @@ class FirebaseAdapter implements FirebaseStorage {
         'dates': adicionarData,
       }, SetOptions(merge: true));
     } catch (e) {
-      throw DomainError.unexpected;
+      rethrow;
     }
   }
 
@@ -64,7 +63,26 @@ class FirebaseAdapter implements FirebaseStorage {
         entity.imeiOrWindowsId: DeviceInfoModel.fromEntity(entity).toJson(),
       }, SetOptions(merge: true));
     } catch (e) {
-      throw DomainError.unexpected;
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseName) async {
+    try {
+      var docRef = firestore
+          .collection('clients')
+          .doc(EnterpriseBuilder.entity!.enterpriseName)
+          .collection("devices")
+          .doc("loadedDevices");
+
+      final value = await docRef.get();
+
+      return (value.data()! as List)
+          .map((e) => DeviceInfoModel.fromJson(e).toEntity())
+          .toList();
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -114,7 +132,7 @@ class FirebaseAdapter implements FirebaseStorage {
         EnterpriseValidationModel.fromEntity(enterprise).toJson(),
       );
     } catch (e) {
-      throw Exception();
+      rethrow;
     }
   }
 
@@ -132,7 +150,7 @@ class FirebaseAdapter implements FirebaseStorage {
         SetOptions(merge: true),
       );
     } catch (e) {
-      throw Exception();
+      rethrow;
     }
   }
 
@@ -142,7 +160,7 @@ class FirebaseAdapter implements FirebaseStorage {
       var docRef = firestore.collection('clients').doc(enterpriseName);
       await docRef.delete();
     } catch (e) {
-      throw Exception();
+      rethrow;
     }
   }
 }

@@ -11,6 +11,7 @@ abstract class FirebaseStorage {
   Future<void> addNewPrintRequest(PrintRequestEntity entity);
 
   Future<void> addDeviceInfo(DeviceInfoEntity entity);
+  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseName);
 
   Future<void> updateMenu(String enterpriseName);
 

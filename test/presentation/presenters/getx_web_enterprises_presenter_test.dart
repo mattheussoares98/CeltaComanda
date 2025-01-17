@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -421,7 +422,7 @@ void main() {
       sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
       await sut.getDevicesInfo();
     });
-    test("Should emit correct values on error", () async {
+    test("Should emit correct values on unexpected error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
         sut.mainErrorStream,
@@ -429,7 +430,20 @@ void main() {
       );
       expectLater(sut.devicesStream, emits(null));
 
-      loadDevicesInfo.mockLoadError();
+      loadDevicesInfo.mockLoadError(DomainError.unexpected);
+
+      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
+      await sut.getDevicesInfo();
+    });
+    test("Should emit correct values on not found error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.notFound]),
+      );
+      expectLater(sut.devicesStream, emits(null));
+
+      loadDevicesInfo.mockLoadError(DomainError.notFound);
 
       sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity!);
       await sut.getDevicesInfo();

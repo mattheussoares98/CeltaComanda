@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/database/database.dart';
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 
 class FirebaseAdapter implements FirebaseStorage {
@@ -79,7 +80,7 @@ class FirebaseAdapter implements FirebaseStorage {
       final value = await docRef.get();
 
       if (value.data() == null) {
-        throw Exception();
+        throw DomainError.notFound;
       }
 
       return (value.data()! as List)

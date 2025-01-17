@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../domain/entities/entities.dart';
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -175,8 +176,14 @@ class GetxWebEnterprisesPresenter extends GetxController
           await loadDevicesInfo.load(_selectedEnterprise!.enterpriseName);
 
       devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
-    } catch (e) {
-      mainError = UIError.unexpected;
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.notFound:
+          mainError = UIError.notFound;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
     } finally {
       isLoading = false;
     }

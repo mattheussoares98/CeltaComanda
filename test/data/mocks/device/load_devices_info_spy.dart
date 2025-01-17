@@ -12,7 +12,7 @@ class LoadDevicesInfoSpy extends Mock implements LoadDevicesInfo {
     this._mockLoadCall().thenAnswer((any) async => devices);
   }
 
-  void mockLoadError() {
-    this._mockLoadCall().thenThrow(DomainError.unexpected);
+  void mockLoadError(DomainError error) {
+    this._mockLoadCall().thenThrow(error);
   }
 }

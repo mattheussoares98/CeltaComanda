@@ -750,7 +750,7 @@ void main() {
       );
 
       expect(
-        sut.selectedSeller,
+        sut.selectedSeller?.toEntity(),
         sellerEntitys.firstWhereOrNull(
             (e) => e.SellersId.toString() == saleRequestTempEntity.SellerCode),
       );

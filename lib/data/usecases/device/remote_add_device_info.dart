@@ -22,7 +22,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
         commandNumber: commandNumber,
         lastUpdatedDate: DateTime.now().toIso8601String(),
         applicationVersion: applicationVersion,
-        imeiOrWindowsId: imeiOrWindowsId,
+        imeiOrWindowsId: imeiOrWindowsId, //TODO add battery information
       ).toEntity();
 
       await firebaseStorage.addDeviceInfo(entity);

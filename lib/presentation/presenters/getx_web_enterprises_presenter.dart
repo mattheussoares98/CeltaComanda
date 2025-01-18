@@ -169,7 +169,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       devices = null;
 
       if (_selectedEnterprise == null) {
-        throw Exception();
+        throw DomainError.unexpected;
       }
 
       final result =

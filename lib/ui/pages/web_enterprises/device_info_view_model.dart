@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
 import 'package:equatable/equatable.dart';
 
@@ -42,7 +43,8 @@ class DeviceInfoViewModel extends Equatable {
   DeviceInfoEntity toEntity() => DeviceInfoEntity(
         commandNumber: commandNumber.toInt(),
         applicationVersion: applicationVersion,
-        lastUpdatedDate: DateTime.parse(lastUpdatedDate),
+        lastUpdatedDate:
+            DateFormat("dd/MM/yyyy HH:mm:ss").parse(lastUpdatedDate),
         imeiOrWindowsId: imeiOrWindowsId,
       );
 

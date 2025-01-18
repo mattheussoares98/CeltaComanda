@@ -6,7 +6,10 @@ import 'package:mocktail/mocktail.dart';
 
 class AddPendingDeviceToUpdateSpy extends Mock
     implements AddPendingDeviceToUpdate {
-  When _mockAddCall(String identifier) => when(() => this.add(identifier));
+  When _mockAddCall(String identifier) => when(() => this.add(
+        imeiOrWindowsId: any(named: "imeiOrWindowsId"),
+        enterpriseName: any(named: "enterpriseName"),
+      ));
 
   void mockAdd(String identifier) {
     this._mockAddCall(identifier).thenAnswer((any) async => any);

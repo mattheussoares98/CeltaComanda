@@ -407,7 +407,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           EnterpriseBuilder.entity?.updatePendingDevices) {
         EnterpriseBuilder.entity = enterprise;
 
-        await addPendingDeviceToUpdate.add(imeiOrWindowsId);
+        await addPendingDeviceToUpdate.add(
+          imeiOrWindowsId: imeiOrWindowsId,
+          enterpriseName: enterprise.enterpriseName,
+        );
         await localEnterpriseData.add(enterprise);
       }
 

@@ -118,10 +118,11 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> addPendingDeviceToUpdate(String imeiOrWindowsId) async {
-    var docRef = firestore
-        .collection('clients')
-        .doc(EnterpriseBuilder.entity!.enterpriseName);
+  Future<void> addPendingDeviceToUpdate({
+    required String imeiOrWindowsId,
+    required String enterpriseName,
+  }) async {
+    var docRef = firestore.collection('clients').doc(enterpriseName);
 
     await docRef.set(
       {

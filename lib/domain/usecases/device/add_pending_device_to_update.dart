@@ -1,3 +1,6 @@
 abstract class AddPendingDeviceToUpdate {
-  Future<void> add(String imeiOrWindowsId);
+  Future<void> add({
+    required String imeiOrWindowsId,
+    required String enterpriseName,
+  });
 }

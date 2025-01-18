@@ -11,9 +11,15 @@ class RemoteAddPendingDeviceToUpdate implements AddPendingDeviceToUpdate {
   });
 
   @override
-  Future<void> add(String imeiOrWindowsId) async {
+  Future<void> add({
+    required String imeiOrWindowsId,
+    required String enterpriseName,
+  }) async {
     try {
-      await firebaseStorage.addPendingDeviceToUpdate(imeiOrWindowsId);
+      await firebaseStorage.addPendingDeviceToUpdate(
+        imeiOrWindowsId: imeiOrWindowsId,
+        enterpriseName: enterpriseName,
+      );
     } catch (e) {
       debugPrint(e.toString());
     }

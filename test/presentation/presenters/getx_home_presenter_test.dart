@@ -1403,7 +1403,10 @@ void main() {
           enterprisePresenter: enterprisePresenter,
         );
 
-        verify(() => addPendingDeviceToUpdate.add(imeiOrWindowsId)).called(1);
+        verify(() => addPendingDeviceToUpdate.add(
+              imeiOrWindowsId: imeiOrWindowsId,
+              enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+            )).called(1);
       });
       test("Should get unique identifier", () async {
         enterpriseJson["updatePendingDevices"] =

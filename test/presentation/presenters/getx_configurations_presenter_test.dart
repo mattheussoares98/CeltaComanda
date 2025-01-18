@@ -358,7 +358,10 @@ void main() {
     test("Should call addPendingDeviceToUpdate.add", () async {
       await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
-      verify(() => addPendingDeviceToUpdate.add(identifier)).called(1);
+      verify(() => addPendingDeviceToUpdate.add(
+            imeiOrWindowsId: identifier,
+            enterpriseName: EnterpriseBuilder.entity?.enterpriseName ?? "",
+          )).called(1);
     });
     test("Should call load pending device", () async {
       await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");

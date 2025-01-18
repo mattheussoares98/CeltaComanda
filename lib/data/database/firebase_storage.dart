@@ -15,7 +15,10 @@ abstract class FirebaseStorage {
 
   Future<void> updateMenu(String enterpriseName);
 
-  Future<void> addPendingDeviceToUpdate(String imeiOrWindowsId);
+  Future<void> addPendingDeviceToUpdate({
+    required String imeiOrWindowsId,
+    required String enterpriseName,
+  });
 
   Future<void> updateEnterpriseParameters(EnterpriseEntity enterprise);
 

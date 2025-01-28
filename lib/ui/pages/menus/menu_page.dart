@@ -57,41 +57,54 @@ class _MenuPageState extends State<MenuPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
 
-    // loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
+    loadingSubscription = handleLoading(context, menuPresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
-      body: StreamBuilder<bool>(
-          stream: menuPresenter.showPreLoadImagesStream,
-          builder: (context, showPreLoadImageSnapshot) {
-            return StreamBuilder<
-                List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
-              stream: menuPresenter.menuStream,
-              builder: (context, snapshot) {
-                if (menuPresenter.loadedMenu.isEmpty) {
-                  return const LoadMenuButton();
-                } else {
-                  return StreamBuilder<int>(
-                      stream: menuPresenter.indexOfSelectedGroupStream,
-                      builder: (context, selectedGroupIndex) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            children: [
-                              if (showPreLoadImageSnapshot.data == true)
-                                const PreLoadImagesPage(),
-                              GroupsSubgroupsAndProducts(
-                                selectedIndex: selectedGroupIndex.data,
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                }
+      body: Column(
+        children: [
+          TextButton(
+              onPressed: () async {
+                await menuPresenter.loadAllImages();
               },
-            );
-          }),
+              child: Text("Load All Images")),
+          Expanded(
+            child: StreamBuilder<bool>(
+                stream: menuPresenter.showPreLoadImagesStream,
+                builder: (context, showPreLoadImageSnapshot) {
+                  return StreamBuilder<
+                      List<
+                          Map<ExpansibleGroupsViewModel,
+                              List<ProductsViewModel>>>>(
+                    stream: menuPresenter.menuStream,
+                    builder: (context, snapshot) {
+                      if (menuPresenter.loadedMenu.isEmpty) {
+                        return const LoadMenuButton();
+                      } else {
+                        return StreamBuilder<int>(
+                            stream: menuPresenter.indexOfSelectedGroupStream,
+                            builder: (context, selectedGroupIndex) {
+                              return SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: Column(
+                                  children: [
+                                    if (showPreLoadImageSnapshot.data == true)
+                                      const PreLoadImagesPage(),
+                                    GroupsSubgroupsAndProducts(
+                                      selectedIndex: selectedGroupIndex.data,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      }
+                    },
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

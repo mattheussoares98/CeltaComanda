@@ -766,17 +766,19 @@ class GetxMenuPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      final result = await loadImages.load(_loadedMenu
-          .expand((map) => map.values)
-          .expand((lista) => lista)
-          .map((e) => e.PriceLookupCode)
-          .toList());
+      final images = await loadImages.load(getLocalImages: false);
 
-      debugPrint(result.toString());
+      _downloadedImages = images;
+
+      debugPrint(images.toString());
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }
   }
+
+  List<ImageModel> _downloadedImages = [];
+  @override
+  List<ImageModel> get downloadedImages => [..._downloadedImages];
 }

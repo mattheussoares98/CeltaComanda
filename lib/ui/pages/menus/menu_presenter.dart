@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
@@ -18,6 +19,8 @@ abstract class MenuPresenter implements Listenable {
 
   Stream<ProductScheduleViewModel?> get productScheduleStream;
   Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream;
+
+  List<ImageModel> get downloadedImages;
 
   Future<void> getGroupsAndProducts({
     required String commandNumber,

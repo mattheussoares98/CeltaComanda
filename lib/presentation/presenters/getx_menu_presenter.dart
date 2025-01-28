@@ -26,6 +26,7 @@ class GetxMenuPresenter extends GetxController
   final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
   final UpdatedAllImages updatedAllImages;
   final ParametersData parametersData;
+  final LoadImages loadImages;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -40,6 +41,7 @@ class GetxMenuPresenter extends GetxController
     required this.manageExpansibleGroupSchedule,
     required this.updatedAllImages,
     required this.parametersData,
+    required this.loadImages,
   });
 
   @override

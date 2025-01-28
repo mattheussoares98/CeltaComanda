@@ -15,4 +15,5 @@ MenuPresenter makeGetxMenuPresenter() => GetxMenuPresenter(
       manageExpansibleGroupSchedule: makeRemoteManageExpansibleGroupSchedule(),
       updatedAllImages: makeLocalUpdatedAllImages(),
       parametersData: makeLocalParametersData(),
+      loadImages: makeConcentratorLoadImages(),
     );

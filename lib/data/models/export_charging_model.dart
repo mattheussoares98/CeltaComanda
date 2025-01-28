@@ -1,4 +1,6 @@
-class ExportChargingModel {
+import 'package:equatable/equatable.dart';
+
+class ExportChargingModel extends Equatable {
   final DateTime lastUpdateImages;
   final DateTime lastUpdateProducts;
 
@@ -6,6 +8,12 @@ class ExportChargingModel {
     required this.lastUpdateImages,
     required this.lastUpdateProducts,
   });
+
+  @override
+  List<Object?> get props => [
+        lastUpdateImages,
+        lastUpdateProducts,
+      ];
 
   factory ExportChargingModel.fromJson(Map json) {
     return ExportChargingModel(

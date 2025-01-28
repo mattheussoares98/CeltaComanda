@@ -762,12 +762,20 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> loadAllImages() async {
+  Future<void> loadAllImages(HomePresenter homePresenter) async {
     try {
+      //TODO remove preload images
+
       isLoading = true;
       mainError = null;
 
-      _downloadedImages = await loadImages.load(getLocalImages: false);
+      final test = await loadExportCharging.load(
+        pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
+                ?.toString()
+                .padLeft(3, "0") ??
+            "100",
+      );
+      _downloadedImages = await loadImages.load(getLocalImages: true);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

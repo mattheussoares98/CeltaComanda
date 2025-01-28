@@ -5,6 +5,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 
 import 'package:faker/faker.dart';
+import 'package:flutter/services.dart';
 
 class EntityFactory {
   static EnterpriseEntity makeEnterpriseWithNullValue({
@@ -1521,5 +1522,12 @@ class EntityFactory {
         lastUpdatedDate: faker.date.dateTime(),
         applicationVersion: faker.randomGenerator.string(10),
         imeiOrWindowsId: faker.randomGenerator.string(10),
+      );
+
+  static ImageModel makeImageModel() => ImageModel(
+        pluOrEan: faker.guid.guid(),
+        image: Uint8List.fromList(faker.randomGenerator.string(10).codeUnits),
+        keyIsEan: faker.randomGenerator.boolean(),
+        isEnterpriseImage: faker.randomGenerator.boolean(),
       );
 }

@@ -53,6 +53,7 @@ class _MenuPageState extends State<MenuPage>
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -66,7 +67,7 @@ class _MenuPageState extends State<MenuPage>
         children: [
           TextButton(
               onPressed: () async {
-                await menuPresenter.loadAllImages();
+                await menuPresenter.loadAllImages(homePresenter);
               },
               child: Text("Load All Images")),
           Expanded(

@@ -5,7 +5,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadExportChargingSpy extends Mock implements LoadExportCharging {
-  When _mockLoadCall() => when(() => this.loadExportsCharging(
+  When _mockLoadCall() => when(() => this.load(
         pdvNumber: any(named: "pdvNumber"),
       ));
 

@@ -11,7 +11,7 @@ class RemoteLoadExportCharging implements LoadExportCharging {
   RemoteLoadExportCharging({required this.httpClient});
 
   @override
-  Future<ExportChargingModel> loadExportsCharging({
+  Future<ExportChargingModel> load({
     required String pdvNumber,
   }) async {
     try {

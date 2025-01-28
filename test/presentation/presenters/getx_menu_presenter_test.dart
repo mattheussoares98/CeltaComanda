@@ -41,6 +41,8 @@ void main() {
   late List<ProductEntity> productsEntityThatIsPromoCombox;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
+  late List<ImageModel> mockedLoadedImages;
+  late ExportChargingModel exportChargingModel;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -164,6 +166,16 @@ void main() {
       EntityFactory.makeParametersModel(),
       EntityFactory.makeParametersModel(),
     ];
+
+    mockedLoadedImages = [
+      EntityFactory.makeImageModel(),
+      EntityFactory.makeImageModel(),
+    ];
+
+    exportChargingModel = ExportChargingModel(
+      lastUpdateImages: faker.date.dateTime(),
+      lastUpdateProducts: faker.date.dateTime(),
+    );
   }
 
   void mockSuccess() {
@@ -176,6 +188,8 @@ void main() {
     loadSuggestionSale.mockLoad(suggestions);
     updatedAllImages.mockGetLastDate(null);
     parametersData.mockLoad(parameters);
+    loadImages.mockLoad(mockedLoadedImages);
+    loadExportCharging.mockLoad(exportChargingModel);
   }
 
   setUp(() {
@@ -1430,6 +1444,57 @@ void main() {
       await sut.addOrRemoveSearchProducts();
       expect(sut.loadedMenu[0].keys.first.Name,
           sut.getExpansibleGroupNameWithoutPipes(mockedExpansibleGroup.Name));
+    });
+  });
+
+  group("Load all images", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      await sut.loadAllImages(homePresenter);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      loadImages.mockLoadError();
+
+      await sut.loadAllImages(homePresenter);
+    });
+    test("Should call load images", () async {
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => loadImages.load(getLocalImages: false)).called(1);
+    });
+    test("Should update downloaded images correctly", () async {
+      expect(sut.downloadedImages, []);
+
+      await sut.loadAllImages(homePresenter);
+
+      expect(sut.downloadedImages, mockedLoadedImages);
+    });
+    test("Should load export charging correctly when pdv is null", () async {
+      homePresenter.commandEntityController = null;
+
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => loadExportCharging.load(pdvNumber: "100")).called(1);
+    });
+    test("Should load export charging correctly when pdv is not null",
+        () async {
+      homePresenter.commandEntityController = null;
+
+      await sut.loadAllImages(homePresenter);
+
+      verify(
+        () => loadExportCharging.load(
+            pdvNumber:
+                homePresenter.commandEntity!.commandNumber!.padLeft(3, "0")),
+      ).called(1);
     });
   });
 }

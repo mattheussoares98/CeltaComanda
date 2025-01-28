@@ -79,5 +79,5 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> addOrRemoveSearchProducts();
 
-  Future<void> loadAllImages();
+  Future<void> loadAllImages(HomePresenter homePresenter);
 }

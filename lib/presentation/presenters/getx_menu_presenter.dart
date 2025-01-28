@@ -766,7 +766,7 @@ class GetxMenuPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      final images = await loadImages.load(getLocalImages: false);
+      final images = await loadImages.load(getLocalImages: true);
 
       _downloadedImages = images;
 

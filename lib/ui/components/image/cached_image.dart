@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-import '../../../infra/helpers/helperts.dart';
 import '../../../main/builders/builders.dart';
+import '../../pages/pages.dart';
 
 class CachedImage extends StatefulWidget {
   final String? ean;
@@ -28,134 +25,45 @@ class CachedImage extends StatefulWidget {
 
 class CachedImageState extends State<CachedImage> {
   @override
-  initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (mounted) {
-        String url =
-            "${EnterpriseBuilder.entity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
-
-        await _imageHasAValidSize(url);
+    final indexOfProduct = menuPresenter.downloadedImages.indexWhere((e) {
+      if (e.keyIsEan) {
+        return e.pluOrEan.toLowerCase() ==
+            "${widget.ean ?? ""}.PNG".toLowerCase();
+      } else {
+        return e.pluOrEan.toLowerCase() == "${widget.plu}.PNG".toLowerCase();
       }
     });
-  }
 
-  static final _customCacheManager = CacheManager(
-    Config(
-      CacheKeys.images.name,
-      maxNrOfCacheObjects: 1000,
-      stalePeriod: Duration(days: 1),
-    ),
-  );
-
-  static final Set<String> _failedUrls = {};
-  static final Set<String> _largeImages = {};
-
-  Future<void> _imageHasAValidSize(String url) async {
-    if (_largeImages.contains(url) || _failedUrls.contains(url)) {
-      return;
-    }
-    try {
-      final maxSizeInBytes = 1 * 1024 * 1024;
-      final client = http.Client();
-      final request = http.Request('GET', Uri.parse(url));
-      final response = await client.send(request).timeout(Duration(seconds: 2));
-      StreamSubscription<List<int>>? subscription;
-      int totalBytes = 0;
-      final completer = Completer<void>();
-      subscription = response.stream.listen(
-        (List<int> data) {
-          totalBytes += data.length;
-
-          if (totalBytes > maxSizeInBytes) {
-            _largeImages.add(url);
-            subscription?.cancel();
-            completer.completeError('Tamanho máximo da imagem excedido $url');
-          }
-        },
-        onDone: () {
-          // _correctImages.add(url);
-          completer.complete();
-        },
-        onError: (error) {
-          _failedUrls.add(url);
-          completer.completeError(error);
-        },
-        cancelOnError: true,
-      );
-    } catch (e) {
-      _failedUrls.add(url);
-      debugPrint(e.toString());
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String url =
-        "${EnterpriseBuilder.entity!.concentradorUrl}/Images/${(widget.ean == null || widget.ean?.isEmpty == true) ? widget.plu : widget.ean}.PNG";
-
-    if (_failedUrls.contains(url) || _largeImages.contains(url)) {
-      return _defaultImage(
+    if (indexOfProduct == -1) {
+      return _defaultImage();
+    } else {
+      return Image.memory(
+        menuPresenter.downloadedImages[indexOfProduct].image,
         height: widget.height,
         width: widget.width,
-        cacheManager: _customCacheManager,
-      );
-    } else {
-      return CachedNetworkImage(
         fit: EnterpriseBuilder.entity?.zoomImage == true && widget.zoomImage
             ? BoxFit.fitWidth
             : BoxFit.contain,
-        cacheManager: _customCacheManager,
-        key: ValueKey<String>(url),
-        imageUrl: url,
-        height: widget.height,
-        width: widget.width,
-        errorWidget: (context, url, error) {
-          _failedUrls.add(url);
-          return _defaultImage(
-            height: widget.height,
-            width: widget.width,
-            cacheManager: _customCacheManager,
-          );
-        },
-        placeholder: (context, url) {
-          return _defaultImage(
-            height: widget.height,
-            width: widget.width,
-            cacheManager: _customCacheManager,
-          );
-        },
       );
     }
   }
 
-  Widget _defaultImage({
-    required double height,
-    required double width,
-    required BaseCacheManager? cacheManager,
-  }) {
+  Widget _defaultImage() {
     final url =
         "${EnterpriseBuilder.entity!.concentradorUrl}/Images/Enterprise${EnterpriseBuilder.entity!.enterpriseId}/Logo.png";
-    return CachedNetworkImage(
-      fit: BoxFit.contain,
-      cacheManager: cacheManager,
-      key: ValueKey<String>(url),
-      imageUrl: url,
-      height: height,
-      width: width,
-      errorWidget: (context, url, error) {
+    return Image.network(
+      url,
+      height: widget.height,
+      width: widget.width,
+      errorBuilder: (context, error, stackTrace) {
         return Image.asset(
           "lib/ui/assets/images/imageNotFound.png",
-          height: height,
-          width: width,
-        );
-      },
-      placeholder: (context, url) {
-        return Image.asset(
-          "lib/ui/assets/images/imageNotFound.png",
-          height: height,
-          width: width,
+          height: widget.height,
+          width: widget.width,
+          fit: BoxFit.contain,
         );
       },
     );

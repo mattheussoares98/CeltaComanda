@@ -1,6 +1,7 @@
 export './app_manager/app_manager.dart';
 export './barcode/barcode.dart';
 export './cart/cart.dart';
+export './charging/charging.dart';
 export 'command/command.dart';
 export 'customer/customer.dart';
 export 'device/device.dart';

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
@@ -752,6 +753,26 @@ class GetxMenuPresenter extends GetxController
           _loadedMenu.removeAt(index);
         }
       }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> loadAllImages() async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      final result = await loadImages.load(_loadedMenu
+          .expand((map) => map.values)
+          .expand((lista) => lista)
+          .map((e) => e.PriceLookupCode)
+          .toList());
+
+      debugPrint(result.toString());
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

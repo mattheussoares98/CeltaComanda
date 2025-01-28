@@ -38,7 +38,7 @@ class CachedImageState extends State<CachedImage> {
     });
 
     if (indexOfProduct == -1) {
-      return _defaultImage();
+      return _defaultImage(menuPresenter);
     } else {
       return Image.memory(
         menuPresenter.downloadedImages[indexOfProduct].image,
@@ -51,21 +51,23 @@ class CachedImageState extends State<CachedImage> {
     }
   }
 
-  Widget _defaultImage() {
-    final url =
-        "${EnterpriseBuilder.entity!.concentradorUrl}/Images/Enterprise${EnterpriseBuilder.entity!.enterpriseId}/Logo.png";
-    return Image.network(
-      url,
-      height: widget.height,
-      width: widget.width,
-      errorBuilder: (context, error, stackTrace) {
-        return Image.asset(
-          "lib/ui/assets/images/imageNotFound.png",
-          height: widget.height,
-          width: widget.width,
-          fit: BoxFit.contain,
-        );
-      },
-    );
+  Widget _defaultImage(MenuPresenter menuPresenter) {
+    final indexOfEnterpriseImage =
+        menuPresenter.downloadedImages.indexWhere((e) => e.isEnterpriseImage);
+
+    if (indexOfEnterpriseImage == -1) {
+      return Image.asset(
+        "lib/ui/assets/images/imageNotFound.png",
+        height: widget.height,
+        width: widget.width,
+        fit: BoxFit.contain,
+      );
+    } else {
+      return Image.memory(
+        menuPresenter.downloadedImages[indexOfEnterpriseImage].image,
+        height: widget.height,
+        width: widget.width,
+      );
+    }
   }
 }

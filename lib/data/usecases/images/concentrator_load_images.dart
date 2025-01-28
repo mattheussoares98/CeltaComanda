@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +23,6 @@ class ConcentratorLoadImages implements LoadImages {
 
   @override
   Future<List<ImageModel>> load({required bool getLocalImages}) async {
-    List<String> plusAndEans = [];
     try {
       if (getLocalImages) {
         final localImages = await hiveStorage.get(CacheKeys.images.name);
@@ -38,56 +38,98 @@ class ConcentratorLoadImages implements LoadImages {
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );
 
-      plusAndEans =
-          response.map<String>((e) => e.toString()).toList().cast<String>();
-      final loadedImages = await _loadImages(plusAndEans);
+      final plusAndEansThatContainsImagesInConcentrator = (response as List)
+          .map<String>((e) => e.toString())
+          .toList()
+          .cast<String>();
 
+      final loadedImages = await _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+
+      await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
-          CacheKeys.images.name, loadedImages.map((e) => e.toJson()).toList());
+        CacheKeys.images.name,
+        loadedImages.map((e) => e.toJson()).toList(),
+      );
       return loadedImages;
     } catch (e) {
       throw DomainError.unexpected;
     }
   }
 
-  Future<List<ImageModel>> _loadImages(List<String> imagesNames) async {
-    final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
+  Future<List<ImageModel>> _loadConcentratorImages(
+      List<String> imagesNames) async {
     final List<ImageModel> images = [];
-    for (var pluOrEan in imagesNames) {
-      final maxSizeInBytes = 1 * 1024 * 1024;
-      final client = http.Client();
-      final url = "$concentratorUrl/Images/$pluOrEan";
-      final request = http.Request('GET', Uri.parse(url));
-      final response =
-          await client.send(request) /* .timeout(Duration(seconds: 2)) */;
-      StreamSubscription<List<int>>? subscription;
-      int totalBytes = 0;
-      final completer = Completer<void>();
-      final List<int> buffer = [];
-      subscription = response.stream.listen(
-        (List<int> data) {
-          totalBytes += data.length;
-          buffer.addAll(data);
 
-          if (totalBytes > maxSizeInBytes) {
-            subscription?.cancel();
-            completer.completeError('Tamanho máximo da imagem excedido $url');
-          }
-        },
-        onDone: () {
-          images.add(ImageModel(
-            pluOrEan: pluOrEan,
-            image: Uint8List.fromList(buffer),
-            keyIsEan: pluOrEan.length > 11,
-          ));
-          completer.complete();
-        },
-        onError: (error) {
-          completer.completeError(error);
-        },
-        cancelOnError: true,
-      );
+    final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
+    final enterpriseImage = await _loadEnterpriseConcentratorImage();
+
+    if (enterpriseImage != null) {
+      images.add(enterpriseImage);
+    }
+
+    for (var pluOrEan in imagesNames) {
+      try {
+        final maxSizeInBytes = 1 * 1024 * 1024;
+        final client = http.Client();
+        final url = "$concentratorUrl/Images/$pluOrEan";
+        final request = http.Request('GET', Uri.parse(url));
+        final response =
+            await client.send(request) /* .timeout(Duration(seconds: 2)) */;
+        StreamSubscription<List<int>>? subscription;
+        int totalBytes = 0;
+        final completer = Completer<void>();
+        final List<int> buffer = [];
+        subscription = response.stream.listen(
+          (List<int> data) {
+            totalBytes += data.length;
+            buffer.addAll(data);
+
+            if (totalBytes > maxSizeInBytes) {
+              subscription?.cancel();
+              completer.completeError('Tamanho máximo da imagem excedido $url');
+            }
+          },
+          onDone: () {
+            images.add(
+              ImageModel(
+                pluOrEan: pluOrEan,
+                image: Uint8List.fromList(buffer),
+                keyIsEan: pluOrEan.length > 11,
+                isEnterpriseImage: false,
+              ),
+            );
+            completer.complete();
+          },
+          onError: (error) {
+            completer.completeError(error);
+          },
+          cancelOnError: true,
+        );
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     }
     return images;
+  }
+
+  Future<ImageModel?> _loadEnterpriseConcentratorImage() async {
+    try {
+      final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
+      final enterpriseImageResponse = await http.get(
+        Uri.parse("$concentratorUrl/Images/Enterprise$enterpriseId/Logo.png"),
+      );
+
+      return ImageModel(
+        pluOrEan: "",
+        image: enterpriseImageResponse.bodyBytes,
+        keyIsEan: false,
+        isEnterpriseImage: true,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
@@ -766,11 +765,7 @@ class GetxMenuPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      final images = await loadImages.load(getLocalImages: true);
-
-      _downloadedImages = images;
-
-      debugPrint(images.toString());
+      _downloadedImages = await loadImages.load(getLocalImages: false);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

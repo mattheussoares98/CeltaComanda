@@ -1,5 +1,5 @@
 import '../../../data/models/models.dart';
 
-abstract class LoadExportsCharging {
+abstract class LoadExportCharging {
   Future<ExportChargingModel> loadExportsCharging({required String pdvNumber});
 }

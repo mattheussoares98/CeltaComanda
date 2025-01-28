@@ -8,6 +8,7 @@ export 'device/device.dart';
 export './enterprise/enterprise.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './expansible_groups/expansible_groups.dart';
+export './export/export.dart';
 export './http/http.dart';
 export './images/images.dart';
 export './login/login.dart';

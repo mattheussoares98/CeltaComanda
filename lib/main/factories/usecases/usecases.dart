@@ -6,6 +6,7 @@ export 'device/device.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './enterprise_data/enterprise_data.dart';
 export './expansible_groups/expansible_groups.dart';
+export 'export/export.dart';
 export './images/images.dart';
 export './login_management/login_management.dart';
 export './menu/menu.dart';

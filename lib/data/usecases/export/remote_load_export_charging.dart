@@ -5,7 +5,7 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
-class RemoteLoadExportCharging implements LoadExportsCharging {
+class RemoteLoadExportCharging implements LoadExportCharging {
   final HttpClient httpClient;
 
   RemoteLoadExportCharging({required this.httpClient});

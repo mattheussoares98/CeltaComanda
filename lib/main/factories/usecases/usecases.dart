@@ -2,6 +2,7 @@ export './app_manager/app_manager.dart';
 export './barcode/barcode.dart';
 export './command/command.dart';
 export './customer/customer.dart';
+export './data/data.dart';
 export 'device/device.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './enterprise_data/enterprise_data.dart';

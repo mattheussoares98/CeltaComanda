@@ -3,6 +3,7 @@ export './barcode/barcode.dart';
 export './cart/cart.dart';
 export './command/command.dart';
 export './customer/customer.dart';
+export './data/data.dart';
 export './database/database.dart';
 export 'device/device.dart';
 export './enterprise/enterprise.dart';

@@ -26,6 +26,7 @@ class GetxConfigurationsPresenter extends GetxController
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
   final LoadDeviceData loadDeviceData;
   final LaunchUrl launchUrl;
+  final DeleteData deleteData;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -42,6 +43,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.addPendingDeviceToUpdate,
     required this.loadDeviceData,
     required this.launchUrl,
+    required this.deleteData,
   });
 
   @override

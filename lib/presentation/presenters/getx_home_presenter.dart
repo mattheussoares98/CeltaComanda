@@ -24,6 +24,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
   final LoadDeviceData loadDeviceData;
   final PdvRegistration pdvRegistration;
+  final DeleteData deleteData;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -39,6 +40,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.addPendingDeviceToUpdate,
     required this.loadDeviceData,
     required this.pdvRegistration,
+    required this.deleteData,
   });
 
   @override

@@ -20,4 +20,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
       loadDeviceData: makeLocalLoadDeviceData(),
       launchUrl: makeRemoteLaunchUrl(),
+      deleteData: makeLocalDeleteData(),
     );

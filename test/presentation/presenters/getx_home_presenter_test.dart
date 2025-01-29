@@ -53,6 +53,7 @@ void main() {
   late String imeiOrWindowsId;
   late double applicationVersion;
   late CommandEntity commandEntity;
+  late DeleteDataSpy deleteData;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -79,6 +80,7 @@ void main() {
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadDeviceData,
       pdvRegistration: pdvRegistration,
+      deleteData: deleteData,
     );
   }
 
@@ -96,6 +98,7 @@ void main() {
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadDeviceData = LoadDeviceDataSpy();
     pdvRegistration = PdvRegistrationSpy();
+    deleteData = DeleteDataSpy();
   }
 
   void initMocks() {

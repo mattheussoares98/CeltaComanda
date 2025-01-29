@@ -39,6 +39,7 @@ void main() {
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadDeviceData;
   late LaunchUrlSpy launchUrl;
+  late DeleteDataSpy deleteData;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -72,6 +73,7 @@ void main() {
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadDeviceData,
       launchUrl: launchUrl,
+      deleteData: deleteData,
     );
   }
 
@@ -91,6 +93,7 @@ void main() {
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadDeviceData = LoadDeviceDataSpy();
     launchUrl = LaunchUrlSpy();
+    deleteData = DeleteDataSpy();
   }
 
   void initMocks() {

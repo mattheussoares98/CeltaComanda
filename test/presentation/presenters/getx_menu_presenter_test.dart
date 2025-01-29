@@ -42,7 +42,7 @@ void main() {
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
   late List<ImageModel> mockedLoadedImages;
-  late ExportChargingModel exportChargingModel;
+  late List<ExportChargingEntity> exports;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -172,10 +172,10 @@ void main() {
       EntityFactory.makeImageModel(),
     ];
 
-    exportChargingModel = ExportChargingModel(
-      lastUpdateImages: faker.date.dateTime(),
-      lastUpdateProducts: faker.date.dateTime(),
-    );
+    exports = [
+      EntityFactory.makeExportChargingEntity(LoadTypeEnum.images),
+      EntityFactory.makeExportChargingEntity(LoadTypeEnum.productCompositions),
+    ];
   }
 
   void mockSuccess() {
@@ -189,7 +189,7 @@ void main() {
     updatedAllImages.mockGetLastDate(null);
     parametersData.mockLoad(parameters);
     loadImages.mockLoad(mockedLoadedImages);
-    loadExportCharging.mockLoad(exportChargingModel);
+    loadExportCharging.mockLoad(exports);
   }
 
   setUp(() {

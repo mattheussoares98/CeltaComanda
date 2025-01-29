@@ -1,5 +1,5 @@
-import '../../../data/models/models.dart';
+import '../../entities/entities.dart';
 
 abstract class LoadExportCharging {
-  Future<ExportChargingModel> load({required String pdvNumber});
+  Future<List<ExportChargingEntity>> load({required String pdvNumber});
 }

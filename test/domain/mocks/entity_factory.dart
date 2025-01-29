@@ -1530,4 +1530,16 @@ class EntityFactory {
         keyIsEan: faker.randomGenerator.boolean(),
         isEnterpriseImage: faker.randomGenerator.boolean(),
       );
+
+  static makeExportChargingEntity(LoadTypeEnum loadType) =>
+      ExportChargingEntity(
+        EnterpriseId: faker.randomGenerator.integer(100),
+        UserId: faker.randomGenerator.integer(100),
+        PdvNumber: faker.randomGenerator.integer(10).toString(),
+        LoadType: loadType,
+        FileName: faker.randomGenerator.string(10),
+        Status: faker.randomGenerator.integer(100),
+        IsAlter: faker.randomGenerator.integer(100),
+        Date: faker.date.dateTime(),
+      );
 }

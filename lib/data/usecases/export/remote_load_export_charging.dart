@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/data/models/export_charging_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
@@ -11,7 +11,7 @@ class RemoteLoadExportCharging implements LoadExportCharging {
   RemoteLoadExportCharging({required this.httpClient});
 
   @override
-  Future<ExportChargingModel> load({
+  Future<List<ExportChargingEntity>> load({
     required String pdvNumber,
   }) async {
     try {
@@ -30,10 +30,18 @@ class RemoteLoadExportCharging implements LoadExportCharging {
       } else {
         debugPrint(response);
         // return ExportChargingModel.fromJson(response);
-        return ExportChargingModel(
-          lastUpdateImages: DateTime.now(),
-          lastUpdateProducts: DateTime.now(),
-        );
+        return [
+          ExportChargingEntity(
+            EnterpriseId: 0,
+            UserId: 0,
+            PdvNumber: "",
+            LoadType: LoadTypeEnum.images,
+            FileName: "",
+            Status: 0,
+            IsAlter: 0,
+            Date: DateTime.now(),
+          )
+        ];
       }
     } catch (e) {
       throw Exception();

@@ -13,6 +13,7 @@ export './expansible_groups_model.dart';
 export './export_charging_model.dart';
 export './getnet_response_model.dart';
 export './image_model.dart';
+export './last_import_model.dart';
 export 'parameter_model.dart';
 export './pdv_model.dart';
 export './print_parameters_model.dart';

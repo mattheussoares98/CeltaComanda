@@ -217,8 +217,8 @@ void main() {
       customerCode: 0,
     ));
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
   });
@@ -1446,7 +1446,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -1457,7 +1460,10 @@ void main() {
 
       loadImages.mockLoadError();
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
     });
     test(
         "Should call load images with false value when export date is after last imported data",
@@ -1473,7 +1479,10 @@ void main() {
         images: DateTime(2024),
       ));
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => loadImages.load(getLocalImages: false)).called(1);
     });
@@ -1491,7 +1500,10 @@ void main() {
         images: DateTime(2025),
       ));
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => loadImages.load(getLocalImages: true)).called(1);
     });
@@ -1499,7 +1511,10 @@ void main() {
         () async {
       lastImport.mockLoad(null);
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => loadImages.load(getLocalImages: false)).called(1);
     });
@@ -1509,21 +1524,65 @@ void main() {
       lastImport.mockLoad(null);
       loadExportCharging.mockLoad([]);
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => loadImages.load(getLocalImages: false)).called(1);
+    });
+    test(
+        "Should not call load images if isValidatingNeedUpdateAgain is true and exports is empty",
+        () async {
+      loadExportCharging.mockLoad([]);
+
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: true,
+      );
+
+      verifyNever(() => loadImages.load(getLocalImages: false));
+      verifyNever(() => loadImages.load(getLocalImages: true));
+    });
+    test(
+        "Should not call load images if isValidatingNeedUpdateAgain is true is getting remote data",
+        () async {
+      loadExportCharging.mockLoad([
+        EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.images,
+          date: DateTime(2024),
+        ),
+      ]);
+      lastImport.mockLoad(LastImportEntity(
+        products: faker.date.dateTime(),
+        images: DateTime(2025),
+      ));
+
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: true,
+      );
+
+      verifyNever(() => loadImages.load(getLocalImages: false));
+      verifyNever(() => loadImages.load(getLocalImages: true));
     });
     test("Should update downloaded images correctly", () async {
       expect(sut.downloadedImages, []);
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       expect(sut.downloadedImages, mockedLoadedImages);
     });
     test("Should load export charging correctly when pdv is null", () async {
       homePresenter.commandEntityController = null;
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => loadExportCharging.load(pdvNumber: "100")).called(1);
     });
@@ -1531,7 +1590,10 @@ void main() {
         () async {
       homePresenter.commandEntityController = null;
 
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(
         () => loadExportCharging.load(
@@ -1540,7 +1602,10 @@ void main() {
       ).called(1);
     });
     test("Should load last import", () async {
-      await sut.loadAllImages(homePresenter);
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
 
       verify(() => lastImport.load()).called(1);
     });

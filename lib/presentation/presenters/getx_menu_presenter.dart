@@ -272,7 +272,7 @@ class GetxMenuPresenter extends GetxController
 
       _menu.subject.add(_loadedMenu);
 
-      await loadAllImages(homePresenter);
+      await loadAllImages(homePresenter, isValidatingNeedUpdateAgain: false);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -746,7 +746,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> loadAllImages(HomePresenter homePresenter) async {
+  Future<void> loadAllImages(
+    HomePresenter homePresenter, {
+    required bool isValidatingNeedUpdateAgain,
+  }) async {
     try {
       isLoading = true;
       mainError = null;
@@ -764,6 +767,11 @@ class GetxMenuPresenter extends GetxController
       bool getRemoteImages = lastImported?.images == null ||
           (lastExportImage?.Date != null &&
               lastExportImage!.Date!.isAfter(lastImported!.images!));
+
+      if (isValidatingNeedUpdateAgain &&
+          (!getRemoteImages || exports.isEmpty)) {
+        return;
+      }
 
       _downloadedImages = await loadImages.load(
         getLocalImages: !getRemoteImages,

@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage>
       await verifyNeedUpdateApp(homePresenter);
     });
 
-    updateImagesTimer = Timer.periodic(Duration(minutes: 1), (_) async {
+    updateImagesTimer = Timer.periodic(Duration(hours: 1), (_) async {
       await menuPresenter.loadAllImages(
         homePresenter,
         isValidatingNeedUpdateAgain: true,

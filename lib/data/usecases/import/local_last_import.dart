@@ -29,6 +29,8 @@ class LocalLastImport implements LastImport {
   Future<void> save(LastImportEntity? entity) async {
     try {
       await hiveStorage.delete(CacheKeys.lastImport.name);
+      await hiveStorage.delete(CacheKeys.updatedAllImages
+          .name); //TODO remove this CacheKey in the next version
 
       if (entity != null) {
         await hiveStorage.put(

@@ -55,7 +55,6 @@ void main() {
   late LoadSuggestionSaleSpy loadSuggestionSale;
   late ManageProductScheduleSpy manageProductSchedule;
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
-  late UpdatedAllImagesSpy updatedAllImages;
   late ParametersDataSpy parametersData;
   late LoadImagesSpy loadImages;
   late LoadExportChargingSpy loadExportCharging;
@@ -76,7 +75,6 @@ void main() {
     loadSuggestionSale = LoadSuggestionSaleSpy();
     manageProductSchedule = ManageProductScheduleSpy();
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
-    updatedAllImages = UpdatedAllImagesSpy();
     parametersData = ParametersDataSpy();
     loadImages = LoadImagesSpy();
     loadExportCharging = LoadExportChargingSpy();
@@ -100,7 +98,6 @@ void main() {
       loadSuggestionSale: loadSuggestionSale,
       manageProductSchedule: manageProductSchedule,
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
-      updatedAllImages: updatedAllImages,
       parametersData: parametersData,
       loadImages: loadImages,
       loadExportCharging: loadExportCharging,
@@ -189,7 +186,6 @@ void main() {
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
     getProductComposition.mockGetChildsOfFather(productsCompositionsEntitys);
     loadSuggestionSale.mockLoad(suggestions);
-    updatedAllImages.mockGetLastDate(null);
     parametersData.mockLoad(parameters);
     loadImages.mockLoad(mockedLoadedImages);
     loadExportCharging.mockLoad(exports);
@@ -563,28 +559,6 @@ void main() {
       );
 
       expect(sut.loadedMenu.first.values.first.first.subgroupName, "primeiro");
-    });
-
-    test(
-        "Should show pre load images if dont return last updated all images data",
-        () async {
-      updatedAllImages.mockGetLastDate(null);
-
-      await sut.getGroupsAndProducts(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
-    test("Should not show pre load images if last date is equal today",
-        () async {
-      updatedAllImages.mockGetLastDate(DateTime.now());
-
-      await sut.getGroupsAndProducts(
-        commandNumber: faker.randomGenerator.integer(999).toString(),
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
     });
   });
 

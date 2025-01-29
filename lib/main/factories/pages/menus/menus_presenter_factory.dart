@@ -13,7 +13,6 @@ MenuPresenter makeGetxMenuPresenter() => GetxMenuPresenter(
       loadSuggestionSale: makeRemoteLoadSuggestionSale(),
       manageProductSchedule: makeRemoteManageProductSchedule(),
       manageExpansibleGroupSchedule: makeRemoteManageExpansibleGroupSchedule(),
-      updatedAllImages: makeLocalUpdatedAllImages(),
       parametersData: makeLocalParametersData(),
       loadImages: makeConcentratorLoadImages(),
       loadExportCharging: makeRemoteLoadExportsCharging(),

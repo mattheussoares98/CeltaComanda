@@ -24,7 +24,6 @@ class GetxMenuPresenter extends GetxController
   final LoadSuggestionSale loadSuggestionSale;
   final ManageProductSchedule manageProductSchedule;
   final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
-  final UpdatedAllImages updatedAllImages;
   final ParametersData parametersData;
   final LoadImages loadImages;
   final LoadExportCharging loadExportCharging;
@@ -41,7 +40,6 @@ class GetxMenuPresenter extends GetxController
     required this.loadSuggestionSale,
     required this.manageProductSchedule,
     required this.manageExpansibleGroupSchedule,
-    required this.updatedAllImages,
     required this.parametersData,
     required this.loadImages,
     required this.loadExportCharging,
@@ -273,8 +271,7 @@ class GetxMenuPresenter extends GetxController
 
       _menu.subject.add(_loadedMenu);
 
-      final lastDate = await updatedAllImages.getLastDate();
-      //TODO remove update all images usecase. In the new usecase to validate, delete the key that is using in this usecase
+      //await loadAllImages(homePresenter); TODO add homePresenter as parameter
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -749,8 +746,6 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> loadAllImages(HomePresenter homePresenter) async {
     try {
-      //TODO remove preload images
-
       isLoading = true;
       mainError = null;
 

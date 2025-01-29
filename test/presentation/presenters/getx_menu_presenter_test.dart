@@ -234,6 +234,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
@@ -246,6 +247,7 @@ void main() {
       final future = sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -260,6 +262,7 @@ void main() {
       final future = sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -269,6 +272,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -292,6 +296,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -302,6 +307,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
@@ -317,6 +323,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
@@ -365,6 +372,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
@@ -423,6 +431,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
@@ -432,6 +441,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -448,6 +458,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -464,6 +475,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -500,6 +512,7 @@ void main() {
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       expect(sut.loadedMenu[0].keys.first.subgroups, ["primeiro", "segundo"]);
@@ -533,6 +546,7 @@ void main() {
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       expect(sut.loadedMenu.length, 1);
@@ -556,6 +570,7 @@ void main() {
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       expect(sut.loadedMenu.first.values.first.first.subgroupName, "primeiro");
@@ -572,6 +587,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -593,6 +609,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
 
@@ -713,6 +730,7 @@ void main() {
       await sut.getGroupsAndProducts(
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
       );
     });
@@ -833,6 +851,7 @@ void main() {
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
@@ -889,6 +908,7 @@ void main() {
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       final loadedProducts = sut.loadedMenu.first.values.first;
@@ -921,6 +941,7 @@ void main() {
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
       loadedProducts[0].suggestions = mockedSuggestions;
@@ -957,6 +978,7 @@ void main() {
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
       final loadedProducts = sut.loadedMenu.first.entries.first.value;
       loadedProducts[0].suggestions = mockedSuggestions;
@@ -999,6 +1021,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
+        homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1023,6 +1046,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
+        homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1046,6 +1070,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
+        homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1166,6 +1191,7 @@ void main() {
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
+        homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1275,6 +1301,7 @@ void main() {
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
+        homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1351,6 +1378,7 @@ void main() {
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       parametersData.mockLoad([
@@ -1369,6 +1397,7 @@ void main() {
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       parametersData.mockLoad([
@@ -1395,6 +1424,7 @@ void main() {
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
 
       parametersData

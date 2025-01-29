@@ -48,9 +48,11 @@ class _SchedulesPageState extends State<SchedulesPage>
           IconButton(
             onPressed: () async {
               await menuPresenter.getGroupsAndProducts(
-                commandNumber: homePresenter.commandEntity!.commandNumber ?? "001",
+                commandNumber:
+                    homePresenter.commandEntity!.commandNumber ?? "001",
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
+                homePresenter: homePresenter,
               );
               setState(() {});
             },
@@ -62,9 +64,11 @@ class _SchedulesPageState extends State<SchedulesPage>
         child: RefreshIndicator(
           onRefresh: () async {
             await menuPresenter.getGroupsAndProducts(
-              commandNumber: homePresenter.commandEntity!.commandNumber ?? "001",
+              commandNumber:
+                  homePresenter.commandEntity!.commandNumber ?? "001",
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
+              homePresenter: homePresenter,
             );
             setState(() {});
           },

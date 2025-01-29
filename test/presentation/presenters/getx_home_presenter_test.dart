@@ -527,9 +527,11 @@ void main() {
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
-          commandNumber: sut.commandEntity!.commandNumber ?? "001",
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter)).called(1);
+            commandNumber: sut.commandEntity!.commandNumber ?? "001",
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            homePresenter: sut,
+          )).called(1);
     });
     test(
         "Should not call cartPresenter.loadSaleRequest and loadSaleRequestTemp when is not fixed command number",

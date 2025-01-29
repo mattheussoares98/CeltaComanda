@@ -134,6 +134,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandNumber: commandEntity?.commandNumber ?? "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: this,
       );
 
       await menuPresenter.addOrRemoveSearchProducts();

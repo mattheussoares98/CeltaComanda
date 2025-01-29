@@ -169,6 +169,7 @@ class GetxMenuPresenter extends GetxController
     required String commandNumber,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required HomePresenter homePresenter,
   }) async {
     isLoading = true;
     mainError = null;
@@ -271,7 +272,7 @@ class GetxMenuPresenter extends GetxController
 
       _menu.subject.add(_loadedMenu);
 
-      //await loadAllImages(homePresenter); TODO add homePresenter as parameter
+      await loadAllImages(homePresenter);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -491,6 +492,7 @@ class GetxMenuPresenter extends GetxController
         commandNumber: homePresenter.commandEntity?.commandNumber ?? "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
       );
       return true;
     } catch (e) {

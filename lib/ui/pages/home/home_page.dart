@@ -27,11 +27,12 @@ class _HomePageState extends State<HomePage>
   ProductsViewModel? _lastShowedSuggestionProduct;
   Timer? loadPrintedTimer;
   Timer? needUpdateAppTimer;
+  Timer? updateImagesTimer;
 
   @override
   initState() {
     super.initState();
-    startTimer();
+    startTimers();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
@@ -48,12 +49,15 @@ class _HomePageState extends State<HomePage>
     mainErrorSubscription?.cancel();
     loadPrintedTimer?.cancel();
     needUpdateAppTimer?.cancel();
+    updateImagesTimer?.cancel();
   }
 
-  void startTimer() {
+  void startTimers() {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
     loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
       if (homePresenter.commandEntity?.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
@@ -65,6 +69,13 @@ class _HomePageState extends State<HomePage>
 
     needUpdateAppTimer = Timer.periodic(Duration(hours: 1), (_) async {
       await verifyNeedUpdateApp(homePresenter);
+    });
+
+    updateImagesTimer = Timer.periodic(Duration(hours: 1), (_) async {
+      await menuPresenter.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: true,
+      );
     });
   }
 

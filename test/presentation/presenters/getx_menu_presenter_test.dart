@@ -1609,5 +1609,13 @@ void main() {
 
       verify(() => lastImport.load()).called(1);
     });
+    test("Should load last import", () async {
+      await sut.loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+      );
+
+      verify(() => lastImport.load()).called(1);
+    });
   });
 }

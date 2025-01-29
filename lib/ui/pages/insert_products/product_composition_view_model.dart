@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, must_be_immutable
+// ignore_for_file: must_be_immutable
 
 import 'package:clean_celta_mobile/ui/helpers/convert/convert.dart';
 import 'package:equatable/equatable.dart';
@@ -112,7 +112,9 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
-        Schedule: entity.Schedule != null ? ProductScheduleModel.fromEntity(entity.Schedule!) : null,
+        Schedule: entity.Schedule != null
+            ? ProductScheduleModel.fromEntity(entity.Schedule!)
+            : null,
         childs: childs
             .map((element) => ProductCompositionViewModel.fromEntity(element))
             .toList(),

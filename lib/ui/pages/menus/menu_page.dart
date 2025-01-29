@@ -62,31 +62,22 @@ class _MenuPageState extends State<MenuPage>
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<
-                List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
-              stream: menuPresenter.menuStream,
-              builder: (context, snapshot) {
-                if (menuPresenter.loadedMenu.isEmpty) {
-                  return const LoadMenuButton();
-                } else {
-                  return StreamBuilder<int>(
-                      stream: menuPresenter.indexOfSelectedGroupStream,
-                      builder: (context, selectedGroupIndex) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: GroupsSubgroupsAndProducts(
-                            selectedIndex: selectedGroupIndex.data,
-                          ),
-                        );
-                      });
-                }
-              },
-            ),
-          ),
-        ],
+      body: StreamBuilder<
+          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
+        stream: menuPresenter.menuStream,
+        builder: (context, snapshot) {
+          if (menuPresenter.loadedMenu.isEmpty) {
+            return const LoadMenuButton();
+          } else {
+            return StreamBuilder<int>(
+                stream: menuPresenter.indexOfSelectedGroupStream,
+                builder: (context, selectedGroupIndex) {
+                  return GroupsSubgroupsAndProducts(
+                    selectedIndex: selectedGroupIndex.data,
+                  );
+                });
+          }
+        },
       ),
     );
   }

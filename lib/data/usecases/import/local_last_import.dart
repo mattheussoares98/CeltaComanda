@@ -26,18 +26,27 @@ class LocalLastImport implements LastImport {
   }
 
   @override
-  Future<void> save(LastImportEntity? entity) async {
+  Future<void> save(List<LoadTypeEnum> typesToUpdate) async {
     try {
-      await hiveStorage.delete(CacheKeys.lastImport.name);
-      await hiveStorage.delete(CacheKeys.updatedAllImages
-          .name); //TODO remove this CacheKey in the next version
+      final previousDate = await hiveStorage.get(CacheKeys.lastImport.name);
 
-      if (entity != null) {
-        await hiveStorage.put(
-          CacheKeys.lastImport.name,
-          LastImportModel.fromEntity(entity).toJson(),
-        );
-      }
+      LastImportModel? lastImportEntity =
+          previousDate == null ? null : LastImportModel.fromJson(previousDate);
+
+      final newEntity = LastImportEntity(
+        products: typesToUpdate.contains(LoadTypeEnum.products)
+            ? DateTime.now()
+            : lastImportEntity?.products,
+        images: typesToUpdate.contains(LoadTypeEnum.images)
+            ? DateTime.now()
+            : lastImportEntity?.images,
+      );
+
+      await hiveStorage.delete(CacheKeys.lastImport.name);
+      await hiveStorage.put(
+        CacheKeys.lastImport.name,
+        LastImportModel.fromEntity(newEntity).toJson(),
+      );
     } catch (e) {
       debugPrint(e.toString());
     }

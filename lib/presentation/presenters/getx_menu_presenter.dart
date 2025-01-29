@@ -776,6 +776,8 @@ class GetxMenuPresenter extends GetxController
       _downloadedImages = await loadImages.load(
         getLocalImages: !getRemoteImages,
       );
+
+      await lastImport.save([LoadTypeEnum.images]);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {

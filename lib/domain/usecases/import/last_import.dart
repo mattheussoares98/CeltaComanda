@@ -2,5 +2,5 @@ import '../../entities/entities.dart';
 
 abstract class LastImport {
   Future<LastImportEntity?> load();
-  Future<void> save(LastImportEntity? entity);
+  Future<void> save(List<LoadTypeEnum> typesToUpdate);
 }

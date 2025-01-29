@@ -86,77 +86,75 @@ class _GroupsSubgroupsAndProductsState
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    return Expanded(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: getGroupItemFlex(),
+          child: GroupItems(
+            expansibleGroupsViewModel:
+                menuPresenter.treatSchedules<ExpansibleGroupsViewModel>(),
+            selectedIndex: widget.selectedIndex ?? 0,
+            scrollUpItemsList: () {
+              _scrollUp(
+                menuPresenter: menuPresenter,
+                productsScrollController: productsScrollController,
+              );
+            },
+          ),
+        ),
+        if (groupIsSelected(menuPresenter, R.string.detach))
           Expanded(
-            flex: getGroupItemFlex(),
-            child: GroupItems(
-              expansibleGroupsViewModel:
-                  menuPresenter.treatSchedules<ExpansibleGroupsViewModel>(),
-              selectedIndex: widget.selectedIndex ?? 0,
-              scrollUpItemsList: () {
-                _scrollUp(
-                  menuPresenter: menuPresenter,
-                  productsScrollController: productsScrollController,
-                );
-              },
+            flex: hasMinWidth(context) ? 90 : 75,
+            child: const DetachItems(),
+          ),
+        if (groupIsSelected(menuPresenter, R.string.searchProduct))
+          Expanded(
+            flex: hasMinWidth(context) ? 90 : 75,
+            child: InsertProductBody(),
+          ),
+        if (!groupIsSelected(menuPresenter, R.string.detach) &&
+            !groupIsSelected(menuPresenter, R.string.searchProduct))
+          Expanded(
+            flex: hasMinWidth(context) ? 90 : 75,
+            child: Column(
+              children: [
+                if (!hasMinWidth(context))
+                  Subgroups(
+                    groupItemsFlex: getGroupItemFlex(),
+                    selectedIndex: widget.selectedIndex,
+                    productsScrollController: productsScrollController,
+                    productItemExtent: getProductItemExtent(context),
+                    firstVisibleProductIndex: firstVisibleProductIndex,
+                  ),
+                Expanded(
+                  flex: 9,
+                  child: Row(
+                    children: [
+                      if (hasMinWidth(context))
+                        Subgroups(
+                          groupItemsFlex: getGroupItemFlex(),
+                          selectedIndex: widget.selectedIndex,
+                          productsScrollController: productsScrollController,
+                          productItemExtent: getProductItemExtent(context),
+                          firstVisibleProductIndex: firstVisibleProductIndex,
+                        ),
+                      Expanded(
+                        flex: 4,
+                        child: ProductsItems(
+                          products: menuPresenter
+                              .treatSchedules<ProductsViewModel>(),
+                          productsScrollController: productsScrollController,
+                          itemExtent: getProductItemExtent(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-          if (groupIsSelected(menuPresenter, R.string.detach))
-            Expanded(
-              flex: hasMinWidth(context) ? 90 : 75,
-              child: const DetachItems(),
-            ),
-          if (groupIsSelected(menuPresenter, R.string.searchProduct))
-            Expanded(
-              flex: hasMinWidth(context) ? 90 : 75,
-              child: InsertProductBody(),
-            ),
-          if (!groupIsSelected(menuPresenter, R.string.detach) &&
-              !groupIsSelected(menuPresenter, R.string.searchProduct))
-            Expanded(
-              flex: hasMinWidth(context) ? 90 : 75,
-              child: Column(
-                children: [
-                  if (!hasMinWidth(context))
-                    Subgroups(
-                      groupItemsFlex: getGroupItemFlex(),
-                      selectedIndex: widget.selectedIndex,
-                      productsScrollController: productsScrollController,
-                      productItemExtent: getProductItemExtent(context),
-                      firstVisibleProductIndex: firstVisibleProductIndex,
-                    ),
-                  Expanded(
-                    flex: 9,
-                    child: Row(
-                      children: [
-                        if (hasMinWidth(context))
-                          Subgroups(
-                            groupItemsFlex: getGroupItemFlex(),
-                            selectedIndex: widget.selectedIndex,
-                            productsScrollController: productsScrollController,
-                            productItemExtent: getProductItemExtent(context),
-                            firstVisibleProductIndex: firstVisibleProductIndex,
-                          ),
-                        Expanded(
-                          flex: 4,
-                          child: ProductsItems(
-                            products: menuPresenter
-                                .treatSchedules<ProductsViewModel>(),
-                            productsScrollController: productsScrollController,
-                            itemExtent: getProductItemExtent(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

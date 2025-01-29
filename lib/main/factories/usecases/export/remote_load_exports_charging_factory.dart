@@ -2,6 +2,6 @@ import '../../../../data/usecases/usecases.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../factories.dart';
 
-LoadExportCharging makeRemoteLoadExportsCharging() => RemoteLoadExportCharging(
-      httpClient: makeHttpAdapter(),
+LastImport makeLocalLastImport() => LocalLastImport(
+      hiveStorage: makeHiveAdapter(),
     );

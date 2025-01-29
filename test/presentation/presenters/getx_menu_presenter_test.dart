@@ -59,6 +59,7 @@ void main() {
   late ParametersDataSpy parametersData;
   late LoadImagesSpy loadImages;
   late LoadExportChargingSpy loadExportCharging;
+  late LastImportSpy lastImport;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -79,6 +80,7 @@ void main() {
     parametersData = ParametersDataSpy();
     loadImages = LoadImagesSpy();
     loadExportCharging = LoadExportChargingSpy();
+    lastImport = LastImportSpy();
   }
 
   void initPresenters() {
@@ -102,6 +104,7 @@ void main() {
       parametersData: parametersData,
       loadImages: loadImages,
       loadExportCharging: loadExportCharging,
+      lastImport: lastImport,
     );
   }
 

@@ -28,6 +28,7 @@ class GetxMenuPresenter extends GetxController
   final ParametersData parametersData;
   final LoadImages loadImages;
   final LoadExportCharging loadExportCharging;
+  final LastImport lastImport;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -44,6 +45,7 @@ class GetxMenuPresenter extends GetxController
     required this.parametersData,
     required this.loadImages,
     required this.loadExportCharging,
+    required this.lastImport,
   });
 
   @override

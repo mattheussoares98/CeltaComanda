@@ -25,7 +25,7 @@ class RemoteLoadExportCharging implements LoadExportCharging {
       );
 
       if (response == null) {
-        throw Exception();
+        return [];
       } else {
         // return ExportChargingModel.fromJson(response);
         return (response as List)
@@ -33,7 +33,7 @@ class RemoteLoadExportCharging implements LoadExportCharging {
             .toList();
       }
     } catch (e) {
-      throw Exception();
+      return [];
     }
   }
 }

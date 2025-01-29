@@ -1468,7 +1468,56 @@ void main() {
 
       await sut.loadAllImages(homePresenter);
     });
-    test("Should call load images", () async {
+    test(
+        "Should call load images with false value when export date is after last imported data",
+        () async {
+      loadExportCharging.mockLoad([
+        EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.images,
+          date: DateTime(2025),
+        ),
+      ]);
+      lastImport.mockLoad(LastImportEntity(
+        products: faker.date.dateTime(),
+        images: DateTime(2024),
+      ));
+
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => loadImages.load(getLocalImages: false)).called(1);
+    });
+    test(
+        "Should call load images with true value when export date is before last imported data",
+        () async {
+      loadExportCharging.mockLoad([
+        EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.images,
+          date: DateTime(2024),
+        ),
+      ]);
+      lastImport.mockLoad(LastImportEntity(
+        products: faker.date.dateTime(),
+        images: DateTime(2025),
+      ));
+
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => loadImages.load(getLocalImages: true)).called(1);
+    });
+    test("Should call load images with false value last import return null",
+        () async {
+      lastImport.mockLoad(null);
+
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => loadImages.load(getLocalImages: false)).called(1);
+    });
+    test(
+        "Should call load images with false value last import return null and exports return empty",
+        () async {
+      lastImport.mockLoad(null);
+      loadExportCharging.mockLoad([]);
+
       await sut.loadAllImages(homePresenter);
 
       verify(() => loadImages.load(getLocalImages: false)).called(1);
@@ -1498,6 +1547,11 @@ void main() {
             pdvNumber:
                 homePresenter.commandEntity!.commandNumber!.padLeft(3, "0")),
       ).called(1);
+    });
+    test("Should load last import", () async {
+      await sut.loadAllImages(homePresenter);
+
+      verify(() => lastImport.load()).called(1);
     });
   });
 }

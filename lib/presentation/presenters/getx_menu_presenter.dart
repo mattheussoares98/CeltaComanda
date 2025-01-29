@@ -771,13 +771,23 @@ class GetxMenuPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      final test = await loadExportCharging.load(
+      final exports = await loadExportCharging.load(
         pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
                 ?.toString()
                 .padLeft(3, "0") ??
             "100",
       );
-      _downloadedImages = await loadImages.load(getLocalImages: true);
+      final lastExportImage =
+          _getLatestByLoadType(exports, LoadTypeEnum.images);
+
+      final lastImported = await lastImport.load();
+      bool getRemoteImages = lastImported?.images == null ||
+          (lastExportImage?.Date != null &&
+              lastExportImage!.Date!.isAfter(lastImported!.images!));
+
+      _downloadedImages = await loadImages.load(
+        getLocalImages: !getRemoteImages,
+      );
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -788,4 +798,21 @@ class GetxMenuPresenter extends GetxController
   List<ImageModel> _downloadedImages = [];
   @override
   List<ImageModel> get downloadedImages => [..._downloadedImages];
+
+  ExportChargingEntity? _getLatestByLoadType(
+      List<ExportChargingEntity>? entities, LoadTypeEnum loadType) {
+    if (entities == null || entities.isEmpty) {
+      return null;
+    }
+
+    return entities
+        .where((entity) => entity.LoadType == loadType)
+        .fold<ExportChargingEntity?>(null, (latest, entity) {
+      if (latest == null ||
+          (entity.Date != null && entity.Date!.isAfter(latest.Date!))) {
+        return entity;
+      }
+      return latest;
+    });
+  }
 }

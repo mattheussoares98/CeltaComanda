@@ -39,8 +39,7 @@ class ExportChargingModel extends Equatable {
         EnterpriseId: json['EnterpriseId'],
         UserId: json['UserId'],
         PdvNumber: json['PdvNumber'],
-        LoadType:
-            json['LoadType'] == null ? null : _treatLoadType(json['LoadType']),
+        LoadType: _treatLoadType(json['LoadType']),
         FileName: json['FileName'],
         Status: json['Status'],
         IsAlter: json['IsAlter'],
@@ -81,23 +80,20 @@ class ExportChargingModel extends Equatable {
         Date: Date,
       );
 
-  static LoadTypeEnum _treatLoadType(String loadType) {
-    if (loadType.toLowerCase() == LoadTypeEnum.images.name.toLowerCase()) {
+  static LoadTypeEnum? _treatLoadType(String? loadType) {
+    if (loadType == null) {
+      return null;
+    } else if (loadType.toLowerCase() ==
+        LoadTypeEnum.images.name.toLowerCase()) {
       return LoadTypeEnum.images;
     } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.expansibleGroupProducts.name.toLowerCase()) {
-      return LoadTypeEnum.expansibleGroupProducts;
-    } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.expansibleGroups.name.toLowerCase()) {
-      return LoadTypeEnum.expansibleGroups;
-    } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.productCompositions.name.toLowerCase()) {
-      return LoadTypeEnum.productCompositions;
-    } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.products.name.toLowerCase()) {
+            "expansibleGroupProducts".toLowerCase() ||
+        loadType.toLowerCase() == "expansibleGroups".toLowerCase() ||
+        loadType.toLowerCase() == "productCompositions".toLowerCase() ||
+        loadType.toLowerCase() == "products".toLowerCase()) {
       return LoadTypeEnum.products;
     } else {
-      return LoadTypeEnum.products;
+      return null;
     }
   }
 }

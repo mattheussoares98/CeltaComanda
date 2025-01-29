@@ -35,9 +35,6 @@ class ExportChargingEntity extends Equatable {
 }
 
 enum LoadTypeEnum {
-  expansibleGroups,
-  expansibleGroupProducts,
   images,
-  productCompositions,
   products,
 }

@@ -174,7 +174,7 @@ void main() {
 
     exports = [
       EntityFactory.makeExportChargingEntity(LoadTypeEnum.images),
-      EntityFactory.makeExportChargingEntity(LoadTypeEnum.productCompositions),
+      EntityFactory.makeExportChargingEntity(LoadTypeEnum.products),
     ];
   }
 

@@ -103,7 +103,7 @@ void main() {
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
-    totalLiquidMocked = faker.randomGenerator.decimal().roundAccordingBs();
+    totalLiquidMocked = faker.randomGenerator.decimal();
   }
 
   mockSuccess() {
@@ -417,8 +417,8 @@ void main() {
       sut.successfulPayments.add(
         ConcentratorFinalizationModel(
           FinalizationId: faker.randomGenerator.integer(100),
-          Value: totalLiquidMocked.roundAccordingBs(),
-          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
           PortionQuantity: faker.randomGenerator.integer(100),
         ),
       );
@@ -449,8 +449,8 @@ void main() {
       sut.successfulPayments.add(
         ConcentratorFinalizationModel(
           FinalizationId: faker.randomGenerator.integer(100),
-          Value: totalLiquidMocked.roundAccordingBs(),
-          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
           PortionQuantity: faker.randomGenerator.integer(100),
         ),
       );
@@ -475,8 +475,8 @@ void main() {
       sut.successfulPayments.add(
         ConcentratorFinalizationModel(
           FinalizationId: faker.randomGenerator.integer(100),
-          Value: totalLiquidMocked.roundAccordingBs(),
-          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
           PortionQuantity: faker.randomGenerator.integer(100),
         ),
       );
@@ -876,8 +876,8 @@ void main() {
       expect(sut.successfulPayments, [
         ConcentratorFinalizationModel(
           FinalizationId: FinalizationIdentification.covenant.finalizationId,
-          Value: totalLiquidMocked.roundAccordingBs(),
-          ValueLiquid: totalLiquidMocked.roundAccordingBs(),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
           PortionQuantity: 1,
           AuthorizationCode: soapResponse.response,
           AuthorizationType: 2,
@@ -903,7 +903,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: totalLiquidMocked.toDouble().roundAccordingBs(),
+          value: totalLiquidMocked.toDouble(),
         ),
       ).called(1);
     });

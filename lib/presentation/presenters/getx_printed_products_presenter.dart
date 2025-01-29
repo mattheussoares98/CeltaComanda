@@ -225,12 +225,14 @@ class GetxPrintedProductsPresenter
       value = printed.IncrementValue.toDouble();
     } else if (printed.IncrementType.toInt() == 2) {
       //percentage
-      value = printed.TotalLiquid.toDouble() * ((EnterpriseBuilder.entity!.serviceChargePercentageOrValue ?? 0) / 100);
+      value = printed.TotalLiquid.toDouble() *
+          ((EnterpriseBuilder.entity!.serviceChargePercentageOrValue ?? 0) /
+              100);
     } else {
       return 0;
     }
 
-    return value.roundAccordingBs();
+    return value;
   }
 
   @override

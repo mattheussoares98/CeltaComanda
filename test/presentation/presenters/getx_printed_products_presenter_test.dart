@@ -33,7 +33,6 @@ void main() {
   late UpdateSaleRequestSpy updateSaleRequest;
   late PrintBitmapSpy printBitmap;
   late NavigateToSpy navigateTo;
-  late GenerateBytesSpy generateBytes;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -58,7 +57,6 @@ void main() {
       updateSaleRequest: updateSaleRequest,
       printBitmap: printBitmap,
       navigateTo: navigateTo,
-      generateBytes: generateBytes,
     );
   }
 
@@ -71,7 +69,6 @@ void main() {
     updateSaleRequest = UpdateSaleRequestSpy();
     printBitmap = PrintBitmapSpy();
     navigateTo = NavigateToSpy();
-    generateBytes = GenerateBytesSpy();
   }
 
   void initEntitys() {
@@ -864,68 +861,6 @@ void main() {
 
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
-    });
-  });
-
-  group("New print products", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.newPrintProducts(
-        closePage: () {},
-      );
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      generateBytes.mockGenerateBytesError();
-
-      await sut.newPrintProducts(
-        closePage: () {},
-      );
-    });
-    test("Should call generate bytes with correct values", () async {
-      await sut.newPrintProducts(
-        closePage: () {},
-      );
-
-      verify(() => generateBytes.generateRowWithColumns([
-            PrintParametersModel(
-              alignCenter: true,
-              bold: true,
-              text: R.string.time,
-              width: 2,
-            ),
-            PrintParametersModel(
-              alignCenter: false,
-              bold: false,
-              text: R.string.product,
-              width: 5,
-            ),
-            PrintParametersModel(
-              alignCenter: true,
-              bold: true,
-              text: R.string.price,
-              width: 2,
-            ),
-            PrintParametersModel(
-              alignCenter: true,
-              bold: true,
-              text: R.string.quantityAbbreviated,
-              width: 1,
-            ),
-            PrintParametersModel(
-              alignCenter: true,
-              bold: true,
-              text: R.string.total,
-              width: 2,
-            ),
-          ])).called(1);
     });
   });
 }

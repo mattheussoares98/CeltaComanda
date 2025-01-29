@@ -51,10 +51,6 @@ abstract class PrintedProductsPresenter
     required void Function() closePage,
   });
 
-  Future<void> newPrintProducts({
-    required void Function() closePage,
-  });
-
   void goToPrintProductsPage();
   void updatePeopleQuantity({required bool isAdding});
 

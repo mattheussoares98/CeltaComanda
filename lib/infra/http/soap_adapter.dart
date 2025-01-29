@@ -5,7 +5,7 @@ import 'package:xml2json/xml2json.dart';
 import '../../data/http/http.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
-import '../helpers/helperts.dart';
+import '../helpers/helpers.dart';
 
 class SoapAdapter implements SoapRequest {
   @override

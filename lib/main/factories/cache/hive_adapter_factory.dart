@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-import '../../../infra/helpers/helperts.dart';
+import '../../../infra/helpers/helpers.dart';
 import '../../../infra/databases/databases.dart';
 
 HiveAdapter makeHiveAdapter() =>

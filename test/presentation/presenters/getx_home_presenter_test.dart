@@ -1,7 +1,7 @@
 import 'package:clean_celta_mobile/data/models/enterprise_model.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
-import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
+import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';

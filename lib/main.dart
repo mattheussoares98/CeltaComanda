@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../main/builders/builders.dart';
-import 'infra/helpers/helperts.dart';
+import 'infra/helpers/helpers.dart';
 import '../ui/components/components.dart';
 import '../ui/helpers/helpers.dart';
 import '../ui/mixins/mixins.dart';

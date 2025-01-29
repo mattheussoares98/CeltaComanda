@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:clean_celta_mobile/infra/databases/databases.dart';
-import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
+import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:hive/hive.dart';
 
 import '../mocks/mocks.dart';

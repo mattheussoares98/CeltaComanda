@@ -2,7 +2,7 @@ import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/data/usecases/enterprise/enterprise.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
+import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 
 import '../../../domain/mocks/mocks.dart';
 import '../../mocks/mocks.dart';

@@ -1,4 +1,4 @@
-import '../../../infra/helpers/helperts.dart';
+import '../../../infra/helpers/helpers.dart';
 
 abstract class CovenantLimit {
   Future<SoapResponse> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({

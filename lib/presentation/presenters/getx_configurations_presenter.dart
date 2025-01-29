@@ -1,6 +1,7 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../infra/helpers/helperts.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -58,6 +59,19 @@ class GetxConfigurationsPresenter extends GetxController
     cartPresenter.clear();
     homePresenter.clear();
     await persistent.makeNotPersistent();
+    await deleteData.delete([
+      CacheKeys.alreadyPaid,
+      CacheKeys.cartProducts,
+      CacheKeys.commandData,
+      CacheKeys.comments,
+      CacheKeys.images,
+      CacheKeys.lastImport,
+      CacheKeys.parameters,
+      CacheKeys.paidInformations,
+      CacheKeys.printRequest,
+      CacheKeys.updatedAllImages,
+      CacheKeys.updatedSaleRequestTemp,
+    ]);
 
     await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }

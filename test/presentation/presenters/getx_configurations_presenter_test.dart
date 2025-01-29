@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/infra/helpers/helperts.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -309,6 +310,29 @@ void main() {
             pageRoute: PageRoutes.splash,
             clear: true,
           )).called(1);
+    });
+
+    test("Should call delete data with correct CacheKeys", () async {
+      await sut.doLogout(
+        menuPresenter: menuPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+
+      verify(() => deleteData.delete([
+            CacheKeys.alreadyPaid,
+            CacheKeys.cartProducts,
+            CacheKeys.commandData,
+            CacheKeys.comments,
+            CacheKeys.images,
+            CacheKeys.lastImport,
+            CacheKeys.parameters,
+            CacheKeys.paidInformations,
+            CacheKeys.printRequest,
+            CacheKeys.updatedAllImages,
+            CacheKeys.updatedSaleRequestTemp,
+          ])).called(1);
     });
   });
 

@@ -273,6 +273,7 @@ class GetxMenuPresenter extends GetxController
 
       _menu.subject.add(_loadedMenu);
 
+      await lastImport.save([LoadTypeEnum.products]);
       await loadAllImages(homePresenter, isValidatingNeedUpdateAgain: false);
     } on DomainError catch (error) {
       switch (error) {

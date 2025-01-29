@@ -575,6 +575,17 @@ void main() {
 
       expect(sut.loadedMenu.first.values.first.first.subgroupName, "primeiro");
     });
+
+    test('Should update last import correctly', () async {
+      await sut.getGroupsAndProducts(
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
+      );
+
+      verify(() => lastImport.save([LoadTypeEnum.products])).called(1);
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

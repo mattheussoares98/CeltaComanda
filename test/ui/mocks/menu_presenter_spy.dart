@@ -13,7 +13,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   final isLoadingController = StreamController<bool>();
   final menuController = StreamController<
       List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
-  final showPreLoadImageController = StreamController<bool>();
   final selectedProductController = StreamController<ProductsViewModel?>();
   final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
       expansibleGroupsController = [];
@@ -23,8 +22,6 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     mockLoadCall().thenAnswer((any) async => any);
     when(() => this.loadedMenu).thenAnswer((_) => expansibleGroupsController);
     when(() => this.menuStream).thenAnswer((_) => menuController.stream);
-    when(() => this.showPreLoadImagesStream)
-        .thenAnswer((_) => showPreLoadImageController.stream);
     when(() => this.clear()).thenAnswer((any) async => any);
     when(() => this.addOrRemoveSearchProducts()).thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))

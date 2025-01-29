@@ -8,7 +8,6 @@ import '../pages.dart';
 abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<bool> get showPreLoadImagesStream;
   Stream<bool> get doScrollGroupsStream;
   Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
       get menuStream;
@@ -74,8 +73,6 @@ abstract class MenuPresenter implements Listenable {
   });
 
   List<T> treatSchedules<T>();
-
-  void cancelPreloadImage();
 
   Future<void> addOrRemoveSearchProducts();
 

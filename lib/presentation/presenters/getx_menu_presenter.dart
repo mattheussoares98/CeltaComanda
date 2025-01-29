@@ -274,14 +274,7 @@ class GetxMenuPresenter extends GetxController
       _menu.subject.add(_loadedMenu);
 
       final lastDate = await updatedAllImages.getLastDate();
-      if (lastDate == null ||
-          (lastDate.day - DateTime.now().day).abs() >=
-              (EnterpriseBuilder.entity?.waitDaysToPreloadImages ?? 1)) {
-        showPreLoadImage = true;
-        await updatedAllImages.updateLastDate(DateTime.now());
-      } else {
-        showPreLoadImage = false;
-      }
+      //TODO remove update all images usecase. In the new usecase to validate, delete the key that is using in this usecase
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -444,11 +437,6 @@ class GetxMenuPresenter extends GetxController
       _searchedProduct.stream;
   set searchedProduct(ProductsViewModel? value) =>
       _searchedProduct.value = value;
-
-  final _showPreLoadImages = false.obs;
-  @override
-  Stream<bool> get showPreLoadImagesStream => _showPreLoadImages.stream;
-  set showPreLoadImage(bool value) => _showPreLoadImages.value = value;
 
   final _doScrollGroupsStream = false.obs;
   @override
@@ -711,11 +699,6 @@ class GetxMenuPresenter extends GetxController
 
     expansibleGroupSchedule = null;
     expansibleGroupSchedule = schedule;
-  }
-
-  @override
-  void cancelPreloadImage() {
-    showPreLoadImage = false;
   }
 
   @override

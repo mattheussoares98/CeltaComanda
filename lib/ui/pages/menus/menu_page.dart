@@ -71,38 +71,26 @@ class _MenuPageState extends State<MenuPage>
               },
               child: Text("Load All Images")),
           Expanded(
-            child: StreamBuilder<bool>(
-                stream: menuPresenter.showPreLoadImagesStream,
-                builder: (context, showPreLoadImageSnapshot) {
-                  return StreamBuilder<
-                      List<
-                          Map<ExpansibleGroupsViewModel,
-                              List<ProductsViewModel>>>>(
-                    stream: menuPresenter.menuStream,
-                    builder: (context, snapshot) {
-                      if (menuPresenter.loadedMenu.isEmpty) {
-                        return const LoadMenuButton();
-                      } else {
-                        return StreamBuilder<int>(
-                            stream: menuPresenter.indexOfSelectedGroupStream,
-                            builder: (context, selectedGroupIndex) {
-                              return SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                child: Column(
-                                  children: [
-                                    if (showPreLoadImageSnapshot.data == true)
-                                      const PreLoadImagesPage(),
-                                    GroupsSubgroupsAndProducts(
-                                      selectedIndex: selectedGroupIndex.data,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            });
-                      }
-                    },
-                  );
-                }),
+            child: StreamBuilder<
+                List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
+              stream: menuPresenter.menuStream,
+              builder: (context, snapshot) {
+                if (menuPresenter.loadedMenu.isEmpty) {
+                  return const LoadMenuButton();
+                } else {
+                  return StreamBuilder<int>(
+                      stream: menuPresenter.indexOfSelectedGroupStream,
+                      builder: (context, selectedGroupIndex) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: GroupsSubgroupsAndProducts(
+                            selectedIndex: selectedGroupIndex.data,
+                          ),
+                        );
+                      });
+                }
+              },
+            ),
           ),
         ],
       ),

@@ -231,7 +231,6 @@ void main() {
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.showPreLoadImagesStream, emits(true));
 
       expectLater(
           sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
@@ -569,8 +568,6 @@ void main() {
     test(
         "Should show pre load images if dont return last updated all images data",
         () async {
-      expectLater(sut.showPreLoadImagesStream, emits(true));
-
       updatedAllImages.mockGetLastDate(null);
 
       await sut.getGroupsAndProducts(
@@ -581,8 +578,6 @@ void main() {
     });
     test("Should not show pre load images if last date is equal today",
         () async {
-      expectLater(sut.showPreLoadImagesStream, emits(false));
-
       updatedAllImages.mockGetLastDate(DateTime.now());
 
       await sut.getGroupsAndProducts(
@@ -1342,14 +1337,6 @@ void main() {
         tuesday: expansibleGroupScheduleViewModel.AllowTuesday,
         wednesday: expansibleGroupScheduleViewModel.AllowWednesday,
       );
-    });
-  });
-
-  group("Cancel pre load image", () {
-    test("Should emit correct value", () {
-      expectLater(sut.showPreLoadImagesStream, emits(false));
-
-      sut.cancelPreloadImage();
     });
   });
 

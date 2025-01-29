@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
@@ -751,9 +752,6 @@ class GetxMenuPresenter extends GetxController
     required bool isValidatingNeedUpdateAgain,
   }) async {
     try {
-      isLoading = true;
-      mainError = null;
-
       final exports = await loadExportCharging.load(
         pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
                 ?.toString()
@@ -779,9 +777,7 @@ class GetxMenuPresenter extends GetxController
 
       await lastImport.save([LoadTypeEnum.images]);
     } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
+      debugPrint(e.toString());
     }
   }
 

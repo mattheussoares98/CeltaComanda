@@ -1442,29 +1442,6 @@ void main() {
   });
 
   group("Load all images", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.loadAllImages(
-        homePresenter,
-        isValidatingNeedUpdateAgain: false,
-      );
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-        sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
-      );
-
-      loadImages.mockLoadError();
-
-      await sut.loadAllImages(
-        homePresenter,
-        isValidatingNeedUpdateAgain: false,
-      );
-    });
     test(
         "Should call load images with false value when export date is after last imported data",
         () async {

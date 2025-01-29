@@ -10,6 +10,7 @@ export './enterprise_model.dart';
 export './expansible_group_from_products_complete_model.dart';
 export './expansible_group_schedule_model.dart';
 export './expansible_groups_model.dart';
+export './export_charging_model.dart';
 export './getnet_response_model.dart';
 export './image_model.dart';
 export 'parameter_model.dart';

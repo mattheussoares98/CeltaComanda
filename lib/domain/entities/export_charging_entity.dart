@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class ExportChargingEntity extends Equatable {
-  final int EnterpriseId;
-  final int UserId;
-  final String PdvNumber;
-  final LoadTypeEnum LoadType;
-  final String FileName;
-  final int Status;
-  final int IsAlter;
-  final DateTime Date;
+  final int? EnterpriseId;
+  final int? UserId;
+  final String? PdvNumber;
+  final LoadTypeEnum? LoadType;
+  final String? FileName;
+  final int? Status;
+  final bool? IsAlter;
+  final DateTime? Date;
 
   const ExportChargingEntity({
     required this.EnterpriseId,

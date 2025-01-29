@@ -1539,7 +1539,7 @@ class EntityFactory {
         LoadType: loadType,
         FileName: faker.randomGenerator.string(10),
         Status: faker.randomGenerator.integer(100),
-        IsAlter: faker.randomGenerator.integer(100),
+        IsAlter: faker.randomGenerator.boolean(),
         Date: faker.date.dateTime(),
       );
 }

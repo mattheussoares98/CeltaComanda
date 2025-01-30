@@ -60,6 +60,7 @@ void main() {
   late LoadImagesSpy loadImages;
   late LoadExportChargingSpy loadExportCharging;
   late LastImportSpy lastImport;
+  late MenuDatabaseManagementSpy menuDatabaseManagement;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -80,6 +81,7 @@ void main() {
     loadImages = LoadImagesSpy();
     loadExportCharging = LoadExportChargingSpy();
     lastImport = LastImportSpy();
+    menuDatabaseManagement = MenuDatabaseManagementSpy();
   }
 
   void initPresenters() {
@@ -103,6 +105,7 @@ void main() {
       loadImages: loadImages,
       loadExportCharging: loadExportCharging,
       lastImport: lastImport,
+      menuDatabaseManagement: menuDatabaseManagement,
     );
   }
 

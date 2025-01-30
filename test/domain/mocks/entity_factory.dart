@@ -1531,7 +1531,7 @@ class EntityFactory {
         isEnterpriseImage: faker.randomGenerator.boolean(),
       );
 
-  static makeExportChargingEntity(LoadTypeEnum loadType, {DateTime? date}) =>
+  static ExportChargingEntity makeExportChargingEntity(LoadTypeEnum loadType, {DateTime? date}) =>
       ExportChargingEntity(
         EnterpriseId: faker.randomGenerator.integer(100),
         UserId: faker.randomGenerator.integer(100),

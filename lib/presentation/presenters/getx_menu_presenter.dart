@@ -183,6 +183,21 @@ class GetxMenuPresenter extends GetxController
         commandNumber: commandNumber,
       );
 
+      final exports = await loadExportCharging.load(
+        pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
+                ?.toString()
+                .padLeft(3, "0") ??
+            "100",
+      );
+      final lastImported = await lastImport.load();
+
+      await loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: false,
+        exports: exports,
+        lastImported: lastImported,
+      );
+
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -274,7 +289,6 @@ class GetxMenuPresenter extends GetxController
       _menu.subject.add(_loadedMenu);
 
       await lastImport.save([LoadTypeEnum.products]);
-      await loadAllImages(homePresenter, isValidatingNeedUpdateAgain: false);
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -751,18 +765,13 @@ class GetxMenuPresenter extends GetxController
   Future<void> loadAllImages(
     HomePresenter homePresenter, {
     required bool isValidatingNeedUpdateAgain,
+    required LastImportEntity? lastImported,
+    required List<ExportChargingEntity> exports,
   }) async {
     try {
-      final exports = await loadExportCharging.load(
-        pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
-                ?.toString()
-                .padLeft(3, "0") ??
-            "100",
-      );
       final lastExportImage =
           _getLatestByLoadType(exports, LoadTypeEnum.images);
 
-      final lastImported = await lastImport.load();
       bool getRemoteImages = lastImported?.images == null ||
           (lastExportImage?.Date != null &&
               lastExportImage!.Date!.isAfter(lastImported!.images!));

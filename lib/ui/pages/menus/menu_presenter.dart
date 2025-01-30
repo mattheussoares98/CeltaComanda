@@ -80,5 +80,7 @@ abstract class MenuPresenter implements Listenable {
   Future<void> loadAllImages(
     HomePresenter homePresenter, {
     required bool isValidatingNeedUpdateAgain,
+    required LastImportEntity? lastImported,
+    required List<ExportChargingEntity> exports,
   });
 }

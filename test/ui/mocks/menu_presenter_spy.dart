@@ -51,6 +51,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
         expansibleGroupFromProductPresenter:
             any(named: "expansibleGroupFromProductPresenter"),
         homePresenter: any(named: "homePresenter"),
+        isValidatingNeedUpdateAgain: any(named: "isValidatingNeedUpdateAgain"),
       ));
 
   void mockExpansibleGroupStreamError(DomainError error) {

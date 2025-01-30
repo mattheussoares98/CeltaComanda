@@ -559,6 +559,7 @@ void main() {
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
             homePresenter: sut,
+            isValidatingNeedUpdateAgain: false,
           )).called(1);
     });
     test(

@@ -26,6 +26,7 @@ abstract class MenuPresenter implements Listenable {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
+    required bool isValidatingNeedUpdateAgain,
   });
   Future<void> searchProduct(String value);
   Future<String> readBarcodeAndSearchProduct();

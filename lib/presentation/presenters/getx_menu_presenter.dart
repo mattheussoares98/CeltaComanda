@@ -171,11 +171,11 @@ class GetxMenuPresenter extends GetxController
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
+    required bool isValidatingNeedUpdateAgain,
   }) async {
     isLoading = true;
     mainError = null;
     _inexOfSelectedGroup.value = 0;
-    clear();
 
     try {
       await commandInformations.ticketIsPermitted(
@@ -191,13 +191,20 @@ class GetxMenuPresenter extends GetxController
       );
       final lastImported = await lastImport.load();
 
-      await loadAllImages(
-        homePresenter,
-        isValidatingNeedUpdateAgain: false,
+      bool getRemoteProducts = _needLoadRemote(
         exports: exports,
+        loadType: LoadTypeEnum.products,
         lastImported: lastImported,
       );
 
+      if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
+        return;
+      } else if (!getRemoteProducts) {
+        //TODO restore data from local storage
+        return;
+      }
+
+      clear();
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -509,6 +516,7 @@ class GetxMenuPresenter extends GetxController
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
+        isValidatingNeedUpdateAgain: false,
       );
       return true;
     } catch (e) {

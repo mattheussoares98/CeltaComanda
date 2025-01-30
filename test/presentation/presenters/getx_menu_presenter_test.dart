@@ -239,6 +239,7 @@ void main() {
           sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -252,6 +253,7 @@ void main() {
           .mockLoadExpansibleGroupsError(DomainError.commandNotAvailable);
 
       final future = sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -267,6 +269,7 @@ void main() {
           .mockLoadExpansibleGroupsError(DomainError.unexpected);
 
       final future = sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -277,6 +280,7 @@ void main() {
     });
     test('Should call LoadExpansibleGroups and loadProducts', () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -291,6 +295,7 @@ void main() {
     });
     // test('Should add fixed group of avaliation in last index', () async {
     //   await sut.getGroupsAndProducts(
+    // isValidatingNeedUpdateAgain: false,
     //     expansibleGroupFromProductPresenter:
     //         expansibleGroupFromProductPresenter,
     //     commandNumber: homePresenter.commandEntityController!.commandNumber!,
@@ -301,6 +306,7 @@ void main() {
 
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -312,6 +318,7 @@ void main() {
 
     test('Should clear expansibleGroups', () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -328,6 +335,7 @@ void main() {
       expectLater(sut.indexOfSelectedGroupStream, emits(0));
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -377,6 +385,7 @@ void main() {
           ]));
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -436,6 +445,7 @@ void main() {
           ]));
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -446,6 +456,7 @@ void main() {
     test("Should call expansibleGroupFromProductPresenter.loadComments",
         () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -463,6 +474,7 @@ void main() {
 
     test("Should call load suggestion sale", () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -480,6 +492,7 @@ void main() {
       loadSuggestionSale.mockLoad([mockedSuggestion]);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -516,6 +529,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -550,6 +564,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -574,6 +589,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: faker.randomGenerator.integer(999).toString(),
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -585,6 +601,7 @@ void main() {
 
     test('Should update last import correctly', () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -598,6 +615,7 @@ void main() {
       homePresenter.commandEntityController = null;
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -610,6 +628,7 @@ void main() {
     test("Should load export charging correctly when pdv is not null",
         () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -625,6 +644,7 @@ void main() {
 
     test("Should load last import", () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -636,6 +656,7 @@ void main() {
 
     test("Should call load last import", () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -654,6 +675,7 @@ void main() {
       loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -676,6 +698,7 @@ void main() {
       loadExpansibleGroups.mockLoadExpansibleGroups([expansibleGroups[0]]);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -797,6 +820,7 @@ void main() {
       await sut.searchProduct(productEan);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
@@ -917,6 +941,7 @@ void main() {
       ];
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -974,6 +999,7 @@ void main() {
       ];
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1007,6 +1033,7 @@ void main() {
       ];
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1044,6 +1071,7 @@ void main() {
       ];
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: "001",
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1089,6 +1117,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
         homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
@@ -1114,6 +1143,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
         homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
@@ -1138,6 +1168,7 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
         homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
@@ -1259,6 +1290,7 @@ void main() {
 
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
         homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
@@ -1369,6 +1401,7 @@ void main() {
 
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
         homePresenter: homePresenter,
         expansibleGroupFromProductPresenter:
@@ -1444,6 +1477,7 @@ void main() {
       ]);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1463,6 +1497,7 @@ void main() {
     test("Should add group in correct index if dont contains detach group",
         () async {
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1490,6 +1525,7 @@ void main() {
       loadExpansibleGroups.mockLoadExpansibleGroups([mockedExpansibleGroup]);
 
       await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,

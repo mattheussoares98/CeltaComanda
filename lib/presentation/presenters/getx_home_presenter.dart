@@ -151,6 +151,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: this,
+        isValidatingNeedUpdateAgain: false,
       );
 
       await menuPresenter.addOrRemoveSearchProducts();

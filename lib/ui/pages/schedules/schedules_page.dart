@@ -53,6 +53,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
                 homePresenter: homePresenter,
+                isValidatingNeedUpdateAgain: false,
               );
               setState(() {});
             },
@@ -69,6 +70,7 @@ class _SchedulesPageState extends State<SchedulesPage>
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
               homePresenter: homePresenter,
+              isValidatingNeedUpdateAgain: false,
             );
             setState(() {});
           },

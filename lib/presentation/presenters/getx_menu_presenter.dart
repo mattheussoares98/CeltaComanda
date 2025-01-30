@@ -769,15 +769,13 @@ class GetxMenuPresenter extends GetxController
     required List<ExportChargingEntity> exports,
   }) async {
     try {
-      final lastExportImage =
-          _getLatestByLoadType(exports, LoadTypeEnum.images);
+      bool getRemoteImages = _needLoadRemote(
+        exports: exports,
+        loadType: LoadTypeEnum.images,
+        lastImported: lastImported,
+      );
 
-      bool getRemoteImages = lastImported?.images == null ||
-          (lastExportImage?.Date != null &&
-              lastExportImage!.Date!.isAfter(lastImported!.images!));
-
-      if (isValidatingNeedUpdateAgain &&
-          (!getRemoteImages || exports.isEmpty)) {
+      if (isValidatingNeedUpdateAgain && !getRemoteImages) {
         return;
       }
 
@@ -795,13 +793,18 @@ class GetxMenuPresenter extends GetxController
   @override
   List<ImageModel> get downloadedImages => [..._downloadedImages];
 
-  ExportChargingEntity? _getLatestByLoadType(
-      List<ExportChargingEntity>? entities, LoadTypeEnum loadType) {
-    if (entities == null || entities.isEmpty) {
-      return null;
+  bool _needLoadRemote({
+    required List<ExportChargingEntity>? exports,
+    required LoadTypeEnum loadType,
+    required LastImportEntity? lastImported,
+  }) {
+    if (lastImported == null && loadType == LoadTypeEnum.images) {
+      return true;
+    } else if (exports == null || exports.isEmpty) {
+      return false;
     }
 
-    return entities
+    final latestByLoadType = exports
         .where((entity) => entity.LoadType == loadType)
         .fold<ExportChargingEntity?>(null, (latest, entity) {
       if (latest == null ||
@@ -810,5 +813,15 @@ class GetxMenuPresenter extends GetxController
       }
       return latest;
     });
+
+    if (loadType == LoadTypeEnum.images) {
+      return lastImported?.images == null ||
+          (latestByLoadType?.Date != null &&
+              latestByLoadType!.Date!.isAfter(lastImported!.images!));
+    } else {
+      return lastImported?.products == null ||
+          (latestByLoadType?.Date != null &&
+              latestByLoadType!.Date!.isAfter(lastImported!.products!));
+    }
   }
 }

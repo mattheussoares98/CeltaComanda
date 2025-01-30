@@ -1570,7 +1570,7 @@ void main() {
       verify(() => loadImages.load(getLocalImages: false)).called(1);
     });
     test(
-        "Should call load images with false value last import return null and exports return empty",
+        "Should call load images with false value if last import return null and exports return empty",
         () async {
       await sut.loadAllImages(
         homePresenter,

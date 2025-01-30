@@ -150,6 +150,7 @@ class GetxMenuPresenter extends GetxController
           List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
               value) =>
       _menu.value = value;
+  //TODO remove this menu
 
   List<ExpansibleGroupEntity> _putExpansibleGroupInFirst(
     List<ExpansibleGroupEntity> expansibleGroups,
@@ -202,7 +203,9 @@ class GetxMenuPresenter extends GetxController
       if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
         return;
       } else if (!getRemoteProducts) {
-        //TODO restore data from local storage
+        final localMenu = await menuDatabaseManagement.load();
+        _loadedMenu.clear();
+        _loadedMenu.addAll(localMenu);
         return;
       }
 

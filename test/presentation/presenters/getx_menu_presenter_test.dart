@@ -43,7 +43,6 @@ void main() {
   late List<ParameterModel> parameters;
   late List<ImageModel> mockedLoadedImages;
   late List<ExportChargingEntity> exports;
-  late LastImportEntity lastImportedEntity;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -180,11 +179,6 @@ void main() {
       EntityFactory.makeExportChargingEntity(LoadTypeEnum.images),
       EntityFactory.makeExportChargingEntity(LoadTypeEnum.products),
     ];
-
-    lastImportedEntity = LastImportEntity(
-      products: faker.date.dateTime(),
-      images: faker.date.dateTime(),
-    );
   }
 
   void mockSuccess() {
@@ -198,7 +192,8 @@ void main() {
     parametersData.mockLoad(parameters);
     loadImages.mockLoad(mockedLoadedImages);
     loadExportCharging.mockLoad(exports);
-    lastImport.mockLoad(lastImportedEntity);
+    lastImport.mockLoad(null);
+    menuDatabaseManagement.mockLoad(menuListWithoutPromoCombox);
   }
 
   setUp(() {
@@ -681,6 +676,20 @@ void main() {
 
       verify(() => menuDatabaseManagement.save(menuListWithoutPromoCombox))
           .called(1);
+    });
+    test("Should call menuDatabaseManagement load when dont get remote data",
+        () async {
+      loadExportCharging.mockLoad([]);
+
+      await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
+      );
+
+      verify(() => menuDatabaseManagement.load()).called(1);
     });
   });
 
@@ -1641,7 +1650,10 @@ void main() {
         homePresenter,
         isValidatingNeedUpdateAgain: true,
         exports: [],
-        lastImported: lastImportedEntity,
+        lastImported: LastImportEntity(
+          products: null,
+          images: faker.date.dateTime(),
+        ),
       );
 
       verifyNever(() => loadImages.load(getLocalImages: false));
@@ -1678,7 +1690,10 @@ void main() {
         homePresenter,
         isValidatingNeedUpdateAgain: false,
         exports: exports,
-        lastImported: lastImportedEntity,
+        lastImported: LastImportEntity(
+          products: null,
+          images: faker.date.dateTime(),
+        ),
       );
 
       expect(sut.downloadedImages, mockedLoadedImages);
@@ -1689,7 +1704,10 @@ void main() {
         homePresenter,
         isValidatingNeedUpdateAgain: false,
         exports: exports,
-        lastImported: lastImportedEntity,
+        lastImported: LastImportEntity(
+          products: null,
+          images: faker.date.dateTime(),
+        ),
       );
 
       verify(() => lastImport.save([LoadTypeEnum.images])).called(1);

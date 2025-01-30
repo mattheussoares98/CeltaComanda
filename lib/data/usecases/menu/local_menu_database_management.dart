@@ -20,7 +20,7 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
       final response = await hiveStorage.get(CacheKeys.menu.name);
 
       final menu = jsonDecode(response);
-      return [];
+      return menu;
     } catch (e) {
       throw Exception();
     }

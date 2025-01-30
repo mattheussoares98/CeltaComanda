@@ -32,7 +32,12 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
   ) async {
     try {
       await hiveStorage.delete(CacheKeys.menu.name);
-      await hiveStorage.put(CacheKeys.menu.name, jsonEncode(menu));
+      final encodedMenu = menu
+          .map((e) => {
+                e.keys.first.toJson(): e.values.first.map((e) => e.toJson()),
+              })
+          .toList();
+      await hiveStorage.put(CacheKeys.menu.name, encodedMenu.toString());
     } catch (e) {
       throw Exception();
     }

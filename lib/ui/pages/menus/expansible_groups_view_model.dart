@@ -54,4 +54,26 @@ class ExpansibleGroupsViewModel extends Equatable {
         OrderClassification: int.tryParse(OrderClassification) ?? 0,
         Schedule: Schedule?.toEntity(),
       );
+
+  Map<String, dynamic> toJson() => {
+        'Name': Name,
+        'ExpansibleGroupId': ExpansibleGroupId,
+        'ExpansibleGroupType': ExpansibleGroupType,
+        'OrderClassification': OrderClassification,
+        'subgroups': subgroups.map((e) => e).toList(),
+        'Schedule': Schedule?.toJson(),
+      };
+
+  factory ExpansibleGroupsViewModel.fromJson(Map<String, dynamic> json) =>
+      ExpansibleGroupsViewModel(
+        Name: json['Name'],
+        ExpansibleGroupId: json['ExpansibleGroupId'],
+        ExpansibleGroupType: json['ExpansibleGroupType'],
+        OrderClassification: json['OrderClassification'],
+        subgroups:
+            (json['subgroups'] as List).map((e) => e.toString()).toList(),
+        Schedule: json['Schedule'] == null
+            ? null
+            : ExpansibleGroupScheduleModel.fromJson(json['Schedule']),
+      );
 }

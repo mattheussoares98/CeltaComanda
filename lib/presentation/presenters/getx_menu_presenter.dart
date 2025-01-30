@@ -818,7 +818,7 @@ class GetxMenuPresenter extends GetxController
       return false;
     }
 
-    final latestByLoadType = exports
+    final latestExportByLoadType = exports
         .where((entity) => entity.LoadType == loadType)
         .fold<ExportChargingEntity?>(null, (latest, entity) {
       if (latest == null ||
@@ -830,12 +830,12 @@ class GetxMenuPresenter extends GetxController
 
     if (loadType == LoadTypeEnum.images) {
       return lastImported?.images == null ||
-          (latestByLoadType?.Date != null &&
-              latestByLoadType!.Date!.isAfter(lastImported!.images!));
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.images!));
     } else {
       return lastImported?.products == null ||
-          (latestByLoadType?.Date != null &&
-              latestByLoadType!.Date!.isAfter(lastImported!.products!));
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.products!));
     }
   }
 }

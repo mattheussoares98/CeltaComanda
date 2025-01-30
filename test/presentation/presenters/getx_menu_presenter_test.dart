@@ -668,6 +668,20 @@ void main() {
 
       verify(() => lastImport.load()).called(1);
     });
+    test("Should call menuDatabaseManagement save", () async {
+      lastImport.mockLoad(null);
+
+      await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
+      );
+
+      verify(() => menuDatabaseManagement.save(menuListWithoutPromoCombox))
+          .called(1);
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

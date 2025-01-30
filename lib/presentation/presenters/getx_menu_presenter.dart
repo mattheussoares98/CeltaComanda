@@ -297,6 +297,7 @@ class GetxMenuPresenter extends GetxController
 
       _menu.subject.add(_loadedMenu);
 
+      await menuDatabaseManagement.save(_loadedMenu);
       await lastImport.save([LoadTypeEnum.products]);
     } on DomainError catch (error) {
       switch (error) {

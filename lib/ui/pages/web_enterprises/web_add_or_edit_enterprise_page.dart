@@ -115,6 +115,13 @@ class _WebAddOrEditEnterprisePageState
                 webEnterprisesPresenter.selectedEnterprise?.zoomImage == true;
             useCovenant =
                 webEnterprisesPresenter.selectedEnterprise?.useCovenant == true;
+            minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
+                        .selectedEnterprise?.minutesVerifyUpdateMenu !=
+                    null
+                ? webEnterprisesPresenter
+                    .selectedEnterprise!.minutesVerifyUpdateMenu!
+                    .toString()
+                : "10";
           });
         }
       }

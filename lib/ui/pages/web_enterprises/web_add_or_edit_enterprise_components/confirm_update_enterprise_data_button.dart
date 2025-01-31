@@ -81,8 +81,6 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                     minutesVerifyUpdateMenuController.text.isEmpty
                         ? null
                         : minutesVerifyUpdateMenuController.text.toInt(),
-
-                ///* TODO create option for change minutes */,
               );
 
               if (updated) {

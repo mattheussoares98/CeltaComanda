@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage>
   ProductsViewModel? _lastShowedSuggestionProduct;
   Timer? loadPrintedTimer;
   Timer? needUpdateAppTimer;
+  Timer? verifyNeedUpdateMenuOrImagesTimer;
 
   @override
   initState() {
@@ -63,12 +64,16 @@ class _HomePageState extends State<HomePage>
     mainErrorSubscription?.cancel();
     loadPrintedTimer?.cancel();
     needUpdateAppTimer?.cancel();
+    verifyNeedUpdateMenuOrImagesTimer?.cancel();
   }
 
   void startTimers() {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(context, listen: false);
     loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
       if (homePresenter.commandEntity?.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
@@ -80,6 +85,19 @@ class _HomePageState extends State<HomePage>
 
     needUpdateAppTimer = Timer.periodic(Duration(hours: 1), (_) async {
       await verifyNeedUpdateApp(homePresenter);
+    });
+
+    needUpdateAppTimer = Timer.periodic(
+        Duration(
+          minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 10,
+        ), (_) async {
+      await menuPresenter.getGroupsAndProducts(
+        commandNumber: homePresenter.commandEntity?.commandNumber ?? "100",
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
+        isValidatingNeedUpdateAgain: true,
+      );
     });
   }
 

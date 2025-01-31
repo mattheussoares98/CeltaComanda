@@ -200,6 +200,7 @@ class GetxMenuPresenter extends GetxController
         return;
       }
 
+      isLoading = true;
       clear();
       _inexOfSelectedGroup.value = 0;
       var expansibleGroups = await loadExpansibleGroups.load();
@@ -297,6 +298,9 @@ class GetxMenuPresenter extends GetxController
         default:
           throw DomainError.unexpected;
       }
+    } finally {
+      isLoading = false;
+      //add verification for this TODO
     }
   }
 
@@ -584,29 +588,31 @@ class GetxMenuPresenter extends GetxController
         }
       }
 
-      return filteredMenu[_inexOfSelectedGroup.value]
-          .productsViewModel
-          .where((e) {
-        if (e.Schedule == null) {
-          return true;
-        } else if (dayOfWeek == daysOfWeek[1]) {
-          return e.Schedule!.AllowMonday == true;
-        } else if (dayOfWeek == daysOfWeek[2]) {
-          return e.Schedule!.AllowTuesday == true;
-        } else if (dayOfWeek == daysOfWeek[3]) {
-          return e.Schedule!.AllowWednesday == true;
-        } else if (dayOfWeek == daysOfWeek[4]) {
-          return e.Schedule!.AllowThursday == true;
-        } else if (dayOfWeek == daysOfWeek[5]) {
-          return e.Schedule!.AllowFriday == true;
-        } else if (dayOfWeek == daysOfWeek[6]) {
-          return e.Schedule!.AllowSaturday == true;
-        } else if (dayOfWeek == daysOfWeek[7]) {
-          return e.Schedule!.AllowSunday == true;
-        } else {
-          return true;
-        }
-      }).toList() as List<T>;
+      return filteredMenu.isEmpty
+          ? []
+          : filteredMenu[_inexOfSelectedGroup.value]
+              .productsViewModel
+              .where((e) {
+              if (e.Schedule == null) {
+                return true;
+              } else if (dayOfWeek == daysOfWeek[1]) {
+                return e.Schedule!.AllowMonday == true;
+              } else if (dayOfWeek == daysOfWeek[2]) {
+                return e.Schedule!.AllowTuesday == true;
+              } else if (dayOfWeek == daysOfWeek[3]) {
+                return e.Schedule!.AllowWednesday == true;
+              } else if (dayOfWeek == daysOfWeek[4]) {
+                return e.Schedule!.AllowThursday == true;
+              } else if (dayOfWeek == daysOfWeek[5]) {
+                return e.Schedule!.AllowFriday == true;
+              } else if (dayOfWeek == daysOfWeek[6]) {
+                return e.Schedule!.AllowSaturday == true;
+              } else if (dayOfWeek == daysOfWeek[7]) {
+                return e.Schedule!.AllowSunday == true;
+              } else {
+                return true;
+              }
+            }).toList() as List<T>;
     } else if (T == ExpansibleGroupsViewModel) {
       return loadedMenu.map((x) => x.expansibleGroupsViewModel).where((e) {
         if (e.Schedule == null) {

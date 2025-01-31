@@ -302,22 +302,6 @@ void main() {
     });
   });
 
-  group("All succeeds", () {
-    test('Should go to home page on success to load data of API', () async {
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-        durationInSeconds: 0,
-      );
-
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.home,
-          clear: true,
-        ),
-      ).called(1);
-    });
-  });
-
   group("Throws navigations", () {
     test('Should go to enterprise validation enterprise is null', () async {
       loadEnterpriseData.mockLoad(null);

@@ -511,19 +511,6 @@ void main() {
           )).called(1);
     });
 
-    test("Should navigate to home page in success", () async {
-      EnterpriseBuilder.entity = clearedEnterprise;
-
-      await sut.validateEnterpriseByName(
-        isFixedCommandNumber: isFixedCommandNumber,
-        commandNumber: commandNumber.toString(),
-        homePresenter: homePresenter,
-      );
-
-      verify(() => navigateTo.navigate(pageRoute: PageRoutes.home, clear: true))
-          .called(1);
-    });
-
     test(
         "Should get pdvs not using when is generating version to rede or getnet",
         () async {
@@ -546,27 +533,6 @@ void main() {
       verify(() => pdvRegistration.getPdvNotUsing()).called(1);
     });
 
-    test(
-        "Should not get pdv not using when dont is generating version to rede or getnet",
-        () async {
-      EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToGetNetMock = false;
-      await sut.validateEnterpriseByName(
-        isFixedCommandNumber: isFixedCommandNumber,
-        commandNumber: commandNumber.toString(),
-        homePresenter: homePresenter,
-      );
-      verifyNever(() => pdvRegistration.getPdvNotUsing());
-
-      EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToRedeMock = false;
-      await sut.validateEnterpriseByName(
-        isFixedCommandNumber: isFixedCommandNumber,
-        commandNumber: commandNumber.toString(),
-        homePresenter: homePresenter,
-      );
-      verifyNever(() => pdvRegistration.getPdvNotUsing());
-    });
     test("Should emit correct values on enterprises not using", () async {
       EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = true;

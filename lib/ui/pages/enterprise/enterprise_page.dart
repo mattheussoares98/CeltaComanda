@@ -148,18 +148,16 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                       });
                     },
                   ),
-                  if (homePresenter.isGeneratingVersionToGetNet ||
-                      homePresenter.isGeneratingVersionToRede)
-                    PdvNotUsingDropdown(
-                      isFixedCommandNumber: isFixedCommandNumber,
-                      commandNumberController: commandNumberController,
-                      selectedPdv: selectedPdv,
-                      updateSelectedPdv: (value) {
-                        setState(() {
-                          selectedPdv = value;
-                        });
-                      },
-                    ),
+                  PdvNotUsingDropdown(
+                    isFixedCommandNumber: isFixedCommandNumber,
+                    commandNumberController: commandNumberController,
+                    selectedPdv: selectedPdv,
+                    updateSelectedPdv: (value) {
+                      setState(() {
+                        selectedPdv = value;
+                      });
+                    },
+                  ),
                 ],
               ),
             )

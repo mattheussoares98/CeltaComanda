@@ -42,47 +42,39 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
           pageRoute: PageRoutes.enterpriseValidation,
           clear: true,
         );
-      } else if (homePresenter.isGeneratingVersionToGetNet ||
-          homePresenter.isGeneratingVersionToRede) {
-        if (localCommandEntity?.pdv == null) {
+      } else if (localCommandEntity?.pdv == null) {
+        navigateTo.navigate(
+          pageRoute: PageRoutes.enterpriseValidation,
+          clear: true,
+        );
+      } else {
+        final registeredPdv =
+            await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
+        final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+
+        if (registeredPdv == null) {
+          //não conseguiu validar, depois valida
+          navigateTo.navigate(
+            pageRoute: PageRoutes.home,
+            clear: true,
+          );
+        } else if (registeredPdv.MacAddress == imeiOrWindowsId) {
+          final versionNumber = await loadDeviceData.getApplicationVersion();
+          await pdvRegistration.updatePdvRegister(
+            entity: registeredPdv,
+            versionNumber: versionNumber,
+          );
+
+          navigateTo.navigate(
+            pageRoute: PageRoutes.home,
+            clear: true,
+          );
+        } else {
           navigateTo.navigate(
             pageRoute: PageRoutes.enterpriseValidation,
             clear: true,
           );
-        } else {
-          final registeredPdv =
-              await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
-          final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
-
-          if (registeredPdv == null) {
-            //não conseguiu validar, depois valida
-            navigateTo.navigate(
-              pageRoute: PageRoutes.home,
-              clear: true,
-            );
-          } else if (registeredPdv.MacAddress == imeiOrWindowsId) {
-            final versionNumber = await loadDeviceData.getApplicationVersion();
-            await pdvRegistration.updatePdvRegister(
-              entity: registeredPdv,
-              versionNumber: versionNumber,
-            );
-
-            navigateTo.navigate(
-              pageRoute: PageRoutes.home,
-              clear: true,
-            );
-          } else {
-            navigateTo.navigate(
-              pageRoute: PageRoutes.enterpriseValidation,
-              clear: true,
-            );
-          }
         }
-      } else {
-        navigateTo.navigate(
-          pageRoute: PageRoutes.home,
-          clear: true,
-        );
       }
     } catch (error) {
       navigateTo.navigate(

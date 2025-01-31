@@ -8,7 +8,7 @@ List<Widget> allButtons(BuildContext context) {
 
   return [
     ProductsSchedulesButton(),
-    UpdateMenuButton(),
+    // UpdateMenuButton(),
     CancelProductsOrRemoveServiceChargeButton(),
     TableConfigurationsButton(),
     SendAllProductsToAnotherTableButton(),

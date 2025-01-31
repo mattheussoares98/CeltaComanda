@@ -163,7 +163,6 @@ class GetxMenuPresenter extends GetxController
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
     required bool isValidatingNeedUpdateAgain,
-    bool updatedSchedule = false,
   }) async {
     try {
       await commandInformations.ticketIsPermitted(
@@ -192,9 +191,7 @@ class GetxMenuPresenter extends GetxController
         lastImported: lastImported,
       );
 
-      if (updatedSchedule) {
-        //only to continue and update menu remotely
-      } else if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
+      if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
         return;
       } else if (!getRemoteProducts) {
         final localMenu = await menuDatabaseManagement.load();

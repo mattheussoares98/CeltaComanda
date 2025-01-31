@@ -701,7 +701,7 @@ void main() {
       loadExportCharging.mockLoad([
         EntityFactory.makeExportChargingEntity(
           LoadTypeEnum.products,
-          date: DateTime(2023),
+          date: DateTime(2025),
         ),
       ]);
 
@@ -710,12 +710,11 @@ void main() {
       );
 
       await sut.getGroupsAndProducts(
-        isValidatingNeedUpdateAgain: false,
+        isValidatingNeedUpdateAgain: true,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
-        updatedSchedule: true,
       );
 
       verify(() => loadExpansibleGroups.load()).called(1);
@@ -740,7 +739,6 @@ void main() {
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
         commandNumber: homePresenter.commandEntityController!.commandNumber!,
-        updatedSchedule: false,
       );
 
       verifyNever(() => loadExpansibleGroups.load());

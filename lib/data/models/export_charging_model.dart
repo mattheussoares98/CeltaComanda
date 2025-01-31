@@ -90,7 +90,8 @@ class ExportChargingModel extends Equatable {
             "expansibleGroupProducts".toLowerCase() ||
         loadType.toLowerCase() == "expansibleGroups".toLowerCase() ||
         loadType.toLowerCase() == "productCompositions".toLowerCase() ||
-        loadType.toLowerCase() == "products".toLowerCase()) {
+        loadType.toLowerCase() == "products".toLowerCase() ||
+        loadType.toLowerCase() == "schedule".toLowerCase()) {
       return LoadTypeEnum.products;
     } else {
       return null;

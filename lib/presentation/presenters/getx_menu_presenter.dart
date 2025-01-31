@@ -506,6 +506,8 @@ class GetxMenuPresenter extends GetxController
             .insertUpdate(_productSchedule.value!.toEntity());
       }
 
+      await insertExportLoadType.insert("schedule");
+
       await getGroupsAndProducts(
         commandNumber: homePresenter.commandEntity?.commandNumber ?? "001",
         expansibleGroupFromProductPresenter:
@@ -680,6 +682,8 @@ class GetxMenuPresenter extends GetxController
         expansibleGroupsViewModel: groupUpdated,
         productsViewModel: oldProducts,
       );
+
+      await insertExportLoadType.insert("schedule");
 
       return true;
     } catch (e) {

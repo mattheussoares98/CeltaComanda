@@ -23,12 +23,11 @@ class _GroupsSubgroupsAndProductsState
   int firstVisibleProductIndex = 0;
 
   bool groupIsSelected(MenuPresenter menuPresenter, String groupName) {
-    return menuPresenter
-            .treatSchedules<ExpansibleGroupsViewModel>()[
-                widget.selectedIndex ?? 0]
-            .Name
-            .toLowerCase() ==
-        groupName.toLowerCase();
+    final groups = menuPresenter.treatSchedules<ExpansibleGroupsViewModel>();
+
+    return groups.isNotEmpty &&
+        groups[widget.selectedIndex ?? 0].Name.toLowerCase() ==
+            groupName.toLowerCase();
   }
 
   Future<void> _scrollUp({

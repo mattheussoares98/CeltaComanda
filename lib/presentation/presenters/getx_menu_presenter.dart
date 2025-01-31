@@ -163,10 +163,6 @@ class GetxMenuPresenter extends GetxController
     required bool isValidatingNeedUpdateAgain,
     bool updatedSchedule = false,
   }) async {
-    isLoading = true;
-    mainError = null;
-    _inexOfSelectedGroup.value = 0;
-
     try {
       await commandInformations.ticketIsPermitted(
         url: EnterpriseBuilder.entity!.url!,
@@ -206,6 +202,7 @@ class GetxMenuPresenter extends GetxController
       }
 
       clear();
+      _inexOfSelectedGroup.value = 0;
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -301,8 +298,6 @@ class GetxMenuPresenter extends GetxController
         default:
           throw DomainError.unexpected;
       }
-    } finally {
-      isLoading = false;
     }
   }
 

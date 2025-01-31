@@ -62,6 +62,8 @@ class PtBr implements Translation {
   String get msgNotFound => "Valor não encontrado";
   String get msgNotFoundData => "Não foram encontrados dados";
   String get msgNumberCopiedSuccessfully => "Número copiado com sucesso";
+  String get msgMinutesVerifyUpdateMenu =>
+      "A aplicação vai verificar se precisa atualizar o menu a cada X minutos";
   String get msgObligatoryFixedCommandNumber =>
       'O número da comanda é obrigatório';
   String get msgOldCommandIsEmpty => "A mesa antiga está vazia";
@@ -231,6 +233,8 @@ class PtBr implements Translation {
   String get login => 'Login';
   String get maximumAbbreviated => "Máx";
   String get minimumAbbreviated => "Mín";
+  String get minutesVerifyUpdateMenu =>
+      "Mínutos para verificar atualização do menu";
   String get missing => 'Faltando';
   String get monday => 'Segunda';
   String get money => 'Dinheiro';

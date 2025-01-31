@@ -41,6 +41,7 @@ abstract class Translation {
   String get msgNotFound;
   String get msgNotFoundData;
   String get msgNumberCopiedSuccessfully;
+  String get msgMinutesVerifyUpdateMenu;
   String get msgObligatoryFixedCommandNumber;
   String get msgOldCommandIsEmpty;
   String get msgOldTable;
@@ -192,6 +193,7 @@ abstract class Translation {
   String get login;
   String get maximumAbbreviated;
   String get minimumAbbreviated;
+  String get minutesVerifyUpdateMenu;
   String get missing;
   String get monday;
   String get money;

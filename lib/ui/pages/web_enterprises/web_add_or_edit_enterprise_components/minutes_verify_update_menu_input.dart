@@ -37,11 +37,11 @@ class MinutesVerifyUpdateMenuInput extends StatelessWidget {
         },
         decoration: formFieldDecoration(
           context: context,
-          hintText: R.string.waitDaysPreloadImage,
-          labelText: R.string.waitDaysPreloadImage,
+          hintText: R.string.minutesVerifyUpdateMenu,
+          labelText: R.string.minutesVerifyUpdateMenu,
           errorText: null,
           suffixIcon: InfoIconButton(
-            toltipMessage: R.string.msgDaysToPreloadImage,
+            toltipMessage: R.string.msgMinutesVerifyUpdateMenu,
           ),
           fontSize: 14,
         ),

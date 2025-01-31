@@ -10,17 +10,12 @@ class EnterpriseValidationModel {
   final bool? persistApp;
   final String? urlCCS;
   final bool? useCovenant;
-  final int? updateMenu;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
-  final int? serviceChargeType;
   final int? updateDevicesInformations;
   final int? updateEnterprise;
   final bool? zoomImage;
-  final List<String>? pendingDevicesToUpdate;
-  final int? updatePendingDevices;
-  final int? waitDaysToPreloadImages;
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
 
@@ -33,15 +28,10 @@ class EnterpriseValidationModel {
     required this.urlCCS,
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
-    required this.updateMenu,
     required this.serviceChargePercentageOrValue,
-    required this.serviceChargeType,
     required this.updateDevicesInformations,
     required this.updateEnterprise,
     required this.zoomImage,
-    required this.pendingDevicesToUpdate,
-    required this.updatePendingDevices,
-    required this.waitDaysToPreloadImages,
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
   });
@@ -68,15 +58,10 @@ class EnterpriseValidationModel {
       urlCCS: json["urlCCS"],
       updateEnterprise: json["updateEnterprise"],
       useCovenant: json["useCovenant"],
-      updateMenu: json["updateMenu"],
       serviceChargePercentageOrValue:
           json["serviceChargePercentageOrValue"]?.toDouble(),
-      serviceChargeType: json["serviceChargeType"],
       updateDevicesInformations: json["updateDevicesInformations"],
       zoomImage: json["zoomImage"],
-      pendingDevicesToUpdate:
-          json["pendingDevicesToUpdate"]?.map((e) => e).toList().cast<String>(),
-      updatePendingDevices: json["updatePendingDevices"],
       enterpriseConcentradorParametersEntity:
           enterpriseConcentradorParametersEntity ??
               (json["enterpriseConcentradorParametersEntity"] == null
@@ -84,7 +69,6 @@ class EnterpriseValidationModel {
                   : EnterpriseConcentradorParametersModel.fromJson(
                           json["enterpriseConcentradorParametersEntity"])
                       .toEntity()),
-      waitDaysToPreloadImages: json["waitDaysToPreloadImages"],
       latestCompatibleVersion: json["latestCompatibleVersion"],
       minutesVerifyUpdateMenu: json["minutesVerifyUpdateMenu"],
     );
@@ -100,16 +84,11 @@ class EnterpriseValidationModel {
         persistApp: entity.persistApp,
         urlCCS: entity.urlCCS,
         useCovenant: entity.useCovenant,
-        updateMenu: entity.updateMenu,
         serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
-        serviceChargeType: entity.serviceChargeType,
         updateDevicesInformations: entity.updateDevicesInformations,
         enterpriseConcentradorParametersEntity:
             entity.enterpriseConcentradorParametersEntity,
         zoomImage: entity.zoomImage,
-        pendingDevicesToUpdate: entity.pendingDevicesToUpdate,
-        updatePendingDevices: entity.updatePendingDevices,
-        waitDaysToPreloadImages: entity.waitDaysToPreloadImages,
         latestCompatibleVersion: entity.latestCompatibleVersion,
         minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
       );
@@ -122,17 +101,12 @@ class EnterpriseValidationModel {
         concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         persistApp: persistApp,
         useCovenant: useCovenant,
-        updateMenu: updateMenu,
         serviceChargePercentageOrValue: serviceChargePercentageOrValue,
-        serviceChargeType: serviceChargeType,
         updateDevicesInformations: updateDevicesInformations,
         updateEnterprise: updateEnterprise,
         enterpriseConcentradorParametersEntity:
             enterpriseConcentradorParametersEntity,
         zoomImage: zoomImage,
-        pendingDevicesToUpdate: pendingDevicesToUpdate,
-        updatePendingDevices: updatePendingDevices,
-        waitDaysToPreloadImages: waitDaysToPreloadImages,
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
       );
@@ -145,11 +119,9 @@ class EnterpriseValidationModel {
         'persistApp': persistApp,
         'urlCCS': urlCCS,
         'useCovenant': useCovenant,
-        'updateMenu': updateMenu,
         'updateEnterprise': updateEnterprise,
         'serviceChargePercentageOrValue': serviceChargePercentageOrValue,
         'updateDevicesInformations': updateDevicesInformations,
-        'serviceChargeType': serviceChargeType,
         'enterpriseConcentradorParametersEntity':
             enterpriseConcentradorParametersEntity != null
                 ? EnterpriseConcentradorParametersModel.fromEntity(
@@ -157,9 +129,6 @@ class EnterpriseValidationModel {
                     .toJson()
                 : null,
         'zoomImage': zoomImage,
-        'pendingDevicesToUpdate': pendingDevicesToUpdate,
-        'updatePendingDevices': updatePendingDevices,
-        'waitDaysToPreloadImages': waitDaysToPreloadImages,
         'latestCompatibleVersion': latestCompatibleVersion,
         'minutesVerifyUpdateMenu': minutesVerifyUpdateMenu,
       };

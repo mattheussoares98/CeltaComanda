@@ -2047,7 +2047,6 @@ void main() {
     test("Should return correct value", () {
       EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
         serviceChargePercentageOrValue: 0,
-        serviceChargeType: 0,
       );
       final totalLiquid = faker.randomGenerator.decimal();
       final value = sut.calculateServiceChargeValue(totalLiquid);

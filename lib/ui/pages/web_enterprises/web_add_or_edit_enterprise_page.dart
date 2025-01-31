@@ -81,10 +81,10 @@ class _WebAddOrEditEnterprisePageState
         WebEnterprisesPresenter webEnterprisesPresenter =
             Provider.of(context, listen: false);
 
-        daysPreloadImageController.text = (webEnterprisesPresenter
-                    .selectedEnterprise?.waitDaysToPreloadImages ??
-                1)
-            .toString();
+        // daysPreloadImageController.text = (webEnterprisesPresenter
+        //             .selectedEnterprise?.waitDaysToPreloadImages ??
+        //         1)
+        //     .toString();
         if (webEnterprisesPresenter.selectedEnterprise != null) {
           setState(() {
             enterpriseNameController.text =

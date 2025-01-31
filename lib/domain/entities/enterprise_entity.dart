@@ -10,17 +10,13 @@ class EnterpriseEntity extends Equatable {
   final bool? persistApp;
   final String? urlCCS;
   final bool? useCovenant;
-  final int? updateMenu;
+
   final int? updateDevicesInformations;
   final int? updateEnterprise;
   final EnterpriseConcentradorParametersEntity?
       enterpriseConcentradorParametersEntity;
   final double? serviceChargePercentageOrValue;
-  final int? serviceChargeType;
   final bool? zoomImage;
-  final List<String>? pendingDevicesToUpdate;
-  final int? updatePendingDevices;
-  final int? waitDaysToPreloadImages;
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
   //TODO remove unecessary parameters
@@ -34,15 +30,10 @@ class EnterpriseEntity extends Equatable {
     required this.urlCCS,
     required this.useCovenant,
     required this.enterpriseConcentradorParametersEntity,
-    required this.updateMenu,
     required this.serviceChargePercentageOrValue,
-    required this.serviceChargeType,
     required this.updateDevicesInformations,
     required this.updateEnterprise,
     required this.zoomImage,
-    required this.pendingDevicesToUpdate,
-    required this.updatePendingDevices,
-    required this.waitDaysToPreloadImages,
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
   });
@@ -57,15 +48,10 @@ class EnterpriseEntity extends Equatable {
         urlCCS,
         useCovenant,
         enterpriseConcentradorParametersEntity,
-        updateMenu,
         serviceChargePercentageOrValue,
-        serviceChargeType,
         updateDevicesInformations,
         updateEnterprise,
         zoomImage,
-        pendingDevicesToUpdate,
-        updatePendingDevices,
-        waitDaysToPreloadImages,
         latestCompatibleVersion,
         minutesVerifyUpdateMenu,
       ];

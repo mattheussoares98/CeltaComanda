@@ -61,7 +61,7 @@ void main() {
         CovenantCode: cartPresenter.saleRequestTempMock!.CovenantCode?.toInt(),
         IncrementValue:
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementType: 1,
         Products: [
           UpdateSaleRequestTempProductEntity(
             ProductInternalCodeOnErp: 1,

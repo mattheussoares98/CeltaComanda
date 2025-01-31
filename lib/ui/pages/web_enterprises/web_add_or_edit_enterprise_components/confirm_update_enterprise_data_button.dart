@@ -67,9 +67,9 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                 concentratorUrl: concentratorUrlController.text,
                 ccsUrl: ccsUrlController.text,
                 enterpriseId: enterpriseIdController.text.toInt(),
-                daysPreloadImage: daysPreloadImageController.text.isEmpty
-                    ? null
-                    : daysPreloadImageController.text.toInt(),
+                // daysPreloadImage: daysPreloadImageController.text.isEmpty
+                //     ? null
+                //     : daysPreloadImageController.text.toInt(),
                 latestCompatibleVersion: latestCompatibleVersionController.text,
                 serviceChargePercentage:
                     serviceChargePercentageController.text.isEmpty

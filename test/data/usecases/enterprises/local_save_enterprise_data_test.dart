@@ -28,18 +28,10 @@ void main() {
       useCovenant: faker.randomGenerator.boolean(),
       enterpriseConcentradorParametersEntity:
           EntityFactory.makeEnterpriseConcentradorParametersEntity(),
-      updateMenu: faker.randomGenerator.integer(100),
       updateDevicesInformations: faker.randomGenerator.integer(100),
       updateEnterprise: faker.randomGenerator.integer(100),
       serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-      serviceChargeType: faker.randomGenerator.integer(2, min: 1),
       zoomImage: faker.randomGenerator.boolean(),
-      pendingDevicesToUpdate: [
-        faker.randomGenerator.string(10),
-        faker.randomGenerator.string(10),
-      ],
-      updatePendingDevices: faker.randomGenerator.integer(100),
-      waitDaysToPreloadImages: faker.randomGenerator.integer(100),
       latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
       minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
     );

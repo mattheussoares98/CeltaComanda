@@ -23,11 +23,7 @@ class EntityFactory {
     bool? updateEnterprise,
     bool? enterpriseConcentradorParametersEntity,
     bool? serviceChargePercentageOrValue,
-    bool? serviceChargeType,
     bool? zoomImage,
-    bool? pendingDevicesToUpdate,
-    bool? updatePendingDevices,
-    bool? waitDaysToPreloadImages,
     bool? secondsPreloadingImages,
     bool? latestCompatibleVersion,
     bool? minutesVerifyUpdateMenu,
@@ -41,7 +37,6 @@ class EntityFactory {
       persistApp: persistApp == true ? null : atualEntity.persistApp,
       urlCCS: urlCCS == true ? null : atualEntity.urlCCS,
       useCovenant: useCovenant == true ? null : atualEntity.useCovenant,
-      updateMenu: updateMenu == true ? null : atualEntity.updateMenu,
       updateDevicesInformations: updateDevicesInformations == true
           ? null
           : atualEntity.updateDevicesInformations,
@@ -54,18 +49,7 @@ class EntityFactory {
       serviceChargePercentageOrValue: serviceChargePercentageOrValue == true
           ? null
           : atualEntity.serviceChargePercentageOrValue,
-      serviceChargeType:
-          serviceChargeType == true ? null : atualEntity.serviceChargeType,
       zoomImage: zoomImage == true ? null : atualEntity.zoomImage,
-      pendingDevicesToUpdate: pendingDevicesToUpdate == true
-          ? null
-          : atualEntity.pendingDevicesToUpdate,
-      updatePendingDevices: updatePendingDevices == true
-          ? null
-          : atualEntity.updatePendingDevices,
-      waitDaysToPreloadImages: waitDaysToPreloadImages == true
-          ? null
-          : atualEntity.waitDaysToPreloadImages,
       latestCompatibleVersion: latestCompatibleVersion == true
           ? null
           : atualEntity.latestCompatibleVersion,
@@ -83,18 +67,13 @@ class EntityFactory {
     bool? persistApp,
     String? urlCCS,
     bool? useCovenant,
-    int? updateMenu,
     int? updateConcentratorEnterpriseData,
     int? updateDevicesInformations,
     int? updateEnterprise,
     EnterpriseConcentradorParametersEntity?
         enterpriseConcentradorParametersEntity,
     double? serviceChargePercentageOrValue,
-    int? serviceChargeType,
     bool? zoomImage,
-    List<String>? pendingDevicesToUpdate,
-    int? updatePendingDevices,
-    int? waitDaysToPreloadImages,
     int? secondsPreloadingImages,
     String? latestCompatibleVersion,
     int? minutesVerifyUpdateMenu,
@@ -112,24 +91,12 @@ class EntityFactory {
       enterpriseConcentradorParametersEntity:
           enterpriseConcentradorParametersEntity ??
               makeEnterpriseConcentradorParametersEntity(),
-      updateMenu: updateMenu ?? faker.randomGenerator.integer(100),
       updateEnterprise: updateEnterprise ?? faker.randomGenerator.integer(100),
       updateDevicesInformations:
           updateDevicesInformations ?? faker.randomGenerator.integer(100),
       serviceChargePercentageOrValue:
           serviceChargePercentageOrValue ?? faker.randomGenerator.decimal(),
-      serviceChargeType:
-          serviceChargeType ?? faker.randomGenerator.integer(2, min: 1),
       zoomImage: zoomImage ?? faker.randomGenerator.boolean(),
-      pendingDevicesToUpdate: pendingDevicesToUpdate ??
-          [
-            faker.randomGenerator.string(10),
-            faker.randomGenerator.string(10),
-          ],
-      updatePendingDevices:
-          updatePendingDevices ?? faker.randomGenerator.integer(100),
-      waitDaysToPreloadImages:
-          waitDaysToPreloadImages ?? faker.randomGenerator.integer(100),
       latestCompatibleVersion:
           latestCompatibleVersion ?? faker.randomGenerator.decimal().toString(),
       minutesVerifyUpdateMenu:
@@ -793,7 +760,7 @@ class EntityFactory {
         Comments: faker.randomGenerator.string(10),
         CustomerCode: faker.randomGenerator.integer(3),
         CovenantCode: faker.randomGenerator.integer(3),
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementType: 1,
         IncrementValue:
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
       );

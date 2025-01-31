@@ -89,7 +89,6 @@ class GetxWebEnterprisesPresenter extends GetxController
     required String concentratorUrl,
     required String ccsUrl,
     required int enterpriseId,
-    required int? daysPreloadImage,
     required String? latestCompatibleVersion,
     required double? serviceChargePercentage,
     required bool? zoomImage,
@@ -112,18 +111,13 @@ class GetxWebEnterprisesPresenter extends GetxController
         urlCCS: ccsUrl.toLowerCase().removeWhiteSpaces(),
         useCovenant: useCovenant,
         enterpriseConcentradorParametersEntity: null,
-        updateMenu: (_selectedEnterprise?.updateMenu ?? 0) + 1,
         serviceChargePercentageOrValue: serviceChargePercentage,
-        serviceChargeType: serviceChargePercentage == null ? null : 1,
         updateDevicesInformations:
             _selectedEnterprise?.updateDevicesInformations == null
                 ? null
                 : (_selectedEnterprise!.updateDevicesInformations! + 1),
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
-        waitDaysToPreloadImages: daysPreloadImage,
         zoomImage: zoomImage,
-        pendingDevicesToUpdate: _selectedEnterprise?.pendingDevicesToUpdate,
-        updatePendingDevices: _selectedEnterprise?.updatePendingDevices,
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
       );

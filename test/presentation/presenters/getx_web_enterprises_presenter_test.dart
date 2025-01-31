@@ -178,7 +178,6 @@ void main() {
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         latestCompatibleVersion:
             EnterpriseBuilder.entity!.latestCompatibleVersion,
         serviceChargePercentage:
@@ -204,7 +203,6 @@ void main() {
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         latestCompatibleVersion:
             EnterpriseBuilder.entity!.latestCompatibleVersion,
         serviceChargePercentage:
@@ -226,7 +224,6 @@ void main() {
         concentratorUrl: enterprise.concentradorUrl!,
         ccsUrl: enterprise.urlCCS!,
         enterpriseId: enterprise.enterpriseId!,
-        daysPreloadImage: enterprise.waitDaysToPreloadImages,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         serviceChargePercentage: enterprise.serviceChargePercentageOrValue,
         zoomImage: enterprise.zoomImage,
@@ -235,8 +232,6 @@ void main() {
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
-        updateMenu: enterprise.updateMenu! + 1,
-        serviceChargeType: 1,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
         serviceChargePercentageOrValue:
@@ -251,9 +246,6 @@ void main() {
         enterpriseConcentradorParametersEntity:
             enterprise.enterpriseConcentradorParametersEntity,
         zoomImage: enterprise.zoomImage,
-        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
-        updatePendingDevices: enterprise.updatePendingDevices,
-        waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
       );
@@ -277,7 +269,6 @@ void main() {
         concentratorUrl: enterprise.concentradorUrl!,
         ccsUrl: enterprise.urlCCS!,
         enterpriseId: enterprise.enterpriseId!,
-        daysPreloadImage: null,
         latestCompatibleVersion: null,
         serviceChargePercentage: null,
         zoomImage: null,
@@ -286,13 +277,10 @@ void main() {
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
-        updateMenu: enterprise.updateMenu! + 1,
-        serviceChargeType: null,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
         persistApp: false,
         serviceChargePercentageOrValue: null,
-        waitDaysToPreloadImages: null,
         latestCompatibleVersion: null,
         zoomImage: null,
         useCovenant: null,
@@ -304,18 +292,14 @@ void main() {
         urlCCS: enterprise.urlCCS,
         enterpriseConcentradorParametersEntity:
             enterprise.enterpriseConcentradorParametersEntity,
-        pendingDevicesToUpdate: enterprise.pendingDevicesToUpdate,
-        updatePendingDevices: enterprise.updatePendingDevices,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,
         enterpriseConcentradorParametersEntity: true,
-        waitDaysToPreloadImages: true,
         latestCompatibleVersion: true,
         serviceChargePercentageOrValue: true,
         zoomImage: true,
         useCovenant: true,
-        serviceChargeType: true,
         minutesVerifyUpdateMenu: true,
       );
 
@@ -331,7 +315,6 @@ void main() {
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         latestCompatibleVersion:
             EnterpriseBuilder.entity!.latestCompatibleVersion,
         serviceChargePercentage:
@@ -354,7 +337,6 @@ void main() {
         concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
         ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        daysPreloadImage: EnterpriseBuilder.entity!.waitDaysToPreloadImages,
         latestCompatibleVersion:
             EnterpriseBuilder.entity!.latestCompatibleVersion,
         serviceChargePercentage:

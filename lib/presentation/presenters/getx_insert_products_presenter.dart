@@ -323,7 +323,7 @@ class GetxInsertProductsPresenter extends GetxController
         CustomerCode: cartPresenter.saleRequestTemp!.CustomerCode?.toInt(),
         IncrementValue:
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
-        IncrementType: EnterpriseBuilder.entity?.serviceChargeType,
+        IncrementType: 1,
       );
 
       await updateSaleRequestTemp.update(

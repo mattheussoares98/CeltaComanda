@@ -57,18 +57,12 @@ void main() {
           useCovenant: enterpriseJsonData["useCovenant"],
           enterpriseConcentradorParametersEntity:
               enterpriseJsonData["enterpriseConcentradorParametersEntity"],
-          updateMenu: enterpriseJsonData["updateMenu"],
           serviceChargePercentageOrValue:
               enterpriseJsonData["serviceChargePercentageOrValue"],
           updateDevicesInformations:
               enterpriseJsonData["updateDevicesInformations"],
-          serviceChargeType: enterpriseJsonData["serviceChargeType"],
           updateEnterprise: enterpriseJsonData["updateEnterprise"],
           zoomImage: enterpriseJsonData["zoomImage"],
-          pendingDevicesToUpdate: enterpriseJsonData["pendingDevicesToUpdate"],
-          updatePendingDevices: enterpriseJsonData["updatePendingDevices"],
-          waitDaysToPreloadImages:
-              enterpriseJsonData["waitDaysToPreloadImages"],
           latestCompatibleVersion:
               enterpriseJsonData["latestCompatibleVersion"],
           minutesVerifyUpdateMenu:

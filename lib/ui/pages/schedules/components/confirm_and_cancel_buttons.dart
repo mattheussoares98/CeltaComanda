@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -139,17 +138,17 @@ class ConfirmAndCancelButtons extends StatelessWidget {
           Navigator.of(context).pop();
 
           callSetState();
-          await notificationDialog(
-              context: context,
-              titleMessage: R.string.msgSuccessToUpdateSchedule,
-              content: Text(
-                R.string.msgWantUpdateMenuInAllDevices,
-                textAlign: TextAlign.center,
-              ),
-              onPress: () async {
-                await configurationsPresenter.loadMenuAgain(
-                    EnterpriseBuilder.entity?.enterpriseName ?? "");
-              });
+          // await notificationDialog(
+          //     context: context,
+          //     titleMessage: R.string.msgSuccessToUpdateSchedule,
+          //     content: Text(
+          //       R.string.msgWantUpdateMenuInAllDevices,
+          //       textAlign: TextAlign.center,
+          //     ),
+          //     onPress: () async {
+          //       await configurationsPresenter.loadMenuAgain(
+          //           EnterpriseBuilder.entity?.enterpriseName ?? "");
+          //     });
         }
       },
     );

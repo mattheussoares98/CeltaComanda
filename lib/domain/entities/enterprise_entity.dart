@@ -19,7 +19,6 @@ class EnterpriseEntity extends Equatable {
   final bool? zoomImage;
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
-  //TODO remove unecessary parameters
 
   const EnterpriseEntity({
     required this.enterpriseName,

@@ -95,7 +95,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   @override
   Future<void> clear() async {
     _commandEntity = null;
-    _updateMenu = -1;
     await localCommandData.update(
       CommandEntity(
         commandNumber: null,
@@ -390,47 +389,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
             EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
       ).toEntity();
 
-      if (_updateMenu == -1) {
-        _updateMenu = enterprise.updateMenu;
-        await loadCommandData(
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-        );
-      }
-
       final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
-      if (_updateMenu != enterprise.updateMenu &&
-          enterprise.pendingDevicesToUpdate != null) {
-        _updateMenu = enterprise.updateMenu;
-        await Future.delayed(
-          Duration(
-            seconds:
-                enterprise.pendingDevicesToUpdate!.indexOf(imeiOrWindowsId) *
-                    15,
-          ),
-        );
-        await loadCommandData(
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-        );
-      }
-
-      if (enterprise.updatePendingDevices !=
-          EnterpriseBuilder.entity?.updatePendingDevices) {
-        EnterpriseBuilder.entity = enterprise;
-
-        await addPendingDeviceToUpdate.add(
-          imeiOrWindowsId: imeiOrWindowsId,
-          enterpriseName: enterprise.enterpriseName,
-        );
-        await localEnterpriseData.add(enterprise);
-      }
 
       if (enterprise.updateDevicesInformations !=
           EnterpriseBuilder.entity?.updateDevicesInformations) {
@@ -507,10 +466,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       isLoading = false;
     }
   }
-
-  int? _updateMenu = -1;
-  @override
-  int? get updateMenu => _updateMenu;
 
   CommandEntity? _commandEntity;
   @override

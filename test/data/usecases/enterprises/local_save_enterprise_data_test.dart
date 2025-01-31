@@ -41,6 +41,7 @@ void main() {
       updatePendingDevices: faker.randomGenerator.integer(100),
       waitDaysToPreloadImages: faker.randomGenerator.integer(100),
       latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
+      minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

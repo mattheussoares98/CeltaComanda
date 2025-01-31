@@ -7,6 +7,7 @@ export './enterprise_name_input.dart';
 export './go_to_devices_info_page_button.dart';
 export './info_icon_button.dart';
 export './latest_compatible_version_input.dart';
+export './minutes_verify_update_menu_input.dart';
 export './navs_url_input.dart';
 export './service_charge_percentage_input.dart';
 export './update_device_informations_button.dart';

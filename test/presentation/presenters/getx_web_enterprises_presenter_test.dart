@@ -185,6 +185,8 @@ void main() {
             EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        minutesVerifyUpdateMenu:
+            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
       );
     });
     test("Should emit correct values on error", () async {
@@ -209,6 +211,8 @@ void main() {
             EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        minutesVerifyUpdateMenu:
+            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
       );
     });
 
@@ -227,6 +231,7 @@ void main() {
         serviceChargePercentage: enterprise.serviceChargePercentageOrValue,
         zoomImage: enterprise.zoomImage,
         useCovenant: enterprise.useCovenant,
+        minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -250,6 +255,7 @@ void main() {
         updatePendingDevices: enterprise.updatePendingDevices,
         waitDaysToPreloadImages: enterprise.waitDaysToPreloadImages,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
+        minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,
@@ -276,6 +282,7 @@ void main() {
         serviceChargePercentage: null,
         zoomImage: null,
         useCovenant: null,
+        minutesVerifyUpdateMenu: null,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -289,6 +296,7 @@ void main() {
         latestCompatibleVersion: null,
         zoomImage: null,
         useCovenant: null,
+        minutesVerifyUpdateMenu: null,
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -308,6 +316,7 @@ void main() {
         zoomImage: true,
         useCovenant: true,
         serviceChargeType: true,
+        minutesVerifyUpdateMenu: true,
       );
 
       verify(() =>
@@ -329,6 +338,8 @@ void main() {
             EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        minutesVerifyUpdateMenu:
+            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
       );
 
       expect(result, true);
@@ -350,6 +361,8 @@ void main() {
             EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
         zoomImage: EnterpriseBuilder.entity!.zoomImage,
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
+        minutesVerifyUpdateMenu:
+            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
       );
 
       expect(result, false);

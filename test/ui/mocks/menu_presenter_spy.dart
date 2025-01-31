@@ -11,17 +11,13 @@ import 'package:mocktail/mocktail.dart';
 class MenuPresenterSpy extends Mock implements MenuPresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
-  final menuController = StreamController<
-      List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>();
   final selectedProductController = StreamController<ProductsViewModel?>();
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      expansibleGroupsController = [];
+  final List<LoadedMenuViewModel> expansibleGroupsController = [];
   ProductsViewModel? searchedProductController;
 
   MenuPresenterSpy() {
     mockLoadCall().thenAnswer((any) async => any);
     when(() => this.loadedMenu).thenAnswer((_) => expansibleGroupsController);
-    when(() => this.menuStream).thenAnswer((_) => menuController.stream);
     when(() => this.clear()).thenAnswer((any) async => any);
     when(() => this.addOrRemoveSearchProducts()).thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))

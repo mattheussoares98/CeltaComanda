@@ -71,6 +71,8 @@ void main() {
               enterpriseJsonData["waitDaysToPreloadImages"],
           latestCompatibleVersion:
               enterpriseJsonData["latestCompatibleVersion"],
+          minutesVerifyUpdateMenu:
+              enterpriseJsonData["minutesVerifyUpdateMenu"],
         ),
       );
     });

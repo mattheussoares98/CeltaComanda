@@ -21,6 +21,7 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required String ccsUrl,
     required int enterpriseId,
     required int? daysPreloadImage,
+    required int? minutesVerifyUpdateMenu,
     required String? latestCompatibleVersion,
     required double? serviceChargePercentage,
     required bool? zoomImage,

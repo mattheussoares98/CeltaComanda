@@ -36,7 +36,22 @@ class _HomePageState extends State<HomePage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         HomePresenter homePresenter = Provider.of(context, listen: false);
+        CartPresenter cartPresenter = Provider.of(context, listen: false);
+        PrintedProductsPresenter printedProductsPresenter =
+            Provider.of(context, listen: false);
+        MenuPresenter menuPresenter = Provider.of(context, listen: false);
+        ExpansibleGroupFromProductPresenter
+            expansibleGroupFromProductPresenter =
+            Provider.of(context, listen: false);
         await verifyNeedUpdateApp(homePresenter);
+        await homePresenter.loadCommandData(
+          menuPresenter: menuPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+        setState(() {});
       }
     });
   }

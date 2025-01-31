@@ -1,11 +1,8 @@
 import 'dart:convert';
 
-import 'package:clean_celta_mobile/ui/pages/menus/expansible_groups_view_model.dart';
-
-import 'package:clean_celta_mobile/ui/pages/products/products_view_model.dart';
-
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
+import '../../../ui/pages/pages.dart';
 import '../../database/database.dart';
 
 class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
@@ -14,12 +11,13 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
   LocalMenuDatabaseManagement({required this.hiveStorage});
 
   @override
-  Future<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
-      load() async {
+  Future<List<LoadedMenuViewModel>> load() async {
     try {
       final response = await hiveStorage.get(CacheKeys.menu.name);
 
-      final menu = jsonDecode(response);
+      final menu = (jsonDecode(response) as List)
+          .map((e) => LoadedMenuViewModel.fromJson(e))
+          .toList();
       return menu;
     } catch (e) {
       throw Exception();
@@ -27,17 +25,12 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
   }
 
   @override
-  Future<void> save(
-    List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menu,
-  ) async {
+  Future<void> save(List<LoadedMenuViewModel> menu) async {
     try {
       await hiveStorage.delete(CacheKeys.menu.name);
-      final encodedMenu = menu
-          .map((e) => {
-                e.keys.first.toJson(): e.values.first.map((e) => e.toJson()),
-              })
-          .toList();
-      await hiveStorage.put(CacheKeys.menu.name, encodedMenu.toString());
+
+      await hiveStorage.put(CacheKeys.menu.name,
+          jsonEncode(menu.map((e) => e.toJson()).toList()));
     } catch (e) {
       throw Exception();
     }

@@ -1,8 +1,8 @@
 import '../../../ui/pages/pages.dart';
 
 abstract class MenuDatabaseManagement {
-  Future<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>> load();
+  Future<List<LoadedMenuViewModel>> load();
   Future<void> save(
-    List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menu,
+    List<LoadedMenuViewModel> menu,
   );
 }

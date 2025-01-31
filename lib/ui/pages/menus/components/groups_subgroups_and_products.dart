@@ -44,8 +44,8 @@ class _GroupsSubgroupsAndProductsState
       await productsScrollController.animateTo(
         productsScrollController.position.minScrollExtent,
         duration: Duration(
-            milliseconds: menuPresenter
-                    .loadedMenu[widget.selectedIndex ?? 0].values.first.length *
+            milliseconds: menuPresenter.loadedMenu[widget.selectedIndex ?? 0]
+                    .productsViewModel.length *
                 50),
         curve: Curves.fastEaseInToSlowEaseOut,
       );
@@ -142,8 +142,8 @@ class _GroupsSubgroupsAndProductsState
                       Expanded(
                         flex: 4,
                         child: ProductsItems(
-                          products: menuPresenter
-                              .treatSchedules<ProductsViewModel>(),
+                          products:
+                              menuPresenter.treatSchedules<ProductsViewModel>(),
                           productsScrollController: productsScrollController,
                           itemExtent: getProductItemExtent(context),
                         ),

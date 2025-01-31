@@ -51,7 +51,6 @@ class GetxMenuPresenter extends GetxController
 
   @override
   void clear() {
-    _menu.subject.add([]);
     _loadedMenu.clear();
     searchedProduct = null;
   }
@@ -130,27 +129,14 @@ class GetxMenuPresenter extends GetxController
     }
   }
 
-  final List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      _loadedMenu = [];
+  final List<LoadedMenuViewModel> _loadedMenu = [];
   @override
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-      get loadedMenu => [..._loadedMenu];
+  List<LoadedMenuViewModel> get loadedMenu => [..._loadedMenu];
 
   final _inexOfSelectedGroup = Rx<int>(0);
   @override
   Stream<int> get indexOfSelectedGroupStream => _inexOfSelectedGroup.stream;
   set indexOfSelectedGroup(int value) => _inexOfSelectedGroup.value = value;
-
-  final _menu =
-      Rx<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>([]);
-  @override
-  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
-      get menuStream => _menu.stream;
-  set menu(
-          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-              value) =>
-      _menu.value = value;
-  //TODO remove this menu
 
   List<ExpansibleGroupEntity> _putExpansibleGroupInFirst(
     List<ExpansibleGroupEntity> expansibleGroups,
@@ -175,6 +161,7 @@ class GetxMenuPresenter extends GetxController
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
     required bool isValidatingNeedUpdateAgain,
+    bool updatedSchedule = false,
   }) async {
     isLoading = true;
     mainError = null;
@@ -194,13 +181,22 @@ class GetxMenuPresenter extends GetxController
       );
       final lastImported = await lastImport.load();
 
+      await loadAllImages(
+        homePresenter,
+        isValidatingNeedUpdateAgain: isValidatingNeedUpdateAgain,
+        lastImported: lastImported,
+        exports: exports,
+      );
+
       bool getRemoteProducts = _needLoadRemote(
         exports: exports,
         loadType: LoadTypeEnum.products,
         lastImported: lastImported,
       );
 
-      if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
+      if (updatedSchedule) {
+        //only to continue and update menu remotely
+      } else if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
         return;
       } else if (!getRemoteProducts) {
         final localMenu = await menuDatabaseManagement.load();
@@ -235,10 +231,8 @@ class GetxMenuPresenter extends GetxController
       }
 
       final allProducts = _loadedMenu
-          .expand((map) =>
-              map.values) // Expande todas as listas de produtos em um Iterable
-          .expand((lista) =>
-              lista) // Expande cada lista individual de produtos em um Iterable
+          .expand((map) => map
+              .productsViewModel) // Expande todas as listas de produtos em um Iterable
           .toList();
 
       for (var product in allProducts) {
@@ -298,8 +292,6 @@ class GetxMenuPresenter extends GetxController
 
       _updateSuggestions(suggestions);
 
-      _menu.subject.add(_loadedMenu);
-
       await menuDatabaseManagement.save(_loadedMenu);
       await lastImport.save([LoadTypeEnum.products]);
     } on DomainError catch (error) {
@@ -333,35 +325,39 @@ class GetxMenuPresenter extends GetxController
         .toList();
 
     if (getAlreadyContainsExpansibleGroupName(groupName)) {
-      int indexOfSameGroup =
-          _loadedMenu.indexWhere((e) => e.keys.first.Name == groupName);
+      int indexOfSameGroup = _loadedMenu
+          .indexWhere((e) => e.expansibleGroupsViewModel.Name == groupName);
 
       if (indexOfSameGroup != -1) {
         _loadedMenu[indexOfSameGroup]
-            .keys
-            .first
+            .expansibleGroupsViewModel
             .subgroups
             .add(getSubgroup(expansibleGroup));
-        _loadedMenu[indexOfSameGroup].values.first.addAll(productsViewModel);
+        _loadedMenu[indexOfSameGroup]
+            .productsViewModel
+            .addAll(productsViewModel);
       }
     } else {
-      _loadedMenu.add({expansibleGroupViewModel: productsViewModel});
+      _loadedMenu.add(
+        LoadedMenuViewModel(
+          expansibleGroupsViewModel: expansibleGroupViewModel,
+          productsViewModel: productsViewModel,
+        ),
+      );
     }
   }
 
   void _updateSuggestions(List<SuggestionSaleEntity> suggestions) {
     for (var suggestion in suggestions) {
       for (var menu in _loadedMenu) {
-        for (var products in menu.values) {
-          int indexOfProduct = products.indexWhere((e) =>
-              e.InternalCodeOnERP == suggestion.ProductPackingCode.toString());
+        int indexOfProduct = menu.productsViewModel.indexWhere((e) =>
+            e.InternalCodeOnERP == suggestion.ProductPackingCode.toString());
 
-          if (indexOfProduct != -1) {
-            if (products[indexOfProduct].suggestions == null) {
-              products[indexOfProduct].suggestions = [];
-            }
-            products[indexOfProduct].suggestions!.add(suggestion);
+        if (indexOfProduct != -1) {
+          if (menu.productsViewModel[indexOfProduct].suggestions == null) {
+            menu.productsViewModel[indexOfProduct].suggestions = [];
           }
+          menu.productsViewModel[indexOfProduct].suggestions!.add(suggestion);
         }
       }
     }
@@ -382,10 +378,8 @@ class GetxMenuPresenter extends GetxController
         (_indexOfAtualSuggestion + 1) < selectedProduct.suggestions!.length;
 
     if (verifySuggestions) {
-      final allProducts = _loadedMenu
-          .expand((map) => map.values)
-          .expand((lista) => lista)
-          .toList();
+      final allProducts =
+          _loadedMenu.expand((map) => map.productsViewModel).toList();
 
       for (var suggestion in selectedProduct.suggestions!) {
         final suggestionProduct = allProducts.firstWhereOrNull((e) =>
@@ -435,11 +429,9 @@ class GetxMenuPresenter extends GetxController
   @override
   bool getAlreadyContainsExpansibleGroupName(String expansibleGroupName) {
     for (var item in _loadedMenu) {
-      for (var group in item.keys) {
-        if (group.Name ==
-            getExpansibleGroupNameWithoutPipes(expansibleGroupName)) {
-          return true;
-        }
+      if (item.expansibleGroupsViewModel.Name ==
+          getExpansibleGroupNameWithoutPipes(expansibleGroupName)) {
+        return true;
       }
     }
 
@@ -522,7 +514,7 @@ class GetxMenuPresenter extends GetxController
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         homePresenter: homePresenter,
-        isValidatingNeedUpdateAgain: false,
+        isValidatingNeedUpdateAgain: true,
       );
       return true;
     } catch (e) {
@@ -585,21 +577,20 @@ class GetxMenuPresenter extends GetxController
     if (T == ProductsViewModel) {
       List<ExpansibleGroupsViewModel> treatedGroups =
           treatSchedules<ExpansibleGroupsViewModel>();
-      List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>
-          filteredMenu = [];
+
+      List<LoadedMenuViewModel> filteredMenu = [];
       // Percorre a lista loadedMenu
       for (var menuItem in loadedMenu) {
         // Para cada mapa em loadedMenu, verifica se a chave está em 'groups'
-        for (var key in menuItem.keys) {
-          if (treatedGroups.contains(key)) {
-            // Se encontrar correspondência, adiciona o item na nova lista
-            filteredMenu.add(menuItem);
-            break; // Não precisa continuar verificando outras chaves no mesmo mapa
-          }
+        if (treatedGroups.contains(menuItem.expansibleGroupsViewModel)) {
+          // Se encontrar correspondência, adiciona o item na nova lista
+          filteredMenu.add(menuItem);
         }
       }
 
-      return filteredMenu[_inexOfSelectedGroup.value].values.first.where((e) {
+      return filteredMenu[_inexOfSelectedGroup.value]
+          .productsViewModel
+          .where((e) {
         if (e.Schedule == null) {
           return true;
         } else if (dayOfWeek == daysOfWeek[1]) {
@@ -621,7 +612,7 @@ class GetxMenuPresenter extends GetxController
         }
       }).toList() as List<T>;
     } else if (T == ExpansibleGroupsViewModel) {
-      return loadedMenu.expand((map) => map.keys).toList().where((e) {
+      return loadedMenu.map((x) => x.expansibleGroupsViewModel).where((e) {
         if (e.Schedule == null) {
           return true;
         } else if (dayOfWeek == daysOfWeek[1]) {
@@ -674,9 +665,10 @@ class GetxMenuPresenter extends GetxController
             .insertUpdate(_expansibleGroupSchedule.value!.toEntity());
       }
 
-      final index = _loadedMenu.indexWhere(
-          (e) => e.keys.first.ExpansibleGroupId.toInt() == expansibleGroupId);
-      final oldGroup = _loadedMenu[index].keys.first;
+      final index = _loadedMenu.indexWhere((e) =>
+          e.expansibleGroupsViewModel.ExpansibleGroupId.toInt() ==
+          expansibleGroupId);
+      final oldGroup = _loadedMenu[index].expansibleGroupsViewModel;
       final groupUpdated = ExpansibleGroupsViewModel(
         Name: oldGroup.Name,
         ExpansibleGroupId: oldGroup.ExpansibleGroupId,
@@ -686,8 +678,12 @@ class GetxMenuPresenter extends GetxController
         Schedule: ExpansibleGroupScheduleModel.fromEntity(
             _expansibleGroupSchedule.value!.toEntity()),
       );
-      final oldProducts = _loadedMenu[index].values.first;
-      _loadedMenu[index] = {groupUpdated: oldProducts};
+      final oldProducts = _loadedMenu[index].productsViewModel;
+      _loadedMenu[index] = LoadedMenuViewModel(
+        expansibleGroupsViewModel: groupUpdated,
+        productsViewModel: oldProducts,
+      );
+
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -744,24 +740,27 @@ class GetxMenuPresenter extends GetxController
       if (searchProductsEnabled) {
         int index = 0;
         if (_loadedMenu.isNotEmpty &&
-            _loadedMenu[0].keys.first.Name.toUpperCase() ==
+            _loadedMenu[0].expansibleGroupsViewModel.Name.toUpperCase() ==
                 R.string.detach.toUpperCase()) {
           index = 1;
         }
 
-        _loadedMenu.insert(index, {
-          ExpansibleGroupsViewModel(
-            Name: R.string.searchProduct.toUpperCase(),
-            ExpansibleGroupId: "0",
-            ExpansibleGroupType: "0",
-            OrderClassification: "0",
-            Schedule: null,
-            subgroups: [],
-          ): [],
-        });
+        _loadedMenu.insert(
+            index,
+            LoadedMenuViewModel(
+              expansibleGroupsViewModel: ExpansibleGroupsViewModel(
+                Name: R.string.searchProduct.toUpperCase(),
+                ExpansibleGroupId: "0",
+                ExpansibleGroupType: "0",
+                OrderClassification: "0",
+                Schedule: null,
+                subgroups: [],
+              ),
+              productsViewModel: [],
+            ));
       } else if (!searchProductsEnabled) {
         int index = _loadedMenu.indexWhere((e) =>
-            e.keys.first.Name.toUpperCase() ==
+            e.expansibleGroupsViewModel.Name.toUpperCase() ==
             R.string.searchProduct.toUpperCase());
 
         if (index != -1) {

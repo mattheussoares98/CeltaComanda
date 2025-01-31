@@ -79,10 +79,10 @@ class _SchedulesPageState extends State<SchedulesPage>
             itemCount: menuPresenter.loadedMenu.length,
             itemBuilder: (context, groupIndex) {
               final group = menuPresenter.loadedMenu
-                  .map((element) => element.keys.first)
+                  .map((element) => element.expansibleGroupsViewModel)
                   .toList()[groupIndex];
               final productsOfGroup =
-                  menuPresenter.loadedMenu[groupIndex].values.first;
+                  menuPresenter.loadedMenu[groupIndex].productsViewModel;
               productsOfGroup.sort((a, b) => a.Name.compareTo(b.Name));
 
               return Container(

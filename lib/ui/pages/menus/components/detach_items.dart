@@ -18,7 +18,7 @@ class DetachItems extends StatelessWidget {
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context);
 
-    if (menuPresenter.loadedMenu[0].entries.isEmpty) {
+    if (menuPresenter.loadedMenu.isEmpty) {
       return SizedBox();
     }
 

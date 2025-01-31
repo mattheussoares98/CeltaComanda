@@ -52,7 +52,7 @@ class _MenuPageState extends State<MenuPage>
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    MenuPresenter menuPresenter = Provider.of(context);
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
@@ -62,23 +62,15 @@ class _MenuPageState extends State<MenuPage>
         handleMainError(context, menuPresenter.mainErrorStream);
 
     return Scaffold(
-      body: StreamBuilder<
-          List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>(
-        stream: menuPresenter.menuStream,
-        builder: (context, snapshot) {
-          if (menuPresenter.loadedMenu.isEmpty) {
-            return const LoadMenuButton();
-          } else {
-            return StreamBuilder<int>(
-                stream: menuPresenter.indexOfSelectedGroupStream,
-                builder: (context, selectedGroupIndex) {
-                  return GroupsSubgroupsAndProducts(
-                    selectedIndex: selectedGroupIndex.data,
-                  );
-                });
-          }
-        },
-      ),
+      body: menuPresenter.loadedMenu.isEmpty
+          ? const LoadMenuButton()
+          : StreamBuilder<int>(
+              stream: menuPresenter.indexOfSelectedGroupStream,
+              builder: (context, selectedGroupIndex) {
+                return GroupsSubgroupsAndProducts(
+                  selectedIndex: selectedGroupIndex.data,
+                );
+              }),
     );
   }
 }

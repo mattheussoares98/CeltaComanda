@@ -183,6 +183,8 @@ class ProductCompositionViewModel extends Equatable {
                 (element) => ProductCompositionViewModel.fromJson(element))
             .toList(),
         commentFather: json["commentFather"],
-        Schedule: json["Schedule"],
+        Schedule: json["Schedule"] == null
+            ? null
+            : ProductScheduleModel.fromJson(json["Schedule"]),
       );
 }

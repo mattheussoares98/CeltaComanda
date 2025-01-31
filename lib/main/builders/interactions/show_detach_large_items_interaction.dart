@@ -17,10 +17,9 @@ class ShowDetachLargeItemsInteraction {
 
   static bool _hasDetachGroup(MenuPresenter menuPresenter) {
     for (var menu in menuPresenter.loadedMenu) {
-      for (var group in menu.keys) {
-        if (group.Name.toLowerCase() == R.string.detach.toLowerCase()) {
-          return true;
-        }
+      if (menu.expansibleGroupsViewModel.Name.toLowerCase() ==
+          R.string.detach.toLowerCase()) {
+        return true;
       }
     }
     return false;

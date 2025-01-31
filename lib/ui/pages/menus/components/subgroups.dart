@@ -71,7 +71,8 @@ class Subgroups extends StatelessWidget {
         return;
       }
 
-      final element = menuPresenter.loadedMenu[selectedIndex ?? 0].values.first
+      final element = menuPresenter
+          .loadedMenu[selectedIndex ?? 0].productsViewModel
           .elementAt(firstVisibleProductIndex);
 
       if (element.subgroupName != subgroups[index]) return;
@@ -87,11 +88,6 @@ class Subgroups extends StatelessWidget {
       final subgroups = menuPresenter
           .treatSchedules<ExpansibleGroupsViewModel>()[selectedIndex ?? 0]
           .subgroups
-          .where((e) => menuPresenter
-              .treatSchedules<ProductsViewModel>()
-              .where((t) => t.subgroupName == e)
-              .toList()
-              .isNotEmpty)
           .toList();
 
       if (subgroups.isEmpty) {

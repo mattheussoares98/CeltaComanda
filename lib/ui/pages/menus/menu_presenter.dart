@@ -9,12 +9,10 @@ abstract class MenuPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<bool> get doScrollGroupsStream;
-  Stream<List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>>>
-      get menuStream;
   Stream<int> get indexOfSelectedGroupStream;
 
   Stream<ProductsViewModel?> get searchedProductStream;
-  List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> get loadedMenu;
+  List<LoadedMenuViewModel> get loadedMenu;
 
   Stream<ProductScheduleViewModel?> get productScheduleStream;
   Stream<ExpansibleGroupScheduleViewModel?> get expansibleGroupScheduleStream;
@@ -27,6 +25,7 @@ abstract class MenuPresenter implements Listenable {
         expansibleGroupFromProductPresenter,
     required HomePresenter homePresenter,
     required bool isValidatingNeedUpdateAgain,
+    bool updatedSchedule = false,
   });
   Future<void> searchProduct(String value);
   Future<String> readBarcodeAndSearchProduct();

@@ -14,6 +14,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final TextEditingController daysPreloadImageController;
   final TextEditingController latestCompatibleVersionController;
   final TextEditingController serviceChargePercentageController;
+  final TextEditingController minutesVerifyUpdateMenuController;
   final bool? zoomImage;
   final bool? useCovenant;
   final GlobalKey<FormState> formKey;
@@ -27,6 +28,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.daysPreloadImageController,
     required this.latestCompatibleVersionController,
     required this.serviceChargePercentageController,
+    required this.minutesVerifyUpdateMenuController,
     required this.zoomImage,
     required this.useCovenant,
     required this.formKey,
@@ -75,6 +77,12 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                         : serviceChargePercentageController.text.toDouble(),
                 zoomImage: zoomImage,
                 useCovenant: useCovenant,
+                minutesVerifyUpdateMenu:
+                    minutesVerifyUpdateMenuController.text.isEmpty
+                        ? null
+                        : minutesVerifyUpdateMenuController.text.toInt(),
+
+                ///* TODO create option for change minutes */,
               );
 
               if (updated) {

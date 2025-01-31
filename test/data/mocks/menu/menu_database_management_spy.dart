@@ -21,8 +21,7 @@ class MenuDatabaseManagementSpy extends Mock implements MenuDatabaseManagement {
   }
 
   When _mockLoadCall() => when(() => this.load());
-  void mockLoad(
-      List<Map<ExpansibleGroupsViewModel, List<ProductsViewModel>>> menu) {
+  void mockLoad(List<LoadedMenuViewModel> menu) {
     _mockLoadCall().thenAnswer((_) async => menu);
   }
 }

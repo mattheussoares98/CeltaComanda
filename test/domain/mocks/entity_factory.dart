@@ -30,6 +30,7 @@ class EntityFactory {
     bool? waitDaysToPreloadImages,
     bool? secondsPreloadingImages,
     bool? latestCompatibleVersion,
+    bool? minutesVerifyUpdateMenu,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -68,6 +69,9 @@ class EntityFactory {
       latestCompatibleVersion: latestCompatibleVersion == true
           ? null
           : atualEntity.latestCompatibleVersion,
+      minutesVerifyUpdateMenu: minutesVerifyUpdateMenu == true
+          ? null
+          : atualEntity.minutesVerifyUpdateMenu,
     );
   }
 
@@ -93,6 +97,7 @@ class EntityFactory {
     int? waitDaysToPreloadImages,
     int? secondsPreloadingImages,
     String? latestCompatibleVersion,
+    int? minutesVerifyUpdateMenu,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -127,6 +132,8 @@ class EntityFactory {
           waitDaysToPreloadImages ?? faker.randomGenerator.integer(100),
       latestCompatibleVersion:
           latestCompatibleVersion ?? faker.randomGenerator.decimal().toString(),
+      minutesVerifyUpdateMenu:
+          minutesVerifyUpdateMenu ?? faker.randomGenerator.integer(100),
     );
   }
 
@@ -1531,7 +1538,8 @@ class EntityFactory {
         isEnterpriseImage: faker.randomGenerator.boolean(),
       );
 
-  static ExportChargingEntity makeExportChargingEntity(LoadTypeEnum loadType, {DateTime? date}) =>
+  static ExportChargingEntity makeExportChargingEntity(LoadTypeEnum loadType,
+          {DateTime? date}) =>
       ExportChargingEntity(
         EnterpriseId: faker.randomGenerator.integer(100),
         UserId: faker.randomGenerator.integer(100),

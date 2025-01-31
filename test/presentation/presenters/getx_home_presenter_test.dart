@@ -194,16 +194,6 @@ void main() {
         verify(() => persistent.makeNotPersistent()).called(1);
       });
 
-      test('Should update updateMenu', () async {
-        await sut.doLogout(
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        expect(sut.updateMenu, -1);
-      });
       test('Should call enterprisePresenter.clearEnterpriseData', () async {
         await sut.doLogout(
           printedProductsPresenter: printedProductsPresenter,
@@ -346,19 +336,7 @@ void main() {
 
       expect(sut.commandEntity, isNull);
     });
-    test('Should clear updateMenu count', () async {
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
 
-      sut.clear();
-
-      expect(sut.updateMenu, -1);
-    });
     test('Should call local command data update correctly', () async {
       await sut.clear();
 
@@ -1169,69 +1147,6 @@ void main() {
   });
 
   group("Do on remote enterprise changes", () {
-    group("Update menu", () {
-      test("Should call loadCommandData if enterprise.menucount is different",
-          () async {
-        enterpriseJson["updateMenu"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() => localCommandData.load()).called(1);
-      });
-      test("Should not call loadCommandData if enterprise.menucount is equal",
-          () async {
-        enterpriseJson["updateMenu"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() => localCommandData.load()).called(1);
-      });
-
-      test("Should update updateMenu with remote data", () async {
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        expect(
-          sut.updateMenu,
-          EnterpriseValidationModel.fromJson(enterpriseJson).updateMenu,
-        );
-      });
-    });
-
     group("Never change data", () {
       test("Should not call functions if enterpriseId is null", () async {
         EnterpriseBuilder.entity = EntityFactory.makeEnterpriseWithNullValue(
@@ -1290,7 +1205,7 @@ void main() {
         );
 
         verify(() => addDeviceInfo.add(
-              commandNumber: sut.commandEntity!.commandNumber?.toInt(),
+              commandNumber: sut.commandEntity?.commandNumber?.toInt(),
               imeiOrWindowsId: imeiOrWindowsId,
               applicationVersion: applicationVersion.toString(),
             )).called(1);
@@ -1414,87 +1329,6 @@ void main() {
             EnterpriseValidationModel.fromJson(enterpriseJson).toEntity();
 
         verify(() => localEnterpriseData.add(newEnterprise)).called(1);
-      });
-    });
-
-    group("Update pending devices", () {
-      test(
-          "Should call add pending device to update if local data is differently than remote data",
-          () async {
-        enterpriseJson["updatePendingDevices"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() => addPendingDeviceToUpdate.add(
-              imeiOrWindowsId: imeiOrWindowsId,
-              enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-            )).called(1);
-      });
-      test("Should get unique identifier", () async {
-        enterpriseJson["updatePendingDevices"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
-      });
-
-      test("Should update enterprise on updateDeviceInformations changes",
-          () async {
-        enterpriseJson["updatePendingDevices"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        expect(
-          EnterpriseBuilder.entity,
-          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
-        );
-      });
-
-      test("Should update locally when updateDeviceInformations changes",
-          () async {
-        enterpriseJson["updatePendingDevices"] =
-            faker.randomGenerator.integer(1000, min: 500);
-
-        await sut.doOnRemoteEnterpriseChanges(
-          data: enterpriseJson,
-          menuPresenter: menuPresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
-
-        verify(() => localEnterpriseData.add(
-                EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
-            .called(1);
       });
     });
 

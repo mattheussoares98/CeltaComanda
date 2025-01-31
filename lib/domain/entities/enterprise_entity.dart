@@ -22,6 +22,8 @@ class EnterpriseEntity extends Equatable {
   final int? updatePendingDevices;
   final int? waitDaysToPreloadImages;
   final String? latestCompatibleVersion;
+  final int? minutesVerifyUpdateMenu;
+  //TODO remove unecessary parameters
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -42,6 +44,7 @@ class EnterpriseEntity extends Equatable {
     required this.updatePendingDevices,
     required this.waitDaysToPreloadImages,
     required this.latestCompatibleVersion,
+    required this.minutesVerifyUpdateMenu,
   });
 
   @override
@@ -64,5 +67,6 @@ class EnterpriseEntity extends Equatable {
         updatePendingDevices,
         waitDaysToPreloadImages,
         latestCompatibleVersion,
+        minutesVerifyUpdateMenu,
       ];
 }

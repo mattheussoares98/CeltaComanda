@@ -103,6 +103,7 @@ void main() {
       updatePendingDevices: null,
       waitDaysToPreloadImages: null,
       latestCompatibleVersion: null,
+      minutesVerifyUpdateMenu: null,
     );
 
     pdvsNotUsing = [
@@ -254,6 +255,7 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           latestCompatibleVersion: null,
+          minutesVerifyUpdateMenu: null,
         ),
       );
     });
@@ -398,6 +400,7 @@ void main() {
           updatePendingDevices: newEnterprise.updatePendingDevices,
           waitDaysToPreloadImages: newEnterprise.waitDaysToPreloadImages,
           latestCompatibleVersion: newEnterprise.latestCompatibleVersion,
+          minutesVerifyUpdateMenu: newEnterprise.minutesVerifyUpdateMenu,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
         ),
       );
@@ -609,6 +612,7 @@ void main() {
             updatePendingDevices: null,
             waitDaysToPreloadImages: null,
             latestCompatibleVersion: null,
+            minutesVerifyUpdateMenu: null,
           ));
     });
   });
@@ -657,6 +661,8 @@ void main() {
                 EnterpriseBuilder.entity!.updatePendingDevices,
             waitDaysToPreloadImages:
                 EnterpriseBuilder.entity!.waitDaysToPreloadImages,
+            minutesVerifyUpdateMenu:
+                EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
             latestCompatibleVersion:
                 EnterpriseBuilder.entity!.latestCompatibleVersion,
           ));
@@ -688,6 +694,7 @@ void main() {
           updatePendingDevices: null,
           waitDaysToPreloadImages: null,
           latestCompatibleVersion: null,
+          minutesVerifyUpdateMenu: null,
         ),
       );
     });

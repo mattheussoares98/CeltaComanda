@@ -95,6 +95,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required bool? zoomImage,
     required bool? useCovenant,
     required String enterpriseName,
+    required int? minutesVerifyUpdateMenu,
   }) async {
     try {
       isLoading = true;
@@ -124,6 +125,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         pendingDevicesToUpdate: _selectedEnterprise?.pendingDevicesToUpdate,
         updatePendingDevices: _selectedEnterprise?.updatePendingDevices,
         latestCompatibleVersion: latestCompatibleVersion,
+        minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
       );
 
       await updateEnterpriseParameters.update(enterprise);

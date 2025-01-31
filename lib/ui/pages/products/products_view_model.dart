@@ -483,7 +483,10 @@ class ProductsViewModel extends Equatable {
       );
 
   Map<String, dynamic> toJson() => {
-        "suggestions": suggestions,
+        "suggestions": suggestions
+            ?.map((e) => SuggestionSaleModel.fromEntity(e).toJson())
+            .toList(),
+        "childsComposition": childsComposition?.map((e) => e.toJson()).toList(),
         "Schedule": Schedule,
         "ProductsId": ProductsId,
         "InternalCodeOnERP": InternalCodeOnERP,
@@ -551,14 +554,20 @@ class ProductsViewModel extends Equatable {
         "PackingAbbreviation": PackingAbbreviation,
         "IsPromoCombox": IsPromoCombox,
         "MaximumQuantityForSale": MaximumQuantityForSale,
-        "childsComposition": childsComposition,
         "productQuantity": productQuantity,
+        "subgroupName": subgroupName,
       };
 
   static ProductsViewModel fromJson(Map json) => ProductsViewModel(
-        subgroupName: null,
-        suggestions: json["suggestions"],
-        Schedule: json["Schedule"],
+        subgroupName: json["subgroupName"],
+        suggestions: json["suggestions"] == null
+            ? null
+            : (json["suggestions"] as List)
+                .map((e) => SuggestionSaleModel.fromJson(e).toEntity())
+                .toList(),
+        Schedule: json["Schedule"] == null
+            ? null
+            : ProductScheduleModel.fromJson(json["Schedule"]),
         ProductsId: json["ProductsId"],
         InternalCodeOnERP: json["InternalCodeOnERP"],
         InternalCodeOfProductOnERP: json["InternalCodeOfProductOnERP"],

@@ -24,6 +24,7 @@ class _WebAddOrEditEnterprisePageState
   final daysPreloadImageController = TextEditingController();
   final latestCompatibleVersionController = TextEditingController();
   final serviceChargePercentageController = TextEditingController();
+  final minutesVerifyUpdateMenuController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final navsFocusNode = FocusNode();
   final concentratorFocusNode = FocusNode();
@@ -32,6 +33,7 @@ class _WebAddOrEditEnterprisePageState
   final daysPreloadImageFocusNode = FocusNode();
   final latestCompatibleVersionFocusNode = FocusNode();
   final serviceChargePercentageFocusNode = FocusNode();
+  final minutesVerifyUpdateMenuFocusNode = FocusNode();
   bool? zoomImage = false;
   bool? useCovenant = false;
 
@@ -59,6 +61,7 @@ class _WebAddOrEditEnterprisePageState
     daysPreloadImageController.dispose();
     latestCompatibleVersionController.dispose();
     serviceChargePercentageController.dispose();
+    minutesVerifyUpdateMenuController.dispose();
     navsFocusNode.dispose();
     concentratorFocusNode.dispose();
     ccsFocusNode.dispose();
@@ -66,6 +69,7 @@ class _WebAddOrEditEnterprisePageState
     daysPreloadImageFocusNode.dispose();
     latestCompatibleVersionFocusNode.dispose();
     serviceChargePercentageFocusNode.dispose();
+    minutesVerifyUpdateMenuFocusNode.dispose();
   }
 
   @override
@@ -194,11 +198,11 @@ class _WebAddOrEditEnterprisePageState
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: DaysPreLoadImageInput(
-                              daysPreloadImageController:
-                                  daysPreloadImageController,
-                              daysPreloadImageFocusNode:
-                                  daysPreloadImageFocusNode,
+                            child: MinutesVerifyUpdateMenuInput(
+                              minutesVerifyUpdateMenuController:
+                                  minutesVerifyUpdateMenuController,
+                              minutesVerifyUpdateMenuFocusNode:
+                                  minutesVerifyUpdateMenuFocusNode,
                               latestCompatibleVersionFocusNode:
                                   latestCompatibleVersionFocusNode,
                             ),
@@ -268,6 +272,8 @@ class _WebAddOrEditEnterprisePageState
                   latestCompatibleVersionController,
               serviceChargePercentageController:
                   serviceChargePercentageController,
+              minutesVerifyUpdateMenuController:
+                  minutesVerifyUpdateMenuController,
               zoomImage: zoomImage,
               useCovenant: useCovenant,
               formKey: _formKey,

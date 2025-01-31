@@ -18,4 +18,5 @@ MenuPresenter makeGetxMenuPresenter() => GetxMenuPresenter(
       loadExportCharging: makeRemoteLoadExportsCharging(),
       lastImport: makeLocalLastImport(),
       menuDatabaseManagement: makeLocalMenuDatabaseManagement(),
+      insertExportLoadType: makeRemoteInsertExportLoadType(),
     );

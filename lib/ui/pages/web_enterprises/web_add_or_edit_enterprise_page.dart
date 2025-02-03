@@ -256,13 +256,8 @@ class _WebAddOrEditEnterprisePageState
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Expanded(child: UpdateMenuInDevicesButton()),
-                          const SizedBox(width: 8),
-                          Expanded(child: GoToDevicesInfoPageButton()),
-                        ],
-                      ),
+                      GoToDevicesInfoPageButton(),
+                      // UpdateMenuInDevicesButton(),
                     ],
                   ),
                 ),

@@ -71,11 +71,13 @@ class Subgroups extends StatelessWidget {
         return;
       }
 
-      final element = menuPresenter
-          .loadedMenu[selectedIndex ?? 0].productsViewModel
-          .elementAt(firstVisibleProductIndex);
+      final treatedProducts = menuPresenter.treatSchedules<ProductsViewModel>();
 
-      if (element.subgroupName != subgroups[index]) return;
+      final element = treatedProducts.elementAt(firstVisibleProductIndex);
+
+      if (element.subgroupName != subgroups[index]) {
+        return;
+      }
 
       subgroupScrollController.animateTo(
         MediaQuery.of(context).size.width * 0.35 * (index - 0.5),

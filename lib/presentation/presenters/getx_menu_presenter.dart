@@ -202,7 +202,6 @@ class GetxMenuPresenter extends GetxController
 
       isLoading = true;
       clear();
-      _inexOfSelectedGroup.value = 0;
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -291,6 +290,11 @@ class GetxMenuPresenter extends GetxController
 
       await menuDatabaseManagement.save(_loadedMenu);
       await lastImport.save([LoadTypeEnum.products]);
+
+      if (_inexOfSelectedGroup.value >= treatSchedules<ExpansibleGroupsViewModel>().length) {
+        _inexOfSelectedGroup.value =
+            treatSchedules<ExpansibleGroupsViewModel>().length - 1;
+      }
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

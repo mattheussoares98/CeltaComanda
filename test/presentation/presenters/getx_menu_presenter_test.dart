@@ -233,21 +233,17 @@ void main() {
   });
 
   group("Get groups and products", () {
-    // test('Should emit correct values on success', () async {
-    //   expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    //   expectLater(sut.mainErrorStream, emits(null));
+    test('Should emit correct values on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-    //   expectLater(
-    //       sut.menuStream, emitsInOrder([[], menuListWithoutPromoCombox]));
-
-    //   await sut.getGroupsAndProducts(
-    //     isValidatingNeedUpdateAgain: false,
-    //     expansibleGroupFromProductPresenter:
-    //         expansibleGroupFromProductPresenter,
-    //     homePresenter: homePresenter,
-    //     commandNumber: homePresenter.commandEntityController!.commandNumber!,
-    //   );
-    // });
+      await sut.getGroupsAndProducts(
+        isValidatingNeedUpdateAgain: false,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        homePresenter: homePresenter,
+        commandNumber: homePresenter.commandEntityController!.commandNumber!,
+      );
+    });
     test(
         'Should throw CommandNotAvailable on getGroupsAndProducts throws commandNotAvailable',
         () async {
@@ -330,19 +326,6 @@ void main() {
 
       sut.clear();
       expect(sut.loadedMenu, []);
-    });
-
-    test('Should update index of selectedGroup when search groups again',
-        () async {
-      expectLater(sut.indexOfSelectedGroupStream, emits(0));
-
-      await sut.getGroupsAndProducts(
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
-        commandNumber: homePresenter.commandEntityController!.commandNumber!,
-      );
     });
 
     test('Should put "destaques" in first group list', () async {

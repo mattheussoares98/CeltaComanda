@@ -67,6 +67,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
             Icon(
               Icons.shopping_cart,
               size: getIconSize(context),
+              color: Colors.white,
             ),
             const SizedBox(width: 8),
             Expanded(

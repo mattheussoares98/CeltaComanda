@@ -59,46 +59,74 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
         menuPresenter.goToInsertProductPage(widget.selectedProduct);
         menuPresenter.updateSuggestionsProducts(widget.selectedProduct);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(
-              Icons.shopping_cart,
-              size: getIconSize(context),
-              color: Colors.white,
-            ),
-            const SizedBox(width: 8),
+      child: Row(
+        children: [
+          Icon(
+            Icons.shopping_cart,
+            size: hasMinWidth(context) ? 35 : 25,
+            color: Colors.white,
+          ),
+          if (hasMinWidth(context))
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Row(
+                  children: [
+                    Text(
                       R.string.insert,
                       style: TextStyle(
                         fontSize: StringSize.size,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.selectedProduct.SaleRetailPraticed
-                          .toDouble()
-                          .toString()
-                          .toBrazilianNumber()
-                          .addBrazilianCoin(),
-                      style: TextStyle(
-                        fontSize: StringSize.size,
+                    Expanded(
+                      child: Text(
+                        widget.selectedProduct.SaleRetailPraticed
+                            .toDouble()
+                            .toString()
+                            .toBrazilianNumber()
+                            .addBrazilianCoin(),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          fontSize: StringSize.size,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          if (!hasMinWidth(context))
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FittedBox(
+                      child: Text(
+                        R.string.insert,
+                        style: TextStyle(
+                          fontSize: StringSize.size,
+                        ),
+                      ),
+                    ),
+                    FittedBox(
+                      child: Text(
+                        widget.selectedProduct.SaleRetailPraticed
+                            .toDouble()
+                            .toString()
+                            .toBrazilianNumber()
+                            .addBrazilianCoin(),
+                        style: TextStyle(
+                          fontSize: StringSize.size,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

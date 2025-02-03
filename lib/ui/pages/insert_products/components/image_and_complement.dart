@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../pages.dart';
@@ -15,8 +14,6 @@ class ImageAndComplement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-
     return Row(
       children: [
         SizedBox(
@@ -32,7 +29,6 @@ class ImageAndComplement extends StatelessWidget {
                 productName: selectedProduct.Name,
                 selectedProduct: selectedProduct,
                 showInsertButton: false,
-                menuPresenter: menuPresenter,
               );
             },
             child: ImageWidget(

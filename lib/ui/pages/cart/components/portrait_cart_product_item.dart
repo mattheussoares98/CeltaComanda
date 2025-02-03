@@ -27,7 +27,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 5, right: 2, left: 2),
@@ -91,7 +90,6 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                         plu: widget.cartProduct.Product.PriceLookupCode,
                         productComplement:
                             widget.cartProduct.Product.ProductComplement,
-                        menuPresenter: menuPresenter,
                         productName: widget.cartProduct.Product.Name,
                         selectedProduct: widget.cartProduct.Product,
                       );

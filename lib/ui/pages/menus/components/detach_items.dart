@@ -44,7 +44,6 @@ class DetachItems extends StatelessWidget {
               ean: product.EanCode,
               productComplement: product.ProductComplement,
               plu: product.PriceLookupCode,
-              menuPresenter: menuPresenter,
               productName: product.Name,
               selectedProduct: product,
               showInsertButton: true,

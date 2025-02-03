@@ -31,7 +31,6 @@ class _LandScapeInsertProductsPageBodyState
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
     if (widget.insertProductsViewModel != null) {
       atualOption = widget.insertProductsViewModel![widget.indexOfAtualOption]
@@ -61,7 +60,6 @@ class _LandScapeInsertProductsPageBodyState
                         plu: widget.selectedProduct.PriceLookupCode,
                         productComplement:
                             widget.selectedProduct.ProductComplement,
-                        menuPresenter: menuPresenter,
                         productName: widget.selectedProduct.Name,
                         selectedProduct: widget.selectedProduct,
                         showInsertButton: false,

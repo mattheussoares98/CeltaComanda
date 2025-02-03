@@ -1,7 +1,6 @@
-import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -18,8 +17,6 @@ class PortraitProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context, listen: false);
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -36,7 +33,6 @@ class PortraitProductItem extends StatelessWidget {
                     productComplement: productsViewModel.ProductComplement,
                     showInsertButton: true,
                     selectedProduct: productsViewModel,
-                    menuPresenter: menuPresenter,
                     productName: productsViewModel.Name,
                   );
                 },

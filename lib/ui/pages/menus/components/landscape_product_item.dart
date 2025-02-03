@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
@@ -20,8 +19,6 @@ class LandscapeProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuPresenter menuPresenter = Provider.of(context);
-
     return Row(
       children: [
         SizedBox(
@@ -36,7 +33,6 @@ class LandscapeProductItem extends StatelessWidget {
                 productComplement: productsViewModel.ProductComplement,
                 showInsertButton: true,
                 selectedProduct: productsViewModel,
-                menuPresenter: menuPresenter,
                 productName: productsViewModel.Name,
               );
             },

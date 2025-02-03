@@ -11,90 +11,66 @@ void showLargeImage({
   ProductsViewModel? selectedProduct,
   bool? showInsertButton,
   required String plu,
-  required MenuPresenter menuPresenter,
   String? productName,
 }) {
-  PersonalizedDialogPage.open(
-      context: context,
-      page: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                ImageWidget(
-                  ean: ean,
-                  plu: plu,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width * 1.3,
-                  selectedProduct: selectedProduct,
-                  zoomImage: false,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.black45,
-                        Colors.transparent,
-                        Colors.transparent,
-                        Colors.transparent,
-                      ],
-                      end: Alignment.bottomCenter,
-                      begin: Alignment.topCenter,
-                    ),
-                  ),
-                ),
-                if (productName != null)
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    child: Text(
-                      productName,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: hasMinWidth(context) ? 40 : 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          if (selectedProduct != null)
-            _complementAndInsertProductButton(
-              productComplement: productComplement,
-              context: context,
-              selectedProduct: selectedProduct,
-              showInsertButton: showInsertButton == true,
-            ),
-        ],
-      ));
-}
+  final deviceHeight = MediaQuery.of(context).size.height;
+  final deviceWidth = MediaQuery.of(context).size.width;
 
-Widget _complementAndInsertProductButton({
-  required String? productComplement,
-  required BuildContext context,
-  required ProductsViewModel selectedProduct,
-  required bool showInsertButton,
-}) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+  PersonalizedDialogPage.open(
+    context: context,
+    page: Column(
       children: [
+        SizedBox(
+          height: productComplement?.isEmpty == true
+              ? deviceHeight
+              : deviceHeight * 0.4,
+          width: deviceWidth,
+          child: Stack(
+            children: [
+              ImageWidget(
+                ean: ean,
+                plu: plu,
+                height: productComplement?.isEmpty == true
+                    ? deviceHeight
+                    : deviceHeight * 0.4,
+                width: deviceWidth,
+                selectedProduct: selectedProduct,
+                zoomImage: false,
+              ),
+              Container(
+                width: deviceWidth,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black12,
+                      Colors.black26,
+                    ],
+                    end: Alignment.bottomCenter,
+                    begin: Alignment.topCenter,
+                  ),
+                ),
+                child: Text(
+                  productName ?? "",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: StringSize.size,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         if (productComplement != null &&
             productComplement.removeComplementConfigurations().isNotEmpty)
           Expanded(
-            flex: 2,
             child: ProductComplement(
               productComplement: productComplement,
             ),
           ),
-        if (showInsertButton)
-          Expanded(
+        if (showInsertButton == true && selectedProduct != null)
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: OpenInsertProductPage(
               selectedProduct: selectedProduct,
             ),

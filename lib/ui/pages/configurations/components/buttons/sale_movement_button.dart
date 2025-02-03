@@ -15,7 +15,6 @@ class SaleMovementButton extends StatelessWidget {
     return defaultButton(
         context: context,
         name: R.string.sales,
-        isNew: true,
         function: () async {
           configurationsPresenter.goToSaleMovementsPage();
         });

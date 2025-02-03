@@ -86,9 +86,18 @@ class Subgroups extends StatelessWidget {
 
     return Builder(builder: (context) {
       final groups = menuPresenter.treatSchedules<ExpansibleGroupsViewModel>();
+      final productsSubGroups = menuPresenter
+          .treatSchedules<ProductsViewModel>()
+          .map((e) => e.subgroupName)
+          .toList();
+
       final subgroups = groups.isEmpty
           ? <String>[]
-          : groups[selectedIndex ?? 0].subgroups.toList();
+          : groups[selectedIndex ?? 0]
+              .subgroups
+              .toList()
+              .where((e) => productsSubGroups.contains(e))
+              .toList();
 
       if (subgroups.isEmpty) {
         return const SizedBox();

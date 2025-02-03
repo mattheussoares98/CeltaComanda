@@ -90,25 +90,27 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (!applicationIsInLatestVersion) UpdateApplicationButton(),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: hasMinWidth(context) ? 3 : 2,
-                  childAspectRatio: hasMinWidth(context) ? 5 : 3,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (!applicationIsInLatestVersion) UpdateApplicationButton(),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: hasMinWidth(context) ? 3 : 2,
+                    childAspectRatio: hasMinWidth(context) ? 5 : 3,
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 5,
+                  ),
+                  itemCount: buttons.length,
+                  itemBuilder: (context, index) {
+                    return buttons[index];
+                  },
                 ),
-                itemCount: buttons.length,
-                itemBuilder: (context, index) {
-                  return buttons[index];
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

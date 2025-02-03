@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/helpers/helpers.dart';
 import '../../pages/pages.dart';
 import '../components.dart';
 
@@ -15,7 +14,6 @@ class ImageWidget extends StatefulWidget {
   final double width;
   final ProductsViewModel? selectedProduct;
   final AnimationOrientation orientation;
-  final bool zoomImage;
 
   const ImageWidget({
     this.height = 65,
@@ -23,7 +21,6 @@ class ImageWidget extends StatefulWidget {
     required this.ean,
     required this.plu,
     required this.selectedProduct,
-    this.zoomImage = true,
     this.orientation = AnimationOrientation.horizontal,
     super.key,
   });
@@ -61,64 +58,55 @@ class _ImageWidgetState extends State<ImageWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Stack(
       children: [
-        Expanded(
-          flex: hasMinWidth(context) ? 4 : 2,
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: AnimatedBuilder(
-                  animation: _animation,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset:
-                          widget.orientation == AnimationOrientation.vertical
-                              ? Offset(0, _animation.value)
-                              : Offset(_animation.value, 0),
-                      child: CachedImage(
-                        ean: widget.ean,
-                        plu: widget.plu,
-                        height: widget.height,
-                        width: widget.width,
-                        zoomImage: widget.zoomImage,
-                      ),
-                    );
-                  },
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return Transform.translate(
+                offset:
+                    widget.orientation == AnimationOrientation.vertical
+                        ? Offset(0, _animation.value)
+                        : Offset(_animation.value, 0),
+                child: CachedImage(
+                  ean: widget.ean,
+                  plu: widget.plu,
+                  height: widget.height,
+                  width: widget.width,
                 ),
-              ),
-              if (widget.selectedProduct?.ProductComplement
-                      .toString()
-                      .toLowerCase()
-                      .contains("(novo)") ==
-                  true)
-                NewProductBadge(
-                  height: widget.height * 0.25,
-                  width: widget.width * 0.25,
-                ),
-              if (widget.selectedProduct?.ProductComplement
-                      .toString()
-                      .toLowerCase()
-                      .contains("(kids)") ==
-                  true)
-                KidsBadge(
-                  height: widget.height * 0.25,
-                  width: widget.width * 0.25,
-                ),
-              if (widget.selectedProduct?.IsAlcoholicProduct == "true")
-                AlcoholicBadge(
-                  height: widget.height * 0.25,
-                  width: widget.width * 0.25,
-                ),
-              PepperBadge(
-                product: widget.selectedProduct,
-                height: widget.height * 0.25,
-                width: widget.width * 0.25,
-              ),
-            ],
+              );
+            },
           ),
+        ),
+        if (widget.selectedProduct?.ProductComplement
+                .toString()
+                .toLowerCase()
+                .contains("(novo)") ==
+            true)
+          NewProductBadge(
+            height: widget.height * 0.25,
+            width: widget.width * 0.25,
+          ),
+        if (widget.selectedProduct?.ProductComplement
+                .toString()
+                .toLowerCase()
+                .contains("(kids)") ==
+            true)
+          KidsBadge(
+            height: widget.height * 0.25,
+            width: widget.width * 0.25,
+          ),
+        if (widget.selectedProduct?.IsAlcoholicProduct == "true")
+          AlcoholicBadge(
+            height: widget.height * 0.25,
+            width: widget.width * 0.25,
+          ),
+        PepperBadge(
+          product: widget.selectedProduct,
+          height: widget.height * 0.25,
+          width: widget.width * 0.25,
         ),
       ],
     );

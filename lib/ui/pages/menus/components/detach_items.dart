@@ -60,7 +60,6 @@ class DetachItems extends StatelessWidget {
                 orientation: hasMinWidth(context)
                     ? AnimationOrientation.horizontal
                     : AnimationOrientation.vertical,
-                zoomImage: false,
               ),
               Container(
                 width: double.infinity,

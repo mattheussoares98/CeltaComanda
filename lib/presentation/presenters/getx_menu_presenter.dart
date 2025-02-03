@@ -304,7 +304,6 @@ class GetxMenuPresenter extends GetxController
       }
     } finally {
       isLoading = false;
-      //add verification for this TODO
     }
   }
 

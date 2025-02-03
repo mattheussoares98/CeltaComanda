@@ -49,7 +49,8 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                       fontSize: StringSize.size,
                       color: Colors.black),
                   items: snapshot.data
-                      ?.map(
+                      ?.where((e) => e.PdvNumber.toInt() >= 100)
+                      .map(
                         (e) => DropdownMenuItem(
                           value: e,
                           onTap: () async {},

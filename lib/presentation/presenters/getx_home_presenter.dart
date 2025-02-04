@@ -498,6 +498,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         pdvNumber: commandEntity?.pdv?.PdvNumber ?? "100",
       );
 
+      mainError = null;
+      isLoading = true;
+
       bool needUpdateProducts = _needLoadRemote(
         exports: lastExports,
         loadType: LoadTypeEnum.products,
@@ -521,8 +524,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (needUpdateImages) {
         await menuPresenter.loadAllImages(updateLocally: false);
       }
-    } catch (e) {
-      e;
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.commandNotAvailable:
+          mainError = UIError.commandNotAvailable;
+          break;
+        default:
+          mainError = UIError.unexpected;
+          break;
+      }
+    } finally {
+      isLoading = false;
     }
   }
 

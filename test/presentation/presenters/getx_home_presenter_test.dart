@@ -1,6 +1,6 @@
-import 'package:clean_celta_mobile/data/models/enterprise_model.dart';
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
-import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
@@ -119,6 +119,7 @@ void main() {
     addPendingDeviceToUpdate.mockAdd(imeiOrWindowsId);
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
     loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
+    loadExportCharging.mockLoad([]);
   }
 
   void initEntitys() {
@@ -638,43 +639,6 @@ void main() {
       );
     });
 
-    test(
-        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
-        () async {
-      //TODO move this test to "update what need"
-      menuPresenter
-          .mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
-
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
-    test(
-        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
-        () async {
-      menuPresenter.mockGetGroupsAndProductsError(DomainError.unexpected);
-      //TODO move this test to "updateWhatNeed"
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
     test("Should call loadSaleRequestTemp", () async {
       await sut.loadCommandData(
         menuPresenter: menuPresenter,
@@ -1464,7 +1428,56 @@ void main() {
     });
   });
 
-  group("Update remotely what need", () {
+  group("Update what need", () {
+    test(
+        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
+        () async {
+      lastImport.mockLoad(
+        LastImportEntity(products: DateTime(2024), images: null),
+      );
+      loadExportCharging.mockLoad(
+        [
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
+              date: DateTime(2025))
+        ],
+      );
+      menuPresenter
+          .mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.commandNotAvailable]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
+    test(
+        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
+        () async {
+      lastImport.mockLoad(
+        LastImportEntity(products: DateTime(2024), images: null),
+      );
+      loadExportCharging.mockLoad(
+        [
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
+              date: DateTime(2025))
+        ],
+      );
+      menuPresenter.mockGetGroupsAndProductsError(DomainError.unexpected);
+
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+    });
     test("Should call load last import", () async {
       await sut.updateWhatNeed(
         menuPresenter: menuPresenter,

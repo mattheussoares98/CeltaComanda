@@ -39,6 +39,7 @@ void showLargeImage({
                 : deviceHeight,
             width: deviceWidth,
             selectedProduct: selectedProduct,
+            orientation: AnimationOrientation.vertical,
             zoomImage: true,
           ),
         ),

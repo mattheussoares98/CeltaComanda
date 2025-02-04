@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage>
         commandEntity: homePresenter.commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        isValidatingNeedUpdateAgain: true,
+        loadLocally: true,
       );
       setState(() {});
     });

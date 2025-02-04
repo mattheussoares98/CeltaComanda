@@ -51,7 +51,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                 commandEntity: homePresenter.commandEntity,
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
-                isValidatingNeedUpdateAgain: false,
+                loadLocally: false,
               );
               setState(() {});
             },
@@ -66,7 +66,7 @@ class _SchedulesPageState extends State<SchedulesPage>
               commandEntity: homePresenter.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              isValidatingNeedUpdateAgain: false,
+              loadLocally: false,
             );
             setState(() {});
           },

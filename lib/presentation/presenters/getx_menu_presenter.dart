@@ -159,7 +159,7 @@ class GetxMenuPresenter extends GetxController
     required CommandEntity? commandEntity,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required bool isValidatingNeedUpdateAgain,
+    required bool loadLocally,
   }) async {
     try {
       await commandInformations.ticketIsPermitted(
@@ -167,7 +167,7 @@ class GetxMenuPresenter extends GetxController
         commandNumber: commandEntity?.commandNumber ?? "001",
       );
 
-      if (1 == 1 /* TODO create parameter to get local or remote */) {
+      if (loadLocally) {
         final localMenu = await menuDatabaseManagement.load();
         _loadedMenu.clear();
         _loadedMenu.addAll(localMenu);
@@ -491,7 +491,7 @@ class GetxMenuPresenter extends GetxController
         commandEntity: homePresenter.commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        isValidatingNeedUpdateAgain: true,
+        loadLocally: true,
       );
       return true;
     } catch (e) {

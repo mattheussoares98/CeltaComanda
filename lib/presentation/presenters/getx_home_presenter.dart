@@ -153,7 +153,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         commandEntity: commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
       );
 
       await menuPresenter.addOrRemoveSearchProducts();
@@ -515,7 +515,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           commandEntity: commandEntity,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          isValidatingNeedUpdateAgain: true,
+          loadLocally: true,
         );
       }
 

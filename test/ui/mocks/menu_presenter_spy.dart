@@ -72,8 +72,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
           commandEntity: any(named: "commandEntity"),
           expansibleGroupFromProductPresenter:
               any(named: "expansibleGroupFromProductPresenter"),
-          isValidatingNeedUpdateAgain:
-              any(named: "isValidatingNeedUpdateAgain"),
+          loadLocally: any(named: "loadLocally"),
         ));
   }
 

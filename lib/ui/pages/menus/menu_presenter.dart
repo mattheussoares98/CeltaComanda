@@ -23,7 +23,7 @@ abstract class MenuPresenter implements Listenable {
     required CommandEntity? commandEntity,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required bool isValidatingNeedUpdateAgain,
+    required bool loadLocally,
   });
   Future<void> searchProduct(String value);
   Future<String> readBarcodeAndSearchProduct();

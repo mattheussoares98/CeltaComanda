@@ -228,7 +228,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -241,7 +241,7 @@ void main() {
 
       final future = sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -256,7 +256,7 @@ void main() {
 
       final future = sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -266,7 +266,7 @@ void main() {
     test('Should call LoadExpansibleGroups and loadProducts', () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -277,22 +277,11 @@ void main() {
       verify(() => loadProducts.load(expansibleGroups[1].ExpansibleGroupId))
           .called(1);
     });
-    // test('Should add fixed group of avaliation in last index', () async {
-    //   await sut.getGroupsAndProducts(
-    // commandEntity: homePresenter.commandEntityController,
-    // isValidatingNeedUpdateAgain: false,
-    //     expansibleGroupFromProductPresenter:
-    //         expansibleGroupFromProductPresenter,
-    //     commandNumber: homePresenter.commandEntityController!.commandNumber!,
-    //   );
-
-    //   expect(sut.loadedMenu.last.entries.first.key.Name, R.string.avaliate);
-    // });
 
     test('Should return correct value on success to load', () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -303,7 +292,7 @@ void main() {
     test('Should clear expansibleGroups', () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -356,7 +345,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -415,7 +404,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -425,7 +414,7 @@ void main() {
         () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -440,7 +429,7 @@ void main() {
     test("Should call load suggestion sale", () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -457,7 +446,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -493,7 +482,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -528,7 +517,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -552,7 +541,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -564,7 +553,7 @@ void main() {
     test('Should update last import correctly', () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -572,33 +561,12 @@ void main() {
       verify(() => lastImport.save([LoadTypeEnum.products])).called(1);
     });
 
-    test("Should load last import", () async {
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => lastImport.load()).called(1);
-    });
-
-    test("Should call load last import", () async {
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => lastImport.load()).called(1);
-    });
     test("Should call menuDatabaseManagement save", () async {
       lastImport.mockLoad(null);
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -617,7 +585,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -639,7 +607,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -760,7 +728,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -880,7 +848,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -937,7 +905,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -970,7 +938,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1007,7 +975,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1052,7 +1020,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1077,7 +1045,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1101,7 +1069,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1222,7 +1190,7 @@ void main() {
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1350,7 +1318,7 @@ void main() {
     test("Should return true on success", () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1375,7 +1343,7 @@ void main() {
     test("Should call insert load type with correct value", () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1452,7 +1420,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1472,7 +1440,7 @@ void main() {
         () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
@@ -1499,7 +1467,7 @@ void main() {
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
+        loadLocally: false,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );

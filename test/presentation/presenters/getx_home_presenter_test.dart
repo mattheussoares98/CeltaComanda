@@ -542,7 +542,7 @@ void main() {
             commandEntity: sut.commandEntity,
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
-            isValidatingNeedUpdateAgain: false,
+            loadLocally: false,
           )).called(1);
     });
     test(
@@ -1596,7 +1596,7 @@ void main() {
               commandEntity: sut.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              isValidatingNeedUpdateAgain: true,
+              loadLocally: true,
             )).called(1);
       },
     );
@@ -1625,7 +1625,7 @@ void main() {
               commandEntity: sut.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              isValidatingNeedUpdateAgain: true,
+              loadLocally: true,
             ));
       },
     );

@@ -158,28 +158,24 @@ class GetxMenuPresenter extends GetxController
 
   @override
   Future<void> getGroupsAndProducts({
-    required String commandNumber,
+    required CommandEntity? commandEntity,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required HomePresenter homePresenter,
     required bool isValidatingNeedUpdateAgain,
   }) async {
     try {
       await commandInformations.ticketIsPermitted(
         url: EnterpriseBuilder.entity!.url!,
-        commandNumber: commandNumber,
+        commandNumber: commandEntity?.commandNumber ?? "001",
       );
 
       final exports = await loadExportCharging.load(
-        pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber
-                ?.toString()
-                .padLeft(3, "0") ??
-            "100",
+        pdvNumber:
+            commandEntity?.pdv?.PdvNumber?.toString().padLeft(3, "0") ?? "100",
       );
       final lastImported = await lastImport.load();
 
       await loadAllImages(
-        homePresenter,
         isValidatingNeedUpdateAgain: isValidatingNeedUpdateAgain,
         lastImported: lastImported,
         exports: exports,
@@ -291,7 +287,8 @@ class GetxMenuPresenter extends GetxController
       await menuDatabaseManagement.save(_loadedMenu);
       await lastImport.save([LoadTypeEnum.products]);
 
-      if (_inexOfSelectedGroup.value >= treatSchedules<ExpansibleGroupsViewModel>().length) {
+      if (_inexOfSelectedGroup.value >=
+          treatSchedules<ExpansibleGroupsViewModel>().length) {
         _inexOfSelectedGroup.value =
             treatSchedules<ExpansibleGroupsViewModel>().length - 1;
       }
@@ -513,10 +510,9 @@ class GetxMenuPresenter extends GetxController
       await insertExportLoadType.insert("schedule");
 
       await getGroupsAndProducts(
-        commandNumber: homePresenter.commandEntity?.commandNumber ?? "001",
+        commandEntity: homePresenter.commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
         isValidatingNeedUpdateAgain: true,
       );
       return true;
@@ -782,8 +778,7 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> loadAllImages(
-    HomePresenter homePresenter, {
+  Future<void> loadAllImages({
     required bool isValidatingNeedUpdateAgain,
     required LastImportEntity? lastImported,
     required List<ExportChargingEntity> exports,

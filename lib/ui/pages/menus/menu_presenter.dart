@@ -20,10 +20,9 @@ abstract class MenuPresenter implements Listenable {
   List<ImageModel> get downloadedImages;
 
   Future<void> getGroupsAndProducts({
-    required String commandNumber,
+    required CommandEntity? commandEntity,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required HomePresenter homePresenter,
     required bool isValidatingNeedUpdateAgain,
   });
   Future<void> searchProduct(String value);
@@ -76,8 +75,7 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> addOrRemoveSearchProducts();
 
-  Future<void> loadAllImages(
-    HomePresenter homePresenter, {
+  Future<void> loadAllImages({
     required bool isValidatingNeedUpdateAgain,
     required LastImportEntity? lastImported,
     required List<ExportChargingEntity> exports,

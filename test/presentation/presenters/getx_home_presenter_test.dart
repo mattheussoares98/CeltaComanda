@@ -55,6 +55,8 @@ void main() {
   late double applicationVersion;
   late CommandEntity commandEntity;
   late DeleteDataSpy deleteData;
+  late LastImportSpy lastImport;
+  late LoadExportChargingSpy loadExportCharging;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -82,6 +84,8 @@ void main() {
       loadDeviceData: loadDeviceData,
       pdvRegistration: pdvRegistration,
       deleteData: deleteData,
+      lastImport: lastImport,
+      loadExportCharging: loadExportCharging,
     );
   }
 
@@ -100,6 +104,8 @@ void main() {
     loadDeviceData = LoadDeviceDataSpy();
     pdvRegistration = PdvRegistrationSpy();
     deleteData = DeleteDataSpy();
+    lastImport = LastImportSpy();
+    loadExportCharging = LoadExportChargingSpy();
   }
 
   void initMocks() {
@@ -533,10 +539,9 @@ void main() {
       );
 
       verify(() => menuPresenter.getGroupsAndProducts(
-            commandNumber: sut.commandEntity!.commandNumber ?? "001",
+            commandEntity: sut.commandEntity,
             expansibleGroupFromProductPresenter:
                 expansibleGroupFromProductPresenter,
-            homePresenter: sut,
             isValidatingNeedUpdateAgain: false,
           )).called(1);
     });
@@ -1471,5 +1476,165 @@ void main() {
 
       expect(result, true);
     });
+  });
+
+  group("Update remotely what need", () {
+    test("Should call load last import", () async {
+      await sut.updateRemotelyWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => lastImport.load()).called(1);
+    });
+    test("Should load last exports with correct pdv number", () async {
+      await sut.updateCommandEntity(
+        commandNumber: faker.randomGenerator.integer(100).toString(),
+        isFixedCommandNumber: faker.randomGenerator.boolean(),
+        pdv: EntityFactory.makePdvEntity(),
+      );
+      await sut.updateRemotelyWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => loadExportCharging.load(
+            pdvNumber: sut.commandEntity!.pdv!.PdvNumber!,
+          )).called(1);
+    });
+    test("Should load last exports with pdv 100 if doesnt have register",
+        () async {
+      sut.updateCommandEntity(
+        commandNumber: sut.commandEntity?.commandNumber,
+        isFixedCommandNumber: sut.commandEntity?.isFixedCommandNumber == true,
+        pdv: null,
+      );
+      await sut.updateRemotelyWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => loadExportCharging.load(
+            pdvNumber: "100",
+          )).called(1);
+    });
+
+    test(
+      "Should call menuPresenter.loadAllImages if last import is older than last export",
+      () async {
+        final lastImported = LastImportEntity(
+          products: null,
+          images: DateTime(2024),
+        );
+        final lastExport = EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.images,
+          date: DateTime(2025),
+        );
+
+        lastImport.mockLoad(lastImported);
+        loadExportCharging.mockLoad([lastExport]);
+
+        await sut.updateRemotelyWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+
+        verify(() => menuPresenter.loadAllImages(
+              isValidatingNeedUpdateAgain: true,
+              lastImported: lastImported,
+              exports: [lastExport],
+            )).called(1);
+      },
+    );
+    test(
+      "Should NOT call menuPresenter.loadAllImages if last import is newer than last export",
+      () async {
+        final lastImported = LastImportEntity(
+          products: null,
+          images: DateTime(2025),
+        );
+        final lastExport = EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.images,
+          date: DateTime(2024),
+        );
+
+        lastImport.mockLoad(lastImported);
+        loadExportCharging.mockLoad([lastExport]);
+
+        await sut.updateRemotelyWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+
+        verifyNever(() => menuPresenter.loadAllImages(
+              isValidatingNeedUpdateAgain: true,
+              lastImported: lastImported,
+              exports: [lastExport],
+            ));
+      },
+    );
+    test(
+      "Should call menuPresenter.getGroupsAndProducts if last import is older than last export",
+      () async {
+        final lastImported = LastImportEntity(
+          products: DateTime(2024),
+          images: null,
+        );
+        final lastExport = EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.products,
+          date: DateTime(2025),
+        );
+
+        lastImport.mockLoad(lastImported);
+        loadExportCharging.mockLoad([lastExport]);
+
+        await sut.updateRemotelyWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+
+        verify(() => menuPresenter.getGroupsAndProducts(
+              commandEntity: sut.commandEntity,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+              isValidatingNeedUpdateAgain: true,
+            )).called(1);
+      },
+    );
+    test(
+      "Should NOT call menuPresenter.getGroupsAndProducts if last import is newer than last export",
+      () async {
+        final lastImported = LastImportEntity(
+          products: DateTime(2025),
+          images: null,
+        );
+        final lastExport = EntityFactory.makeExportChargingEntity(
+          LoadTypeEnum.products,
+          date: DateTime(2024),
+        );
+
+        lastImport.mockLoad(lastImported);
+        loadExportCharging.mockLoad([lastExport]);
+
+        await sut.updateRemotelyWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+
+        verifyNever(() => menuPresenter.getGroupsAndProducts(
+              commandEntity: sut.commandEntity,
+              expansibleGroupFromProductPresenter:
+                  expansibleGroupFromProductPresenter,
+              isValidatingNeedUpdateAgain: true,
+            ));
+      },
+    );
   });
 }

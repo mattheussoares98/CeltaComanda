@@ -92,10 +92,9 @@ class _HomePageState extends State<HomePage>
           minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 10,
         ), (_) async {
       await menuPresenter.getGroupsAndProducts(
-        commandNumber: homePresenter.commandEntity?.commandNumber ?? "100",
+        commandEntity: homePresenter.commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        homePresenter: homePresenter,
         isValidatingNeedUpdateAgain: true,
       );
       setState(() {});

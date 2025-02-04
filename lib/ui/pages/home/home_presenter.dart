@@ -86,4 +86,10 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   });
 
   Future<bool> applicationIsInLatestVersion();
+
+  Future<void> updateRemotelyWhatNeed({
+    required MenuPresenter menuPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  });
 }

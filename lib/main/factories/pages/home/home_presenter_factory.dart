@@ -17,4 +17,6 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       loadDeviceData: makeLocalLoadDeviceData(),
       pdvRegistration: makeConcentratorPdvRegistration(),
       deleteData: makeLocalDeleteData(),
+      lastImport: makeLocalLastImport(),
+      loadExportCharging: makeRemoteLoadExportsCharging(),
     );

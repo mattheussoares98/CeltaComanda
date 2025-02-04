@@ -26,6 +26,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final LoadDeviceData loadDeviceData;
   final PdvRegistration pdvRegistration;
   final DeleteData deleteData;
+  final LastImport lastImport;
+  final LoadExportCharging loadExportCharging;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -42,6 +44,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.loadDeviceData,
     required this.pdvRegistration,
     required this.deleteData,
+    required this.lastImport,
+    required this.loadExportCharging,
   });
 
   @override
@@ -146,10 +150,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       await menuPresenter.getGroupsAndProducts(
-        commandNumber: commandEntity?.commandNumber ?? "001",
+        commandEntity: commandEntity,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        homePresenter: this,
         isValidatingNeedUpdateAgain: false,
       );
 
@@ -487,6 +490,82 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           remoteVersion;
     } catch (e) {
       return true;
+    }
+  }
+
+  @override
+  Future<void> updateRemotelyWhatNeed({
+    required MenuPresenter menuPresenter,
+    required ExpansibleGroupFromProductPresenter
+        expansibleGroupFromProductPresenter,
+  }) async {
+    try {
+      final lastImported = await lastImport.load();
+      final lastExports = await loadExportCharging.load(
+        pdvNumber: commandEntity?.pdv?.PdvNumber ?? "100",
+      );
+
+      bool needUpdateProducts = _needLoadRemote(
+        exports: lastExports,
+        loadType: LoadTypeEnum.products,
+        lastImported: lastImported,
+      );
+      if (needUpdateProducts) {
+        await menuPresenter.getGroupsAndProducts(
+          commandEntity: commandEntity,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          isValidatingNeedUpdateAgain: true,
+        );
+      }
+
+      bool needUpdateImages = _needLoadRemote(
+        exports: lastExports,
+        loadType: LoadTypeEnum.images,
+        lastImported: lastImported,
+      );
+
+      if (needUpdateImages) {
+        await menuPresenter.loadAllImages(
+          isValidatingNeedUpdateAgain: true,
+          lastImported: lastImported,
+          exports: lastExports,
+        );
+      }
+    } catch (e) {
+      e;
+    }
+  }
+
+  bool _needLoadRemote({
+    required List<ExportChargingEntity>? exports,
+    required LoadTypeEnum loadType,
+    required LastImportEntity? lastImported,
+  }) {
+    if (lastImported == null && loadType == LoadTypeEnum.images) {
+      return true;
+    } else if (exports == null || exports.isEmpty) {
+      return false;
+    }
+
+    final latestExportByLoadType = exports
+        .where((entity) => entity.LoadType == loadType)
+        .fold<ExportChargingEntity?>(null, (latest, entity) {
+      if (latest == null ||
+          (entity.Date != null && entity.Date!.isAfter(latest.Date!))) {
+        return entity;
+      }
+      return latest;
+    });
+
+    if (loadType == LoadTypeEnum.images) {
+      return lastImported?.images == null ||
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.images!));
+    } else {
+      return lastImported?.products == null ||
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.products!));
     }
   }
 }

@@ -9,11 +9,13 @@ class CachedImage extends StatefulWidget {
   final String plu;
   final double height;
   final double width;
+  final bool zoomImage;
   const CachedImage({
     required this.ean,
     required this.plu,
     required this.height,
     required this.width,
+    this.zoomImage = false,
     super.key,
   });
 
@@ -42,7 +44,8 @@ class CachedImageState extends State<CachedImage> {
         menuPresenter.downloadedImages[indexOfProduct].image,
         height: widget.height,
         width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true
+        fit: EnterpriseBuilder.entity?.zoomImage == true &&
+                widget.zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );
@@ -58,7 +61,8 @@ class CachedImageState extends State<CachedImage> {
         "lib/ui/assets/images/imageNotFound.png",
         height: widget.height,
         width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true
+        fit: EnterpriseBuilder.entity?.zoomImage == true &&
+                widget.zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );
@@ -67,7 +71,8 @@ class CachedImageState extends State<CachedImage> {
         menuPresenter.downloadedImages[indexOfEnterpriseImage].image,
         height: widget.height,
         width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true
+        fit: EnterpriseBuilder.entity?.zoomImage == true &&
+                widget.zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );

@@ -30,7 +30,7 @@ void showLargeImage({
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: ImageWidget(
             ean: ean,
             plu: plu,
@@ -39,6 +39,7 @@ void showLargeImage({
                 : deviceHeight,
             width: deviceWidth,
             selectedProduct: selectedProduct,
+            zoomImage: true,
           ),
         ),
         if (productComplement != null &&

@@ -44,6 +44,7 @@ class LandscapeProductItem extends StatelessWidget {
                   height: itemHeight,
                   width: itemHeight * 1.5,
                   selectedProduct: productsViewModel,
+                  zoomImage: true,
                 ),
                 Positioned(
                   right: 0,

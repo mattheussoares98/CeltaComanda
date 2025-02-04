@@ -42,6 +42,7 @@ class PortraitProductItem extends StatelessWidget {
                   height: itemHeight,
                   width: itemWidth,
                   selectedProduct: productsViewModel,
+                  zoomImage: true,
                 ),
               ),
             ),

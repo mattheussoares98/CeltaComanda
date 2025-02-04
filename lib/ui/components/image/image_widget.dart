@@ -14,6 +14,7 @@ class ImageWidget extends StatefulWidget {
   final double width;
   final ProductsViewModel? selectedProduct;
   final AnimationOrientation orientation;
+  final bool zoomImage;
 
   const ImageWidget({
     this.height = 65,
@@ -22,6 +23,7 @@ class ImageWidget extends StatefulWidget {
     required this.plu,
     required this.selectedProduct,
     this.orientation = AnimationOrientation.horizontal,
+    this.zoomImage = false,
     super.key,
   });
 
@@ -66,15 +68,15 @@ class _ImageWidgetState extends State<ImageWidget>
             animation: _animation,
             builder: (context, child) {
               return Transform.translate(
-                offset:
-                    widget.orientation == AnimationOrientation.vertical
-                        ? Offset(0, _animation.value)
-                        : Offset(_animation.value, 0),
+                offset: widget.orientation == AnimationOrientation.vertical
+                    ? Offset(0, _animation.value)
+                    : Offset(_animation.value, 0),
                 child: CachedImage(
                   ean: widget.ean,
                   plu: widget.plu,
                   height: widget.height,
                   width: widget.width,
+                  zoomImage: widget.zoomImage,
                 ),
               );
             },

@@ -5,12 +5,14 @@ class DeviceInfoEntity extends Equatable {
   final DateTime? lastUpdatedDate;
   final String? applicationVersion;
   final String imeiOrWindowsId;
+  final String? pdvNumber;
 
   const DeviceInfoEntity({
     required this.commandNumber,
     required this.lastUpdatedDate,
     required this.applicationVersion,
     required this.imeiOrWindowsId,
+    required this.pdvNumber,
   });
 
   @override
@@ -19,5 +21,6 @@ class DeviceInfoEntity extends Equatable {
         lastUpdatedDate,
         applicationVersion,
         imeiOrWindowsId,
+        pdvNumber,
       ];
 }

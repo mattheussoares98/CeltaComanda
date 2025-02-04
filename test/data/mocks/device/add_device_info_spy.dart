@@ -9,6 +9,7 @@ class AddDeviceInfoSpy extends Mock implements AddDeviceInfo {
         commandNumber: any(named: "commandNumber"),
         imeiOrWindowsId: any(named: "imeiOrWindowsId"),
         applicationVersion: any(named: "applicationVersion"),
+        pdvNumber: any(named: "pdvNumber"),
       ));
 
   void mockDeviceInfo(int? commandNumber) {

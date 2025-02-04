@@ -3,5 +3,6 @@ abstract class AddDeviceInfo {
     required int? commandNumber,
     required String imeiOrWindowsId,
     required String applicationVersion,
+    required String? pdvNumber,
   });
 }

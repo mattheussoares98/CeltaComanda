@@ -7,12 +7,14 @@ class DeviceInfoModel {
   final String? lastUpdatedDate;
   final String? applicationVersion;
   final String imeiOrWindowsId;
+  final String? pdvNumber;
 
   const DeviceInfoModel({
     required this.commandNumber,
     required this.lastUpdatedDate,
     required this.applicationVersion,
     required this.imeiOrWindowsId,
+    required this.pdvNumber,
   });
 
   factory DeviceInfoModel.fromEntity(DeviceInfoEntity entity) =>
@@ -21,6 +23,7 @@ class DeviceInfoModel {
         applicationVersion: entity.applicationVersion,
         lastUpdatedDate: entity.lastUpdatedDate?.toIso8601String(),
         imeiOrWindowsId: entity.imeiOrWindowsId,
+        pdvNumber: entity.pdvNumber,
       );
 
   factory DeviceInfoModel.fromJson(Map data) => DeviceInfoModel(
@@ -28,6 +31,7 @@ class DeviceInfoModel {
         lastUpdatedDate: data['lastUpdatedDate'],
         applicationVersion: data['applicationVersion'],
         imeiOrWindowsId: data['imeiOrWindowsId'] ?? "",
+        pdvNumber: data['pdvNumber'],
       );
 
   DeviceInfoEntity toEntity() => DeviceInfoEntity(
@@ -36,6 +40,7 @@ class DeviceInfoModel {
         lastUpdatedDate:
             lastUpdatedDate != null ? DateTime.parse(lastUpdatedDate!) : null,
         imeiOrWindowsId: imeiOrWindowsId,
+        pdvNumber: pdvNumber,
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +48,6 @@ class DeviceInfoModel {
         "lastUpdatedDate": lastUpdatedDate,
         "applicationVersion": applicationVersion,
         "imeiOrWindowsId": imeiOrWindowsId,
+        "pdvNumber": pdvNumber,
       };
 }

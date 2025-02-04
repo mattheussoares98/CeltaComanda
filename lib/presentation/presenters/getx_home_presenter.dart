@@ -398,6 +398,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           commandNumber: commandEntity?.commandNumber?.toInt(),
           imeiOrWindowsId: imeiOrWindowsId,
           applicationVersion: applicationVersion,
+          pdvNumber: commandEntity?.pdv?.PdvNumber,
         );
         EnterpriseBuilder.entity = enterprise;
         await localEnterpriseData.add(enterprise);

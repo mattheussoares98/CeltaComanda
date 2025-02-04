@@ -1208,6 +1208,7 @@ void main() {
               commandNumber: sut.commandEntity?.commandNumber?.toInt(),
               imeiOrWindowsId: imeiOrWindowsId,
               applicationVersion: applicationVersion.toString(),
+              pdvNumber: sut.commandEntity?.pdv?.PdvNumber,
             )).called(1);
       });
       test("Should update enterprise on updateDeviceInformations changes",

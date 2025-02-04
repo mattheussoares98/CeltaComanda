@@ -12,12 +12,14 @@ class DeviceInfoViewModel extends Equatable {
   final String lastUpdatedDate;
   final String applicationVersion;
   final String imeiOrWindowsId;
+  final String? pdvNumber;
 
   const DeviceInfoViewModel({
     required this.commandNumber,
     required this.lastUpdatedDate,
     required this.applicationVersion,
     required this.imeiOrWindowsId,
+    required this.pdvNumber,
   });
 
   factory DeviceInfoViewModel.fromEntity(DeviceInfoEntity entity) =>
@@ -31,6 +33,7 @@ class DeviceInfoViewModel extends Equatable {
                 [dd, '/', mm, '/', yyyy, ' ', HH, ':', nn, ':', ss],
               ),
         imeiOrWindowsId: entity.imeiOrWindowsId,
+        pdvNumber: entity.pdvNumber,
       );
 
   factory DeviceInfoViewModel.fromJson(Map data) => DeviceInfoViewModel(
@@ -38,6 +41,7 @@ class DeviceInfoViewModel extends Equatable {
         lastUpdatedDate: data['lastUpdatedDate'],
         applicationVersion: data['applicationVersion'],
         imeiOrWindowsId: data['imeiOrWindowsId'],
+        pdvNumber: data['pdvNumber'],
       );
 
   DeviceInfoEntity toEntity() => DeviceInfoEntity(
@@ -46,6 +50,7 @@ class DeviceInfoViewModel extends Equatable {
         lastUpdatedDate:
             DateFormat("dd/MM/yyyy HH:mm:ss").parse(lastUpdatedDate),
         imeiOrWindowsId: imeiOrWindowsId,
+        pdvNumber: pdvNumber,
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +58,7 @@ class DeviceInfoViewModel extends Equatable {
         "lastUpdatedDate": lastUpdatedDate,
         "applicationVersion": applicationVersion,
         "imeiOrWindowsId": imeiOrWindowsId,
+        "pdvNumber": pdvNumber,
       };
 
   @override
@@ -61,5 +67,6 @@ class DeviceInfoViewModel extends Equatable {
         lastUpdatedDate,
         applicationVersion,
         imeiOrWindowsId,
+        pdvNumber,
       ];
 }

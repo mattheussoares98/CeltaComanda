@@ -1496,6 +1496,7 @@ class EntityFactory {
         lastUpdatedDate: faker.date.dateTime(),
         applicationVersion: faker.randomGenerator.string(10),
         imeiOrWindowsId: faker.randomGenerator.string(10),
+        pdvNumber: faker.randomGenerator.integer(100).toString(),
       );
 
   static ImageModel makeImageModel() => ImageModel(

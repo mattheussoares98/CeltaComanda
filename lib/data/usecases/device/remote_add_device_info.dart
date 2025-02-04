@@ -16,6 +16,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
     required int? commandNumber,
     required String imeiOrWindowsId,
     required String applicationVersion,
+    required String? pdvNumber,
   }) async {
     try {
       final entity = DeviceInfoModel(
@@ -23,6 +24,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
         lastUpdatedDate: DateTime.now().toIso8601String(),
         applicationVersion: applicationVersion,
         imeiOrWindowsId: imeiOrWindowsId, //TODO add battery information
+        pdvNumber: pdvNumber,
       ).toEntity();
 
       await firebaseStorage.addDeviceInfo(entity);

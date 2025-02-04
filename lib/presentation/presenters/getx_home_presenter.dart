@@ -515,7 +515,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           commandEntity: commandEntity,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
-          loadLocally: true,
+          loadLocally: false,
         );
       }
 
@@ -526,7 +526,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (needUpdateImages) {
-        await menuPresenter.loadAllImages(updateLocally: true);
+        await menuPresenter.loadAllImages(updateLocally: false);
       }
     } catch (e) {
       e;

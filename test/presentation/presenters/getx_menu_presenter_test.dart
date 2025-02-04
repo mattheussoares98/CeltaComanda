@@ -574,6 +574,18 @@ void main() {
       verify(() => menuDatabaseManagement.save(menuListWithoutPromoCombox))
           .called(1);
     });
+
+    test('Should not call loadExpansibleGroups when pass to load locally',
+        () async {
+      await sut.getGroupsAndProducts(
+        commandEntity: homePresenter.commandEntityController,
+        loadLocally: true,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verifyNever(() => loadExpansibleGroups.load());
+    });
   });
 
   group("Get expansible groups on get groups and products", () {

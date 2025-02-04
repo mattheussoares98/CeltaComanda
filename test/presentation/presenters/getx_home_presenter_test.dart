@@ -1543,7 +1543,7 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verify(() => menuPresenter.loadAllImages(updateLocally: true))
+        verify(() => menuPresenter.loadAllImages(updateLocally: false))
             .called(1);
       },
     );
@@ -1568,7 +1568,7 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verifyNever(() => menuPresenter.loadAllImages(updateLocally: true));
+        verifyNever(() => menuPresenter.loadAllImages(updateLocally: false));
       },
     );
     test(
@@ -1596,7 +1596,7 @@ void main() {
               commandEntity: sut.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              loadLocally: true,
+              loadLocally: false,
             )).called(1);
       },
     );
@@ -1625,7 +1625,7 @@ void main() {
               commandEntity: sut.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              loadLocally: true,
+              loadLocally: false,
             ));
       },
     );

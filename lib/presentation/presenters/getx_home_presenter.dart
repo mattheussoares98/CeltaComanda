@@ -526,11 +526,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (needUpdateImages) {
-        await menuPresenter.loadAllImages(
-          isValidatingNeedUpdateAgain: true,
-          lastImported: lastImported,
-          exports: lastExports,
-        );
+        await menuPresenter.loadAllImages(updateLocally: true);
       }
     } catch (e) {
       e;

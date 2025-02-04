@@ -75,9 +75,5 @@ abstract class MenuPresenter implements Listenable {
 
   Future<void> addOrRemoveSearchProducts();
 
-  Future<void> loadAllImages({
-    required bool isValidatingNeedUpdateAgain,
-    required LastImportEntity? lastImported,
-    required List<ExportChargingEntity> exports,
-  });
+  Future<void> loadAllImages({required bool updateLocally});
 }

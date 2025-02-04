@@ -170,16 +170,11 @@ class GetxMenuPresenter extends GetxController
       );
 
       final exports = await loadExportCharging.load(
+        //TODO remove this usecase
         pdvNumber:
             commandEntity?.pdv?.PdvNumber?.toString().padLeft(3, "0") ?? "100",
       );
-      final lastImported = await lastImport.load();
-
-      await loadAllImages(
-        isValidatingNeedUpdateAgain: isValidatingNeedUpdateAgain,
-        lastImported: lastImported,
-        exports: exports,
-      );
+      final lastImported = await lastImport.load(); //TODO remove this usecase
 
       bool getRemoteProducts = _needLoadRemote(
         exports: exports,
@@ -778,24 +773,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> loadAllImages({
-    required bool isValidatingNeedUpdateAgain,
-    required LastImportEntity? lastImported,
-    required List<ExportChargingEntity> exports,
-  }) async {
+  Future<void> loadAllImages({required bool updateLocally}) async {
     try {
-      bool getRemoteImages = _needLoadRemote(
-        exports: exports,
-        loadType: LoadTypeEnum.images,
-        lastImported: lastImported,
-      );
-
-      if (isValidatingNeedUpdateAgain && !getRemoteImages) {
-        return;
-      }
-
       _downloadedImages = await loadImages.load(
-        getLocalImages: !getRemoteImages,
+        getLocalImages: updateLocally,
       );
 
       await lastImport.save([LoadTypeEnum.images]);

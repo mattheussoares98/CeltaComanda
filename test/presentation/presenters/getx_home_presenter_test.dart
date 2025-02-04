@@ -1543,11 +1543,8 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verify(() => menuPresenter.loadAllImages(
-              isValidatingNeedUpdateAgain: true,
-              lastImported: lastImported,
-              exports: [lastExport],
-            )).called(1);
+        verify(() => menuPresenter.loadAllImages(updateLocally: true))
+            .called(1);
       },
     );
     test(
@@ -1571,11 +1568,7 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verifyNever(() => menuPresenter.loadAllImages(
-              isValidatingNeedUpdateAgain: true,
-              lastImported: lastImported,
-              exports: [lastExport],
-            ));
+        verifyNever(() => menuPresenter.loadAllImages(updateLocally: true));
       },
     );
     test(

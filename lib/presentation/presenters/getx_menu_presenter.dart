@@ -27,10 +27,9 @@ class GetxMenuPresenter extends GetxController
   final ManageExpansibleGroupSchedule manageExpansibleGroupSchedule;
   final ParametersData parametersData;
   final LoadImages loadImages;
-  final LoadExportCharging loadExportCharging;
-  final LastImport lastImport;
   final MenuDatabaseManagement menuDatabaseManagement;
   final InsertExportLoadType insertExportLoadType;
+  final LastImport lastImport;
 
   GetxMenuPresenter({
     required this.loadExpansibleGroups,
@@ -45,10 +44,9 @@ class GetxMenuPresenter extends GetxController
     required this.manageExpansibleGroupSchedule,
     required this.parametersData,
     required this.loadImages,
-    required this.loadExportCharging,
-    required this.lastImport,
     required this.menuDatabaseManagement,
     required this.insertExportLoadType,
+    required this.lastImport,
   });
 
   @override
@@ -169,22 +167,7 @@ class GetxMenuPresenter extends GetxController
         commandNumber: commandEntity?.commandNumber ?? "001",
       );
 
-      final exports = await loadExportCharging.load(
-        //TODO remove this usecase
-        pdvNumber:
-            commandEntity?.pdv?.PdvNumber?.toString().padLeft(3, "0") ?? "100",
-      );
-      final lastImported = await lastImport.load(); //TODO remove this usecase
-
-      bool getRemoteProducts = _needLoadRemote(
-        exports: exports,
-        loadType: LoadTypeEnum.products,
-        lastImported: lastImported,
-      );
-
-      if (isValidatingNeedUpdateAgain && !getRemoteProducts) {
-        return;
-      } else if (!getRemoteProducts) {
+      if (1 == 1 /* TODO create parameter to get local or remote */) {
         final localMenu = await menuDatabaseManagement.load();
         _loadedMenu.clear();
         _loadedMenu.addAll(localMenu);
@@ -788,36 +771,4 @@ class GetxMenuPresenter extends GetxController
   List<ImageModel> _downloadedImages = [];
   @override
   List<ImageModel> get downloadedImages => [..._downloadedImages];
-
-  bool _needLoadRemote({
-    required List<ExportChargingEntity>? exports,
-    required LoadTypeEnum loadType,
-    required LastImportEntity? lastImported,
-  }) {
-    if (lastImported == null && loadType == LoadTypeEnum.images) {
-      return true;
-    } else if (exports == null || exports.isEmpty) {
-      return false;
-    }
-
-    final latestExportByLoadType = exports
-        .where((entity) => entity.LoadType == loadType)
-        .fold<ExportChargingEntity?>(null, (latest, entity) {
-      if (latest == null ||
-          (entity.Date != null && entity.Date!.isAfter(latest.Date!))) {
-        return entity;
-      }
-      return latest;
-    });
-
-    if (loadType == LoadTypeEnum.images) {
-      return lastImported?.images == null ||
-          (latestExportByLoadType?.Date != null &&
-              latestExportByLoadType!.Date!.isAfter(lastImported!.images!));
-    } else {
-      return lastImported?.products == null ||
-          (latestExportByLoadType?.Date != null &&
-              latestExportByLoadType!.Date!.isAfter(lastImported!.products!));
-    }
-  }
 }

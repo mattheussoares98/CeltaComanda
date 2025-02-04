@@ -41,7 +41,6 @@ void main() {
   late List<ProductCompositionEntity> productsCompositionsEntitys;
   late List<ParameterModel> parameters;
   late List<ImageModel> mockedLoadedImages;
-  late List<ExportChargingEntity> exports;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -56,7 +55,6 @@ void main() {
   late ManageExpansibleGroupScheduleSpy manageExpansibleGroupSchedule;
   late ParametersDataSpy parametersData;
   late LoadImagesSpy loadImages;
-  late LoadExportChargingSpy loadExportCharging;
   late LastImportSpy lastImport;
   late MenuDatabaseManagementSpy menuDatabaseManagement;
   late InsertExportLoadTypeSpy insertExportLoadType;
@@ -78,7 +76,6 @@ void main() {
     manageExpansibleGroupSchedule = ManageExpansibleGroupScheduleSpy();
     parametersData = ParametersDataSpy();
     loadImages = LoadImagesSpy();
-    loadExportCharging = LoadExportChargingSpy();
     lastImport = LastImportSpy();
     menuDatabaseManagement = MenuDatabaseManagementSpy();
     insertExportLoadType = InsertExportLoadTypeSpy();
@@ -103,7 +100,6 @@ void main() {
       manageExpansibleGroupSchedule: manageExpansibleGroupSchedule,
       parametersData: parametersData,
       loadImages: loadImages,
-      loadExportCharging: loadExportCharging,
       lastImport: lastImport,
       menuDatabaseManagement: menuDatabaseManagement,
       insertExportLoadType: insertExportLoadType,
@@ -178,11 +174,6 @@ void main() {
       EntityFactory.makeImageModel(),
       EntityFactory.makeImageModel(),
     ];
-
-    exports = [
-      EntityFactory.makeExportChargingEntity(LoadTypeEnum.images),
-      EntityFactory.makeExportChargingEntity(LoadTypeEnum.products),
-    ];
   }
 
   void mockSuccess() {
@@ -195,7 +186,6 @@ void main() {
     loadSuggestionSale.mockLoad(suggestions);
     parametersData.mockLoad(parameters);
     loadImages.mockLoad(mockedLoadedImages);
-    loadExportCharging.mockLoad(exports);
     lastImport.mockLoad(null);
     menuDatabaseManagement.mockLoad(menuListWithoutPromoCombox);
   }
@@ -582,36 +572,6 @@ void main() {
       verify(() => lastImport.save([LoadTypeEnum.products])).called(1);
     });
 
-    test("Should load export charging correctly when pdv is null", () async {
-      homePresenter.commandEntityController = null;
-
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => loadExportCharging.load(pdvNumber: "100")).called(1);
-    });
-    test("Should load export charging correctly when pdv is not null",
-        () async {
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(
-        () => loadExportCharging.load(
-            pdvNumber: homePresenter.commandEntityController?.pdv?.PdvNumber
-                    .toString()
-                    .padLeft(3, "0") ??
-                "100"),
-      ).called(1);
-    });
-
     test("Should load last import", () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
@@ -645,65 +605,6 @@ void main() {
 
       verify(() => menuDatabaseManagement.save(menuListWithoutPromoCombox))
           .called(1);
-    });
-    test("Should call menuDatabaseManagement load when dont get remote data",
-        () async {
-      loadExportCharging.mockLoad([]);
-
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => menuDatabaseManagement.load()).called(1);
-    });
-    test(
-        "Should update remotely when update schedule, even last updated is greater than last export",
-        () async {
-      loadExportCharging.mockLoad([
-        EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.products,
-          date: DateTime(2025),
-        ),
-      ]);
-
-      lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null),
-      );
-
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: true,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => loadExpansibleGroups.load()).called(1);
-    });
-    test(
-        "Should not update remotely when dont update schedule and last updated is greater than last export",
-        () async {
-      loadExportCharging.mockLoad([
-        EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.products,
-          date: DateTime(2023),
-        ),
-      ]);
-
-      lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null),
-      );
-
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        isValidatingNeedUpdateAgain: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verifyNever(() => loadExpansibleGroups.load());
     });
   });
 

@@ -20,8 +20,8 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
       StreamController<ProductScheduleViewModel?>();
   final expansibleGroupScheduleController =
       StreamController<ExpansibleGroupScheduleViewModel?>();
-  final List<LoadedMenuViewModel> loadedMenuController = [];
-  final List<ImageModel> downloadedImagesController = [];
+  List<LoadedMenuViewModel> loadedMenuController = [];
+  List<ImageModel> downloadedImagesController = [];
 
   MenuPresenterSpy() {
     mockGetGroupsAndProducts().thenAnswer((any) async => any);

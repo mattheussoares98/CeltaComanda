@@ -513,6 +513,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               expansibleGroupFromProductPresenter,
           loadLocally: false,
         );
+      } else if (menuPresenter.loadedMenu.isEmpty) {
+        await menuPresenter.getGroupsAndProducts(
+          commandEntity: commandEntity,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          loadLocally: true,
+        );
       }
 
       bool needUpdateImages = _needLoadRemote(

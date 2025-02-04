@@ -1628,5 +1628,29 @@ void main() {
             ));
       },
     );
+
+    test(
+        "Should update products locally when menuPresenter.loadedMenu is empty",
+        () async {
+      menuPresenter.loadedMenuController = [];
+
+      loadExportCharging.mockLoad([]);
+      lastImport.mockLoad(
+        LastImportEntity(products: faker.date.dateTime(), images: null),
+      );
+
+      await sut.updateWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => menuPresenter.getGroupsAndProducts(
+            commandEntity: sut.commandEntity,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            loadLocally: true,
+          )).called(1);
+    });
   });
 }

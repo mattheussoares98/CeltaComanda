@@ -1652,5 +1652,23 @@ void main() {
             loadLocally: true,
           )).called(1);
     });
+    test(
+        "Should update images locally when menuPresenter.downloadedImages is empty",
+        () async {
+      menuPresenter.downloadedImagesController = [];
+
+      loadExportCharging.mockLoad([]);
+      lastImport.mockLoad(
+        LastImportEntity(products: null, images: faker.date.dateTime()),
+      );
+
+      await sut.updateWhatNeed(
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      verify(() => menuPresenter.loadAllImages(updateLocally: true)).called(1);
+    });
   });
 }

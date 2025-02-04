@@ -149,13 +149,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
       }
 
-      await menuPresenter.getGroupsAndProducts(
-        commandEntity: commandEntity,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        loadLocally: false,
-      );
-
       await menuPresenter.addOrRemoveSearchProducts();
 
       if (commandEntity?.isFixedCommandNumber == true &&
@@ -494,7 +487,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }
 
   @override
-  Future<void> updateRemotelyWhatNeed({
+  Future<void> updateWhatNeed({
     required MenuPresenter menuPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,

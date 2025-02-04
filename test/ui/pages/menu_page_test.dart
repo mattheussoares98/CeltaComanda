@@ -90,7 +90,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockLoadDataError(DomainError.unexpected);
+    presenter.mockGetGroupsAndProductsError(DomainError.unexpected);
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key("loadMenu")), findsOneWidget);
@@ -100,7 +100,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    presenter.mockLoadDataError(DomainError.commandNotAvailable);
+    presenter.mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key("loadMenu")), findsOneWidget);

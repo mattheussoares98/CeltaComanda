@@ -24,7 +24,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
   final List<ImageModel> downloadedImagesController = [];
 
   MenuPresenterSpy() {
-    mockLoadCall().thenAnswer((any) async => any);
+    mockGetGroupsAndProducts().thenAnswer((any) async => any);
     when(() => this.loadedMenu).thenAnswer((_) => loadedMenuController);
     when(() => this.clear()).thenAnswer((any) async => any);
     when(() => this.addOrRemoveSearchProducts()).thenAnswer((any) async => any);
@@ -32,7 +32,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     when(() => this.loadAllImages(
           updateLocally: any(named: "updateLocally"),
         )).thenAnswer((any) async => any);
-    this.mockLoadCall().thenAnswer((any) async => any);
+    this.mockGetGroupsAndProducts().thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))
         .thenAnswer((any) async => any);
 
@@ -63,11 +63,11 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     });
   }
 
-  void mockLoadDataError(DomainError error) {
-    mockLoadCall().thenThrow(error);
+  void mockGetGroupsAndProductsError(DomainError error) {
+    mockGetGroupsAndProducts().thenThrow(error);
   }
 
-  When mockLoadCall() {
+  When mockGetGroupsAndProducts() {
     return when(() => this.getGroupsAndProducts(
           commandEntity: any(named: "commandEntity"),
           expansibleGroupFromProductPresenter:

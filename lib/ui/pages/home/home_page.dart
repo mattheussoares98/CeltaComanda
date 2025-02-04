@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage>
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
+
         setState(() {});
         await verifyNeedUpdateApp(homePresenter);
       }
@@ -89,15 +90,18 @@ class _HomePageState extends State<HomePage>
 
     needUpdateAppTimer = Timer.periodic(
         Duration(
-          minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 10,
+          seconds: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 40,
+          //TODO correct the time
         ), (_) async {
-      await menuPresenter.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntity,
+      await homePresenter.updateWhatNeed(
+        menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
-        loadLocally: true,
       );
-      setState(() {});
+      setState(() {
+        debugPrint("Set State");
+        //TODO remove this
+      });
     });
   }
 

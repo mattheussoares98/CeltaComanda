@@ -528,23 +528,6 @@ void main() {
           sut.commandEntity!.commandNumber, entity2.commandNumber.toString());
     });
 
-    test("Should call menuPresenter.getGroupsAndProducts on loadCommandData",
-        () async {
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => menuPresenter.getGroupsAndProducts(
-            commandEntity: sut.commandEntity,
-            expansibleGroupFromProductPresenter:
-                expansibleGroupFromProductPresenter,
-            loadLocally: false,
-          )).called(1);
-    });
     test(
         "Should not call cartPresenter.loadSaleRequest and loadSaleRequestTemp when is not fixed command number",
         () async {
@@ -658,7 +641,9 @@ void main() {
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
         () async {
-      menuPresenter.mockLoadDataError(DomainError.commandNotAvailable);
+      //TODO move this test to "update what need"
+      menuPresenter
+          .mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
 
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.commandNotAvailable]));
@@ -675,7 +660,8 @@ void main() {
     test(
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
         () async {
-      menuPresenter.mockLoadDataError(DomainError.unexpected);
+      menuPresenter.mockGetGroupsAndProductsError(DomainError.unexpected);
+      //TODO move this test to "updateWhatNeed"
 
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
@@ -1480,7 +1466,7 @@ void main() {
 
   group("Update remotely what need", () {
     test("Should call load last import", () async {
-      await sut.updateRemotelyWhatNeed(
+      await sut.updateWhatNeed(
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1494,7 +1480,7 @@ void main() {
         isFixedCommandNumber: faker.randomGenerator.boolean(),
         pdv: EntityFactory.makePdvEntity(),
       );
-      await sut.updateRemotelyWhatNeed(
+      await sut.updateWhatNeed(
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1511,7 +1497,7 @@ void main() {
         isFixedCommandNumber: sut.commandEntity?.isFixedCommandNumber == true,
         pdv: null,
       );
-      await sut.updateRemotelyWhatNeed(
+      await sut.updateWhatNeed(
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1537,7 +1523,7 @@ void main() {
         lastImport.mockLoad(lastImported);
         loadExportCharging.mockLoad([lastExport]);
 
-        await sut.updateRemotelyWhatNeed(
+        await sut.updateWhatNeed(
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1562,7 +1548,7 @@ void main() {
         lastImport.mockLoad(lastImported);
         loadExportCharging.mockLoad([lastExport]);
 
-        await sut.updateRemotelyWhatNeed(
+        await sut.updateWhatNeed(
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1586,7 +1572,7 @@ void main() {
         lastImport.mockLoad(lastImported);
         loadExportCharging.mockLoad([lastExport]);
 
-        await sut.updateRemotelyWhatNeed(
+        await sut.updateWhatNeed(
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1615,7 +1601,7 @@ void main() {
         lastImport.mockLoad(lastImported);
         loadExportCharging.mockLoad([lastExport]);
 
-        await sut.updateRemotelyWhatNeed(
+        await sut.updateWhatNeed(
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,

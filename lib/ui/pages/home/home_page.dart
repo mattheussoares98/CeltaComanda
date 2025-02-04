@@ -44,7 +44,6 @@ class _HomePageState extends State<HomePage>
         ExpansibleGroupFromProductPresenter
             expansibleGroupFromProductPresenter =
             Provider.of(context, listen: false);
-        await verifyNeedUpdateApp(homePresenter);
         await homePresenter.loadCommandData(
           menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
@@ -53,6 +52,7 @@ class _HomePageState extends State<HomePage>
               expansibleGroupFromProductPresenter,
         );
         setState(() {});
+        await verifyNeedUpdateApp(homePresenter);
       }
     });
   }

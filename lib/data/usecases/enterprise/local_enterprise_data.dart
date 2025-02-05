@@ -40,8 +40,8 @@ class LocalEnterpriseData implements LoadEnterpriseData, SaveEnterpriseData {
   }
 
   EnterpriseEntity? _mapToEntity(dynamic json) =>
-      EnterpriseValidationModel.fromJson(json).toEntity();
+      EnterpriseModel.fromJson(json).toEntity();
 
   Map _mapToJson(EnterpriseEntity entity) =>
-      EnterpriseValidationModel.fromEntity(entity).toJson();
+      EnterpriseModel.fromEntity(entity).toJson();
 }

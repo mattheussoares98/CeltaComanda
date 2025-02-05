@@ -30,7 +30,7 @@ class RemoteLoadAllEnterprises implements LoadAllEnterprises {
         throw Exception();
       } else {
         return querySnapshot.docs
-            .map((e) => EnterpriseValidationModel.fromJson(e.data()).toEntity())
+            .map((e) => EnterpriseModel.fromJson(e.data()).toEntity())
             .toList();
       }
     } catch (error) {

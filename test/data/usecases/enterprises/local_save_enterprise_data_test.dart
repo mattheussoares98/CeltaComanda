@@ -43,7 +43,7 @@ void main() {
 
     verify(() => cacheStorage.put(
           CacheKeys.enterprise.name,
-          EnterpriseValidationModel.fromEntity(enterpriseData).toJson(),
+          EnterpriseModel.fromEntity(enterpriseData).toJson(),
         ));
   });
 

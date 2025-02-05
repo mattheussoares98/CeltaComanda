@@ -37,7 +37,7 @@ class RemoteLoadEnterpriseData implements LoadEnterpriseData {
       } else {
         Map<String, dynamic> data = querySnapshot.docs[0].data();
 
-        return EnterpriseValidationModel.fromJson(data).toEntity();
+        return EnterpriseModel.fromJson(data).toEntity();
       }
     } catch (error) {
       throw DomainError.enterpriseOrUrlNotFound;

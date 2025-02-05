@@ -2,7 +2,7 @@ import '../../ui/helpers/helpers.dart';
 import '../../domain/entities/entities.dart';
 import 'models.dart';
 
-class EnterpriseValidationModel {
+class EnterpriseModel {
   final String enterpriseName;
   final String? url;
   final int? enterpriseId;
@@ -19,7 +19,7 @@ class EnterpriseValidationModel {
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
 
-  EnterpriseValidationModel({
+  EnterpriseModel({
     required this.enterpriseName,
     required this.url,
     required this.enterpriseId,
@@ -36,7 +36,7 @@ class EnterpriseValidationModel {
     required this.minutesVerifyUpdateMenu,
   });
 
-  factory EnterpriseValidationModel.fromJson(
+  factory EnterpriseModel.fromJson(
     Map json, {
     EnterpriseConcentradorParametersEntity?
         enterpriseConcentradorParametersEntity,
@@ -49,7 +49,7 @@ class EnterpriseValidationModel {
     ])) {
       throw Exception();
     }
-    return EnterpriseValidationModel(
+    return EnterpriseModel(
       url: json['url'],
       enterpriseName: json["enterpriseName"],
       enterpriseId: json["enterpriseId"],
@@ -74,8 +74,8 @@ class EnterpriseValidationModel {
     );
   }
 
-  factory EnterpriseValidationModel.fromEntity(EnterpriseEntity entity) =>
-      EnterpriseValidationModel(
+  factory EnterpriseModel.fromEntity(EnterpriseEntity entity) =>
+      EnterpriseModel(
         url: entity.url,
         updateEnterprise: entity.updateEnterprise,
         enterpriseName: entity.enterpriseName,

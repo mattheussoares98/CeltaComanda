@@ -379,7 +379,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     }
 
     try {
-      final enterprise = EnterpriseValidationModel.fromJson(
+      final enterprise = EnterpriseModel.fromJson(
         data,
         enterpriseConcentradorParametersEntity:
             EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,

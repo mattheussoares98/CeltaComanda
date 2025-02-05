@@ -142,7 +142,7 @@ void main() {
     userCode = faker.randomGenerator.integer(100);
 
     enterpriseJson =
-        EnterpriseValidationModel.fromEntity(EnterpriseBuilder.entity!)
+        EnterpriseModel.fromEntity(EnterpriseBuilder.entity!)
             .toJson();
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
@@ -1183,7 +1183,7 @@ void main() {
 
         expect(
           EnterpriseBuilder.entity,
-          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+          EnterpriseModel.fromJson(enterpriseJson).toEntity(),
         );
       });
       test("Should update locally when updateDeviceInformations changes",
@@ -1202,7 +1202,7 @@ void main() {
         );
 
         verify(() => localEnterpriseData.add(
-                EnterpriseValidationModel.fromJson(enterpriseJson).toEntity()))
+                EnterpriseModel.fromJson(enterpriseJson).toEntity()))
             .called(1);
       });
 
@@ -1242,7 +1242,7 @@ void main() {
 
         expect(
           EnterpriseBuilder.entity,
-          EnterpriseValidationModel.fromJson(enterpriseJson).toEntity(),
+          EnterpriseModel.fromJson(enterpriseJson).toEntity(),
         );
       });
       test(
@@ -1282,7 +1282,7 @@ void main() {
         );
 
         final newEnterprise =
-            EnterpriseValidationModel.fromJson(enterpriseJson).toEntity();
+            EnterpriseModel.fromJson(enterpriseJson).toEntity();
 
         verify(() => localEnterpriseData.add(newEnterprise)).called(1);
       });

@@ -139,7 +139,7 @@ class FirebaseAdapter implements FirebaseStorage {
           firestore.collection('clients').doc(enterprise.enterpriseName);
 
       await docRef.set(
-        EnterpriseValidationModel.fromEntity(enterprise).toJson(),
+        EnterpriseModel.fromEntity(enterprise).toJson(),
       );
     } catch (e) {
       rethrow;

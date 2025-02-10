@@ -131,7 +131,7 @@ class _WebAddOrEditEnterprisePageState
                 ? webEnterprisesPresenter
                     .selectedEnterprise!.minutesVerifyUpdateMenu!
                     .toString()
-                : "10";
+                : "5";
           });
         }
       }

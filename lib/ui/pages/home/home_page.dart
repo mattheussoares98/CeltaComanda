@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage>
 
     needUpdateAppTimer = Timer.periodic(
         Duration(
-          minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 10,
+          minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 5,
         ), (_) async {
       await homePresenter.updateWhatNeed(
         menuPresenter: menuPresenter,

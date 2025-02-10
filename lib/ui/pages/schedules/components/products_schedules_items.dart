@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -65,7 +66,11 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                         child: RichText(
                       text: TextSpan(children: [
                         TextSpan(
-                          text: product.Name,
+                          text: EnterpriseBuilder
+                                      .entity?.useReducedNameOnProduct ==
+                                  true
+                              ? product.NameReduced
+                              : product.Name,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: StringSize.size,

@@ -18,6 +18,7 @@ class EnterpriseModel {
   final bool? zoomImage;
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
+  final bool? useReducedNameOnProduct;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -34,6 +35,7 @@ class EnterpriseModel {
     required this.zoomImage,
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
+    required this.useReducedNameOnProduct,
   });
 
   factory EnterpriseModel.fromJson(
@@ -71,6 +73,7 @@ class EnterpriseModel {
                       .toEntity()),
       latestCompatibleVersion: json["latestCompatibleVersion"],
       minutesVerifyUpdateMenu: json["minutesVerifyUpdateMenu"],
+      useReducedNameOnProduct: json["useReducedNameOnProduct"],
     );
   }
 
@@ -91,6 +94,7 @@ class EnterpriseModel {
         zoomImage: entity.zoomImage,
         latestCompatibleVersion: entity.latestCompatibleVersion,
         minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: entity.useReducedNameOnProduct,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -109,6 +113,7 @@ class EnterpriseModel {
         zoomImage: zoomImage,
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: useReducedNameOnProduct,
       );
 
   Map<String, dynamic> toJson() => {
@@ -131,5 +136,6 @@ class EnterpriseModel {
         'zoomImage': zoomImage,
         'latestCompatibleVersion': latestCompatibleVersion,
         'minutesVerifyUpdateMenu': minutesVerifyUpdateMenu,
+        'useReducedNameOnProduct': useReducedNameOnProduct,
       };
 }

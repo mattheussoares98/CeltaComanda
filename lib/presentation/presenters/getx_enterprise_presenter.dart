@@ -89,6 +89,7 @@ class GetxEnterprisePresenter extends GetxController
             zoomImage: firebaseData.zoomImage,
             latestCompatibleVersion: firebaseData.latestCompatibleVersion,
             minutesVerifyUpdateMenu: firebaseData.minutesVerifyUpdateMenu,
+            useReducedNameOnProduct: firebaseData.useReducedNameOnProduct,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -162,6 +163,7 @@ class GetxEnterprisePresenter extends GetxController
       zoomImage: null,
       latestCompatibleVersion: null,
       minutesVerifyUpdateMenu: null,
+      useReducedNameOnProduct: null,
     );
 
     _enterpriseError.value =
@@ -220,6 +222,7 @@ class GetxEnterprisePresenter extends GetxController
         zoomImage: enterprise.zoomImage,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
       );
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -248,6 +251,7 @@ class GetxEnterprisePresenter extends GetxController
         zoomImage: null,
         latestCompatibleVersion: null,
         minutesVerifyUpdateMenu: null,
+        useReducedNameOnProduct: null,
       );
 
       EnterpriseBuilder.entity = newEnterprise;

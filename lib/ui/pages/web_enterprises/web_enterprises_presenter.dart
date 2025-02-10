@@ -26,6 +26,7 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required bool? zoomImage,
     required bool? useCovenant,
     required String enterpriseName,
+    required bool? useReducedNameOnProduct,
   });
 
   Future<bool> deleteEnterpriseData();

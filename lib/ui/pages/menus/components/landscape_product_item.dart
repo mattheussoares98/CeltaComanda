@@ -69,7 +69,7 @@ class LandscapeProductItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        productsViewModel.Name,
+                        productsViewModel.Name, //TODO treat reducedName or not
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: StringSize.size,

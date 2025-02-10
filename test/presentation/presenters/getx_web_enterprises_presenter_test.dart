@@ -186,6 +186,8 @@ void main() {
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         minutesVerifyUpdateMenu:
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct:
+            EnterpriseBuilder.entity!.useReducedNameOnProduct,
       );
     });
     test("Should emit correct values on error", () async {
@@ -211,6 +213,8 @@ void main() {
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         minutesVerifyUpdateMenu:
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct:
+            EnterpriseBuilder.entity!.useReducedNameOnProduct,
       );
     });
 
@@ -229,6 +233,7 @@ void main() {
         zoomImage: enterprise.zoomImage,
         useCovenant: enterprise.useCovenant,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -274,6 +279,7 @@ void main() {
         zoomImage: null,
         useCovenant: null,
         minutesVerifyUpdateMenu: null,
+        useReducedNameOnProduct: null,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -285,6 +291,7 @@ void main() {
         zoomImage: null,
         useCovenant: null,
         minutesVerifyUpdateMenu: null,
+        useReducedNameOnProduct: null,
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -301,6 +308,7 @@ void main() {
         zoomImage: true,
         useCovenant: true,
         minutesVerifyUpdateMenu: true,
+        useReducedNameOnProduct: true,
       );
 
       verify(() =>
@@ -323,6 +331,8 @@ void main() {
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         minutesVerifyUpdateMenu:
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct:
+            EnterpriseBuilder.entity!.useReducedNameOnProduct,
       );
 
       expect(result, true);
@@ -345,6 +355,8 @@ void main() {
         useCovenant: EnterpriseBuilder.entity!.useCovenant,
         minutesVerifyUpdateMenu:
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct:
+            EnterpriseBuilder.entity!.useReducedNameOnProduct,
       );
 
       expect(result, false);

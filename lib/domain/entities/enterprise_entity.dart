@@ -10,7 +10,6 @@ class EnterpriseEntity extends Equatable {
   final bool? persistApp;
   final String? urlCCS;
   final bool? useCovenant;
-
   final int? updateDevicesInformations;
   final int? updateEnterprise;
   final EnterpriseConcentradorParametersEntity?
@@ -19,6 +18,7 @@ class EnterpriseEntity extends Equatable {
   final bool? zoomImage;
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
+  final bool? useReducedNameOnProduct;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -35,6 +35,7 @@ class EnterpriseEntity extends Equatable {
     required this.zoomImage,
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
+    required this.useReducedNameOnProduct,
   });
 
   @override
@@ -53,5 +54,6 @@ class EnterpriseEntity extends Equatable {
         zoomImage,
         latestCompatibleVersion,
         minutesVerifyUpdateMenu,
+        useReducedNameOnProduct,
       ];
 }

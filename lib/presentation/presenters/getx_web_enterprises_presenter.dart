@@ -95,6 +95,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required bool? useCovenant,
     required String enterpriseName,
     required int? minutesVerifyUpdateMenu,
+    required bool? useReducedNameOnProduct,
   }) async {
     try {
       isLoading = true;
@@ -120,6 +121,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         zoomImage: zoomImage,
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: useReducedNameOnProduct,
       );
 
       await updateEnterpriseParameters.update(enterprise);

@@ -67,6 +67,8 @@ void main() {
               enterpriseJsonData["latestCompatibleVersion"],
           minutesVerifyUpdateMenu:
               enterpriseJsonData["minutesVerifyUpdateMenu"],
+          useReducedNameOnProduct:
+              enterpriseJsonData["useReducedNameOnProduct"],
         ),
       );
     });

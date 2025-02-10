@@ -118,8 +118,9 @@ void main() {
           updateDevicesInformations: faker.randomGenerator.integer(100),
           serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
           zoomImage: faker.randomGenerator.boolean(),
-           minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
+          minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
           latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
+          useReducedNameOnProduct: faker.randomGenerator.boolean(),
         ),
       );
 
@@ -153,6 +154,7 @@ void main() {
           zoomImage: faker.randomGenerator.boolean(),
           latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
           minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
+          useReducedNameOnProduct: faker.randomGenerator.boolean(),
         ),
       );
 

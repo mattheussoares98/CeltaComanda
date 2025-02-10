@@ -34,6 +34,7 @@ void main() {
       zoomImage: faker.randomGenerator.boolean(),
       latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
       minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
+      useReducedNameOnProduct: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

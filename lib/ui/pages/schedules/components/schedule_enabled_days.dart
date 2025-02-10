@@ -41,49 +41,55 @@ class ScheduleEnabledDays extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        getIcon(
-          enabled: allowMonday,
-          firstLetterOfDay: "S",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowTuesday,
-          firstLetterOfDay: "T",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowWednesday,
-          firstLetterOfDay: "Q",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowThursday,
-          firstLetterOfDay: "Q",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowFriday,
-          firstLetterOfDay: "S",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowSaturday,
-          firstLetterOfDay: "S",
-          context: context,
-        ),
-        getIcon(
-          enabled: allowSunday,
-          firstLetterOfDay: "D",
-          context: context,
-        ),
-        const SizedBox(width: 5),
-        Icon(
-          Icons.edit,
-          color: Theme.of(context).primaryColorLight,
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: Theme.of(context).secondaryHeaderColor.withAlpha(30),
+      ),
+      child: Row(
+        children: [
+          getIcon(
+            enabled: allowMonday,
+            firstLetterOfDay: "S",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowTuesday,
+            firstLetterOfDay: "T",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowWednesday,
+            firstLetterOfDay: "Q",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowThursday,
+            firstLetterOfDay: "Q",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowFriday,
+            firstLetterOfDay: "S",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowSaturday,
+            firstLetterOfDay: "S",
+            context: context,
+          ),
+          getIcon(
+            enabled: allowSunday,
+            firstLetterOfDay: "D",
+            context: context,
+          ),
+          const SizedBox(width: 5),
+          Icon(
+            Icons.edit,
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
+        ],
+      ),
     );
   }
 }

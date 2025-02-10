@@ -19,6 +19,7 @@ class _SchedulesPageState extends State<SchedulesPage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  int? selectedGroupIndex;
 
   @override
   void dispose() {
@@ -26,6 +27,18 @@ class _SchedulesPageState extends State<SchedulesPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+  }
+
+  void updateSelectedGroupIndex(int groupIndex) {
+    if (groupIndex == selectedGroupIndex) {
+      setState(() {
+        selectedGroupIndex = null;
+      });
+    } else {
+      setState(() {
+        selectedGroupIndex = groupIndex;
+      });
+    }
   }
 
   @override
@@ -59,61 +72,66 @@ class _SchedulesPageState extends State<SchedulesPage>
           ),
         ],
       ),
-      body: Center(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            await menuPresenter.getGroupsAndProducts(
-              commandEntity: homePresenter.commandEntity,
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-              loadLocally: false,
-            );
-            setState(() {});
-          },
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: menuPresenter.loadedMenu.length,
-            itemBuilder: (context, groupIndex) {
-              final group = menuPresenter.loadedMenu
-                  .map((element) => element.expansibleGroupsViewModel)
-                  .toList()[groupIndex];
-              final productsOfGroup =
-                  menuPresenter.loadedMenu[groupIndex].productsViewModel;
-              productsOfGroup.sort((a, b) => a.Name.compareTo(b.Name));
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await menuPresenter.getGroupsAndProducts(
+            commandEntity: homePresenter.commandEntity,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+            loadLocally: false,
+          );
+          setState(() {});
+        },
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: menuPresenter.loadedMenu.length,
+          itemBuilder: (context, groupIndex) {
+            final group = menuPresenter.loadedMenu
+                .map((element) => element.expansibleGroupsViewModel)
+                .toList()[groupIndex];
+            final productsOfGroup =
+                menuPresenter.loadedMenu[groupIndex].productsViewModel;
+            productsOfGroup.sort((a, b) => a.Name.compareTo(b.Name));
 
-              return Container(
-                margin: EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Theme.of(context).secondaryHeaderColor,
-                    )),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ExpansibleGroupScheduleItem(
-                        expansibleGroup: group,
-                        callSetSate: () => setState(() {}),
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        child: ProductsSchedulesItems(
-                          products: productsOfGroup,
-                          expansibleGroup: group,
-                          callSetState: () => setState(() {}),
-                        ),
-                      ),
-                    ],
+            return Container(
+              margin: EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Theme.of(context).secondaryHeaderColor,
+                  )),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      updateSelectedGroupIndex(groupIndex);
+                    },
+                    child: ExpansibleGroupScheduleItem(
+                      expansibleGroup: group,
+                      callSetSate: () => setState(() {}),
+                      updateSelectedGroupIndex: () {
+                        updateSelectedGroupIndex(groupIndex);
+                      },
+                      groupIsSelected: groupIndex == selectedGroupIndex,
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                  if (selectedGroupIndex == groupIndex)
+                    ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      child: ProductsSchedulesItems(
+                        products: productsOfGroup,
+                        expansibleGroup: group,
+                        callSetState: () => setState(() {}),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

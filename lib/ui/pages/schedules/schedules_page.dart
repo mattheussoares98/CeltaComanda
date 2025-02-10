@@ -20,6 +20,7 @@ class _SchedulesPageState extends State<SchedulesPage>
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   int? selectedGroupIndex;
+  final scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -27,6 +28,7 @@ class _SchedulesPageState extends State<SchedulesPage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    scrollController.dispose();
   }
 
   void updateSelectedGroupIndex(int groupIndex) {
@@ -34,10 +36,12 @@ class _SchedulesPageState extends State<SchedulesPage>
       setState(() {
         selectedGroupIndex = null;
       });
+      scrollController.jumpTo(0);
     } else {
       setState(() {
         selectedGroupIndex = groupIndex;
       });
+      scrollController.jumpTo(groupIndex * 45);
     }
   }
 
@@ -83,6 +87,7 @@ class _SchedulesPageState extends State<SchedulesPage>
           setState(() {});
         },
         child: ListView.builder(
+          controller: scrollController,
           shrinkWrap: true,
           itemCount: menuPresenter.loadedMenu.length,
           itemBuilder: (context, groupIndex) {

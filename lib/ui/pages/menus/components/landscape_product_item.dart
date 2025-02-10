@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
@@ -69,7 +70,11 @@ class LandscapeProductItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        productsViewModel.Name, //TODO treat reducedName or not
+                        EnterpriseBuilder.entity?.useReducedNameOnProduct ==
+                                true
+                            ? (productsViewModel.NameReduced ??
+                                productsViewModel.Name)
+                            : productsViewModel.Name,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: StringSize.size,

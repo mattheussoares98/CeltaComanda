@@ -13,5 +13,6 @@ export './service_charge_percentage_input.dart';
 export './update_device_informations_button.dart';
 export './update_menu_in_devices_button.dart';
 export './use_covenant_switch.dart';
+export './use_product_reduced_name_switch.dart';
 export './zoom_image_switch.dart';
 

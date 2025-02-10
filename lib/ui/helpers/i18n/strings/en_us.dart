@@ -337,6 +337,7 @@ class EnUs implements Translation {
   String get updateTableNumberAndPeopleNumbers =>
       'Update table and number of people';
   String get updateTableNumber => "Update table number";
+  String get useProductReducedName => 'Use product reduced name';
   String get userCode => 'User code';
   String get user => 'User';
   String get url => 'Enterprise or URL';

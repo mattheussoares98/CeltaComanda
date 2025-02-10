@@ -36,6 +36,13 @@ class _WebAddOrEditEnterprisePageState
   final minutesVerifyUpdateMenuFocusNode = FocusNode();
   bool? zoomImage = false;
   bool? useCovenant = false;
+  bool? useProductReducedName = false;
+
+  void changeUseProductReducedName() {
+    setState(() {
+      useProductReducedName = !(useProductReducedName ?? false);
+    });
+  }
 
   void changeZoom() {
     setState(() {
@@ -115,6 +122,9 @@ class _WebAddOrEditEnterprisePageState
                 webEnterprisesPresenter.selectedEnterprise?.zoomImage == true;
             useCovenant =
                 webEnterprisesPresenter.selectedEnterprise?.useCovenant == true;
+            useProductReducedName = webEnterprisesPresenter
+                    .selectedEnterprise?.useReducedNameOnProduct ==
+                true;
             minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
                         .selectedEnterprise?.minutesVerifyUpdateMenu !=
                     null
@@ -256,8 +266,21 @@ class _WebAddOrEditEnterprisePageState
                           ),
                         ],
                       ),
-                      GoToDevicesInfoPageButton(),
-                      // UpdateMenuInDevicesButton(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: UseProductReducedNameSwitch(
+                              useReducedName: useProductReducedName ?? false,
+                              changeUseProductReducedName:
+                                  changeUseProductReducedName,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: GoToDevicesInfoPageButton(),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -278,6 +301,7 @@ class _WebAddOrEditEnterprisePageState
                   minutesVerifyUpdateMenuController,
               zoomImage: zoomImage,
               useCovenant: useCovenant,
+              useProductReducedName: useProductReducedName,
               formKey: _formKey,
             ),
           ],

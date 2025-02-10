@@ -340,6 +340,7 @@ class PtBr implements Translation {
   String get updateTableNumberAndPeopleNumbers =>
       "Alterar mesa e quantidade de pessoas";
   String get updateTableNumber => "Alterar mesa";
+  String get useProductReducedName => 'Usar nome reduzido do produto';
   String get userCode => 'Código do usuário';
   String get user => 'Usuário';
   String get url => 'Empresa ou url';

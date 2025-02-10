@@ -292,6 +292,7 @@ abstract class Translation {
   String get updateTableNumberAndPeopleNumbers;
   String get updateTableNumber;
   String get url;
+  String get useProductReducedName;
   String get userCode;
   String get user;
   String get validateEnterprise;

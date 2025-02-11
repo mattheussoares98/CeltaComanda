@@ -23,7 +23,7 @@ class RemoteAddDeviceInfo implements AddDeviceInfo {
         commandNumber: commandNumber,
         lastUpdatedDate: DateTime.now().toIso8601String(),
         applicationVersion: applicationVersion,
-        imeiOrWindowsId: imeiOrWindowsId, //TODO add battery information
+        imeiOrWindowsId: imeiOrWindowsId,
         pdvNumber: pdvNumber,
       ).toEntity();
 

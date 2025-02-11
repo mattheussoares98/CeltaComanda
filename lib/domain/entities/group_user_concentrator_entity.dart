@@ -8,7 +8,7 @@ class GroupUserConcentratorEntity extends Equatable {
   final bool AllowDiscountOnItem;
   final bool IsInternal;
 
-  GroupUserConcentratorEntity({
+  const GroupUserConcentratorEntity({
     required this.GroupId,
     required this.Name,
     required this.PercMaxLimitDiscount,

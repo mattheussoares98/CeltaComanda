@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/entities.dart';
 import 'models.dart';
 
 class UserConcentratorModel extends Equatable {
@@ -72,5 +73,21 @@ class UserConcentratorModel extends Equatable {
             : (json["Enterprise"] as List)
                 .map((e) => EnterpriseConcentradorModel.fromJson(e))
                 .toList(),
+      );
+
+  UserConcentratorEntity toEntity() => UserConcentratorEntity(
+        UserId: UserId,
+        InternalCodeOnERP: InternalCodeOnERP,
+        PersonalizedCode: PersonalizedCode,
+        Name: Name,
+        Group: Group,
+        Password: Password,
+        PasswordMd5: PasswordMd5,
+        DigitalPassword: DigitalPassword,
+        IsAdm: IsAdm,
+        IsExcluded: IsExcluded,
+        IsAlterPassword: IsAlterPassword,
+        Groups: Groups?.map((e) => e.toEntity()).toList(),
+        Enterprises: Enterprises?.map((e) => e.toEntity()).toList(),
       );
 }

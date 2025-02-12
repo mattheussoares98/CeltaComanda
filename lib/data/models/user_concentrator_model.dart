@@ -70,7 +70,7 @@ class UserConcentratorModel extends Equatable {
                 .toList(),
         Enterprises: json["Enterprises"] == null
             ? null
-            : (json["Enterprise"] as List)
+            : (json["Enterprises"] as List)
                 .map((e) => EnterpriseConcentradorModel.fromJson(e))
                 .toList(),
       );

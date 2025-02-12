@@ -1525,4 +1525,31 @@ class EntityFactory {
         IsAlter: faker.randomGenerator.boolean(),
         Date: date ?? faker.date.dateTime(),
       );
+
+  static GroupUserConcentratorEntity makeGroupUserConcentratorEntity() =>
+      GroupUserConcentratorEntity(
+        GroupId: faker.randomGenerator.integer(100),
+        Name: faker.person.name(),
+        PercMaxLimitDiscount: faker.randomGenerator.decimal(),
+        AllowDiscountOnTotal: faker.randomGenerator.boolean(),
+        AllowDiscountOnItem: faker.randomGenerator.boolean(),
+        IsInternal: faker.randomGenerator.boolean(),
+      );
+
+  static UserConcentratorEntity makeUserConcentratorEntity() =>
+      UserConcentratorEntity(
+        UserId: faker.randomGenerator.integer(100),
+        InternalCodeOnERP: faker.randomGenerator.integer(100),
+        PersonalizedCode: faker.randomGenerator.integer(100).toString(),
+        Name: faker.randomGenerator.string(10),
+        Group: faker.randomGenerator.string(10),
+        Password: faker.randomGenerator.string(10),
+        PasswordMd5: faker.randomGenerator.string(10),
+        DigitalPassword: faker.randomGenerator.string(10),
+        IsAdm: faker.randomGenerator.boolean(),
+        IsExcluded: faker.randomGenerator.boolean(),
+        IsAlterPassword: faker.randomGenerator.boolean(),
+        Groups: [makeGroupUserConcentratorEntity()],
+        Enterprises: [makeEnterpriseConcentradorEntity()],
+      );
 }

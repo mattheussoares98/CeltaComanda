@@ -40,6 +40,10 @@ void main() {
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadDeviceData;
   late PdvRegistrationSpy pdvRegistration;
+  late DeleteDataSpy deleteData;
+  late LastImportSpy lastImport;
+  late LoadExportChargingSpy loadExportCharging;
+  late ConcentratorLoginSpy concentratorLogin;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -50,14 +54,12 @@ void main() {
   late SellersViewModel selectedSeller;
   late int userCode;
   late String password;
+  late String username;
   late Map<String, dynamic> enterpriseJson;
   late String imeiOrWindowsId;
   late double applicationVersion;
   late CommandEntity commandEntity;
-  late DeleteDataSpy deleteData;
-  late LastImportSpy lastImport;
-  late LoadExportChargingSpy loadExportCharging;
-  late ConcentratorLoginSpy concentratorLogin;
+  late UserConcentratorEntity userConcentratorEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -123,6 +125,7 @@ void main() {
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
     loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
     loadExportCharging.mockLoad([]);
+    concentratorLogin.mockLogin(userConcentratorEntity);
   }
 
   void initEntitys() {
@@ -149,6 +152,8 @@ void main() {
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
     commandEntity = EntityFactory.makeCommandEntity();
+    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
+    username = faker.person.name();
   }
 
   setUp(() {
@@ -1670,6 +1675,61 @@ void main() {
       );
 
       verify(() => menuPresenter.loadAllImages(updateLocally: true)).called(1);
+    });
+  });
+
+  group("New go to configurations page", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.newGoToConfigurationsPage(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLoginError();
+
+      await sut.newGoToConfigurationsPage(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on login return null value", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLogin(null);
+
+      await sut.newGoToConfigurationsPage(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should call concentrator login with correct values", () async {
+      await sut.newGoToConfigurationsPage(
+        username: username,
+        password: password,
+      );
+
+      verify(() =>
+              concentratorLogin.login(username: username, password: password))
+          .called(1);
+    });
+    test("Should call go to configurations page", () async {
+      await sut.newGoToConfigurationsPage(
+        username: username,
+        password: password,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
+          .called(1);
     });
   });
 }

@@ -16,6 +16,6 @@ class ConcentratorLoginSpy extends Mock implements ConcentratorLogin {
   }
 
   void mockLoginError() {
-    this._mockLoginCall().thenThrow(DomainError.unexpected);
+    this._mockLoginCall().thenThrow(DomainError.invalidCredentials);
   }
 }

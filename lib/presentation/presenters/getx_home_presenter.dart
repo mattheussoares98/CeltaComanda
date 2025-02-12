@@ -585,5 +585,23 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   Future<void> newGoToConfigurationsPage({
     required String username,
     required String password,
-  }) async {}
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      UserConcentratorEntity? user =
+          await concentratorLogin.login(username: username, password: password);
+
+      if (user == null) {
+        throw Exception();
+      }
+
+      navigateTo.navigate(pageRoute: PageRoutes.configurations);
+    } catch (e) {
+      mainError = UIError.invalidCredentials;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

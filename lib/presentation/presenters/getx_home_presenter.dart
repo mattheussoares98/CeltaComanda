@@ -530,7 +530,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
       await menuPresenter.loadAllImages(
         loadLocally: !needUpdateImagesRemotelly,
-      );
+      ); //TODO test if is reloading locally images unecessary
 
       bool needUpdateUsersRemotelly = _needLoadRemote(
         exports: lastExports,
@@ -540,7 +540,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       await configurationsPresenter.updateUserGroupsPermissions(
         loadLocally: !needUpdateUsersRemotelly,
       );
-      //TODO create tests
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

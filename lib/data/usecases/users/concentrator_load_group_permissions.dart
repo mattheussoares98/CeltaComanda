@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -33,7 +31,7 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
       final url = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpAdapter.request(
         url: '$url/api/APIGroupPermissions/GetAll',
-        method: "put",
+        method: "get",
         headers: headers,
       );
       if (response == null) {
@@ -75,7 +73,11 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
         ).toList();
         await hiveStorage.delete(CacheKeys.groupPermissions.name);
         await hiveStorage.put(
-            CacheKeys.groupPermissions.name, json.encode(result));
+            CacheKeys.groupPermissions.name,
+            result
+                .map((e) =>
+                    GroupPermissionConcentratorModel.fromEntity(e).toJson())
+                .toList());
         return result;
       }
     } catch (e) {

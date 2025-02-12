@@ -26,6 +26,7 @@ void main() {
   late ExpansibleGroupFromProductPresenterSpy
       expansibleGroupFromProductPresenter;
   late EnterprisePresenterSpy enterprisePresenter;
+  late ConfigurationsPresenterSpy configurationsPresenter;
 
   late NavigateToSpy navigateTo;
   late LocalEnterpriseDataSpy localEnterpriseData;
@@ -68,6 +69,7 @@ void main() {
     expansibleGroupFromProductPresenter =
         ExpansibleGroupFromProductPresenterSpy();
     enterprisePresenter = EnterprisePresenterSpy();
+    configurationsPresenter = ConfigurationsPresenterSpy();
 
     sut = GetxHomePresenter(
       navigateTo: navigateTo,
@@ -162,15 +164,17 @@ void main() {
         EntityFactory.makeExpansibleGroupFromProductViewModel());
     registerFallbackValue(EntityFactory.makeCommandEntity(true));
     registerFallbackValue(EntityFactory.makeUpdateSaleRequestTempEntity());
-    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
-    registerFallbackValue(PrintedProductsPresenterSpy());
-    registerFallbackValue(HomePresenterSpy());
-    registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(EntityFactory.makePdvEntity());
     registerFallbackValue(EntityFactory.makeCartProductEntity(
       maximumProductQuantity: 0,
       minimumProductQuantity: 0,
     ));
+
+    registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
+    registerFallbackValue(PrintedProductsPresenterSpy());
+    registerFallbackValue(HomePresenterSpy());
+    registerFallbackValue(MenuPresenterSpy());
+    registerFallbackValue(CartPresenterSpy());
   });
 
   group("Navigation", () {
@@ -1447,6 +1451,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1471,6 +1476,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1478,6 +1484,7 @@ void main() {
     });
     test("Should call load last import", () async {
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1492,6 +1499,7 @@ void main() {
         pdv: EntityFactory.makePdvEntity(),
       );
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1509,6 +1517,7 @@ void main() {
         pdv: null,
       );
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1536,13 +1545,13 @@ void main() {
         loadExportCharging.mockLoad([lastExport]);
 
         await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
 
-        verify(() => menuPresenter.loadAllImages(loadLocally: false))
-            .called(1);
+        verify(() => menuPresenter.loadAllImages(loadLocally: false)).called(1);
       },
     );
     test(
@@ -1562,6 +1571,7 @@ void main() {
         loadExportCharging.mockLoad([lastExport]);
 
         await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1587,6 +1597,7 @@ void main() {
         loadExportCharging.mockLoad([lastExport]);
 
         await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1617,6 +1628,7 @@ void main() {
         loadExportCharging.mockLoad([lastExport]);
 
         await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1646,6 +1658,7 @@ void main() {
       );
 
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
@@ -1673,6 +1686,7 @@ void main() {
       );
 
       await sut.updateWhatNeed(
+        configurationsPresenter: configurationsPresenter,
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,

@@ -38,6 +38,8 @@ class _HomePageState extends State<HomePage>
       if (mounted) {
         HomePresenter homePresenter = Provider.of(context, listen: false);
         CartPresenter cartPresenter = Provider.of(context, listen: false);
+        ConfigurationsPresenter configurationsPresenter =
+            Provider.of(context, listen: false);
         PrintedProductsPresenter printedProductsPresenter =
             Provider.of(context, listen: false);
         MenuPresenter menuPresenter = Provider.of(context, listen: false);
@@ -55,6 +57,7 @@ class _HomePageState extends State<HomePage>
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
         );
 
         setState(() {});
@@ -78,6 +81,8 @@ class _HomePageState extends State<HomePage>
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
@@ -101,6 +106,7 @@ class _HomePageState extends State<HomePage>
         menuPresenter: menuPresenter,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
+        configurationsPresenter: configurationsPresenter,
       );
       setState(() {});
     });

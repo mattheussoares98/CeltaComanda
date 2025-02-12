@@ -491,6 +491,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required MenuPresenter menuPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required ConfigurationsPresenter configurationsPresenter,
   }) async {
     try {
       final lastImported = await lastImport.load();
@@ -522,17 +523,24 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         );
       }
 
-      bool needUpdateImages = _needLoadRemote(
+      bool needUpdateImagesRemotelly = _needLoadRemote(
         exports: lastExports,
         loadType: LoadTypeEnum.images,
         lastImported: lastImported,
       );
+      await menuPresenter.loadAllImages(
+        loadLocally: !needUpdateImagesRemotelly,
+      );
 
-      if (needUpdateImages) {
-        await menuPresenter.loadAllImages(loadLocally: false);
-      } else if (menuPresenter.downloadedImages.isEmpty) {
-        await menuPresenter.loadAllImages(loadLocally: true);
-      }
+      bool needUpdateUsersRemotelly = _needLoadRemote(
+        exports: lastExports,
+        loadType: LoadTypeEnum.users,
+        lastImported: lastImported,
+      );
+      await configurationsPresenter.updateUserGroupsPermissions(
+        loadLocally: !needUpdateUsersRemotelly,
+      );
+      //TODO create tests
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -572,10 +580,16 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       return lastImported?.images == null ||
           (latestExportByLoadType?.Date != null &&
               latestExportByLoadType!.Date!.isAfter(lastImported!.images!));
-    } else {
+    } else if (loadType == LoadTypeEnum.products) {
       return lastImported?.products == null ||
           (latestExportByLoadType?.Date != null &&
               latestExportByLoadType!.Date!.isAfter(lastImported!.products!));
+    } else if (loadType == LoadTypeEnum.users) {
+      return lastImported?.users == null ||
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.users!));
+    } else {
+      return false;
     }
   }
 }

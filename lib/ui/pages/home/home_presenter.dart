@@ -91,5 +91,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required MenuPresenter menuPresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
+    required ConfigurationsPresenter configurationsPresenter,
   });
 }

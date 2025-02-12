@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../database/database.dart';
 import '../../http/http.dart';
@@ -19,8 +22,11 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
     required bool loadLocally,
   }) async {
     try {
-      if(loadLocally) {
-        //TODO create method to load locally
+      if (loadLocally) {
+        final result = await hiveStorage.get(CacheKeys.groupPermissions.name);
+        return (result as List)
+            .map((e) => GroupPermissionConcentratorModel.fromJson(e).toEntity())
+            .toList();
       }
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
@@ -33,7 +39,7 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
       if (response == null) {
         throw Exception();
       } else {
-        return (response as List)
+        final result = (response as List)
             .map((e) => GroupPermissionConcentratorModel.fromJson(e).toEntity())
             .toList()
             .where(
@@ -67,6 +73,10 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
                         PermissionName.trocarProdutosEntreComandas);
           },
         ).toList();
+        await hiveStorage.delete(CacheKeys.groupPermissions.name);
+        await hiveStorage.put(
+            CacheKeys.groupPermissions.name, json.encode(result));
+        return result;
       }
     } catch (e) {
       throw Exception();

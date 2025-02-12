@@ -4,6 +4,7 @@ enum CacheKeys {
   commandData,
   comments,
   enterprise,
+  groupPermissions,
   hiveBoxName,
   images,
   lastImport,

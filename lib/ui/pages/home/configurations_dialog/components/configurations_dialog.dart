@@ -13,11 +13,11 @@ class ConfigurationsDialogPage extends StatefulWidget {
 }
 
 class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
-  final _userCodeController = TextEditingController();
+  final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _userCodeFocusNode = FocusNode();
+  final _userNameFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
-  final _keyUserAndPassword = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -34,23 +34,25 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   void dispose() {
     super.dispose();
 
-    _userCodeController.dispose();
+    _userNameController.dispose();
     _passwordController.dispose();
     _passwordFocusNode.dispose();
-    _userCodeFocusNode.dispose();
+    _userNameFocusNode.dispose();
   }
 
-  Future<void> goToConfigurationsPage(HomePresenter homePresenter) async {
-    bool? isValid = _keyUserAndPassword.currentState?.validate();
+  Future<void> goToConfigurationsPage(
+    ConfigurationsPresenter configurationsPrsenter,
+  ) async {
+    bool? isValid = _formKey.currentState?.validate();
 
     if (isValid == true) {
-      _userCodeFocusNode.unfocus();
+      _userNameFocusNode.unfocus();
       _passwordFocusNode.unfocus();
 
       Navigator.of(context).pop();
 
-      await homePresenter.goToConfigurationsPage(
-        userPersonalizedCode: _userCodeController.text.toInt(),
+      await configurationsPrsenter.login(
+        username: _userNameController.text,
         password: _passwordController.text,
       );
     }
@@ -58,7 +60,8 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
 
     return GestureDetector(
       onTap: () {
@@ -71,20 +74,21 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
             child: Column(
               children: [
                 Form(
-                  key: _keyUserAndPassword,
+                  key: _formKey,
                   child: Column(
                     children: [
-                      UserPersonalizedCodeInput(
+                      UserNameInput(
                         passwordFocusNode: _passwordFocusNode,
-                        userController: _userCodeController,
-                        userCodeFocusNode: _userCodeFocusNode,
+                        userNameController: _userNameController,
+                        userNameFocusNode: _userNameFocusNode,
                       ),
                       const SizedBox(height: 10),
                       PasswordInput(
                           passwordFocusNode: _passwordFocusNode,
                           passwordController: _passwordController,
                           goToConfigurationsPage: () async {
-                            await goToConfigurationsPage(homePresenter);
+                            await goToConfigurationsPage(
+                                configurationsPresenter);
                           }),
                     ],
                   ),
@@ -93,7 +97,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                   padding: const EdgeInsets.only(top: 8),
                   child: GoToConfigurationsPageButton(
                     goToConfigurationsPage: () async {
-                      await goToConfigurationsPage(homePresenter);
+                      await goToConfigurationsPage(configurationsPresenter);
                     },
                   ),
                 ),

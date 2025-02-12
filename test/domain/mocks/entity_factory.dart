@@ -1527,9 +1527,11 @@ class EntityFactory {
         Date: date ?? faker.date.dateTime(),
       );
 
-  static GroupUserConcentratorEntity makeGroupUserConcentratorEntity() =>
+  static GroupUserConcentratorEntity makeGroupUserConcentratorEntity({
+    required int groupId,
+  }) =>
       GroupUserConcentratorEntity(
-        GroupId: faker.randomGenerator.integer(100),
+        GroupId: groupId,
         Name: faker.person.name(),
         PercMaxLimitDiscount: faker.randomGenerator.decimal(),
         AllowDiscountOnTotal: faker.randomGenerator.boolean(),
@@ -1537,7 +1539,9 @@ class EntityFactory {
         IsInternal: faker.randomGenerator.boolean(),
       );
 
-  static UserConcentratorEntity makeUserConcentratorEntity() =>
+  static UserConcentratorEntity makeUserConcentratorEntity({
+    required int groupId,
+  }) =>
       UserConcentratorEntity(
         UserId: faker.randomGenerator.integer(100),
         InternalCodeOnERP: faker.randomGenerator.integer(100),
@@ -1550,7 +1554,7 @@ class EntityFactory {
         IsAdm: faker.randomGenerator.boolean(),
         IsExcluded: faker.randomGenerator.boolean(),
         IsAlterPassword: faker.randomGenerator.boolean(),
-        Groups: [makeGroupUserConcentratorEntity()],
+        Groups: [makeGroupUserConcentratorEntity(groupId: groupId)],
         Enterprises: [makeEnterpriseConcentradorEntity()],
       );
 
@@ -1558,9 +1562,10 @@ class EntityFactory {
       makeGroupPermissionConcentratorEntity(
     PermissionName permissionName, {
     bool? isActive,
+    int? groupId,
   }) =>
           GroupPermissionConcentratorEntity(
-            GroupId: faker.randomGenerator.integer(100),
+            GroupId: groupId ?? faker.randomGenerator.integer(100),
             GroupPermissionsId: faker.randomGenerator.integer(100),
             IsActive: isActive ?? faker.randomGenerator.boolean(),
             Permission: makePermissionEntity(permissionName),

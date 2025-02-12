@@ -373,4 +373,21 @@ class GetxConfigurationsPresenter extends GetxController
   void updateLoggedUser(UserConcentratorEntity? user) {
     _loggedUser = user;
   }
+
+  @override
+  bool userCanAccessResource(PermissionName permission) {
+    if (_loggedUser == null ||
+        _loadedPermissions == null ||
+        _loadedPermissions?.isEmpty == true) {
+      return false;
+    }
+
+    final userPermission = _loadedPermissions!
+        .where((e) =>
+            e.GroupId == _loggedUser?.Groups?.first.GroupId &&
+            e.Permission?.Name == permission.description)
+        .toList();
+
+    return userPermission.first.IsActive == true;
+  }
 }

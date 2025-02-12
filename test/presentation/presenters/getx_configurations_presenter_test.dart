@@ -133,7 +133,8 @@ void main() {
     );
 
     identifier = faker.randomGenerator.string(10);
-    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
+    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity(
+        groupId: faker.randomGenerator.integer(100));
     groupPermissions = [
       EntityFactory.makeGroupPermissionConcentratorEntity(
           PermissionName.agendamentoDeProdutos),
@@ -842,12 +843,47 @@ void main() {
 
   group("Update logged user", () {
     test("Should update logged user correctly", () {
-      final user = EntityFactory.makeUserConcentratorEntity();
+      final user = EntityFactory.makeUserConcentratorEntity(groupId: faker.randomGenerator.integer(100));
       sut.updateLoggedUser(user);
       expect(sut.loggedUser, user);
 
       sut.updateLoggedUser(null);
       expect(sut.loggedUser, null);
+    });
+  });
+
+  group("User can access resource", () {
+    test(
+        "Should return false if logged user is null or loaded permissions is empty",
+        () {
+      expect(sut.loadedPermissions, null);
+      expect(sut.loggedUser, null);
+
+      final result =
+          sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
+
+      expect(result, false);
+    });
+    test(
+        "Should return false if logged user is null or loaded permissions is empty",
+        () async {
+      final groupId = faker.randomGenerator.integer(100);
+      final isActive = faker.randomGenerator.boolean();
+      loadGroupPermissions.mockGetAll([
+        EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.agendamentoDeProdutos,
+          groupId: groupId,
+          isActive: isActive,
+        ),
+      ]);
+      await sut.updateUserGroupsPermissions(loadLocally: false);
+      sut.updateLoggedUser(
+        EntityFactory.makeUserConcentratorEntity(groupId: groupId),
+      );
+
+      final result =
+          sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
+      expect(result, isActive);
     });
   });
 }

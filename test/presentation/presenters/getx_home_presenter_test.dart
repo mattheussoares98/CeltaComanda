@@ -155,7 +155,8 @@ void main() {
     applicationVersion = faker.randomGenerator.decimal();
     commandEntity = EntityFactory.makeCommandEntity();
     username = faker.person.name();
-    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
+    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity(
+        groupId: faker.randomGenerator.integer(100));
   }
 
   setUp(() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../domain/helpers/helpers.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -56,4 +57,6 @@ abstract class ConfigurationsPresenter implements Listenable {
   });
 
   void updateLoggedUser(UserConcentratorEntity? user);
+
+  bool userCanAccessResource(PermissionName permission);
 }

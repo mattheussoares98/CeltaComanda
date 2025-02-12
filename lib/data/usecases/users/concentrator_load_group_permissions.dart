@@ -1,4 +1,5 @@
 import '../../../domain/entities/entities.dart';
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
@@ -28,18 +29,32 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
             .where(
           (e) {
             final permissionName = e.Permission?.Name?.toLowerCase();
+            String permissionDescription(PermissionName permission) {
+              return permission.description.toLowerCase();
+            }
 
-            return permissionName == "Agendamento de produtos".toLowerCase() ||
-                permissionName == "Atualizar menu".toLowerCase() ||
-                permissionName == "Cancelar itens".toLowerCase() ||
-                permissionName == "Configurações da Mesa".toLowerCase() ||
-                permissionName == "Fazer logout".toLowerCase() ||
-                permissionName == "Fechar mesa".toLowerCase() ||
-                permissionName == "Liberar/Bloquear mesa".toLowerCase() ||
-                permissionName == "Parâmetros".toLowerCase() ||
-                permissionName == "Reservar mesa".toLowerCase() ||
+            return permissionName ==
+                    permissionDescription(
+                        PermissionName.agendamentoDeProdutos) ||
                 permissionName ==
-                    "Trocar produtos entre comandas".toLowerCase();
+                    permissionDescription(PermissionName.atualizarMenu) ||
+                permissionName ==
+                    permissionDescription(PermissionName.cancelarItens) ||
+                permissionName ==
+                    permissionDescription(PermissionName.configuracoesDaMesa) ||
+                permissionName ==
+                    permissionDescription(PermissionName.fazerLogout) ||
+                permissionName ==
+                    permissionDescription(PermissionName.fecharMesa) ||
+                permissionName ==
+                    permissionDescription(PermissionName.liberarBloquearMesa) ||
+                permissionName ==
+                    permissionDescription(PermissionName.parametros) ||
+                permissionName ==
+                    permissionDescription(PermissionName.reservarMesa) ||
+                permissionName ==
+                    permissionDescription(
+                        PermissionName.trocarProdutosEntreComandas);
           },
         ).toList();
       }

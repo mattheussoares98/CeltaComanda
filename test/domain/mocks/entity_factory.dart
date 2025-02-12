@@ -1561,7 +1561,7 @@ class EntityFactory {
   }) =>
           GroupPermissionConcentratorEntity(
             GroupId: faker.randomGenerator.integer(100),
-            GroupName: faker.person.name(),
+            GroupPermissionsId: faker.randomGenerator.integer(100),
             IsActive: isActive ?? faker.randomGenerator.boolean(),
             Permission: makePermissionEntity(permissionName),
           );

@@ -5,13 +5,13 @@ import 'group_permission_concentrator.dart';
 
 class GroupPermissionConcentratorModel extends Equatable {
   final int? GroupId;
-  final String? GroupName;
+  final int? GroupPermissionsId;
   final bool? IsActive;
   final PermissionModel? Permission;
 
   const GroupPermissionConcentratorModel({
     required this.GroupId,
-    required this.GroupName,
+    required this.GroupPermissionsId,
     required this.IsActive,
     required this.Permission,
   });
@@ -19,7 +19,7 @@ class GroupPermissionConcentratorModel extends Equatable {
   @override
   List<Object?> get props => [
         GroupId,
-        GroupName,
+        GroupPermissionsId,
         IsActive,
         Permission,
       ];
@@ -27,7 +27,7 @@ class GroupPermissionConcentratorModel extends Equatable {
   factory GroupPermissionConcentratorModel.fromJson(Map json) =>
       GroupPermissionConcentratorModel(
         GroupId: json["GroupId"],
-        GroupName: json["GroupName"],
+        GroupPermissionsId: json["GroupPermissionsId"],
         IsActive: json["IsActive"] == 1,
         Permission: json["Permission"] == null
             ? null
@@ -38,7 +38,7 @@ class GroupPermissionConcentratorModel extends Equatable {
           GroupPermissionConcentratorEntity entity) =>
       GroupPermissionConcentratorModel(
         GroupId: entity.GroupId,
-        GroupName: entity.GroupName,
+        GroupPermissionsId: entity.GroupPermissionsId,
         IsActive: entity.IsActive,
         Permission: entity.Permission == null
             ? null
@@ -48,14 +48,14 @@ class GroupPermissionConcentratorModel extends Equatable {
   GroupPermissionConcentratorEntity toEntity() =>
       GroupPermissionConcentratorEntity(
         GroupId: GroupId,
-        GroupName: GroupName,
+        GroupPermissionsId: GroupPermissionsId,
         IsActive: IsActive,
         Permission: Permission?.toEntity(),
       );
 
   Map<String, dynamic> toJson() => {
         "GroupId": GroupId,
-        "GroupName": GroupName,
+        "GroupPermissionsId": GroupPermissionsId,
         "IsActive": IsActive,
         "Permission": Permission?.toJson(),
       };

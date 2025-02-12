@@ -19,4 +19,5 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       deleteData: makeLocalDeleteData(),
       lastImport: makeLocalLastImport(),
       loadExportCharging: makeRemoteLoadExportsCharging(),
+      concentratorLogin: makeRemoteConcentratorLogin(),
     );

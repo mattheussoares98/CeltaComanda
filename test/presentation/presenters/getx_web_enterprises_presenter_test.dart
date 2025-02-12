@@ -253,6 +253,7 @@ void main() {
         zoomImage: enterprise.zoomImage,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,

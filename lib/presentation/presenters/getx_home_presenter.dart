@@ -28,6 +28,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final DeleteData deleteData;
   final LastImport lastImport;
   final LoadExportCharging loadExportCharging;
+  final ConcentratorLogin concentratorLogin;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -46,6 +47,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.deleteData,
     required this.lastImport,
     required this.loadExportCharging,
+    required this.concentratorLogin,
   });
 
   @override
@@ -578,4 +580,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               latestExportByLoadType!.Date!.isAfter(lastImported!.products!));
     }
   }
+
+  @override
+  Future<void> newGoToConfigurationsPage({
+    required String username,
+    required String password,
+  }) async {}
 }

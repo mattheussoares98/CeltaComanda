@@ -57,6 +57,7 @@ void main() {
   late DeleteDataSpy deleteData;
   late LastImportSpy lastImport;
   late LoadExportChargingSpy loadExportCharging;
+  late ConcentratorLoginSpy concentratorLogin;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -86,6 +87,7 @@ void main() {
       deleteData: deleteData,
       lastImport: lastImport,
       loadExportCharging: loadExportCharging,
+      concentratorLogin: concentratorLogin,
     );
   }
 
@@ -106,6 +108,7 @@ void main() {
     deleteData = DeleteDataSpy();
     lastImport = LastImportSpy();
     loadExportCharging = LoadExportChargingSpy();
+    concentratorLogin = ConcentratorLoginSpy();
   }
 
   void initMocks() {
@@ -142,8 +145,7 @@ void main() {
     userCode = faker.randomGenerator.integer(100);
 
     enterpriseJson =
-        EnterpriseModel.fromEntity(EnterpriseBuilder.entity!)
-            .toJson();
+        EnterpriseModel.fromEntity(EnterpriseBuilder.entity!).toJson();
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
     commandEntity = EntityFactory.makeCommandEntity();
@@ -1202,8 +1204,7 @@ void main() {
         );
 
         verify(() => localEnterpriseData.add(
-                EnterpriseModel.fromJson(enterpriseJson).toEntity()))
-            .called(1);
+            EnterpriseModel.fromJson(enterpriseJson).toEntity())).called(1);
       });
 
       test("Should call get application version", () async {

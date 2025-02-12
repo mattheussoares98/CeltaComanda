@@ -10,7 +10,7 @@ export './expansible_groups/expansible_groups.dart';
 export 'export/export.dart';
 export './images/images.dart';
 export './import/import.dart';
-export './login_management/login_management.dart';
+export 'login/login.dart';
 export './menu/menu.dart';
 export './navigation/navigation.dart';
 export './parameters/parameters.dart';

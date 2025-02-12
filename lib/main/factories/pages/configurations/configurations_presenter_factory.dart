@@ -23,4 +23,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       deleteData: makeLocalDeleteData(),
       concentratorLogin: makeRemoteConcentratorLogin(),
       loadGroupPermissions: makeConcentratorLoadGroupPermissions(),
+      lastImport: makeLocalLastImport(),
     );

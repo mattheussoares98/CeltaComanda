@@ -32,6 +32,7 @@ class GetxConfigurationsPresenter extends GetxController
   final DeleteData deleteData;
   final ConcentratorLogin concentratorLogin;
   final LoadGroupPermissions loadGroupPermissions;
+  final LastImport lastImport;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -51,6 +52,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.deleteData,
     required this.concentratorLogin,
     required this.loadGroupPermissions,
+    required this.lastImport,
   });
 
   @override
@@ -365,6 +367,7 @@ class GetxConfigurationsPresenter extends GetxController
   Future<void> updateUserGroupsPermissions() async {
     try {
       final result = await loadGroupPermissions.getAll();
+      await lastImport.save([LoadTypeEnum.users]);
     } catch (e) {
       debugPrint(e.toString());
     }

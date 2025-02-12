@@ -52,8 +52,6 @@ void main() {
   late CommandEntity fixedCommandEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
   late String identifier;
-  late String password;
-  late String username;
   late UserConcentratorEntity userConcentratorEntity;
   late List<GroupPermissionConcentratorEntity> groupPermissions;
 
@@ -82,7 +80,6 @@ void main() {
       loadDeviceData: loadDeviceData,
       launchUrl: launchUrl,
       deleteData: deleteData,
-      concentratorLogin: concentratorLogin,
       loadGroupPermissions: loadGroupPermissions,
       lastImport: lastImport,
     );
@@ -136,8 +133,6 @@ void main() {
     );
 
     identifier = faker.randomGenerator.string(10);
-    password = faker.guid.guid();
-    username = faker.person.name();
     userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
     groupPermissions = [
       EntityFactory.makeGroupPermissionConcentratorEntity(
@@ -805,75 +800,6 @@ void main() {
     });
   });
 
-  group("Login", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.mainErrorStream, emits(null));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.login(
-        username: username,
-        password: password,
-      );
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentials]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      concentratorLogin.mockLoginError();
-
-      await sut.login(
-        username: username,
-        password: password,
-      );
-    });
-    test("Should emit correct values on login return null value", () async {
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentials]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      concentratorLogin.mockLogin(null);
-
-      await sut.login(
-        username: username,
-        password: password,
-      );
-    });
-    test("Should call concentrator login with correct values", () async {
-      await sut.login(
-        username: username,
-        password: password,
-      );
-
-      verify(() =>
-              concentratorLogin.login(username: username, password: password))
-          .called(1);
-    });
-    test("Should call go to configurations page", () async {
-      await sut.login(
-        username: username,
-        password: password,
-      );
-
-      verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
-          .called(1);
-    });
-    test("Should update loggedUser correctly", () async {
-      await sut.login(
-        username: username,
-        password: password,
-      );
-      expect(sut.loggedUser, userConcentratorEntity);
-
-      concentratorLogin.mockLogin(null);
-      await sut.login(
-        username: username,
-        password: password,
-      );
-      expect(sut.loggedUser, null);
-    });
-  });
-
   group("Update users groups permissions", () {
     test(
         "Should call load group permissions with correct value when load locally",
@@ -911,6 +837,17 @@ void main() {
       await sut.updateUserGroupsPermissions(loadLocally: true);
 
       expect(sut.loadedPermissions, groupPermissions);
+    });
+  });
+
+  group("Update logged user", () {
+    test("Should update logged user correctly", () {
+      final user = EntityFactory.makeUserConcentratorEntity();
+      sut.updateLoggedUser(user);
+      expect(sut.loggedUser, user);
+
+      sut.updateLoggedUser(null);
+      expect(sut.loggedUser, null);
     });
   });
 }

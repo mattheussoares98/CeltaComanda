@@ -85,6 +85,12 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
     required String password,
   });
 
+  Future<void> newGoToConfigurationsPage({
+    required String username,
+    required String password,
+    required ConfigurationsPresenter configurationsPresenter,
+  });
+
   Future<bool> applicationIsInLatestVersion();
 
   Future<void> updateWhatNeed({

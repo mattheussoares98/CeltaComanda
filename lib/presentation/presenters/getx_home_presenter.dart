@@ -28,6 +28,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   final DeleteData deleteData;
   final LastImport lastImport;
   final LoadExportCharging loadExportCharging;
+  final ConcentratorLogin concentratorLogin;
 
   GetxHomePresenter({
     required this.navigateTo,
@@ -46,6 +47,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required this.deleteData,
     required this.lastImport,
     required this.loadExportCharging,
+    required this.concentratorLogin,
   });
 
   @override
@@ -581,6 +583,33 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
               latestExportByLoadType!.Date!.isAfter(lastImported!.users!));
     } else {
       return false;
+    }
+  }
+
+  @override
+  Future<void> newGoToConfigurationsPage({
+    required String username,
+    required String password,
+    required ConfigurationsPresenter configurationsPresenter,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      UserConcentratorEntity? user =
+          await concentratorLogin.login(username: username, password: password);
+
+      if (user == null) {
+        throw Exception();
+      } else {
+        configurationsPresenter.updateLoggedUser(user);
+      }
+
+      isLoading = false;
+      navigateTo.navigate(pageRoute: PageRoutes.configurations);
+    } catch (e) {
+      mainError = UIError.invalidCredentials;
+      isLoading = false;
     }
   }
 }

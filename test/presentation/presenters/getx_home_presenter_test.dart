@@ -44,6 +44,7 @@ void main() {
   late DeleteDataSpy deleteData;
   late LastImportSpy lastImport;
   late LoadExportChargingSpy loadExportCharging;
+  late ConcentratorLoginSpy concentratorLogin;
 
   late CommandEntity fixedCommandEntity;
   late CommandEntity notFixedCommandEntity;
@@ -53,11 +54,13 @@ void main() {
   late List<SellerEntity> sellerEntitys;
   late SellersViewModel selectedSeller;
   late int userCode;
+  late String username;
   late String password;
   late Map<String, dynamic> enterpriseJson;
   late String imeiOrWindowsId;
   late double applicationVersion;
   late CommandEntity commandEntity;
+  late UserConcentratorEntity userConcentratorEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -88,6 +91,7 @@ void main() {
       deleteData: deleteData,
       lastImport: lastImport,
       loadExportCharging: loadExportCharging,
+      concentratorLogin: concentratorLogin,
     );
   }
 
@@ -108,6 +112,7 @@ void main() {
     deleteData = DeleteDataSpy();
     lastImport = LastImportSpy();
     loadExportCharging = LoadExportChargingSpy();
+    concentratorLogin = ConcentratorLoginSpy();
   }
 
   void initMocks() {
@@ -122,6 +127,7 @@ void main() {
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
     loadDeviceData.mockGetApplicationVersion(applicationVersion.toString());
     loadExportCharging.mockLoad([]);
+    concentratorLogin.mockLogin(userConcentratorEntity);
   }
 
   void initEntitys() {
@@ -148,6 +154,8 @@ void main() {
     imeiOrWindowsId = faker.randomGenerator.string(10);
     applicationVersion = faker.randomGenerator.decimal();
     commandEntity = EntityFactory.makeCommandEntity();
+    username = faker.person.name();
+    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
   }
 
   setUp(() {
@@ -1750,6 +1758,77 @@ void main() {
               loadLocally: true,
             )).called(1);
       });
+    });
+  });
+
+  group("Login", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLoginError();
+
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on login return null value", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLogin(null);
+
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+    });
+    test("Should call concentrator login with correct values", () async {
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+
+      verify(() =>
+              concentratorLogin.login(username: username, password: password))
+          .called(1);
+    });
+    test("Should call go to configurations page", () async {
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
+          .called(1);
+    });
+    test("Should update loggedUser in configurations presenter", () async {
+      await sut.newGoToConfigurationsPage(
+        configurationsPresenter: configurationsPresenter,
+        username: username,
+        password: password,
+      );
+
+      verify(() =>
+              configurationsPresenter.updateLoggedUser(userConcentratorEntity))
+          .called(1);
     });
   });
 }

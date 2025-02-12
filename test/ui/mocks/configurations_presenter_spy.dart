@@ -43,13 +43,10 @@ class ConfigurationsPresenterSpy extends Mock
     when(() => this.goToParametersPage()).thenAnswer((any) async => any);
     when(() => this.goToSaleMovementsPage()).thenAnswer((any) => any);
     when(() => this.goToUpdateApplication()).thenAnswer((any) async => any);
-    when(() => this.login(
-          username: any(named: "username"),
-          password: any(named: "password"),
-        )).thenAnswer((any) async => any);
     when(() => this.updateUserGroupsPermissions(
           loadLocally: any(named: "loadLocally"),
         )).thenAnswer((any) async => any);
+    when(() => this.updateLoggedUser(any())).thenAnswer((any) => any);
 
     mockOpenOrBlockadCommand(true);
     mockLoadMenuAgain(true);

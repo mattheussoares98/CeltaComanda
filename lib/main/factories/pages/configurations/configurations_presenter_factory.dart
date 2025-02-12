@@ -21,7 +21,6 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       loadDeviceData: makeLocalLoadDeviceData(),
       launchUrl: makeRemoteLaunchUrl(),
       deleteData: makeLocalDeleteData(),
-      concentratorLogin: makeRemoteConcentratorLogin(),
       loadGroupPermissions: makeConcentratorLoadGroupPermissions(),
       lastImport: makeLocalLastImport(),
     );

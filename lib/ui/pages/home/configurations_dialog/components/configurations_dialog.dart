@@ -41,7 +41,8 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   }
 
   Future<void> goToConfigurationsPage(
-    ConfigurationsPresenter configurationsPrsenter,
+    HomePresenter homePresenter,
+    ConfigurationsPresenter configurationsPresenter,
   ) async {
     bool? isValid = _formKey.currentState?.validate();
 
@@ -51,15 +52,17 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
 
       Navigator.of(context).pop();
 
-      await configurationsPrsenter.login(
+      await homePresenter.newGoToConfigurationsPage(
         username: _userNameController.text,
         password: _passwordController.text,
+        configurationsPresenter: configurationsPresenter,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    HomePresenter homePresenter = Provider.of(context, listen: false);
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
@@ -88,7 +91,9 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                           passwordController: _passwordController,
                           goToConfigurationsPage: () async {
                             await goToConfigurationsPage(
-                                configurationsPresenter);
+                              homePresenter,
+                              configurationsPresenter,
+                            );
                           }),
                     ],
                   ),
@@ -97,7 +102,10 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                   padding: const EdgeInsets.only(top: 8),
                   child: GoToConfigurationsPageButton(
                     goToConfigurationsPage: () async {
-                      await goToConfigurationsPage(configurationsPresenter);
+                      await goToConfigurationsPage(
+                        homePresenter,
+                        configurationsPresenter,
+                      );
                     },
                   ),
                 ),

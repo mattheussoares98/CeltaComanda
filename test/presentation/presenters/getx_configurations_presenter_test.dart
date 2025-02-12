@@ -891,5 +891,12 @@ void main() {
       await sut.updateUserGroupsPermissions(loadLocally: true);
       verifyNever(() => lastImport.save([LoadTypeEnum.users]));
     });
+    test("Should update loadedPermissions", () async {
+      expect(sut.loadedPermissions, null);
+
+      await sut.updateUserGroupsPermissions(loadLocally: true);
+
+      expect(sut.loadedPermissions, groupPermissions);
+    });
   });
 }

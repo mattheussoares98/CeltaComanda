@@ -1702,5 +1702,54 @@ void main() {
         verify(() => menuPresenter.loadAllImages(loadLocally: true)).called(1);
       });
     });
+
+    group("Load group permissions", () {
+      test("Should load remote if export is newer than last import", () async {
+        lastImport.mockLoad(LastImportEntity(
+          products: null,
+          images: null,
+          users: DateTime(2024),
+        ));
+
+        loadExportCharging.mockLoad([
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.users,
+              date: DateTime(2025))
+        ]);
+
+        await sut.updateWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
+        );
+
+        verify(() => configurationsPresenter.updateUserGroupsPermissions(
+              loadLocally: false,
+            )).called(1);
+      });
+      test("Should load local if export is older than last import", () async {
+        lastImport.mockLoad(LastImportEntity(
+          products: null,
+          images: null,
+          users: DateTime(2025),
+        ));
+
+        loadExportCharging.mockLoad([
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.users,
+              date: DateTime(2024))
+        ]);
+
+        await sut.updateWhatNeed(
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
+        );
+
+        verify(() => configurationsPresenter.updateUserGroupsPermissions(
+              loadLocally: true,
+            )).called(1);
+      });
+    });
   });
 }

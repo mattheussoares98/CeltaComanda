@@ -45,7 +45,7 @@ void main() {
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
   late LocalEnterpriseDataSpy localEnterpriseData;
   late NavigateToSpy navigateTo;
-  late CommandInformationsSpy ticketIsPermitted;
+  late CommandInformationsSpy commandInformations;
   late SearchProductByCodeSpy searchProductByCode;
   late BarcodeScannerSpy barcodeScanner;
   late LoadProductsSpy loadProducts;
@@ -64,7 +64,7 @@ void main() {
 
   void initUseCases() {
     loadExpansibleGroups = LoadExpansibleGroupsSpy();
-    ticketIsPermitted = CommandInformationsSpy();
+    commandInformations = CommandInformationsSpy();
     localEnterpriseData = LocalEnterpriseDataSpy();
     navigateTo = NavigateToSpy();
     searchProductByCode = SearchProductByCodeSpy();
@@ -90,7 +90,7 @@ void main() {
     sut = GetxMenuPresenter(
       navigateTo: navigateTo,
       loadExpansibleGroups: loadExpansibleGroups,
-      commandInformations: ticketIsPermitted,
+      commandInformations: commandInformations,
       searchProductByCode: searchProductByCode,
       barcodeScanner: barcodeScanner,
       loadProducts: loadProducts,
@@ -585,6 +585,32 @@ void main() {
       );
 
       verifyNever(() => loadExpansibleGroups.load());
+    });
+
+    test(
+        'Should not load locally it pass to load local but already has data in loaded menu',
+        () async {
+      await sut.getGroupsAndProducts(
+        commandEntity: homePresenter.commandEntityController,
+        loadLocally: true,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      verify(() => commandInformations.ticketIsPermitted(
+            url: EnterpriseBuilder.entity!.url!,
+            commandNumber: homePresenter.commandEntityController?.commandNumber ?? "001",
+          )).called(1);
+
+      await sut.getGroupsAndProducts(
+        commandEntity: homePresenter.commandEntityController,
+        loadLocally: true,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      verifyNever(() => commandInformations.ticketIsPermitted(
+            url: EnterpriseBuilder.entity!.url!,
+            commandNumber: homePresenter.commandEntityController?.commandNumber ?? "001",
+          ));
     });
   });
 
@@ -1509,6 +1535,16 @@ void main() {
       await sut.loadAllImages(loadLocally: true);
 
       verify(() => loadImages.load(getLocalImages: true)).called(1);
+    });
+
+    test(
+        "Should no call loadImages with local value if loadedImages is not empty",
+        () async {
+      await sut.loadAllImages(loadLocally: true);
+      verify(() => loadImages.load(getLocalImages: true)).called(1);
+
+      await sut.loadAllImages(loadLocally: true);
+      verifyNever(() => loadImages.load(getLocalImages: true));
     });
   });
 }

@@ -162,6 +162,8 @@ class GetxMenuPresenter extends GetxController
     required bool loadLocally,
   }) async {
     try {
+      if (loadLocally && _loadedMenu.isNotEmpty) return;
+
       await commandInformations.ticketIsPermitted(
         url: EnterpriseBuilder.entity!.url!,
         commandNumber: commandEntity?.commandNumber ?? "001",
@@ -758,6 +760,8 @@ class GetxMenuPresenter extends GetxController
   @override
   Future<void> loadAllImages({required bool loadLocally}) async {
     try {
+      if (loadLocally && _downloadedImages.isNotEmpty) return;
+
       _downloadedImages = await loadImages.load(
         getLocalImages: loadLocally,
       );

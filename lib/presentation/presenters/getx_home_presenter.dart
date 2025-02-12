@@ -502,26 +502,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       mainError = null;
       isLoading = true;
 
-      bool needUpdateProducts = _needLoadRemote(
+      bool needUpdateProductsRemotelly = _needLoadRemote(
         exports: lastExports,
         loadType: LoadTypeEnum.products,
         lastImported: lastImported,
       );
-      if (needUpdateProducts) {
-        await menuPresenter.getGroupsAndProducts(
-          commandEntity: commandEntity,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          loadLocally: false,
-        );
-      } else if (menuPresenter.loadedMenu.isEmpty) {
-        await menuPresenter.getGroupsAndProducts(
-          commandEntity: commandEntity,
-          expansibleGroupFromProductPresenter:
-              expansibleGroupFromProductPresenter,
-          loadLocally: true,
-        );
-      }
+      await menuPresenter.getGroupsAndProducts(
+        commandEntity: commandEntity,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        loadLocally: !needUpdateProductsRemotelly,
+      );
 
       bool needUpdateImagesRemotelly = _needLoadRemote(
         exports: lastExports,
@@ -529,12 +520,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         lastImported: lastImported,
       );
 
-      if (needUpdateImagesRemotelly) {
-        await menuPresenter.loadAllImages(loadLocally: false);
-      } else if (menuPresenter.downloadedImages.isEmpty) {
-        await menuPresenter.loadAllImages(loadLocally: true);
-      }
-      
+      await menuPresenter.loadAllImages(
+        loadLocally: !needUpdateImagesRemotelly,
+      );
+
       bool needUpdateUsersRemotelly = _needLoadRemote(
         exports: lastExports,
         loadType: LoadTypeEnum.users,

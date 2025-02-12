@@ -1,5 +1,6 @@
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
+import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -1551,5 +1552,26 @@ class EntityFactory {
         IsAlterPassword: faker.randomGenerator.boolean(),
         Groups: [makeGroupUserConcentratorEntity()],
         Enterprises: [makeEnterpriseConcentradorEntity()],
+      );
+
+  static GroupPermissionConcentratorEntity
+      makeGroupPermissionConcentratorEntity(
+    PermissionName permissionName, {
+    bool? isActive,
+  }) =>
+          GroupPermissionConcentratorEntity(
+            GroupId: faker.randomGenerator.integer(100),
+            GroupName: faker.person.name(),
+            IsActive: isActive ?? faker.randomGenerator.boolean(),
+            Permission: makePermissionEntity(permissionName),
+          );
+
+  static PermissionEntity makePermissionEntity(PermissionName permissionName) =>
+      PermissionEntity(
+        Name: permissionName.description,
+        PermissionId: faker.randomGenerator.integer(100),
+        PermissionsFatherId: faker.randomGenerator.integer(100),
+        PermissionsAbsolutId: faker.randomGenerator.integer(100),
+        OrderView: faker.randomGenerator.integer(100),
       );
 }

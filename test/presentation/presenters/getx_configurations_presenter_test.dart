@@ -55,6 +55,7 @@ void main() {
   late String password;
   late String username;
   late UserConcentratorEntity userConcentratorEntity;
+  late List<GroupPermissionConcentratorEntity> groupPermissions;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -115,6 +116,7 @@ void main() {
     loadDeviceData.mockGetImeiOrWindowsId(identifier);
     addPendingDeviceToUpdate.mockAdd(identifier);
     concentratorLogin.mockLogin(userConcentratorEntity);
+    loadGroupPermissions.mockGetAll(groupPermissions);
   }
 
   void initEntitys() {
@@ -137,6 +139,28 @@ void main() {
     password = faker.guid.guid();
     username = faker.person.name();
     userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
+    groupPermissions = [
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.agendamentoDeProdutos),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.atualizarMenu),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.cancelarItens),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.configuracoesDaMesa),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.fazerLogout),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.fecharMesa),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.liberarBloquearMesa),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.parametros),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.reservarMesa),
+      EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.trocarProdutosEntreComandas),
+    ];
   }
 
   setUp(() {
@@ -833,6 +857,20 @@ void main() {
 
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
           .called(1);
+    });
+  });
+
+  group("Update users groups permissions", () {
+    test("Should call load group permissions", () async {
+      await sut.updateUserGroupsPermissions();
+
+      verify(() => loadGroupPermissions.getAll()).called(1);
+    });
+
+    test("Should call lastImport.save with correct value", () async {
+      await sut.updateUserGroupsPermissions();
+
+      verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
     });
   });
 }

@@ -861,14 +861,23 @@ void main() {
   });
 
   group("Update users groups permissions", () {
-    test("Should call load group permissions", () async {
-      await sut.updateUserGroupsPermissions();
+    test(
+        "Should call load group permissions with correct value when load locally",
+        () async {
+      await sut.updateUserGroupsPermissions(loadLocally: false);
 
-      verify(() => loadGroupPermissions.getAll()).called(1);
+      verify(() => loadGroupPermissions.getAll(loadLocally: false)).called(1);
+    });
+    test(
+        "Should call load group permissions with correct value when load remote",
+        () async {
+      await sut.updateUserGroupsPermissions(loadLocally: true);
+
+      verify(() => loadGroupPermissions.getAll(loadLocally: true)).called(1);
     });
 
     test("Should call lastImport.save with correct value", () async {
-      await sut.updateUserGroupsPermissions();
+      await sut.updateUserGroupsPermissions(loadLocally: false);
 
       verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
     });

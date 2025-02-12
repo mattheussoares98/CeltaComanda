@@ -5,4 +5,5 @@ import '../../factories.dart';
 LoadGroupPermissions makeConcentratorLoadGroupPermissions() =>
     ConcentratorLoadGroupPermissions(
       httpAdapter: makeHttpAdapter(),
+      hiveStorage: makeHiveAdapter(),
     );

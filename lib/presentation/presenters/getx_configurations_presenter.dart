@@ -364,9 +364,14 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<void> updateUserGroupsPermissions() async {
+  Future<void> updateUserGroupsPermissions({
+    required bool loadLocally,
+  }) async {
     try {
-      final result = await loadGroupPermissions.getAll();
+      final result = await loadGroupPermissions.getAll(
+        loadLocally: loadLocally,
+      );
+      
       await lastImport.save([LoadTypeEnum.users]);
     } catch (e) {
       debugPrint(e.toString());

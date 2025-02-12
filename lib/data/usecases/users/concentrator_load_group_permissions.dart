@@ -2,16 +2,26 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
+import '../../database/database.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
 class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
   final HttpClient httpAdapter;
-  ConcentratorLoadGroupPermissions({required this.httpAdapter});
+  final HiveStorage hiveStorage;
+  ConcentratorLoadGroupPermissions({
+    required this.httpAdapter,
+    required this.hiveStorage,
+  });
 
   @override
-  Future<List<GroupPermissionConcentratorEntity>> getAll() async {
+  Future<List<GroupPermissionConcentratorEntity>> getAll({
+    required bool loadLocally,
+  }) async {
     try {
+      if(loadLocally) {
+        //TODO create method to load locally
+      }
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
       final url = EnterpriseBuilder.entity?.concentradorUrl;

@@ -1500,13 +1500,13 @@ void main() {
 
   group("Load all images", () {
     test("Should call load images false value when pass false value", () async {
-      await sut.loadAllImages(updateLocally: true);
+      await sut.loadAllImages(loadLocally: true);
 
       verify(() => loadImages.load(getLocalImages: true)).called(1);
     });
     test("Should call load images with true value if pass true value",
         () async {
-      await sut.loadAllImages(updateLocally: true);
+      await sut.loadAllImages(loadLocally: true);
 
       verify(() => loadImages.load(getLocalImages: true)).called(1);
     });

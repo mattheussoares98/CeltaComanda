@@ -529,9 +529,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (needUpdateImages) {
-        await menuPresenter.loadAllImages(updateLocally: false);
+        await menuPresenter.loadAllImages(loadLocally: false);
       } else if (menuPresenter.downloadedImages.isEmpty) {
-        await menuPresenter.loadAllImages(updateLocally: true);
+        await menuPresenter.loadAllImages(loadLocally: true);
       }
     } on DomainError catch (error) {
       switch (error) {

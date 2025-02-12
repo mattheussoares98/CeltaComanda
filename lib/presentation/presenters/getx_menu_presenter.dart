@@ -756,10 +756,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> loadAllImages({required bool updateLocally}) async {
+  Future<void> loadAllImages({required bool loadLocally}) async {
     try {
       _downloadedImages = await loadImages.load(
-        getLocalImages: updateLocally,
+        getLocalImages: loadLocally,
       );
 
       await lastImport.save([LoadTypeEnum.images]);

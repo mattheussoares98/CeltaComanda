@@ -1541,7 +1541,7 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verify(() => menuPresenter.loadAllImages(updateLocally: false))
+        verify(() => menuPresenter.loadAllImages(loadLocally: false))
             .called(1);
       },
     );
@@ -1567,7 +1567,7 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verifyNever(() => menuPresenter.loadAllImages(updateLocally: false));
+        verifyNever(() => menuPresenter.loadAllImages(loadLocally: false));
       },
     );
     test(
@@ -1678,7 +1678,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verify(() => menuPresenter.loadAllImages(updateLocally: true)).called(1);
+      verify(() => menuPresenter.loadAllImages(loadLocally: true)).called(1);
     });
   });
 }

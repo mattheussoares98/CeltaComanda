@@ -1439,7 +1439,7 @@ void main() {
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
         () async {
       lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null),
+        LastImportEntity(products: DateTime(2024), images: null, users: null),
       );
       loadExportCharging.mockLoad(
         [
@@ -1464,7 +1464,7 @@ void main() {
         "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
         () async {
       lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null),
+        LastImportEntity(products: DateTime(2024), images: null, users: null),
       );
       loadExportCharging.mockLoad(
         [
@@ -1533,6 +1533,7 @@ void main() {
         final lastImported = LastImportEntity(
           products: null,
           images: DateTime(2024),
+          users: null,
         );
         final lastExport = EntityFactory.makeExportChargingEntity(
           LoadTypeEnum.images,
@@ -1558,6 +1559,7 @@ void main() {
         final lastImported = LastImportEntity(
           products: null,
           images: DateTime(2025),
+          users: null,
         );
         final lastExport = EntityFactory.makeExportChargingEntity(
           LoadTypeEnum.images,
@@ -1582,6 +1584,7 @@ void main() {
         final lastImported = LastImportEntity(
           products: DateTime(2024),
           images: null,
+          users: null,
         );
         final lastExport = EntityFactory.makeExportChargingEntity(
           LoadTypeEnum.products,
@@ -1611,6 +1614,7 @@ void main() {
         final lastImported = LastImportEntity(
           products: DateTime(2025),
           images: null,
+          users: null,
         );
         final lastExport = EntityFactory.makeExportChargingEntity(
           LoadTypeEnum.products,
@@ -1642,7 +1646,11 @@ void main() {
 
       loadExportCharging.mockLoad([]);
       lastImport.mockLoad(
-        LastImportEntity(products: faker.date.dateTime(), images: null),
+        LastImportEntity(
+          products: faker.date.dateTime(),
+          images: null,
+          users: null,
+        ),
       );
 
       await sut.updateWhatNeed(
@@ -1665,7 +1673,11 @@ void main() {
 
       loadExportCharging.mockLoad([]);
       lastImport.mockLoad(
-        LastImportEntity(products: null, images: faker.date.dateTime()),
+        LastImportEntity(
+          products: null,
+          images: faker.date.dateTime(),
+          users: null,
+        ),
       );
 
       await sut.updateWhatNeed(

@@ -1431,119 +1431,8 @@ void main() {
   });
 
   group("Update what need", () {
-    test(
-        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
-        () async {
-      lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null, users: null),
-      );
-      loadExportCharging.mockLoad(
-        [
-          EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
-              date: DateTime(2025))
-        ],
-      );
-      menuPresenter
-          .mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
-
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.commandNotAvailable]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
-    test(
-        "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
-        () async {
-      lastImport.mockLoad(
-        LastImportEntity(products: DateTime(2024), images: null, users: null),
-      );
-      loadExportCharging.mockLoad(
-        [
-          EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
-              date: DateTime(2025))
-        ],
-      );
-      menuPresenter.mockGetGroupsAndProductsError(DomainError.unexpected);
-
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    });
-    test("Should call load last import", () async {
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => lastImport.load()).called(1);
-    });
-    test("Should load last exports with correct pdv number", () async {
-      await sut.updateCommandEntity(
-        commandNumber: faker.randomGenerator.integer(100).toString(),
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        pdv: EntityFactory.makePdvEntity(),
-      );
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => loadExportCharging.load(
-            pdvNumber: sut.commandEntity!.pdv!.PdvNumber!,
-          )).called(1);
-    });
-    test("Should load last exports with pdv 100 if doesnt have register",
-        () async {
-      sut.updateCommandEntity(
-        commandNumber: sut.commandEntity?.commandNumber,
-        isFixedCommandNumber: sut.commandEntity?.isFixedCommandNumber == true,
-        pdv: null,
-      );
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => loadExportCharging.load(
-            pdvNumber: "100",
-          )).called(1);
-    });
-
-    test(
-      "Should call menuPresenter.loadAllImages if last import is older than last export",
-      () async {
-        final lastImported = LastImportEntity(
-          products: null,
-          images: DateTime(2024),
-          users: null,
-        );
-        final lastExport = EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.images,
-          date: DateTime(2025),
-        );
-
-        lastImport.mockLoad(lastImported);
-        loadExportCharging.mockLoad([lastExport]);
-
+    group("Pattern requests", () {
+      test("Should call load last import", () async {
         await sut.updateWhatNeed(
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
@@ -1551,25 +1440,14 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verify(() => menuPresenter.loadAllImages(loadLocally: false)).called(1);
-      },
-    );
-    test(
-      "Should NOT call menuPresenter.loadAllImages if last import is newer than last export",
-      () async {
-        final lastImported = LastImportEntity(
-          products: null,
-          images: DateTime(2025),
-          users: null,
+        verify(() => lastImport.load()).called(1);
+      });
+      test("Should load last exports with correct pdv number", () async {
+        await sut.updateCommandEntity(
+          commandNumber: faker.randomGenerator.integer(100).toString(),
+          isFixedCommandNumber: faker.randomGenerator.boolean(),
+          pdv: EntityFactory.makePdvEntity(),
         );
-        final lastExport = EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.images,
-          date: DateTime(2024),
-        );
-
-        lastImport.mockLoad(lastImported);
-        loadExportCharging.mockLoad([lastExport]);
-
         await sut.updateWhatNeed(
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
@@ -1577,24 +1455,158 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verifyNever(() => menuPresenter.loadAllImages(loadLocally: false));
-      },
-    );
-    test(
-      "Should call menuPresenter.getGroupsAndProducts if last import is older than last export",
-      () async {
-        final lastImported = LastImportEntity(
-          products: DateTime(2024),
-          images: null,
-          users: null,
+        verify(() => loadExportCharging.load(
+              pdvNumber: sut.commandEntity!.pdv!.PdvNumber!,
+            )).called(1);
+      });
+      test("Should load last exports with pdv 100 if doesnt have register",
+          () async {
+        sut.updateCommandEntity(
+          commandNumber: sut.commandEntity?.commandNumber,
+          isFixedCommandNumber: sut.commandEntity?.isFixedCommandNumber == true,
+          pdv: null,
         );
-        final lastExport = EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.products,
-          date: DateTime(2025),
+        await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
         );
 
-        lastImport.mockLoad(lastImported);
-        loadExportCharging.mockLoad([lastExport]);
+        verify(() => loadExportCharging.load(
+              pdvNumber: "100",
+            )).called(1);
+      });
+    });
+    group("Get groups and products", () {
+      test(
+          "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
+          () async {
+        lastImport.mockLoad(
+          LastImportEntity(products: DateTime(2024), images: null, users: null),
+        );
+        loadExportCharging.mockLoad(
+          [
+            EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
+                date: DateTime(2025))
+          ],
+        );
+        menuPresenter
+            .mockGetGroupsAndProductsError(DomainError.commandNotAvailable);
+
+        expectLater(sut.mainErrorStream,
+            emitsInOrder([null, UIError.commandNotAvailable]));
+        expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+        await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+      });
+      test(
+          "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
+          () async {
+        lastImport.mockLoad(
+          LastImportEntity(products: DateTime(2024), images: null, users: null),
+        );
+        loadExportCharging.mockLoad(
+          [
+            EntityFactory.makeExportChargingEntity(LoadTypeEnum.products,
+                date: DateTime(2025))
+          ],
+        );
+        menuPresenter.mockGetGroupsAndProductsError(DomainError.unexpected);
+
+        expectLater(
+            sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+        expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+        await sut.updateWhatNeed(
+          configurationsPresenter: configurationsPresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+      });
+
+      test(
+        "Should call menuPresenter.getGroupsAndProducts if last import is older than last export",
+        () async {
+          final lastImported = LastImportEntity(
+            products: DateTime(2024),
+            images: null,
+            users: null,
+          );
+          final lastExport = EntityFactory.makeExportChargingEntity(
+            LoadTypeEnum.products,
+            date: DateTime(2025),
+          );
+
+          lastImport.mockLoad(lastImported);
+          loadExportCharging.mockLoad([lastExport]);
+
+          await sut.updateWhatNeed(
+            configurationsPresenter: configurationsPresenter,
+            menuPresenter: menuPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+
+          verify(() => menuPresenter.getGroupsAndProducts(
+                commandEntity: sut.commandEntity,
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
+                loadLocally: false,
+              )).called(1);
+        },
+      );
+      test(
+        "Should NOT call menuPresenter.getGroupsAndProducts if last import is newer than last export",
+        () async {
+          final lastImported = LastImportEntity(
+            products: DateTime(2025),
+            images: null,
+            users: null,
+          );
+          final lastExport = EntityFactory.makeExportChargingEntity(
+            LoadTypeEnum.products,
+            date: DateTime(2024),
+          );
+
+          lastImport.mockLoad(lastImported);
+          loadExportCharging.mockLoad([lastExport]);
+
+          await sut.updateWhatNeed(
+            configurationsPresenter: configurationsPresenter,
+            menuPresenter: menuPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+
+          verifyNever(() => menuPresenter.getGroupsAndProducts(
+                commandEntity: sut.commandEntity,
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
+                loadLocally: false,
+              ));
+        },
+      );
+
+      test(
+          "Should update products locally when menuPresenter.loadedMenu is empty",
+          () async {
+        menuPresenter.loadedMenuController = [];
+
+        loadExportCharging.mockLoad([]);
+        lastImport.mockLoad(
+          LastImportEntity(
+            products: faker.date.dateTime(),
+            images: null,
+            users: null,
+          ),
+        );
 
         await sut.updateWhatNeed(
           configurationsPresenter: configurationsPresenter,
@@ -1607,25 +1619,78 @@ void main() {
               commandEntity: sut.commandEntity,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
-              loadLocally: false,
+              loadLocally: true,
             )).called(1);
-      },
-    );
-    test(
-      "Should NOT call menuPresenter.getGroupsAndProducts if last import is newer than last export",
-      () async {
-        final lastImported = LastImportEntity(
-          products: DateTime(2025),
-          images: null,
-          users: null,
-        );
-        final lastExport = EntityFactory.makeExportChargingEntity(
-          LoadTypeEnum.products,
-          date: DateTime(2024),
-        );
+      });
+    });
+    group("Load all images", () {
+      test(
+        "Should call menuPresenter.loadAllImages if last import is older than last export",
+        () async {
+          final lastImported = LastImportEntity(
+            products: null,
+            images: DateTime(2024),
+            users: null,
+          );
+          final lastExport = EntityFactory.makeExportChargingEntity(
+            LoadTypeEnum.images,
+            date: DateTime(2025),
+          );
 
-        lastImport.mockLoad(lastImported);
-        loadExportCharging.mockLoad([lastExport]);
+          lastImport.mockLoad(lastImported);
+          loadExportCharging.mockLoad([lastExport]);
+
+          await sut.updateWhatNeed(
+            configurationsPresenter: configurationsPresenter,
+            menuPresenter: menuPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+
+          verify(() => menuPresenter.loadAllImages(loadLocally: false))
+              .called(1);
+        },
+      );
+      test(
+        "Should NOT call menuPresenter.loadAllImages if last import is newer than last export",
+        () async {
+          final lastImported = LastImportEntity(
+            products: null,
+            images: DateTime(2025),
+            users: null,
+          );
+          final lastExport = EntityFactory.makeExportChargingEntity(
+            LoadTypeEnum.images,
+            date: DateTime(2024),
+          );
+
+          lastImport.mockLoad(lastImported);
+          loadExportCharging.mockLoad([lastExport]);
+
+          await sut.updateWhatNeed(
+            configurationsPresenter: configurationsPresenter,
+            menuPresenter: menuPresenter,
+            expansibleGroupFromProductPresenter:
+                expansibleGroupFromProductPresenter,
+          );
+
+          verifyNever(() => menuPresenter.loadAllImages(loadLocally: false));
+        },
+      );
+
+      test(
+          "Should update images locally when menuPresenter.downloadedImages is empty",
+          () async {
+        menuPresenter.downloadedImagesController = [];
+
+        loadExportCharging.mockLoad([]);
+        lastImport.mockLoad(
+          LastImportEntity(
+            products: null,
+            images: faker.date.dateTime(),
+            users: null,
+          ),
+        );
 
         await sut.updateWhatNeed(
           configurationsPresenter: configurationsPresenter,
@@ -1634,65 +1699,8 @@ void main() {
               expansibleGroupFromProductPresenter,
         );
 
-        verifyNever(() => menuPresenter.getGroupsAndProducts(
-              commandEntity: sut.commandEntity,
-              expansibleGroupFromProductPresenter:
-                  expansibleGroupFromProductPresenter,
-              loadLocally: false,
-            ));
-      },
-    );
-
-    test(
-        "Should update products locally when menuPresenter.loadedMenu is empty",
-        () async {
-      menuPresenter.loadedMenuController = [];
-
-      loadExportCharging.mockLoad([]);
-      lastImport.mockLoad(
-        LastImportEntity(
-          products: faker.date.dateTime(),
-          images: null,
-          users: null,
-        ),
-      );
-
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => menuPresenter.getGroupsAndProducts(
-            commandEntity: sut.commandEntity,
-            expansibleGroupFromProductPresenter:
-                expansibleGroupFromProductPresenter,
-            loadLocally: true,
-          )).called(1);
-    });
-    test(
-        "Should update images locally when menuPresenter.downloadedImages is empty",
-        () async {
-      menuPresenter.downloadedImagesController = [];
-
-      loadExportCharging.mockLoad([]);
-      lastImport.mockLoad(
-        LastImportEntity(
-          products: null,
-          images: faker.date.dateTime(),
-          users: null,
-        ),
-      );
-
-      await sut.updateWhatNeed(
-        configurationsPresenter: configurationsPresenter,
-        menuPresenter: menuPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => menuPresenter.loadAllImages(loadLocally: true)).called(1);
+        verify(() => menuPresenter.loadAllImages(loadLocally: true)).called(1);
+      });
     });
   });
 }

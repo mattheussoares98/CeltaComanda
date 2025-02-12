@@ -843,7 +843,8 @@ void main() {
 
   group("Update logged user", () {
     test("Should update logged user correctly", () {
-      final user = EntityFactory.makeUserConcentratorEntity(groupId: faker.randomGenerator.integer(100));
+      final user = EntityFactory.makeUserConcentratorEntity(
+          groupId: faker.randomGenerator.integer(100));
       sut.updateLoggedUser(user);
       expect(sut.loggedUser, user);
 
@@ -864,9 +865,7 @@ void main() {
 
       expect(result, false);
     });
-    test(
-        "Should return false if logged user is null or loaded permissions is empty",
-        () async {
+    test("Should return correct value", () async {
       final groupId = faker.randomGenerator.integer(100);
       final isActive = faker.randomGenerator.boolean();
       loadGroupPermissions.mockGetAll([
@@ -884,6 +883,26 @@ void main() {
       final result =
           sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
       expect(result, isActive);
+    });
+    test("Should emit access danied if dont has permission", () async {
+      final groupId = faker.randomGenerator.integer(100);
+      loadGroupPermissions.mockGetAll([
+        EntityFactory.makeGroupPermissionConcentratorEntity(
+          PermissionName.agendamentoDeProdutos,
+          groupId: groupId,
+          isActive: false,
+        ),
+      ]);
+      await sut.updateUserGroupsPermissions(loadLocally: false);
+      sut.updateLoggedUser(
+        EntityFactory.makeUserConcentratorEntity(groupId: groupId),
+      );
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder({null, UIError.accessDenied}),
+      );
+      sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
     });
   });
 }

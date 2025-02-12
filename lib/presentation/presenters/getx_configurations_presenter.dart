@@ -388,6 +388,13 @@ class GetxConfigurationsPresenter extends GetxController
             e.Permission?.Name == permission.description)
         .toList();
 
-    return userPermission.first.IsActive == true;
+    final canAccess = userPermission.first.IsActive == true;
+
+    if (!canAccess) {
+      mainError = null;
+      mainError = UIError.accessDenied;
+    }
+
+    return canAccess;
   }
 }

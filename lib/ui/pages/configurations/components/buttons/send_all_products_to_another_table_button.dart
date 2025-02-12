@@ -9,8 +9,7 @@ class SendAllProductsToAnotherTableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.sendAllProductsToAnotherTable,
         function: () {
           notificationDialog(

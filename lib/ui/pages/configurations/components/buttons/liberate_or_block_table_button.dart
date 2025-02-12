@@ -9,8 +9,7 @@ class LiberateOrBlockTableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.liberateOrBlockTable,
         function: () {
           notificationDialog(

@@ -9,8 +9,7 @@ class TableConfigurationsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.tableConfigurations,
         function: () async {
           notificationDialog(

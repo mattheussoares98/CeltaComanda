@@ -12,8 +12,7 @@ class CancelProductsOrRemoveServiceChargeButton extends StatelessWidget {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.cancelProductsOrRemoveServiceCharge,
         function: () async {
           await configurationsPresenter.goToCancelProductsPage();

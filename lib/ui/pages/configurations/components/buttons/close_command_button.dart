@@ -29,8 +29,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
-    return defaultButton(
-      context: context,
+    return DefaultButton(
       name: R.string.closeTable,
       function: () async {
         await notificationDialog(

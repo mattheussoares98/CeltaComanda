@@ -2,13 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../helpers/helpers.dart';
 
-Widget defaultButton({
-  required BuildContext context,
-  required String name,
-  required Function() function,
-  bool isNew = false,
-}) =>
-    LayoutBuilder(
+class DefaultButton extends StatelessWidget {
+  final String name;
+  final Function() function;
+  final bool isNew;
+
+  const DefaultButton({
+    super.key,
+    required this.name,
+    required this.function,
+    this.isNew = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
       builder: (context, constraints) => Stack(
         children: [
           SizedBox(
@@ -25,20 +33,22 @@ Widget defaultButton({
             ),
           ),
           if (isNew)
-          Positioned(
-            left: 5,
-            top: 0,
-            child: FittedBox(
-              child: Text(
-                R.string.neww,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
+            Positioned(
+              left: 5,
+              top: 0,
+              child: FittedBox(
+                child: Text(
+                  R.string.neww,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
+  }
+}

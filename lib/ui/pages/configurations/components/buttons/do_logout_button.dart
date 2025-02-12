@@ -18,8 +18,7 @@ class DoLogoutButton extends StatelessWidget {
     EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
 
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.doLogout,
         function: () {
           WidgetsBinding.instance.addPostFrameCallback((_) async {

@@ -9,8 +9,7 @@ class ReserveTableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return defaultButton(
-        context: context,
+    return DefaultButton(
         name: R.string.reserveTable,
         function: () async {
           Navigator.of(NavigatorKey.navigatorKey.currentState!.context)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
 
@@ -10,6 +11,7 @@ abstract class ConfigurationsPresenter implements Listenable {
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
+  List<GroupPermissionConcentratorEntity>? get loadedPermissions;
 
   Future<void> doLogout({
     required MenuPresenter menuPresenter,

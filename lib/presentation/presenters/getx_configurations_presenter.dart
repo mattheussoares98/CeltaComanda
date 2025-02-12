@@ -368,13 +368,26 @@ class GetxConfigurationsPresenter extends GetxController
     required bool loadLocally,
   }) async {
     try {
+      if (loadLocally &&
+          _loadedPermissions != null &&
+          _loadedPermissions!.isNotEmpty == true) {
+        return;
+      }
+
       final result = await loadGroupPermissions.getAll(
         loadLocally: loadLocally,
       );
-      
+
+      _loadedPermissions = result;
+
       await lastImport.save([LoadTypeEnum.users]);
     } catch (e) {
       debugPrint(e.toString());
     }
   }
+
+  List<GroupPermissionConcentratorEntity>? _loadedPermissions;
+  @override
+  List<GroupPermissionConcentratorEntity>? get loadedPermissions =>
+      _loadedPermissions;
 }

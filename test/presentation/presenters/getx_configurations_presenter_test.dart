@@ -881,5 +881,15 @@ void main() {
 
       verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
     });
+
+    test(
+        "Should not call load locally when already has value in loaded permissions",
+        () async {
+      await sut.updateUserGroupsPermissions(loadLocally: true);
+      verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
+
+      await sut.updateUserGroupsPermissions(loadLocally: true);
+      verifyNever(() => lastImport.save([LoadTypeEnum.users]));
+    });
   });
 }

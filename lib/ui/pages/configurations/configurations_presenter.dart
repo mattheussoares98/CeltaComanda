@@ -52,4 +52,6 @@ abstract class ConfigurationsPresenter implements Listenable {
     required String username,
     required String password,
   });
+
+  Future<void> updateUserGroupsPermissions();
 }

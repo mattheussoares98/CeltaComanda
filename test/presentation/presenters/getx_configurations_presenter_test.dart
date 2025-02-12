@@ -42,6 +42,7 @@ void main() {
   late LaunchUrlSpy launchUrl;
   late DeleteDataSpy deleteData;
   late ConcentratorLoginSpy concentratorLogin;
+  late LoadGroupPermissionsSpy loadGroupPermissions;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -80,6 +81,7 @@ void main() {
       launchUrl: launchUrl,
       deleteData: deleteData,
       concentratorLogin: concentratorLogin,
+      loadGroupPermissions: loadGroupPermissions,
     );
   }
 
@@ -101,6 +103,7 @@ void main() {
     launchUrl = LaunchUrlSpy();
     deleteData = DeleteDataSpy();
     concentratorLogin = ConcentratorLoginSpy();
+    loadGroupPermissions = LoadGroupPermissionsSpy();
   }
 
   void initMocks() {

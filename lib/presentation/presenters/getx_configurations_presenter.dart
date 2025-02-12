@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -29,6 +31,7 @@ class GetxConfigurationsPresenter extends GetxController
   final LaunchUrl launchUrl;
   final DeleteData deleteData;
   final ConcentratorLogin concentratorLogin;
+  final LoadGroupPermissions loadGroupPermissions;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -47,6 +50,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.launchUrl,
     required this.deleteData,
     required this.concentratorLogin,
+    required this.loadGroupPermissions,
   });
 
   @override
@@ -354,6 +358,15 @@ class GetxConfigurationsPresenter extends GetxController
       mainError = UIError.invalidCredentials;
     } finally {
       isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> updateUserGroupsPermissions() async {
+    try {
+      final result = await loadGroupPermissions.getAll();
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

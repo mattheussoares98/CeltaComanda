@@ -1,12 +1,11 @@
-import 'package:clean_celta_mobile/domain/entities/group_permission_concentrator/group_permission_concentrator_entity.dart';
-
+import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/http/http.dart';
 import '../../../main/builders/builders.dart';
+import '../../http/http.dart';
 import '../../models/models.dart';
 
 class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
-  final HttpAdapter httpAdapter;
+  final HttpClient httpAdapter;
   ConcentratorLoadGroupPermissions({required this.httpAdapter});
 
   @override

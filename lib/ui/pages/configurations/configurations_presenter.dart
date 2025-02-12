@@ -47,4 +47,9 @@ abstract class ConfigurationsPresenter implements Listenable {
 
   Future<bool> closeCommand(int commandNumber);
   Future<void> goToUpdateApplication();
+
+  Future<void> login({
+    required String username,
+    required String password,
+  });
 }

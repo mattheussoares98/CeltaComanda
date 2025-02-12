@@ -41,6 +41,7 @@ void main() {
   late LoadDeviceDataSpy loadDeviceData;
   late LaunchUrlSpy launchUrl;
   late DeleteDataSpy deleteData;
+  late ConcentratorLoginSpy concentratorLogin;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -49,6 +50,9 @@ void main() {
   late CommandEntity fixedCommandEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
   late String identifier;
+  late String password;
+  late String username;
+  late UserConcentratorEntity userConcentratorEntity;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -75,6 +79,7 @@ void main() {
       loadDeviceData: loadDeviceData,
       launchUrl: launchUrl,
       deleteData: deleteData,
+      concentratorLogin: concentratorLogin,
     );
   }
 
@@ -95,6 +100,7 @@ void main() {
     loadDeviceData = LoadDeviceDataSpy();
     launchUrl = LaunchUrlSpy();
     deleteData = DeleteDataSpy();
+    concentratorLogin = ConcentratorLoginSpy();
   }
 
   void initMocks() {
@@ -102,6 +108,7 @@ void main() {
     loadSaleRequestTemp.mockLoadSaleRequestTemp(saleRequestTempEntity);
     loadDeviceData.mockGetImeiOrWindowsId(identifier);
     addPendingDeviceToUpdate.mockAdd(identifier);
+    concentratorLogin.mockLogin(userConcentratorEntity);
   }
 
   void initEntitys() {
@@ -121,6 +128,9 @@ void main() {
     );
 
     identifier = faker.randomGenerator.string(10);
+    password = faker.guid.guid();
+    username = faker.person.name();
+    userConcentratorEntity = EntityFactory.makeUserConcentratorEntity();
   }
 
   setUp(() {
@@ -762,6 +772,61 @@ void main() {
       verify(() => launchUrl.launch(
             "https://apps.apple.com/br/app/celta-comanda/id6504995969?l=en-GB",
           )).called(1);
+    });
+  });
+
+  group("Login", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.login(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLoginError();
+
+      await sut.login(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should emit correct values on login return null value", () async {
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.invalidCredentials]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      concentratorLogin.mockLogin(null);
+
+      await sut.login(
+        username: username,
+        password: password,
+      );
+    });
+    test("Should call concentrator login with correct values", () async {
+      await sut.login(
+        username: username,
+        password: password,
+      );
+
+      verify(() =>
+              concentratorLogin.login(username: username, password: password))
+          .called(1);
+    });
+    test("Should call go to configurations page", () async {
+      await sut.login(
+        username: username,
+        password: password,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
+          .called(1);
     });
   });
 }

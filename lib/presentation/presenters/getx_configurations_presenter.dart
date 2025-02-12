@@ -28,6 +28,7 @@ class GetxConfigurationsPresenter extends GetxController
   final LoadDeviceData loadDeviceData;
   final LaunchUrl launchUrl;
   final DeleteData deleteData;
+  final ConcentratorLogin concentratorLogin;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -45,6 +46,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.loadDeviceData,
     required this.launchUrl,
     required this.deleteData,
+    required this.concentratorLogin,
   });
 
   @override
@@ -326,6 +328,30 @@ class GetxConfigurationsPresenter extends GetxController
       }
     } catch (e) {
       mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      UserConcentratorEntity? user =
+          await concentratorLogin.login(username: username, password: password);
+
+      if (user == null) {
+        throw Exception();
+      }
+
+      navigateTo.navigate(pageRoute: PageRoutes.configurations);
+    } catch (e) {
+      mainError = UIError.invalidCredentials;
     } finally {
       isLoading = false;
     }

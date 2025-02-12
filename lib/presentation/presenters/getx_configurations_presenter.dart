@@ -351,6 +351,8 @@ class GetxConfigurationsPresenter extends GetxController
       UserConcentratorEntity? user =
           await concentratorLogin.login(username: username, password: password);
 
+      _loggedUser = user;
+
       if (user == null) {
         throw Exception();
       }
@@ -390,4 +392,8 @@ class GetxConfigurationsPresenter extends GetxController
   @override
   List<GroupPermissionConcentratorEntity>? get loadedPermissions =>
       _loadedPermissions;
+
+  UserConcentratorEntity? _loggedUser;
+  @override
+  UserConcentratorEntity? get loggedUser => _loggedUser;
 }

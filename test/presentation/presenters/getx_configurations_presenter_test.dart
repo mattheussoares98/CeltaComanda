@@ -858,6 +858,20 @@ void main() {
       verify(() => navigateTo.navigate(pageRoute: PageRoutes.configurations))
           .called(1);
     });
+    test("Should update loggedUser correctly", () async {
+      await sut.login(
+        username: username,
+        password: password,
+      );
+      expect(sut.loggedUser, userConcentratorEntity);
+
+      concentratorLogin.mockLogin(null);
+      await sut.login(
+        username: username,
+        password: password,
+      );
+      expect(sut.loggedUser, null);
+    });
   });
 
   group("Update users groups permissions", () {

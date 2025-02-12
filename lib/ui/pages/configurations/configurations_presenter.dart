@@ -12,6 +12,7 @@ abstract class ConfigurationsPresenter implements Listenable {
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
   List<GroupPermissionConcentratorEntity>? get loadedPermissions;
+  UserConcentratorEntity? get loggedUser;
 
   Future<void> doLogout({
     required MenuPresenter menuPresenter,

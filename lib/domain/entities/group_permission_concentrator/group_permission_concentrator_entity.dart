@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'group_permission_concentrator.dart';
 
 class GroupPermissionConcentratorEntity extends Equatable {
-  final int GroupId;
-  final String GroupName;
-  final bool IsActive;
-  final PermissionEntity Permission;
+  final int? GroupId;
+  final String? GroupName;
+  final bool? IsActive;
+  final PermissionEntity? Permission;
 
   const GroupPermissionConcentratorEntity({
     required this.GroupId,

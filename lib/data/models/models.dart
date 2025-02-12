@@ -1,4 +1,5 @@
 export './customer/customer.dart';
+export './group_permission_concentrator/group_permission_concentrator.dart';
 export 'sale_movement/sale_movement.dart';
 export './cart_product_model.dart';
 export './command_model.dart';

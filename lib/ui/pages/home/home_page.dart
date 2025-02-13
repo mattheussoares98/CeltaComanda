@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage>
       await verifyNeedUpdateApp(homePresenter);
     });
 
-    needUpdateAppTimer = Timer.periodic(
+    verifyNeedUpdateMenuOrImagesTimer = Timer.periodic(
         Duration(
           minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 5,
         ), (_) async {

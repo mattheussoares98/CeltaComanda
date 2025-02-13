@@ -13,11 +13,10 @@ class ConfigurationsDialogPage extends StatefulWidget {
 }
 
 class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
-  final _userNameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _userNameFocusNode = FocusNode();
-  final _passwordFocusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
+  final passwordController = TextEditingController();
+  final passwordFocusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
+  UserConcentratorViewModel? selectedUser;
 
   @override
   void initState() {
@@ -34,27 +33,24 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   void dispose() {
     super.dispose();
 
-    _userNameController.dispose();
-    _passwordController.dispose();
-    _passwordFocusNode.dispose();
-    _userNameFocusNode.dispose();
+    passwordController.dispose();
+    passwordFocusNode.dispose();
   }
 
   Future<void> goToConfigurationsPage(
     HomePresenter homePresenter,
     ConfigurationsPresenter configurationsPresenter,
   ) async {
-    bool? isValid = _formKey.currentState?.validate();
+    bool? isValid = formKey.currentState?.validate();
 
     if (isValid == true) {
-      _userNameFocusNode.unfocus();
-      _passwordFocusNode.unfocus();
+      passwordFocusNode.unfocus();
 
       Navigator.of(context).pop();
 
       await homePresenter.newGoToConfigurationsPage(
-        username: _userNameController.text,
-        password: _passwordController.text,
+        username: selectedUser!.Name!,
+        password: passwordController.text,
         configurationsPresenter: configurationsPresenter,
       );
     }
@@ -77,18 +73,21 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
             child: Column(
               children: [
                 Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
                       SelectUserDropDown(
-                        passwordFocusNode: _passwordFocusNode,
-                        userNameController: _userNameController,
-                        userNameFocusNode: _userNameFocusNode,
+                        selectedUser: selectedUser,
+                        updateSelectedUser: (value) {
+                          setState(() {
+                            selectedUser = value;
+                          });
+                        },
                       ),
                       const SizedBox(height: 10),
                       PasswordInput(
-                          passwordFocusNode: _passwordFocusNode,
-                          passwordController: _passwordController,
+                          passwordFocusNode: passwordFocusNode,
+                          passwordController: passwordController,
                           goToConfigurationsPage: () async {
                             await goToConfigurationsPage(
                               homePresenter,

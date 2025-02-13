@@ -5,14 +5,12 @@ import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class SelectUserDropDown extends StatelessWidget {
-  final FocusNode passwordFocusNode;
-  final FocusNode userNameFocusNode;
-  final TextEditingController userNameController;
+  final UserConcentratorViewModel? selectedUser;
+  final void Function(UserConcentratorViewModel? user) updateSelectedUser;
   const SelectUserDropDown({
     super.key,
-    required this.passwordFocusNode,
-    required this.userNameFocusNode,
-    required this.userNameController,
+    required this.selectedUser,
+    required this.updateSelectedUser,
   });
 
   @override
@@ -22,6 +20,9 @@ class SelectUserDropDown extends StatelessWidget {
 
     return DropdownButtonFormField<UserConcentratorViewModel>(
       validator: (value) {
+        if (selectedUser == null) {
+          return R.string.selectUser;
+        }
         return null;
       },
       isExpanded: true,
@@ -35,14 +36,14 @@ class SelectUserDropDown extends StatelessWidget {
           ?.map(
             (e) => DropdownMenuItem(
               value: e,
-              onTap: () async {},
+              onTap: () {},
               child: Center(
                 child: Text(e.Name.toString()),
               ),
             ),
           )
           .toList(),
-      onChanged: (value) async {},
+      onChanged: updateSelectedUser,
     );
   }
 }

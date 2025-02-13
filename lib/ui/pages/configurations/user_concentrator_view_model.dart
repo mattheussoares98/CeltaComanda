@@ -1,4 +1,6 @@
-class UserConcentratorViewModel {
+import 'package:equatable/equatable.dart';
+
+class UserConcentratorViewModel extends Equatable {
   final String?
       Name; //need only this property because use this view model only to select the user name
   // final String? UserId;
@@ -14,5 +16,8 @@ class UserConcentratorViewModel {
   // final List<GroupUserConcentratorModel>? Groups;
   // final List<EnterpriseConcentradorModel>? Enterprises;
 
-  UserConcentratorViewModel({required this.Name});
+  const UserConcentratorViewModel({required this.Name});
+
+  @override
+  List<Object?> get props => [Name];
 }

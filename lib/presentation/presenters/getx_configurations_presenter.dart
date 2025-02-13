@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -358,6 +359,11 @@ class GetxConfigurationsPresenter extends GetxController
         loadLocally: loadLocally,
       );
 
+      _allUsers.value = null;
+      _allUsers.value = allUsers
+          .map((e) => UserConcentratorModel.fromEntity(e).toViewModel())
+          .toList();
+
       _loadedPermissions = result;
 
       await lastImport.save([LoadTypeEnum.users]);
@@ -403,4 +409,9 @@ class GetxConfigurationsPresenter extends GetxController
 
     return canAccess;
   }
+
+  final _allUsers = Rx<List<UserConcentratorViewModel>?>(null);
+  @override
+  Stream<List<UserConcentratorViewModel>?> get allUsersStream =>
+      _allUsers.stream;
 }

@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
@@ -862,6 +863,17 @@ void main() {
       await sut.updateUsersData(loadLocally: true);
 
       verify(() => loadUsers.getAll(loadLocally: true)).called(1);
+    });
+    test("Should emit correct values on users", () async {
+      expectLater(
+          sut.allUsersStream,
+          emitsInOrder([
+            null,
+            loadedUsers
+                .map((e) => UserConcentratorModel.fromEntity(e).toViewModel()),
+          ]));
+
+      await sut.updateUsersData(loadLocally: true);
     });
   });
 

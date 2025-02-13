@@ -296,6 +296,7 @@ class PtBr implements Translation {
   String get selectPdv => "Selecione um PDV";
   String get selectProduct => "Selecione um produto!";
   String get selectQuantity => "Informe a quantidade";
+  String get selectUser => "Selecione um usuário";
   String get seller => "Vendedor";
   String get sendAllProductsToAnotherTable =>
       'Enviar TODOS produtos para outra mesa';

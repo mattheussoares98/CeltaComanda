@@ -80,7 +80,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      UserNameInput(
+                      SelectUserDropDown(
                         passwordFocusNode: _passwordFocusNode,
                         userNameController: _userNameController,
                         userNameFocusNode: _userNameFocusNode,

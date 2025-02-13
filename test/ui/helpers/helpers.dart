@@ -94,6 +94,9 @@ Widget makePage(
       ListenableProvider<CovenantPresenter>(
         create: (_) => CovenantPresenterSpy(),
       ),
+      ListenableProvider<ConfigurationsPresenter>(
+        create: (_) => ConfigurationsPresenterSpy(),
+      ),
     ],
     child: GetMaterialApp(
       initialRoute: path,

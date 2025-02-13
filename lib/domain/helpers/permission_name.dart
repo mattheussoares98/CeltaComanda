@@ -3,6 +3,7 @@ enum PermissionName {
   atualizarMenu,
   cancelarItens,
   configuracoesDaMesa,
+  consultarVendas,
   fazerLogout,
   fecharMesa,
   liberarBloquearMesa,
@@ -22,6 +23,8 @@ extension PermissionNameExtension on PermissionName {
         return "Cancelar itens";
       case PermissionName.configuracoesDaMesa:
         return "Configurações da Mesa";
+      case PermissionName.consultarVendas:
+        return "Consultar vendas";
       case PermissionName.fazerLogout:
         return "Fazer logout";
       case PermissionName.fecharMesa:

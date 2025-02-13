@@ -57,6 +57,8 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
                 permissionName ==
                     permissionDescription(PermissionName.configuracoesDaMesa) ||
                 permissionName ==
+                    permissionDescription(PermissionName.consultarVendas) ||
+                permissionName ==
                     permissionDescription(PermissionName.fazerLogout) ||
                 permissionName ==
                     permissionDescription(PermissionName.fecharMesa) ||

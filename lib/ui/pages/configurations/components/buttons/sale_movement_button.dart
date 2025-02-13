@@ -15,8 +15,7 @@ class SaleMovementButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.sales,
-        permissionName: PermissionName
-            .cancelarItens, //TODO create new permission in concentrator
+        permissionName: PermissionName.consultarVendas,
         function: () async {
           configurationsPresenter.goToSaleMovementsPage();
         });

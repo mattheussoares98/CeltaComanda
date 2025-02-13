@@ -90,4 +90,40 @@ class UserConcentratorModel extends Equatable {
         Groups: Groups?.map((e) => e.toEntity()).toList(),
         Enterprises: Enterprises?.map((e) => e.toEntity()).toList(),
       );
+
+  factory UserConcentratorModel.fromEntity(UserConcentratorEntity entity) =>
+      UserConcentratorModel(
+        UserId: entity.UserId,
+        InternalCodeOnERP: entity.InternalCodeOnERP,
+        PersonalizedCode: entity.PersonalizedCode,
+        Name: entity.Name,
+        Group: entity.Group,
+        Password: entity.Password,
+        PasswordMd5: entity.PasswordMd5,
+        DigitalPassword: entity.DigitalPassword,
+        IsAdm: entity.IsAdm,
+        IsExcluded: entity.IsExcluded,
+        IsAlterPassword: entity.IsAlterPassword,
+        Groups:
+            entity.Groups?.map((e) => GroupUserConcentratorModel.fromEntity(e))
+                .toList(),
+        Enterprises: entity.Enterprises?.map(
+            (e) => EnterpriseConcentradorModel.fromEntity(e)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "UserId": UserId,
+        "InternalCodeOnERP": InternalCodeOnERP,
+        "PersonalizedCode": PersonalizedCode,
+        "Name": Name,
+        "Group": Group,
+        "Password": Password,
+        "PasswordMd5": PasswordMd5,
+        "DigitalPassword": DigitalPassword,
+        "IsAdm": IsAdm,
+        "IsExcluded": IsExcluded,
+        "IsAlterPassword": IsAlterPassword,
+        "Groups": Groups?.map((e) => e.toJson()).toList(),
+        "Enterprises": Enterprises?.map((e) => e.toJson()).toList(),
+      };
 }

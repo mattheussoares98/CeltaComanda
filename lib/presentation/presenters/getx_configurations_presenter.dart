@@ -351,20 +351,18 @@ class GetxConfigurationsPresenter extends GetxController
         return;
       }
 
-      final result = await loadGroupPermissions.getAll(
+      final permissions = await loadGroupPermissions.getAll(
         loadLocally: loadLocally,
       );
+      _loadedPermissions = permissions;
 
       final allUsers = await loadUsers.getAll(
         loadLocally: loadLocally,
       );
 
-      _allUsers.value = null;
-      _allUsers.value = allUsers
+      _loadedUsers = allUsers
           .map((e) => UserConcentratorModel.fromEntity(e).toViewModel())
           .toList();
-
-      _loadedPermissions = result;
 
       await lastImport.save([LoadTypeEnum.users]);
     } catch (e) {
@@ -410,8 +408,7 @@ class GetxConfigurationsPresenter extends GetxController
     return canAccess;
   }
 
-  final _allUsers = Rx<List<UserConcentratorViewModel>?>(null);
+  List<UserConcentratorViewModel> _loadedUsers = [];
   @override
-  Stream<List<UserConcentratorViewModel>?> get allUsersStream =>
-      _allUsers.stream;
+  List<UserConcentratorViewModel>? get loadedUsers => [..._loadedUsers];
 }

@@ -865,15 +865,12 @@ void main() {
       verify(() => loadUsers.getAll(loadLocally: true)).called(1);
     });
     test("Should emit correct values on users", () async {
-      expectLater(
-          sut.allUsersStream,
-          emitsInOrder([
-            null,
-            loadedUsers
-                .map((e) => UserConcentratorModel.fromEntity(e).toViewModel()),
-          ]));
-
       await sut.updateUsersData(loadLocally: true);
+
+      expect(
+          sut.loadedUsers,
+          loadedUsers
+              .map((e) => UserConcentratorModel.fromEntity(e).toViewModel()));
     });
   });
 

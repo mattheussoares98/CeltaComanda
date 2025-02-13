@@ -20,37 +20,29 @@ class SelectUserDropDown extends StatelessWidget {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
-    return StreamBuilder<List<UserConcentratorViewModel>?>(
-        stream: configurationsPresenter.allUsersStream,
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return SizedBox();
-          }
-
-          return DropdownButtonFormField<UserConcentratorViewModel>(
-            validator: (value) {
-              return null;
-            },
-            isExpanded: true,
-            alignment: Alignment.center,
-            hint: Text(R.string.selectUser),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: StringSize.size,
-                color: Colors.black),
-            items: snapshot.data!
-                .map(
-                  (e) => DropdownMenuItem(
-                    value: e,
-                    onTap: () async {},
-                    child: Center(
-                      child: Text(e.Name.toString()),
-                    ),
-                  ),
-                )
-                .toList(),
-            onChanged: (value) async {},
-          );
-        });
+    return DropdownButtonFormField<UserConcentratorViewModel>(
+      validator: (value) {
+        return null;
+      },
+      isExpanded: true,
+      alignment: Alignment.center,
+      hint: Text(R.string.selectUser),
+      style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: StringSize.size,
+          color: Colors.black),
+      items: configurationsPresenter.loadedUsers
+          ?.map(
+            (e) => DropdownMenuItem(
+              value: e,
+              onTap: () async {},
+              child: Center(
+                child: Text(e.Name.toString()),
+              ),
+            ),
+          )
+          .toList(),
+      onChanged: (value) async {},
+    );
   }
 }

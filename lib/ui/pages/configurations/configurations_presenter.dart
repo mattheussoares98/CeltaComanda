@@ -8,7 +8,7 @@ import '../pages.dart';
 abstract class ConfigurationsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<UserConcentratorViewModel>?> get allUsersStream;
+  List<UserConcentratorViewModel>? get loadedUsers;
   int? get selectedPeoples;
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;

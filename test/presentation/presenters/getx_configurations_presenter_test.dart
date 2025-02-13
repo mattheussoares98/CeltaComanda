@@ -44,6 +44,7 @@ void main() {
   late ConcentratorLoginSpy concentratorLogin;
   late LoadGroupPermissionsSpy loadGroupPermissions;
   late LastImportSpy lastImport;
+  late LoadUsersSpy loadUsers;
 
   late int newFixedCommandNumber;
   late SellersViewModel selectedSeller;
@@ -82,6 +83,7 @@ void main() {
       deleteData: deleteData,
       loadGroupPermissions: loadGroupPermissions,
       lastImport: lastImport,
+      loadUsers: loadUsers,
     );
   }
 
@@ -105,6 +107,7 @@ void main() {
     concentratorLogin = ConcentratorLoginSpy();
     loadGroupPermissions = LoadGroupPermissionsSpy();
     lastImport = LastImportSpy();
+    loadUsers = LoadUsersSpy();
   }
 
   void initMocks() {

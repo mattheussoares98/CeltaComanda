@@ -23,4 +23,5 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       deleteData: makeLocalDeleteData(),
       loadGroupPermissions: makeConcentratorLoadGroupPermissions(),
       lastImport: makeLocalLastImport(),
+      loadUsers: makeConcentratorLoadUsers(),
     );

@@ -32,6 +32,7 @@ class GetxConfigurationsPresenter extends GetxController
   final DeleteData deleteData;
   final LoadGroupPermissions loadGroupPermissions;
   final LastImport lastImport;
+  final LoadUsers loadUsers;
 
   GetxConfigurationsPresenter({
     required this.userValidations,
@@ -51,6 +52,7 @@ class GetxConfigurationsPresenter extends GetxController
     required this.deleteData,
     required this.loadGroupPermissions,
     required this.lastImport,
+    required this.loadUsers,
   });
 
   @override

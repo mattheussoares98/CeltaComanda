@@ -531,7 +531,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
         loadType: LoadTypeEnum.users,
         lastImported: lastImported,
       );
-      await configurationsPresenter.updateUserGroupsPermissions(
+      await configurationsPresenter.updateUsersData(
         loadLocally: !needUpdateUsersRemotelly,
       );
     } on DomainError catch (error) {

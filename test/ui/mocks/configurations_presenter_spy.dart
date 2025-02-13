@@ -43,7 +43,7 @@ class ConfigurationsPresenterSpy extends Mock
     when(() => this.goToParametersPage()).thenAnswer((any) async => any);
     when(() => this.goToSaleMovementsPage()).thenAnswer((any) => any);
     when(() => this.goToUpdateApplication()).thenAnswer((any) async => any);
-    when(() => this.updateUserGroupsPermissions(
+    when(() => this.updateUsersData(
           loadLocally: any(named: "loadLocally"),
         )).thenAnswer((any) async => any);
     when(() => this.updateLoggedUser(any())).thenAnswer((any) => any);

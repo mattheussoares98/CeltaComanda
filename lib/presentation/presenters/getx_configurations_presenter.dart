@@ -340,7 +340,7 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<void> updateUserGroupsPermissions({
+  Future<void> updateUsersData({
     required bool loadLocally,
   }) async {
     try {

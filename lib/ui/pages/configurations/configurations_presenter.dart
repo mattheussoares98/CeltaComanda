@@ -52,7 +52,7 @@ abstract class ConfigurationsPresenter implements Listenable {
   Future<bool> closeCommand(int commandNumber);
   Future<void> goToUpdateApplication();
 
-  Future<void> updateUserGroupsPermissions({
+  Future<void> updateUsersData({
     required bool loadLocally,
   });
 

@@ -804,24 +804,24 @@ void main() {
     });
   });
 
-  group("Update users groups permissions", () {
+  group("Update users data", () {
     test(
         "Should call load group permissions with correct value when load locally",
         () async {
-      await sut.updateUserGroupsPermissions(loadLocally: false);
+      await sut.updateUsersData(loadLocally: false);
 
       verify(() => loadGroupPermissions.getAll(loadLocally: false)).called(1);
     });
     test(
         "Should call load group permissions with correct value when load remote",
         () async {
-      await sut.updateUserGroupsPermissions(loadLocally: true);
+      await sut.updateUsersData(loadLocally: true);
 
       verify(() => loadGroupPermissions.getAll(loadLocally: true)).called(1);
     });
 
     test("Should call lastImport.save with correct value", () async {
-      await sut.updateUserGroupsPermissions(loadLocally: false);
+      await sut.updateUsersData(loadLocally: false);
 
       verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
     });
@@ -829,16 +829,16 @@ void main() {
     test(
         "Should not call load locally when already has value in loaded permissions",
         () async {
-      await sut.updateUserGroupsPermissions(loadLocally: true);
+      await sut.updateUsersData(loadLocally: true);
       verify(() => lastImport.save([LoadTypeEnum.users])).called(1);
 
-      await sut.updateUserGroupsPermissions(loadLocally: true);
+      await sut.updateUsersData(loadLocally: true);
       verifyNever(() => lastImport.save([LoadTypeEnum.users]));
     });
     test("Should update loadedPermissions", () async {
       expect(sut.loadedPermissions, null);
 
-      await sut.updateUserGroupsPermissions(loadLocally: true);
+      await sut.updateUsersData(loadLocally: true);
 
       expect(sut.loadedPermissions, groupPermissions);
     });
@@ -878,7 +878,7 @@ void main() {
           isActive: isActive,
         ),
       ]);
-      await sut.updateUserGroupsPermissions(loadLocally: false);
+      await sut.updateUsersData(loadLocally: false);
       sut.updateLoggedUser(
         EntityFactory.makeUserConcentratorEntity(groupId: groupId),
       );
@@ -896,7 +896,7 @@ void main() {
           isActive: false,
         ),
       ]);
-      await sut.updateUserGroupsPermissions(loadLocally: false);
+      await sut.updateUsersData(loadLocally: false);
       sut.updateLoggedUser(
         EntityFactory.makeUserConcentratorEntity(groupId: groupId),
       );

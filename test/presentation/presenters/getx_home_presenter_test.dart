@@ -1732,7 +1732,7 @@ void main() {
           configurationsPresenter: configurationsPresenter,
         );
 
-        verify(() => configurationsPresenter.updateUserGroupsPermissions(
+        verify(() => configurationsPresenter.updateUsersData(
               loadLocally: false,
             )).called(1);
       });
@@ -1755,7 +1755,7 @@ void main() {
           configurationsPresenter: configurationsPresenter,
         );
 
-        verify(() => configurationsPresenter.updateUserGroupsPermissions(
+        verify(() => configurationsPresenter.updateUsersData(
               loadLocally: true,
             )).called(1);
       });

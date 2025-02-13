@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage>
 
     verifyNeedUpdateMenuOrImagesTimer = Timer.periodic(
         Duration(
-          seconds: 10,
+          minutes: EnterpriseBuilder.entity?.minutesVerifyUpdateMenu ?? 5,
         ), (_) async {
       await homePresenter.updateWhatNeed(
         menuPresenter: menuPresenter,
@@ -109,7 +109,6 @@ class _HomePageState extends State<HomePage>
         configurationsPresenter: configurationsPresenter,
       );
       setState(() {});
-      debugPrint("Updated");
     });
   }
 

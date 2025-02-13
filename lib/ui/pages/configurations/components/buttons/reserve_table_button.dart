@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../../main/builders/builders.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -11,6 +12,7 @@ class ReserveTableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.reserveTable,
+        permissionName: PermissionName.reservarMesa,
         function: () async {
           Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
               .popUntil(

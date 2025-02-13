@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -31,6 +32,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
 
     return DefaultButton(
       name: R.string.closeTable,
+      permissionName: PermissionName.fecharMesa,
       function: () async {
         await notificationDialog(
             context: context,

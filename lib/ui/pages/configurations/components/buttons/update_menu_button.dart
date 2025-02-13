@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../../main/builders/builders.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
@@ -16,6 +17,7 @@ class UpdateMenuButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.updateMenu,
+        permissionName: PermissionName.atualizarMenu,
         function: () async {
           notificationDialog(
               context: context,

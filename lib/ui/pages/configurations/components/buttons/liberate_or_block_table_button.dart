@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../components.dart';
@@ -11,6 +12,7 @@ class LiberateOrBlockTableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.liberateOrBlockTable,
+        permissionName: PermissionName.liberarBloquearMesa,
         function: () {
           notificationDialog(
               context: context,

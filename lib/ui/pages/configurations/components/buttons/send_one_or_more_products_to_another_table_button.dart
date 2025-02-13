@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
@@ -14,6 +15,7 @@ class SendOneOrMoreProductsToAnotherTableButton extends StatelessWidget {
 
     return DefaultButton(
       name: R.string.sendOneOrMoreProductsToAnotherTable,
+      permissionName: PermissionName.trocarProdutosEntreComandas,
       function: () async {
         configurationsPresenter.goToSendProductsToAnotherTablePage();
       },

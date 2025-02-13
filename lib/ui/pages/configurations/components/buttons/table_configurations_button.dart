@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -11,6 +12,7 @@ class TableConfigurationsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.tableConfigurations,
+        permissionName: PermissionName.configuracoesDaMesa,
         function: () async {
           notificationDialog(
               context: context,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../domain/helpers/helpers.dart';
 import '../../../../components/components.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
@@ -20,6 +21,7 @@ class DoLogoutButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.doLogout,
+        permissionName: PermissionName.fazerLogout,
         function: () {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             notificationDialog(

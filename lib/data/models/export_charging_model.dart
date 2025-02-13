@@ -93,6 +93,9 @@ class ExportChargingModel extends Equatable {
         loadType.toLowerCase() == "products".toLowerCase() ||
         loadType.toLowerCase() == "schedule".toLowerCase()) {
       return LoadTypeEnum.products;
+    } else if (loadType.toLowerCase() ==
+        LoadTypeEnum.users.name.toLowerCase()) {
+      return LoadTypeEnum.users;
     } else {
       return null;
     }

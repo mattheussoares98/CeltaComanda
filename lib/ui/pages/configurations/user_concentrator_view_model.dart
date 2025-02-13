@@ -11,7 +11,7 @@ class UserConcentratorViewModel extends Equatable {
   // final String? PasswordMd5;
   // final String? DigitalPassword;
   // final String? IsAdm;
-  // final String? IsExcluded; //TODO test is returning excluded users
+  // final String? IsExcluded;
   // final String? IsAlterPassword;
   // final List<GroupUserConcentratorModel>? Groups;
   // final List<EnterpriseConcentradorModel>? Enterprises;

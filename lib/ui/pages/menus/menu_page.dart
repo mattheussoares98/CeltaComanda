@@ -63,7 +63,11 @@ class _MenuPageState extends State<MenuPage>
 
     return Scaffold(
       body: menuPresenter.loadedMenu.isEmpty
-          ? const LoadMenuButton()
+          ? LoadMenuButton(
+              callSetState: () {
+                setState(() {});
+              },
+            )
           : StreamBuilder<int>(
               stream: menuPresenter.indexOfSelectedGroupStream,
               builder: (context, selectedGroupIndex) {

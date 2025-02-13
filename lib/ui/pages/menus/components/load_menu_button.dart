@@ -5,7 +5,11 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class LoadMenuButton extends StatelessWidget {
-  const LoadMenuButton({super.key});
+  final void Function() callSetState;
+  const LoadMenuButton({
+    required this.callSetState,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +17,7 @@ class LoadMenuButton extends StatelessWidget {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    CartPresenter cartPresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
+    ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
 
     return SizedBox(
@@ -24,13 +27,13 @@ class LoadMenuButton extends StatelessWidget {
         child: TextButton.icon(
           key: const Key("loadMenu"),
           onPressed: () async {
-            await homePresenter.loadCommandData(
+            await homePresenter.updateWhatNeed(
               menuPresenter: menuPresenter,
-              printedProductsPresenter: printedProductsPresenter,
-              cartPresenter: cartPresenter,
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
+              configurationsPresenter: configurationsPresenter,
             );
+            callSetState();
           },
           icon: Icon(
             Icons.menu_book,

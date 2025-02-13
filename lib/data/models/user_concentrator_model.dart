@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/entities.dart';
+import '../../ui/pages/pages.dart';
 import 'models.dart';
 
 class UserConcentratorModel extends Equatable {
@@ -126,4 +127,7 @@ class UserConcentratorModel extends Equatable {
         "Groups": Groups?.map((e) => e.toJson()).toList(),
         "Enterprises": Enterprises?.map((e) => e.toJson()).toList(),
       };
+
+  UserConcentratorViewModel toViewModel() =>
+      UserConcentratorViewModel(Name: Name);
 }

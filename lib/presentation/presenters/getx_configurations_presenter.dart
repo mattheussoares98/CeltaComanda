@@ -398,7 +398,8 @@ class GetxConfigurationsPresenter extends GetxController
             e.Permission?.Name == permission.description)
         .toList();
 
-    final canAccess = userPermission.first.IsActive == true;
+    final canAccess =
+        userPermission.isNotEmpty && userPermission.first.IsActive == true;
 
     if (!canAccess) {
       mainError = null;

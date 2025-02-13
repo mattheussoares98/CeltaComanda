@@ -354,6 +354,10 @@ class GetxConfigurationsPresenter extends GetxController
         loadLocally: loadLocally,
       );
 
+      final allUsers = await loadUsers.getAll(
+        loadLocally: loadLocally,
+      );
+
       _loadedPermissions = result;
 
       await lastImport.save([LoadTypeEnum.users]);

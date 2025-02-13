@@ -55,6 +55,7 @@ void main() {
   late String identifier;
   late UserConcentratorEntity userConcentratorEntity;
   late List<GroupPermissionConcentratorEntity> groupPermissions;
+  late List<UserConcentratorEntity> loadedUsers;
 
   WidgetsFlutterBinding.ensureInitialized();
   Get.testMode = true;
@@ -117,6 +118,7 @@ void main() {
     addPendingDeviceToUpdate.mockAdd(identifier);
     concentratorLogin.mockLogin(userConcentratorEntity);
     loadGroupPermissions.mockGetAll(groupPermissions);
+    loadUsers.mockGetAll(loadedUsers);
   }
 
   void initEntitys() {
@@ -138,6 +140,14 @@ void main() {
     identifier = faker.randomGenerator.string(10);
     userConcentratorEntity = EntityFactory.makeUserConcentratorEntity(
         groupId: faker.randomGenerator.integer(100));
+    loadedUsers = [
+      EntityFactory.makeUserConcentratorEntity(
+        groupId: faker.randomGenerator.integer(100),
+      ),
+      EntityFactory.makeUserConcentratorEntity(
+        groupId: faker.randomGenerator.integer(100),
+      ),
+    ];
     groupPermissions = [
       EntityFactory.makeGroupPermissionConcentratorEntity(
           PermissionName.agendamentoDeProdutos),
@@ -841,6 +851,17 @@ void main() {
       await sut.updateUsersData(loadLocally: true);
 
       expect(sut.loadedPermissions, groupPermissions);
+    });
+
+    test("Should load all users locally", () async {
+      await sut.updateUsersData(loadLocally: false);
+
+      verify(() => loadUsers.getAll(loadLocally: false)).called(1);
+    });
+    test("Should load all users remotelly", () async {
+      await sut.updateUsersData(loadLocally: true);
+
+      verify(() => loadUsers.getAll(loadLocally: true)).called(1);
     });
   });
 

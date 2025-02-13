@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 class LoadUsersSpy extends Mock implements LoadUsers {
   When _mockGetAllCall() =>
       when(() => this.getAll(loadLocally: any(named: "loadLocally")));
-  void mockGetAll(List<GroupPermissionConcentratorEntity> result) {
+  void mockGetAll(List<UserConcentratorEntity> result) {
     this._mockGetAllCall().thenAnswer((_) async => result);
   }
 

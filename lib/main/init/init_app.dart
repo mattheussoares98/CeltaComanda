@@ -33,11 +33,12 @@ void _deletePath(String path) {
   final pathToDelete = '$userHome/$path';
   final directoryToDelete = Directory(pathToDelete);
 
-  if (directoryToDelete.existsSync()) {
-    directoryToDelete.deleteSync(recursive: true);
-    debugPrint('Deleted: $pathToDelete');
-  } else {
-    debugPrint('Directory does not exist: $pathToDelete');
+  try {
+    if (directoryToDelete.existsSync()) {
+      directoryToDelete.deleteSync(recursive: true);
+    }
+  } catch (e) {
+    // debugPrint(e.toString());
   }
 }
 

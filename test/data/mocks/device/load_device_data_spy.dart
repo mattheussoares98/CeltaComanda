@@ -6,7 +6,8 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
   LoadDeviceDataSpy() {
-    mockIsAndroidPlatform(true);
+    this.mockIsAndroidPlatform(true);
+    this.mockIsIOSPlatform(true);
   }
   When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId());
 
@@ -34,9 +35,14 @@ class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
   }
 
   When _mockIsAndroidPlatformCall() => when(() => this.isAndroidPlatform());
-
   void mockIsAndroidPlatform(bool value) {
     this._mockIsAndroidPlatformCall().thenAnswer((any) => value);
+  }
+
+  When _mockIsIOSPlatformCall() => when(() => this.isIOSPlatform());
+
+  void mockIsIOSPlatform(bool value) {
+    this._mockIsIOSPlatformCall().thenAnswer((any) => value);
   }
 
   void mockIsAndroidPlatformError() {

@@ -792,10 +792,15 @@ void main() {
 
       await sut.goToUpdateApplication();
     });
-    test("Should verify platform", () async {
+    test("Should verify android platform", () async {
       await sut.goToUpdateApplication();
 
       verify(() => loadDeviceData.isAndroidPlatform()).called(1);
+    });
+    test("Should verify ios platform", () async {
+      await sut.goToUpdateApplication();
+
+      verify(() => loadDeviceData.isIOSPlatform()).called(1);
     });
     test("Should launch correct url if is android", () async {
       await sut.goToUpdateApplication();
@@ -804,13 +809,25 @@ void main() {
             "https://play.google.com/store/apps/details?id=br.com.celtaware.comanda",
           )).called(1);
     });
-    test("Should launch correct url if is iOS", () async {
+    test("Should launch correct url if is iOS and is not android", () async {
       loadDeviceData.mockIsAndroidPlatform(false);
+      loadDeviceData.mockIsIOSPlatform(true);
 
       await sut.goToUpdateApplication();
 
       verify(() => launchUrl.launch(
             "https://apps.apple.com/br/app/celta-comanda/id6504995969?l=en-GB",
+          )).called(1);
+    });
+    test("Should launch correct url if dont is IOS and dont is android",
+        () async {
+      loadDeviceData.mockIsAndroidPlatform(false);
+      loadDeviceData.mockIsIOSPlatform(false);
+
+      await sut.goToUpdateApplication();
+
+      verify(() => launchUrl.launch(
+            "https://apps.microsoft.com/detail/9nn3866qk56s?hl=pt-br&gl=BR&ocid=pdpshare",
           )).called(1);
     });
   });

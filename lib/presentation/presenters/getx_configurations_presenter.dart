@@ -323,14 +323,19 @@ class GetxConfigurationsPresenter extends GetxController
       isLoading = true;
       mainError = null;
       bool isAndroid = loadDeviceData.isAndroidPlatform();
+      bool isIos = loadDeviceData.isIOSPlatform();
 
       if (isAndroid) {
         await launchUrl.launch(
           "https://play.google.com/store/apps/details?id=br.com.celtaware.comanda",
         );
-      } else {
+      } else if (isIos) {
         await launchUrl.launch(
           "https://apps.apple.com/br/app/celta-comanda/id6504995969?l=en-GB",
+        );
+      } else {
+        await launchUrl.launch(
+          "https://apps.microsoft.com/detail/9nn3866qk56s?hl=pt-br&gl=BR&ocid=pdpshare",
         );
       }
     } catch (e) {

@@ -35,4 +35,9 @@ class LocalLoadimeiOrWindowsId implements LoadDeviceData {
   bool isAndroidPlatform() {
     return Platform.isAndroid;
   }
+
+  @override
+  bool isIOSPlatform() {
+    return Platform.isIOS;
+  }
 }

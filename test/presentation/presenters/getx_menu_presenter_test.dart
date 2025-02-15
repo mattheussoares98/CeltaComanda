@@ -598,7 +598,8 @@ void main() {
       );
       verify(() => commandInformations.ticketIsPermitted(
             url: EnterpriseBuilder.entity!.url!,
-            commandNumber: homePresenter.commandEntityController?.commandNumber ?? "001",
+            commandNumber:
+                homePresenter.commandEntityController?.commandNumber ?? "001",
           )).called(1);
 
       await sut.getGroupsAndProducts(
@@ -609,7 +610,8 @@ void main() {
       );
       verifyNever(() => commandInformations.ticketIsPermitted(
             url: EnterpriseBuilder.entity!.url!,
-            commandNumber: homePresenter.commandEntityController?.commandNumber ?? "001",
+            commandNumber:
+                homePresenter.commandEntityController?.commandNumber ?? "001",
           ));
     });
   });
@@ -1423,12 +1425,12 @@ void main() {
     });
   });
 
-  group("Add or remove search products", () {
+  group("Treat show search products", () {
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -1437,10 +1439,10 @@ void main() {
 
       parametersData.mockLoadError();
 
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
     });
     test("Should call load correctly", () async {
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
 
       verify(() => parametersData.load()).called(1);
     });
@@ -1467,7 +1469,7 @@ void main() {
         EntityFactory.makeParametersModel(
             enabled: true, key: ParameterKey.enableSearchProducts),
       ]);
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
 
       expect(sut.loadedMenu[0].expansibleGroupsViewModel.Name,
           R.string.detach.toUpperCase());
@@ -1487,7 +1489,7 @@ void main() {
         EntityFactory.makeParametersModel(
             enabled: true, key: ParameterKey.enableSearchProducts),
       ]);
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
 
       expect(sut.loadedMenu[0].expansibleGroupsViewModel.Name,
           R.string.searchProduct.toUpperCase());
@@ -1512,15 +1514,29 @@ void main() {
 
       parametersData
           .mockLoad([EntityFactory.makeParametersModel(enabled: true)]);
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
       expect(sut.loadedMenu[0].expansibleGroupsViewModel.Name,
           R.string.searchProduct.toUpperCase());
 
       parametersData
           .mockLoad([EntityFactory.makeParametersModel(enabled: false)]);
-      await sut.addOrRemoveSearchProducts();
+      await sut.treatShowSearchProducts();
       expect(sut.loadedMenu[0].expansibleGroupsViewModel.Name,
           sut.getExpansibleGroupNameWithoutPipes(mockedExpansibleGroup.Name));
+    });
+
+    test("Should not add again if call more than one time the function to add",
+        () async {
+      await sut.treatShowSearchProducts();
+      await sut.treatShowSearchProducts();
+
+      final searchProductQuantity = sut.loadedMenu
+          .where((e) =>
+              e.expansibleGroupsViewModel.Name ==
+              R.string.searchProduct.toUpperCase())
+          .length;
+
+      expect(searchProductQuantity, 1);
     });
   });
 

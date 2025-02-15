@@ -73,7 +73,7 @@ abstract class MenuPresenter implements Listenable {
 
   List<T> treatSchedules<T>();
 
-  Future<void> addOrRemoveSearchProducts();
+  Future<void> treatShowSearchProducts();
 
   Future<void> loadAllImages({required bool loadLocally});
 }

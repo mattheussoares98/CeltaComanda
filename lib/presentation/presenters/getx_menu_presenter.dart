@@ -710,7 +710,7 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  Future<void> addOrRemoveSearchProducts() async {
+  Future<void> treatShowSearchProducts() async {
     isLoading = true;
     mainError = null;
     try {
@@ -720,7 +720,13 @@ class GetxMenuPresenter extends GetxController
               (e) => e.key == ParameterKey.enableSearchProducts && e.enabled) !=
           null;
 
-      if (searchProductsEnabled) {
+      final isDisabled = _loadedMenu
+          .where((e) =>
+              e.expansibleGroupsViewModel.Name ==
+              R.string.searchProduct.toUpperCase())
+          .isEmpty;
+
+      if (searchProductsEnabled && isDisabled) {
         int index = 0;
         if (_loadedMenu.isNotEmpty &&
             _loadedMenu[0].expansibleGroupsViewModel.Name.toUpperCase() ==

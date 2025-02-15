@@ -82,7 +82,7 @@ class _ParametersPageState extends State<ParametersPage>
                       child: InkWell(
                         onTap: () async {
                           await parametersPresenter.changeParameter(index);
-                          await menuPresenter.addOrRemoveSearchProducts();
+                          await menuPresenter.treatShowSearchProducts();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -102,7 +102,7 @@ class _ParametersPageState extends State<ParametersPage>
                                   await parametersPresenter
                                       .changeParameter(index);
                                   await menuPresenter
-                                      .addOrRemoveSearchProducts();
+                                      .treatShowSearchProducts();
                                 },
                               ),
                             ],

@@ -846,7 +846,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      verify(() => menuPresenter.addOrRemoveSearchProducts()).called(1);
+      verify(() => menuPresenter.treatShowSearchProducts()).called(1);
     });
   });
 

@@ -156,7 +156,6 @@ Future<void> _onPress({
     }
   } else if (onWriteCommand == OnWriteCommand.loadCommandData) {
     await homePresenter.loadCommandData(
-      menuPresenter: menuPresenter,
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,

@@ -388,7 +388,6 @@ void main() {
     test("Should load useFixedCommandNumber on call loadUseFixedCommandNumber",
         () async {
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -408,7 +407,6 @@ void main() {
       localCommandData.mockLoad(entity);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -428,7 +426,6 @@ void main() {
       localCommandData.mockLoad(entity);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -446,7 +443,6 @@ void main() {
       localCommandData.mockLoad(null);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -461,7 +457,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -483,7 +478,6 @@ void main() {
 
       localCommandData.mockLoad(fixed);
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -493,7 +487,6 @@ void main() {
 
       localCommandData.mockLoad(notFixed);
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -520,7 +513,6 @@ void main() {
 
       localCommandData.mockLoad(entity1);
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -531,7 +523,6 @@ void main() {
 
       localCommandData.mockLoad(entity2);
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -547,7 +538,6 @@ void main() {
       localCommandData.mockLoad(notFixedCommandEntity);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -567,7 +557,6 @@ void main() {
         "Should  call cartPresenter.loadSaleRequest and printedProductsPresenter.loadPrinted when is fixed command number",
         () async {
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -590,7 +579,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -608,7 +596,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -625,7 +612,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -643,7 +629,6 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -653,7 +638,6 @@ void main() {
 
     test("Should call loadSaleRequestTemp", () async {
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -671,7 +655,6 @@ void main() {
       // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -685,7 +668,6 @@ void main() {
       // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -704,7 +686,6 @@ void main() {
       expect(sut.commandEntity?.isFixedCommandNumber, false);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -718,7 +699,6 @@ void main() {
       // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -741,7 +721,6 @@ void main() {
       // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -750,7 +729,6 @@ void main() {
     });
     test("Should call isValidDateTime when is fixed command number", () async {
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -774,7 +752,6 @@ void main() {
       // sut.updateCommandEntity(newFixedCommandNumber.toString());
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -792,7 +769,6 @@ void main() {
       sut.changeIsGeneratingVersionToTablet(true);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -812,7 +788,6 @@ void main() {
       sut.changeIsGeneratingVersionToTablet(false);
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -827,7 +802,6 @@ void main() {
       );
 
       await sut.loadCommandData(
-        menuPresenter: menuPresenter,
         printedProductsPresenter: printedProductsPresenter,
         cartPresenter: cartPresenter,
         expansibleGroupFromProductPresenter:
@@ -835,18 +809,6 @@ void main() {
       );
 
       verify(() => persistent.makeNotPersistent()).called(1);
-    });
-
-    test("Should call add or remove search products", () async {
-      await sut.loadCommandData(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => menuPresenter.treatShowSearchProducts()).called(1);
     });
   });
 

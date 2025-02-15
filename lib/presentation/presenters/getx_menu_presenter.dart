@@ -164,10 +164,9 @@ class GetxMenuPresenter extends GetxController
     try {
       if (loadLocally && _loadedMenu.isNotEmpty) return;
 
-      await commandInformations.ticketIsPermitted(
-        url: EnterpriseBuilder.entity!.url!,
-        commandNumber: commandEntity?.commandNumber ?? "001",
-      );
+      isLoading = true;
+
+      await treatShowSearchProducts();
 
       if (loadLocally) {
         final localMenu = await menuDatabaseManagement.load();
@@ -176,7 +175,11 @@ class GetxMenuPresenter extends GetxController
         return;
       }
 
-      isLoading = true;
+      await commandInformations.ticketIsPermitted(
+        url: EnterpriseBuilder.entity!.url!,
+        commandNumber: commandEntity?.commandNumber ?? "001",
+      );
+
       clear();
       var expansibleGroups = await loadExpansibleGroups.load();
 

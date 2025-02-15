@@ -50,7 +50,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   }
 
   When mockLoadCommandDataCall() => when(() => this.loadCommandData(
-        menuPresenter: any(named: "menuPresenter"),
         printedProductsPresenter: any(named: "printedProductsPresenter"),
         cartPresenter: any(named: "cartPresenter"),
         expansibleGroupFromProductPresenter:

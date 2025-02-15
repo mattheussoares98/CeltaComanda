@@ -47,7 +47,6 @@ class _HomePageState extends State<HomePage>
             expansibleGroupFromProductPresenter =
             Provider.of(context, listen: false);
         await homePresenter.loadCommandData(
-          menuPresenter: menuPresenter,
           printedProductsPresenter: printedProductsPresenter,
           cartPresenter: cartPresenter,
           expansibleGroupFromProductPresenter:

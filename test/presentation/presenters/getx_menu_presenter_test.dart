@@ -587,27 +587,14 @@ void main() {
       verifyNever(() => loadExpansibleGroups.load());
     });
 
-    test(
-        'Should not load locally it pass to load local but already has data in loaded menu',
-        () async {
+    test('Should not verify ticket is permitted if load locally', () async {
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
         loadLocally: true,
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      verify(() => commandInformations.ticketIsPermitted(
-            url: EnterpriseBuilder.entity!.url!,
-            commandNumber:
-                homePresenter.commandEntityController?.commandNumber ?? "001",
-          )).called(1);
 
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        loadLocally: true,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
       verifyNever(() => commandInformations.ticketIsPermitted(
             url: EnterpriseBuilder.entity!.url!,
             commandNumber:

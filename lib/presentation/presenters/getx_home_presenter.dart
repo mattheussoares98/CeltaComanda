@@ -122,7 +122,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> loadCommandData({
-    required MenuPresenter menuPresenter, //TODO remove this
     required PrintedProductsPresenter printedProductsPresenter,
     required CartPresenter cartPresenter,
     required ExpansibleGroupFromProductPresenter
@@ -150,8 +149,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           pdv: loadedCommand.pdv,
         );
       }
-
-      await menuPresenter.treatShowSearchProducts(); //TODO remove this
 
       if (commandEntity?.isFixedCommandNumber == true &&
           commandEntity?.commandNumber != null) {

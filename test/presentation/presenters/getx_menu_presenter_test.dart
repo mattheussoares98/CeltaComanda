@@ -1413,21 +1413,6 @@ void main() {
   });
 
   group("Treat show search products", () {
-    test("Should emit correct values on success", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream, emits(null));
-
-      await sut.treatShowSearchProducts();
-    });
-    test("Should emit correct values on error", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
-
-      parametersData.mockLoadError();
-
-      await sut.treatShowSearchProducts();
-    });
     test("Should call load correctly", () async {
       await sut.treatShowSearchProducts();
 

@@ -162,16 +162,21 @@ class GetxMenuPresenter extends GetxController
     required bool loadLocally,
   }) async {
     try {
-      if (loadLocally && _loadedMenu.isNotEmpty) return;
+      bool menuIsNotEmpty = _loadedMenu
+          .where((e) =>
+              e.expansibleGroupsViewModel.Name !=
+              R.string.searchProduct.toUpperCase())
+          .isNotEmpty;
+
+      if (loadLocally && menuIsNotEmpty) return;
 
       isLoading = true;
-
-      await treatShowSearchProducts();
 
       if (loadLocally) {
         final localMenu = await menuDatabaseManagement.load();
         _loadedMenu.clear();
         _loadedMenu.addAll(localMenu);
+        await treatShowSearchProducts();
         return;
       }
 
@@ -275,6 +280,8 @@ class GetxMenuPresenter extends GetxController
         _inexOfSelectedGroup.value =
             treatSchedules<ExpansibleGroupsViewModel>().length - 1;
       }
+
+      await treatShowSearchProducts();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -714,8 +721,6 @@ class GetxMenuPresenter extends GetxController
 
   @override
   Future<void> treatShowSearchProducts() async {
-    isLoading = true;
-    mainError = null;
     try {
       final parameters = await parametersData.load();
 
@@ -760,9 +765,7 @@ class GetxMenuPresenter extends GetxController
         }
       }
     } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
+      e;
     }
   }
 

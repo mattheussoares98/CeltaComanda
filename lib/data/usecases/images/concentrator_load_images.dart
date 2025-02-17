@@ -75,12 +75,13 @@ class ConcentratorLoadImages implements LoadImages {
         final client = http.Client();
         final url = "$concentratorUrl/Images/$pluOrEan";
         final request = http.Request('GET', Uri.parse(url));
-        final response =
-            await client.send(request) /* .timeout(Duration(seconds: 2)) */;
+        final response = await client.send(request);
+
         StreamSubscription<List<int>>? subscription;
         int totalBytes = 0;
         final completer = Completer<void>();
         final List<int> buffer = [];
+
         subscription = response.stream.listen(
           (List<int> data) {
             totalBytes += data.length;
@@ -107,10 +108,14 @@ class ConcentratorLoadImages implements LoadImages {
           },
           cancelOnError: true,
         );
+
+        // Wait for the download to complete or fail before moving to the next image
+        await completer.future;
       } catch (e) {
         debugPrint(e.toString());
       }
     }
+
     return images;
   }
 

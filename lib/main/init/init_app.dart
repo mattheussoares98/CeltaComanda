@@ -59,7 +59,7 @@ Future<void> _initHive() async {
       path = appDocumentDir.path;
     }
     Hive.init(path);
-    await Hive.openBox(path);
+    await Hive.openBox(CacheKeys.hiveBoxName.name);
   } catch (e) {
     debugPrint(e.toString());
   }

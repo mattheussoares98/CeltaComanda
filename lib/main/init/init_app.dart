@@ -26,7 +26,7 @@ Future<void> initFirebase() async {
 }
 
 void _deletePath(String path) {
-  if (!Platform.isWindows) return;
+  if (kIsWeb || !Platform.isWindows) return;
 
   final userHome =
       Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
@@ -50,13 +50,17 @@ void _hideNavigationButtons() {
 Future<void> _initHive() async {
   String? path;
 
-  if (kIsWeb) {
-    path = CacheKeys.hiveBoxName.name;
-  } else {
-    final appDocumentDir =
-        await path_provider.getApplicationDocumentsDirectory();
-    path = appDocumentDir.path;
+  try {
+    if (kIsWeb) {
+      path = CacheKeys.hiveBoxName.name;
+    } else {
+      final appDocumentDir =
+          await path_provider.getApplicationDocumentsDirectory();
+      path = appDocumentDir.path;
+    }
+    Hive.init(path);
+    await Hive.openBox(path);
+  } catch (e) {
+    debugPrint(e.toString());
   }
-  Hive.init(path);
-  await Hive.openBox(CacheKeys.hiveBoxName.name);
 }

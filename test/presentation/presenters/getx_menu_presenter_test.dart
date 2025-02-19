@@ -39,7 +39,6 @@ void main() {
   late List<ProductEntity> products;
   late List<ProductEntity> productsEntityThatIsPromoCombox;
   late List<ProductCompositionEntity> productsCompositionsEntitys;
-  late List<ParameterModel> parameters;
   late List<ImageModel> mockedLoadedImages;
 
   late LoadExpansibleGroupsSpy loadExpansibleGroups;
@@ -165,11 +164,6 @@ void main() {
             EntityFactory.makeExpansibleGroupScheduleEntity(
                 expansibleGroups.first.ExpansibleGroupId));
 
-    parameters = [
-      EntityFactory.makeParametersModel(),
-      EntityFactory.makeParametersModel(),
-    ];
-
     mockedLoadedImages = [
       EntityFactory.makeImageModel(),
       EntityFactory.makeImageModel(),
@@ -184,7 +178,6 @@ void main() {
     getProductComposition.mockGetFathers(productsCompositionsEntitys);
     getProductComposition.mockGetChildsOfFather(productsCompositionsEntitys);
     loadSuggestionSale.mockLoad(suggestions);
-    parametersData.mockLoad(parameters);
     loadImages.mockLoad(mockedLoadedImages);
     lastImport.mockLoad(null);
     menuDatabaseManagement.mockLoad(menuListWithoutPromoCombox);
@@ -563,6 +556,7 @@ void main() {
 
     test("Should call menuDatabaseManagement save", () async {
       lastImport.mockLoad(null);
+      parametersData.mockLoad([]);
 
       await sut.getGroupsAndProducts(
         commandEntity: homePresenter.commandEntityController,
@@ -1499,6 +1493,11 @@ void main() {
 
     test("Should not add again if call more than one time the function to add",
         () async {
+      parametersData.mockLoad([
+        EntityFactory.makeParametersModel(
+            enabled: true, key: ParameterKey.enableSearchProducts),
+      ]);
+
       await sut.treatShowSearchProducts();
       await sut.treatShowSearchProducts();
 

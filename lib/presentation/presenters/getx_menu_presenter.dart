@@ -272,6 +272,8 @@ class GetxMenuPresenter extends GetxController
 
       _updateSuggestions(suggestions);
 
+      await treatShowSearchProducts();
+
       await menuDatabaseManagement.save(_loadedMenu);
       await lastImport.save([LoadTypeEnum.products]);
 
@@ -280,8 +282,6 @@ class GetxMenuPresenter extends GetxController
         _inexOfSelectedGroup.value =
             treatSchedules<ExpansibleGroupsViewModel>().length - 1;
       }
-
-      await treatShowSearchProducts();
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

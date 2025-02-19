@@ -1620,7 +1620,7 @@ void main() {
 
           verify(() => menuPresenter.loadAllImages(
                 loadLocally: false,
-                updatedImages: [],
+                updatedImages: [lastExport.FileName!],
               )).called(1);
         },
       );

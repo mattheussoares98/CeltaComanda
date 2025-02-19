@@ -28,7 +28,7 @@ class GroupPermissionConcentratorModel extends Equatable {
       GroupPermissionConcentratorModel(
         GroupId: json["GroupId"],
         GroupPermissionsId: json["GroupPermissionsId"],
-        IsActive: json["IsActive"] == 1,
+        IsActive: json["IsActive"] == 1 || json["IsActive"] == true,
         Permission: json["Permission"] == null
             ? null
             : PermissionModel.fromJson(json["Permission"]),

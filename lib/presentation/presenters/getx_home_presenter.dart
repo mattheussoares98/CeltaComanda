@@ -521,7 +521,11 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       await menuPresenter.loadAllImages(
         loadLocally: !needUpdateImagesRemotelly,
-        updatedImages: lastExports.where((e) => e.LoadType == LoadTypeEnum.images).map((e) => e.FileName.toString()).toList(),
+        updatedImages: lastExports
+            .where(
+                (e) => e.LoadType == LoadTypeEnum.images && e.FileName != null)
+            .map((e) => e.FileName?.toString() ?? "")
+            .toList(),
       );
 
       bool needUpdateUsersRemotelly = _needLoadRemote(

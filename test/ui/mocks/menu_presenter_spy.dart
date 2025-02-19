@@ -31,6 +31,7 @@ class MenuPresenterSpy extends Mock implements MenuPresenter {
     when(() => this.searchProduct(any())).thenAnswer((any) async => any);
     when(() => this.loadAllImages(
           loadLocally: any(named: "loadLocally"),
+          updatedImages: any(named: "updatedImages"),
         )).thenAnswer((any) async => any);
     this.mockGetGroupsAndProducts().thenAnswer((any) async => any);
     when(() => this.updateIndexOfSelectedGroup(any()))

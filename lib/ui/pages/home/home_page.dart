@@ -59,8 +59,8 @@ class _HomePageState extends State<HomePage>
           configurationsPresenter: configurationsPresenter,
         );
 
-        setState(() {});
         await verifyNeedUpdateApp(homePresenter);
+        setState(() {});
       }
     });
   }

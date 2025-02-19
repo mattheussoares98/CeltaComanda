@@ -5,8 +5,10 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadImagesSpy extends Mock implements LoadImages {
-  When _mockLoadCall() =>
-      when(() => this.load(getLocalImages: any(named: "getLocalImages"),));
+  When _mockLoadCall() => when(() => this.load(
+        getLocalImages: any(named: "getLocalImages"),
+        updatedImages: any(named: "updatedImages"),
+      ));
 
   void mockLoad(List<ImageModel> images) {
     _mockLoadCall().thenAnswer((_) async => images);

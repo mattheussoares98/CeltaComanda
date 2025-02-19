@@ -1514,25 +1514,49 @@ void main() {
 
   group("Load all images", () {
     test("Should call load images false value when pass false value", () async {
-      await sut.loadAllImages(loadLocally: true);
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
 
-      verify(() => loadImages.load(getLocalImages: true)).called(1);
+      verify(() => loadImages.load(
+            getLocalImages: true,
+            updatedImages: [],
+          )).called(1);
     });
     test("Should call load images with true value if pass true value",
         () async {
-      await sut.loadAllImages(loadLocally: true);
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
 
-      verify(() => loadImages.load(getLocalImages: true)).called(1);
+      verify(() => loadImages.load(
+            getLocalImages: true,
+            updatedImages: [],
+          )).called(1);
     });
 
     test(
         "Should no call loadImages with local value if loadedImages is not empty",
         () async {
-      await sut.loadAllImages(loadLocally: true);
-      verify(() => loadImages.load(getLocalImages: true)).called(1);
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
+      verify(() => loadImages.load(
+            getLocalImages: true,
+            updatedImages: [],
+          )).called(1);
 
-      await sut.loadAllImages(loadLocally: true);
-      verifyNever(() => loadImages.load(getLocalImages: true));
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
+      verifyNever(() => loadImages.load(
+            getLocalImages: true,
+            updatedImages: [],
+          ));
     });
   });
 }

@@ -22,14 +22,41 @@ class ConcentratorLoadImages implements LoadImages {
   });
 
   @override
-  Future<List<ImageModel>> load({required bool getLocalImages}) async {
+  Future<List<ImageModel>> load({
+    required bool getLocalImages,
+    required List<String> updatedImages,
+  }) async {
     try {
-      if (getLocalImages) {
-        final localImages = await hiveStorage.get(CacheKeys.images.name);
+      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
+      var localImages = localImagesJson == null
+          ? <ImageModel>[]
+          : (localImagesJson as List)
+              .map((e) => ImageModel.fromJson(e))
+              .toList();
 
-        return (localImages as List)
-            .map((e) => ImageModel.fromJson(e))
-            .toList();
+      if (getLocalImages) {
+        return localImages;
+      } else if (updatedImages.isNotEmpty && localImages.isNotEmpty) {
+        final newImages = await _loadConcentratorImages(updatedImages);
+
+        for (var updatedImage in newImages) {
+          int indexInLocalImages = localImages
+              .indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
+
+          if (indexInLocalImages != -1) {
+            localImages[indexInLocalImages] = updatedImage;
+          } else {
+            localImages.add(updatedImage);
+          }
+        }
+
+        await hiveStorage.delete(CacheKeys.images.name);
+        await hiveStorage.put(
+          CacheKeys.images.name,
+          localImages.map((e) => e.toJson()).toList(),
+        );
+
+        return localImages;
       }
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpClient.request(

@@ -142,5 +142,6 @@ class EnterpriseModel {
         'latestCompatibleVersion': latestCompatibleVersion,
         'minutesVerifyUpdateMenu': minutesVerifyUpdateMenu,
         'useReducedNameOnProduct': useReducedNameOnProduct,
+        'verifyCommandBlocked': verifyCommandBlocked,
       };
 }

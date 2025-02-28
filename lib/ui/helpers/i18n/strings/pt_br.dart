@@ -240,6 +240,7 @@ class PtBr implements Translation {
   String get money => 'Dinheiro';
   String get name => 'Nome';
   String get navsUrl => 'Url do navs';
+  String get needLiberateCommand => 'Necessário liberar a comanda pra conseguir lançar produtos';
   String get neww => 'Novo';
   String get no => 'Não';
   String get obligatory => 'Obrigatório';

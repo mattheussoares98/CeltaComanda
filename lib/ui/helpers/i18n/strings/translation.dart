@@ -199,6 +199,7 @@ abstract class Translation {
   String get money;
   String get name;
   String get navsUrl;
+  String get needLiberateCommand;
   String get neww;
   String get no;
   String get obligatory;

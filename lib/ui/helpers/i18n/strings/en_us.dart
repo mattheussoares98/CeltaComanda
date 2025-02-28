@@ -240,6 +240,7 @@ class EnUs implements Translation {
   String get money => 'Money';
   String get name => 'Name';
   String get navsUrl => 'Url of navs';
+  String get needLiberateCommand => 'Need liberate the command to send products';
   String get neww => 'New';
   String get no => 'No';
   String get obligatory => 'Mandatory';

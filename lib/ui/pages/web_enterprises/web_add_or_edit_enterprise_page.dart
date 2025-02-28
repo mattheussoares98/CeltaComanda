@@ -37,11 +37,17 @@ class _WebAddOrEditEnterprisePageState
   bool? zoomImage = false;
   bool? useCovenant = false;
   bool? useProductReducedName = false;
-  bool? verifyCommandBlocked = false;
+  bool? verifyCommandBlocked = true;
 
   void changeUseProductReducedName() {
     setState(() {
       useProductReducedName = !(useProductReducedName ?? false);
+    });
+  }
+
+  void changeVerifyCommandIsBlocked() {
+    setState(() {
+      verifyCommandBlocked = !(verifyCommandBlocked ?? true);
     });
   }
 
@@ -278,10 +284,16 @@ class _WebAddOrEditEnterprisePageState
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: GoToDevicesInfoPageButton(),
+                            child: VerifyBlockedCommandSwitch(
+                              verifyCommandIsBlocked:
+                                  verifyCommandBlocked ?? false,
+                              changeVerifyCommandIsBlocked:
+                                  changeVerifyCommandIsBlocked,
+                            ),
                           ),
                         ],
                       ),
+                      GoToDevicesInfoPageButton(),
                     ],
                   ),
                 ),

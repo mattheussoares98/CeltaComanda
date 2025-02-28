@@ -139,6 +139,12 @@ class _WebAddOrEditEnterprisePageState
             useProductReducedName = webEnterprisesPresenter
                     .selectedEnterprise?.useReducedNameOnProduct ==
                 true;
+            verifyCommandBlocked = webEnterprisesPresenter
+                    .selectedEnterprise?.verifyCommandBlocked ==
+                true;
+            canInsertCommentManually = webEnterprisesPresenter
+                    .selectedEnterprise?.canInsertCommentManually ==
+                true;
             minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
                         .selectedEnterprise?.minutesVerifyUpdateMenu !=
                     null
@@ -300,7 +306,22 @@ class _WebAddOrEditEnterprisePageState
                           ),
                         ],
                       ),
-                      GoToDevicesInfoPageButton(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CanInsertCommentManuallySwitch(
+                              canInsertCommentManually:
+                                  canInsertCommentManually ?? false,
+                              changeCanInsertCommentManually:
+                                  changeCanInsertCommentManually,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: GoToDevicesInfoPageButton(),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

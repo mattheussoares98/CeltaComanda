@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -9,12 +10,16 @@ import '../../pages.dart';
 class PortraitCartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
   final int index;
+  final int? selectedIndex;
   final double maxWidth;
+  final void Function() updateSelectedIndex;
 
   const PortraitCartProductItem({
     required this.cartProduct,
     required this.index,
+    required this.selectedIndex,
     required this.maxWidth,
+    required this.updateSelectedIndex,
     super.key,
   });
 
@@ -123,6 +128,12 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
               ),
             ],
           ),
+          if (EnterpriseBuilder.entity?.canInsertCommentManually == true)
+            ChangeComment(
+              index: widget.index,
+              selectedIndex: widget.selectedIndex,
+              updateSelectedIndex: widget.updateSelectedIndex,
+            ),
           if (widget.cartProduct.Product.childsComposition != null)
             SelectedChilds(cartProduct: widget.cartProduct),
         ],

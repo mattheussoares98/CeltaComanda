@@ -4,10 +4,29 @@ import 'package:provider/provider.dart';
 import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
 
-class CartProductsItems extends StatelessWidget {
+class CartProductsItems extends StatefulWidget {
   const CartProductsItems({
     super.key,
   });
+
+  @override
+  State<CartProductsItems> createState() => _CartProductsItemsState();
+}
+
+class _CartProductsItemsState extends State<CartProductsItems> {
+  int? selectedIndexComment;
+
+  void updateSelectedIndexComment(int index) {
+    if (selectedIndexComment == index) {
+      setState(() {
+        selectedIndexComment = null;
+      });
+    } else {
+      setState(() {
+        selectedIndexComment = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +49,10 @@ class CartProductsItems extends StatelessWidget {
               cartProduct: cartProduct,
               index: index,
               maxWidth: constraints.maxWidth,
+              selectedIndex: selectedIndexComment,
+              updateSelectedIndex: () {
+                updateSelectedIndexComment(index);
+              },
             );
           }
         },

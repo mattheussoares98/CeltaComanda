@@ -725,5 +725,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _cartProducts[productIndex].Product.childsComposition![childIndex] =
           newChild;
     }
+    await cartInformations.updateCartProducts(_cartProducts);
   }
 }

@@ -2095,5 +2095,24 @@ void main() {
         newComment,
       );
     });
+    test("Should update cart locally", () async {
+      await sut.addProductInCart(
+        writtedComment: null,
+        product: cartProductEntityWithChilds,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final newComment = faker.randomGenerator.string(10);
+      await sut.changeComment(
+        comment: newComment,
+        productIndex: 0,
+        childIndex: 0,
+      );
+
+      verify(() => cartInformations.updateCartProducts(sut.cartProducts))
+          .called(2);
+    });
   });
 }

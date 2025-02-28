@@ -139,9 +139,14 @@ class _WebAddOrEditEnterprisePageState
             useProductReducedName = webEnterprisesPresenter
                     .selectedEnterprise?.useReducedNameOnProduct ==
                 true;
-            verifyCommandBlocked = webEnterprisesPresenter
-                    .selectedEnterprise?.verifyCommandBlocked ==
-                true;
+
+            if (webEnterprisesPresenter
+                    .selectedEnterprise?.verifyCommandBlocked !=
+                null) {
+              verifyCommandBlocked = webEnterprisesPresenter
+                      .selectedEnterprise?.verifyCommandBlocked ==
+                  true;
+            }
             canInsertCommentManually = webEnterprisesPresenter
                     .selectedEnterprise?.canInsertCommentManually ==
                 true;

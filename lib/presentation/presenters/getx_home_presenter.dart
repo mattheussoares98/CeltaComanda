@@ -384,19 +384,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
             EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
       ).toEntity();
 
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
-
       if (enterprise.updateDevicesInformations !=
           EnterpriseBuilder.entity?.updateDevicesInformations) {
-        final applicationVersion = await loadDeviceData.getApplicationVersion();
-        await addDeviceInfo.add(
-          commandNumber: commandEntity?.commandNumber?.toInt(),
-          imeiOrWindowsId: imeiOrWindowsId,
-          applicationVersion: applicationVersion,
-          pdvNumber: commandEntity?.pdv?.PdvNumber,
-        );
-        EnterpriseBuilder.entity = enterprise;
-        await localEnterpriseData.add(enterprise);
+        await updateDeviceInformations();
       }
 
       if (enterprise.updateEnterprise !=
@@ -613,5 +603,19 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       mainError = UIError.invalidCredentials;
       isLoading = false;
     }
+  }
+
+  @override
+  Future<void> updateDeviceInformations() async {
+    //TODO create tests
+    final applicationVersion = await loadDeviceData.getApplicationVersion();
+    final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+
+    await addDeviceInfo.add(
+      commandNumber: commandEntity?.commandNumber?.toInt(),
+      imeiOrWindowsId: imeiOrWindowsId,
+      applicationVersion: applicationVersion,
+      pdvNumber: commandEntity?.pdv?.PdvNumber,
+    );
   }
 }

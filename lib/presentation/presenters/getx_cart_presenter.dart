@@ -434,7 +434,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       bool isValid = await commandInformations.isValidDatetime(
         commandNumber: homePresenter.commandEntity!.commandNumber!,
-      );
+      );//TODO add new parameter in comandaConfigurations to use only when need
 
       if (!isValid) {
         throw DomainError.blockedCommand;

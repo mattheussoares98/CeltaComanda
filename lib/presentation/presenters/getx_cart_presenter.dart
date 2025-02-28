@@ -434,7 +434,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       bool isValid = await commandInformations.isValidDatetime(
         commandNumber: homePresenter.commandEntity!.commandNumber!,
-      );//TODO add new parameter in comandaConfigurations to use only when need
+      ); //TODO add new parameter in comandaConfigurations to use only when need
 
       if (!isValid) {
         throw DomainError.blockedCommand;
@@ -680,6 +680,50 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       );
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  @override
+  Future<void> changeComment({
+    required String comment,
+    required int productIndex,
+    required int? childIndex,
+  }) async {
+    final oldProduct = _cartProducts[productIndex];
+    if (childIndex == null) {
+      final newProduct = CartProductsViewModel(
+        Comments: comment,
+        Product: oldProduct.Product,
+        TotalLiquid: oldProduct.TotalLiquid,
+        Quantity: oldProduct.Quantity,
+        Value: oldProduct.Value,
+        ProductPriceLookUpCode: oldProduct.ProductPriceLookUpCode,
+      );
+
+      _cartProducts[productIndex] = newProduct;
+    } else {
+      final oldChild =
+          _cartProducts[productIndex].Product.childsComposition![childIndex];
+      final newChild = ProductCompositionViewModel(
+        commentFather: comment,
+        ProductCompositionId: oldChild.ProductCompositionId,
+        EnterpriseId: oldChild.EnterpriseId,
+        InternalCodeOnERPCodeFather: oldChild.InternalCodeOnERPCodeFather,
+        InternalCodeOnERPCodeChild: oldChild.InternalCodeOnERPCodeChild,
+        PluChild: oldChild.PluChild,
+        ChildName: oldChild.ChildName,
+        Quantity: oldChild.Quantity,
+        SalePrice: oldChild.SalePrice,
+        OfferPrice: oldChild.OfferPrice,
+        IncrementValue: oldChild.IncrementValue,
+        IsOptionalItem: oldChild.IsOptionalItem,
+        ProductOptions: oldChild.ProductOptions,
+        Schedule: oldChild.Schedule,
+        indexOfSelectedChild: oldChild.indexOfSelectedChild,
+        childs: oldChild.childs,
+      );
+      _cartProducts[productIndex].Product.childsComposition![childIndex] =
+          newChild;
     }
   }
 }

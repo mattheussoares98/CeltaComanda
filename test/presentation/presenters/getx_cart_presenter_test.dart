@@ -2054,4 +2054,46 @@ void main() {
       expect(value, 0);
     });
   });
+
+  group("Update product comment", () {
+    test("Should update product comment correctly", () async {
+      await sut.addProductInCart(
+        writtedComment: null,
+        product: cartProductEntityWithChilds,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final newComment = faker.randomGenerator.string(10);
+      await sut.changeComment(
+        comment: newComment,
+        productIndex: 0,
+        childIndex: null,
+      );
+
+      expect(sut.cartProducts[0].Comments, newComment);
+    });
+    test("Should update child comment correctly", () async {
+      await sut.addProductInCart(
+        writtedComment: null,
+        product: cartProductEntityWithChilds,
+        menuPresenter: menuPresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      final newComment = faker.randomGenerator.string(10);
+      await sut.changeComment(
+        comment: newComment,
+        productIndex: 0,
+        childIndex: 0,
+      );
+
+      expect(
+        sut.cartProducts[0].Product.childsComposition![0].commentFather,
+        newComment,
+      );
+    });
+  });
 }

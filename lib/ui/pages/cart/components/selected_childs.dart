@@ -9,24 +9,28 @@ class SelectedChilds extends StatelessWidget {
   final CartProductsViewModel cartProduct;
   final int productIndex;
   final int? selectedIndex;
+  final int? selectedChildIndexComment;
   final void Function() updateSelectedIndex;
   final TextEditingController controller;
   final void Function() callSetState;
   final FocusNode focusNode;
+  final void Function(int index) updateSelectedChildIndex;
   const SelectedChilds({
     required this.productIndex,
     required this.selectedIndex,
+    required this.selectedChildIndexComment,
     required this.updateSelectedIndex,
     required this.controller,
     required this.callSetState,
     required this.focusNode,
     required this.cartProduct,
+    required this.updateSelectedChildIndex,
     super.key,
   });
 
-  static const _productAndCommentFlex = 2;
-  static const _quantityFlex = 1;
-  static const _priceFlex = 1;
+  final productAndCommentFlex = 2;
+  final quantityFlex = 1;
+  final priceFlex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class SelectedChilds extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: _productAndCommentFlex,
+                flex: productAndCommentFlex,
                 child: Text(
                   hasMinWidth(context)
                       ? R.string.selectedProductsAndComments
@@ -56,7 +60,7 @@ class SelectedChilds extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: _quantityFlex,
+                flex: quantityFlex,
                 child: Text(
                   hasMinWidth(context)
                       ? R.string.quantity
@@ -69,7 +73,7 @@ class SelectedChilds extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: _priceFlex,
+                flex: priceFlex,
                 child: Text(
                   R.string.price,
                   textAlign: TextAlign.center,
@@ -104,7 +108,7 @@ class SelectedChilds extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        flex: _productAndCommentFlex,
+                        flex: productAndCommentFlex,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -121,7 +125,7 @@ class SelectedChilds extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                          flex: _quantityFlex,
+                          flex: quantityFlex,
                           child: Text(
                             child.Quantity!.toBrazilianNumber(),
                             textAlign: TextAlign.center,
@@ -130,7 +134,7 @@ class SelectedChilds extends StatelessWidget {
                             ),
                           )),
                       Expanded(
-                        flex: _priceFlex,
+                        flex: priceFlex,
                         child: Text(
                           (child.Quantity!.toDouble() *
                                   insertProductPresenter
@@ -152,6 +156,18 @@ class SelectedChilds extends StatelessWidget {
                       thickness: 0.2,
                       height: 10,
                     ),
+                  ChangeComment(
+                    productIndex: productIndex,
+                    childIndex: i,
+                    showTextFormField: productIndex == selectedIndex &&
+                        selectedChildIndexComment == i,
+                    updateSelectedIndex: () {
+                      updateSelectedChildIndex(i);
+                    },
+                    controller: controller,
+                    callSetState: callSetState,
+                    focusNode: focusNode,
+                  ),
                 ],
               );
             },

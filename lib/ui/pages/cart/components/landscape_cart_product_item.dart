@@ -8,25 +8,27 @@ import '../../pages.dart';
 
 class LandscapeCartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
-  final int index;
   final double maxWidth;
   final int productIndex;
   final int? selectedIndex;
+  final int? selectedChildIndexComment;
   final void Function() updateSelectedIndex;
   final TextEditingController controller;
   final void Function() callSetState;
+  final void Function(int value) updateSelectedChildIndex;
   final FocusNode commentFocusNode;
 
   const LandscapeCartProductItem({
     required this.cartProduct,
-    required this.index,
     required this.maxWidth,
     required this.productIndex,
     required this.selectedIndex,
+    required this.selectedChildIndexComment,
     required this.updateSelectedIndex,
     required this.controller,
     required this.callSetState,
     required this.commentFocusNode,
+    required this.updateSelectedChildIndex,
     super.key,
   });
 
@@ -64,7 +66,8 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
             children: [
               InkWell(
                 onTap: () async {
-                  await cartPresenter.removeProductFromCart(widget.index);
+                  await cartPresenter
+                      .removeProductFromCart(widget.productIndex);
                 },
                 child: SizedBox(
                   height: 100,
@@ -129,10 +132,11 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                         ? null
                         : () async {
                             await cartPresenter
-                                .reduceCartProductQuantity(widget.index);
+                                .reduceCartProductQuantity(widget.productIndex);
                           },
                 onPressedAddQuantity: () async {
-                  await cartPresenter.addCartProductQuantity(widget.index);
+                  await cartPresenter
+                      .addCartProductQuantity(widget.productIndex);
                 },
               ),
             ],
@@ -148,6 +152,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
           ),
           if (widget.cartProduct.Product.childsComposition != null)
             SelectedChilds(
+              updateSelectedChildIndex: widget.updateSelectedChildIndex,
               productIndex: widget.productIndex,
               selectedIndex: widget.selectedIndex,
               updateSelectedIndex: widget.updateSelectedIndex,
@@ -155,6 +160,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
               callSetState: widget.callSetState,
               focusNode: widget.commentFocusNode,
               cartProduct: widget.cartProduct,
+              selectedChildIndexComment: widget.selectedChildIndexComment,
             ),
         ],
       ),

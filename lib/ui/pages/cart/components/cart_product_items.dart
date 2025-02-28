@@ -14,7 +14,8 @@ class CartProductsItems extends StatefulWidget {
 }
 
 class _CartProductsItemsState extends State<CartProductsItems> {
-  int? selectedIndexComment;
+  int? selectedProductIndexComment;
+  int? selectedChildIndexComment;
   final commentController = TextEditingController();
   final commentFocusNode = FocusNode();
 
@@ -25,17 +26,43 @@ class _CartProductsItemsState extends State<CartProductsItems> {
     commentFocusNode.dispose();
   }
 
-  void updateSelectedIndexComment(int index) {
-    if (selectedIndexComment == index) {
+  void updateSelectedProductIndexComment(int index) {
+    if (selectedProductIndexComment == index) {
       setState(() {
-        selectedIndexComment = null;
+        selectedProductIndexComment = null;
       });
     } else {
       setState(() {
         Future.delayed(Duration.zero, () {
           commentFocusNode.unfocus();
         });
-        selectedIndexComment = index;
+        commentController.clear();
+        selectedProductIndexComment = index;
+
+        Future.delayed(Duration(milliseconds: 100), () {
+          commentFocusNode.requestFocus();
+        });
+      });
+    }
+  }
+
+  void updateSelectedChildIndexComment({
+    required int childIndex,
+    required int productIndex,
+  }) {
+    if (selectedChildIndexComment == childIndex) {
+      setState(() {
+        selectedProductIndexComment = null;
+        selectedChildIndexComment = null;
+      });
+    } else {
+      setState(() {
+        Future.delayed(Duration.zero, () {
+          commentFocusNode.unfocus();
+        });
+        commentController.clear();
+        selectedProductIndexComment = productIndex;
+        selectedChildIndexComment = childIndex;
 
         Future.delayed(Duration(milliseconds: 100), () {
           commentFocusNode.requestFocus();
@@ -56,37 +83,50 @@ class _CartProductsItemsState extends State<CartProductsItems> {
           final cartProduct = cartPresenter.cartProducts[index];
           if (hasMinWidth(context)) {
             return LandscapeCartProductItem(
+              updateSelectedChildIndex: (childIndex) {
+                updateSelectedChildIndexComment(
+                  childIndex: childIndex,
+                  productIndex: index,
+                );
+              },
               cartProduct: cartProduct,
-              index: index,
+              selectedChildIndexComment: selectedChildIndexComment,
               maxWidth: constraints.maxWidth,
               productIndex: index,
               callSetState: () {
                 setState(() {});
-                updateSelectedIndexComment(index);
+                updateSelectedProductIndexComment(index);
               },
               controller: commentController,
               commentFocusNode: commentFocusNode,
-              selectedIndex: selectedIndexComment,
+              selectedIndex: selectedProductIndexComment,
               updateSelectedIndex: () {
                 commentController.clear();
-                updateSelectedIndexComment(index);
+                updateSelectedProductIndexComment(index);
               },
             );
           } else {
             return PortraitCartProductItem(
+              selectedChildIndexComment: selectedChildIndexComment,
               cartProduct: cartProduct,
               focusNode: commentFocusNode,
               productIndex: index,
               maxWidth: constraints.maxWidth,
-              selectedIndex: selectedIndexComment,
+              selectedIndex: selectedProductIndexComment,
               commentController: commentController,
               callSetState: () {
                 setState(() {});
-                updateSelectedIndexComment(index);
+                updateSelectedProductIndexComment(index);
               },
               updateSelectedIndex: () {
                 commentController.clear();
-                updateSelectedIndexComment(index);
+                updateSelectedProductIndexComment(index);
+              },
+              updateSelectedChildIndex: (childIndex) {
+                updateSelectedChildIndexComment(
+                  childIndex: childIndex,
+                  productIndex: index,
+                );
               },
             );
           }

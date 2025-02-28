@@ -9,17 +9,23 @@ import '../../pages.dart';
 
 class PortraitCartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
-  final int index;
+  final int productIndex;
   final int? selectedIndex;
   final double maxWidth;
   final void Function() updateSelectedIndex;
+  final void Function() callSetState;
+  final TextEditingController commentController;
+  final FocusNode focusNode;
 
   const PortraitCartProductItem({
     required this.cartProduct,
-    required this.index,
+    required this.productIndex,
     required this.selectedIndex,
     required this.maxWidth,
     required this.updateSelectedIndex,
+    required this.callSetState,
+    required this.commentController,
+    required this.focusNode,
     super.key,
   });
 
@@ -54,7 +60,8 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
             children: [
               InkWell(
                 onTap: () async {
-                  await cartPresenter.removeProductFromCart(widget.index);
+                  await cartPresenter
+                      .removeProductFromCart(widget.productIndex);
                 },
                 child: Center(
                   child: Icon(
@@ -118,11 +125,12 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
                       widget.cartProduct.Quantity.toDouble() <= 1
                           ? null
                           : () async {
-                              await cartPresenter
-                                  .reduceCartProductQuantity(widget.index);
+                              await cartPresenter.reduceCartProductQuantity(
+                                  widget.productIndex);
                             },
                   onPressedAddQuantity: () async {
-                    await cartPresenter.addCartProductQuantity(widget.index);
+                    await cartPresenter
+                        .addCartProductQuantity(widget.productIndex);
                   },
                 ),
               ),
@@ -130,9 +138,13 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
           ),
           if (EnterpriseBuilder.entity?.canInsertCommentManually == true)
             ChangeComment(
-              index: widget.index,
+              productIndex: widget.productIndex,
               selectedIndex: widget.selectedIndex,
               updateSelectedIndex: widget.updateSelectedIndex,
+              childIndex: null,
+              controller: widget.commentController,
+              callSetState: widget.callSetState,
+              focusNode: widget.focusNode,
             ),
           if (widget.cartProduct.Product.childsComposition != null)
             SelectedChilds(cartProduct: widget.cartProduct),

@@ -15,6 +15,15 @@ class CartProductsItems extends StatefulWidget {
 
 class _CartProductsItemsState extends State<CartProductsItems> {
   int? selectedIndexComment;
+  final commentController = TextEditingController();
+  final focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    super.dispose();
+    commentController.dispose();
+    focusNode.dispose();
+  }
 
   void updateSelectedIndexComment(int index) {
     if (selectedIndexComment == index) {
@@ -23,7 +32,14 @@ class _CartProductsItemsState extends State<CartProductsItems> {
       });
     } else {
       setState(() {
+        Future.delayed(Duration.zero, () {
+          focusNode.unfocus();
+        });
         selectedIndexComment = index;
+
+        Future.delayed(Duration(milliseconds: 100), () {
+          focusNode.requestFocus();
+        });
       });
     }
   }
@@ -47,10 +63,17 @@ class _CartProductsItemsState extends State<CartProductsItems> {
           } else {
             return PortraitCartProductItem(
               cartProduct: cartProduct,
-              index: index,
+              focusNode: focusNode,
+              productIndex: index,
               maxWidth: constraints.maxWidth,
               selectedIndex: selectedIndexComment,
+              commentController: commentController,
+              callSetState: () {
+                setState(() {});
+                updateSelectedIndexComment(index);
+              },
               updateSelectedIndex: () {
+                commentController.clear();
                 updateSelectedIndexComment(index);
               },
             );

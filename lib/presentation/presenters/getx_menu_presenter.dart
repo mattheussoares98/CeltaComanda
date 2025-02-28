@@ -176,6 +176,12 @@ class GetxMenuPresenter extends GetxController
         final localMenu = await menuDatabaseManagement.load();
         _loadedMenu.clear();
         _loadedMenu.addAll(localMenu);
+        final allProducts = _loadedMenu
+            .expand((map) => map
+                .productsViewModel) // Expande todas as listas de produtos em um Iterable
+            .toList();
+        await expansibleGroupFromProductPresenter
+            .loadCommentsAndObligatoryOptions(allProducts);
         await treatShowSearchProducts();
         return;
       }

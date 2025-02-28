@@ -386,7 +386,9 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       if (enterprise.updateDevicesInformations !=
           EnterpriseBuilder.entity?.updateDevicesInformations) {
+        EnterpriseBuilder.entity = enterprise;
         await updateDeviceInformations();
+        await localEnterpriseData.add(enterprise);
       }
 
       if (enterprise.updateEnterprise !=

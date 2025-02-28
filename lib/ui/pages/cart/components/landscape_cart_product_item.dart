@@ -10,11 +10,23 @@ class LandscapeCartProductItem extends StatefulWidget {
   final CartProductsViewModel cartProduct;
   final int index;
   final double maxWidth;
+  final int productIndex;
+  final int? selectedIndex;
+  final void Function() updateSelectedIndex;
+  final TextEditingController controller;
+  final void Function() callSetState;
+  final FocusNode commentFocusNode;
 
   const LandscapeCartProductItem({
     required this.cartProduct,
     required this.index,
     required this.maxWidth,
+    required this.productIndex,
+    required this.selectedIndex,
+    required this.updateSelectedIndex,
+    required this.controller,
+    required this.callSetState,
+    required this.commentFocusNode,
     super.key,
   });
 
@@ -125,8 +137,25 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
               ),
             ],
           ),
+          ChangeComment(
+            productIndex: widget.productIndex,
+            selectedIndex: widget.selectedIndex,
+            updateSelectedIndex: widget.updateSelectedIndex,
+            controller: widget.controller,
+            callSetState: widget.callSetState,
+            focusNode: widget.commentFocusNode,
+            childIndex: null,
+          ),
           if (widget.cartProduct.Product.childsComposition != null)
-            SelectedChilds(cartProduct: widget.cartProduct),
+            SelectedChilds(
+              productIndex: widget.productIndex,
+              selectedIndex: widget.selectedIndex,
+              updateSelectedIndex: widget.updateSelectedIndex,
+              controller: widget.controller,
+              callSetState: widget.callSetState,
+              focusNode: widget.commentFocusNode,
+              cartProduct: widget.cartProduct,
+            ),
         ],
       ),
     );

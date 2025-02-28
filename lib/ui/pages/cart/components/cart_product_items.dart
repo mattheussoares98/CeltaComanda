@@ -16,13 +16,13 @@ class CartProductsItems extends StatefulWidget {
 class _CartProductsItemsState extends State<CartProductsItems> {
   int? selectedIndexComment;
   final commentController = TextEditingController();
-  final focusNode = FocusNode();
+  final commentFocusNode = FocusNode();
 
   @override
   void dispose() {
     super.dispose();
     commentController.dispose();
-    focusNode.dispose();
+    commentFocusNode.dispose();
   }
 
   void updateSelectedIndexComment(int index) {
@@ -33,12 +33,12 @@ class _CartProductsItemsState extends State<CartProductsItems> {
     } else {
       setState(() {
         Future.delayed(Duration.zero, () {
-          focusNode.unfocus();
+          commentFocusNode.unfocus();
         });
         selectedIndexComment = index;
 
         Future.delayed(Duration(milliseconds: 100), () {
-          focusNode.requestFocus();
+          commentFocusNode.requestFocus();
         });
       });
     }
@@ -59,11 +59,23 @@ class _CartProductsItemsState extends State<CartProductsItems> {
               cartProduct: cartProduct,
               index: index,
               maxWidth: constraints.maxWidth,
+              productIndex: index,
+              callSetState: () {
+                setState(() {});
+                updateSelectedIndexComment(index);
+              },
+              controller: commentController,
+              commentFocusNode: commentFocusNode,
+              selectedIndex: selectedIndexComment,
+              updateSelectedIndex: () {
+                commentController.clear();
+                updateSelectedIndexComment(index);
+              },
             );
           } else {
             return PortraitCartProductItem(
               cartProduct: cartProduct,
-              focusNode: focusNode,
+              focusNode: commentFocusNode,
               productIndex: index,
               maxWidth: constraints.maxWidth,
               selectedIndex: selectedIndexComment,

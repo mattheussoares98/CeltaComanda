@@ -7,7 +7,19 @@ import '../../pages.dart';
 
 class SelectedChilds extends StatelessWidget {
   final CartProductsViewModel cartProduct;
+  final int productIndex;
+  final int? selectedIndex;
+  final void Function() updateSelectedIndex;
+  final TextEditingController controller;
+  final void Function() callSetState;
+  final FocusNode focusNode;
   const SelectedChilds({
+    required this.productIndex,
+    required this.selectedIndex,
+    required this.updateSelectedIndex,
+    required this.controller,
+    required this.callSetState,
+    required this.focusNode,
     required this.cartProduct,
     super.key,
   });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -37,6 +38,10 @@ class ChangeComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
+
+    if (EnterpriseBuilder.entity?.canInsertCommentManually != true) {
+      return Container();
+    }
 
     return Column(
       children: [

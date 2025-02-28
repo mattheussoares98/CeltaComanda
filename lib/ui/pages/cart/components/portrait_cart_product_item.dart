@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -136,18 +135,25 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
               ),
             ],
           ),
-          if (EnterpriseBuilder.entity?.canInsertCommentManually == true)
-            ChangeComment(
+          ChangeComment(
+            childIndex: null,
+            productIndex: widget.productIndex,
+            selectedIndex: widget.selectedIndex,
+            updateSelectedIndex: widget.updateSelectedIndex,
+            controller: widget.commentController,
+            callSetState: widget.callSetState,
+            focusNode: widget.focusNode,
+          ),
+          if (widget.cartProduct.Product.childsComposition != null)
+            SelectedChilds(
+              cartProduct: widget.cartProduct,
               productIndex: widget.productIndex,
               selectedIndex: widget.selectedIndex,
               updateSelectedIndex: widget.updateSelectedIndex,
-              childIndex: null,
               controller: widget.commentController,
               callSetState: widget.callSetState,
               focusNode: widget.focusNode,
             ),
-          if (widget.cartProduct.Product.childsComposition != null)
-            SelectedChilds(cartProduct: widget.cartProduct),
         ],
       ),
     );

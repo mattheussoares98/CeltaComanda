@@ -28,6 +28,7 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required String enterpriseName,
     required bool? useReducedNameOnProduct,
     required bool? verifyCommandBlocked,
+    required bool? canInsertCommentManually,
   });
 
   Future<bool> deleteEnterpriseData();

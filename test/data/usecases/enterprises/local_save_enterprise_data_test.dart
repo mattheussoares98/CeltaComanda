@@ -36,6 +36,7 @@ void main() {
       minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
       useReducedNameOnProduct: faker.randomGenerator.boolean(),
       verifyCommandBlocked: faker.randomGenerator.boolean(),
+      canInsertCommentManually: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

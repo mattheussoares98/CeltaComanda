@@ -101,6 +101,7 @@ void main() {
       minutesVerifyUpdateMenu: null,
       useReducedNameOnProduct: null,
       verifyCommandBlocked: null,
+      canInsertCommentManually: null,
     );
 
     pdvsNotUsing = [
@@ -250,6 +251,7 @@ void main() {
           minutesVerifyUpdateMenu: null,
           useReducedNameOnProduct: null,
           verifyCommandBlocked: null,
+          canInsertCommentManually: null,
         ),
       );
     });
@@ -387,12 +389,13 @@ void main() {
               newEnterprise.serviceChargePercentageOrValue,
           updateDevicesInformations: newEnterprise.updateDevicesInformations,
           updateEnterprise: newEnterprise.updateEnterprise,
+          enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
           zoomImage: newEnterprise.zoomImage,
           useReducedNameOnProduct: newEnterprise.useReducedNameOnProduct,
           latestCompatibleVersion: newEnterprise.latestCompatibleVersion,
           minutesVerifyUpdateMenu: newEnterprise.minutesVerifyUpdateMenu,
           verifyCommandBlocked: newEnterprise.verifyCommandBlocked,
-          enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
+          canInsertCommentManually: newEnterprise.canInsertCommentManually,
         ),
       );
     });
@@ -567,6 +570,7 @@ void main() {
             minutesVerifyUpdateMenu: null,
             useReducedNameOnProduct: null,
             verifyCommandBlocked: null,
+            canInsertCommentManually: null,
           ));
     });
   });
@@ -615,6 +619,8 @@ void main() {
                 EnterpriseBuilder.entity!.useReducedNameOnProduct,
             verifyCommandBlocked:
                 EnterpriseBuilder.entity!.verifyCommandBlocked,
+            canInsertCommentManually:
+                EnterpriseBuilder.entity!.canInsertCommentManually,
           ));
     });
   });
@@ -642,6 +648,7 @@ void main() {
           minutesVerifyUpdateMenu: null,
           useReducedNameOnProduct: null,
           verifyCommandBlocked: null,
+          canInsertCommentManually: null,
         ),
       );
     });

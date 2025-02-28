@@ -189,6 +189,8 @@ void main() {
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
+        canInsertCommentManually:
+            EnterpriseBuilder.entity!.canInsertCommentManually,
       );
     });
     test("Should emit correct values on error", () async {
@@ -217,6 +219,8 @@ void main() {
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
+        canInsertCommentManually:
+            EnterpriseBuilder.entity!.canInsertCommentManually,
       );
     });
 
@@ -237,6 +241,7 @@ void main() {
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
+        canInsertCommentManually: enterprise.canInsertCommentManually,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -257,6 +262,8 @@ void main() {
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
+        verifyCommandBlocked: enterprise.verifyCommandBlocked,
+        canInsertCommentManually: enterprise.canInsertCommentManually,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,
@@ -285,6 +292,7 @@ void main() {
         useCovenant: null,
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
+        canInsertCommentManually: null,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -298,6 +306,7 @@ void main() {
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
         verifyCommandBlocked: null,
+        canInsertCommentManually: null,
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -316,6 +325,7 @@ void main() {
         minutesVerifyUpdateMenu: true,
         useReducedNameOnProduct: true,
         verifyCommandBlocked: true,
+        canInsertCommentManually: true,
       );
 
       verify(() =>
@@ -341,6 +351,8 @@ void main() {
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
+        canInsertCommentManually:
+            EnterpriseBuilder.entity!.canInsertCommentManually,
       );
 
       expect(result, true);
@@ -366,6 +378,8 @@ void main() {
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
+        canInsertCommentManually:
+            EnterpriseBuilder.entity!.canInsertCommentManually,
       );
 
       expect(result, false);

@@ -20,6 +20,7 @@ class EnterpriseModel {
   final int? minutesVerifyUpdateMenu;
   final bool? useReducedNameOnProduct;
   final bool? verifyCommandBlocked;
+  final bool? canInsertCommentManually;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -38,6 +39,7 @@ class EnterpriseModel {
     required this.minutesVerifyUpdateMenu,
     required this.useReducedNameOnProduct,
     required this.verifyCommandBlocked,
+    required this.canInsertCommentManually,
   });
 
   factory EnterpriseModel.fromJson(
@@ -77,6 +79,7 @@ class EnterpriseModel {
       minutesVerifyUpdateMenu: json["minutesVerifyUpdateMenu"],
       useReducedNameOnProduct: json["useReducedNameOnProduct"],
       verifyCommandBlocked: json["verifyCommandBlocked"],
+      canInsertCommentManually: json["canInsertCommentManually"],
     );
   }
 
@@ -99,6 +102,7 @@ class EnterpriseModel {
         minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: entity.useReducedNameOnProduct,
         verifyCommandBlocked: entity.verifyCommandBlocked,
+        canInsertCommentManually: entity.canInsertCommentManually,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -119,6 +123,7 @@ class EnterpriseModel {
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
         useReducedNameOnProduct: useReducedNameOnProduct,
         verifyCommandBlocked: verifyCommandBlocked,
+        canInsertCommentManually: canInsertCommentManually,
       );
 
   Map<String, dynamic> toJson() => {
@@ -143,5 +148,6 @@ class EnterpriseModel {
         'minutesVerifyUpdateMenu': minutesVerifyUpdateMenu,
         'useReducedNameOnProduct': useReducedNameOnProduct,
         'verifyCommandBlocked': verifyCommandBlocked,
+        'canInsertCommentManually': canInsertCommentManually,
       };
 }

@@ -20,6 +20,7 @@ class EnterpriseEntity extends Equatable {
   final int? minutesVerifyUpdateMenu;
   final bool? useReducedNameOnProduct;
   final bool? verifyCommandBlocked;
+  final bool? canInsertCommentManually;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -38,6 +39,7 @@ class EnterpriseEntity extends Equatable {
     required this.minutesVerifyUpdateMenu,
     required this.useReducedNameOnProduct,
     required this.verifyCommandBlocked,
+    required this.canInsertCommentManually,
   });
 
   @override
@@ -58,5 +60,6 @@ class EnterpriseEntity extends Equatable {
         minutesVerifyUpdateMenu,
         useReducedNameOnProduct,
         verifyCommandBlocked,
+        canInsertCommentManually,
       ];
 }

@@ -38,10 +38,17 @@ class _WebAddOrEditEnterprisePageState
   bool? useCovenant = false;
   bool? useProductReducedName = false;
   bool? verifyCommandBlocked = true;
+  bool? canInsertCommentManually = false;
 
   void changeUseProductReducedName() {
     setState(() {
       useProductReducedName = !(useProductReducedName ?? false);
+    });
+  }
+
+  void changeCanInsertCommentManually() {
+    setState(() {
+      canInsertCommentManually = !(canInsertCommentManually ?? false);
     });
   }
 
@@ -317,6 +324,7 @@ class _WebAddOrEditEnterprisePageState
               useProductReducedName: useProductReducedName,
               formKey: _formKey,
               verifyCommandBlocked: verifyCommandBlocked,
+              canInsertCommentManually: canInsertCommentManually,
             ),
           ],
         ),

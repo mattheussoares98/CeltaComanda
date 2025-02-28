@@ -70,6 +70,7 @@ void main() {
           useReducedNameOnProduct:
               enterpriseJsonData["useReducedNameOnProduct"],
           verifyCommandBlocked: enterpriseJsonData["verifyCommandBlocked"],
+          canInsertCommentManually: enterpriseJsonData["canInsertCommentManually"],
         ),
       );
     });

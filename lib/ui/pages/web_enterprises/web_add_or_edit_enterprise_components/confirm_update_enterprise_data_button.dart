@@ -19,6 +19,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final bool? useCovenant;
   final bool? useProductReducedName;
   final bool? verifyCommandBlocked;
+  final bool? canInsertCommentManually;
   final GlobalKey<FormState> formKey;
 
   const ConfirmUpdateEnterpriseDataButton({
@@ -36,6 +37,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.useCovenant,
     required this.useProductReducedName,
     required this.verifyCommandBlocked,
+    required this.canInsertCommentManually,
     super.key,
   });
 
@@ -87,6 +89,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                         : minutesVerifyUpdateMenuController.text.toInt(),
                 useReducedNameOnProduct: useProductReducedName,
                 verifyCommandBlocked: verifyCommandBlocked,
+                canInsertCommentManually: canInsertCommentManually,
               );
 
               if (updated) {

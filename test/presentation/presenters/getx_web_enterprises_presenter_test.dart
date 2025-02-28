@@ -188,6 +188,7 @@ void main() {
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
+        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
       );
     });
     test("Should emit correct values on error", () async {
@@ -215,6 +216,7 @@ void main() {
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
+        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
       );
     });
 
@@ -234,6 +236,7 @@ void main() {
         useCovenant: enterprise.useCovenant,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
+        verifyCommandBlocked: enterprise.verifyCommandBlocked,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -275,6 +278,7 @@ void main() {
         concentratorUrl: enterprise.concentradorUrl!,
         ccsUrl: enterprise.urlCCS!,
         enterpriseId: enterprise.enterpriseId!,
+        verifyCommandBlocked: null,
         latestCompatibleVersion: null,
         serviceChargePercentage: null,
         zoomImage: null,
@@ -293,6 +297,7 @@ void main() {
         useCovenant: null,
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
+        verifyCommandBlocked: null,
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -310,6 +315,7 @@ void main() {
         useCovenant: true,
         minutesVerifyUpdateMenu: true,
         useReducedNameOnProduct: true,
+        verifyCommandBlocked: true,
       );
 
       verify(() =>
@@ -334,6 +340,7 @@ void main() {
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
+        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
       );
 
       expect(result, true);
@@ -358,6 +365,7 @@ void main() {
             EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
         useReducedNameOnProduct:
             EnterpriseBuilder.entity!.useReducedNameOnProduct,
+        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
       );
 
       expect(result, false);

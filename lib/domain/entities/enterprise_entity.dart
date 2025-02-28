@@ -19,6 +19,7 @@ class EnterpriseEntity extends Equatable {
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
   final bool? useReducedNameOnProduct;
+  final bool? verifyCommandBlocked;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -36,6 +37,7 @@ class EnterpriseEntity extends Equatable {
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
     required this.useReducedNameOnProduct,
+    required this.verifyCommandBlocked,
   });
 
   @override
@@ -55,5 +57,6 @@ class EnterpriseEntity extends Equatable {
         latestCompatibleVersion,
         minutesVerifyUpdateMenu,
         useReducedNameOnProduct,
+        verifyCommandBlocked,
       ];
 }

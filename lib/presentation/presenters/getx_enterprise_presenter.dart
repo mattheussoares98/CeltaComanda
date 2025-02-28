@@ -90,6 +90,7 @@ class GetxEnterprisePresenter extends GetxController
             latestCompatibleVersion: firebaseData.latestCompatibleVersion,
             minutesVerifyUpdateMenu: firebaseData.minutesVerifyUpdateMenu,
             useReducedNameOnProduct: firebaseData.useReducedNameOnProduct,
+            verifyCommandBlocked: firebaseData.verifyCommandBlocked,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -164,6 +165,7 @@ class GetxEnterprisePresenter extends GetxController
       latestCompatibleVersion: null,
       minutesVerifyUpdateMenu: null,
       useReducedNameOnProduct: null,
+      verifyCommandBlocked: null,
     );
 
     _enterpriseError.value =
@@ -223,6 +225,7 @@ class GetxEnterprisePresenter extends GetxController
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
+        verifyCommandBlocked: enterprise.verifyCommandBlocked,
       );
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -252,6 +255,7 @@ class GetxEnterprisePresenter extends GetxController
         latestCompatibleVersion: null,
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
+        verifyCommandBlocked: null,
       );
 
       EnterpriseBuilder.entity = newEnterprise;

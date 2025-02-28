@@ -121,6 +121,7 @@ void main() {
           minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
           latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
           useReducedNameOnProduct: faker.randomGenerator.boolean(),
+          verifyCommandBlocked: faker.randomGenerator.boolean(),
         ),
       );
 
@@ -155,6 +156,7 @@ void main() {
           latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
           minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
           useReducedNameOnProduct: faker.randomGenerator.boolean(),
+          verifyCommandBlocked: faker.randomGenerator.boolean(),
         ),
       );
 

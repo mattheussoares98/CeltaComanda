@@ -96,6 +96,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required String enterpriseName,
     required int? minutesVerifyUpdateMenu,
     required bool? useReducedNameOnProduct,
+    required bool? verifyCommandBlocked,
   }) async {
     try {
       isLoading = true;
@@ -122,6 +123,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
         useReducedNameOnProduct: useReducedNameOnProduct,
+        verifyCommandBlocked: verifyCommandBlocked,
       );
 
       await updateEnterpriseParameters.update(enterprise);

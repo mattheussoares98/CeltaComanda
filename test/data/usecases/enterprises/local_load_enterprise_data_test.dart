@@ -69,6 +69,7 @@ void main() {
               enterpriseJsonData["minutesVerifyUpdateMenu"],
           useReducedNameOnProduct:
               enterpriseJsonData["useReducedNameOnProduct"],
+          verifyCommandBlocked: enterpriseJsonData["verifyCommandBlocked"],
         ),
       );
     });

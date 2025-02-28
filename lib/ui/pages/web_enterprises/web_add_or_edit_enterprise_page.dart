@@ -37,6 +37,7 @@ class _WebAddOrEditEnterprisePageState
   bool? zoomImage = false;
   bool? useCovenant = false;
   bool? useProductReducedName = false;
+  bool? verifyCommandBlocked = false;
 
   void changeUseProductReducedName() {
     setState(() {
@@ -303,6 +304,7 @@ class _WebAddOrEditEnterprisePageState
               useCovenant: useCovenant,
               useProductReducedName: useProductReducedName,
               formKey: _formKey,
+              verifyCommandBlocked: verifyCommandBlocked,
             ),
           ],
         ),

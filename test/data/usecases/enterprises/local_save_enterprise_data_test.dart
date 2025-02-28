@@ -35,6 +35,7 @@ void main() {
       latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
       minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
       useReducedNameOnProduct: faker.randomGenerator.boolean(),
+      verifyCommandBlocked: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

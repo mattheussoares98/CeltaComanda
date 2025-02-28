@@ -19,6 +19,7 @@ class EnterpriseModel {
   final String? latestCompatibleVersion;
   final int? minutesVerifyUpdateMenu;
   final bool? useReducedNameOnProduct;
+  final bool? verifyCommandBlocked;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -36,6 +37,7 @@ class EnterpriseModel {
     required this.latestCompatibleVersion,
     required this.minutesVerifyUpdateMenu,
     required this.useReducedNameOnProduct,
+    required this.verifyCommandBlocked,
   });
 
   factory EnterpriseModel.fromJson(
@@ -74,6 +76,7 @@ class EnterpriseModel {
       latestCompatibleVersion: json["latestCompatibleVersion"],
       minutesVerifyUpdateMenu: json["minutesVerifyUpdateMenu"],
       useReducedNameOnProduct: json["useReducedNameOnProduct"],
+      verifyCommandBlocked: json["verifyCommandBlocked"],
     );
   }
 
@@ -95,6 +98,7 @@ class EnterpriseModel {
         latestCompatibleVersion: entity.latestCompatibleVersion,
         minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
         useReducedNameOnProduct: entity.useReducedNameOnProduct,
+        verifyCommandBlocked: entity.verifyCommandBlocked,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -114,6 +118,7 @@ class EnterpriseModel {
         latestCompatibleVersion: latestCompatibleVersion,
         minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
         useReducedNameOnProduct: useReducedNameOnProduct,
+        verifyCommandBlocked: verifyCommandBlocked,
       );
 
   Map<String, dynamic> toJson() => {

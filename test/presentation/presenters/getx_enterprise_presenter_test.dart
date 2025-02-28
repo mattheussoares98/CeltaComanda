@@ -100,6 +100,7 @@ void main() {
       latestCompatibleVersion: null,
       minutesVerifyUpdateMenu: null,
       useReducedNameOnProduct: null,
+      verifyCommandBlocked: null,
     );
 
     pdvsNotUsing = [
@@ -248,6 +249,7 @@ void main() {
           latestCompatibleVersion: null,
           minutesVerifyUpdateMenu: null,
           useReducedNameOnProduct: null,
+          verifyCommandBlocked: null,
         ),
       );
     });
@@ -389,6 +391,7 @@ void main() {
           useReducedNameOnProduct: newEnterprise.useReducedNameOnProduct,
           latestCompatibleVersion: newEnterprise.latestCompatibleVersion,
           minutesVerifyUpdateMenu: newEnterprise.minutesVerifyUpdateMenu,
+          verifyCommandBlocked: newEnterprise.verifyCommandBlocked,
           enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
         ),
       );
@@ -563,6 +566,7 @@ void main() {
             latestCompatibleVersion: null,
             minutesVerifyUpdateMenu: null,
             useReducedNameOnProduct: null,
+            verifyCommandBlocked: null,
           ));
     });
   });
@@ -609,6 +613,8 @@ void main() {
                 EnterpriseBuilder.entity!.latestCompatibleVersion,
             useReducedNameOnProduct:
                 EnterpriseBuilder.entity!.useReducedNameOnProduct,
+            verifyCommandBlocked:
+                EnterpriseBuilder.entity!.verifyCommandBlocked,
           ));
     });
   });
@@ -635,6 +641,7 @@ void main() {
           latestCompatibleVersion: null,
           minutesVerifyUpdateMenu: null,
           useReducedNameOnProduct: null,
+          verifyCommandBlocked: null,
         ),
       );
     });

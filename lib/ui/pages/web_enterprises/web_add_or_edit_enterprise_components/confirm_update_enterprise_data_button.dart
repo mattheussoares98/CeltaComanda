@@ -18,6 +18,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final bool? zoomImage;
   final bool? useCovenant;
   final bool? useProductReducedName;
+  final bool? verifyCommandBlocked;
   final GlobalKey<FormState> formKey;
 
   const ConfirmUpdateEnterpriseDataButton({
@@ -34,6 +35,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.formKey,
     required this.useCovenant,
     required this.useProductReducedName,
+    required this.verifyCommandBlocked,
     super.key,
   });
 
@@ -84,6 +86,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                         ? null
                         : minutesVerifyUpdateMenuController.text.toInt(),
                 useReducedNameOnProduct: useProductReducedName,
+                verifyCommandBlocked: verifyCommandBlocked,
               );
 
               if (updated) {

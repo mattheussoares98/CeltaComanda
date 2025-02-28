@@ -29,6 +29,7 @@ class EntityFactory {
     bool? latestCompatibleVersion,
     bool? minutesVerifyUpdateMenu,
     bool? useReducedNameOnProduct,
+    bool? verifyCommandBlocked,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -61,6 +62,9 @@ class EntityFactory {
       useReducedNameOnProduct: useReducedNameOnProduct == true
           ? null
           : atualEntity.useReducedNameOnProduct,
+      verifyCommandBlocked: verifyCommandBlocked == true
+          ? null
+          : atualEntity.verifyCommandBlocked,
     );
   }
 
@@ -83,6 +87,7 @@ class EntityFactory {
     String? latestCompatibleVersion,
     int? minutesVerifyUpdateMenu,
     bool? useReducedNameOnProduct,
+    bool? verifyCommandBlocked,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -109,6 +114,8 @@ class EntityFactory {
           minutesVerifyUpdateMenu ?? faker.randomGenerator.integer(100),
       useReducedNameOnProduct:
           useReducedNameOnProduct ?? faker.randomGenerator.boolean(),
+      verifyCommandBlocked:
+          verifyCommandBlocked ?? faker.randomGenerator.boolean(),
     );
   }
 

@@ -139,7 +139,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
           ),
           ChangeComment(
             productIndex: widget.productIndex,
-            selectedIndex: widget.selectedIndex,
+            showTextFormField: widget.selectedIndex == widget.productIndex,
             updateSelectedIndex: widget.updateSelectedIndex,
             controller: widget.controller,
             callSetState: widget.callSetState,

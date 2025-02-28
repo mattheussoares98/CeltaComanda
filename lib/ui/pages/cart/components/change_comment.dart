@@ -9,7 +9,7 @@ import '../../pages.dart';
 class ChangeComment extends StatelessWidget {
   final int productIndex;
   final int? childIndex;
-  final int? selectedIndex;
+  final bool showTextFormField;
   final void Function() updateSelectedIndex;
   final TextEditingController controller;
   final void Function() callSetState;
@@ -17,7 +17,7 @@ class ChangeComment extends StatelessWidget {
   const ChangeComment({
     required this.productIndex,
     required this.childIndex,
-    required this.selectedIndex,
+    required this.showTextFormField,
     required this.updateSelectedIndex,
     required this.controller,
     required this.callSetState,
@@ -56,7 +56,7 @@ class ChangeComment extends StatelessWidget {
             label: Text(R.string.comment),
           ),
         ),
-        if (productIndex == selectedIndex)
+        if (showTextFormField)
           Column(
             children: [
               Padding(

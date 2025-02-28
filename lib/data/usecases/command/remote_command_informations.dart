@@ -13,6 +13,10 @@ class RemoteCommandInformations implements CommandInformations {
   @override
   Future<bool> isValidDatetime({required String commandNumber}) async {
     try {
+      if (EnterpriseBuilder.entity?.verifyCommandBlocked == false) {
+        return true;
+      }
+
       final isValid = await httpAdapter.request(
         url:
             "${EnterpriseBuilder.entity!.url!}/api/APITicketAC/IsValidDateTime?ticketNumber=$commandNumber",

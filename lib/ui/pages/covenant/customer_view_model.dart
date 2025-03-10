@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+
 
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:equatable/equatable.dart';

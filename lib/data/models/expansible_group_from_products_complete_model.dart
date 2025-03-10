@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import '../../domain/entities/entities.dart';
 
 class ExpansibleGroupFromProductsCompleteModel {
@@ -17,7 +15,12 @@ class ExpansibleGroupFromProductsCompleteModel {
 
   factory ExpansibleGroupFromProductsCompleteModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll(
-      ["ProductName", "ExpansibleGroupId", "ProductInternalCodeOnErp", "GroupName"],
+      [
+        "ProductName",
+        "ExpansibleGroupId",
+        "ProductInternalCodeOnErp",
+        "GroupName"
+      ],
     )) {
       throw Exception();
     }

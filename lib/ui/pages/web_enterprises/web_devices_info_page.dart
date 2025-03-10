@@ -64,15 +64,21 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
     });
   }
 
-  void sortDownDeviceId(List<DeviceInfoViewModel>? data) {
+  void sortDownPdvNumber(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!.sort((a, b) => a.imeiOrWindowsId.compareTo(b.imeiOrWindowsId));
+      data!.sort((a, b) => a.pdvNumber
+          .toString()
+          .toInt()
+          .compareTo(b.pdvNumber.toString().toInt()));
     });
   }
 
-  void sortUpDeviceId(List<DeviceInfoViewModel>? data) {
+  void sortUpPdvNumber(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!.sort((a, b) => b.imeiOrWindowsId.compareTo(a.imeiOrWindowsId));
+      data!.sort((a, b) => b.pdvNumber
+          .toString()
+          .toInt()
+          .compareTo(a.pdvNumber.toString().toInt()));
     });
   }
 
@@ -146,9 +152,9 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                               data: snapshot.data!,
                             ),
                             OrganizeUpOrDown(
-                              sortDown: sortDownDeviceId,
-                              sortUp: sortUpDeviceId,
-                              title: R.string.deviceId,
+                              sortDown: sortDownPdvNumber,
+                              sortUp: sortUpPdvNumber,
+                              title: R.string.pdv,
                               data: snapshot.data!,
                             ),
                             OrganizeUpOrDown(
@@ -184,7 +190,7 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                             ),
                             Expanded(
                               child:
-                                  Center(child: Text(device.imeiOrWindowsId)),
+                                  Center(child: Text(device.pdvNumber ?? "")),
                             ),
                             Expanded(
                               child:

@@ -23,7 +23,6 @@ export './printed_products/printed_products.dart';
 export './product_composition/product_composition.dart';
 export './products/products.dart';
 export 'sale_movement/sale_movement.dart';
-export './sale_request_concentrador/sale_request_concentrador.dart';
 export 'sale_request/sale_request.dart';
 export './schedule/schedule.dart';
 export './sellers/sellers.dart';

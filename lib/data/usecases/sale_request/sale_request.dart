@@ -1,6 +1,7 @@
 export './remote_change_sale_request_personalized_code_products.dart';
 export './remote_change_sale_request_personalized_code.dart';
 export './remote_close_sale_request.dart';
+export './remote_finish_sale_request_concentrador.dart';
 export './remote_finish_sale_request_temp_by_id.dart';
 export 'remote_finish_sale_request_temp.dart';
 export 'remote_load_sale_request_temp.dart';

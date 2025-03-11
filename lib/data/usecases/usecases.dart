@@ -29,3 +29,4 @@ export './schedule/schedule.dart';
 export './sellers/sellers.dart';
 export './url/url.dart';
 export './users/users.dart';
+export './xml/xml.dart';

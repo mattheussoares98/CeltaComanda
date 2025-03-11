@@ -1,1 +1,1 @@
-export 'remote_load_sale_movement_concentrator.dart';
+export 'remote_conc_load_sale_movement.dart';

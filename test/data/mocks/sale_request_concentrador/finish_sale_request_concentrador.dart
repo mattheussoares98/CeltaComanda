@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 class FinishSaleRequestConcentradorSpy extends Mock
-    implements FinishSaleRequestConcentrador {
+    implements ConcFinishSaleRequest {
   FinishSaleRequestConcentradorSpy() {
     this._mockFinish();
   }

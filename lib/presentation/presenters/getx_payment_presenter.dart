@@ -19,7 +19,7 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final Pay pay;
   final CommandInformations commandInformations;
-  final FinishSaleRequestConcentrador finishSaleRequestConcentrador;
+  final ConcFinishSaleRequest finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
   final UpdateSaleRequest updateSaleRequest;
   final LoadCustomer loadCustomer;

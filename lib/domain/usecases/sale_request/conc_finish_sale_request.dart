@@ -1,6 +1,6 @@
 import '../../../data/models/models.dart';
 
-abstract class FinishSaleRequestConcentrador {
+abstract class ConcFinishSaleRequest {
   Future<void> finish({
     required int pdvNumber,
     required int commandNumber,

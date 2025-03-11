@@ -4,11 +4,10 @@ import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
-class RemoteFinishSaleRequestConcentrador
-    implements FinishSaleRequestConcentrador {
+class RemoteConcFinishSaleRequest implements ConcFinishSaleRequest {
   final HttpClient httpAdapter;
 
-  RemoteFinishSaleRequestConcentrador({required this.httpAdapter});
+  RemoteConcFinishSaleRequest({required this.httpAdapter});
 
   @override
   Future<void> finish({

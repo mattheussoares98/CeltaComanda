@@ -8,7 +8,7 @@ import '../../../main/builders/builders.dart';
 class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
   @override
   Future<String> generate({
-    required List<CartProductEntity> products,
+    required List<PrintedProductsEntity> products,
     required List<SaleMovementConcentratorFinalizationModel> finalizations,
     required CustomerEntity? customer,
     required int? cpf,

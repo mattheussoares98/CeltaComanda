@@ -155,7 +155,8 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
 
     try {
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
+          isRedeVersion: false /* tanto faz, não usa mais essa função */);
       await addPendingDeviceToUpdate.add(
         imeiOrWindowsId: imeiOrWindowsId,
         enterpriseName: enterpriseName,

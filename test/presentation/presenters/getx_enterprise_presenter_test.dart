@@ -679,6 +679,7 @@ void main() {
 
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -695,6 +696,7 @@ void main() {
 
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -703,16 +705,18 @@ void main() {
     test("Should call get imei or windows id", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
       );
 
-      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false)).called(1);
     });
     test("Should call get application version", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -724,6 +728,7 @@ void main() {
     test("Should call set pdv register with correct values", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -740,6 +745,7 @@ void main() {
     test("Should call navigate to home page", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -753,6 +759,7 @@ void main() {
     test("Should update local command data correctly", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
+        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,

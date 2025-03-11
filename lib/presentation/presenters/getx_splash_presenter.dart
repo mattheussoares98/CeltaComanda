@@ -50,7 +50,9 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
       } else {
         final registeredPdv =
             await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
-        final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+        final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
+          isRedeVersion: homePresenter.isGeneratingVersionToRede,
+        );
 
         if (registeredPdv == null) {
           //não conseguiu validar, depois valida

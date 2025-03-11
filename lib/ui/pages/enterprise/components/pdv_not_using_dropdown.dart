@@ -26,6 +26,7 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
   Widget build(BuildContext context) {
     EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return StreamBuilder(
         stream: enterprisePresenter.pdvsNotUsingStream,
@@ -79,6 +80,8 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                                     ? null
                                     : widget.commandNumberController.text,
                             isFixedCommandNumber: widget.isFixedCommandNumber,
+                            isRedeVersion:
+                                homePresenter.isGeneratingVersionToRede,
                           );
                         },
                   child: Text(

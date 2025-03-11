@@ -82,17 +82,13 @@ void main() {
 
   group("Is web", () {
     test("Should call getPlataform.isWeb", () async {
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-      );
+      await sut.checkPageToGo(homePresenter: homePresenter);
 
       verify(() => obtainPlatform.isWeb()).called(1);
     });
     test("Should go to webLoginPage if is web page", () async {
       obtainPlatform.mockIsWeb(true);
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-      );
+      await sut.checkPageToGo(homePresenter: homePresenter);
 
       verify(() =>
               navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true))
@@ -237,20 +233,17 @@ void main() {
       homePresenter.isGeneratingVersionToGetNetMock = true;
       pdvRegistration.mockGetById(null);
 
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-      );
+      await sut.checkPageToGo(homePresenter: homePresenter);
 
-      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId(
+          isRedeVersion: homePresenter.isGeneratingVersionToRede)).called(1);
     });
     test(
         "Should go to enterprise page if device id and remote id registered are differently",
         () async {
       homePresenter.isGeneratingVersionToGetNetMock = true;
 
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-      );
+      await sut.checkPageToGo(homePresenter: homePresenter);
 
       verify(() => navigateTo.navigate(
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
@@ -263,9 +256,7 @@ void main() {
       final applicationVersion = faker.guid.guid();
       loadDeviceData.mockGetApplicationVersion(applicationVersion);
 
-      await sut.checkPageToGo(
-        homePresenter: homePresenter,
-      );
+      await sut.checkPageToGo(homePresenter: homePresenter);
 
       verify(() => loadDeviceData.getApplicationVersion()).called(1);
       verify(() => pdvRegistration.updatePdvRegister(

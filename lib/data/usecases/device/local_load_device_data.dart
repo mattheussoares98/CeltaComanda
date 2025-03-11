@@ -8,7 +8,7 @@ import '../../../domain/usecases/usecases.dart';
 
 class LocalLoadimeiOrWindowsId implements LoadDeviceData {
   @override
-  Future<String> getImeiOrWindowsId() async {
+  Future<String> getImeiOrWindowsId({required bool isRedeVersion}) async {
     String? identifier;
     if (Platform.isWindows) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -16,6 +16,10 @@ class LocalLoadimeiOrWindowsId implements LoadDeviceData {
       identifier = windowsInfo.deviceId;
     } else {
       identifier = await FlutterDeviceImei.instance.getIMEI();
+    }
+
+    if (isRedeVersion) {
+      return "Rede - ${identifier ?? ""}";
     }
 
     return identifier ?? "";

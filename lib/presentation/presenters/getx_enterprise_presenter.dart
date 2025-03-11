@@ -280,11 +280,13 @@ class GetxEnterprisePresenter extends GetxController
     required PdvNotUsingViewModel selectedPdv,
     required String? commandNumber,
     required bool isFixedCommandNumber,
+    required bool isRedeVersion,
   }) async {
     isLoading = true;
     mainError = null;
     try {
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
+      final imeiOrWindowsId =
+          await loadDeviceData.getImeiOrWindowsId(isRedeVersion: isRedeVersion);
       final applicationVersion = await loadDeviceData.getApplicationVersion();
 
       await pdvRegistration.setPdvRegister(

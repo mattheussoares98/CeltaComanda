@@ -443,7 +443,8 @@ void main() {
     test("Should call load pending device", () async {
       await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
-      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false))
+          .called(1);
     });
   });
 

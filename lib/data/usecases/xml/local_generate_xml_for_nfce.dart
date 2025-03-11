@@ -9,7 +9,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
   @override
   Future<String> generate({
     required List<PrintedProductsEntity> products,
-    required List<SaleMovementConcentratorFinalizationModel> finalizations,
+    required List<ConcentratorFinalizationModel> finalizations,
     required CustomerEntity? customer,
     required int? cpf,
     required int? cnpj,

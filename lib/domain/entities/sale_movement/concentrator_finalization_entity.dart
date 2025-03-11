@@ -2,7 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
-class SaleMovementConcentratorFinalizationEntity extends Equatable {
+class ConcentratorFinalizationEntity extends Equatable {
   final int? SaleMovementFinalizationId;
   final int? FinalizationId;
   final double? Value;
@@ -27,7 +27,7 @@ class SaleMovementConcentratorFinalizationEntity extends Equatable {
 //  public virtual IList<ModelSaleMovementFinalizationCheck> Checks
 //  public virtual IList<ModelSaleMovementFinalizationPortion> Portions
 
-  const SaleMovementConcentratorFinalizationEntity({
+  const ConcentratorFinalizationEntity({
     required this.SaleMovementFinalizationId,
     required this.FinalizationId,
     required this.Value,

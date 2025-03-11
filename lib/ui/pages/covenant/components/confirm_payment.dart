@@ -9,6 +9,7 @@ class ConfirmPayment extends StatelessWidget {
   final TextEditingController passwordController;
   final CustomerViewModel customer;
   final GlobalKey<FormState> passwordKey;
+  //TODO add option to add cpf or cnpj
 
   const ConfirmPayment({
     required this.customer,
@@ -27,6 +28,8 @@ class ConfirmPayment extends StatelessWidget {
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
+      cnpj: null,
+      cpf: null,
       showErrorMessageReturnedByBs: (error) {
         snackBarMessage(
           context,

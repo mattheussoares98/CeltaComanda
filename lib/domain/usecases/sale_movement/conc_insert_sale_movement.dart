@@ -1,3 +1,4 @@
+import '../../../ui/pages/pages.dart';
 import '../../entities/entities.dart';
 
 abstract class ConcInsertSaleMovement {
@@ -10,8 +11,8 @@ abstract class ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
-    required List<SaleMovementConcentratorFinalizationEntity> finalizations,
-    required List<SaleMovementProductConcentratorEntity> products,
+    required List<ConcentratorFinalizationEntity> finalizations,
+    required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,
   });
 }

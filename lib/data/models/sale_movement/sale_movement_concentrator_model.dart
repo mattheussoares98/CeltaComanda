@@ -55,7 +55,7 @@ class SaleMovementConcentratorModel extends Equatable {
   final bool? WasPrinted;
   final bool? IsDelivery;
   final List<SaleMovementProductConcentratorModel> Products;
-  final List<SaleMovementConcentratorFinalizationModel> Finalizations;
+  final List<ConcentratorFinalizationModel> Finalizations;
 
   const SaleMovementConcentratorModel({
     required this.PdvNumber,
@@ -224,7 +224,7 @@ class SaleMovementConcentratorModel extends Equatable {
         Finalizations: data["Finalizations"] != null
             ? (data["Finalizations"] as List)
                 .map((e) =>
-                    SaleMovementConcentratorFinalizationModel.fromJson(e))
+                    ConcentratorFinalizationModel.fromJson(e))
                 .toList()
             : [],
       );
@@ -393,7 +393,7 @@ class SaleMovementConcentratorModel extends Equatable {
         Products: entity.Products.map(
             (e) => SaleMovementProductConcentratorModel.fromEntity(e)).toList(),
         Finalizations: entity.Finalizations.map(
-                (e) => SaleMovementConcentratorFinalizationModel.fromEntity(e))
+                (e) => ConcentratorFinalizationModel.fromEntity(e))
             .toList(),
       );
 }

@@ -3,6 +3,7 @@ import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
+import '../../../ui/pages/pages.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
@@ -21,8 +22,8 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
-    required List<SaleMovementConcentratorFinalizationEntity> finalizations,
-    required List<SaleMovementProductConcentratorEntity> products,
+    required List<ConcentratorFinalizationEntity> finalizations,
+    required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,
   }) async {
     try {
@@ -71,8 +72,8 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
-    required List<SaleMovementConcentratorFinalizationEntity> finalizations,
-    required List<SaleMovementProductConcentratorEntity> products,
+    required List<ConcentratorFinalizationEntity> finalizations,
+    required List<PrintedProductsViewModel> products,
   }) {
     final enterprise = EnterpriseBuilder.entity;
     return SaleMovementConcentratorEntity(
@@ -135,14 +136,14 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
   }
 }
 
-List<SaleMovementConcentratorFinalizationEntity> _getFinalizations({
-  required List<SaleMovementConcentratorFinalizationEntity> finalizations,
+List<ConcentratorFinalizationEntity> _getFinalizations({
+  required List<ConcentratorFinalizationEntity> finalizations,
   required double totalLiquid,
 }) =>
     finalizations.isEmpty
         ? [
-            SaleMovementConcentratorFinalizationEntity(
-              FinalizationId: FinalizationIdentification.money.finalizationId,
+            ConcentratorFinalizationEntity(
+              FinalizationId: FinalizationType.money.id,
               PortionQuantity: 1,
               Value: totalLiquid,
               ValueLiquid: totalLiquid,
@@ -167,57 +168,68 @@ List<SaleMovementConcentratorFinalizationEntity> _getFinalizations({
         : finalizations;
 
 List<SaleMovementProductConcentratorEntity> _getProducts({
-  required List<SaleMovementProductConcentratorEntity> products,
+  required List<PrintedProductsViewModel> products,
 }) {
   return products.map((e) {
     int position = 1;
+    final product = e.toEntity();
+    final productEntity = product.Product;
 
     return SaleMovementProductConcentratorEntity(
       BlockadeDiscountType: 1,
-      CFOP: e.CFOP,
-      CofinsPercentage: e.CofinsPercentage,
-      CofinsType: e.CofinsType,
-      Comments: e.Comments,
-      CSTPisCofins: e.CSTPisCofins,
-      IcmsAliquot: e.IcmsAliquot,
-      IcmsFiscalAdjustCode: e.IcmsFiscalAdjustCode,
-      IcmsFiscalAdjustObservationCode: e.IcmsFiscalAdjustObservationCode,
-      IcmsFiscalBenefitCode: e.IcmsFiscalBenefitCode,
-      IcmsFiscalOriginalAliquot: e.IcmsFiscalOriginalAliquot,
-      IcmsIVAMargin: e.IcmsIVAMargin,
-      IcmsReductionMargin: e.IcmsReductionMargin,
-      IcmsStave: e.IcmsStave,
-      IcmsTributarySituationCode: e.IcmsTributarySituationCode,
-      LiquidCost: e.LiquidCost,
-      LiquidCostMiddle: e.LiquidCostMiddle,
-      LiquidCostReal: e.LiquidCostReal,
-      NatureOperationCodePisCofins: e.NatureOperationCodePisCofins,
-      OfferECommercePrice: e.OfferECommercePrice,
-      OfferRetailPrice: e.OfferRetailPrice,
-      PisPercentage: e.PisPercentage,
-      PisType: e.PisType,
+      CFOP: productEntity.CFOP,
+      CofinsPercentage: productEntity.CofinsPercentage,
+      CofinsType: productEntity.CofinsType,
+      Comments: product.Comments,
+      CSTPisCofins: productEntity.CSTPisCofins,
+      IcmsAliquot: productEntity.IcmsAliquot,
+      IcmsFiscalAdjustCode:
+          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalAdjustCode  */,
+      IcmsFiscalAdjustObservationCode:
+          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalAdjustObservationCode  */,
+      IcmsFiscalBenefitCode:
+          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalBenefitCode  */,
+      IcmsFiscalOriginalAliquot:
+          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalOriginalAliquot  */,
+      IcmsTributarySituationCode:
+          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsTributarySituationCode  */,
+      NatureOperationCodePisCofins:
+          null /*I DONT HAVE THIS PROPERTY productEntity.NatureOperationCodePisCofins  */,
+      UnitValue: null /*I DONT HAVE THIS PROPERTY productEntity.UnitValue  */,
+      WholeOfferPrice: productEntity.WholeOfferPrice,
+      WholeSalePrice: productEntity.WholeSalePrice,
+      IcmsIVAMargin: productEntity.IcmsIVAMargin,
+      IcmsReductionMargin: productEntity.IcmsReductionMargin,
+      IcmsStave: productEntity.IcmsStave,
+      LiquidCost: productEntity.LiquidCost,
+      LiquidCostMiddle: productEntity.LiquidCostMiddle,
+      LiquidCostReal: productEntity.LiquidCostReal,
+      OfferECommercePrice: productEntity.OfferECommercePrice,
+      OfferRetailPrice: productEntity.OfferRetailPrice,
+      PisPercentage: productEntity.PisPercentage,
+      PisType: productEntity.PisType,
       Position: ++position,
-      ProductEan: e.ProductEan,
-      ProductInternalCodeOnERP: e.ProductInternalCodeOnERP,
-      ProductIsFatherComposition: e.ProductIsFatherComposition,
-      ProductName: e.ProductName,
-      ProductPluCode: e.ProductPluCode,
-      Quantity: e.Quantity,
-      RepositionCost: e.RepositionCost,
-      RepositionCostMiddle: e.RepositionCostMiddle,
-      RepositionCostReal: e.RepositionCostReal,
-      SaleECommercePrice: e.SaleECommercePrice,
+      ProductEan: productEntity.EanCode,
+      ProductInternalCodeOnERP:
+          productEntity.InternalCodeOfProductOnERP?.toString(),
+      ProductIsFatherComposition: productEntity.ProductIsFatherComposition == 1,
+      ProductName: productEntity.Name,
+      ProductPluCode: productEntity.PriceLookupCode,
+      Quantity: e.Quantity.toDouble(),
+      RepositionCost: productEntity.RepositionCost,
+      RepositionCostMiddle: productEntity.RepositionCostMiddle,
+      RepositionCostReal: productEntity.RepositionCostReal,
+      SaleECommercePrice: productEntity.SaleECommercePrice,
       SaleMovement: null,
-      SaleMovementProductCompositionId: e.ProductIsFatherComposition == true
+      SaleMovementProductCompositionId:
+          null /* e.ProductIsFatherComposition == true
           ? e.SaleMovementProductId?.toString()
-          : e.SaleMovementProductCompositionId,
+          : e.SaleMovementProductCompositionId */
+      ,
       SaleMovementProductId: 0,
-      SaleRequestProductInternalCodeOnERP: e.ProductInternalCodeOnERP?.toInt(),
-      SaleRetailPrice: e.SaleRetailPrice,
-      SocialContributionCodePisCofins: e.SocialContributionCodePisCofins,
-      UnitValue: e.UnitValue,
-      WholeOfferPrice: e.WholeOfferPrice,
-      WholeSalePrice: e.WholeSalePrice,
+      SaleRequestProductInternalCodeOnERP: e.ProductInternalCodeOnErp.toInt(),
+      SaleRetailPrice: productEntity.SaleRetailPrice,
+      SocialContributionCodePisCofins: null,
       SaleNegotiationDiscountType: null,
       SaleNegotiationDiscountValue: null,
       SaleOfferCode: null,

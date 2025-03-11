@@ -52,7 +52,7 @@ class SaleMovementConcentratorEntity extends Equatable {
   final double? TotalLiquid;
   final int? RoundingType;
   final List<SaleMovementProductConcentratorEntity> Products;
-  final List<SaleMovementConcentratorFinalizationEntity> Finalizations;
+  final List<ConcentratorFinalizationEntity> Finalizations;
 
   const SaleMovementConcentratorEntity({
     required this.SaleMovementId,

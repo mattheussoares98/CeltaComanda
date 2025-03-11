@@ -1483,9 +1483,9 @@ class EntityFactory {
             ProductIsFatherComposition: faker.randomGenerator.boolean(),
           );
 
-  static SaleMovementConcentratorFinalizationEntity
+  static ConcentratorFinalizationEntity
       makeSaleMovementConcentratorFinalizationEntity() =>
-          SaleMovementConcentratorFinalizationEntity(
+          ConcentratorFinalizationEntity(
             SaleMovementFinalizationId: faker.randomGenerator.integer(10),
             FinalizationId: faker.randomGenerator.integer(10),
             Value: faker.randomGenerator.decimal(),

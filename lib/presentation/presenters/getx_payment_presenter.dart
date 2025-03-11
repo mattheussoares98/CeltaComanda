@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -60,7 +59,6 @@ class GetxPaymentPresenter extends GetxController
         Value: longAmountValue,
         ValueLiquid: longAmountValue,
         PortionQuantity: 1,
-        finalizationIdentification: Random().nextDouble().toString(),
       );
 
       bool isValid = await commandInformations.isValidDatetime(
@@ -246,7 +244,7 @@ class GetxPaymentPresenter extends GetxController
       return 0;
     } else {
       return _successfulPayments.fold(
-          0.0, (previousValue, element) => previousValue + element.Value);
+          0.0, (previousValue, element) => previousValue + element.Value!);
     }
   }
 
@@ -361,6 +359,8 @@ class GetxPaymentPresenter extends GetxController
     required void Function(String error) showErrorMessageReturnedByBs,
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
+    required int? cpf,
+    required int? cnpj,
   }) async {
     mainError = null;
     isLoading = true;
@@ -406,7 +406,7 @@ class GetxPaymentPresenter extends GetxController
         );
 
         _successfulPayments.add(ConcentratorFinalizationModel(
-          FinalizationId: FinalizationIdentification.covenant.finalizationId,
+          FinalizationId: FinalizationType.covenant.id,
           Value: pendingValue,
           ValueLiquid: pendingValue,
           PortionQuantity: 1,
@@ -414,13 +414,63 @@ class GetxPaymentPresenter extends GetxController
           AuthorizationType: 2,
         ));
 
+        final indexSelectedCustomer = _customersViewModel.value
+            ?.indexWhere((e) => _selectedCovenant.keys.first == e.Code);
+        final selectedCustomer = _customersViewModel.value != null &&
+                indexSelectedCustomer != null &&
+                indexSelectedCustomer != -1
+            ? _customersViewModel.value![indexSelectedCustomer].toEntity()
+            : null;
+
+        final xml = await generateXmlForNfce.generate(
+          products: printedProductsPresenter.printed?.Products
+                  .map((e) => e.toEntity())
+                  .toList() ??
+              [],
+          finalizations: _successfulPayments,
+          customer: selectedCustomer,
+          cpf: cpf,
+          cnpj: cnpj,
+          pdvNumber: homePresenter.commandEntity?.commandNumber?.toInt(),
+          incrementValue: printedProductsPresenter.getServiceChargeValue(
+            printedProductsPresenter.printed,
+          ),
+        ); //TODO add new tests
+
+        final xmlReponse = await sendSaleMovementAsNfce.send(xml);
+
+        if (xmlReponse.responseType == SoapResponseType.error) {
+          throw Exception();
+        }
+
+        final double serviceChargeValue = printedProductsPresenter
+            .getServiceChargeValue(printedProductsPresenter.printed);
+
+        await concInsertSaleMovement.insert(
+          pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
+          pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
+          covenantCode: _selectedCovenant.keys.isEmpty
+              ? null
+              : _selectedCovenant.keys.first.toInt(),
+          customerCode: selectedCustomer?.Code,
+          cpfCnpj: cpf != null ? cpf.toString() : cnpj?.toString(),
+          incrementType: serviceChargeValue == 0 ? 0 : 1,
+          incrementValue: serviceChargeValue,
+          totalLiquid: printedProductsPresenter
+              .getTotalLiquid(printedProductsPresenter.printed),
+          finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
+          products: printedProductsPresenter.printed!.Products,
+          xmlToGenerateFiscal: xmlReponse.response,
+        );
+
+        /* TODO remove tests relateds 
         await finishSaleRequestConcentrador.finish(
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber == null
               ? 100
               : homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
           commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
           finalizations: _successfulPayments,
-        );
+        ); */
 
         _authorizationPendingModel = null;
         _successfulPayments.clear();
@@ -462,12 +512,12 @@ class GetxPaymentPresenter extends GetxController
   Stream<ValidationError?> get customerErrorStream => _customerError.stream;
   set customerError(ValidationError? value) => _customerError.value = value;
 
-  final _customersViewModelStream = Rx<List<CustomerViewModel>?>(null);
+  final _customersViewModel = Rx<List<CustomerViewModel>?>(null);
   @override
   Stream<List<CustomerViewModel>?> get customersViewModelStream =>
-      _customersViewModelStream.stream;
+      _customersViewModel.stream;
   set customersViewModel(List<CustomerViewModel>? customer) =>
-      _customersViewModelStream.subject.add(customer);
+      _customersViewModel.subject.add(customer);
 
   Map<String, String?> _selectedCovenant = {};
   @override

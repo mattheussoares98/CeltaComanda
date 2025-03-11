@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/entities.dart';
@@ -92,5 +90,27 @@ class PrintedProductsViewModel extends Equatable {
         childs: entity.childs
             .map((e) => PrintedProductsViewModel.fromEntity(e))
             .toList(),
+      );
+
+  PrintedProductsEntity toEntity() => PrintedProductsEntity(
+        Product: Product.toEntity(),
+        SaleRequestProductId: SaleRequestProductId.toInt(),
+        ProductPriceLookUpCode: ProductPriceLookUpCode,
+        Value: Value.toDouble(),
+        Quantity: Quantity.toDouble(),
+        QuantityString: QuantityString,
+        Comments: Comments,
+        UserId: UserId.toInt(),
+        DateHourOfCreation: DateHourOfCreation,
+        IsCancelled: IsCancelled == "true",
+        IsDelivered: IsDelivered == "true",
+        IsPrinted: IsPrinted == "true",
+        ProductionStatus: ProductionStatus.toInt(),
+        TotalLiquid: TotalLiquid.toDouble(),
+        ProductInternalCodeOnErp: ProductInternalCodeOnErp.toInt(),
+        SaleRequestId: SaleRequestId.toInt(),
+        ProductIsFatherComposition: ProductIsFatherComposition == "true",
+        childs: childs.map((e) => e.toEntity()).toList(),
+        SaleRequestProductIdOfFather: SaleRequestProductId.toInt(),
       );
 }

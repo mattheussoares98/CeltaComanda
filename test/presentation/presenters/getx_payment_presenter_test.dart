@@ -841,6 +841,8 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -858,6 +860,8 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -875,6 +879,8 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -884,7 +890,7 @@ void main() {
 
       expect(sut.successfulPayments, [
         ConcentratorFinalizationModel(
-          FinalizationId: FinalizationIdentification.covenant.finalizationId,
+          FinalizationId: FinalizationType.covenant.id,
           Value: totalLiquidMocked,
           ValueLiquid: totalLiquidMocked,
           PortionQuantity: 1,
@@ -899,6 +905,8 @@ void main() {
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -929,6 +937,8 @@ void main() {
       ));
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -957,6 +967,8 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -979,6 +991,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1006,6 +1020,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1027,6 +1043,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1053,6 +1071,8 @@ void main() {
       checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1080,6 +1100,8 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1103,6 +1125,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1120,6 +1144,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1147,6 +1173,8 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1165,6 +1193,8 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,

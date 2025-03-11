@@ -37,7 +37,7 @@ class SalesByFinalizations extends StatelessWidget {
 
           return Row(
             children: [
-              Expanded(child: Text(finalizationType.name)),
+              Expanded(child: Text(finalizationType?.name ?? "")),
               Text(
                 finalizationsByType
                     .map((e) => e.ValueLiquid!)

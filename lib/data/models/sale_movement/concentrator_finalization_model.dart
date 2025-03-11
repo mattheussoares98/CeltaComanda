@@ -1,14 +1,12 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
 import '../../../ui/helpers/helpers.dart';
 
-class SaleMovementConcentratorFinalizationModel extends Equatable {
+class ConcentratorFinalizationModel extends Equatable {
   final int? SaleMovementFinalizationId;
   final int? FinalizationId;
-  final FinalizationType finalizationType;
+  final FinalizationType? finalizationType;
   final double? Value;
   final double? PayBackValue;
   final double? ValueLiquid;
@@ -31,28 +29,28 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
 //  public virtual IList<ModelSaleMovementFinalizationCheck> Checks
 //  public virtual IList<ModelSaleMovementFinalizationPortion> Portions
 
-  const SaleMovementConcentratorFinalizationModel({
-    required this.SaleMovementFinalizationId,
+  const ConcentratorFinalizationModel({
     required this.FinalizationId,
-    required this.finalizationType,
     required this.Value,
-    required this.PayBackValue,
     required this.ValueLiquid,
-    required this.AuthorizationCode,
-    required this.AuthorizationType,
     required this.PortionQuantity,
-    required this.FinalizationPdvId,
-    required this.TEFNSUSitef,
-    required this.TEFNSUHost,
-    required this.TEFAuthorizationCode,
-    required this.TEFBinCode,
-    required this.TEFCardLastNumbers,
-    required this.TEFNetWorkCode,
-    required this.TEFFlagCode,
-    required this.TEFFlagDescription,
-    required this.TEFModalityPaymentCode,
-    required this.TEFModalityDescription,
-    required this.TEFPlanCardCode,
+    this.finalizationType,
+    this.AuthorizationType,
+    this.SaleMovementFinalizationId,
+    this.PayBackValue,
+    this.AuthorizationCode,
+    this.FinalizationPdvId,
+    this.TEFNSUSitef,
+    this.TEFNSUHost,
+    this.TEFAuthorizationCode,
+    this.TEFBinCode,
+    this.TEFCardLastNumbers,
+    this.TEFNetWorkCode,
+    this.TEFFlagCode,
+    this.TEFFlagDescription,
+    this.TEFModalityPaymentCode,
+    this.TEFModalityDescription,
+    this.TEFPlanCardCode,
   });
 
   @override
@@ -79,11 +77,11 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         TEFPlanCardCode,
       ];
 
-  factory SaleMovementConcentratorFinalizationModel.fromJson(Map data) =>
-      SaleMovementConcentratorFinalizationModel(
+  factory ConcentratorFinalizationModel.fromJson(Map data) =>
+      ConcentratorFinalizationModel(
         SaleMovementFinalizationId: data["SaleMovementFinalizationId"],
         FinalizationId: data["FinalizationId"],
-        finalizationType: (data["FinalizationId"] as int).id,
+        finalizationType: (data["FinalizationId"] as int).finalizationId,
         Value: data["Value"],
         PayBackValue: data["PayBackValue"],
         ValueLiquid: data["ValueLiquid"],
@@ -127,8 +125,7 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         "TEFPlanCardCode": TEFPlanCardCode,
       };
 
-  SaleMovementConcentratorFinalizationEntity toEntity() =>
-      SaleMovementConcentratorFinalizationEntity(
+  ConcentratorFinalizationEntity toEntity() => ConcentratorFinalizationEntity(
         SaleMovementFinalizationId: SaleMovementFinalizationId,
         FinalizationId: FinalizationId,
         Value: Value,
@@ -151,12 +148,12 @@ class SaleMovementConcentratorFinalizationModel extends Equatable {
         TEFPlanCardCode: TEFPlanCardCode,
       );
 
-  factory SaleMovementConcentratorFinalizationModel.fromEntity(
-          SaleMovementConcentratorFinalizationEntity entity) =>
-      SaleMovementConcentratorFinalizationModel(
+  factory ConcentratorFinalizationModel.fromEntity(
+          ConcentratorFinalizationEntity entity) =>
+      ConcentratorFinalizationModel(
         SaleMovementFinalizationId: entity.SaleMovementFinalizationId,
         FinalizationId: entity.FinalizationId,
-        finalizationType: entity.FinalizationId!.id,
+        finalizationType: entity.FinalizationId!.finalizationId,
         Value: entity.Value,
         PayBackValue: entity.PayBackValue,
         ValueLiquid: entity.ValueLiquid,
@@ -192,7 +189,7 @@ enum FinalizationType {
 }
 
 extension FinalizationTypeExtensionInt on int {
-  FinalizationType get id {
+  FinalizationType get finalizationId {
     switch (this) {
       case 1:
         return FinalizationType.money;
@@ -243,6 +240,33 @@ extension FinalizationTypeExtensionName on FinalizationType {
         return R.string.portion; //boleto
       case FinalizationType.financialCredits:
         return R.string.financialCredits;
+    }
+  }
+}
+
+extension FinalizationTypeExtension on FinalizationType {
+  int get id {
+    switch (this) {
+      case FinalizationType.money:
+        return 1;
+      case FinalizationType.check:
+        return 2;
+      case FinalizationType.pix:
+        return 3;
+      case FinalizationType.purchaseVale:
+        return 4;
+      case FinalizationType.debitCard:
+        return 5;
+      case FinalizationType.creditCard:
+        return 6;
+      case FinalizationType.covenant:
+        return 7;
+      case FinalizationType.pos:
+        return 8;
+      case FinalizationType.portion:
+        return 9;
+      case FinalizationType.financialCredits:
+        return 10;
     }
   }
 }

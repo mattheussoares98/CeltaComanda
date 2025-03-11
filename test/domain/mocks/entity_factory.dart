@@ -1379,6 +1379,7 @@ class EntityFactory {
         CouponFiscalNumber: faker.randomGenerator.integer(100),
         DiscountType: faker.randomGenerator.integer(100),
         UserIdOfDiscount: faker.randomGenerator.integer(100),
+        RoundingType: faker.randomGenerator.integer(100),
         CRMDiscountType: faker.randomGenerator.integer(100),
         IncrementType: faker.randomGenerator.integer(100),
         SaleFiscalType: faker.randomGenerator.integer(100),
@@ -1411,7 +1412,9 @@ class EntityFactory {
   static SaleMovementProductConcentratorEntity
       makeSaleMovementProductConcentratorEntity() =>
           SaleMovementProductConcentratorEntity(
+            SaleMovement: null,
             SaleMovementProductId: faker.randomGenerator.integer(100),
+            BlockadeDiscountType: faker.randomGenerator.integer(100),
             Position: faker.randomGenerator.integer(100),
             SaleRequestProductInternalCodeOnERP:
                 faker.randomGenerator.integer(100),

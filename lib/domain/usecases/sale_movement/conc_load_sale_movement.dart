@@ -1,5 +1,5 @@
 import '../../entities/entities.dart';
 
-abstract class LoadSaleMovementConcentrator {
+abstract class ConcLoadSaleMovement {
   Future<List<SaleMovementConcentratorEntity>?> load({required String date});
 }

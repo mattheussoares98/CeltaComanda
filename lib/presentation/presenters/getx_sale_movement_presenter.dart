@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class GetxSaleMovementPresenter extends GetxController
     with LoadingManager, FormManager, UIErrorManager
     implements SaleMovementPresenter {
-  final LoadSaleMovementConcentrator loadSaleMovementConcentrator;
+  final ConcLoadSaleMovement loadSaleMovementConcentrator;
 
   GetxSaleMovementPresenter({
     required this.loadSaleMovementConcentrator,

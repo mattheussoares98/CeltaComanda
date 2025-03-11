@@ -1,8 +1,7 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../models.dart';
 
 class SaleMovementProductConcentratorModel extends Equatable {
   final int? SaleMovementProductId;
@@ -22,6 +21,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
   final int? IcmsFiscalAdjustObservationCode;
   final int? SaleOfferCode;
   final int? SaleOfferDiscountType;
+  final int? BlockadeDiscountType;
   final double? UnitValue;
   final double? Quantity;
   final double? DiscountValue;
@@ -69,6 +69,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
   final bool? IsToDelivery;
   final bool? IsPrinted;
   final bool? ProductIsFatherComposition;
+  final SaleMovementConcentratorModel? SaleMovement;
 
   const SaleMovementProductConcentratorModel({
     required this.SaleMovementProductId,
@@ -88,6 +89,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
     required this.IcmsFiscalAdjustObservationCode,
     required this.SaleOfferCode,
     required this.SaleOfferDiscountType,
+    required this.BlockadeDiscountType,
     required this.UnitValue,
     required this.Quantity,
     required this.DiscountValue,
@@ -135,6 +137,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
     required this.IsToDelivery,
     required this.IsPrinted,
     required this.ProductIsFatherComposition,
+    required this.SaleMovement,
   });
 
   @override
@@ -202,7 +205,9 @@ class SaleMovementProductConcentratorModel extends Equatable {
         SaleOfferCode,
         SaleOfferQuantity,
         SaleOfferDiscountType,
+        BlockadeDiscountType,
         SaleOfferDiscountValue,
+        SaleMovement,
       ];
 
   factory SaleMovementProductConcentratorModel.fromJson(Map data) =>
@@ -276,7 +281,11 @@ class SaleMovementProductConcentratorModel extends Equatable {
         SaleOfferCode: data["SaleOfferCode"],
         SaleOfferQuantity: data["SaleOfferQuantity"],
         SaleOfferDiscountType: data["SaleOfferDiscountType"],
+        BlockadeDiscountType: data["BlockadeDiscountType"],
         SaleOfferDiscountValue: data["SaleOfferDiscountValue"],
+        SaleMovement: data["SaleMovement"] == null
+            ? null
+            : SaleMovementConcentratorModel.fromJson(data["SaleMovement"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -345,6 +354,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
         "SaleOfferCode": SaleOfferCode,
         "SaleOfferQuantity": SaleOfferQuantity,
         "SaleOfferDiscountType": SaleOfferDiscountType,
+        "BlockadeDiscountType": BlockadeDiscountType,
         "SaleOfferDiscountValue": SaleOfferDiscountValue,
       };
 
@@ -415,12 +425,17 @@ class SaleMovementProductConcentratorModel extends Equatable {
         SaleOfferCode: SaleOfferCode,
         SaleOfferQuantity: SaleOfferQuantity,
         SaleOfferDiscountType: SaleOfferDiscountType,
+        BlockadeDiscountType: BlockadeDiscountType,
         SaleOfferDiscountValue: SaleOfferDiscountValue,
+        SaleMovement: SaleMovement?.toEntity(),
       );
 
   factory SaleMovementProductConcentratorModel.fromEntity(
           SaleMovementProductConcentratorEntity entity) =>
       SaleMovementProductConcentratorModel(
+        SaleMovement: entity.SaleMovement == null
+            ? null
+            : SaleMovementConcentratorModel.fromEntity(entity.SaleMovement!),
         SaleMovementProductId: entity.SaleMovementProductId,
         Position: entity.Position,
         SaleRequestProductInternalCodeOnERP:
@@ -488,6 +503,7 @@ class SaleMovementProductConcentratorModel extends Equatable {
         SaleOfferCode: entity.SaleOfferCode,
         SaleOfferQuantity: entity.SaleOfferQuantity,
         SaleOfferDiscountType: entity.SaleOfferDiscountType,
+        BlockadeDiscountType: entity.BlockadeDiscountType,
         SaleOfferDiscountValue: entity.SaleOfferDiscountValue,
       );
 }

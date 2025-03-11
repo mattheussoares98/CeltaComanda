@@ -6,7 +6,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadSaleMovementConcentratorSpy extends Mock
-    implements LoadSaleMovementConcentrator {
+    implements ConcLoadSaleMovement {
   LoadSaleMovementConcentratorSpy() {
     mockLoad(null);
   }

@@ -1,6 +1,6 @@
-
-
 import 'package:equatable/equatable.dart';
+
+import '../entities.dart';
 
 class SaleMovementProductConcentratorEntity extends Equatable {
   final int? SaleMovementProductId;
@@ -41,6 +41,7 @@ class SaleMovementProductConcentratorEntity extends Equatable {
   final double? IcmsIVAMargin;
   final int? PisType;
   final int? CofinsType;
+  final int? BlockadeDiscountType;
   final double? PisPercentage;
   final double? CofinsPercentage;
   final double? SaleRetailPrice;
@@ -67,6 +68,7 @@ class SaleMovementProductConcentratorEntity extends Equatable {
   final double? SaleOfferQuantity;
   final int? SaleOfferDiscountType;
   final double? SaleOfferDiscountValue;
+  final SaleMovementConcentratorEntity? SaleMovement;
 
   const SaleMovementProductConcentratorEntity({
     required this.SaleMovementProductId,
@@ -107,6 +109,7 @@ class SaleMovementProductConcentratorEntity extends Equatable {
     required this.IcmsIVAMargin,
     required this.PisType,
     required this.CofinsType,
+    required this.BlockadeDiscountType,
     required this.PisPercentage,
     required this.CofinsPercentage,
     required this.SaleRetailPrice,
@@ -133,6 +136,7 @@ class SaleMovementProductConcentratorEntity extends Equatable {
     required this.SaleOfferQuantity,
     required this.SaleOfferDiscountType,
     required this.SaleOfferDiscountValue,
+    required this.SaleMovement,
   });
 
   @override
@@ -175,6 +179,7 @@ class SaleMovementProductConcentratorEntity extends Equatable {
         IcmsIVAMargin,
         PisType,
         CofinsType,
+        BlockadeDiscountType,
         PisPercentage,
         CofinsPercentage,
         SaleRetailPrice,
@@ -201,5 +206,6 @@ class SaleMovementProductConcentratorEntity extends Equatable {
         SaleOfferQuantity,
         SaleOfferDiscountType,
         SaleOfferDiscountValue,
+        SaleMovement,
       ];
 }

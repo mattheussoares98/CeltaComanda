@@ -43,6 +43,7 @@ class SaleMovementConcentratorModel extends Equatable {
   final int? CustomerCode;
   final int? CustomerAdditionalCode;
   final int? SellerCode;
+  final int? RoundingType;
   final double? DiscountValue;
   final double? DiscountFinalizationValue;
   final double? CRMDiscountValue;
@@ -94,6 +95,7 @@ class SaleMovementConcentratorModel extends Equatable {
     required this.CustomerCode,
     required this.CustomerAdditionalCode,
     required this.SellerCode,
+    required this.RoundingType,
     required this.DiscountValue,
     required this.DiscountFinalizationValue,
     required this.CRMDiscountValue,
@@ -155,6 +157,7 @@ class SaleMovementConcentratorModel extends Equatable {
         CustomerCode,
         CustomerAdditionalCode,
         SellerCode,
+        RoundingType,
         SellerName,
         TotalLiquid,
         Products,
@@ -210,6 +213,7 @@ class SaleMovementConcentratorModel extends Equatable {
         CustomerCode: data["CustomerCode"],
         CustomerAdditionalCode: data["CustomerAdditionalCode"],
         SellerCode: data["SellerCode"],
+        RoundingType: data["RoundingType"],
         SellerName: data["SellerName"],
         TotalLiquid: data["TotalLiquid"],
         Products: data["Products"] != null
@@ -272,6 +276,7 @@ class SaleMovementConcentratorModel extends Equatable {
         "CustomerCode": CustomerCode,
         "CustomerAdditionalCode": CustomerAdditionalCode,
         "SellerCode": SellerCode,
+        "RoundingType": RoundingType,
         "SellerName": SellerName,
         "TotalLiquid": TotalLiquid,
         "Products": Products,
@@ -325,6 +330,7 @@ class SaleMovementConcentratorModel extends Equatable {
         CustomerCode: CustomerCode,
         CustomerAdditionalCode: CustomerAdditionalCode,
         SellerCode: SellerCode,
+        RoundingType: RoundingType,
         SellerName: SellerName,
         TotalLiquid: TotalLiquid,
         Products: Products.map((e) => e.toEntity()).toList(),
@@ -381,6 +387,7 @@ class SaleMovementConcentratorModel extends Equatable {
         CustomerCode: entity.CustomerCode,
         CustomerAdditionalCode: entity.CustomerAdditionalCode,
         SellerCode: entity.SellerCode,
+        RoundingType: entity.RoundingType,
         SellerName: entity.SellerName,
         TotalLiquid: entity.TotalLiquid,
         Products: entity.Products.map(

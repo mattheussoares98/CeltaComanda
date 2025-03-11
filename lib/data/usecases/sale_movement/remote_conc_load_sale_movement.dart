@@ -7,11 +7,10 @@ import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
-class RemoteLoadSaleMovementConcentrator
-    implements LoadSaleMovementConcentrator {
+class RemoteConcLoadSaleMovement implements ConcLoadSaleMovement {
   final HttpClient httpAdapter;
 
-  RemoteLoadSaleMovementConcentrator({required this.httpAdapter});
+  RemoteConcLoadSaleMovement({required this.httpAdapter});
 
   @override
   Future<List<SaleMovementConcentratorEntity>> load({

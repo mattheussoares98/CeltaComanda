@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../entities.dart';
@@ -52,6 +50,7 @@ class SaleMovementConcentratorEntity extends Equatable {
   final int? SellerCode;
   final String? SellerName;
   final double? TotalLiquid;
+  final int? RoundingType;
   final List<SaleMovementProductConcentratorEntity> Products;
   final List<SaleMovementConcentratorFinalizationEntity> Finalizations;
 
@@ -105,6 +104,7 @@ class SaleMovementConcentratorEntity extends Equatable {
     required this.TotalLiquid,
     required this.Products,
     required this.Finalizations,
+    required this.RoundingType,
   });
 
   @override
@@ -158,5 +158,6 @@ class SaleMovementConcentratorEntity extends Equatable {
         TotalLiquid,
         Products,
         Finalizations,
+        RoundingType,
       ];
 }

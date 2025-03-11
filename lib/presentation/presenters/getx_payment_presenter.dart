@@ -26,6 +26,9 @@ class GetxPaymentPresenter extends GetxController
   final Validation validation;
   final CovenantLimit covenantLimit;
   final CheckPasswordByCustomerCode checkPasswordByCustomerCode;
+  final ConcInsertSaleMovement concInsertSaleMovement;
+  final GenerateXmlForNfce generateXmlForNfce;
+  final SendSaleMovementAsNfce sendSaleMovementAsNfce;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -37,6 +40,9 @@ class GetxPaymentPresenter extends GetxController
     required this.validation,
     required this.covenantLimit,
     required this.checkPasswordByCustomerCode,
+    required this.concInsertSaleMovement,
+    required this.generateXmlForNfce,
+    required this.sendSaleMovementAsNfce,
   });
 
   @override
@@ -394,8 +400,7 @@ class GetxPaymentPresenter extends GetxController
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
-          commandNumber:
-              homePresenter.commandEntity!.commandNumber!,
+          commandNumber: homePresenter.commandEntity!.commandNumber!,
           saleRequestId:
               printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );

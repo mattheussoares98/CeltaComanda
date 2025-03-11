@@ -1,10 +1,10 @@
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
-import '../../../infra/http/http.dart';
 import '../../../main/builders/builders.dart';
+import '../../http/http.dart';
 
 class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
-  final SoapAdapter soapAdapter;
+  final SoapRequest soapAdapter;
 
   BsSendSaleMovementAsNfce({required this.soapAdapter});
 

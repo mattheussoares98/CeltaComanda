@@ -15,4 +15,7 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       loadCustomer: makeRemoteLoadCustomer(),
       updateSaleRequest: makeRemoteUpdateSaleRequest(),
       validation: makeCustomerValidation(),
+      concInsertSaleMovement: makeRemoteConcInsertSaleMovement(),
+      generateXmlForNfce: makeLocalGenerateXmlForNfce(),
+      sendSaleMovementAsNfce: makeBsSendSaleMovementAsNfce(),
     );

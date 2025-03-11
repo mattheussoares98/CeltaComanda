@@ -30,7 +30,7 @@ void main() {
 
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
-  late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
+  late ConcFinishSaleRequestSpy finishSaleRequestConcentrador;
   late CovenantLimitSpy covenantLimit;
   late UpdateSaleRequestSpy updateSaleRequest;
   late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
@@ -46,7 +46,7 @@ void main() {
   void initUseCases() {
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
-    finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
+    finishSaleRequestConcentrador = ConcFinishSaleRequestSpy();
     covenantLimit = CovenantLimitSpy();
     checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
   }

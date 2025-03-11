@@ -35,13 +35,16 @@ void main() {
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
-  late FinishSaleRequestConcentradorSpy finishSaleRequestConcentrador;
+  late ConcFinishSaleRequestSpy finishSaleRequestConcentrador;
   late NavigateToSpy navigateTo;
   late UpdateSaleRequestSpy updateSaleRequest;
   late LoadCustomerSpy loadCustomer;
   late ValidationSpy validation;
   late CovenantLimitSpy covenantLimit;
   late CheckPasswordByCustomerCodeSpy checkPasswordByCustomerCode;
+  late ConcInsertSaleMovementSpy concInsertSaleMovement;
+  late GenerateXmlForNfceSpy generateXmlForNfce;
+  late SendSaleMovementAsNfceSpy sendSaleMovementAsNfce;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -58,13 +61,16 @@ void main() {
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
-    finishSaleRequestConcentrador = FinishSaleRequestConcentradorSpy();
+    finishSaleRequestConcentrador = ConcFinishSaleRequestSpy();
     navigateTo = NavigateToSpy();
     updateSaleRequest = UpdateSaleRequestSpy();
     loadCustomer = LoadCustomerSpy();
     validation = ValidationSpy();
     covenantLimit = CovenantLimitSpy();
     checkPasswordByCustomerCode = CheckPasswordByCustomerCodeSpy();
+    concInsertSaleMovement = ConcInsertSaleMovementSpy();
+    generateXmlForNfce = GenerateXmlForNfceSpy();
+    sendSaleMovementAsNfce = SendSaleMovementAsNfceSpy();
   }
 
   initPresenters() {
@@ -78,6 +84,9 @@ void main() {
       loadCustomer: loadCustomer,
       updateSaleRequest: updateSaleRequest,
       validation: validation,
+      concInsertSaleMovement: concInsertSaleMovement,
+      generateXmlForNfce: generateXmlForNfce,
+      sendSaleMovementAsNfce: sendSaleMovementAsNfce,
     );
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
@@ -982,8 +991,7 @@ void main() {
               CovenantCode: sut.selectedCovenant.values.first!.toInt(),
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
-            commandNumber: homePresenter
-                .commandEntityController!.commandNumber!
+            commandNumber: homePresenter.commandEntityController!.commandNumber!
                 .padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId

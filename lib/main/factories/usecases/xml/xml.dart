@@ -1,0 +1,1 @@
+export './local_generate_xml_for_nfce_factory.dart';

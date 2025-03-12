@@ -23,7 +23,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
     final concentratorEnterprise = EnterpriseBuilder
         .entity?.enterpriseConcentradorParametersEntity?.enterprise;
 
-    builder.processing('xml', 'version=1.0 encoding=ISO-8859-1');
+    builder.processing('xml', 'version="1.0" encoding="ISO-8859-1"');
     builder.element('Cupom', nest: () {
       builder.element(
         'CodigoEmpresa',
@@ -72,12 +72,13 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
             'AbreviacaoEmbalagem',
             nest: product.Product.PackingAbbreviation,
           );
+          builder.element('Desconto', nest: 0);
+          builder.element('Acrescimo', nest: 0);
           builder.element('Quantidade',
               nest: _convertToCorrectNumber(product.Quantity));
           builder.element(
             'ValorUnitario',
-            nest: _convertToCorrectNumber(
-                product.Product.SaleRetailPraticedString),
+            nest: _convertToCorrectNumber(product.Product.SaleRetailPraticed),
           );
           builder.element(
             'ValorTotal',
@@ -249,14 +250,16 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
   String _convertToCorrectNumber(dynamic value) {
     if (value == null) {
       return "0";
-    } else if (int.tryParse(value.toString()) != null) {
+    } else if (value is int) {
       if (value == 0) {
         return "0";
       }
-      return value.toString();
+      return value.toString().toInt().toString();
     } else if (value is double) {
       if (value == 0) {
         return "0";
+      } else if (value % 1 == 0) {
+        return value.toInt().toString();
       }
       return value.toString().toBrazilianNumber();
     } else {

@@ -15,6 +15,7 @@ class SoapAdapter implements SoapRequest {
     required String? typeOfResult,
     required String soapAction,
     required String serviceASMX,
+    bool? addXmlnsInParameterTag,
   }) async {
     late SoapResponse soapResponse;
 
@@ -31,7 +32,11 @@ class SoapAdapter implements SoapRequest {
       String parameterTags = '';
 
       parameters.forEach((tag, value) {
-        parameterTags += '<$tag>$value</$tag>\n';
+        if (addXmlnsInParameterTag == true) {
+          parameterTags += '<$tag xmlns"">$value</$tag>\n';
+        } else {
+          parameterTags += '<$tag>$value</$tag>\n';
+        }
       });
 
       final envelope = '''<?xml version="1.0" encoding="utf-8"?>
@@ -44,8 +49,7 @@ class SoapAdapter implements SoapRequest {
       </soap12:Envelope>''';
 
       final response = await http.post(
-        Uri.parse(
-            '${EnterpriseBuilder.entity!.urlCCS}/$serviceASMX'),
+        Uri.parse('${EnterpriseBuilder.entity!.urlCCS}/$serviceASMX'),
         headers: soapHeaders,
         body: envelope,
       );

@@ -33,7 +33,7 @@ class SoapAdapter implements SoapRequest {
 
       parameters.forEach((tag, value) {
         if (addXmlnsInParameterTag == true) {
-          parameterTags += '<$tag xmlns"">$value</$tag>\n';
+          parameterTags += '<$tag xmlns="">$value</$tag>\n';
         } else {
           parameterTags += '<$tag>$value</$tag>\n';
         }

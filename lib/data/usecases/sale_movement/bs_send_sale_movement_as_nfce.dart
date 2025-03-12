@@ -14,6 +14,7 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
       final enterprise =
           EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity;
       final result = await soapAdapter.post(
+        addXmlnsInParameterTag: true,
         parameters: {
           "crossIdentity": enterprise?.celtaBSCrossIdentity,
           "enterpriseCode": enterprise?.enterprise?.enterpriseCode,

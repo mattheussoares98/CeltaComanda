@@ -11,6 +11,7 @@ abstract class ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
+    required int couponFiscalNumber,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,

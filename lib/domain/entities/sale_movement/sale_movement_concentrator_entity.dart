@@ -51,6 +51,8 @@ class SaleMovementConcentratorEntity extends Equatable {
   final String? SellerName;
   final double? TotalLiquid;
   final int? RoundingType;
+  final List? Checks;
+  final List? Portions;
   final List<SaleMovementProductConcentratorEntity> Products;
   final List<ConcentratorFinalizationEntity> Finalizations;
 
@@ -105,6 +107,8 @@ class SaleMovementConcentratorEntity extends Equatable {
     required this.Products,
     required this.Finalizations,
     required this.RoundingType,
+    required this.Checks,
+    required this.Portions,
   });
 
   @override
@@ -159,5 +163,7 @@ class SaleMovementConcentratorEntity extends Equatable {
         Products,
         Finalizations,
         RoundingType,
+        Checks,
+        Portions,
       ];
 }

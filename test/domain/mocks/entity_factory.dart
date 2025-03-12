@@ -1355,6 +1355,8 @@ class EntityFactory {
 
   static SaleMovementConcentratorEntity makeSaleMovementConcentratorEntity() =>
       SaleMovementConcentratorEntity(
+        Checks: [],
+        Portions: [],
         PdvNumber: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),

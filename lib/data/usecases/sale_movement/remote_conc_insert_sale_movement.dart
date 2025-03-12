@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -22,6 +24,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
+    required int couponFiscalNumber,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,
@@ -29,11 +32,13 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
-      final url = "${EnterpriseBuilder.entity!.concentradorUrl}/api/Insert";
+      final url =
+          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Insert";
 
       final saleMovement = _createSaleMovementEntity(
+        couponFiscalNumber: couponFiscalNumber,
         pdvId: pdvId,
-        pdvNumber: pdvNumber,
+        pdvNumber: pdvNumber.padLeft(3, "0"),
         covenantCode: covenantCode,
         customerCode: customerCode,
         cpfCnpj: cpfCnpj,
@@ -72,31 +77,42 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required int? incrementType,
     required double? incrementValue,
     required double totalLiquid,
+    required int couponFiscalNumber,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
   }) {
     final enterprise = EnterpriseBuilder.entity;
+    final atualDate = DateTime.now();
+    final personalizedCode = atualDate.year.toString() +
+        atualDate.month.toString().padLeft(2, "0") +
+        atualDate.day.toString().padLeft(2, "0") +
+        pdvNumber.padLeft(3, "0") +
+        couponFiscalNumber.toString().padLeft(4, "0");
     return SaleMovementConcentratorEntity(
+      Checks: [],
+      Portions: [],
       XmlSatNfce: xml,
-      SaleFiscalTypeString: null,
-      SaleMovementId: null,
-      PdvId: pdvId,
-      PdvNumber: pdvNumber,
+      SaleFiscalTypeString: xml == null ? "Venda" : "NFCe",
       SaleFiscalType:
           xml == null ? SaleFiscalType.nfceEmulador.id : SaleFiscalType.nfce.id,
+      EletronicAccessKey:
+          "35250333667505000163657060000000019537740754", //TODO get from xml
+      SaleMovementId: 0, //TODO get correct number
+      PdvId: pdvId,
+      PdvNumber: pdvNumber,
       CovenantCode: covenantCode,
       CustomerCode: customerCode,
       CpfCnpj: cpfCnpj,
-      DateHourOfCreation: DateTime.now().toIso8601String(),
-      DateHourOfDelivery: DateTime.now().toIso8601String(),
-      DateOfCreation: DateTime.now().toIso8601String(),
+      DateHourOfCreation: atualDate.toIso8601String(),
+      DateHourOfDelivery: null,
+      DateOfCreation: atualDate.toIso8601String(),
       EnterpriseCode: enterprise
           ?.enterpriseConcentradorParametersEntity?.enterprise?.enterpriseCode,
       EnterpriseId: enterprise?.enterpriseId,
       IncrementType: incrementType,
       IncrementValue: incrementValue,
-      RoundingType: 2,
-      SalePricePraticed: 0,
+      RoundingType: 1,
+      SalePricePraticed: 1,
       TotalLiquid: totalLiquid,
       Finalizations: _getFinalizations(
         finalizations: finalizations,
@@ -106,7 +122,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       SaleRequestPersonalizedCode: null,
       SellerCode: /* seller != null ? seller.SellersId : (int?)null */ null,
       SellerName: /* seller != null ? seller.Name : null */ null,
-      PersonalizedCode: /* saleMovementPersonalizedCode */ null,
+      PersonalizedCode: personalizedCode,
       MotiveJustificationName: null,
       MotiveJustificationId: null,
       CashierMovementId: null,
@@ -116,10 +132,9 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       CRMDiscountType: null,
       CRMDiscountValue: null,
       DeliveryControl: null,
-      DiscountFinalizationValue: null,
+      DiscountFinalizationValue: 0,
       DiscountType: null,
       DiscountValue: null,
-      EletronicAccessKey: null,
       FidelityControlsPoints: null,
       IsCancelled: false,
       IsDelivery: false,
@@ -131,7 +146,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       UserIdOfDiscount: null,
       XmlSatNfceCancel: null,
       WasPrinted: false,
-      CouponFiscalNumber: null,
+      CouponFiscalNumber: couponFiscalNumber,
     );
   }
 }
@@ -144,10 +159,10 @@ List<ConcentratorFinalizationEntity> _getFinalizations({
         ? [
             ConcentratorFinalizationEntity(
               FinalizationId: FinalizationType.money.id,
-              PortionQuantity: 1,
+              PortionQuantity: null,
               Value: totalLiquid,
               ValueLiquid: totalLiquid,
-              SaleMovementFinalizationId: null,
+              SaleMovementFinalizationId: 0,
               PayBackValue: null,
               AuthorizationCode: null,
               AuthorizationType: null,
@@ -192,10 +207,10 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       IcmsFiscalOriginalAliquot:
           null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalOriginalAliquot  */,
       IcmsTributarySituationCode:
-          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsTributarySituationCode  */,
+          "060" /*TODO notify Cardoso about this data that I dont receive*/,
       NatureOperationCodePisCofins:
           null /*I DONT HAVE THIS PROPERTY productEntity.NatureOperationCodePisCofins  */,
-      UnitValue: null /*I DONT HAVE THIS PROPERTY productEntity.UnitValue  */,
+      UnitValue: productEntity.SaleRetailPraticed,
       WholeOfferPrice: productEntity.WholeOfferPrice,
       WholeSalePrice: productEntity.WholeSalePrice,
       IcmsIVAMargin: productEntity.IcmsIVAMargin,

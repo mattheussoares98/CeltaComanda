@@ -11,6 +11,7 @@ class ConcInsertSaleMovementSpy extends Mock implements ConcInsertSaleMovement {
 
   When _mockInsertCall() => when(() => this.insert(
         pdvId: any(named: "pdvId"),
+        couponFiscalNumber: any(named: "couponFiscalNumber"),
         pdvNumber: any(named: "pdvNumber"),
         covenantCode: any(named: "covenantCode"),
         customerCode: any(named: "customerCode"),

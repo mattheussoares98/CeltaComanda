@@ -7,7 +7,6 @@ import '../../data/models/models.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../infra/helpers/helpers.dart';
-import '../../main/builders/builders.dart';
 import '../../presentation/mixins/mixins.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -365,54 +364,57 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      if (customerPassword != null && customerPassword.isNotEmpty) {
-        final passwordResponse = await checkPasswordByCustomerCode.validate(
-          customerCode: _selectedCovenant.keys.first.toInt(),
-          password: customerPassword,
-        );
-        if (passwordResponse.responseType == SoapResponseType.error) {
-          showErrorMessageReturnedByBs(passwordResponse.response);
-          return;
-        }
-      }
+      // if (customerPassword != null && customerPassword.isNotEmpty) {
+      //   final passwordResponse = await checkPasswordByCustomerCode.validate(
+      //     customerCode: _selectedCovenant.keys.first.toInt(),
+      //     password: customerPassword,
+      //   );
+      //   if (passwordResponse.responseType == SoapResponseType.error) {
+      //     showErrorMessageReturnedByBs(passwordResponse.response);
+      //     return;
+      //   }
+      // }
+      //TODO remove this comment
 
       double pendingValue = getTotalPendingValue(printedProductsPresenter);
 
-      SoapResponse soapResponse = await covenantLimit
-          .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-        crossIdentity: EnterpriseBuilder.entity!
-            .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
-        customerCode: _selectedCovenant.keys.first.toInt(),
-        covenantCode: _selectedCovenant.values.first!.toInt(),
-        value: pendingValue,
-      );
+      SoapResponse soapResponse = SoapResponse(
+          response: "response", responseType: SoapResponseType.success);
+      //TODO correct return
+      // await covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+      //   crossIdentity: EnterpriseBuilder.entity!
+      //       .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
+      //   customerCode: _selectedCovenant.keys.first.toInt(),
+      //   covenantCode: _selectedCovenant.values.first!.toInt(),
+      //   value: pendingValue,
+      // );
 
       if (soapResponse.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(soapResponse.response);
       } else {
-        _authorizationPendingModel = AuthorizationPendingModel(
-          code: soapResponse.response,
-          isPending: true,
-        );
+        // _authorizationPendingModel = AuthorizationPendingModel(
+        //   code: soapResponse.response,
+        //   isPending: true,
+        // );
 
-        await updateSaleRequest.update(
-          model: SaleRequestModel(
-            CustomerCode: _selectedCovenant.keys.first.toInt(),
-            CovenantCode: _selectedCovenant.values.first!.toInt(),
-          ),
-          commandNumber: homePresenter.commandEntity!.commandNumber!,
-          saleRequestId:
-              printedProductsPresenter.printed!.SaleRequestId.toInt(),
-        );
+        // await updateSaleRequest.update(
+        //   model: SaleRequestModel(
+        //     CustomerCode: _selectedCovenant.keys.first.toInt(),
+        //     CovenantCode: _selectedCovenant.values.first!.toInt(),
+        //   ),
+        //   commandNumber: homePresenter.commandEntity!.commandNumber!,
+        //   saleRequestId:
+        //       printedProductsPresenter.printed!.SaleRequestId.toInt(),
+        // );//TODO remove this comment
 
-         _successfulPayments.add(ConcentratorFinalizationModel(
-          FinalizationId: FinalizationType.covenant.id,
-          Value: pendingValue,
-          ValueLiquid: pendingValue,
-          PortionQuantity: 1,
-          AuthorizationCode: soapResponse.response,
-          AuthorizationType: 2,
-        ));
+        //  _successfulPayments.add(ConcentratorFinalizationModel(
+        //   FinalizationId: FinalizationType.covenant.id,
+        //   Value: pendingValue,
+        //   ValueLiquid: pendingValue,
+        //   PortionQuantity: 1,
+        //   AuthorizationCode: soapResponse.response,
+        //   AuthorizationType: 2,
+        // ));//TODO remove comment
 
         final indexSelectedCustomer = _customersViewModel.value
             ?.indexWhere((e) => _selectedCovenant.keys.first == e.Code);
@@ -427,11 +429,21 @@ class GetxPaymentPresenter extends GetxController
                   .map((e) => e.toEntity())
                   .toList() ??
               [],
-          finalizations: _successfulPayments,
+          finalizations: [
+            /* _successfulPayments */ ConcentratorFinalizationModel(
+              //TODO change to _successfulPayments
+              FinalizationId: FinalizationType.covenant.id,
+              Value: pendingValue,
+              ValueLiquid: pendingValue,
+              PortionQuantity: 1,
+              AuthorizationCode: soapResponse.response,
+              AuthorizationType: 2,
+            )
+          ],
           customer: selectedCustomer,
           cpf: cpf,
           cnpj: cnpj,
-          pdvNumber: homePresenter.commandEntity?.commandNumber?.toInt(),
+          pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
             printedProductsPresenter.printed,
           ),
@@ -448,6 +460,7 @@ class GetxPaymentPresenter extends GetxController
             .getServiceChargeValue(printedProductsPresenter.printed);
 
         await concInsertSaleMovement.insert(
+          couponFiscalNumber: 1,
           pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
           pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
           covenantCode: _selectedCovenant.keys.isEmpty

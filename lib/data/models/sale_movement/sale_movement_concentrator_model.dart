@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -54,6 +52,8 @@ class SaleMovementConcentratorModel extends Equatable {
   final bool? IsForTravel;
   final bool? WasPrinted;
   final bool? IsDelivery;
+  final List? Checks;
+  final List? Portions;
   final List<SaleMovementProductConcentratorModel> Products;
   final List<ConcentratorFinalizationModel> Finalizations;
 
@@ -106,6 +106,8 @@ class SaleMovementConcentratorModel extends Equatable {
     required this.IsForTravel,
     required this.WasPrinted,
     required this.IsDelivery,
+    required this.Checks,
+    required this.Portions,
     required this.Products,
     required this.Finalizations,
   });
@@ -153,6 +155,8 @@ class SaleMovementConcentratorModel extends Equatable {
         MotiveJustificationSaleDiscountId,
         MotiveJustificationSaleDiscountName,
         IsDelivery,
+        Checks,
+        Portions,
         CovenantCode,
         CustomerCode,
         CustomerAdditionalCode,
@@ -209,6 +213,8 @@ class SaleMovementConcentratorModel extends Equatable {
         MotiveJustificationSaleDiscountName:
             data["MotiveJustificationSaleDiscountName"],
         IsDelivery: data["IsDelivery"],
+        Checks: data["Checks"],
+        Portions: data["Portions"],
         CovenantCode: data["CovenantCode"],
         CustomerCode: data["CustomerCode"],
         CustomerAdditionalCode: data["CustomerAdditionalCode"],
@@ -223,8 +229,7 @@ class SaleMovementConcentratorModel extends Equatable {
             : [],
         Finalizations: data["Finalizations"] != null
             ? (data["Finalizations"] as List)
-                .map((e) =>
-                    ConcentratorFinalizationModel.fromJson(e))
+                .map((e) => ConcentratorFinalizationModel.fromJson(e))
                 .toList()
             : [],
       );
@@ -272,6 +277,8 @@ class SaleMovementConcentratorModel extends Equatable {
         "MotiveJustificationSaleDiscountName":
             MotiveJustificationSaleDiscountName,
         "IsDelivery": IsDelivery,
+        "Checks": Checks,
+        "Portions": Portions,
         "CovenantCode": CovenantCode,
         "CustomerCode": CustomerCode,
         "CustomerAdditionalCode": CustomerAdditionalCode,
@@ -326,6 +333,8 @@ class SaleMovementConcentratorModel extends Equatable {
         MotiveJustificationSaleDiscountName:
             MotiveJustificationSaleDiscountName,
         IsDelivery: IsDelivery,
+        Checks: Checks,
+        Portions: Portions,
         CovenantCode: CovenantCode,
         CustomerCode: CustomerCode,
         CustomerAdditionalCode: CustomerAdditionalCode,
@@ -383,6 +392,8 @@ class SaleMovementConcentratorModel extends Equatable {
         MotiveJustificationSaleDiscountName:
             entity.MotiveJustificationSaleDiscountName,
         IsDelivery: entity.IsDelivery,
+        Checks: entity.Checks,
+        Portions: entity.Portions,
         CovenantCode: entity.CovenantCode,
         CustomerCode: entity.CustomerCode,
         CustomerAdditionalCode: entity.CustomerAdditionalCode,
@@ -393,7 +404,6 @@ class SaleMovementConcentratorModel extends Equatable {
         Products: entity.Products.map(
             (e) => SaleMovementProductConcentratorModel.fromEntity(e)).toList(),
         Finalizations: entity.Finalizations.map(
-                (e) => ConcentratorFinalizationModel.fromEntity(e))
-            .toList(),
+            (e) => ConcentratorFinalizationModel.fromEntity(e)).toList(),
       );
 }

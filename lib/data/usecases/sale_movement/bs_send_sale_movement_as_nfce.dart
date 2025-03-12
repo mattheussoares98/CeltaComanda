@@ -17,12 +17,12 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
         parameters: {
           "crossIdentity": enterprise?.celtaBSCrossIdentity,
           "enterpriseCode": enterprise?.enterprise?.enterpriseCode,
-          "xmlSaleMovement": xml,
+          "xmlSaleMovement": xml.replaceAll(RegExp(r'<'), '&lt;').replaceAll(RegExp(r'>'), '&gt;'),
         },
         typeOfResponse: "SendSaleMovementAsNFCeResponse",
-        typeOfResult: "SendSaleMovementAsNFCeResult",
         soapAction: "SendSaleMovementAsNFCe",
         serviceASMX: "CeltaSaleMovementService.asmx",
+        typeOfResult: "SendSaleMovementAsNFCeResult",
       );
 
       return result;

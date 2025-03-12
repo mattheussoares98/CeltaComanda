@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
 import '../pages.dart';
-import 'web_add_or_edit_enterprise_components/web_add_or_edit_enterprise_components.dart';
 import 'web_devices_info_components/web_devices_info_components.dart';
 
 class WebDevicesInfoPage extends StatefulWidget {
@@ -107,7 +106,6 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  UpdateDeviceInformationsButton(),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: TextButton.icon(
@@ -202,7 +200,6 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                     },
                   ),
                 ),
-                UpdateDeviceInformationsButton(),
               ],
             ),
           );

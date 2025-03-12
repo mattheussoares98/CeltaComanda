@@ -11,7 +11,6 @@ export './latest_compatible_version_input.dart';
 export './minutes_verify_update_menu_input.dart';
 export './navs_url_input.dart';
 export './service_charge_percentage_input.dart';
-export './update_device_informations_button.dart';
 export './update_menu_in_devices_button.dart';
 export './use_covenant_switch.dart';
 export './use_product_reduced_name_switch.dart';

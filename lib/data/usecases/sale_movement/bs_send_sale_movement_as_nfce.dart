@@ -18,7 +18,7 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
         parameters: {
           "crossIdentity": enterprise?.celtaBSCrossIdentity,
           "enterpriseCode": enterprise?.enterprise?.enterpriseCode,
-          "xmlSaleMovement": xml.replaceAll(RegExp(r'<'), '&lt;').replaceAll(RegExp(r'>'), '&gt;'),
+          "xmlSaleMovement": xml.replaceAll(RegExp(r'<'), '&lt;').replaceAll(RegExp(r'>'), '&gt;').replaceAll('\n', '').replaceAll('\r', ''),
         },
         typeOfResponse: "SendSaleMovementAsNFCeResponse",
         soapAction: "SendSaleMovementAsNFCe",

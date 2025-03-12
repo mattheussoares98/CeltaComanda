@@ -1,9 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:xml/xml.dart' as xml;
 
 import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
+import '../../../ui/helpers/helpers.dart';
 
 class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
   @override
@@ -33,8 +35,10 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
       );
       builder.element(
         'FlagConsideraIcmsCalcBasePisCofinsEmpresa',
-        nest: concentratorEnterprise?.considerIcmsForCalculateBaseOfPisCofins
-            .toString(),
+        nest: concentratorEnterprise?.considerIcmsForCalculateBaseOfPisCofins ==
+                true
+            ? 1
+            : 0,
       );
       builder.element('CNPJEmpresa', nest: concentratorEnterprise?.cnpj);
       builder.element(
@@ -42,11 +46,16 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         nest: concentratorEnterprise?.inscriptionState,
       );
 
-      builder.element('NumeroCaixa', nest: pdvNumber);
+      builder.element('NumeroCaixa',
+          nest: pdvNumber?.toString().padLeft(3, "0"));
       builder.element('NumeroCupom',
-          nest: 1); //TODO verify how get this correct number
-      builder.element('NumeroOrdemCupom', nest: 1); //TODO equal NumeroCupom
-      builder.element('DataHoraVenda', nest: DateTime.now().toIso8601String());
+          nest: 1
+              .toString()
+              .padLeft(6, "0")); //TODO verify how get this correct number
+      builder.element('NumeroOrdemCupom',
+          nest: 1.toString().padLeft(6, "0")); //TODO equal NumeroCupom
+      builder.element('DataHoraVenda',
+          nest: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()));
       builder.element('PDVTYPE', nest: '1');
 
       for (var index = 0; index < products.length; index++) {
@@ -54,7 +63,8 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         builder.element('Produto', nest: () {
           builder.element('Item', nest: index + 1);
           builder.element('PLU', nest: product.ProductPriceLookUpCode);
-          if (product.Product.EanCode != null) {
+          if (product.Product.EanCode != null &&
+              product.Product.EanCode!.isNotEmpty) {
             builder.element('EAN', nest: product.Product.EanCode);
           }
           builder.element('NomeProduto', nest: product.Product.Name);
@@ -62,34 +72,49 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
             'AbreviacaoEmbalagem',
             nest: product.Product.PackingAbbreviation,
           );
-          builder.element('Quantidade', nest: product.Quantity.toString());
-          builder.element('ValorUnitario',
-              nest: product.Product.SaleRetailPraticedString?.toString());
-          builder.element('ValorTotal', nest: product.TotalLiquid.toString());
+          builder.element('Quantidade',
+              nest: _convertToCorrectNumber(product.Quantity));
+          builder.element(
+            'ValorUnitario',
+            nest: _convertToCorrectNumber(
+                product.Product.SaleRetailPraticedString),
+          );
+          builder.element(
+            'ValorTotal',
+            nest: _convertToCorrectNumber(product.TotalLiquid),
+          );
           builder.element('CustoReposicao',
-              nest: product.Product.RepositionCost?.toString());
-          builder.element('CustoReposicaoMedio',
-              nest: product.Product.RepositionCostMiddle?.toString());
-          builder.element('CustoReposicaoReal',
-              nest: product.Product.RepositionCostReal?.toString());
+              nest: _convertToCorrectNumber(product.Product.RepositionCost));
+          builder.element(
+            'CustoReposicaoMedio',
+            nest: _convertToCorrectNumber(product.Product.RepositionCostMiddle),
+          );
+          builder.element(
+            'CustoReposicaoReal',
+            nest: _convertToCorrectNumber(product.Product.RepositionCostReal),
+          );
           builder.element('CustoLiquido',
-              nest: product.Product.LiquidCost?.toString());
+              nest: _convertToCorrectNumber(product.Product.LiquidCost));
           builder.element('CustoLiquidoMedio',
-              nest: product.Product.LiquidCostMiddle?.toString());
+              nest: _convertToCorrectNumber(product.Product.LiquidCostMiddle));
           builder.element('CustoLiquidoReal',
-              nest: product.Product.LiquidCostReal?.toString());
+              nest: _convertToCorrectNumber(product.Product.LiquidCostReal));
           builder.element('VendaVarejo',
-              nest: product.Product.SaleRetailPrice?.toString());
+              nest: _convertToCorrectNumber(product.Product.SaleRetailPrice));
           builder.element('VendaAtacado',
-              nest: product.Product.WholeSalePrice?.toString());
+              nest: _convertToCorrectNumber(product.Product.WholeSalePrice));
           builder.element('OfertaAtacado',
-              nest: product.Product.WholeOfferPrice?.toString());
+              nest: _convertToCorrectNumber(product.Product.WholeOfferPrice));
           builder.element('OfertaVarejo',
-              nest: product.Product.OfferRetailPrice?.toString());
-          builder.element('VendaECommerce',
-              nest: product.Product.SaleECommercePrice?.toString());
-          builder.element('OfertaECommerce',
-              nest: product.Product.OfferECommercePrice?.toString());
+              nest: _convertToCorrectNumber(product.Product.OfferRetailPrice));
+          builder.element(
+            'VendaECommerce',
+            nest: _convertToCorrectNumber(product.Product.SaleECommercePrice),
+          );
+          builder.element(
+            'OfertaECommerce',
+            nest: _convertToCorrectNumber(product.Product.OfferECommercePrice),
+          );
           builder.element('CFOP', nest: product.Product.CFOP?.toString());
           builder.element('NCM',
               nest: product.Product.FiscalClassificationNCM?.toString());
@@ -98,35 +123,38 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
             builder.element('CST',
                 nest: product.Product.TributarySituationCode.toString());
             builder.element('ALIQUOTA',
-                nest: product.Product.IcmsAliquot.toString());
-            builder.element('REDUC',
-                nest: product.Product.IcmsReductionMargin.toString());
+                nest: _convertToCorrectNumber(product.Product.IcmsAliquot));
+            builder.element(
+              'REDUC',
+              nest:
+                  _convertToCorrectNumber(product.Product.IcmsReductionMargin),
+            );
             builder.element('IVA',
-                nest: product.Product.IcmsIVAMargin.toString());
+                nest: _convertToCorrectNumber(product.Product.IcmsIVAMargin));
             builder.element('PAUTA',
-                nest: product.Product.IcmsStave.toString());
+                nest: _convertToCorrectNumber(product.Product.IcmsStave));
+            builder.element('FiscalBenefitCode', nest: "");
           });
 
           builder.element('PIS', nest: () {
             builder.element('TIPO', nest: product.Product.PisType.toString());
             builder.element('CST',
-                nest: product.Product.CSTPisCofins.toString());
+                nest: product.Product.CSTPisCofins.toString().padLeft(2, "0"));
+            builder.element('NatureOperationCode', nest: "");
+            builder.element('SocialContributionCodePisCofins', nest: 51);
             builder.element('PERC',
-                nest: product.Product.PisPercentage.toString());
+                nest: _convertToCorrectNumber(product.Product.PisPercentage));
           });
           builder.element('COFINS', nest: () {
             builder.element('TIPO',
                 nest: product.Product.CofinsType.toString());
             builder.element('CST',
                 nest: product.Product.CSTPisCofins.toString());
+            builder.element('NatureOperationCodePisCofins', nest: "");
+            builder.element('SocialContributionCodePisCofins', nest: 51);
             builder.element('PERC',
-                nest: product.Product.CofinsPercentage.toString());
-
-            builder.element('TIPO', nest: product.Product.PisType.toString());
-            builder.element('CST',
-                nest: product.Product.CSTPisCofins.toString());
-            builder.element('PERC',
-                nest: product.Product.PisPercentage.toString());
+                nest:
+                    _convertToCorrectNumber(product.Product.CofinsPercentage));
           });
         });
       }
@@ -158,13 +186,14 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
 
       builder.element('Finalizacao', nest: () {
         builder.element('Desconto', nest: 0);
-        builder.element('Acrescimo', nest: incrementValue.toString());
+        builder.element('Acrescimo', nest: 0);
 
         for (var finalization in finalizations) {
           builder.element('Pagamento', nest: () {
             builder.element('Finalizadora',
                 nest: finalization.FinalizationId.toString());
-            builder.element('Valor', nest: finalization.ValueLiquid.toString());
+            builder.element('Valor',
+                nest: _convertToCorrectNumber(finalization.ValueLiquid));
           });
         }
       });
@@ -215,5 +244,23 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
 
     final xmlDoc = builder.buildDocument();
     return xmlDoc.toXmlString(pretty: true);
+  }
+
+  String _convertToCorrectNumber(dynamic value) {
+    if (value == null) {
+      return "0";
+    } else if (int.tryParse(value.toString()) != null) {
+      if (value == 0) {
+        return "0";
+      }
+      return value.toString();
+    } else if (value is double) {
+      if (value == 0) {
+        return "0";
+      }
+      return value.toString().toBrazilianNumber();
+    } else {
+      return "0";
+    }
   }
 }

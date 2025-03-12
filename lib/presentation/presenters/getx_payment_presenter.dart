@@ -405,7 +405,7 @@ class GetxPaymentPresenter extends GetxController
               printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );
 
-        _successfulPayments.add(ConcentratorFinalizationModel(
+         _successfulPayments.add(ConcentratorFinalizationModel(
           FinalizationId: FinalizationType.covenant.id,
           Value: pendingValue,
           ValueLiquid: pendingValue,
@@ -440,7 +440,8 @@ class GetxPaymentPresenter extends GetxController
         final xmlReponse = await sendSaleMovementAsNfce.send(xml);
 
         if (xmlReponse.responseType == SoapResponseType.error) {
-          throw Exception();
+          showErrorMessageReturnedByBs(xmlReponse.response);
+          return;
         }
 
         final double serviceChargeValue = printedProductsPresenter

@@ -4,12 +4,12 @@ import 'package:mocktail/mocktail.dart';
 
 class LoadUseUrlSatSharingSpy extends Mock implements LoadUseUrlSatSharing {
   LoadUseUrlSatSharingSpy() {
-    mockUse(true);
+    mockUse(false);
   }
   When _mockUseCall() => when(() => this.getUse());
 
   void mockUse(bool use) {
-    _mockUseCall().thenAnswer((_) async => use);
+    _mockUseCall().thenAnswer((_) => use);
   }
 
   void mockError(DomainError error) {

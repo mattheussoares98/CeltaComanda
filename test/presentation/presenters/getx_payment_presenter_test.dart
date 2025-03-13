@@ -1292,6 +1292,25 @@ void main() {
 
       expect(sut.couponNumber, lastCouponNumber + 2);
     });
+
+    test("Should call load use sat sharing", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => loadUseUrlSatSharing.getUse()).called(1);
+    });
   });
 
   group("Clear payments", () {

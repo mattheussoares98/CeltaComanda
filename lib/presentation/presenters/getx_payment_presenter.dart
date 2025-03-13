@@ -418,28 +418,32 @@ class GetxPaymentPresenter extends GetxController
           throw Exception();
         }
 
-        //TODO generate totalSharing configuration. If isnt fiscal, dont send xml
-        final xml = await generateXmlForNfce.generate(
-          couponFiscalNumber: _couponNumber!,
-          products: printedProductsPresenter.printed?.Products
-                  .map((e) => e.toEntity())
-                  .toList() ??
-              [],
-          finalizations: _successfulPayments,
-          customer: null,
-          cpf: cpf,
-          cnpj: cnpj,
-          pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
-          incrementValue: printedProductsPresenter.getServiceChargeValue(
-            printedProductsPresenter.printed,
-          ),
-        );
+        bool useSharing = loadUseUrlSatSharing.getUse();
+        SoapResponse? xmlReponse;
 
-        final xmlReponse = await sendSaleMovementAsNfce.send(xml);
+        if (useSharing == false) {
+          final xml = await generateXmlForNfce.generate(
+            couponFiscalNumber: _couponNumber!,
+            products: printedProductsPresenter.printed?.Products
+                    .map((e) => e.toEntity())
+                    .toList() ??
+                [],
+            finalizations: _successfulPayments,
+            customer: null,
+            cpf: cpf,
+            cnpj: cnpj,
+            pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
+            incrementValue: printedProductsPresenter.getServiceChargeValue(
+              printedProductsPresenter.printed,
+            ),
+          );
 
-        if (xmlReponse.responseType == SoapResponseType.error) {
-          showErrorMessageReturnedByBs(xmlReponse.response);
-          return;
+          xmlReponse = await sendSaleMovementAsNfce.send(xml);
+
+          if (xmlReponse.responseType == SoapResponseType.error) {
+            showErrorMessageReturnedByBs(xmlReponse.response);
+            return;
+          }
         }
 
         final double serviceChargeValue = printedProductsPresenter
@@ -463,7 +467,7 @@ class GetxPaymentPresenter extends GetxController
           finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
           products: printedProductsPresenter.printed!.Products,
           xmlToGenerateFiscal:
-              xmlReponse.response, //TODO if doesnt fiscal, send null value
+              useSharing == false ? xmlReponse?.response : null,
         );
 
         await couponFiscalNumber.save(_couponNumber!);

@@ -527,19 +527,4 @@ class GetxPaymentPresenter extends GetxController
   int? _couponNumber;
   @override
   int? get couponNumber => _couponNumber;
-
-  @override
-  bool useUrlSatSharing() {
-    int? urlSatSharing = EnterpriseBuilder.entity
-        ?.enterpriseConcentradorParametersEntity?.urlSATSharingTotalCouponGroup;
-    if (urlSatSharing == null) {
-      return true;
-    } else if (urlSatSharing == 100) {
-      return true;
-    } else if (urlSatSharing == 99) {
-      return false;
-    } else {
-      return Random().nextInt(101) <= urlSatSharing;
-    }
-  }
 }

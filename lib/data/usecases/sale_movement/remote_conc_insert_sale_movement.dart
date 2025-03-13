@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:xml2json/xml2json.dart';
 
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
@@ -35,7 +36,14 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       final url =
           "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Insert";
 
+      final Xml2Json xml2json = Xml2Json();
+      xml2json.parse(xmlToGenerateFiscal ?? "");
+      final mapAsString = xml2json.toParker();
+      Map<String, dynamic> parsedJson = json.decode(mapAsString);
+
       final saleMovement = _createSaleMovementEntity(
+        eletronicAccessKey: parsedJson["CeltaBSResponse"]["NFCe"]
+            ["fiscalNoteConsumerEletronicKeyAccess"],
         couponFiscalNumber: couponFiscalNumber,
         pdvId: pdvId,
         pdvNumber: pdvNumber.padLeft(3, "0"),
@@ -78,6 +86,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required double? incrementValue,
     required double totalLiquid,
     required int couponFiscalNumber,
+    required String eletronicAccessKey,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
   }) {
@@ -95,8 +104,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       SaleFiscalTypeString: xml == null ? "Venda" : "NFCe",
       SaleFiscalType:
           xml == null ? SaleFiscalType.nfceEmulador.id : SaleFiscalType.nfce.id,
-      EletronicAccessKey:
-          "35250333667505000163657060000000019537740754", //TODO get from xml
+      EletronicAccessKey: eletronicAccessKey,
       SaleMovementId: 0, //TODO get correct number
       PdvId: pdvId,
       PdvNumber: pdvNumber,
@@ -131,7 +139,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       CRMDiscountTransactionId: null,
       CRMDiscountType: null,
       CRMDiscountValue: null,
-      DeliveryControl: null,
+      DeliveryControl: 0,
       DiscountFinalizationValue: 0,
       DiscountType: null,
       DiscountValue: null,

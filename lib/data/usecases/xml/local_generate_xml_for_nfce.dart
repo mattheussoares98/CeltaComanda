@@ -187,7 +187,10 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
 
       builder.element('Finalizacao', nest: () {
         builder.element('Desconto', nest: 0);
-        builder.element('Acrescimo', nest: 0);
+        builder.element('Acrescimo',
+            nest: incrementValue != null && incrementValue > 0
+                ? _convertToCorrectNumber(incrementValue)
+                : 0);
 
         for (var finalization in finalizations) {
           builder.element('Pagamento', nest: () {

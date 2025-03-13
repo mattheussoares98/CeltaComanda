@@ -416,14 +416,6 @@ class GetxPaymentPresenter extends GetxController
         //   AuthorizationType: 2,
         // ));//TODO remove comment
 
-        final indexSelectedCustomer = _customersViewModel.value
-            ?.indexWhere((e) => _selectedCovenant.keys.first == e.Code);
-        final selectedCustomer = _customersViewModel.value != null &&
-                indexSelectedCustomer != null &&
-                indexSelectedCustomer != -1
-            ? _customersViewModel.value![indexSelectedCustomer].toEntity()
-            : null;
-
         final xml = await generateXmlForNfce.generate(
           products: printedProductsPresenter.printed?.Products
                   .map((e) => e.toEntity())
@@ -440,7 +432,7 @@ class GetxPaymentPresenter extends GetxController
               AuthorizationType: 2,
             )
           ],
-          customer: selectedCustomer,
+          customer: null,
           cpf: cpf,
           cnpj: cnpj,
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
@@ -463,10 +455,12 @@ class GetxPaymentPresenter extends GetxController
           couponFiscalNumber: 1,
           pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
           pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
-          covenantCode: _selectedCovenant.keys.isEmpty
+          covenantCode: _selectedCovenant.values.isEmpty
+              ? null
+              : _selectedCovenant.values.first?.toInt(),
+          customerCode: _selectedCovenant.keys.isEmpty
               ? null
               : _selectedCovenant.keys.first.toInt(),
-          customerCode: selectedCustomer?.Code,
           cpfCnpj: cpf != null ? cpf.toString() : cnpj?.toString(),
           incrementType: serviceChargeValue == 0 ? 0 : 1,
           incrementValue: serviceChargeValue,
@@ -476,15 +470,6 @@ class GetxPaymentPresenter extends GetxController
           products: printedProductsPresenter.printed!.Products,
           xmlToGenerateFiscal: xmlReponse.response,
         );
-
-        /* TODO remove tests relateds 
-        await finishSaleRequestConcentrador.finish(
-          pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber == null
-              ? 100
-              : homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
-          commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
-          finalizations: _successfulPayments,
-        ); */
 
         _authorizationPendingModel = null;
         _successfulPayments.clear();

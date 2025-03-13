@@ -15,7 +15,7 @@ class CouponFiscalNumberSpy extends Mock implements CouponFiscalNumber {
     _mockSaveCall().thenThrow(Exception());
   }
 
-  When _mockLoadCall() => when(() => this.load());
+  When _mockLoadCall() => when(() => this.loadLastNumber());
 
   void mockLoad(int value) {
     _mockLoadCall().thenAnswer((_) async => value);

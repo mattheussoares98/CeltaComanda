@@ -54,6 +54,7 @@ void main() {
   late SoapResponse authorizationSoapResponse;
   late SoapResponse xmlSoapResponse;
   late double totalLiquidMocked;
+  late int lastCouponNumber;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -121,6 +122,7 @@ void main() {
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
+    lastCouponNumber = faker.randomGenerator.integer(100);
   }
 
   mockSuccess() {
@@ -143,6 +145,7 @@ void main() {
     generateXmlForNfce.mockGenerate(faker.randomGenerator.string(100));
     sendSaleMovementAsNfce.mockSend(xmlSoapResponse);
     concInsertSaleMovement.mockInsert(1);
+    couponFiscalNumber.mockLoad(lastCouponNumber);
   }
 
   setUp(() {
@@ -1195,6 +1198,96 @@ void main() {
 
       expect(sut.successfulPayments, []);
       expect(sut.authorizationPendingModel, null);
+    });
+
+    test("Shoul load coupon fiscal number if coupon number is null", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => couponFiscalNumber.loadLastNumber()).called(1);
+    });
+    test("Shoul update coupon number correctly", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.couponNumber, lastCouponNumber + 1);
+    });
+    test("Shoul save last coupon number on success", () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => couponFiscalNumber.save(lastCouponNumber + 1)).called(1);
+    });
+
+    test("Shoul call sale movement with correct sequence of coupon number",
+        () async {
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      await sut.updateSelectedCovenant(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100).toString(),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cnpj: null,
+        cpf: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.couponNumber, lastCouponNumber + 2);
     });
   });
 

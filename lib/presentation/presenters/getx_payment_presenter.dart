@@ -406,9 +406,19 @@ class GetxPaymentPresenter extends GetxController
           AuthorizationType: 2,
         ));
 
+        if (_couponNumber == null) {
+          _couponNumber = await couponFiscalNumber.loadLastNumber() + 1;
+        } else {
+          _couponNumber = _couponNumber! + 1;
+        }
+
+        if (_couponNumber == null) {
+          throw Exception();
+        }
+
         //TODO generate totalSharing configuration. If isnt fiscal, dont send xml
         final xml = await generateXmlForNfce.generate(
-          couponFiscalNumber: 13,
+          couponFiscalNumber: _couponNumber!,
           products: printedProductsPresenter.printed?.Products
                   .map((e) => e.toEntity())
                   .toList() ??
@@ -434,7 +444,7 @@ class GetxPaymentPresenter extends GetxController
             .getServiceChargeValue(printedProductsPresenter.printed);
 
         await concInsertSaleMovement.insert(
-          couponFiscalNumber: 13,
+          couponFiscalNumber: _couponNumber!,
           pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
           pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
           covenantCode: _selectedCovenant.values.isEmpty
@@ -454,10 +464,11 @@ class GetxPaymentPresenter extends GetxController
               xmlReponse.response, //TODO if doesnt fiscal, send null value
         );
 
+        await couponFiscalNumber.save(_couponNumber!);
+
         _authorizationPendingModel = null;
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
-
         //TODO exclude salerequest
         await printedProductsPresenter
             .loadPrinted(homePresenter.commandEntity!.commandNumber!);

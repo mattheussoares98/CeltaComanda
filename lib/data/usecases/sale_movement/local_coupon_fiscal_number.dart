@@ -8,9 +8,15 @@ class LocalCouponFiscalNumber implements CouponFiscalNumber {
   LocalCouponFiscalNumber({required this.hiveStorage});
 
   @override
-  Future<int> load() async {
+  Future<int> loadLastNumber() async {
     try {
-      return await hiveStorage.get(CacheKeys.couponFiscalNumber.name);
+      final couponNumber =
+          await hiveStorage.get(CacheKeys.couponFiscalNumber.name);
+      if (couponNumber == null) {
+        return 1;
+      }
+
+      return couponNumber;
     } catch (e) {
       rethrow;
     }

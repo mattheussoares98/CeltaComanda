@@ -1,4 +1,4 @@
 abstract class CouponFiscalNumber {
-  Future<int> load();
+  Future<int> loadLastNumber();
   Future<void> save(int number);
 }

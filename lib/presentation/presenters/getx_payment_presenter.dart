@@ -28,6 +28,7 @@ class GetxPaymentPresenter extends GetxController
   final ConcInsertSaleMovement concInsertSaleMovement;
   final GenerateXmlForNfce generateXmlForNfce;
   final SendSaleMovementAsNfce sendSaleMovementAsNfce;
+  final CouponFiscalNumber couponFiscalNumber;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -42,6 +43,7 @@ class GetxPaymentPresenter extends GetxController
     required this.concInsertSaleMovement,
     required this.generateXmlForNfce,
     required this.sendSaleMovementAsNfce,
+    required this.couponFiscalNumber,
   });
 
   @override

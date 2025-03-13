@@ -18,4 +18,5 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       concInsertSaleMovement: makeRemoteConcInsertSaleMovement(),
       generateXmlForNfce: makeLocalGenerateXmlForNfce(),
       sendSaleMovementAsNfce: makeBsSendSaleMovementAsNfce(),
+      couponFiscalNumber: makeLocalCouponFiscalNumber(),
     );

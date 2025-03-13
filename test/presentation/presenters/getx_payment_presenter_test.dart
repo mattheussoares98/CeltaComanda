@@ -45,6 +45,7 @@ void main() {
   late ConcInsertSaleMovementSpy concInsertSaleMovement;
   late GenerateXmlForNfceSpy generateXmlForNfce;
   late SendSaleMovementAsNfceSpy sendSaleMovementAsNfce;
+  late CouponFiscalNumberSpy couponFiscalNumber;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -72,6 +73,7 @@ void main() {
     concInsertSaleMovement = ConcInsertSaleMovementSpy();
     generateXmlForNfce = GenerateXmlForNfceSpy();
     sendSaleMovementAsNfce = SendSaleMovementAsNfceSpy();
+    couponFiscalNumber = CouponFiscalNumberSpy();
   }
 
   initPresenters() {
@@ -88,6 +90,7 @@ void main() {
       concInsertSaleMovement: concInsertSaleMovement,
       generateXmlForNfce: generateXmlForNfce,
       sendSaleMovementAsNfce: sendSaleMovementAsNfce,
+      couponFiscalNumber: couponFiscalNumber,
     );
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();

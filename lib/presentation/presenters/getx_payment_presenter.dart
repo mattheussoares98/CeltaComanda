@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,6 +29,7 @@ class GetxPaymentPresenter extends GetxController
   final GenerateXmlForNfce generateXmlForNfce;
   final SendSaleMovementAsNfce sendSaleMovementAsNfce;
   final CouponFiscalNumber couponFiscalNumber;
+  final LoadUseUrlSatSharing loadUseUrlSatSharing;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -45,6 +45,7 @@ class GetxPaymentPresenter extends GetxController
     required this.generateXmlForNfce,
     required this.sendSaleMovementAsNfce,
     required this.couponFiscalNumber,
+    required this.loadUseUrlSatSharing,
   });
 
   @override

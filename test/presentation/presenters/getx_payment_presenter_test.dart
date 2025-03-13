@@ -46,6 +46,7 @@ void main() {
   late GenerateXmlForNfceSpy generateXmlForNfce;
   late SendSaleMovementAsNfceSpy sendSaleMovementAsNfce;
   late CouponFiscalNumberSpy couponFiscalNumber;
+  late LoadUseUrlSatSharingSpy loadUseUrlSatSharing;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -75,6 +76,7 @@ void main() {
     generateXmlForNfce = GenerateXmlForNfceSpy();
     sendSaleMovementAsNfce = SendSaleMovementAsNfceSpy();
     couponFiscalNumber = CouponFiscalNumberSpy();
+    loadUseUrlSatSharing = LoadUseUrlSatSharingSpy();
   }
 
   initPresenters() {
@@ -92,6 +94,7 @@ void main() {
       generateXmlForNfce: generateXmlForNfce,
       sendSaleMovementAsNfce: sendSaleMovementAsNfce,
       couponFiscalNumber: couponFiscalNumber,
+      loadUseUrlSatSharing: loadUseUrlSatSharing,
     );
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();

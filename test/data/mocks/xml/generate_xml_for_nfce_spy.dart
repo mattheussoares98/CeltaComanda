@@ -6,6 +6,7 @@ class GenerateXmlForNfceSpy extends Mock implements GenerateXmlForNfce {
     mockGenerate();
   }
   When _mockGenerateCall() => when(() => this.generate(
+        couponFiscalNumber: any(named: "couponFiscalNumber"),
         products: any(named: "products"),
         finalizations: any(named: "finalizations"),
         customer: any(named: "customer"),

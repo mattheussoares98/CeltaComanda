@@ -17,6 +17,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
     required int? cnpj,
     required int? pdvNumber,
     required double? incrementValue,
+    required int couponFiscalNumber,
   }) async {
     final builder = xml.XmlBuilder();
 
@@ -49,11 +50,13 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
       builder.element('NumeroCaixa',
           nest: pdvNumber?.toString().padLeft(3, "0"));
       builder.element('NumeroCupom',
-          nest: 1
+          nest: couponFiscalNumber
               .toString()
               .padLeft(6, "0")); //TODO verify how get this correct number
       builder.element('NumeroOrdemCupom',
-          nest: 1.toString().padLeft(6, "0")); //TODO equal NumeroCupom
+          nest: couponFiscalNumber
+              .toString()
+              .padLeft(6, "0")); //TODO equal NumeroCupom
       builder.element('DataHoraVenda',
           nest: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()));
       builder.element('PDVTYPE', nest: '1');
@@ -240,7 +243,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
           builder.element(
             'Observacoes',
             nest:
-                'Valor aproximado dos tributos deste cupom (R\$) $totalTaxFromPercImpNBPT. Federal $totalTaxFromPercImpNBPTNational / Estadual $totalTaxFromPercImpNBPTState / Municipal $totalTaxFromPercImpNBPTMunicipal. Fonte IBPT(Conforme Lei Federal 12.741/2012)',
+                'Valor aproximado dos tributos deste cupom (R\$) ${totalTaxFromPercImpNBPT.toString().toBrazilianNumber()}. Federal ${totalTaxFromPercImpNBPTNational.toString().toBrazilianNumber()} / Estadual ${totalTaxFromPercImpNBPTState.toString().toBrazilianNumber()} / Municipal ${totalTaxFromPercImpNBPTMunicipal.toString().toBrazilianNumber()}. Fonte IBPT(Conforme Lei Federal 12.741/2012)',
           );
         },
       );

@@ -18,7 +18,12 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
         parameters: {
           "crossIdentity": enterprise?.celtaBSCrossIdentity,
           "enterpriseCode": enterprise?.enterprise?.enterpriseCode,
-          "xmlSaleMovement": xml.replaceAll(RegExp(r'<'), '&lt;').replaceAll(RegExp(r'>'), '&gt;').replaceAll('\n', '').replaceAll('\r', ''),
+          "xmlSaleMovement": xml
+              .replaceAll(RegExp(r'<'), '&lt;')
+              .replaceAll(RegExp(r'>'), '&gt;')
+              .replaceAll('\n', '')
+              .replaceAll('\r', '')
+            ..replaceAll(' ', ''),
         },
         typeOfResponse: "SendSaleMovementAsNFCeResponse",
         soapAction: "SendSaleMovementAsNFCe",
@@ -26,7 +31,7 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
         typeOfResult: "SendSaleMovementAsNFCeResult",
       );
 
-      return result;
+      return result; //TODO if return nfceoffline, throw error
     } catch (e) {
       rethrow;
     }

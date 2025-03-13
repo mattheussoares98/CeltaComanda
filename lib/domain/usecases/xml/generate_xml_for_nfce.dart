@@ -10,5 +10,6 @@ abstract class GenerateXmlForNfce {
     required int? cnpj,
     required int? pdvNumber,
     required double? incrementValue,
+    required int couponFiscalNumber,
   });
 }

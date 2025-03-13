@@ -105,7 +105,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       SaleFiscalType:
           xml == null ? SaleFiscalType.nfceEmulador.id : SaleFiscalType.nfce.id,
       EletronicAccessKey: eletronicAccessKey,
-      SaleMovementId: 0, //TODO get correct number
+      SaleMovementId: 0,
       PdvId: pdvId,
       PdvNumber: pdvNumber,
       CovenantCode: covenantCode,
@@ -203,21 +203,15 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       CFOP: productEntity.CFOP,
       CofinsPercentage: productEntity.CofinsPercentage,
       CofinsType: productEntity.CofinsType,
-      Comments: product.Comments,
+      Comments: product.Comments ?? "",
       CSTPisCofins: productEntity.CSTPisCofins,
       IcmsAliquot: productEntity.IcmsAliquot,
-      IcmsFiscalAdjustCode:
-          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalAdjustCode  */,
-      IcmsFiscalAdjustObservationCode:
-          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalAdjustObservationCode  */,
-      IcmsFiscalBenefitCode:
-          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalBenefitCode  */,
-      IcmsFiscalOriginalAliquot:
-          null /*I DONT HAVE THIS PROPERTY productEntity.IcmsFiscalOriginalAliquot  */,
-      IcmsTributarySituationCode:
-          "060" /*TODO notify Cardoso about this data that I dont receive*/,
-      NatureOperationCodePisCofins:
-          null /*I DONT HAVE THIS PROPERTY productEntity.NatureOperationCodePisCofins  */,
+      IcmsFiscalAdjustCode: null /*  */,
+      IcmsFiscalAdjustObservationCode: null /*  */,
+      IcmsFiscalBenefitCode: null /*  */,
+      IcmsFiscalOriginalAliquot: null /*  */,
+      NatureOperationCodePisCofins: null /*  */,
+      IcmsTributarySituationCode: e.Product.TributarySituationCode,
       UnitValue: productEntity.SaleRetailPraticed,
       WholeOfferPrice: productEntity.WholeOfferPrice,
       WholeSalePrice: productEntity.WholeSalePrice,
@@ -250,8 +244,8 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
           : e.SaleMovementProductCompositionId */
       ,
       SaleMovementProductId: 0,
-      SaleRequestProductInternalCodeOnERP: e.ProductInternalCodeOnErp.toInt(),
       SaleRetailPrice: productEntity.SaleRetailPrice,
+      SaleRequestProductInternalCodeOnERP: null,
       SocialContributionCodePisCofins: null,
       SaleNegotiationDiscountType: null,
       SaleNegotiationDiscountValue: null,

@@ -1327,4 +1327,34 @@ void main() {
       expect(sut.successfulPayments, []);
     });
   });
+
+  group("Generate fiscal", () {
+    test("Should return true if total sharing is null", () {
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        enterpriseConcentradorParametersEntity:
+            EntityFactory.makeEnterpriseConcentradorParametersEntity(
+                urlSATSharingTotalCouponGroup: null),
+      );
+
+      expect(sut.useUrlSatSharing(), true);
+    });
+    test("Should return true if total sharing is 100", () {
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        enterpriseConcentradorParametersEntity:
+            EntityFactory.makeEnterpriseConcentradorParametersEntity(
+                urlSATSharingTotalCouponGroup: null),
+      );
+
+      expect(sut.useUrlSatSharing(), true);
+    });
+    test("Should return false if total sharing is 99", () {
+      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
+        enterpriseConcentradorParametersEntity:
+            EntityFactory.makeEnterpriseConcentradorParametersEntity(
+                urlSATSharingTotalCouponGroup: 99),
+      );
+
+      expect(sut.useUrlSatSharing(), false);
+    });
+  });
 }

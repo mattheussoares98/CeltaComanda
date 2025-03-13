@@ -990,7 +990,9 @@ class EntityFactory {
       ];
 
   static EnterpriseConcentradorParametersEntity
-      makeEnterpriseConcentradorParametersEntity() =>
+      makeEnterpriseConcentradorParametersEntity({
+    int? urlSATSharingTotalCouponGroup = 50,
+  }) =>
           EnterpriseConcentradorParametersEntity(
             enterprise: makeEnterpriseConcentradorEntity(),
             useBalanceOnPdv: faker.randomGenerator.boolean(),
@@ -1081,7 +1083,7 @@ class EntityFactory {
             parcelMaxPortionsNumber: faker.randomGenerator.integer(100),
             pdvAspectViwModelType: faker.randomGenerator.integer(100),
             saleProductMaxQtdItem: faker.randomGenerator.integer(100),
-            urlSATSharingTotalCouponGroup: faker.randomGenerator.integer(100),
+            urlSATSharingTotalCouponGroup: urlSATSharingTotalCouponGroup,
             daysToMaintainHistory: faker.randomGenerator.integer(100),
             bleedingPrintNumber: faker.randomGenerator.integer(100),
             printNumberForPOSVoucher: faker.randomGenerator.integer(100),

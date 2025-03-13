@@ -67,4 +67,5 @@ abstract class PaymentPresenter implements Listenable {
   });
 
   void clearPayments();
+  bool useUrlSatSharing();
 }

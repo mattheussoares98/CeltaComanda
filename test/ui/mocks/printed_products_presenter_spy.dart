@@ -65,4 +65,8 @@ class PrintedProductsPresenterSpy extends Mock
   void mockGetTotalLiquid(double value) {
     when(() => this.getTotalLiquid(any())).thenAnswer((_) => value);
   }
+
+  void mockGetServiceChargeValue(double value) {
+    when(() => this.getServiceChargeValue(any())).thenAnswer((_) => value);
+  }
 }

@@ -2,9 +2,6 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class GenerateXmlForNfceSpy extends Mock implements GenerateXmlForNfce {
-  GenerateXmlForNfceSpy() {
-    mockGenerate();
-  }
   When _mockGenerateCall() => when(() => this.generate(
         couponFiscalNumber: any(named: "couponFiscalNumber"),
         products: any(named: "products"),
@@ -16,8 +13,8 @@ class GenerateXmlForNfceSpy extends Mock implements GenerateXmlForNfce {
         incrementValue: any(named: "incrementValue"),
       ));
 
-  void mockGenerate() {
-    this._mockGenerateCall().thenAnswer((any) async => any);
+  void mockGenerate(String value) {
+    this._mockGenerateCall().thenAnswer((any) async => value);
   }
 
   void mockGenerateError() {

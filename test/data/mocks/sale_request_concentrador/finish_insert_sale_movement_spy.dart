@@ -5,10 +5,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
 class ConcInsertSaleMovementSpy extends Mock implements ConcInsertSaleMovement {
-  ConcInsertSaleMovementSpy() {
-    this.mockInsert();
-  }
-
   When _mockInsertCall() => when(() => this.insert(
         pdvId: any(named: "pdvId"),
         couponFiscalNumber: any(named: "couponFiscalNumber"),
@@ -23,7 +19,7 @@ class ConcInsertSaleMovementSpy extends Mock implements ConcInsertSaleMovement {
         products: any(named: "products"),
         xmlToGenerateFiscal: any(named: "xmlToGenerateFiscal"),
       ));
-  void mockInsert() => this._mockInsertCall().thenAnswer((any) async => any);
+  void mockInsert(int value) => this._mockInsertCall().thenAnswer((any) async => value);
   void mockInsertError() =>
       this._mockInsertCall().thenThrow(DomainError.unexpected);
 }

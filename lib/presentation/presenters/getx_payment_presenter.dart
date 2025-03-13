@@ -360,7 +360,7 @@ class GetxPaymentPresenter extends GetxController
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
     required int? cpf,
-    required int? cnpj,
+    required int? cnpj, //TODO use only one. Or cnpj or cpf
   }) async {
     mainError = null;
     isLoading = true;
@@ -393,16 +393,6 @@ class GetxPaymentPresenter extends GetxController
         _authorizationPendingModel = AuthorizationPendingModel(
           code: soapResponse.response,
           isPending: true,
-        );
-
-        await updateSaleRequest.update(
-          model: SaleRequestModel(
-            CustomerCode: _selectedCovenant.keys.first.toInt(),
-            CovenantCode: _selectedCovenant.values.first!.toInt(),
-          ),
-          commandNumber: homePresenter.commandEntity!.commandNumber!,
-          saleRequestId:
-              printedProductsPresenter.printed!.SaleRequestId.toInt(),
         );
 
         _successfulPayments.add(ConcentratorFinalizationModel(
@@ -466,6 +456,7 @@ class GetxPaymentPresenter extends GetxController
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
 
+        //TODO exclude salerequest
         await printedProductsPresenter
             .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       }

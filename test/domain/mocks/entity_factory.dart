@@ -400,7 +400,7 @@ class EntityFactory {
       AllowQuantityInPdv: faker.randomGenerator.boolean().toString(),
       GoesForFastTable: faker.randomGenerator.boolean().toString(),
       IsAlcoholicProduct: faker.randomGenerator.boolean().toString(),
-      SaleRetailPrice: faker.randomGenerator.string(10),
+      SaleRetailPrice: faker.randomGenerator.decimal().toString(),
       PercImpNBPTNational: faker.randomGenerator.string(10),
       CofinsPercentage: faker.randomGenerator.string(10),
       PisPercentage: faker.randomGenerator.string(10),
@@ -583,7 +583,9 @@ class EntityFactory {
 
   static PrintedViewModel makePrintedViewModel() {
     return PrintedViewModel(
-      Products: makePrintedProductsViewModel(),
+      Products: [
+        PrintedProductsViewModel.fromEntity(makePrintedEntity().Products[0])
+      ],
       PersonalizedCode: faker.randomGenerator.string(10),
       TotalLiquid: faker.randomGenerator.decimal().toString(),
       DeliveryControl: faker.randomGenerator.string(10),

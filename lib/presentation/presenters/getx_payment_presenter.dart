@@ -511,4 +511,8 @@ class GetxPaymentPresenter extends GetxController
   @override
   AuthorizationPendingModel? get authorizationPendingModel =>
       _authorizationPendingModel;
+
+  int? _couponNumber;
+  @override
+  int? get couponNumber => _couponNumber;
 }

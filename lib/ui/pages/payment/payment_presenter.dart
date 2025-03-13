@@ -17,6 +17,7 @@ abstract class PaymentPresenter implements Listenable {
   Stream<List<CustomerViewModel>?> get customersViewModelStream;
   Map<String, String?> get selectedCovenant;
   AuthorizationPendingModel? get authorizationPendingModel;
+  int? get couponNumber;
 
   Future<void> callPayment({
     required double longAmountValue,

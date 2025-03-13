@@ -602,7 +602,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
   @override
   Future<void> updateDeviceInformations() async {
-    //TODO create tests
     final applicationVersion = await loadDeviceData.getApplicationVersion();
     final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
       isRedeVersion: isGeneratingVersionToRede,

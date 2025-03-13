@@ -1722,4 +1722,31 @@ void main() {
           .called(1);
     });
   });
+
+  group("Update device informations", () {
+    test("Should load application version", () async {
+      await sut.updateDeviceInformations();
+
+      verify(() => loadDeviceData.getApplicationVersion()).called(1);
+    });
+
+    test("Should load imeiOrWindowsId", () async {
+      await sut.updateDeviceInformations();
+
+      verify(() => loadDeviceData.getImeiOrWindowsId(
+            isRedeVersion: sut.isGeneratingVersionToRede,
+          )).called(1);
+    });
+
+    test("Should call add device informations correctly", () async {
+      await sut.updateDeviceInformations();
+
+      verify(() => addDeviceInfo.add(
+            commandNumber: sut.commandEntity?.commandNumber?.toInt(),
+            imeiOrWindowsId: imeiOrWindowsId,
+            applicationVersion: applicationVersion.toString(),
+            pdvNumber: sut.commandEntity?.pdv?.PdvNumber,
+          )).called(1);
+    });
+  });
 }

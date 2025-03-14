@@ -84,19 +84,19 @@ class ExportChargingModel extends Equatable {
     if (loadType == null) {
       return null;
     } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.images.name.toLowerCase()) {
-      return LoadTypeEnum.images;
-    } else if (loadType.toLowerCase() ==
             "expansibleGroupProducts".toLowerCase() ||
         loadType.toLowerCase() == "expansibleGroups".toLowerCase() ||
         loadType.toLowerCase() == "productCompositions".toLowerCase() ||
         loadType.toLowerCase() == "products".toLowerCase() ||
         loadType.toLowerCase() == "schedule".toLowerCase()) {
       return LoadTypeEnum.products;
-    } else if (loadType.toLowerCase() ==
-        LoadTypeEnum.users.name.toLowerCase()) {
-      return LoadTypeEnum.users;
     } else {
+      for (var element in LoadTypeEnum.values) {
+        if (element.name.toLowerCase() == loadType.toLowerCase()) {
+          return element;
+        }
+      }
+
       return null;
     }
   }

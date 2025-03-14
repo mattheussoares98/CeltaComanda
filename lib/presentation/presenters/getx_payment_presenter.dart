@@ -271,7 +271,7 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     customersViewModel = null;
-    _selectedCovenant = {};
+    _selectedCustomer = null;
 
     try {
       validateCustomerField(value);
@@ -343,16 +343,17 @@ class GetxPaymentPresenter extends GetxController
   @override
   Future<void> updateSelectedCovenant(
     CustomerViewModel? customer,
-    String? covenantCode,
+    int? covenantCode,
   ) async {
     _authorizationPendingModel = null;
 
     if (customer == null) {
-      _selectedCovenant = {};
+      _selectedCustomer = null;
     } else {
-      _selectedCovenant = {
-        customer.Code!: covenantCode,
-      };
+      _selectedCustomer = SelectedCustomerModel(
+        customer: CustomerModel.fromViewModel(customer),
+        covenantCode: covenantCode?.toInt(),
+      );
     }
   }
 
@@ -370,7 +371,7 @@ class GetxPaymentPresenter extends GetxController
     try {
       if (customerPassword != null && customerPassword.isNotEmpty) {
         final passwordResponse = await checkPasswordByCustomerCode.validate(
-          customerCode: _selectedCovenant.keys.first.toInt(),
+          customerCode: _selectedCustomer!.customer.Code!,
           password: customerPassword,
         );
         if (passwordResponse.responseType == SoapResponseType.error) {
@@ -385,8 +386,8 @@ class GetxPaymentPresenter extends GetxController
           .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseBuilder.entity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
-        customerCode: _selectedCovenant.keys.first.toInt(),
-        covenantCode: _selectedCovenant.values.first!.toInt(),
+        customerCode: _selectedCustomer!.customer.Code!,
+        covenantCode: _selectedCustomer!.covenantCode!,
         value: pendingValue,
       );
 
@@ -451,12 +452,8 @@ class GetxPaymentPresenter extends GetxController
           couponFiscalNumber: _couponNumber!,
           pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
           pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
-          covenantCode: _selectedCovenant.values.isEmpty
-              ? null
-              : _selectedCovenant.values.first?.toInt(),
-          customerCode: _selectedCovenant.keys.isEmpty
-              ? null
-              : _selectedCovenant.keys.first.toInt(),
+          covenantCode: _selectedCustomer?.covenantCode,
+          customerCode: _selectedCustomer?.customer.Code,
           cpfCnpj: cpfCnpj?.toString(),
           incrementType: serviceChargeValue == 0 ? 0 : 1,
           incrementValue: serviceChargeValue,
@@ -517,9 +514,9 @@ class GetxPaymentPresenter extends GetxController
   set customersViewModel(List<CustomerViewModel>? customer) =>
       _customersViewModel.subject.add(customer);
 
-  Map<String, String?> _selectedCovenant = {};
+  SelectedCustomerModel? _selectedCustomer;
   @override
-  Map<String, String?> get selectedCovenant => _selectedCovenant;
+  SelectedCustomerModel? get selectedCustomer => _selectedCustomer;
 
   AuthorizationPendingModel? _authorizationPendingModel;
 

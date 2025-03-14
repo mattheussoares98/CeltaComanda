@@ -1,9 +1,11 @@
-
+import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../ui/helpers/helpers.dart';
+import '../../../ui/pages/pages.dart';
 import 'customer.dart';
 
-class CustomerModel {
+class CustomerModel extends Equatable {
   final int? Code;
   final String? PersonalizedCode;
   final String? Name;
@@ -35,6 +37,24 @@ class CustomerModel {
     required this.Addresses,
     required this.Covenants,
   });
+
+  @override
+  List<Object?> get props => [
+        Code,
+        PersonalizedCode,
+        Name,
+        ReducedName,
+        CpfCnpjNumber,
+        RegistrationNumber,
+        DateOfBirth,
+        SexType,
+        PersonType,
+        HasPassword,
+        Emails,
+        Telephones,
+        Addresses,
+        Covenants,
+      ];
 
   factory CustomerModel.fromJson(Map json) => CustomerModel(
         Code: json["Code"],
@@ -91,5 +111,23 @@ class CustomerModel {
         Telephones: Telephones?.map((e) => e.toEntity()).toList(),
         Addresses: Addresses?.map((e) => e.toEntity()).toList(),
         CustomerCovenants: Covenants?.map((e) => e.toEntity()).toList(),
+      );
+
+  factory CustomerModel.fromViewModel(CustomerViewModel viewModel) =>
+      CustomerModel(
+        Code: viewModel.Code?.toInt(),
+        PersonalizedCode: viewModel.PersonalizedCode,
+        Name: viewModel.Name,
+        ReducedName: viewModel.ReducedName,
+        CpfCnpjNumber: viewModel.CpfCnpjNumber,
+        RegistrationNumber: viewModel.RegistrationNumber,
+        DateOfBirth: viewModel.DateOfBirth,
+        SexType: viewModel.SexType,
+        PersonType: viewModel.PersonType,
+        HasPassword: viewModel.HasPassword == "true",
+        Emails: viewModel.Emails,
+        Telephones: viewModel.Telephones,
+        Addresses: viewModel.Addresses,
+        Covenants: viewModel.CustomerCovenants,
       );
 }

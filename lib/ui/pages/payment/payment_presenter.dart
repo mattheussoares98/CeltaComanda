@@ -15,7 +15,7 @@ abstract class PaymentPresenter implements Listenable {
   List<ConcentratorFinalizationModel> get successfulPayments;
   Stream<ValidationError?> get customerErrorStream;
   Stream<List<CustomerViewModel>?> get customersViewModelStream;
-  Map<String, String?> get selectedCovenant;
+  SelectedCustomerModel? get selectedCustomer;
   AuthorizationPendingModel? get authorizationPendingModel;
   int? get couponNumber;
 
@@ -54,7 +54,7 @@ abstract class PaymentPresenter implements Listenable {
   void validateCustomerField(String value);
   Future<void> updateSelectedCovenant(
     CustomerViewModel? customer,
-    String? newValue,
+    int? newValue,
   );
   Future<void> finishSaleRequestByCovenant({
     required HomePresenter homePresenter,

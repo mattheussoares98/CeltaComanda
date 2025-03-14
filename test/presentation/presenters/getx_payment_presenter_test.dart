@@ -760,19 +760,23 @@ void main() {
     });
 
     test("Should clear selectedCovenant", () async {
-      String newValue = faker.randomGenerator.string(10);
+      int newValue = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(customersViewModel[0], newValue);
 
-      expect(sut.selectedCovenant, {
-        customersViewModel[0].Code: newValue,
-      });
+      expect(
+        sut.selectedCustomer,
+        SelectedCustomerModel(
+          customer: CustomerModel.fromViewModel(customersViewModel[0]),
+          covenantCode: newValue,
+        ),
+      );
 
       await sut.getCustomerByNameCodeOrCpf(
           searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
           value: "any");
 
-      expect(sut.selectedCovenant, {});
+      expect(sut.selectedCustomer, null);
     });
     test("Should clear authorizationPendingModel", () async {
       await sut.getCustomerByNameCodeOrCpf(
@@ -825,17 +829,24 @@ void main() {
 
   group("Update selected covenant", () {
     test("Should update selected covenant correctly", () async {
-      String newValue = faker.randomGenerator.string(10);
+      int newValue = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(customersViewModel[0], newValue);
 
-      expect(sut.selectedCovenant, {
+      expect(
+          sut.selectedCustomer,
+          SelectedCustomerModel(
+              customer: CustomerModel.fromViewModel(customersViewModel[0]),
+              covenantCode:
+                  newValue) /* 
+      {
         customersViewModel[0].Code: newValue,
-      });
+      } */
+          );
     });
     test("Should clear authorizationPendingModel", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.string(10),
+        faker.randomGenerator.integer(100),
       );
 
       expect(sut.authorizationPendingModel, null);
@@ -844,11 +855,11 @@ void main() {
     test("Should clear selectedCovenant when customer is null", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.string(10),
+        faker.randomGenerator.integer(10),
       );
-      await sut.updateSelectedCovenant(null, faker.randomGenerator.string(10));
+      await sut.updateSelectedCovenant(null, faker.randomGenerator.integer(10));
 
-      expect(sut.selectedCovenant, {});
+      expect(sut.selectedCustomer, null);
     });
   });
 
@@ -888,7 +899,7 @@ void main() {
     test("Should add new finalization correctly", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       concInsertSaleMovement.mockInsertError();
@@ -915,7 +926,7 @@ void main() {
     });
 
     test("Should call authorize covenant limit use by code", () async {
-      String covenantCode = faker.randomGenerator.integer(100).toString();
+      int covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
@@ -940,7 +951,7 @@ void main() {
     test(
         "Should not finish sale request concentrador when soap response returns error type",
         () async {
-      String covenantCode = faker.randomGenerator.integer(100).toString();
+      int covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       covenantLimit
@@ -973,7 +984,7 @@ void main() {
         () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       concInsertSaleMovement.mockInsertError();
@@ -997,7 +1008,7 @@ void main() {
     test("Should call checkPasswordByCustomerCode", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1019,7 +1030,7 @@ void main() {
         () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1039,7 +1050,7 @@ void main() {
     test(
         "Should not call covenantLimit validation if selectedCustomer has invalid password",
         () async {
-      String covenantCode = faker.randomGenerator.integer(100).toString();
+      int covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       final errorSoapResponse = SoapResponse(
@@ -1072,7 +1083,7 @@ void main() {
     test("Should update authorization pending model correctly", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.string(10),
+        faker.randomGenerator.integer(10),
       );
 
       concInsertSaleMovement.mockInsertError();
@@ -1098,7 +1109,7 @@ void main() {
     test("Should clear authorization pending model", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.string(10),
+        faker.randomGenerator.integer(10),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1117,7 +1128,7 @@ void main() {
       final covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        covenantCode.toString(),
+        covenantCode,
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1152,7 +1163,7 @@ void main() {
         () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.string(10),
+        faker.randomGenerator.integer(10),
       );
 
       concInsertSaleMovement.mockInsertError();
@@ -1173,7 +1184,7 @@ void main() {
         () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(10).toString(),
+        faker.randomGenerator.integer(10),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1192,7 +1203,7 @@ void main() {
     test("Shoul load coupon fiscal number if coupon number is null", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1209,7 +1220,7 @@ void main() {
     test("Shoul update coupon number correctly", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1226,7 +1237,7 @@ void main() {
     test("Shoul save last coupon number on success", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1245,7 +1256,7 @@ void main() {
         () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1259,7 +1270,7 @@ void main() {
 
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(
@@ -1277,7 +1288,7 @@ void main() {
     test("Should call load use sat sharing", () async {
       await sut.updateSelectedCovenant(
         customersViewModel[0],
-        faker.randomGenerator.integer(100).toString(),
+        faker.randomGenerator.integer(100),
       );
 
       await sut.finishSaleRequestByCovenant(

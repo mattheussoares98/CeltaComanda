@@ -57,8 +57,9 @@ class ConfirmPayment extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return ElevatedButton(
-      onPressed: paymentPresenter.selectedCovenant.containsKey(customer.Code)
-          ? () async {
+      onPressed: paymentPresenter.selectedCustomer?.customer.Code == null
+          ? null
+          : () async {
               if (customer.HasPassword == "false") {
                 await _finishSaleRequestByCovenant(
                   paymentPresenter: paymentPresenter,
@@ -119,8 +120,7 @@ class ConfirmPayment extends StatelessWidget {
                       }
                     });
               }
-            }
-          : null,
+            },
       child: Text(
         R.string.liquidateCommand.toUpperCase(),
       ),

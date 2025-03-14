@@ -32,7 +32,7 @@ class _CovenantPageState extends State<CovenantPage>
     textController.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
-    await paymentPresenter.updateSelectedCovenant(null, "");
+    await paymentPresenter.updateSelectedCovenant(null, null);
   }
 
   @override
@@ -42,7 +42,7 @@ class _CovenantPageState extends State<CovenantPage>
       if (mounted) {
         paymentPresenter =
             Provider.of<PaymentPresenter>(context, listen: false);
-        await paymentPresenter.updateSelectedCovenant(null, "");
+        await paymentPresenter.updateSelectedCovenant(null, null);
       }
     });
   }

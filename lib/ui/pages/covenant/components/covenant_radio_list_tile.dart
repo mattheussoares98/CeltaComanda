@@ -19,7 +19,7 @@ class CovenantRadioListTile extends StatelessWidget {
 
   Future<void> _updateSelectedCovenant({
     required PaymentPresenter paymentPresenter,
-    required String? value,
+    required int? value,
   }) async {
     await paymentPresenter.updateSelectedCovenant(
       customer,
@@ -32,7 +32,7 @@ class CovenantRadioListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
-    return RadioListTile<String>(
+    return RadioListTile<int?>(
       dense: true,
       visualDensity: VisualDensity.compact,
       title: Text(
@@ -41,8 +41,8 @@ class CovenantRadioListTile extends StatelessWidget {
           fontSize: StringSize.size,
         ),
       ),
-      value: covenant!.Code.toString(),
-      groupValue: paymentPresenter.selectedCovenant[customer.Code],
+      value: covenant!.Code,
+      groupValue: paymentPresenter.selectedCustomer?.customer.Code,
       onChanged: (value) async {
         if (paymentPresenter.authorizationPendingModel?.isPending == true) {
           notificationDialog(

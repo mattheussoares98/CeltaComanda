@@ -472,7 +472,8 @@ class GetxPaymentPresenter extends GetxController
         _authorizationPendingModel = null;
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
-        //TODO exclude salerequest
+        await deleteSaleRequest
+            .delete(printedProductsPresenter.printed!.SaleRequestId.toInt());
         await printedProductsPresenter
             .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       }

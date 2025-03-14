@@ -1425,6 +1425,24 @@ void main() {
             EntityFactory.makePrintedViewModel(),
           ));
     });
+    test("Should delete sale request", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: faker.guid.guid(),
+      );
+
+      verify(() => deleteSaleRequest
+          .delete(printedProductsPresenter.printed!.SaleRequestId.toInt()));
+    });
   });
 
   group("Clear payments", () {

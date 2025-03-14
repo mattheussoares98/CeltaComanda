@@ -7,8 +7,7 @@ class GenerateXmlForNfceSpy extends Mock implements GenerateXmlForNfce {
         products: any(named: "products"),
         finalizations: any(named: "finalizations"),
         customer: any(named: "customer"),
-        cpf: any(named: "cpf"),
-        cnpj: any(named: "cnpj"),
+        cpfCnpj: any(named: "cpfCnpj"),
         pdvNumber: any(named: "pdvNumber"),
         incrementValue: any(named: "incrementValue"),
       ));

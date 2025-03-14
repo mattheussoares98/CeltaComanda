@@ -13,8 +13,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
     required List<PrintedProductsEntity> products,
     required List<ConcentratorFinalizationModel> finalizations,
     required CustomerEntity? customer,
-    required int? cpf,
-    required int? cnpj,
+    required int? cpfCnpj,
     required int? pdvNumber,
     required double? incrementValue,
     required int couponFiscalNumber,
@@ -182,10 +181,9 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         });
       }
 
-      if (cpf != null) {
-        builder.element('CPF', nest: cpf);
-      } else if (cnpj != null) {
-        builder.element('CNPJ', nest: cnpj);
+      if (cpfCnpj != null) {
+        builder.element(cpfCnpj.toString().length == 11 ? 'CPF' : "CNPJ",
+            nest: cpfCnpj);
       }
 
       builder.element('Finalizacao', nest: () {

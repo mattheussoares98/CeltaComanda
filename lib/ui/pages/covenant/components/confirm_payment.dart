@@ -28,8 +28,7 @@ class ConfirmPayment extends StatelessWidget {
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
-      cnpj: null,
-      cpf: null,
+      cpfCnpj: null,
       showErrorMessageReturnedByBs: (error) {
         snackBarMessage(
           context,

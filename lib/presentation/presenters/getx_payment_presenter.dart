@@ -363,8 +363,7 @@ class GetxPaymentPresenter extends GetxController
     required void Function(String error) showErrorMessageReturnedByBs,
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
-    required int? cpf,
-    required int? cnpj, //TODO use only one. Or cnpj or cpf
+    required int? cpfCnpj,
   }) async {
     mainError = null;
     isLoading = true;
@@ -430,8 +429,7 @@ class GetxPaymentPresenter extends GetxController
                 [],
             finalizations: _successfulPayments,
             customer: null,
-            cpf: cpf,
-            cnpj: cnpj,
+            cpfCnpj: cpfCnpj,
             pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
             incrementValue: printedProductsPresenter.getServiceChargeValue(
               printedProductsPresenter.printed,
@@ -459,7 +457,7 @@ class GetxPaymentPresenter extends GetxController
           customerCode: _selectedCovenant.keys.isEmpty
               ? null
               : _selectedCovenant.keys.first.toInt(),
-          cpfCnpj: cpf != null ? cpf.toString() : cnpj?.toString(),
+          cpfCnpj: cpfCnpj?.toString(),
           incrementType: serviceChargeValue == 0 ? 0 : 1,
           incrementValue: serviceChargeValue,
           totalLiquid: printedProductsPresenter

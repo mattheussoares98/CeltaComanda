@@ -62,8 +62,7 @@ abstract class PaymentPresenter implements Listenable {
     required void Function(String error) showErrorMessageReturnedByBs,
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
-    required int? cpf,
-    required int? cnpj,
+    required int? cpfCnpj,
   });
 
   void clearPayments();

@@ -530,8 +530,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       if (needUpdateEnterpriseRemotelly) {
-        await enterprisePresenter
-            .updateConcentratorEnterpriseParameters(); //TODO update last imported in this function
+        await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
     } on DomainError catch (error) {
       switch (error) {

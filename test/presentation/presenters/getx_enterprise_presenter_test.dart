@@ -626,6 +626,12 @@ void main() {
                 EnterpriseBuilder.entity!.canInsertCommentManually,
           ));
     });
+    test("Should update last import when update enterprise parameters",
+        () async {
+      await sut.updateConcentratorEnterpriseParameters();
+
+      verify(() => lastImport.save([LoadTypeEnum.enterprise]));
+    });
   });
 
   group("Clear enterprise data", () {

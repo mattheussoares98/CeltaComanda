@@ -212,6 +212,8 @@ class GetxEnterprisePresenter extends GetxController
         enterpriseId: enterprise.enterpriseId!,
       );
 
+      await lastImport.save([LoadTypeEnum.enterprise]);
+
       EnterpriseBuilder.entity = EnterpriseEntity(
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,

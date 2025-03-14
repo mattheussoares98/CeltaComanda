@@ -341,7 +341,7 @@ class GetxPaymentPresenter extends GetxController
   }
 
   @override
-  Future<void> updateSelectedCovenant(
+  Future<void> updateSelectedCustomer(
     CustomerViewModel? customer,
     int? covenantCode,
   ) async {
@@ -429,7 +429,7 @@ class GetxPaymentPresenter extends GetxController
                     .toList() ??
                 [],
             finalizations: _successfulPayments,
-            customer: null,
+            customer: _selectedCustomer?.customer.toEntity(),
             cpfCnpj: cpfCnpj,
             pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
             incrementValue: printedProductsPresenter.getServiceChargeValue(

@@ -1,8 +1,8 @@
-
+import 'package:equatable/equatable.dart';
 
 import 'product_entity.dart';
 
-class PrintedProductsEntity {
+class PrintedProductsEntity extends Equatable {
   final ProductEntity Product;
   final int SaleRequestProductId;
   final String ProductPriceLookUpCode;
@@ -23,7 +23,7 @@ class PrintedProductsEntity {
   final int? SaleRequestProductIdOfFather;
   final List<PrintedProductsEntity> childs;
 
-  PrintedProductsEntity({
+  const PrintedProductsEntity({
     required this.Product,
     required this.SaleRequestProductId,
     required this.ProductPriceLookUpCode,
@@ -44,4 +44,27 @@ class PrintedProductsEntity {
     required this.childs,
     required this.SaleRequestProductIdOfFather,
   });
+
+  @override
+  List<Object?> get props => [
+        Product,
+        SaleRequestProductId,
+        ProductPriceLookUpCode,
+        Value,
+        Quantity,
+        QuantityString,
+        Comments,
+        UserId,
+        DateHourOfCreation,
+        IsCancelled,
+        IsDelivered,
+        IsPrinted,
+        ProductionStatus,
+        TotalLiquid,
+        ProductInternalCodeOnErp,
+        SaleRequestId,
+        ProductIsFatherComposition,
+        childs,
+        SaleRequestProductIdOfFather,
+      ];
 }

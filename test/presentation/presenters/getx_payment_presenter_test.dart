@@ -56,6 +56,8 @@ void main() {
   late SoapResponse xmlSoapResponse;
   late double totalLiquidMocked;
   late int lastCouponNumber;
+  late String xmlReturnedByBs;
+  late int cpfCnpj;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -126,6 +128,8 @@ void main() {
       responseType: SoapResponseType.success,
     );
     lastCouponNumber = faker.randomGenerator.integer(100);
+    xmlReturnedByBs = faker.randomGenerator.string(10);
+    cpfCnpj = faker.randomGenerator.integer(14);
   }
 
   mockSuccess() {
@@ -145,7 +149,7 @@ void main() {
         authorizationSoapResponse);
     checkPasswordByCustomerCode.mockCheck(authorizationSoapResponse);
     printedProductsPresenter.mockGetTotalLiquid(totalLiquidMocked);
-    generateXmlForNfce.mockGenerate(faker.randomGenerator.string(100));
+    generateXmlForNfce.mockGenerate(xmlReturnedByBs);
     sendSaleMovementAsNfce.mockSend(xmlSoapResponse);
     concInsertSaleMovement.mockInsert(1);
     couponFiscalNumber.mockLoad(lastCouponNumber);
@@ -761,7 +765,7 @@ void main() {
 
     test("Should clear selectedCovenant", () async {
       int newValue = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
+      await sut.updateSelectedCustomer(customersViewModel[0], newValue);
 
       expect(
         sut.selectedCustomer,
@@ -830,7 +834,7 @@ void main() {
   group("Update selected covenant", () {
     test("Should update selected covenant correctly", () async {
       int newValue = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
+      await sut.updateSelectedCustomer(customersViewModel[0], newValue);
 
       expect(
           sut.selectedCustomer,
@@ -844,7 +848,7 @@ void main() {
           );
     });
     test("Should clear authorizationPendingModel", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -853,11 +857,11 @@ void main() {
     });
 
     test("Should clear selectedCovenant when customer is null", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(10),
       );
-      await sut.updateSelectedCovenant(null, faker.randomGenerator.integer(10));
+      await sut.updateSelectedCustomer(null, faker.randomGenerator.integer(10));
 
       expect(sut.selectedCustomer, null);
     });
@@ -897,7 +901,7 @@ void main() {
     });
 
     test("Should add new finalization correctly", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -927,7 +931,7 @@ void main() {
 
     test("Should call authorize covenant limit use by code", () async {
       int covenantCode = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
         cpfCnpj: null,
@@ -952,7 +956,7 @@ void main() {
         "Should not finish sale request concentrador when soap response returns error type",
         () async {
       int covenantCode = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
       covenantLimit
           .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(SoapResponse(
@@ -982,7 +986,7 @@ void main() {
     test(
         "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
         () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1006,7 +1010,7 @@ void main() {
     });
 
     test("Should call checkPasswordByCustomerCode", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1028,7 +1032,7 @@ void main() {
     test(
         "Should not call checkPasswordByCustomerCode if customerPassword is empty",
         () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1051,7 +1055,7 @@ void main() {
         "Should not call covenantLimit validation if selectedCustomer has invalid password",
         () async {
       int covenantCode = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
       final errorSoapResponse = SoapResponse(
         response: faker.randomGenerator.string(10),
@@ -1081,7 +1085,7 @@ void main() {
       );
     });
     test("Should update authorization pending model correctly", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(10),
       );
@@ -1107,7 +1111,7 @@ void main() {
     });
 
     test("Should clear authorization pending model", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(10),
       );
@@ -1126,11 +1130,10 @@ void main() {
     test("Should call finishSaleRequestConcentrador with correct values",
         () async {
       final covenantCode = faker.randomGenerator.integer(100);
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         covenantCode,
       );
-      final cpfCnpj = faker.randomGenerator.integer(14);
 
       await sut.finishSaleRequestByCovenant(
         cpfCnpj: cpfCnpj,
@@ -1165,7 +1168,7 @@ void main() {
     test(
         "Should not clear authorizationPendingModel and succesfullFinalization on throws",
         () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(10),
       );
@@ -1186,7 +1189,7 @@ void main() {
     });
     test("Should clear authorizationPendingModel and succesfullFinalization",
         () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(10),
       );
@@ -1205,7 +1208,7 @@ void main() {
     });
 
     test("Shoul load coupon fiscal number if coupon number is null", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1222,7 +1225,7 @@ void main() {
       verify(() => couponFiscalNumber.loadLastNumber()).called(1);
     });
     test("Shoul update coupon number correctly", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1239,7 +1242,7 @@ void main() {
       expect(sut.couponNumber, lastCouponNumber + 1);
     });
     test("Shoul save last coupon number on success", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1258,7 +1261,7 @@ void main() {
 
     test("Shoul call sale movement with correct sequence of coupon number",
         () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1272,7 +1275,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1290,7 +1293,7 @@ void main() {
     });
 
     test("Should call load use sat sharing", () async {
-      await sut.updateSelectedCovenant(
+      await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
@@ -1305,6 +1308,120 @@ void main() {
       );
 
       verify(() => loadUseUrlSatSharing.getUse()).called(1);
+    });
+
+    test("Should generate xml if isnt using sat sharing", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final products = printedProductsPresenter.printed?.Products
+              .map((e) => e.toEntity())
+              .toList() ??
+          [];
+
+      verify(() => generateXmlForNfce.generate(
+            products: products,
+            finalizations: sut.successfulPayments,
+            customer: sut.selectedCustomer?.customer.toEntity(),
+            cpfCnpj: cpfCnpj,
+            pdvNumber:
+                homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
+            incrementValue: incrementValue,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+          )).called(1);
+    });
+    test("Should not generate xml if is using sat sharing", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
+      loadUseUrlSatSharing.mockUse(true);
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final products = printedProductsPresenter.printed?.Products
+              .map((e) => e.toEntity())
+              .toList() ??
+          [];
+
+      verifyNever(() => generateXmlForNfce.generate(
+            products: products,
+            finalizations: sut.successfulPayments,
+            customer: sut.selectedCustomer?.customer.toEntity(),
+            cpfCnpj: cpfCnpj,
+            pdvNumber:
+                homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
+            incrementValue: incrementValue,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+          ));
+    });
+
+    test("Should send xml as nfce to BS", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(() => sendSaleMovementAsNfce.send(xmlReturnedByBs)).called(1);
+    });
+
+    test("Should dont continue if send xml return error",
+        () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+      sendSaleMovementAsNfce.mockSend(
+        SoapResponse(
+          response: faker.randomGenerator.string(10),
+          responseType: SoapResponseType.error,
+        ),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: faker.guid.guid(),
+      );
+
+      verifyNever(() => printedProductsPresenter.getServiceChargeValue(
+            EntityFactory.makePrintedViewModel(),
+          ));
     });
   });
 

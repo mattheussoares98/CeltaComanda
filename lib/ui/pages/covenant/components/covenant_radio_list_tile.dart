@@ -21,7 +21,7 @@ class CovenantRadioListTile extends StatelessWidget {
     required PaymentPresenter paymentPresenter,
     required int? value,
   }) async {
-    await paymentPresenter.updateSelectedCovenant(
+    await paymentPresenter.updateSelectedCustomer(
       customer,
       value,
     );

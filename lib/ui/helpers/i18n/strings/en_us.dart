@@ -186,6 +186,7 @@ class EnUs implements Translation {
   String get costBenefit => 'Cost-benefit';
   String get covenant => 'Covenant';
   String get covenants => 'Covenants';
+  String get cpfCnpj => 'CPF or CNPJ';
   String get credit => 'Credit';
   String get customer => 'Customer';
   String get dateNotUpdated => 'Date not updated';

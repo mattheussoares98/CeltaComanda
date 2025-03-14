@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
@@ -9,26 +10,33 @@ class ConfirmPayment extends StatelessWidget {
   final TextEditingController passwordController;
   final CustomerViewModel customer;
   final GlobalKey<FormState> passwordKey;
-  //TODO add option to add cpf or cnpj
+  final TextEditingController cpfCnpjController;
+  final GlobalKey<FormState> cpfCnpjKey;
 
   const ConfirmPayment({
     required this.customer,
     required this.passwordController,
     required this.passwordKey,
+    required this.cpfCnpjController,
+    required this.cpfCnpjKey,
     super.key,
   });
 
-  Future<void> _finishSaleRequestByCovenant({
+  Future<void> finish({
     required HomePresenter homePresenter,
     required PaymentPresenter paymentPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
   }) async {
+    cpfCnpjController.clear();
+
     await paymentPresenter.finishSaleRequestByCovenant(
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
-      cpfCnpj: null,
+      cpfCnpj: cpfCnpjController.text.isEmpty
+          ? null
+          : cpfCnpjController.text.toInt(),
       showErrorMessageReturnedByBs: (error) {
         snackBarMessage(
           context,
@@ -49,6 +57,109 @@ class ConfirmPayment extends StatelessWidget {
     );
   }
 
+  void requestPassword({
+    required HomePresenter homePresenter,
+    required PaymentPresenter paymentPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required BuildContext context,
+  }) {
+    passwordController.clear();
+    notificationDialog(
+        closeDialogOnConfirmPress: false,
+        context: context,
+        titleMessage: R.string.password,
+        cancelMessage: R.string.cancel,
+        confirmMessage: R.string.confirm,
+        content: Form(
+          key: passwordKey,
+          child: TextFormField(
+            controller: passwordController,
+            autofocus: true,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            obscureText: true,
+            decoration: formFieldDecoration(
+              context: context,
+              hintText: R.string.password,
+              labelText: R.string.password,
+              errorText: null,
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return R.string.msgWritePassword;
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) async {
+              if (passwordKey.currentState?.validate() != true) return;
+              Navigator.of(context).pop();
+              await finish(
+                homePresenter: homePresenter,
+                paymentPresenter: paymentPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                context: context,
+              );
+            },
+          ),
+        ),
+        onPress: () async {
+          if (passwordKey.currentState?.validate() != true) return;
+          Navigator.of(context).pop();
+          await finish(
+            homePresenter: homePresenter,
+            paymentPresenter: paymentPresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            context: context,
+          );
+        });
+  }
+
+  Future<void> requestCpfOrCnpj({
+    required HomePresenter homePresenter,
+    required PaymentPresenter paymentPresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required BuildContext context,
+  }) async {
+    await notificationDialog(
+        context: context,
+        titleMessage: R.string.cpfCnpj,
+        cancelMessage: R.string.cancel,
+        confirmMessage: R.string.confirm,
+        closeDialogOnConfirmPress: false,
+        content: Form(
+          key: cpfCnpjKey,
+          child: TextFormField(
+            controller: cpfCnpjController,
+            autofocus: true,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            inputFormatters: [LengthLimitingTextInputFormatter(14)],
+            decoration: formFieldDecoration(
+              context: context,
+              hintText: R.string.cpfCnpj,
+              labelText: R.string.cpfCnpj,
+              errorText: null,
+            ),
+            validator: (value) {
+              //TODO fix validation
+              if (value != "39367504837") {
+                return "tá errado";
+              }
+              if (value == null || value.isEmpty) {
+                return R.string.msgWritePassword;
+              }
+              return null;
+            },
+            onFieldSubmitted: (_) async {
+              if (cpfCnpjKey.currentState?.validate() != true) return;
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        onPress: () async {
+          if (cpfCnpjKey.currentState?.validate() != true) return;
+          Navigator.of(context).pop();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
@@ -60,65 +171,27 @@ class ConfirmPayment extends StatelessWidget {
       onPressed: paymentPresenter.selectedCustomer?.customer.Code == null
           ? null
           : () async {
-              if (customer.HasPassword == "false") {
-                await _finishSaleRequestByCovenant(
-                  paymentPresenter: paymentPresenter,
+              await requestCpfOrCnpj(
+                homePresenter: homePresenter,
+                paymentPresenter: paymentPresenter,
+                printedProductsPresenter: printedProductsPresenter,
+                context: context,
+              );
+
+              if (customer.HasPassword == "true") {
+                requestPassword(
                   homePresenter: homePresenter,
+                  paymentPresenter: paymentPresenter,
                   printedProductsPresenter: printedProductsPresenter,
                   context: context,
                 );
               } else {
-                passwordController.clear();
-                notificationDialog(
-                    context: context,
-                    titleMessage: R.string.password,
-                    cancelMessage: R.string.cancel,
-                    confirmMessage: R.string.confirm,
-                    content: Form(
-                      key: passwordKey,
-                      child: TextFormField(
-                        controller: passwordController,
-                        autofocus: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        obscureText: true,
-                        decoration: formFieldDecoration(
-                          context: context,
-                          hintText: R.string.password,
-                          labelText: R.string.password,
-                          errorText: null,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return R.string.msgWritePassword;
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (_) async {
-                          bool? isValid = passwordKey.currentState?.validate();
-                          if (isValid == true) {
-                            Navigator.of(context).pop();
-                            await _finishSaleRequestByCovenant(
-                              paymentPresenter: paymentPresenter,
-                              homePresenter: homePresenter,
-                              printedProductsPresenter:
-                                  printedProductsPresenter,
-                              context: context,
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                    onPress: () async {
-                      bool? isValid = passwordKey.currentState?.validate();
-                      if (isValid == true) {
-                        await _finishSaleRequestByCovenant(
-                          paymentPresenter: paymentPresenter,
-                          homePresenter: homePresenter,
-                          printedProductsPresenter: printedProductsPresenter,
-                          context: context,
-                        );
-                      }
-                    });
+                await finish(
+                  homePresenter: homePresenter,
+                  paymentPresenter: paymentPresenter,
+                  printedProductsPresenter: printedProductsPresenter,
+                  context: context,
+                );
               }
             },
       child: Text(

@@ -183,6 +183,7 @@ class PtBr implements Translation {
   String get costBenefit => 'Custo benefício';
   String get covenant => "Convênio";
   String get covenants => "Convênios";
+  String get cpfCnpj => "CPF ou CNPJ";
   String get credit => "Crédito";
   String get customer => "Cliente";
   String get dateNotUpdated => "Data não atualizada";

@@ -19,13 +19,16 @@ class Covenants extends StatefulWidget {
 
 class _CovenantsState extends State<Covenants> {
   final passwordKey = GlobalKey<FormState>();
+  final cpfCnpjKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
+  final cpfCnpjController = TextEditingController();
 
   @override
   dispose() {
     super.dispose();
 
     passwordController.dispose();
+    cpfCnpjController.dispose();
   }
 
   @override
@@ -74,6 +77,8 @@ class _CovenantsState extends State<Covenants> {
           customer: widget.customer,
           passwordController: passwordController,
           passwordKey: passwordKey,
+          cpfCnpjController: cpfCnpjController,
+          cpfCnpjKey: cpfCnpjKey,
         ),
       ],
     );

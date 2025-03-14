@@ -36,14 +36,18 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       final url =
           "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/Insert";
 
-      final Xml2Json xml2json = Xml2Json();
-      xml2json.parse(xmlToGenerateFiscal ?? "");
-      final mapAsString = xml2json.toParker();
-      Map<String, dynamic> parsedJson = json.decode(mapAsString);
+      String? eletronicAccessKey;
+      if (xmlToGenerateFiscal != null) {
+        final Xml2Json xml2json = Xml2Json();
+        xml2json.parse(xmlToGenerateFiscal);
+        final mapAsString = xml2json.toParker();
+        Map<String, dynamic> parsedJson = json.decode(mapAsString);
+        eletronicAccessKey = parsedJson["CeltaBSResponse"]["NFCe"]
+            ["fiscalNoteConsumerEletronicKeyAccess"];
+      }
 
       final saleMovement = _createSaleMovementEntity(
-        eletronicAccessKey: parsedJson["CeltaBSResponse"]["NFCe"]
-            ["fiscalNoteConsumerEletronicKeyAccess"],
+        eletronicAccessKey: eletronicAccessKey,
         couponFiscalNumber: couponFiscalNumber,
         pdvId: pdvId,
         pdvNumber: pdvNumber.padLeft(3, "0"),
@@ -86,7 +90,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required double? incrementValue,
     required double totalLiquid,
     required int couponFiscalNumber,
-    required String eletronicAccessKey,
+    required String? eletronicAccessKey,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
   }) {

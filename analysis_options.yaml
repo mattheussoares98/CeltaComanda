@@ -12,6 +12,7 @@ analyzer:
     use_build_context_synchronously: ignore
     non_constant_identifier_names: ignore
     unnecessary_this: ignore
+    no_wildcard_variable_uses: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

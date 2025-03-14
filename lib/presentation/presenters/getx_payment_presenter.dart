@@ -30,6 +30,7 @@ class GetxPaymentPresenter extends GetxController
   final SendSaleMovementAsNfce sendSaleMovementAsNfce;
   final CouponFiscalNumber couponFiscalNumber;
   final LoadUseUrlSatSharing loadUseUrlSatSharing;
+  final DeleteSaleRequest deleteSaleRequest;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -46,6 +47,7 @@ class GetxPaymentPresenter extends GetxController
     required this.sendSaleMovementAsNfce,
     required this.couponFiscalNumber,
     required this.loadUseUrlSatSharing,
+    required this.deleteSaleRequest,
   });
 
   @override

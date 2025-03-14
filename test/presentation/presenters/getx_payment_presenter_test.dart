@@ -47,6 +47,7 @@ void main() {
   late SendSaleMovementAsNfceSpy sendSaleMovementAsNfce;
   late CouponFiscalNumberSpy couponFiscalNumber;
   late LoadUseUrlSatSharingSpy loadUseUrlSatSharing;
+  late DeleteSaleRequestSpy deleteSaleRequest;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -79,6 +80,7 @@ void main() {
     sendSaleMovementAsNfce = SendSaleMovementAsNfceSpy();
     couponFiscalNumber = CouponFiscalNumberSpy();
     loadUseUrlSatSharing = LoadUseUrlSatSharingSpy();
+    deleteSaleRequest = DeleteSaleRequestSpy();
   }
 
   initPresenters() {
@@ -97,6 +99,7 @@ void main() {
       sendSaleMovementAsNfce: sendSaleMovementAsNfce,
       couponFiscalNumber: couponFiscalNumber,
       loadUseUrlSatSharing: loadUseUrlSatSharing,
+      deleteSaleRequest: deleteSaleRequest,
     );
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
@@ -1397,8 +1400,7 @@ void main() {
       verify(() => sendSaleMovementAsNfce.send(xmlReturnedByBs)).called(1);
     });
 
-    test("Should dont continue if send xml return error",
-        () async {
+    test("Should dont continue if send xml return error", () async {
       await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),

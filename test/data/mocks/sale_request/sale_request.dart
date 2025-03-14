@@ -2,6 +2,7 @@ export './change_sale_request_personalized_code_products_spy.dart';
 export './change_sale_request_personalized_code_spy.dart';
 export 'clear_sale_request_temp_spy.dart';
 export './close_sale_request_spy.dart';
+export './delete_sale_request_spy.dart';
 export './finish_sale_request_temp_by_id_spy.dart';
 export 'finish_sale_request_temp_spy.dart';
 export 'load_commands_available_spy.dart';

@@ -52,6 +52,9 @@ class _PaymentPageState extends State<PaymentPage>
         paymentPresenter?.initPaymentResultHandler(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
+          showErrorMessageReturnedByBs: (error) {
+            snackBarMessage(context, error, backgroundColor: Colors.red);
+          },
           showSuccessAndCloseUntilHomePage: () {
             Navigator.of(context).popUntil(
               (route) => route.isFirst,

@@ -30,12 +30,14 @@ abstract class PaymentPresenter implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required HomePresenter homePresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   });
 
   void initPaymentResultHandler({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   });
 
   void disposePaymentResultHandler();

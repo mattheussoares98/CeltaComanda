@@ -91,6 +91,9 @@ Widget makePage(
       ListenableProvider<ExpansibleGroupFromProductPresenter>(
         create: (_) => ExpansibleGroupFromProductPresenterSpy(),
       ),
+      ListenableProvider<EnterprisePresenter>(
+        create: (_) => EnterprisePresenterSpy(),
+      ),
       ListenableProvider<CovenantPresenter>(
         create: (_) => CovenantPresenterSpy(),
       ),

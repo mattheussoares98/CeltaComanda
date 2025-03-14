@@ -35,6 +35,9 @@ class LiquidateCommand extends StatelessWidget {
             await paymentPresenter.liquidateCommand(
                 printedProductsPresenter: printedProductsPresenter,
                 homePresenter: homePresenter,
+                showErrorMessageReturnedByBs: (error) {
+                  snackBarMessage(context, error, backgroundColor: Colors.red);
+                },
                 showSuccessAndCloseUntilHomePage: () {
                   final correctContext =
                       NavigatorKey.navigatorKey.currentState?.context ??

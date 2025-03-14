@@ -102,6 +102,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
     updateScreen = true;
 
@@ -147,6 +148,7 @@ class GetxPaymentPresenter extends GetxController
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   }) {
     if (homePresenter.isGeneratingVersionToGetNet) {
       _channel = MethodChannel(Channels.getnet.name);
@@ -163,6 +165,7 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter,
           call,
           showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs,
         );
       } else {
         await _treatGetNetResponse(
@@ -170,6 +173,7 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter,
           call,
           showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs,
         );
       }
     });
@@ -180,6 +184,7 @@ class GetxPaymentPresenter extends GetxController
     PrintedProductsPresenter printedProductsPresenter,
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
+    void Function(String error) showErrorMessageReturnedByBs,
   ) async {
     try {
       final response = GetNetResponseModel.fromJson(call.arguments);
@@ -188,6 +193,7 @@ class GetxPaymentPresenter extends GetxController
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
         );
       } else if (response.result == "1") {
         mainError = UIError.paymentDeclined;
@@ -212,6 +218,7 @@ class GetxPaymentPresenter extends GetxController
     PrintedProductsPresenter printedProductsPresenter,
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
+    void Function(String error) showErrorMessageReturnedByBs,
   ) async {
     if (call.arguments == "Pagamento Autorizado") {
       try {
@@ -219,6 +226,7 @@ class GetxPaymentPresenter extends GetxController
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
         );
       } catch (e) {
         mainError = UIError.liquidadeCommandError;

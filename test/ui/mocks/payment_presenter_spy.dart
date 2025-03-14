@@ -33,6 +33,8 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
           homePresenter: any(named: "homePresenter"),
           showSuccessAndCloseUntilHomePage:
               any(named: "showSuccessAndCloseUntilHomePage"),
+          showErrorMessageReturnedByBs:
+              any(named: "showErrorMessageReturnedByBs"),
         ),
       ).thenAnswer((any) async => any);
 

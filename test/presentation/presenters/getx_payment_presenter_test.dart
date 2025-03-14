@@ -457,6 +457,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -471,6 +472,7 @@ void main() {
       printedProductsPresenter.mockGetTotalLiquid(0);
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -489,6 +491,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -521,6 +524,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -545,6 +549,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -559,6 +564,7 @@ void main() {
       printedProductsPresenter.totalLiquidController = 1;
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -573,6 +579,7 @@ void main() {
     });
     test("Should clear succesful payments", () async {
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -582,6 +589,7 @@ void main() {
     });
     test("Should clear last requested paymento amount", () async {
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1544,6 +1552,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
         showSuccessAndCloseUntilHomePage: () {},

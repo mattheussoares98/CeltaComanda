@@ -24,6 +24,7 @@ class GetxEnterprisePresenter extends GetxController
       loadEnterpriseConcentradorParameters;
   final PdvRegistration pdvRegistration;
   final LoadDeviceData loadDeviceData;
+  final LastImport lastImport;
 
   GetxEnterprisePresenter({
     required this.validation,
@@ -36,6 +37,7 @@ class GetxEnterprisePresenter extends GetxController
     required this.loadEnterpriseConcentradorParameters,
     required this.pdvRegistration,
     required this.loadDeviceData,
+    required this.lastImport,
   });
 
   @override

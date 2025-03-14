@@ -30,6 +30,7 @@ void main() {
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
   late LoadDeviceDataSpy loadDeviceData;
+  late LastImportSpy lastImport;
 
   late TicketIsPermittedEntity ticketIsPermittedEntity;
   late CommandEntity commandEntity;
@@ -54,6 +55,7 @@ void main() {
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
     loadDeviceData = LoadDeviceDataSpy();
+    lastImport = LastImportSpy();
   }
 
   void initPresenters() {
@@ -71,6 +73,7 @@ void main() {
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
       loadDeviceData: loadDeviceData,
+      lastImport: lastImport,
     );
   }
 
@@ -711,7 +714,8 @@ void main() {
         isFixedCommandNumber: isFixedCommandNumber,
       );
 
-      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false)).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false))
+          .called(1);
     });
     test("Should call get application version", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);

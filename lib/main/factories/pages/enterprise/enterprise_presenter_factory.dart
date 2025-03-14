@@ -14,4 +14,5 @@ EnterprisePresenter makeGetxEnterprisePresenter() => GetxEnterprisePresenter(
           makeRemoteLoadEnterpriseConcentradorParameters(),
       pdvRegistration: makeConcentratorPdvRegistration(),
       loadDeviceData: makeLocalLoadDeviceData(),
+      lastImport: makeLocalLastImport(),
     );

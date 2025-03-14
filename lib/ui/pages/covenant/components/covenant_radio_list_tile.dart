@@ -41,8 +41,8 @@ class CovenantRadioListTile extends StatelessWidget {
           fontSize: StringSize.size,
         ),
       ),
-      value: covenant!.Code,
-      groupValue: paymentPresenter.selectedCustomer?.customer.Code,
+      value: covenant?.Code,
+      groupValue: paymentPresenter.selectedCustomer?.covenantCode,
       onChanged: (value) async {
         if (paymentPresenter.authorizationPendingModel?.isPending == true) {
           notificationDialog(

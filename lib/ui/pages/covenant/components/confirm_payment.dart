@@ -56,7 +56,6 @@ class ConfirmPayment extends StatelessWidget {
         );
       },
     );
-    cpfCnpjController.clear();
   }
 
   void requestPassword({
@@ -72,6 +71,7 @@ class ConfirmPayment extends StatelessWidget {
         titleMessage: R.string.password,
         cancelMessage: R.string.cancel,
         confirmMessage: R.string.confirm,
+        canPop: false,
         content: Form(
           key: passwordKey,
           child: TextFormField(
@@ -131,6 +131,10 @@ class ConfirmPayment extends StatelessWidget {
         cancelMessage: R.string.jump,
         confirmMessage: R.string.confirm,
         closeDialogOnConfirmPress: false,
+        onCancelPress: () async {
+          cpfCnpjController.clear();
+        },
+        canPop: false,
         content: Form(
           key: cpfCnpjKey,
           child: TextFormField(

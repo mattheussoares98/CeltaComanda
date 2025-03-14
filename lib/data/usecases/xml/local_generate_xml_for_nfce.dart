@@ -49,13 +49,9 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
       builder.element('NumeroCaixa',
           nest: pdvNumber?.toString().padLeft(3, "0"));
       builder.element('NumeroCupom',
-          nest: couponFiscalNumber
-              .toString()
-              .padLeft(6, "0")); //TODO verify how get this correct number
+          nest: couponFiscalNumber.toString().padLeft(6, "0"));
       builder.element('NumeroOrdemCupom',
-          nest: couponFiscalNumber
-              .toString()
-              .padLeft(6, "0")); //TODO equal NumeroCupom
+          nest: couponFiscalNumber.toString().padLeft(6, "0"));
       builder.element('DataHoraVenda',
           nest: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()));
       builder.element('PDVTYPE', nest: '1');

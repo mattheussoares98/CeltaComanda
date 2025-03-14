@@ -1,3 +1,6 @@
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -118,10 +121,14 @@ class ConfirmPayment extends StatelessWidget {
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
   }) async {
+    Future.delayed(Duration.zero, () {
+      cpfCnpjKey.currentState?.validate();
+    });
+
     await notificationDialog(
         context: context,
         titleMessage: R.string.cpfCnpj,
-        cancelMessage: R.string.cancel,
+        cancelMessage: R.string.jump,
         confirmMessage: R.string.confirm,
         closeDialogOnConfirmPress: false,
         content: Form(
@@ -138,14 +145,15 @@ class ConfirmPayment extends StatelessWidget {
               errorText: null,
             ),
             validator: (value) {
-              //TODO fix validation
-              if (value != "39367504837") {
-                return "tá errado";
+              if (value == null || (value.length != 11 && value.length != 14)) {
+                return R.string.msgInvalidCpfCnpj;
+              } else if (value.length == 11 && CPFValidator.isValid(value)) {
+                return null;
+              } else if (value.length == 14 && CNPJValidator.isValid(value)) {
+                return null;
               }
-              if (value == null || value.isEmpty) {
-                return R.string.msgWritePassword;
-              }
-              return null;
+
+              return R.string.msgInvalidCpfCnpj;
             },
             onFieldSubmitted: (_) async {
               if (cpfCnpjKey.currentState?.validate() != true) return;

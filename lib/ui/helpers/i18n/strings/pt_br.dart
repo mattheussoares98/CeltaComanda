@@ -45,6 +45,7 @@ class PtBr implements Translation {
   String get msgInsertCommandNumber => "Informe o número da comanda";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
+  String get msgInvalidCpfCnpj => 'CPF/CNPJ inválido';
   String get msgInvalidCredentials => 'Credenciais inválidas.';
   String get msgInvalidCredentialsOrAccessDenied =>
       'Credenciais inválidas ou usuário sem permissão';
@@ -242,7 +243,8 @@ class PtBr implements Translation {
   String get money => 'Dinheiro';
   String get name => 'Nome';
   String get navsUrl => 'Url do navs';
-  String get needLiberateCommand => 'Necessário liberar a comanda pra conseguir lançar produtos';
+  String get needLiberateCommand =>
+      'Necessário liberar a comanda pra conseguir lançar produtos';
   String get neww => 'Novo';
   String get no => 'Não';
   String get obligatory => 'Obrigatório';

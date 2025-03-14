@@ -28,6 +28,7 @@ abstract class Translation {
   String get msgIfLogoutClearCart;
   String get msgInsertCommandNumber;
   String get msgInvalidCombox;
+  String get msgInvalidCpfCnpj;
   String get msgInvalidCredentials;
   String get msgInvalidCredentialsOrAccessDenied;
   String get msgInvalidField;

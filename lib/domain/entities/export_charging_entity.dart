@@ -36,6 +36,7 @@ class ExportChargingEntity extends Equatable {
 
 enum LoadTypeEnum {
   images,
+  enterprise,
   products,
   users,
 }

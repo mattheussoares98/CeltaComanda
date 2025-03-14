@@ -46,6 +46,8 @@ class _HomePageState extends State<HomePage>
         ExpansibleGroupFromProductPresenter
             expansibleGroupFromProductPresenter =
             Provider.of(context, listen: false);
+        EnterprisePresenter enterprisePresenter =
+            Provider.of(context, listen: false);
 
         await homePresenter.loadCommandData(
           printedProductsPresenter: printedProductsPresenter,
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage>
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
           configurationsPresenter: configurationsPresenter,
+          enterprisePresenter: enterprisePresenter,
         );
 
         await homePresenter.updateDeviceInformations();
@@ -87,6 +90,9 @@ class _HomePageState extends State<HomePage>
         Provider.of(context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
+    EnterprisePresenter enterprisePresenter =
+        Provider.of(context, listen: false);
+
     loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
       if (homePresenter.commandEntity?.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
@@ -109,6 +115,7 @@ class _HomePageState extends State<HomePage>
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
         configurationsPresenter: configurationsPresenter,
+        enterprisePresenter: enterprisePresenter,
       );
       setState(() {});
     });

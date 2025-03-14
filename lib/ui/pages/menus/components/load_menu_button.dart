@@ -19,6 +19,8 @@ class LoadMenuButton extends StatelessWidget {
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
+    EnterprisePresenter enterprisePresenter =
+        Provider.of(context, listen: false);
 
     return SizedBox(
       height:
@@ -32,6 +34,7 @@ class LoadMenuButton extends StatelessWidget {
               expansibleGroupFromProductPresenter:
                   expansibleGroupFromProductPresenter,
               configurationsPresenter: configurationsPresenter,
+              enterprisePresenter: enterprisePresenter,
             );
             callSetState();
           },

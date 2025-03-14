@@ -43,6 +43,9 @@ class LocalLastImport implements LastImport {
         users: typesToUpdate.contains(LoadTypeEnum.users)
             ? DateTime.now()
             : lastImportEntity?.users,
+        enterprise: typesToUpdate.contains(LoadTypeEnum.enterprise)
+            ? DateTime.now()
+            : lastImportEntity?.enterprise,
       );
 
       await hiveStorage.delete(CacheKeys.lastImport.name);

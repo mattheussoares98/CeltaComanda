@@ -476,6 +476,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
     required ConfigurationsPresenter configurationsPresenter,
+    required EnterprisePresenter enterprisePresenter,
   }) async {
     try {
       final lastImported = await lastImport.load();
@@ -521,6 +522,17 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       await configurationsPresenter.updateUsersData(
         loadLocally: !needUpdateUsersRemotelly,
       );
+
+      bool needUpdateEnterpriseRemotelly = _needLoadRemote(
+        exports: lastExports,
+        loadType: LoadTypeEnum.enterprise,
+        lastImported: lastImported,
+      );
+
+      if (needUpdateEnterpriseRemotelly) {
+        await enterprisePresenter
+            .updateConcentratorEnterpriseParameters(); //TODO update last imported in this function
+      }
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -568,6 +580,10 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       return lastImported?.users == null ||
           (latestExportByLoadType?.Date != null &&
               latestExportByLoadType!.Date!.isAfter(lastImported!.users!));
+    } else if (loadType == LoadTypeEnum.enterprise) {
+      return lastImported?.enterprise == null ||
+          (latestExportByLoadType?.Date != null &&
+              latestExportByLoadType!.Date!.isAfter(lastImported!.enterprise!));
     } else {
       return false;
     }

@@ -1325,6 +1325,7 @@ void main() {
     group("Pattern requests", () {
       test("Should call load last import", () async {
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1340,6 +1341,7 @@ void main() {
           pdv: EntityFactory.makePdvEntity(),
         );
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1358,6 +1360,7 @@ void main() {
           pdv: null,
         );
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1374,7 +1377,12 @@ void main() {
           "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows CommandNotAvailable",
           () async {
         lastImport.mockLoad(
-          LastImportEntity(products: DateTime(2024), images: null, users: null),
+          LastImportEntity(
+            products: DateTime(2024),
+            images: null,
+            users: null,
+            enterprise: null,
+          ),
         );
         loadExportCharging.mockLoad(
           [
@@ -1390,6 +1398,7 @@ void main() {
         expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1400,7 +1409,12 @@ void main() {
           "Should emit correct values on menuPresenter.loadGroupsAndProducts trhows unexpected",
           () async {
         lastImport.mockLoad(
-          LastImportEntity(products: DateTime(2024), images: null, users: null),
+          LastImportEntity(
+            products: DateTime(2024),
+            images: null,
+            users: null,
+            enterprise: null,
+          ),
         );
         loadExportCharging.mockLoad(
           [
@@ -1415,6 +1429,7 @@ void main() {
         expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1429,6 +1444,7 @@ void main() {
             products: DateTime(2024),
             images: null,
             users: null,
+            enterprise: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.products,
@@ -1439,6 +1455,7 @@ void main() {
           loadExportCharging.mockLoad([lastExport]);
 
           await sut.updateWhatNeed(
+            enterprisePresenter: enterprisePresenter,
             configurationsPresenter: configurationsPresenter,
             menuPresenter: menuPresenter,
             expansibleGroupFromProductPresenter:
@@ -1460,6 +1477,7 @@ void main() {
             products: DateTime(2025),
             images: null,
             users: null,
+            enterprise: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.products,
@@ -1470,6 +1488,7 @@ void main() {
           loadExportCharging.mockLoad([lastExport]);
 
           await sut.updateWhatNeed(
+            enterprisePresenter: enterprisePresenter,
             configurationsPresenter: configurationsPresenter,
             menuPresenter: menuPresenter,
             expansibleGroupFromProductPresenter:
@@ -1496,10 +1515,12 @@ void main() {
             products: faker.date.dateTime(),
             images: null,
             users: null,
+            enterprise: null,
           ),
         );
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1522,6 +1543,7 @@ void main() {
             products: null,
             images: DateTime(2024),
             users: null,
+            enterprise: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.images,
@@ -1532,6 +1554,7 @@ void main() {
           loadExportCharging.mockLoad([lastExport]);
 
           await sut.updateWhatNeed(
+            enterprisePresenter: enterprisePresenter,
             configurationsPresenter: configurationsPresenter,
             menuPresenter: menuPresenter,
             expansibleGroupFromProductPresenter:
@@ -1551,6 +1574,7 @@ void main() {
             products: null,
             images: DateTime(2025),
             users: null,
+            enterprise: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.images,
@@ -1561,6 +1585,7 @@ void main() {
           loadExportCharging.mockLoad([lastExport]);
 
           await sut.updateWhatNeed(
+            enterprisePresenter: enterprisePresenter,
             configurationsPresenter: configurationsPresenter,
             menuPresenter: menuPresenter,
             expansibleGroupFromProductPresenter:
@@ -1585,10 +1610,12 @@ void main() {
             products: null,
             images: faker.date.dateTime(),
             users: null,
+            enterprise: null,
           ),
         );
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           configurationsPresenter: configurationsPresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
@@ -1608,6 +1635,7 @@ void main() {
           products: null,
           images: null,
           users: DateTime(2024),
+          enterprise: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1616,6 +1644,7 @@ void main() {
         ]);
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1631,6 +1660,7 @@ void main() {
           products: null,
           images: null,
           users: DateTime(2025),
+          enterprise: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1639,6 +1669,7 @@ void main() {
         ]);
 
         await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
           menuPresenter: menuPresenter,
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
@@ -1648,6 +1679,84 @@ void main() {
         verify(() => configurationsPresenter.updateUsersData(
               loadLocally: true,
             )).called(1);
+      });
+    });
+
+    group("Update enterprise parameters", () {
+      test("Should load remote if export is newer than last import", () async {
+        lastImport.mockLoad(LastImportEntity(
+          products: null,
+          images: null,
+          users: null,
+          enterprise: DateTime(2024),
+        ));
+
+        loadExportCharging.mockLoad([
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.enterprise,
+              date: DateTime(2025))
+        ]);
+
+        await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
+        );
+
+        verify(() =>
+                enterprisePresenter.updateConcentratorEnterpriseParameters())
+            .called(1);
+      });
+      test("Should load remote if last import is null", () async {
+        lastImport.mockLoad(LastImportEntity(
+          products: null,
+          images: null,
+          users: null,
+          enterprise: null,
+        ));
+
+        loadExportCharging.mockLoad([
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.enterprise,
+              date: DateTime(2025))
+        ]);
+
+        await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
+        );
+
+        verify(() =>
+                enterprisePresenter.updateConcentratorEnterpriseParameters())
+            .called(1);
+      });
+      test("Should not update enterprise if last import is newer than export",
+          () async {
+        lastImport.mockLoad(LastImportEntity(
+          products: null,
+          images: null,
+          users: null,
+          enterprise: DateTime(2025),
+        ));
+
+        loadExportCharging.mockLoad([
+          EntityFactory.makeExportChargingEntity(LoadTypeEnum.enterprise,
+              date: DateTime(2024))
+        ]);
+
+        await sut.updateWhatNeed(
+          enterprisePresenter: enterprisePresenter,
+          menuPresenter: menuPresenter,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+          configurationsPresenter: configurationsPresenter,
+        );
+
+        verifyNever(
+            () => enterprisePresenter.updateConcentratorEnterpriseParameters());
       });
     });
   });

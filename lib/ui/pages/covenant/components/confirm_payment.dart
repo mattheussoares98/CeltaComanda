@@ -28,8 +28,6 @@ class ConfirmPayment extends StatelessWidget {
     required PrintedProductsPresenter printedProductsPresenter,
     required BuildContext context,
   }) async {
-    cpfCnpjController.clear();
-
     await paymentPresenter.finishSaleRequestByCovenant(
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
@@ -55,6 +53,7 @@ class ConfirmPayment extends StatelessWidget {
         );
       },
     );
+    cpfCnpjController.clear();
   }
 
   void requestPassword({

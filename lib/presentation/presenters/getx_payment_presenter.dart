@@ -457,8 +457,8 @@ class GetxPaymentPresenter extends GetxController
           covenantCode: _selectedCustomer?.covenantCode,
           customerCode: _selectedCustomer?.customer.Code,
           cpfCnpj: cpfCnpj?.toString(),
-          incrementType: serviceChargeValue == 0 ? 0 : 1,
-          incrementValue: serviceChargeValue,
+          incrementType: serviceChargeValue == 0 ? null : 1,
+          incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
           totalLiquid: printedProductsPresenter
               .getTotalLiquid(printedProductsPresenter.printed),
           finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),

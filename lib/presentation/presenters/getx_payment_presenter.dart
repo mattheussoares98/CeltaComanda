@@ -105,6 +105,19 @@ class GetxPaymentPresenter extends GetxController
     required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
     updateScreen = true;
+    _lastRequestedPaymentFinalization = ConcentratorFinalizationModel(
+      FinalizationId: PaymentMode.pix.finalizationId,
+      Value: printedProductsPresenter
+              .getTotalLiquid(printedProductsPresenter.printed) /
+          2,
+      ValueLiquid: printedProductsPresenter
+              .getTotalLiquid(printedProductsPresenter.printed) /
+          2,
+      PortionQuantity: 1,
+    );
+    _successfulPayments.add(_lastRequestedPaymentFinalization!);
+    //TODO remove all above
+    updateScreen = true;
 
     if (_lastRequestedPaymentFinalization != null &&
         !_successfulPayments.contains(_lastRequestedPaymentFinalization)) {

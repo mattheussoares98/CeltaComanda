@@ -1302,7 +1302,7 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
+        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1310,7 +1310,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      verify(() => loadUseUrlSatSharing.getUse()).called(1);
+      verify(() => loadUseUrlSatSharing.getUse(cpfCnpj)).called(1);
     });
 
     test("Should generate xml if isnt using sat sharing", () async {

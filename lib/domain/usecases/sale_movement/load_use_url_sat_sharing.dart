@@ -1,3 +1,3 @@
 abstract class LoadUseUrlSatSharing {
-  bool getUse();
+  bool getUse(int? cpfCnpj);
 }

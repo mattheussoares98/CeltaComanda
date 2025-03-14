@@ -6,7 +6,7 @@ class LoadUseUrlSatSharingSpy extends Mock implements LoadUseUrlSatSharing {
   LoadUseUrlSatSharingSpy() {
     mockUse(false);
   }
-  When _mockUseCall() => when(() => this.getUse());
+  When _mockUseCall() => when(() => this.getUse(any()));
 
   void mockUse(bool use) {
     _mockUseCall().thenAnswer((_) => use);

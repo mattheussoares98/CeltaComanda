@@ -8,7 +8,6 @@ import 'package:hive/hive.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
-import '../../firebase_options.dart';
 import '../../infra/helpers/helpers.dart';
 
 Future<void> initApp() async {
@@ -22,7 +21,7 @@ Future<void> initApp() async {
 }
 
 Future<void> initFirebase() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp();
 }
 
 void _deletePath(String path) {

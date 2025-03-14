@@ -18,7 +18,8 @@ class LocalLoadUseUrlSatSharing implements LoadUseUrlSatSharing {
     } else if (urlSatSharing == 99) {
       return true;
     } else {
-      return Random().nextInt(101) <= urlSatSharing;
+      final generatedNumber = Random().nextInt(101);
+      return generatedNumber <= urlSatSharing;
     }
   }
 }

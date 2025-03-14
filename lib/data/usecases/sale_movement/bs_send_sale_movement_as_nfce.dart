@@ -31,7 +31,7 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
         typeOfResult: "SendSaleMovementAsNFCeResult",
       );
 
-      return result; //TODO test if return nfce offline
+      return result;
     } catch (e) {
       rethrow;
     }

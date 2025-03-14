@@ -54,10 +54,10 @@ void main() {
   late PrintedEntity printedEntity;
   late String commandNumber;
   late SoapResponse authorizationSoapResponse;
-  late SoapResponse xmlSoapResponse;
+  late SoapResponse xmlSoapResponseGeneratedByBs;
   late double totalLiquidMocked;
   late int lastCouponNumber;
-  late String xmlReturnedByBs;
+  late String xmlGeneratedLocally;
   late int? cpfCnpj;
 
   late List<CustomerEntity> customersEntitys;
@@ -126,12 +126,12 @@ void main() {
       responseType: SoapResponseType.success,
     );
     totalLiquidMocked = faker.randomGenerator.decimal();
-    xmlSoapResponse = SoapResponse(
+    xmlSoapResponseGeneratedByBs = SoapResponse(
       response: faker.randomGenerator.string(10),
       responseType: SoapResponseType.success,
     );
     lastCouponNumber = faker.randomGenerator.integer(100);
-    xmlReturnedByBs = faker.randomGenerator.string(10);
+    xmlGeneratedLocally = faker.randomGenerator.string(10);
     cpfCnpj = faker.randomGenerator.integer(14);
   }
 
@@ -152,8 +152,8 @@ void main() {
         authorizationSoapResponse);
     checkPasswordByCustomerCode.mockCheck(authorizationSoapResponse);
     printedProductsPresenter.mockGetTotalLiquid(totalLiquidMocked);
-    generateXmlForNfce.mockGenerate(xmlReturnedByBs);
-    sendSaleMovementAsNfce.mockSend(xmlSoapResponse);
+    generateXmlForNfce.mockGenerate(xmlGeneratedLocally);
+    sendSaleMovementAsNfce.mockSend(xmlSoapResponseGeneratedByBs);
     concInsertSaleMovement.mockInsert(1);
     couponFiscalNumber.mockLoad(lastCouponNumber);
   }
@@ -596,6 +596,292 @@ void main() {
       );
 
       expect(sut.lastRequestedPaymentFinalization, null);
+    });
+
+    test("Should load use url sat sharing", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => loadUseUrlSatSharing.getUse(null)).called(1);
+    });
+    test("Should generate xml for nfce if is not using sharing sat", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final products = printedProductsPresenter.printed?.Products
+              .map((e) => e.toEntity())
+              .toList() ??
+          [];
+
+      verify(() => generateXmlForNfce.generate(
+            products: products,
+            finalizations: sut.successfulPayments,
+            customer: null,
+            cpfCnpj: null,
+            pdvNumber:
+                homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
+            incrementValue: incrementValue,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+          )).called(1);
+    });
+    test("Should not generate xml for nfce if is using sharing sat", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      loadUseUrlSatSharing.mockUse(true);
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final products = printedProductsPresenter.printed?.Products
+              .map((e) => e.toEntity())
+              .toList() ??
+          [];
+
+      verifyNever(() => generateXmlForNfce.generate(
+            products: products,
+            finalizations: sut.successfulPayments,
+            customer: null,
+            cpfCnpj: null,
+            pdvNumber:
+                homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
+            incrementValue: incrementValue,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+          ));
+    });
+    test("Should load last command number if is null", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => couponFiscalNumber.loadLastNumber()).called(1);
+    });
+    test("Should update last command number if is null", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(sut.couponNumber, lastCouponNumber + 1);
+    });
+    test(
+        "Should call update next liquidate with correct sequence of coupon number",
+        () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      expect(sut.couponNumber, lastCouponNumber + 2);
+    });
+    test("Should call send sale movement as nfce", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => sendSaleMovementAsNfce.send(xmlGeneratedLocally)).called(1);
+    });
+    test("Should not continue if send sale movement as nfce return error",
+        () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      sendSaleMovementAsNfce.mockSend(SoapResponse(
+        response: faker.randomGenerator.string(10),
+        responseType: SoapResponseType.error,
+      ));
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verifyNever(
+        () => printedProductsPresenter
+            .getServiceChargeValue(EntityFactory.makePrintedViewModel()),
+      );
+    });
+    test("Should insert sale movement in concentrator", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => concInsertSaleMovement.insert(
+            pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
+            pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
+            covenantCode: null,
+            customerCode: null,
+            cpfCnpj: null,
+            incrementType: 1,
+            incrementValue: totalLiquidMocked,
+            totalLiquid: totalLiquidMocked,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+            finalizations:
+                sut.successfulPayments.map((e) => e.toEntity()).toList(),
+            products: printedProductsPresenter.printed!.Products,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
+          ));
+    });
+    test("Should save last coupon number locally", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => couponFiscalNumber.save(sut.couponNumber ?? 1)).called(1);
+    });
+    test("Should delete sale request", () async {
+      sut.successfulPayments.add(
+        ConcentratorFinalizationModel(
+          FinalizationId: faker.randomGenerator.integer(100),
+          Value: totalLiquidMocked,
+          ValueLiquid: totalLiquidMocked,
+          PortionQuantity: faker.randomGenerator.integer(100),
+        ),
+      );
+
+      await sut.liquidateCommand(
+        showErrorMessageReturnedByBs: (error) {},
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+      );
+
+      verify(() => deleteSaleRequest
+          .delete(printedProductsPresenter.printed!.SaleRequestId.toInt()));
     });
   });
 
@@ -1173,7 +1459,7 @@ void main() {
             finalizations:
                 sut.successfulPayments.map((e) => e.toEntity()).toList(),
             products: printedProductsPresenter.printed!.Products,
-            xmlToGenerateFiscal: xmlSoapResponse.response,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
           ));
     });
     test(
@@ -1407,7 +1693,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      verify(() => sendSaleMovementAsNfce.send(xmlReturnedByBs)).called(1);
+      verify(() => sendSaleMovementAsNfce.send(xmlGeneratedLocally)).called(1);
     });
 
     test("Should dont continue if send xml return error", () async {

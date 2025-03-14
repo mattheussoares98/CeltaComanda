@@ -1130,10 +1130,10 @@ void main() {
         customersViewModel[0],
         covenantCode,
       );
+      final cpfCnpj = faker.randomGenerator.integer(14);
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj:
-            null, //TODO test this after change to insert only or cpf or only cnpj
+        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1141,22 +1141,26 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      // verify(() => concInsertSaleMovement.insert(
-      //       pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
-      //       pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
-      //       covenantCode: covenantCode.toInt(),
-      //       customerCode: customersViewModel[0].Code!.toInt(),
-      //       cpfCnpj: null,
-      //       incrementType: 1,
-      //       incrementValue: any(),
-      //       totalLiquid: any(),
-      //       couponFiscalNumber:
-      //           any(), //TODO save couponFiscalNumber locally and use here to test
-      //       finalizations:
-      //           sut.successfulPayments.map((e) => e.toEntity()).toList(),
-      //       products: printedProductsPresenter.printed!.Products,
-      //       xmlToGenerateFiscal: xmlSoapResponse.response,
-      //     )).called(1);
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final totalLiquid = printedProductsPresenter
+          .getTotalLiquid(printedProductsPresenter.printed);
+
+      verify(() => concInsertSaleMovement.insert(
+            pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
+            pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
+            covenantCode: covenantCode.toInt(),
+            customerCode: customersViewModel[0].Code!.toInt(),
+            cpfCnpj: cpfCnpj.toString(),
+            incrementType: 1,
+            incrementValue: incrementValue,
+            totalLiquid: totalLiquid,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+            finalizations:
+                sut.successfulPayments.map((e) => e.toEntity()).toList(),
+            products: printedProductsPresenter.printed!.Products,
+            xmlToGenerateFiscal: xmlSoapResponse.response,
+          ));
     });
     test(
         "Should not clear authorizationPendingModel and succesfullFinalization on throws",

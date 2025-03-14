@@ -423,7 +423,7 @@ class GetxPaymentPresenter extends GetxController
         bool useSharing = loadUseUrlSatSharing.getUse();
         SoapResponse? xmlReponse;
 
-        if (useSharing == false) {
+        if (useSharing == false || cpfCnpj != null) {
           final xml = await generateXmlForNfce.generate(
             couponFiscalNumber: _couponNumber!,
             products: printedProductsPresenter.printed?.Products

@@ -58,7 +58,7 @@ void main() {
   late double totalLiquidMocked;
   late int lastCouponNumber;
   late String xmlReturnedByBs;
-  late int cpfCnpj;
+  late int? cpfCnpj;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -1346,13 +1346,14 @@ void main() {
             couponFiscalNumber: sut.couponNumber ?? 1,
           )).called(1);
     });
-    test("Should not generate xml if is using sat sharing", () async {
+    test("Should not generate xml if is using sat sharing && cpfCnpj is null", () async {
       await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
 
       loadUseUrlSatSharing.mockUse(true);
+      cpfCnpj = null;
 
       await sut.finishSaleRequestByCovenant(
         cpfCnpj: cpfCnpj,
@@ -1442,6 +1443,40 @@ void main() {
 
       verify(() => deleteSaleRequest
           .delete(printedProductsPresenter.printed!.SaleRequestId.toInt()));
+    });
+    test(
+        "Should call generate Xml for nfce if cpf cnpj is not null && is not using sat sharing",
+        () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: cpfCnpj,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: faker.guid.guid(),
+      );
+
+      final incrementValue = printedProductsPresenter
+          .getServiceChargeValue(printedProductsPresenter.printed);
+      final products = printedProductsPresenter.printed?.Products
+              .map((e) => e.toEntity())
+              .toList() ??
+          [];
+      verify(() => generateXmlForNfce.generate(
+            products: products,
+            finalizations: sut.successfulPayments,
+            customer: sut.selectedCustomer?.customer.toEntity(),
+            cpfCnpj: cpfCnpj,
+            pdvNumber:
+                homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
+            incrementValue: incrementValue,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+          ));
     });
   });
 

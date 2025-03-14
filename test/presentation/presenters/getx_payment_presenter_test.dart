@@ -1346,7 +1346,8 @@ void main() {
             couponFiscalNumber: sut.couponNumber ?? 1,
           )).called(1);
     });
-    test("Should not generate xml if is using sat sharing && cpfCnpj is null", () async {
+    test("Should not generate xml if is using sat sharing && cpfCnpj is null",
+        () async {
       await sut.updateSelectedCustomer(
         customersViewModel[0],
         faker.randomGenerator.integer(100),
@@ -1477,6 +1478,43 @@ void main() {
             incrementValue: incrementValue,
             couponFiscalNumber: sut.couponNumber ?? 1,
           ));
+    });
+
+    test("Should not try to get a new authorization if has a pendent",
+        () async {
+      final covenantCode = faker.randomGenerator.integer(100);
+      await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
+
+      couponFiscalNumber.mockSaveError();
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      expect(sut.authorizationPendingModel, isNotNull);
+
+      await sut.finishSaleRequestByCovenant(
+        cpfCnpj: null,
+        showSuccessAndCloseUntilHomePage: () {},
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        customerPassword: customersViewModel[0].HasPassword,
+      );
+
+      verify(
+        () => covenantLimit.authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+          crossIdentity: EnterpriseBuilder.entity!
+              .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
+          covenantCode: covenantCode,
+          customerCode: customersViewModel[0].Code!.toInt(),
+          value: totalLiquidMocked.toDouble(),
+        ),
+      ).called(1);
     });
   });
 

@@ -384,31 +384,32 @@ class GetxPaymentPresenter extends GetxController
 
       double pendingValue = getTotalPendingValue(printedProductsPresenter);
 
-      SoapResponse soapResponse = await covenantLimit
-          .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-        crossIdentity: EnterpriseBuilder.entity!
-            .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
-        customerCode: _selectedCustomer!.customer.Code!,
-        covenantCode: _selectedCustomer!.covenantCode!,
-        value: pendingValue,
-      );
+      SoapResponse? authorizationSoapResponse;
+      if (_authorizationPendingModel == null) {
+        authorizationSoapResponse = await covenantLimit
+            .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
+          crossIdentity: EnterpriseBuilder.entity!
+              .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
+          customerCode: _selectedCustomer!.customer.Code!,
+          covenantCode: _selectedCustomer!.covenantCode!,
+          value: pendingValue,
+        );
 
-      if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse.response);
-      } else {
         _authorizationPendingModel = AuthorizationPendingModel(
-          code: soapResponse.response,
+          code: authorizationSoapResponse.response,
           isPending: true,
         );
 
-        _successfulPayments.add(ConcentratorFinalizationModel(
-          FinalizationId: FinalizationType.covenant.id,
-          Value: pendingValue,
-          ValueLiquid: pendingValue,
-          PortionQuantity: 1,
-          AuthorizationCode: soapResponse.response,
-          AuthorizationType: 2,
-        ));
+        _successfulPayments.add(
+          ConcentratorFinalizationModel(
+            FinalizationId: FinalizationType.covenant.id,
+            Value: pendingValue,
+            ValueLiquid: pendingValue,
+            PortionQuantity: 1,
+            AuthorizationCode: authorizationSoapResponse.response,
+            AuthorizationType: 2,
+          ),
+        );
 
         if (_couponNumber == null) {
           _couponNumber = await couponFiscalNumber.loadLastNumber() + 1;
@@ -419,7 +420,11 @@ class GetxPaymentPresenter extends GetxController
         if (_couponNumber == null) {
           throw Exception();
         }
+      }
 
+      if (authorizationSoapResponse?.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(authorizationSoapResponse!.response);
+      } else {
         bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
         SoapResponse? xmlReponse;
 

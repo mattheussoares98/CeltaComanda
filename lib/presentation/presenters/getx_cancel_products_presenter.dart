@@ -107,6 +107,7 @@ class GetxCancelProductsPresenter extends GetxController
 
               return SaleRequestProductModel.fromEntity(
                 SaleRequestProductEntity(
+                  ProductIsFatherComposition: e.ProductIsFatherComposition,
                   IsCancelled: isSameProduct ? true : e.IsCancelled,
                   UserIdOfCancellation: isSameProduct
                       ? UserIdOfCancellation

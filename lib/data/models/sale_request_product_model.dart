@@ -17,6 +17,7 @@ class SaleRequestProductModel extends Equatable {
   final int? ProductionStatus;
   final int? ProductInternalCodeOnErp;
   final int? SaleRequestId;
+  final bool? ProductIsFatherComposition;
   final double? Value;
   final double? Quantity;
   final double? TotalLiquid;
@@ -36,6 +37,7 @@ class SaleRequestProductModel extends Equatable {
     required this.ProductionStatus,
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
+    required this.ProductIsFatherComposition,
     required this.Value,
     required this.Quantity,
     required this.TotalLiquid,
@@ -57,6 +59,7 @@ class SaleRequestProductModel extends Equatable {
         ProductionStatus,
         ProductInternalCodeOnErp,
         SaleRequestId,
+        ProductIsFatherComposition,
         Value,
         Quantity,
         TotalLiquid,
@@ -78,6 +81,7 @@ class SaleRequestProductModel extends Equatable {
         ProductionStatus: json["ProductionStatus"],
         ProductInternalCodeOnErp: json["ProductInternalCodeOnErp"],
         SaleRequestId: json["SaleRequestId"],
+        ProductIsFatherComposition: json["ProductIsFatherComposition"] == 1,
         Value: json["Value"],
         Quantity: json["Quantity"],
         TotalLiquid: json["TotalLiquid"],
@@ -100,6 +104,7 @@ class SaleRequestProductModel extends Equatable {
         ProductionStatus: entity.ProductionStatus,
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp,
         SaleRequestId: entity.SaleRequestId,
+        ProductIsFatherComposition: entity.ProductIsFatherComposition,
         Value: entity.Value,
         Quantity: entity.Quantity,
         TotalLiquid: entity.TotalLiquid,
@@ -120,6 +125,7 @@ class SaleRequestProductModel extends Equatable {
         "ProductionStatus": ProductionStatus,
         "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
         "SaleRequestId": SaleRequestId,
+        "ProductIsFatherComposition": ProductIsFatherComposition == true ? 1 : 0,
         "Value": Value,
         "Quantity": Quantity,
         "TotalLiquid": TotalLiquid,

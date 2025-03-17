@@ -1250,6 +1250,7 @@ class EntityFactory {
 
   static SaleRequestProductEntity makeSaleRequestProductEntity() =>
       SaleRequestProductEntity(
+        ProductIsFatherComposition: faker.randomGenerator.boolean(),
         Product: makeProductsEntitys()[0],
         SaleMovementProductCompositionId: faker.randomGenerator.integer(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),

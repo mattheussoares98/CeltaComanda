@@ -10,6 +10,7 @@ class SaleRequestProductEntity {
   final bool IsCancelled;
   final bool IsDelivered;
   final bool IsPrinted;
+  final bool ProductIsFatherComposition;
   final int SaleRequestProductId;
   final int UserId;
   final int ProductionStatus;
@@ -30,6 +31,7 @@ class SaleRequestProductEntity {
     required this.IsCancelled,
     required this.IsDelivered,
     required this.IsPrinted,
+    required this.ProductIsFatherComposition,
     required this.SaleRequestProductId,
     required this.UserId,
     required this.ProductionStatus,

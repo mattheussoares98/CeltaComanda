@@ -28,7 +28,7 @@ class RemoteLoadPrintedProducts implements LoadPrintedProducts {
       if (printedProducts == null) return null;
 
       final printedEntity =
-          PrintedProductsModel.fromJson(printedProducts).toEntity();
+          PrintedModel.fromJson(printedProducts).toEntity();
       final allProducts = _insertChildsInFathers(printedEntity);
       printedEntity.Products.removeRange(0, printedEntity.Products.length);
       printedEntity.Products.addAll(allProducts);

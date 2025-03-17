@@ -19,7 +19,7 @@ export 'parameter_model.dart';
 export './pdv_model.dart';
 export './print_parameters_model.dart';
 export './print_request_model.dart';
-export './printed_products_model.dart';
+export 'printed_model.dart';
 export './product_composition_model.dart';
 export './product_model.dart';
 export './sale_request_model.dart';

@@ -1,9 +1,7 @@
-
-
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
-class PrintedProductsModel {
+class PrintedModel {
   final List<PrintedProductsEntity> Products;
   final String PersonalizedCode;
   final String DateOfCreation;
@@ -22,7 +20,7 @@ class PrintedProductsModel {
   final int? IncrementType;
   final double? IncrementValue;
 
-  PrintedProductsModel({
+  PrintedModel({
     required this.Products,
     required this.PersonalizedCode,
     required this.DateOfCreation,
@@ -42,7 +40,7 @@ class PrintedProductsModel {
     required this.IncrementValue,
   });
 
-  factory PrintedProductsModel.fromJson(Map json) {
+  factory PrintedModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
       "Products",
       "PersonalizedCode",
@@ -52,7 +50,7 @@ class PrintedProductsModel {
     ])) {
       throw Exception();
     }
-    return PrintedProductsModel(
+    return PrintedModel(
       Products: (json["Products"] as List)
           .map((e) => PrintedProductsEntity(
                 Product: ProductModel.fromJson(e["Product"]).toEntity(),
@@ -95,8 +93,7 @@ class PrintedProductsModel {
     );
   }
 
-  factory PrintedProductsModel.fromEntity(PrintedEntity entity) =>
-      PrintedProductsModel(
+  factory PrintedModel.fromEntity(PrintedEntity entity) => PrintedModel(
         Products: entity.Products,
         PersonalizedCode: entity.PersonalizedCode,
         DateOfCreation: entity.DateOfCreation,

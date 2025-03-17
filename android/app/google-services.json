@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "619247462622",
+    "firebase_url": "https://celta-restaurant-default-rtdb.firebaseio.com",
     "project_id": "celta-restaurant",
-    "storage_bucket": "celta-restaurant.appspot.com"
+    "storage_bucket": "celta-restaurant.firebasestorage.app"
   },
   "client": [
     {

@@ -49,7 +49,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
     authDomain: 'celta-restaurant.firebaseapp.com',
-    storageBucket: 'celta-restaurant.appspot.com',
+    databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
+    storageBucket: 'celta-restaurant.firebasestorage.app',
     measurementId: 'G-LQQ3N30761',
   );
 
@@ -58,7 +59,8 @@ class DefaultFirebaseOptions {
     appId: '1:619247462622:android:e79de7b35a35ec76813a4f',
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
-    storageBucket: 'celta-restaurant.appspot.com',
+    databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
+    storageBucket: 'celta-restaurant.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -66,7 +68,8 @@ class DefaultFirebaseOptions {
     appId: '1:619247462622:ios:8415e54123b435ba813a4f',
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
-    storageBucket: 'celta-restaurant.appspot.com',
+    databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
+    storageBucket: 'celta-restaurant.firebasestorage.app',
     iosBundleId: 'br.com.celtaware.comanda',
   );
 
@@ -76,7 +79,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '619247462622',
     projectId: 'celta-restaurant',
     authDomain: 'celta-restaurant.firebaseapp.com',
-    storageBucket: 'celta-restaurant.appspot.com',
+    databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
+    storageBucket: 'celta-restaurant.firebasestorage.app',
     measurementId: 'G-VFMT0F8VEK',
   );
 

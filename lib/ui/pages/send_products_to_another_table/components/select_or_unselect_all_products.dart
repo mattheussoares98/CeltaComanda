@@ -19,7 +19,7 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
       return false;
     }
 
-    return printedViewModel?.Products.length ==
+    return printedViewModel?.Products.where((e) => e.IsCancelled == "false").length ==
         sendProductsToAnotherTablePresenter
             .selectedsSaleRequestProductsIds.length;
   }

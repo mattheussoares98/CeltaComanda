@@ -59,15 +59,19 @@ class LoadedProductsItems extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 4),
             child: InkWell(
-              onTap: () {
-                updateProductIsSelected(
-                  sendProductsToAnotherTablePresenter:
-                      sendProductsToAnotherTablePresenter,
-                  product: product,
-                );
-              },
+              onTap: product.IsCancelled == "true"
+                  ? null
+                  : () {
+                      updateProductIsSelected(
+                        sendProductsToAnotherTablePresenter:
+                            sendProductsToAnotherTablePresenter,
+                        product: product,
+                      );
+                    },
               child: Container(
-                color: Theme.of(context).primaryColorLight.withAlpha(30),
+                color: product.IsCancelled == "true"
+                    ? Colors.red
+                    : Theme.of(context).primaryColorLight.withAlpha(30),
                 child: Column(
                   children: [
                     Row(
@@ -83,7 +87,7 @@ class LoadedProductsItems extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  product.Product.Name,
+                                  "${product.Product.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -109,13 +113,15 @@ class LoadedProductsItems extends StatelessWidget {
                               .contains(
                             product.SaleRequestProductId.toInt(),
                           ),
-                          onChanged: (value) {
-                            updateProductIsSelected(
-                              sendProductsToAnotherTablePresenter:
-                                  sendProductsToAnotherTablePresenter,
-                              product: product,
-                            );
-                          },
+                          onChanged: product.IsCancelled == "true"
+                              ? null
+                              : (value) {
+                                  updateProductIsSelected(
+                                    sendProductsToAnotherTablePresenter:
+                                        sendProductsToAnotherTablePresenter,
+                                    product: product,
+                                  );
+                                },
                         ),
                       ],
                     ),

@@ -21,6 +21,8 @@ class PrintedProductsEntity extends Equatable {
   final int SaleRequestId;
   final bool ProductIsFatherComposition;
   final int? SaleRequestProductIdOfFather;
+  final int? SaleMovementProductCompositionId;
+  final int? UserIdOfCancellation;
   final List<PrintedProductsEntity> childs;
 
   const PrintedProductsEntity({
@@ -43,6 +45,8 @@ class PrintedProductsEntity extends Equatable {
     required this.ProductIsFatherComposition,
     required this.childs,
     required this.SaleRequestProductIdOfFather,
+    required this.SaleMovementProductCompositionId,
+    required this.UserIdOfCancellation,
   });
 
   @override
@@ -66,5 +70,7 @@ class PrintedProductsEntity extends Equatable {
         ProductIsFatherComposition,
         childs,
         SaleRequestProductIdOfFather,
+        SaleMovementProductCompositionId,
+        UserIdOfCancellation,
       ];
 }

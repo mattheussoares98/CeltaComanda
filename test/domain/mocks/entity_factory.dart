@@ -583,6 +583,10 @@ class EntityFactory {
 
   static PrintedViewModel makePrintedViewModel() {
     return PrintedViewModel(
+      Comments: faker.randomGenerator.string(10),
+      SellerCode: faker.randomGenerator.integer(100).toString(),
+      CovenantCode: faker.randomGenerator.integer(100).toString(),
+      CustomerCode: faker.randomGenerator.integer(100).toString(),
       Products: [
         PrintedProductsViewModel.fromEntity(makePrintedEntity().Products[0])
       ],
@@ -607,6 +611,9 @@ class EntityFactory {
   static List<PrintedProductsViewModel> makePrintedProductsViewModel() {
     return [
       PrintedProductsViewModel(
+        Comments: faker.randomGenerator.string(10),
+        SaleMovementProductCompositionId: faker.randomGenerator.string(10),
+        UserIdOfCancellation: faker.randomGenerator.string(10),
         Product: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
@@ -626,6 +633,9 @@ class EntityFactory {
         childs: [],
       ),
       PrintedProductsViewModel(
+        SaleMovementProductCompositionId: faker.randomGenerator.string(10),
+        UserIdOfCancellation: faker.randomGenerator.string(10),
+        Comments: faker.randomGenerator.string(10),
         Product: makeProductsViewModel(),
         SaleRequestProductId: faker.randomGenerator.string(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
@@ -672,6 +682,8 @@ class EntityFactory {
     return PrintedEntity(
       Products: [
         PrintedProductsEntity(
+          SaleMovementProductCompositionId: faker.randomGenerator.integer(10),
+          UserIdOfCancellation: faker.randomGenerator.integer(10),
           Product: makeProductsEntitys()[0],
           ProductPriceLookUpCode:
               productPriceLookUpCode ?? faker.randomGenerator.string(7),
@@ -694,6 +706,10 @@ class EntityFactory {
           childs: [],
         ),
       ],
+      Comments: faker.randomGenerator.string(10),
+      CovenantCode: faker.randomGenerator.integer(100),
+      CustomerCode: faker.randomGenerator.integer(100),
+      SellerCode: faker.randomGenerator.integer(100),
       IncrementType: incrementType ?? faker.randomGenerator.integer(2, min: 1),
       IncrementValue: faker.randomGenerator.decimal(),
       PersonalizedCode: faker.randomGenerator.string(10),
@@ -1214,7 +1230,7 @@ class EntityFactory {
         DateOfCreation: faker.randomGenerator.string(10),
         DateHourOfCreation: faker.randomGenerator.string(10),
         RequestType: faker.randomGenerator.string(10),
-        SellerCode: faker.randomGenerator.string(10),
+        SellerCode: faker.randomGenerator.integer(10),
         FlagStatus: faker.randomGenerator.string(10),
         Comments: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),
@@ -1235,7 +1251,7 @@ class EntityFactory {
   static SaleRequestProductEntity makeSaleRequestProductEntity() =>
       SaleRequestProductEntity(
         Product: makeProductsEntitys()[0],
-        SaleMovementProductCompositionId: faker.randomGenerator.string(10),
+        SaleMovementProductCompositionId: faker.randomGenerator.integer(10),
         ProductPriceLookUpCode: faker.randomGenerator.string(10),
         QuantityString: faker.randomGenerator.string(10),
         Comments: faker.randomGenerator.string(10),
@@ -1267,7 +1283,7 @@ class EntityFactory {
         DateOfCreation: faker.randomGenerator.string(10),
         DateHourOfCreation: faker.randomGenerator.string(10),
         RequestType: faker.randomGenerator.string(10),
-        SellerCode: faker.randomGenerator.string(10),
+        SellerCode: faker.randomGenerator.integer(10),
         FlagStatus: faker.randomGenerator.string(10),
         Comments: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),

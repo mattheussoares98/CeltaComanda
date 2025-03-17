@@ -559,6 +559,10 @@ void main() {
     test("Should not update printedProducts if the list of products is empty",
         () async {
       loadPrintedProducts.mockLoadPrintedEntity(PrintedEntity(
+        Comments: faker.randomGenerator.string(10),
+        CovenantCode: faker.randomGenerator.integer(10),
+        CustomerCode: faker.randomGenerator.integer(10),
+        SellerCode: faker.randomGenerator.integer(10),
         Products: [],
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),

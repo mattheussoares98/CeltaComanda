@@ -22,6 +22,8 @@ class PrintedProductsViewModel extends Equatable {
   final String ProductInternalCodeOnErp;
   final String SaleRequestId;
   final String ProductIsFatherComposition;
+  final String SaleMovementProductCompositionId;
+  final String UserIdOfCancellation;
   final List<PrintedProductsViewModel> childs;
 
   @override
@@ -42,6 +44,8 @@ class PrintedProductsViewModel extends Equatable {
         ProductInternalCodeOnErp,
         SaleRequestId,
         ProductIsFatherComposition,
+        SaleMovementProductCompositionId,
+        UserIdOfCancellation,
         childs,
         Comments,
       ];
@@ -63,6 +67,8 @@ class PrintedProductsViewModel extends Equatable {
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
     required this.ProductIsFatherComposition,
+    required this.SaleMovementProductCompositionId,
+    required this.UserIdOfCancellation,
     required this.childs,
     this.Comments,
   });
@@ -85,6 +91,9 @@ class PrintedProductsViewModel extends Equatable {
         ProductionStatus: entity.ProductionStatus.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
         SaleRequestId: entity.SaleRequestId.toString(),
+        UserIdOfCancellation: entity.UserIdOfCancellation.toString(),
+        SaleMovementProductCompositionId:
+            entity.SaleMovementProductCompositionId.toString(),
         ProductIsFatherComposition:
             entity.ProductIsFatherComposition.toString(),
         childs: entity.childs
@@ -93,6 +102,9 @@ class PrintedProductsViewModel extends Equatable {
       );
 
   PrintedProductsEntity toEntity() => PrintedProductsEntity(
+        UserIdOfCancellation: UserIdOfCancellation.toInt(),
+        SaleMovementProductCompositionId:
+            SaleMovementProductCompositionId.toInt(),
         Product: Product.toEntity(),
         SaleRequestProductId: SaleRequestProductId.toInt(),
         ProductPriceLookUpCode: ProductPriceLookUpCode,

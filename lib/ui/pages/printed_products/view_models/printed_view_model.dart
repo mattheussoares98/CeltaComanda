@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../../domain/entities/entities.dart';
@@ -24,6 +22,9 @@ class PrintedViewModel extends Equatable {
   final String FlagOrigin;
   final String IncrementType;
   final String IncrementValue;
+  final String? CovenantCode;
+  final String? CustomerCode;
+  final String? SellerCode;
 
   @override
   List get props => [
@@ -44,6 +45,9 @@ class PrintedViewModel extends Equatable {
         FlagOrigin,
         IncrementType,
         IncrementValue,
+        CovenantCode,
+        CustomerCode,
+        SellerCode,
       ];
 
   const PrintedViewModel({
@@ -51,7 +55,7 @@ class PrintedViewModel extends Equatable {
     required this.PersonalizedCode,
     required this.TotalLiquid,
     required this.DeliveryControl,
-    this.Comments,
+    required this.Comments,
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.FlagStatus,
@@ -64,6 +68,9 @@ class PrintedViewModel extends Equatable {
     required this.FlagOrigin,
     required this.IncrementType,
     required this.IncrementValue,
+    required this.CovenantCode,
+    required this.CustomerCode,
+    required this.SellerCode,
   });
 
   factory PrintedViewModel.fromEntity(PrintedEntity entity) => PrintedViewModel(
@@ -86,5 +93,8 @@ class PrintedViewModel extends Equatable {
         FlagOrigin: entity.FlagOrigin.toString(),
         IncrementType: entity.IncrementType.toString(),
         IncrementValue: entity.IncrementValue.toString(),
+        CovenantCode: entity.CovenantCode.toString(),
+        CustomerCode: entity.CustomerCode.toString(),
+        SellerCode: entity.SellerCode.toString(),
       );
 }

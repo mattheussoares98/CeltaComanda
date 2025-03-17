@@ -1,13 +1,11 @@
-
-
 import 'product_entity.dart';
 
 class SaleRequestProductEntity {
   final ProductEntity Product;
-  final String SaleMovementProductCompositionId;
+  final int? SaleMovementProductCompositionId;
   final String ProductPriceLookUpCode;
   final String QuantityString;
-  final String Comments;
+  final String? Comments;
   final String DateHourOfCreation;
   final bool IsCancelled;
   final bool IsDelivered;
@@ -17,7 +15,7 @@ class SaleRequestProductEntity {
   final int ProductionStatus;
   final int ProductInternalCodeOnErp;
   final int SaleRequestId;
-  final int UserIdOfCancellation;
+  final int? UserIdOfCancellation;
   final double Value;
   final double Quantity;
   final double TotalLiquid;

@@ -1,3 +1,4 @@
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -79,4 +80,86 @@ class GetxCancelProductsPresenter extends GetxController
   @override
   Stream<PrintedViewModel?> get printedProducts => _products.stream;
   set products(PrintedViewModel? value) => _products.value = value;
+
+  @override
+  Future<void> newCancelProduct({
+    required PrintedProductsViewModel product,
+    required PrintedModel printedModel,
+    required int commandNumber,
+    required void Function() showSuccessMessage,
+    required CartPresenter cartPresenter,
+    required HomePresenter homePresenter,
+    required int UserIdOfCancellation,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await updateSaleRequest.update(
+        commandNumber: commandNumber.toString(),
+        saleRequestId: printedModel.SaleRequestId,
+        model: SaleRequestModel(
+          Products: printedModel.Products.map(
+            (e) {
+              final bool isSameProduct = product.SaleRequestProductId.toInt() ==
+                  e.SaleRequestProductId;
+
+              return SaleRequestProductModel.fromEntity(
+                SaleRequestProductEntity(
+                  IsCancelled: isSameProduct ? true : e.IsCancelled,
+                  UserIdOfCancellation: isSameProduct
+                      ? UserIdOfCancellation
+                      : e.UserIdOfCancellation,
+                  Product: e.Product,
+                  SaleMovementProductCompositionId:
+                      e.SaleMovementProductCompositionId,
+                  ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+                  QuantityString: e.QuantityString,
+                  Comments: e.Comments,
+                  DateHourOfCreation: e.DateHourOfCreation,
+                  IsDelivered: e.IsDelivered,
+                  IsPrinted: e.IsPrinted,
+                  SaleRequestProductId: e.SaleRequestProductId,
+                  UserId: e.UserId,
+                  ProductionStatus: e.ProductionStatus,
+                  ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
+                  SaleRequestId: e.SaleRequestId,
+                  Value: e.Value,
+                  Quantity: e.Quantity,
+                  TotalLiquid: e.TotalLiquid,
+                ),
+              );
+            },
+          ).toList(),
+          DateOfCreation: printedModel.DateOfCreation,
+          DateHourOfCreation: printedModel.DateHourOfCreation,
+          RequestType: printedModel.RequestType,
+          SellerCode: printedModel.SellerCode,
+          FlagStatus: printedModel.FlagStatus,
+          Comments: printedModel.Comments,
+          PersonalizedCode: printedModel.PersonalizedCode,
+          IsCancelled: printedModel.IsCancelled,
+          IsUsing: printedModel.IsUsing,
+          TotalLiquid: printedModel.TotalLiquid,
+          CovenantCode: printedModel.CovenantCode,
+          CustomerCode: printedModel.CustomerCode,
+          EnterpriseId: printedModel.EnterpriseId,
+          Peoples: printedModel.Peoples,
+          FlagOrigin: printedModel.FlagOrigin,
+          DeliveryControl: printedModel.DeliveryControl,
+          SaleRequestId: printedModel.SaleRequestId,
+          IncrementValue: printedModel.IncrementValue,
+          IncrementType: printedModel.IncrementType,
+        ),
+      );
+      await cartPresenter.updateIncrementValue(commandNumber.toString());
+
+      await loadProducts(commandNumber);
+      showSuccessMessage();
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

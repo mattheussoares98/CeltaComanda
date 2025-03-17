@@ -86,7 +86,7 @@ class SaleRequestProductModel extends Equatable {
   factory SaleRequestProductModel.fromEntity(SaleRequestProductEntity entity) =>
       SaleRequestProductModel(
         SaleMovementProductCompositionId:
-            entity.SaleMovementProductCompositionId,
+            entity.SaleMovementProductCompositionId?.toString(),
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
         QuantityString: entity.QuantityString,
         Comments: entity.Comments,

@@ -1,5 +1,3 @@
-
-
 import 'entities.dart';
 
 class SaleRequestEntity {
@@ -7,7 +5,7 @@ class SaleRequestEntity {
   final String DateOfCreation;
   final String DateHourOfCreation;
   final String RequestType;
-  final String SellerCode;
+  final int? SellerCode;
   final String FlagStatus;
   final String Comments;
   final String PersonalizedCode;

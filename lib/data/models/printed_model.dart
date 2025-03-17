@@ -21,6 +21,9 @@ class PrintedModel {
   final String? Comments;
   final int? IncrementType;
   final double? IncrementValue;
+  final int? CovenantCode;
+  final int? CustomerCode;
+  final int? SellerCode;
 
   PrintedModel({
     required this.Products,
@@ -40,6 +43,9 @@ class PrintedModel {
     required this.Comments,
     required this.IncrementType,
     required this.IncrementValue,
+    required this.CovenantCode,
+    required this.CustomerCode,
+    required this.SellerCode,
   });
 
   factory PrintedModel.fromJson(Map json) {
@@ -74,6 +80,8 @@ class PrintedModel {
                 ProductIsFatherComposition: e["ProductIsFatherComposition"],
                 childs: e["childs"] ?? [],
                 SaleRequestProductIdOfFather: e["SaleRequestProductIdOfFather"],
+                SaleMovementProductCompositionId: e["SaleMovementProductCompositionId"],
+                UserIdOfCancellation: e["UserIdOfCancellation"],
               ))
           .toList(),
       PersonalizedCode: json["PersonalizedCode"],
@@ -92,6 +100,9 @@ class PrintedModel {
       Comments: json["Comments"],
       IncrementType: json["IncrementType"],
       IncrementValue: json["IncrementValue"],
+      CovenantCode: json["CovenantCode"],
+      CustomerCode: json["CustomerCode"],
+      SellerCode: json["SellerCode"],
     );
   }
 
@@ -113,6 +124,9 @@ class PrintedModel {
         Comments: entity.Comments,
         IncrementType: entity.IncrementType,
         IncrementValue: entity.IncrementValue,
+        CovenantCode: entity.CovenantCode,
+        CustomerCode: entity.CustomerCode,
+        SellerCode: entity.SellerCode,
       );
 
   PrintedEntity toEntity() => PrintedEntity(
@@ -133,6 +147,9 @@ class PrintedModel {
         DeliveryControl: DeliveryControl,
         IncrementType: IncrementType,
         IncrementValue: IncrementValue,
+        CovenantCode: CovenantCode,
+        CustomerCode: CustomerCode,
+        SellerCode: SellerCode,
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +170,9 @@ class PrintedModel {
         "DeliveryControl": DeliveryControl,
         "IncrementType": IncrementType,
         "IncrementValue": IncrementValue,
+        "CovenantCode": CovenantCode,
+        "CustomerCode": CustomerCode,
+        "SellerCode": SellerCode,
       };
 
   factory PrintedModel.fromViewModel(PrintedViewModel viewModel) =>
@@ -174,5 +194,8 @@ class PrintedModel {
         Comments: viewModel.Comments,
         IncrementType: viewModel.IncrementType.toInt(),
         IncrementValue: viewModel.IncrementValue.toDouble(),
+        CovenantCode: viewModel.CovenantCode?.toInt(),
+        CustomerCode: viewModel.CustomerCode?.toInt(),
+        SellerCode: viewModel.SellerCode?.toInt(),
       );
 }

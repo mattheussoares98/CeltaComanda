@@ -1,5 +1,3 @@
-
-
 import '../../domain/entities/entities.dart';
 
 class PrintedEntity {
@@ -19,7 +17,10 @@ class PrintedEntity {
   final int DeliveryControl;
   final int? IncrementType;
   final double? IncrementValue;
-  String? Comments;
+  final int? CovenantCode;
+  final int? CustomerCode;
+  final int? SellerCode;
+  final String? Comments;
 
   PrintedEntity({
     required this.Products,
@@ -27,7 +28,7 @@ class PrintedEntity {
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.FlagStatus,
-    this.Comments,
+    required this.Comments,
     required this.EnterpriseId,
     required this.RequestType,
     required this.IsCancelled,
@@ -39,5 +40,8 @@ class PrintedEntity {
     required this.DeliveryControl,
     required this.IncrementType,
     required this.IncrementValue,
+    required this.CovenantCode,
+    required this.CustomerCode,
+    required this.SellerCode,
   });
 }

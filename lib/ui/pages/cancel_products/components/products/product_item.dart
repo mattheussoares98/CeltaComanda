@@ -33,6 +33,8 @@ class ProductItem extends StatelessWidget {
         Provider.of(context, listen: false);
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
@@ -122,7 +124,7 @@ class ProductItem extends StatelessWidget {
                       ),
                       onPress: () async {
                         await cancelProductsPresenter.newCancelProduct(
-                            UserIdOfCancellation: 2,
+                            UserIdOfCancellation: configurationsPresenter.loggedUser!.UserId!,
                             printedModel: PrintedModel.fromViewModel(
                                 printedProductsPresenter.printed!),
                             cartPresenter: cartPresenter,

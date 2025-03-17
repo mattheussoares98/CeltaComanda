@@ -644,7 +644,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         throw Exception();
       }
 
-      double totalLiquid = printed.Products.fold(
+      double totalLiquid =
+          printed.Products.where((e) => e.IsCancelled == false).fold(
         0,
         (previous, element) => element.TotalLiquid.toDouble() + previous,
       );

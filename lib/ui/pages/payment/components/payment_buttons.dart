@@ -19,23 +19,15 @@ class PaymentButtons extends StatelessWidget {
     PaymentPresenter paymentPresenter,
     HomePresenter homePresenter,
     PaymentMode paymentMode,
-    PrintedProductsPresenter printedProductsPresenter, //TODO remove this
   ) async {
     bool? isValid = formKey.currentState?.validate();
     if (isValid == true) {
-      await paymentPresenter.liquidateCommand(
-        printedProductsPresenter: printedProductsPresenter,
+      await paymentPresenter.callPayment(
+        longAmountValue: paymentController.text.toDouble(),
+        portionQuantity: 1,
+        paymentMode: paymentMode,
         homePresenter: homePresenter,
-        showSuccessAndCloseUntilHomePage: () {},
-        showErrorMessageReturnedByBs: (e) {},
       );
-      //TODO remove this comment below and remove this function above
-      // await paymentPresenter.callPayment(
-      //   longAmountValue: paymentController.text.toDouble(),
-      //   portionQuantity: 1,
-      //   paymentMode: paymentMode,
-      //   homePresenter: homePresenter,
-      // );
     }
   }
 
@@ -43,8 +35,6 @@ class PaymentButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +49,6 @@ class PaymentButtons extends StatelessWidget {
                     paymentPresenter,
                     homePresenter,
                     PaymentMode.pix,
-                    printedProductsPresenter,
                   );
                 },
                 child: Text(
@@ -75,7 +64,6 @@ class PaymentButtons extends StatelessWidget {
                       paymentPresenter,
                       homePresenter,
                       PaymentMode.debit,
-                      printedProductsPresenter,
                     );
                   },
                   child: Text(
@@ -92,7 +80,6 @@ class PaymentButtons extends StatelessWidget {
                       paymentPresenter,
                       homePresenter,
                       PaymentMode.credit,
-                      printedProductsPresenter,
                     );
                   },
                   child: Text(
@@ -109,7 +96,6 @@ class PaymentButtons extends StatelessWidget {
                       paymentPresenter,
                       homePresenter,
                       PaymentMode.voucher,
-                      printedProductsPresenter,
                     );
                   },
                   child: Text(

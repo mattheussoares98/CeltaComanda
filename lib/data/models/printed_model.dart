@@ -1,5 +1,7 @@
+import '../../../ui/helpers/helpers.dart';
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
+import '../../ui/pages/pages.dart';
 
 class PrintedModel {
   final List<PrintedProductsEntity> Products;
@@ -152,4 +154,25 @@ class PrintedModel {
         "IncrementType": IncrementType,
         "IncrementValue": IncrementValue,
       };
+
+  factory PrintedModel.fromViewModel(PrintedViewModel viewModel) =>
+      PrintedModel(
+        Products: viewModel.Products.map((e) => e.toEntity()).toList(),
+        PersonalizedCode: viewModel.PersonalizedCode,
+        DateOfCreation: viewModel.DateOfCreation,
+        DateHourOfCreation: viewModel.DateHourOfCreation,
+        FlagStatus: viewModel.FlagStatus,
+        EnterpriseId: viewModel.EnterpriseId.toInt(),
+        RequestType: viewModel.RequestType,
+        IsCancelled: viewModel.IsCancelled == "true",
+        IsUsing: viewModel.IsUsing == "true",
+        TotalLiquid: viewModel.TotalLiquid.toDouble(),
+        Peoples: viewModel.Peoples.toInt(),
+        SaleRequestId: viewModel.SaleRequestId.toInt(),
+        FlagOrigin: viewModel.FlagOrigin.toInt(),
+        DeliveryControl: viewModel.DeliveryControl.toInt(),
+        Comments: viewModel.Comments,
+        IncrementType: viewModel.IncrementType.toInt(),
+        IncrementValue: viewModel.IncrementValue.toDouble(),
+      );
 }

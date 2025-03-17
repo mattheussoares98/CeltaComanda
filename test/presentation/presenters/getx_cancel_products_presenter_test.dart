@@ -20,6 +20,7 @@ void main() {
 
   late RemovePrintedProductSpy removePrintedProduct;
   late LoadPrintedProductsSpy loadPrintedProducts;
+  late UpdateSaleRequestSpy updateSaleRequest;
 
   late int commandNumber;
   late PrintedEntity printedEntity;
@@ -28,6 +29,7 @@ void main() {
   void initUsecases() {
     removePrintedProduct = RemovePrintedProductSpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
+    updateSaleRequest = UpdateSaleRequestSpy();
   }
 
   void initPresenters() {
@@ -36,6 +38,7 @@ void main() {
     sut = GetxCancelProductsPresenter(
       removePrintedProduct: removePrintedProduct,
       loadPrintedProducts: loadPrintedProducts,
+      updateSaleRequest: updateSaleRequest,
     );
   }
 

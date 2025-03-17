@@ -12,10 +12,12 @@ class GetxCancelProductsPresenter extends GetxController
     implements CancelProductsPresenter {
   final RemovePrintedProduct removePrintedProduct;
   final LoadPrintedProducts loadPrintedProducts;
+  final UpdateSaleRequest updateSaleRequest; //TODO remove if dont works
 
   GetxCancelProductsPresenter({
     required this.removePrintedProduct,
     required this.loadPrintedProducts,
+    required this.updateSaleRequest,
   });
 
   @override

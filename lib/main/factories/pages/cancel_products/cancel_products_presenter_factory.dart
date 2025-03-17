@@ -6,4 +6,5 @@ CancelProductsPresenter makeGetxCancelProductsPresenter() =>
     GetxCancelProductsPresenter(
       removePrintedProduct: makeRemoteRemovePrintedProduct(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
+      updateSaleRequest: makeRemoteUpdateSaleRequest(),
     );

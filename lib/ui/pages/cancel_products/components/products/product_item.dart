@@ -27,6 +27,16 @@ class ProductItem extends StatelessWidget {
     super.key,
   });
 
+  Color getColor(BuildContext context) {
+    if (product.IsCancelled == "true") {
+      return Colors.red.withAlpha(250);
+    } else if (index % 2 == 1) {
+      return Theme.of(context).primaryColorLight.withAlpha(30);
+    } else {
+      return Colors.white;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     CancelProductsPresenter cancelProductsPresenter =
@@ -40,9 +50,7 @@ class ProductItem extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      color: index % 2 == 1
-          ? Theme.of(context).primaryColorLight.withAlpha(20)
-          : Colors.white,
+      color: getColor(context),
       child: Column(
         children: [
           Row(
@@ -54,7 +62,7 @@ class ProductItem extends StatelessWidget {
               Expanded(
                 flex: productFlex,
                 child: Text(
-                  product.Product.Name,
+                  "${product.Product.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: StringSize.size,
@@ -92,57 +100,62 @@ class ProductItem extends StatelessWidget {
                 width: deleteButtonSize,
                 height: deleteButtonSize,
                 child: IconButton(
-                  onPressed: () async {
-                    notificationDialog(
-                      context: context,
-                      titleMessage: "${R.string.cancelProduct}?",
-                      content: SizedBox(
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              product.Product.Name,
-                              style: TextStyle(
-                                fontSize: StringSize.size,
-                                fontWeight: FontWeight.bold,
+                  onPressed: product.IsCancelled == "true"
+                      ? null
+                      : () async {
+                          notificationDialog(
+                            context: context,
+                            titleMessage: "${R.string.cancelProduct}?",
+                            content: SizedBox(
+                              height: MediaQuery.of(context).size.height / 3,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    product.Product.Name,
+                                    style: TextStyle(
+                                      fontSize: StringSize.size,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    product.TotalLiquid.toDouble()
+                                        .toString()
+                                        .toBrazilianNumber()
+                                        .addBrazilianCoin(),
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: StringSize.size,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              product.TotalLiquid.toDouble()
-                                  .toString()
-                                  .toBrazilianNumber()
-                                  .addBrazilianCoin(),
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: StringSize.size,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      onPress: () async {
-                        await cancelProductsPresenter.newCancelProduct(
-                            UserIdOfCancellation: configurationsPresenter.loggedUser!.UserId!,
-                            printedModel: PrintedModel.fromViewModel(
-                                printedProductsPresenter.printed!),
-                            cartPresenter: cartPresenter,
-                            homePresenter: homePresenter,
-                            product: product,
-                            commandNumber: commandNumber!,
-                            showSuccessMessage: () {
-                              snackBarMessage(
-                                context,
-                                R.string.msgSuccessToCancelProducts,
-                              );
-                            });
-                      },
-                    );
-                  },
+                            onPress: () async {
+                              await cancelProductsPresenter.newCancelProduct(
+                                  UserIdOfCancellation: configurationsPresenter
+                                      .loggedUser!.UserId!,
+                                  printedModel: PrintedModel.fromViewModel(
+                                      printedProductsPresenter.printed!),
+                                  cartPresenter: cartPresenter,
+                                  homePresenter: homePresenter,
+                                  product: product,
+                                  commandNumber: commandNumber!,
+                                  showSuccessMessage: () {
+                                    snackBarMessage(
+                                      context,
+                                      R.string.msgSuccessToCancelProducts,
+                                    );
+                                  });
+                            },
+                          );
+                        },
                   icon: Icon(
                     Icons.delete,
-                    color: Colors.red,
+                    color: product.IsCancelled == "true"
+                        ? Theme.of(context).primaryColorLight
+                        : Colors.red,
                   ),
                 ),
               ),

@@ -1245,6 +1245,7 @@ class EntityFactory {
         IsPrinted: faker.randomGenerator.boolean(),
         SaleRequestProductId: faker.randomGenerator.integer(100),
         UserId: faker.randomGenerator.integer(100),
+        UserIdOfCancellation: faker.randomGenerator.integer(100),
         ProductionStatus: faker.randomGenerator.integer(100),
         ProductInternalCodeOnErp: faker.randomGenerator.integer(100),
         SaleRequestId: faker.randomGenerator.integer(100),

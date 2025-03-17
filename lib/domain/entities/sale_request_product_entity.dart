@@ -17,6 +17,7 @@ class SaleRequestProductEntity {
   final int ProductionStatus;
   final int ProductInternalCodeOnErp;
   final int SaleRequestId;
+  final int UserIdOfCancellation;
   final double Value;
   final double Quantity;
   final double TotalLiquid;
@@ -36,6 +37,7 @@ class SaleRequestProductEntity {
     required this.ProductionStatus,
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
+    required this.UserIdOfCancellation,
     required this.Value,
     required this.Quantity,
     required this.TotalLiquid,

@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/entities.dart';
@@ -15,6 +13,7 @@ class SaleRequestProductModel extends Equatable {
   final bool? IsPrinted;
   final int? SaleRequestProductId;
   final int? UserId;
+  final int? UserIdOfCancellation;
   final int? ProductionStatus;
   final int? ProductInternalCodeOnErp;
   final int? SaleRequestId;
@@ -33,6 +32,7 @@ class SaleRequestProductModel extends Equatable {
     required this.IsPrinted,
     required this.SaleRequestProductId,
     required this.UserId,
+    required this.UserIdOfCancellation,
     required this.ProductionStatus,
     required this.ProductInternalCodeOnErp,
     required this.SaleRequestId,
@@ -53,6 +53,7 @@ class SaleRequestProductModel extends Equatable {
         IsPrinted,
         SaleRequestProductId,
         UserId,
+        UserIdOfCancellation,
         ProductionStatus,
         ProductInternalCodeOnErp,
         SaleRequestId,
@@ -73,6 +74,7 @@ class SaleRequestProductModel extends Equatable {
         IsPrinted: json["IsPrinted"],
         SaleRequestProductId: json["SaleRequestProductId"],
         UserId: json["UserId"],
+        UserIdOfCancellation: json["UserIdOfCancellation"],
         ProductionStatus: json["ProductionStatus"],
         ProductInternalCodeOnErp: json["ProductInternalCodeOnErp"],
         SaleRequestId: json["SaleRequestId"],
@@ -94,6 +96,7 @@ class SaleRequestProductModel extends Equatable {
         IsPrinted: entity.IsPrinted,
         SaleRequestProductId: entity.SaleRequestProductId,
         UserId: entity.UserId,
+        UserIdOfCancellation: entity.UserIdOfCancellation,
         ProductionStatus: entity.ProductionStatus,
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp,
         SaleRequestId: entity.SaleRequestId,
@@ -113,6 +116,7 @@ class SaleRequestProductModel extends Equatable {
         "IsPrinted": IsPrinted,
         "SaleRequestProductId": SaleRequestProductId,
         "UserId": UserId,
+        "UserIdOfCancellation": UserIdOfCancellation,
         "ProductionStatus": ProductionStatus,
         "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
         "SaleRequestId": SaleRequestId,

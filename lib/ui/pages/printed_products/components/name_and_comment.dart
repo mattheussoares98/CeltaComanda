@@ -18,15 +18,14 @@ class NameAndComment extends StatelessWidget {
     return Column(
       children: [
         Text(
-          product.Product.Name,
+          "${product.Product.Name}${product.Product.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: StringSize.size,
           ),
         ),
-        if (comments != null)
-          Comment(comment: "($comments)"),
+        if (comments != null) Comment(comment: "($comments)"),
       ],
     );
   }

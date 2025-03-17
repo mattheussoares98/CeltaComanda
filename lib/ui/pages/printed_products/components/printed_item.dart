@@ -39,6 +39,16 @@ class _PrintedItemState extends State<PrintedItem> {
     );
   }
 
+  Color getColor(int index, PrintedProductsViewModel product) {
+    if (product.IsCancelled == "true") {
+      return Colors.red;
+    } else if (index % 2 == 0) {
+      return Theme.of(context).primaryColorLight.withAlpha(10);
+    } else {
+      return Colors.transparent;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -77,11 +87,7 @@ class _PrintedItemState extends State<PrintedItem> {
                                 rightMargin,
                             margin: const EdgeInsets.only(right: 2, left: 2),
                             padding: const EdgeInsets.all(8),
-                            color: index % 2 == 0
-                                ? Theme.of(context)
-                                    .primaryColorLight
-                                    .withAlpha(10)
-                                : Colors.transparent,
+                            color: getColor(index, product),
                             child: ProductDetails(
                               printed: widget.printed,
                               product: product,

@@ -96,65 +96,67 @@ class GetxCancelProductsPresenter extends GetxController
     mainError = null;
 
     try {
+      final model = SaleRequestModel(
+        Products: printedModel.Products.map(
+          (e) {
+            final bool isSameProduct =
+                product.SaleRequestProductId?.toInt() == e.SaleRequestProductId;
+
+            return SaleRequestProductModel.fromEntity(
+              SaleRequestProductEntity(
+                ProductIsFatherComposition: e.ProductIsFatherComposition,
+                IsCancelled: isSameProduct == true ? true : e.IsCancelled,
+                UserIdOfCancellation: isSameProduct
+                    ? UserIdOfCancellation
+                    : e.UserIdOfCancellation,
+                Product: e.Product,
+                SaleMovementProductCompositionId:
+                    e.SaleMovementProductCompositionId,
+                ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+                QuantityString: e.QuantityString,
+                Comments: e.Comments,
+                DateHourOfCreation: e.DateHourOfCreation,
+                IsDelivered: e.IsDelivered,
+                IsPrinted: e.IsPrinted,
+                SaleRequestProductId: e.SaleRequestProductId,
+                UserId: e.UserId,
+                ProductionStatus: e.ProductionStatus,
+                ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
+                SaleRequestId: e.SaleRequestId,
+                Value: e.Value,
+                Quantity: e.Quantity,
+                TotalLiquid: e.TotalLiquid,
+              ),
+            );
+          },
+        ).toList(),
+        DateOfCreation: printedModel.DateOfCreation,
+        DateHourOfCreation: printedModel.DateHourOfCreation,
+        RequestType: printedModel.RequestType,
+        SellerCode: printedModel.SellerCode,
+        FlagStatus: printedModel.FlagStatus,
+        Comments: printedModel.Comments,
+        PersonalizedCode: printedModel.PersonalizedCode,
+        IsCancelled: printedModel.IsCancelled,
+        IsUsing: printedModel.IsUsing,
+        TotalLiquid: printedModel.TotalLiquid,
+        CovenantCode: printedModel.CovenantCode,
+        CustomerCode: printedModel.CustomerCode,
+        EnterpriseId: printedModel.EnterpriseId,
+        Peoples: printedModel.Peoples,
+        FlagOrigin: printedModel.FlagOrigin,
+        DeliveryControl: printedModel.DeliveryControl,
+        SaleRequestId: printedModel.SaleRequestId,
+        IncrementValue: printedModel.IncrementValue,
+        IncrementType: printedModel.IncrementType,
+      );
       await updateSaleRequest.update(
         commandNumber: commandNumber.toString(),
         saleRequestId: printedModel.SaleRequestId!,
-        model: SaleRequestModel(
-          Products: printedModel.Products.map(
-            (e) {
-              final bool isSameProduct =
-                  product.SaleRequestProductId?.toInt() ==
-                      e.SaleRequestProductId;
-
-              return SaleRequestProductModel.fromEntity(
-                SaleRequestProductEntity(
-                  ProductIsFatherComposition: e.ProductIsFatherComposition,
-                  IsCancelled: isSameProduct == true ? true : e.IsCancelled,
-                  UserIdOfCancellation: isSameProduct
-                      ? UserIdOfCancellation
-                      : e.UserIdOfCancellation,
-                  Product: e.Product,
-                  SaleMovementProductCompositionId:
-                      e.SaleMovementProductCompositionId,
-                  ProductPriceLookUpCode: e.ProductPriceLookUpCode,
-                  QuantityString: e.QuantityString,
-                  Comments: e.Comments,
-                  DateHourOfCreation: e.DateHourOfCreation,
-                  IsDelivered: e.IsDelivered,
-                  IsPrinted: e.IsPrinted,
-                  SaleRequestProductId: e.SaleRequestProductId,
-                  UserId: e.UserId,
-                  ProductionStatus: e.ProductionStatus,
-                  ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
-                  SaleRequestId: e.SaleRequestId,
-                  Value: e.Value,
-                  Quantity: e.Quantity,
-                  TotalLiquid: e.TotalLiquid,
-                ),
-              );
-            },
-          ).toList(),
-          DateOfCreation: printedModel.DateOfCreation,
-          DateHourOfCreation: printedModel.DateHourOfCreation,
-          RequestType: printedModel.RequestType,
-          SellerCode: printedModel.SellerCode,
-          FlagStatus: printedModel.FlagStatus,
-          Comments: printedModel.Comments,
-          PersonalizedCode: printedModel.PersonalizedCode,
-          IsCancelled: printedModel.IsCancelled,
-          IsUsing: printedModel.IsUsing,
-          TotalLiquid: printedModel.TotalLiquid,
-          CovenantCode: printedModel.CovenantCode,
-          CustomerCode: printedModel.CustomerCode,
-          EnterpriseId: printedModel.EnterpriseId,
-          Peoples: printedModel.Peoples,
-          FlagOrigin: printedModel.FlagOrigin,
-          DeliveryControl: printedModel.DeliveryControl,
-          SaleRequestId: printedModel.SaleRequestId,
-          IncrementValue: printedModel.IncrementValue,
-          IncrementType: printedModel.IncrementType,
-        ),
+        model: model,
       );
+      printedModel.Products.where((e) => e.IsCancelled == true).toList();
+      model.Products?.where((e) => e.IsCancelled == true).toList();
       await cartPresenter.updateIncrementValue(commandNumber.toString());
 
       await loadProducts(commandNumber);

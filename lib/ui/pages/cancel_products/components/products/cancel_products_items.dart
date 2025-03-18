@@ -39,6 +39,7 @@ class CancelProductsItems extends StatelessWidget {
                 final product = printed.Products[index];
 
                 return ProductItem(
+                  printedVieModel: printed,
                   timeFlex: timeFlex,
                   product: product,
                   index: index,

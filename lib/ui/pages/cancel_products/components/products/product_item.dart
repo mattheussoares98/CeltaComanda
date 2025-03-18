@@ -15,6 +15,7 @@ class ProductItem extends StatelessWidget {
   final int? commandNumber;
   final double deleteButtonSize;
   final int timeFlex;
+  final PrintedViewModel printedVieModel;
   const ProductItem({
     required this.product,
     required this.index,
@@ -24,6 +25,7 @@ class ProductItem extends StatelessWidget {
     required this.commandNumber,
     required this.deleteButtonSize,
     required this.timeFlex,
+    required this.printedVieModel,
     super.key,
   });
 
@@ -44,8 +46,6 @@ class ProductItem extends StatelessWidget {
     CartPresenter cartPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ConfigurationsPresenter configurationsPresenter =
-        Provider.of(context, listen: false);
-    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
     return Container(
@@ -119,7 +119,8 @@ class ProductItem extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    product.TotalLiquid!.toDouble()
+                                    product.TotalLiquid!
+                                        .toDouble()
                                         .toString()
                                         .toBrazilianNumber()
                                         .addBrazilianCoin(),
@@ -137,7 +138,8 @@ class ProductItem extends StatelessWidget {
                                   UserIdOfCancellation: configurationsPresenter
                                       .loggedUser!.UserId!,
                                   printedModel: PrintedModel.fromViewModel(
-                                      printedProductsPresenter.printed!),
+                                    printedVieModel,
+                                  ),
                                   cartPresenter: cartPresenter,
                                   homePresenter: homePresenter,
                                   product: product,

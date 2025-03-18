@@ -73,9 +73,7 @@ class ProductItem extends StatelessWidget {
               Expanded(
                 flex: quantityFlex,
                 child: Text(
-                  product.Product!.productQuantity
-                      .toString()
-                      .toBrazilianNumber(0),
+                  product.Quantity.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: StringSize.size,

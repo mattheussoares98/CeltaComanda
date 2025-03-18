@@ -71,8 +71,8 @@ class ProductsViewModel extends Equatable {
   final String? NameComplete;
   final String? NameReduced;
   final String? ProductComplement;
-  final String PackingAbbreviation;
-  final String IsPromoCombox;
+  final String? PackingAbbreviation;
+  final String? IsPromoCombox;
   final String? MaximumQuantityForSale;
   final ProductScheduleModel? Schedule;
   List<ProductCompositionViewModel>? childsComposition;
@@ -332,7 +332,7 @@ class ProductsViewModel extends Equatable {
         ProductComplement: ProductComplement,
         Schedule: Schedule?.toEntity(),
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
-        IsPromoCombox: bool.parse(IsPromoCombox),
+        IsPromoCombox: IsPromoCombox == "true",
         Name: Name,
         CFOP: CFOP,
         ProductsId: int.parse(ProductsId),
@@ -407,7 +407,7 @@ class ProductsViewModel extends Equatable {
         Schedule: Schedule?.toEntity(),
         ProductComplement: ProductComplement,
         MaximumQuantityForSale: MaximumQuantityForSale?.toDouble(),
-        IsPromoCombox: bool.parse(IsPromoCombox),
+        IsPromoCombox: IsPromoCombox == "true",
         Name: Name,
         CFOP: CFOP,
         ProductsId: int.parse(ProductsId),

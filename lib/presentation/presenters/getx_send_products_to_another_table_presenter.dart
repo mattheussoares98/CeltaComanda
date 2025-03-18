@@ -35,8 +35,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       if (printedProducts?.Products.isEmpty == false) {
         final printedViewModel = PrintedViewModel.fromEntity(printedProducts!);
         printedViewModel.Products.sort((a, b) =>
-            DateTime.parse(a.DateHourOfCreation)
-                .compareTo(DateTime.parse(b.DateHourOfCreation)));
+            DateTime.parse(a.DateHourOfCreation!)
+                .compareTo(DateTime.parse(b.DateHourOfCreation!)));
 
         products = printedViewModel;
       }
@@ -129,7 +129,7 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     _selectedSaleRequestProductsIds.clear();
     _selectedSaleRequestProductsIds.addAll(_printedProducts.value!.Products
         .where((e) => e.IsCancelled == "false")
-        .map((e) => e.SaleRequestProductId.toInt())
+        .map((e) => e.SaleRequestProductId!.toInt())
         .toList());
   }
 }

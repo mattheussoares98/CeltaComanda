@@ -144,7 +144,7 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => removePrintedProduct.remove(id)).called(1);
+      verify(() => removePrintedProduct.remove(id!)).called(1);
     });
   });
 

@@ -75,8 +75,8 @@ class GetxPrintedProductsPresenter
       _printed = null;
       if (printedProducts?.Products.isEmpty == false) {
         _printed = PrintedViewModel.fromEntity(printedProducts!);
-        _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation)
-            .compareTo(DateTime.parse(b.DateHourOfCreation)));
+        _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation!)
+            .compareTo(DateTime.parse(b.DateHourOfCreation!)));
       }
     } catch (error) {
       switch (error) {
@@ -198,7 +198,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return (printed.TotalLiquid.toDouble() + getServiceChargeValue(printed))
+    return (printed.TotalLiquid!.toDouble() + getServiceChargeValue(printed))
         .toStringAsFixed(2)
         .toDouble();
   }
@@ -209,7 +209,7 @@ class GetxPrintedProductsPresenter
       return 0;
     }
 
-    return printed.TotalLiquid.toDouble();
+    return printed.TotalLiquid!.toDouble();
   }
 
   @override
@@ -220,12 +220,12 @@ class GetxPrintedProductsPresenter
 
     double value;
 
-    if (printed.IncrementType.toInt() == 1) {
+    if (printed.IncrementType?.toInt() == 1) {
       //value
-      value = printed.IncrementValue.toDouble();
-    } else if (printed.IncrementType.toInt() == 2) {
+      value = printed.IncrementValue!.toDouble();
+    } else if (printed.IncrementType?.toInt() == 2) {
       //percentage
-      value = printed.TotalLiquid.toDouble() *
+      value = printed.TotalLiquid!.toDouble() *
           ((EnterpriseBuilder.entity!.serviceChargePercentageOrValue ?? 0) /
               100);
     } else {
@@ -263,14 +263,14 @@ class GetxPrintedProductsPresenter
         CustomerCode: null,
         IncrementType: 0,
         IncrementValue: 0,
-        TotalLiquid: printed.TotalLiquid.toDouble(),
+        TotalLiquid: printed.TotalLiquid!.toDouble(),
         EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
       );
 
       await updateSaleRequest.update(
         model: model,
         commandNumber: commandNumber.padLeft(3, "0"),
-        saleRequestId: printed.SaleRequestId.toInt(),
+        saleRequestId: printed.SaleRequestId!.toInt(),
       );
 
       await loadPrinted(commandNumber);

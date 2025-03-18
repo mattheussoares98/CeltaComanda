@@ -881,7 +881,7 @@ void main() {
       );
 
       verify(() => deleteSaleRequest
-          .delete(printedProductsPresenter.printed!.SaleRequestId.toInt()));
+          .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt()));
     });
   });
 
@@ -1376,7 +1376,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: printedProductsPresenter.printedProductsMock.TotalLiquid
+          value: printedProductsPresenter.printedProductsMock.TotalLiquid!
               .toDouble(),
         ),
       );
@@ -1737,7 +1737,7 @@ void main() {
       );
 
       verify(() => deleteSaleRequest
-          .delete(printedProductsPresenter.printed!.SaleRequestId.toInt()));
+          .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt()));
     });
     test(
         "Should call generate Xml for nfce if cpf cnpj is not null && is not using sat sharing",

@@ -484,7 +484,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: printedProductsPresenter.printedProductsMock.TotalLiquid
+          value: printedProductsPresenter.printedProductsMock.TotalLiquid!
               .toDouble(),
         ),
       ).called(1);
@@ -513,7 +513,8 @@ void main() {
       verifyNever(
         () => finishSaleRequestConcentrador.finish(
           pdvNumber: 100,
-          commandNumber: homePresenter.commandEntityController!.commandNumber!.toInt(),
+          commandNumber:
+              homePresenter.commandEntityController!.commandNumber!.toInt(),
           finalizations: null,
         ),
       );
@@ -583,10 +584,10 @@ void main() {
               CovenantCode: sut.selectedCovenant.values.first!.toInt(),
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
             ),
-            commandNumber:
-                homePresenter.commandEntityController!.commandNumber!.padLeft(3, "0"),
+            commandNumber: homePresenter.commandEntityController!.commandNumber!
+                .padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
-                .printedProductsMock.SaleRequestId
+                .printedProductsMock.SaleRequestId!
                 .toInt(),
           )).called(1);
     });
@@ -661,7 +662,7 @@ void main() {
               .enterpriseConcentradorParametersEntity!.celtaBSCrossIdentity!,
           covenantCode: covenantCode.toInt(),
           customerCode: customersViewModel[0].Code!.toInt(),
-          value: printedProductsPresenter.printedProductsMock.TotalLiquid
+          value: printedProductsPresenter.printedProductsMock.TotalLiquid!
               .toDouble(),
         ),
       );

@@ -654,7 +654,7 @@ void main() {
 
       expect(
         sut.getTotalLiquid(sut.printed),
-        printed.TotalLiquid.toDouble().toStringAsFixed(2).toDouble() +
+        printed.TotalLiquid!.toDouble().toStringAsFixed(2).toDouble() +
             sut.getServiceChargeValue(sut.printed),
       );
     });
@@ -672,7 +672,7 @@ void main() {
 
       expect(
         sut.getSubtotal(sut.printed),
-        printedEntity.TotalLiquid.toStringAsFixed(2).toDouble(),
+        printedEntity.TotalLiquid?.toStringAsFixed(2).toDouble(),
       );
     });
   });
@@ -755,12 +755,12 @@ void main() {
             CustomerCode: null,
             IncrementType: 0,
             IncrementValue: 0,
-            TotalLiquid: sut.printed!.TotalLiquid.toDouble(),
+            TotalLiquid: sut.printed!.TotalLiquid!.toDouble(),
             EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
           ),
           commandNumber: homePresenter.commandEntityController!.commandNumber!
               .padLeft(3, "0"),
-          saleRequestId: sut.printed!.SaleRequestId.toInt(),
+          saleRequestId: sut.printed!.SaleRequestId!.toInt(),
         ),
       ).called(1);
     });

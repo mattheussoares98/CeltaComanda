@@ -647,7 +647,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       double totalLiquid =
           printed.Products.where((e) => e.IsCancelled == false).fold(
         0,
-        (previous, element) => element.TotalLiquid.toDouble() + previous,
+        (previous, element) => element.TotalLiquid!.toDouble() + previous,
       );
 
       if (EnterpriseBuilder.entity?.serviceChargePercentageOrValue == null) {
@@ -660,7 +660,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
             TotalLiquid: totalLiquid,
           ),
           commandNumber: commandNumber,
-          saleRequestId: printed.SaleRequestId.toInt(),
+          saleRequestId: printed.SaleRequestId!.toInt(),
         );
         return;
       }
@@ -677,7 +677,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
           TotalLiquid: totalLiquid,
         ),
         commandNumber: commandNumber,
-        saleRequestId: printed.SaleRequestId.toInt(),
+        saleRequestId: printed.SaleRequestId!.toInt(),
       );
     } catch (e) {
       debugPrint(e.toString());

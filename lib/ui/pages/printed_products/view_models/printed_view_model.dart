@@ -6,22 +6,22 @@ import '../../../../ui/pages/pages.dart';
 
 class PrintedViewModel extends Equatable {
   final List<PrintedProductsViewModel> Products;
-  final String PersonalizedCode;
-  final String TotalLiquid;
-  final String DeliveryControl;
+  final String? PersonalizedCode;
+  final String? TotalLiquid;
+  final String? DeliveryControl;
   final String? Comments;
-  final String DateOfCreation;
-  final String DateHourOfCreation;
-  final String FlagStatus;
-  final String EnterpriseId;
+  final String? DateOfCreation;
+  final String? DateHourOfCreation;
+  final String? FlagStatus;
+  final String? EnterpriseId;
   final String? RequestType;
-  final String IsCancelled;
-  final String IsUsing;
-  final String Peoples;
-  final String SaleRequestId;
-  final String FlagOrigin;
-  final String IncrementType;
-  final String IncrementValue;
+  final String? IsCancelled;
+  final String? IsUsing;
+  final String? Peoples;
+  final String? SaleRequestId;
+  final String? FlagOrigin;
+  final String? IncrementType;
+  final String? IncrementValue;
   final String? CovenantCode;
   final String? CustomerCode;
   final String? SellerCode;
@@ -84,7 +84,7 @@ class PrintedViewModel extends Equatable {
         FlagStatus: entity.FlagStatus,
         RequestType: entity.RequestType,
         EnterpriseId: entity.EnterpriseId.toString(),
-        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
+        TotalLiquid: entity.TotalLiquid!.toStringAsFixed(2).toBrazilianNumber(),
         DeliveryControl: entity.DeliveryControl.toString(),
         IsCancelled: entity.IsCancelled.toString(),
         IsUsing: entity.IsUsing.toString(),

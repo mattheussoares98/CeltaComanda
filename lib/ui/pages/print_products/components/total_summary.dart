@@ -17,7 +17,8 @@ class TotalSummary extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (printedProductsPresenter.printed!.IncrementType.isNotEmpty &&
+            if (printedProductsPresenter.printed?.IncrementType != null &&
+                printedProductsPresenter.printed!.IncrementType!.isNotEmpty &&
                 printedProductsPresenter.printed!.IncrementType != "0")
               Expanded(
                 child: Column(
@@ -39,7 +40,8 @@ class TotalSummary extends StatelessWidget {
                   ],
                 ),
               ),
-            if (printedProductsPresenter.printed!.IncrementType.isNotEmpty &&
+            if (printedProductsPresenter.printed?.IncrementType != null &&
+                printedProductsPresenter.printed!.IncrementType!.isNotEmpty &&
                 printedProductsPresenter.printed!.IncrementType != "0")
               Expanded(
                 child: Column(
@@ -68,8 +70,9 @@ class TotalSummary extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  if (printedProductsPresenter
-                          .printed!.IncrementType.isNotEmpty &&
+                  if (printedProductsPresenter.printed?.IncrementType != null &&
+                      printedProductsPresenter
+                          .printed!.IncrementType!.isNotEmpty &&
                       printedProductsPresenter.printed!.IncrementType != "0")
                     Text(R.string.total, style: textStyle(context)),
                   FittedBox(

@@ -5,25 +5,25 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../../ui/pages/pages.dart';
 
 class PrintedProductsViewModel extends Equatable {
-  final ProductsViewModel Product;
-  final String SaleRequestProductId;
-  final String ProductPriceLookUpCode;
-  final String Value;
-  final String Quantity;
-  final String QuantityString;
+  final ProductsViewModel? Product;
+  final String? SaleRequestProductId;
+  final String? ProductPriceLookUpCode;
+  final String? Value;
+  final String? Quantity;
+  final String? QuantityString;
   final String? Comments;
-  final String UserId;
-  final String DateHourOfCreation;
-  final String IsCancelled;
-  final String IsDelivered;
-  final String IsPrinted;
-  final String ProductionStatus;
-  final String TotalLiquid;
-  final String ProductInternalCodeOnErp;
-  final String SaleRequestId;
-  final String ProductIsFatherComposition;
-  final String SaleMovementProductCompositionId;
-  final String UserIdOfCancellation;
+  final String? UserId;
+  final String? DateHourOfCreation;
+  final String? IsCancelled;
+  final String? IsDelivered;
+  final String? IsPrinted;
+  final String? ProductionStatus;
+  final String? TotalLiquid;
+  final String? ProductInternalCodeOnErp;
+  final String? SaleRequestId;
+  final String? ProductIsFatherComposition;
+  final String? SaleMovementProductCompositionId;
+  final String? UserIdOfCancellation;
   final List<PrintedProductsViewModel> childs;
 
   @override
@@ -75,15 +75,17 @@ class PrintedProductsViewModel extends Equatable {
 
   factory PrintedProductsViewModel.fromEntity(PrintedProductsEntity entity) =>
       PrintedProductsViewModel(
-        Product: ProductsViewModel.fromEntity(entity.Product),
+        Product: entity.Product == null
+            ? null
+            : ProductsViewModel.fromEntity(entity.Product!),
         ProductPriceLookUpCode: entity.ProductPriceLookUpCode,
         QuantityString: entity.QuantityString,
         Comments: entity.Comments,
         DateHourOfCreation: entity.DateHourOfCreation,
         SaleRequestProductId: entity.SaleRequestProductId.toString(),
-        Value: entity.Value.toStringAsFixed(2).toBrazilianNumber(),
-        Quantity: entity.Quantity.toStringAsFixed(2).toBrazilianNumber(),
-        TotalLiquid: entity.TotalLiquid.toStringAsFixed(2).toBrazilianNumber(),
+        Value: entity.Value?.toStringAsFixed(2).toBrazilianNumber(),
+        Quantity: entity.Quantity?.toStringAsFixed(2).toBrazilianNumber(),
+        TotalLiquid: entity.TotalLiquid?.toStringAsFixed(2).toBrazilianNumber(),
         UserId: entity.UserId.toString(),
         IsCancelled: entity.IsCancelled.toString(),
         IsDelivered: entity.IsDelivered.toString(),
@@ -91,7 +93,7 @@ class PrintedProductsViewModel extends Equatable {
         ProductionStatus: entity.ProductionStatus.toString(),
         ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
         SaleRequestId: entity.SaleRequestId.toString(),
-        UserIdOfCancellation: entity.UserIdOfCancellation.toString(),
+        UserIdOfCancellation: entity.UserIdOfCancellation?.toString(),
         SaleMovementProductCompositionId:
             entity.SaleMovementProductCompositionId.toString(),
         ProductIsFatherComposition:
@@ -102,27 +104,27 @@ class PrintedProductsViewModel extends Equatable {
       );
 
   PrintedProductsEntity toEntity() => PrintedProductsEntity(
-        UserIdOfCancellation: UserIdOfCancellation.toInt(),
+        UserIdOfCancellation: UserIdOfCancellation?.toInt(),
         SaleMovementProductCompositionId:
-            SaleMovementProductCompositionId.toInt(),
-        Product: Product.toEntity(),
-        SaleRequestProductId: SaleRequestProductId.toInt(),
+            SaleMovementProductCompositionId?.toInt(),
+        Product: Product?.toEntity(),
+        SaleRequestProductId: SaleRequestProductId?.toInt(),
         ProductPriceLookUpCode: ProductPriceLookUpCode,
-        Value: Value.toDouble(),
-        Quantity: Quantity.toDouble(),
+        Value: Value?.toDouble(),
+        Quantity: Quantity?.toDouble(),
         QuantityString: QuantityString,
         Comments: Comments,
-        UserId: UserId.toInt(),
+        UserId: UserId?.toInt(),
         DateHourOfCreation: DateHourOfCreation,
         IsCancelled: IsCancelled == "true",
         IsDelivered: IsDelivered == "true",
         IsPrinted: IsPrinted == "true",
-        ProductionStatus: ProductionStatus.toInt(),
-        TotalLiquid: TotalLiquid.toDouble(),
-        ProductInternalCodeOnErp: ProductInternalCodeOnErp.toInt(),
-        SaleRequestId: SaleRequestId.toInt(),
+        ProductionStatus: ProductionStatus?.toInt(),
+        TotalLiquid: TotalLiquid?.toDouble(),
+        ProductInternalCodeOnErp: ProductInternalCodeOnErp?.toInt(),
+        SaleRequestId: SaleRequestId?.toInt(),
         ProductIsFatherComposition: ProductIsFatherComposition == "true",
         childs: childs.map((e) => e.toEntity()).toList(),
-        SaleRequestProductIdOfFather: SaleRequestProductId.toInt(),
+        SaleRequestProductIdOfFather: SaleRequestProductId?.toInt(),
       );
 }

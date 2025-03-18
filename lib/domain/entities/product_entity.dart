@@ -73,7 +73,7 @@ class ProductEntity extends Equatable {
   final String? NameComplete;
   final String? NameReduced;
   final String? ProductComplement;
-  final String PackingAbbreviation;
+  final String? PackingAbbreviation;
   final List<ProductCompositionEntity>? childsComposition;
   final ProductScheduleEntity? Schedule;
 

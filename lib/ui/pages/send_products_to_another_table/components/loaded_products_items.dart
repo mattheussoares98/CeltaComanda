@@ -20,7 +20,7 @@ class LoadedProductsItems extends StatelessWidget {
     required PrintedProductsViewModel product,
   }) {
     sendProductsToAnotherTablePresenter.updateProductIsSelected(
-      product.SaleRequestProductId.toInt(),
+      product.SaleRequestProductId!.toInt(),
     );
     callSetState();
   }
@@ -52,7 +52,7 @@ class LoadedProductsItems extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = printedViewModel!.Products[index];
 
-          DateTime data = DateTime.parse(product.DateHourOfCreation);
+          DateTime data = DateTime.parse(product.DateHourOfCreation!);
           String horasEMinutos =
               "${data.hour.toString().padLeft(2, '0')}:${data.minute.toString().padLeft(2, '0')}";
 
@@ -87,7 +87,7 @@ class LoadedProductsItems extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  "${product.Product.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
+                                  "${product.Product?.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class LoadedProductsItems extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
-                            product.TotalLiquid.toDouble()
+                            product.TotalLiquid!.toDouble()
                                 .toString()
                                 .toBrazilianNumber()
                                 .addBrazilianCoin(),
@@ -111,7 +111,7 @@ class LoadedProductsItems extends StatelessWidget {
                           value: sendProductsToAnotherTablePresenter
                               .selectedsSaleRequestProductsIds
                               .contains(
-                            product.SaleRequestProductId.toInt(),
+                            product.SaleRequestProductId!.toInt(),
                           ),
                           onChanged: product.IsCancelled == "true"
                               ? null

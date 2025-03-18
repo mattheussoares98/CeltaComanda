@@ -5,19 +5,19 @@ import '../../ui/pages/pages.dart';
 
 class PrintedModel {
   final List<PrintedProductsEntity> Products;
-  final String PersonalizedCode;
-  final String DateOfCreation;
-  final String DateHourOfCreation;
-  final String FlagStatus;
-  final int EnterpriseId;
+  final String? PersonalizedCode;
+  final String? DateOfCreation;
+  final String? DateHourOfCreation;
+  final String? FlagStatus;
+  final int? EnterpriseId;
   final dynamic RequestType;
-  final bool IsCancelled;
-  final bool IsUsing;
-  final double TotalLiquid;
-  final int Peoples;
-  final int SaleRequestId;
-  final int FlagOrigin;
-  final int DeliveryControl;
+  final bool? IsCancelled;
+  final bool? IsUsing;
+  final double? TotalLiquid;
+  final int? Peoples;
+  final int? SaleRequestId;
+  final int? FlagOrigin;
+  final int? DeliveryControl;
   final String? Comments;
   final int? IncrementType;
   final double? IncrementValue;
@@ -80,7 +80,8 @@ class PrintedModel {
                 ProductIsFatherComposition: e["ProductIsFatherComposition"],
                 childs: e["childs"] ?? [],
                 SaleRequestProductIdOfFather: e["SaleRequestProductIdOfFather"],
-                SaleMovementProductCompositionId: e["SaleMovementProductCompositionId"],
+                SaleMovementProductCompositionId:
+                    e["SaleMovementProductCompositionId"],
                 UserIdOfCancellation: e["UserIdOfCancellation"],
               ))
           .toList(),
@@ -131,10 +132,10 @@ class PrintedModel {
 
   PrintedEntity toEntity() => PrintedEntity(
         Products: Products,
-        PersonalizedCode: PersonalizedCode,
-        DateOfCreation: DateOfCreation,
-        DateHourOfCreation: DateHourOfCreation,
-        FlagStatus: FlagStatus,
+        PersonalizedCode: PersonalizedCode?.toString(),
+        DateOfCreation: DateOfCreation?.toString(),
+        DateHourOfCreation: DateHourOfCreation?.toString(),
+        FlagStatus: FlagStatus?.toString(),
         Comments: Comments,
         EnterpriseId: EnterpriseId,
         RequestType: RequestType,
@@ -182,18 +183,18 @@ class PrintedModel {
         DateOfCreation: viewModel.DateOfCreation,
         DateHourOfCreation: viewModel.DateHourOfCreation,
         FlagStatus: viewModel.FlagStatus,
-        EnterpriseId: viewModel.EnterpriseId.toInt(),
+        EnterpriseId: viewModel.EnterpriseId?.toInt(),
         RequestType: viewModel.RequestType,
         IsCancelled: viewModel.IsCancelled == "true",
         IsUsing: viewModel.IsUsing == "true",
-        TotalLiquid: viewModel.TotalLiquid.toDouble(),
-        Peoples: viewModel.Peoples.toInt(),
-        SaleRequestId: viewModel.SaleRequestId.toInt(),
-        FlagOrigin: viewModel.FlagOrigin.toInt(),
-        DeliveryControl: viewModel.DeliveryControl.toInt(),
+        TotalLiquid: viewModel.TotalLiquid?.toDouble(),
+        Peoples: viewModel.Peoples?.toInt(),
+        SaleRequestId: viewModel.SaleRequestId?.toInt(),
+        FlagOrigin: viewModel.FlagOrigin?.toInt(),
+        DeliveryControl: viewModel.DeliveryControl?.toInt(),
         Comments: viewModel.Comments,
-        IncrementType: viewModel.IncrementType.toInt(),
-        IncrementValue: viewModel.IncrementValue.toDouble(),
+        IncrementType: viewModel.IncrementType?.toInt(),
+        IncrementValue: viewModel.IncrementValue?.toDouble(),
         CovenantCode: viewModel.CovenantCode?.toInt(),
         CustomerCode: viewModel.CustomerCode?.toInt(),
         SellerCode: viewModel.SellerCode?.toInt(),

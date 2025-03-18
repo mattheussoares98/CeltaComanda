@@ -34,7 +34,7 @@ class CancelProductsItems extends StatelessWidget {
               itemCount: printed.Products.length,
               itemBuilder: (context, index) {
                 printed.Products.sort(
-                    (a, b) => a.DateHourOfCreation.compareTo(b.DateHourOfCreation));
+                    (a, b) => a.DateHourOfCreation!.compareTo(b.DateHourOfCreation!));
 
                 final product = printed.Products[index];
 

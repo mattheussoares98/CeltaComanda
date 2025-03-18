@@ -91,12 +91,12 @@ class _PrintedItemState extends State<PrintedItem> {
                             child: ProductDetails(
                               printed: widget.printed,
                               product: product,
-                              quantity: product.Quantity,
-                              value: (product.TotalLiquid.toDouble() /
-                                      product.Quantity.toDouble())
+                              quantity: product.Quantity!,
+                              value: (product.TotalLiquid!.toDouble() /
+                                      product.Quantity!.toDouble())
                                   .toString()
                                   .toBrazilianNumber(),
-                              totalLiquid: product.TotalLiquid,
+                              totalLiquid: product.TotalLiquid!,
                               comments: product.Comments,
                             ),
                           ),

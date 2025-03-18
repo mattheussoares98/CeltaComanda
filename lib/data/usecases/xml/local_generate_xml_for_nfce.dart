@@ -61,14 +61,14 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         builder.element('Produto', nest: () {
           builder.element('Item', nest: index + 1);
           builder.element('PLU', nest: product.ProductPriceLookUpCode);
-          if (product.Product.EanCode != null &&
-              product.Product.EanCode!.isNotEmpty) {
-            builder.element('EAN', nest: product.Product.EanCode);
+          if (product.Product?.EanCode != null &&
+              product.Product?.EanCode!.isNotEmpty == true) {
+            builder.element('EAN', nest: product.Product?.EanCode);
           }
-          builder.element('NomeProduto', nest: product.Product.Name);
+          builder.element('NomeProduto', nest: product.Product?.Name);
           builder.element(
             'AbreviacaoEmbalagem',
-            nest: product.Product.PackingAbbreviation,
+            nest: product.Product?.PackingAbbreviation,
           );
           builder.element('Desconto', nest: 0);
           builder.element('Acrescimo', nest: 0);
@@ -76,84 +76,85 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
               nest: _convertToCorrectNumber(product.Quantity));
           builder.element(
             'ValorUnitario',
-            nest: _convertToCorrectNumber(product.Product.SaleRetailPraticed),
+            nest: _convertToCorrectNumber(product.Product?.SaleRetailPraticed),
           );
           builder.element(
             'ValorTotal',
             nest: _convertToCorrectNumber(product.TotalLiquid),
           );
           builder.element('CustoReposicao',
-              nest: _convertToCorrectNumber(product.Product.RepositionCost));
+              nest: _convertToCorrectNumber(product.Product?.RepositionCost));
           builder.element(
             'CustoReposicaoMedio',
-            nest: _convertToCorrectNumber(product.Product.RepositionCostMiddle),
+            nest:
+                _convertToCorrectNumber(product.Product?.RepositionCostMiddle),
           );
           builder.element(
             'CustoReposicaoReal',
-            nest: _convertToCorrectNumber(product.Product.RepositionCostReal),
+            nest: _convertToCorrectNumber(product.Product?.RepositionCostReal),
           );
           builder.element('CustoLiquido',
-              nest: _convertToCorrectNumber(product.Product.LiquidCost));
+              nest: _convertToCorrectNumber(product.Product?.LiquidCost));
           builder.element('CustoLiquidoMedio',
-              nest: _convertToCorrectNumber(product.Product.LiquidCostMiddle));
+              nest: _convertToCorrectNumber(product.Product?.LiquidCostMiddle));
           builder.element('CustoLiquidoReal',
-              nest: _convertToCorrectNumber(product.Product.LiquidCostReal));
+              nest: _convertToCorrectNumber(product.Product?.LiquidCostReal));
           builder.element('VendaVarejo',
-              nest: _convertToCorrectNumber(product.Product.SaleRetailPrice));
+              nest: _convertToCorrectNumber(product.Product?.SaleRetailPrice));
           builder.element('VendaAtacado',
-              nest: _convertToCorrectNumber(product.Product.WholeSalePrice));
+              nest: _convertToCorrectNumber(product.Product?.WholeSalePrice));
           builder.element('OfertaAtacado',
-              nest: _convertToCorrectNumber(product.Product.WholeOfferPrice));
+              nest: _convertToCorrectNumber(product.Product?.WholeOfferPrice));
           builder.element('OfertaVarejo',
-              nest: _convertToCorrectNumber(product.Product.OfferRetailPrice));
+              nest: _convertToCorrectNumber(product.Product?.OfferRetailPrice));
           builder.element(
             'VendaECommerce',
-            nest: _convertToCorrectNumber(product.Product.SaleECommercePrice),
+            nest: _convertToCorrectNumber(product.Product?.SaleECommercePrice),
           );
           builder.element(
             'OfertaECommerce',
-            nest: _convertToCorrectNumber(product.Product.OfferECommercePrice),
+            nest: _convertToCorrectNumber(product.Product?.OfferECommercePrice),
           );
-          builder.element('CFOP', nest: product.Product.CFOP?.toString());
+          builder.element('CFOP', nest: product.Product?.CFOP?.toString());
           builder.element('NCM',
-              nest: product.Product.FiscalClassificationNCM?.toString());
+              nest: product.Product?.FiscalClassificationNCM?.toString());
 
           builder.element('ICMS', nest: () {
             builder.element('CST',
-                nest: product.Product.TributarySituationCode.toString());
+                nest: product.Product?.TributarySituationCode.toString());
             builder.element('ALIQUOTA',
-                nest: _convertToCorrectNumber(product.Product.IcmsAliquot));
+                nest: _convertToCorrectNumber(product.Product?.IcmsAliquot));
             builder.element(
               'REDUC',
               nest:
-                  _convertToCorrectNumber(product.Product.IcmsReductionMargin),
+                  _convertToCorrectNumber(product.Product?.IcmsReductionMargin),
             );
             builder.element('IVA',
-                nest: _convertToCorrectNumber(product.Product.IcmsIVAMargin));
+                nest: _convertToCorrectNumber(product.Product?.IcmsIVAMargin));
             builder.element('PAUTA',
-                nest: _convertToCorrectNumber(product.Product.IcmsStave));
+                nest: _convertToCorrectNumber(product.Product?.IcmsStave));
             builder.element('FiscalBenefitCode', nest: "");
           });
 
           builder.element('PIS', nest: () {
-            builder.element('TIPO', nest: product.Product.PisType.toString());
+            builder.element('TIPO', nest: product.Product?.PisType.toString());
             builder.element('CST',
-                nest: product.Product.CSTPisCofins.toString().padLeft(2, "0"));
+                nest: product.Product?.CSTPisCofins.toString().padLeft(2, "0"));
             builder.element('NatureOperationCode', nest: "");
             builder.element('SocialContributionCodePisCofins', nest: 51);
             builder.element('PERC',
-                nest: _convertToCorrectNumber(product.Product.PisPercentage));
+                nest: _convertToCorrectNumber(product.Product?.PisPercentage));
           });
           builder.element('COFINS', nest: () {
             builder.element('TIPO',
-                nest: product.Product.CofinsType.toString());
+                nest: product.Product?.CofinsType.toString());
             builder.element('CST',
-                nest: product.Product.CSTPisCofins.toString());
+                nest: product.Product?.CSTPisCofins.toString());
             builder.element('NatureOperationCodePisCofins', nest: "");
             builder.element('SocialContributionCodePisCofins', nest: 51);
             builder.element('PERC',
                 nest:
-                    _convertToCorrectNumber(product.Product.CofinsPercentage));
+                    _convertToCorrectNumber(product.Product?.CofinsPercentage));
           });
         });
       }
@@ -204,30 +205,31 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         nest: () {
           double totalTaxFromPercImpNBPTNational = products
               .where((e) =>
-                  e.Product.PercImpNBPTNational != null &&
-                  e.Product.PercImpNBPTNational! > 0)
+                  e.Product?.PercImpNBPTNational != null &&
+                  e.Product!.PercImpNBPTNational! > 0)
               .map((product) => product)
               .fold(0.0, (previous, element) {
-            return element.TotalLiquid * (element.Product.PercImpNBPTNational!);
+            return element.TotalLiquid! *
+                (element.Product!.PercImpNBPTNational!);
           });
 
           double totalTaxFromPercImpNBPTState = products
               .where((e) =>
-                  e.Product.PercImpNBPTState != null &&
-                  e.Product.PercImpNBPTState! > 0)
+                  e.Product?.PercImpNBPTState != null &&
+                  e.Product!.PercImpNBPTState! > 0)
               .map((product) => product)
               .fold(0.0, (previous, element) {
-            return element.TotalLiquid * (element.Product.PercImpNBPTState!);
+            return element.TotalLiquid! * (element.Product!.PercImpNBPTState!);
           });
 
           double totalTaxFromPercImpNBPTMunicipal = products
               .where((e) =>
-                  e.Product.PercImpNBPTMunicipal != null &&
-                  e.Product.PercImpNBPTMunicipal! > 0)
+                  e.Product?.PercImpNBPTMunicipal != null &&
+                  e.Product!.PercImpNBPTMunicipal! > 0)
               .map((product) => product)
               .fold(0.0, (previous, element) {
-            return element.TotalLiquid *
-                (element.Product.PercImpNBPTMunicipal!);
+            return element.TotalLiquid! *
+                (element.Product!.PercImpNBPTMunicipal!);
           });
 
           double totalTaxFromPercImpNBPT = totalTaxFromPercImpNBPTNational +

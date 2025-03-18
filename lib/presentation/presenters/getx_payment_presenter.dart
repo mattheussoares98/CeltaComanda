@@ -184,7 +184,7 @@ class GetxPaymentPresenter extends GetxController
       _lastRequestedPaymentFinalization = null;
 
       await deleteSaleRequest
-          .delete(printedProductsPresenter.printed!.SaleRequestId.toInt());
+          .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(
         homePresenter.commandEntity!.commandNumber!,
       );
@@ -539,7 +539,7 @@ class GetxPaymentPresenter extends GetxController
         _successfulPayments.clear();
         showSuccessAndCloseUntilHomePage();
         await deleteSaleRequest
-            .delete(printedProductsPresenter.printed!.SaleRequestId.toInt());
+            .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
         await printedProductsPresenter
             .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       }

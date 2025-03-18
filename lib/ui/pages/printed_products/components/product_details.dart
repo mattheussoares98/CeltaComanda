@@ -67,7 +67,7 @@ class ProductDetails extends StatelessWidget {
                         const SizedBox(width: 2),
                         RichText(
                           text: TextSpan(
-                            text: child.Product.Name,
+                            text: child.Product!.Name,
                             style: TextStyle(
                               fontSize: StringSize.size * 0.9,
                               color: Colors.black,

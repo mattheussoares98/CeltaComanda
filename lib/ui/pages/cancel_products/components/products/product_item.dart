@@ -62,7 +62,7 @@ class ProductItem extends StatelessWidget {
               Expanded(
                 flex: productFlex,
                 child: Text(
-                  "${product.Product.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
+                  "${product.Product?.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: StringSize.size,
@@ -73,7 +73,7 @@ class ProductItem extends StatelessWidget {
               Expanded(
                 flex: quantityFlex,
                 child: Text(
-                  product.Product.productQuantity
+                  product.Product!.productQuantity
                       .toString()
                       .toBrazilianNumber(0),
                   textAlign: TextAlign.center,
@@ -87,7 +87,7 @@ class ProductItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      product.TotalLiquid,
+                      product.TotalLiquid!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: StringSize.size,
@@ -112,14 +112,14 @@ class ProductItem extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    product.Product.Name,
+                                    product.Product!.Name,
                                     style: TextStyle(
                                       fontSize: StringSize.size,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    product.TotalLiquid.toDouble()
+                                    product.TotalLiquid!.toDouble()
                                         .toString()
                                         .toBrazilianNumber()
                                         .addBrazilianCoin(),
@@ -176,7 +176,7 @@ class ProductItem extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(
-                          text: child.Product.Name,
+                          text: child.Product!.Name,
                           style: TextStyle(
                             fontSize: StringSize.size * 0.9,
                             color: Colors.black,

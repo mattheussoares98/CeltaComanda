@@ -61,7 +61,7 @@ class ProductModel {
   final String? NameComplete;
   final String? NameReduced;
   final String? ProductComplement;
-  final String PackingAbbreviation;
+  final String? PackingAbbreviation;
   final bool? AllowFractionate;
   final bool? IsBalance;
   final bool? CanBeWeightyInPdv;

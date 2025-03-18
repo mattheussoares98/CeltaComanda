@@ -168,7 +168,7 @@ class GetxCovenantPresenter extends GetxController
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
         customerCode: _selectedCovenant.keys.first.toInt(),
         covenantCode: _selectedCovenant.values.first!.toInt(),
-        value: printedProductsPresenter.printed!.TotalLiquid.toDouble(),
+        value: printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
       );
 
       if (soapResponse.responseType == SoapResponseType.error) {
@@ -189,7 +189,7 @@ class GetxCovenantPresenter extends GetxController
               .toString()
               .padLeft(3, "0"),
           saleRequestId:
-              printedProductsPresenter.printed!.SaleRequestId.toInt(),
+              printedProductsPresenter.printed!.SaleRequestId!.toInt(),
         );
 
         //add new finalization in paymentPresent.succesfulFinalizations and call finish

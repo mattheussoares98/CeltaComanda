@@ -44,12 +44,12 @@ class PrintProductsItems extends StatelessWidget {
             // Expanded(child: RequestedAt(printedProduct: product)),
             Expanded(
               flex: 3,
-              child: Text(product.Product.Name, style: textStyle(context)),
+              child: Text(product.Product!.Name, style: textStyle(context)),
             ),
-            Expanded(child: Text(product.Quantity, style: textStyle(context))),
+            Expanded(child: Text(product.Quantity!, style: textStyle(context))),
             Expanded(
                 child: Text(
-              product.TotalLiquid,
+              product.TotalLiquid!,
               style: textStyle(context),
               textAlign: TextAlign.end,
             )),

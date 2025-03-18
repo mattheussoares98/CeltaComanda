@@ -288,7 +288,7 @@ void main() {
       sut.selectAllProducts();
       expect(
           sut.selectedsSaleRequestProductsIds,
-          printedViewModel.Products.map((e) => e.SaleRequestProductId.toInt())
+          printedViewModel.Products.map((e) => e.SaleRequestProductId!.toInt())
               .toList());
     });
   });

@@ -33,7 +33,7 @@ class GetxCancelProductsPresenter extends GetxController
     mainError = null;
 
     try {
-      await removePrintedProduct.remove(product.SaleRequestProductId);
+      await removePrintedProduct.remove(product.SaleRequestProductId!);
       await cartPresenter.updateIncrementValue(commandNumber.toString());
 
       await loadProducts(commandNumber);
@@ -59,8 +59,8 @@ class GetxCancelProductsPresenter extends GetxController
       if (printedProducts?.Products.isEmpty == false) {
         final printedViewModel = PrintedViewModel.fromEntity(printedProducts!);
         printedViewModel.Products.sort((a, b) =>
-            DateTime.parse(a.DateHourOfCreation)
-                .compareTo(DateTime.parse(b.DateHourOfCreation)));
+            DateTime.parse(a.DateHourOfCreation!)
+                .compareTo(DateTime.parse(b.DateHourOfCreation!)));
 
         products = printedViewModel;
       }
@@ -98,17 +98,18 @@ class GetxCancelProductsPresenter extends GetxController
     try {
       await updateSaleRequest.update(
         commandNumber: commandNumber.toString(),
-        saleRequestId: printedModel.SaleRequestId,
+        saleRequestId: printedModel.SaleRequestId!,
         model: SaleRequestModel(
           Products: printedModel.Products.map(
             (e) {
-              final bool isSameProduct = product.SaleRequestProductId.toInt() ==
-                  e.SaleRequestProductId;
+              final bool isSameProduct =
+                  product.SaleRequestProductId?.toInt() ==
+                      e.SaleRequestProductId;
 
               return SaleRequestProductModel.fromEntity(
                 SaleRequestProductEntity(
                   ProductIsFatherComposition: e.ProductIsFatherComposition,
-                  IsCancelled: isSameProduct ? true : e.IsCancelled,
+                  IsCancelled: isSameProduct == true ? true : e.IsCancelled,
                   UserIdOfCancellation: isSameProduct
                       ? UserIdOfCancellation
                       : e.UserIdOfCancellation,

@@ -1,25 +1,25 @@
 import 'product_entity.dart';
 
 class SaleRequestProductEntity {
-  final ProductEntity Product;
+  final ProductEntity? Product;
   final int? SaleMovementProductCompositionId;
-  final String ProductPriceLookUpCode;
-  final String QuantityString;
+  final String? ProductPriceLookUpCode;
+  final String? QuantityString;
   final String? Comments;
-  final String DateHourOfCreation;
-  final bool IsCancelled;
-  final bool IsDelivered;
-  final bool IsPrinted;
-  final bool ProductIsFatherComposition;
-  final int SaleRequestProductId;
-  final int UserId;
-  final int ProductionStatus;
-  final int ProductInternalCodeOnErp;
-  final int SaleRequestId;
+  final String? DateHourOfCreation;
+  final bool? IsCancelled;
+  final bool? IsDelivered;
+  final bool? IsPrinted;
+  final bool? ProductIsFatherComposition;
+  final int? SaleRequestProductId;
+  final int? UserId;
+  final int? ProductionStatus;
+  final int? ProductInternalCodeOnErp;
+  final int? SaleRequestId;
   final int? UserIdOfCancellation;
-  final double Value;
-  final double Quantity;
-  final double TotalLiquid;
+  final double? Value;
+  final double? Quantity;
+  final double? TotalLiquid;
 
   const SaleRequestProductEntity({
     required this.Product,

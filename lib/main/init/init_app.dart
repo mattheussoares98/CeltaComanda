@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clean_celta_mobile/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,15 @@ import '../../infra/helpers/helpers.dart';
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await _initHive();
   await initFirebase();
+  await _initHive();
   _hideNavigationButtons();
   WakelockPlus.enable();
   _deletePath("AppData\\Local\\firestore");
 }
 
 Future<void> initFirebase() async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
 
 void _deletePath(String path) {

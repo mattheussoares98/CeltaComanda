@@ -526,7 +526,9 @@ class GetxPaymentPresenter extends GetxController
           totalLiquid: printedProductsPresenter
               .getTotalLiquid(printedProductsPresenter.printed),
           finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-          products: printedProductsPresenter.printed!.Products,
+          products: _getProductsToInsertInConcentrator(
+            printedProductsPresenter: printedProductsPresenter,
+          ),
           xmlToGenerateFiscal:
               useSharing == false ? xmlReponse?.response : null,
         );
@@ -546,6 +548,125 @@ class GetxPaymentPresenter extends GetxController
     } finally {
       isLoading = false;
     }
+  }
+
+  List<PrintedProductsViewModel> _getProductsToInsertInConcentrator({
+    required PrintedProductsPresenter printedProductsPresenter,
+  }) {
+    List<PrintedProductsViewModel> products = [];
+
+    for (var i = 0;
+        i < printedProductsPresenter.printed!.Products.length;
+        i++) {
+      final product = printedProductsPresenter.printed!.Products[i];
+
+      products.add(product);
+
+      if (product.ProductIsFatherComposition == "true" &&
+          product.childs.isNotEmpty) {
+        for (var x = 0; x < product.childs.length; x++) {
+          final child = product.childs[x];
+          products.add(PrintedProductsViewModel(
+            Product: ProductsViewModel(
+              SaleRetailPraticed: child.Value!,
+              subgroupName: child.Product?.subgroupName,
+              MaximumQuantityForSale: child.Product?.MaximumQuantityForSale,
+              IsPromoCombox: child.Product?.IsPromoCombox,
+              ProductComplement: child.Product?.ProductComplement,
+              ProductsId: child.Product!.ProductsId,
+              PriceLookupCode: child.Product!.PriceLookupCode,
+              Name: child.Product!.Name,
+              PackingAbbreviation: child.Product?.PackingAbbreviation,
+              InternalCodeOnERP: child.Product?.InternalCodeOnERP,
+              InternalCodeOfProductOnERP:
+                  child.Product?.InternalCodeOfProductOnERP,
+              EenterpriseId: child.Product?.EenterpriseId,
+              PackingQuantity: child.Product?.PackingQuantity,
+              OfferRetailPrice: child.Product?.OfferRetailPrice,
+              WholeSalePrice: child.Product?.WholeSalePrice,
+              WholeOfferPrice: child.Product?.WholeOfferPrice,
+              OfferECommercePrice: child.Product?.OfferECommercePrice,
+              SaleECommercePrice: child.Product?.SaleECommercePrice,
+              LiquidCost: child.Product?.LiquidCost,
+              LiquidCostMiddle: child.Product?.LiquidCostMiddle,
+              LiquidCostReal: child.Product?.LiquidCostReal,
+              RepositionCost: child.Product?.RepositionCost,
+              RepositionCostMiddle: child.Product?.RepositionCostMiddle,
+              RepositionCostReal: child.Product?.RepositionCostReal,
+              IcmsAliquot: child.Product?.IcmsAliquot,
+              IcmsIVAMargin: child.Product?.IcmsIVAMargin,
+              IcmsReductionMargin: child.Product?.IcmsReductionMargin,
+              IcmsStave: child.Product?.IcmsStave,
+              PercImpNBPTState: child.Product?.PercImpNBPTState,
+              PercImpNBPTMunicipal: child.Product?.PercImpNBPTMunicipal,
+              CofinsType: child.Product?.CofinsType,
+              PisType: child.Product?.PisType,
+              ProductIsFatherComposition:
+                  child.Product?.ProductIsFatherComposition,
+              QuantityMinimumWholeSale: child.Product?.QuantityMinimumWholeSale,
+              QuantityMinimumWholeSaleByClass:
+                  child.Product?.QuantityMinimumWholeSaleByClass,
+              BalanceTare: child.Product?.BalanceTare,
+              FamilyCode: child.Product?.FamilyCode,
+              DepartmentCode: child.Product?.DepartmentCode,
+              SectionCode: child.Product?.SectionCode,
+              GroupCode: child.Product?.GroupCode,
+              SubGroupCode: child.Product?.SubGroupCode,
+              StockQuantity: child.Product?.StockQuantity,
+              AllowFractionate: child.Product?.AllowFractionate,
+              IsBalance: child.Product?.IsBalance,
+              CanBeWeightyInPdv: child.Product?.CanBeWeightyInPdv,
+              QuantityInBalance: child.Product?.QuantityInBalance,
+              AllowQuantityInPdv: child.Product?.AllowQuantityInPdv,
+              GoesForFastTable: child.Product?.GoesForFastTable,
+              IsAlcoholicProduct: child.Product?.IsAlcoholicProduct,
+              SaleRetailPrice: child.Product?.SaleRetailPrice,
+              PercImpNBPTNational: child.Product?.PercImpNBPTNational,
+              CofinsPercentage: child.Product?.CofinsPercentage,
+              PisPercentage: child.Product?.PisPercentage,
+              CFOP: child.Product?.CFOP,
+              FiscalClassificationNCM: child.Product?.FiscalClassificationNCM,
+              TributarySituationCode: child.Product?.TributarySituationCode,
+              CSTPisCofins: child.Product?.CSTPisCofins,
+              CodeClass: child.Product?.CodeClass,
+              DepartmentName: child.Product?.DepartmentName,
+              SectionName: child.Product?.SectionName,
+              DateOfLastChanged: child.Product?.DateOfLastChanged,
+              GroupName: child.Product?.GroupName,
+              SaleRetailPraticedString: child.Product?.SaleRetailPraticedString,
+              PersonalizedCode: child.Product?.PersonalizedCode,
+              EanCode: child.Product?.EanCode,
+              NameComplete: child.Product?.NameComplete,
+              NameReduced: child.Product?.NameReduced,
+              Schedule: child.Product?.Schedule,
+              childsComposition: child.Product?.childsComposition,
+              suggestions: child.Product?.suggestions,
+            ),
+            SaleRequestProductId: child.SaleRequestProductId,
+            ProductPriceLookUpCode: child.ProductPriceLookUpCode,
+            Value: child.Value,
+            Quantity: child.Quantity,
+            QuantityString: child.QuantityString,
+            UserId: child.UserId,
+            DateHourOfCreation: child.DateHourOfCreation,
+            IsCancelled: child.IsCancelled,
+            IsDelivered: child.IsDelivered,
+            IsPrinted: child.IsPrinted,
+            ProductionStatus: child.ProductionStatus,
+            TotalLiquid: child.TotalLiquid,
+            ProductInternalCodeOnErp: child.ProductInternalCodeOnErp,
+            SaleRequestId: child.SaleRequestId,
+            ProductIsFatherComposition: child.ProductIsFatherComposition,
+            SaleMovementProductCompositionId:
+                child.SaleMovementProductCompositionId,
+            UserIdOfCancellation: child.UserIdOfCancellation,
+            childs: child.childs,
+          ));
+        }
+      }
+    }
+
+    return products; //TODO continue testing childs prices etc
   }
 
   @override

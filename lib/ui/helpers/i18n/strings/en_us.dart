@@ -152,6 +152,7 @@ class EnUs implements Translation {
   String get cart => 'Cart';
   String get call => 'Call';
   String get cancel => 'Cancel';
+  String get canceledBy => 'Canceled by';
   String get cancelProductsOrRemoveServiceCharge =>
       'Cancel products or remove service charge';
   String get cancelProduct => 'Cancel product';

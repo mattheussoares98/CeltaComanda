@@ -110,6 +110,7 @@ abstract class Translation {
   String get blockTable;
   String get call;
   String get cancel;
+  String get canceledBy;
   String get cancelProductsOrRemoveServiceCharge;
   String get cancelProduct;
   String get canInsertCommentManually;

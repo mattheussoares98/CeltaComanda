@@ -233,7 +233,8 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       ProductEan: productEntity?.EanCode,
       ProductInternalCodeOnERP:
           productEntity?.InternalCodeOfProductOnERP?.toString(),
-      ProductIsFatherComposition: productEntity?.ProductIsFatherComposition == 1,
+      ProductIsFatherComposition:
+          productEntity?.ProductIsFatherComposition == 1,
       ProductName: productEntity?.Name,
       ProductPluCode: productEntity?.PriceLookupCode,
       Quantity: e.Quantity?.toDouble(),
@@ -241,14 +242,12 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       RepositionCostMiddle: productEntity?.RepositionCostMiddle,
       RepositionCostReal: productEntity?.RepositionCostReal,
       SaleECommercePrice: productEntity?.SaleECommercePrice,
-      SaleMovement: null,
-      SaleMovementProductCompositionId:
-          null /* e.ProductIsFatherComposition == true
-          ? e.SaleMovementProductId?.toString()
-          : e.SaleMovementProductCompositionId */
-      ,
+      SaleMovementProductCompositionId: e.SaleMovementProductCompositionId,
       SaleMovementProductId: 0,
       SaleRetailPrice: productEntity?.SaleRetailPrice,
+      UserIdOfCancellation: e.UserIdOfCancellation?.toInt(),
+      IsCancelled: e.IsCancelled == "true",
+      SaleMovement: null,
       SaleRequestProductInternalCodeOnERP: null,
       SocialContributionCodePisCofins: null,
       SaleNegotiationDiscountType: null,
@@ -257,7 +256,6 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       SaleOfferDiscountType: null,
       SaleOfferDiscountValue: null,
       SaleOfferQuantity: null,
-      UserIdOfCancellation: null,
       UserIdOfDiscount: null,
       CRMDiscountType: null,
       CRMDiscountValue: null,
@@ -271,7 +269,6 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       MotiveJustificationName: null,
       MotiveJustificationSaleDiscountId: null,
       MotiveJustificationSaleDiscountName: null,
-      IsCancelled: false,
       IsPrinted: false,
       IsToDelivery: false,
       // SaleMovementProducOfFatherComposition: null,

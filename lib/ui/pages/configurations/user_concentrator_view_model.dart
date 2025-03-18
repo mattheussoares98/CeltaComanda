@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class UserConcentratorViewModel extends Equatable {
   final String?
       Name; //need only this property because use this view model only to select the user name
-  // final String? UserId;
+  final String? UserId;
   // final String? InternalCodeOnERP;
   // final String? PersonalizedCode;
   // final String? Group;
@@ -16,8 +16,11 @@ class UserConcentratorViewModel extends Equatable {
   // final List<GroupUserConcentratorModel>? Groups;
   // final List<EnterpriseConcentradorModel>? Enterprises;
 
-  const UserConcentratorViewModel({required this.Name});
+  const UserConcentratorViewModel({
+    required this.Name,
+    required this.UserId,
+  });
 
   @override
-  List<Object?> get props => [Name];
+  List<Object?> get props => [Name, UserId];
 }

@@ -128,6 +128,8 @@ class UserConcentratorModel extends Equatable {
         "Enterprises": Enterprises?.map((e) => e.toJson()).toList(),
       };
 
-  UserConcentratorViewModel toViewModel() =>
-      UserConcentratorViewModel(Name: Name);
+  UserConcentratorViewModel toViewModel() => UserConcentratorViewModel(
+        Name: Name,
+        UserId: UserId.toString(),
+      );
 }

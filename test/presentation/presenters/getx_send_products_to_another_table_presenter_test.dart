@@ -288,7 +288,8 @@ void main() {
       sut.selectAllProducts();
       expect(
           sut.selectedsSaleRequestProductsIds,
-          printedViewModel.Products.map((e) => e.SaleRequestProductId!.toInt())
+          printedViewModel.Products.where((e) => e.IsCancelled == "false")
+              .map((e) => e.SaleRequestProductId!.toInt())
               .toList());
     });
   });

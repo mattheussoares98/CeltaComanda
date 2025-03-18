@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/entities.dart';
 
-class PrintedEntity {
+class PrintedEntity extends Equatable {
   final List<PrintedProductsEntity> Products;
   final String? PersonalizedCode;
   final String? DateOfCreation;
@@ -22,7 +24,7 @@ class PrintedEntity {
   final int? SellerCode;
   final String? Comments;
 
-  PrintedEntity({
+  const PrintedEntity({
     required this.Products,
     required this.PersonalizedCode,
     required this.DateOfCreation,
@@ -44,4 +46,28 @@ class PrintedEntity {
     required this.CustomerCode,
     required this.SellerCode,
   });
+
+  @override
+  List<Object?> get props => [
+        Products,
+        PersonalizedCode,
+        DateOfCreation,
+        DateHourOfCreation,
+        FlagStatus,
+        Comments,
+        EnterpriseId,
+        RequestType,
+        IsCancelled,
+        IsUsing,
+        TotalLiquid,
+        Peoples,
+        SaleRequestId,
+        FlagOrigin,
+        DeliveryControl,
+        IncrementType,
+        IncrementValue,
+        CovenantCode,
+        CustomerCode,
+        SellerCode,
+      ];
 }

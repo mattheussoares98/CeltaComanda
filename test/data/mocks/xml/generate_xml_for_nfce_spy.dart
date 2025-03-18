@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 class GenerateXmlForNfceSpy extends Mock implements GenerateXmlForNfce {
   When _mockGenerateCall() => when(() => this.generate(
         couponFiscalNumber: any(named: "couponFiscalNumber"),
-        products: any(named: "products"),
+        printed: any(named: "printed"),
         finalizations: any(named: "finalizations"),
         customer: any(named: "customer"),
         cpfCnpj: any(named: "cpfCnpj"),

@@ -137,10 +137,8 @@ class GetxPaymentPresenter extends GetxController
       if (useSharing == false) {
         final xml = await generateXmlForNfce.generate(
           couponFiscalNumber: _couponNumber!,
-          products: printedProductsPresenter.printed?.Products
-                  .map((e) => e.toEntity())
-                  .toList() ??
-              [],
+          printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity(),
           finalizations: _successfulPayments,
           customer: null,
           cpfCnpj: null,
@@ -486,17 +484,16 @@ class GetxPaymentPresenter extends GetxController
       if (authorizationSoapResponse?.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(authorizationSoapResponse!.response);
       } else {
-        bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
+        bool useSharing =
+            loadUseUrlSatSharing.getUse(cpfCnpj); //remove this comment
         SoapResponse? xmlReponse;
 
         if (useSharing == false) {
           final xml = await generateXmlForNfce.generate(
             couponFiscalNumber: _couponNumber!,
-            products: printedProductsPresenter.printed?.Products
-                    .map((e) => e.toEntity())
-                    .where((e) => e.IsCancelled != true)
-                    .toList() ??
-                [],
+            printed:
+                PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+                    .toEntity(),
             finalizations: _successfulPayments,
             customer: _selectedCustomer?.customer.toEntity(),
             cpfCnpj: cpfCnpj,

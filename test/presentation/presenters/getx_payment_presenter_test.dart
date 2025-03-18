@@ -189,6 +189,7 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(EntityFactory.makePrintedEntity());
   });
 
   group("Call payment", () {
@@ -468,7 +469,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      finishSaleRequestConcentrador.mockError();
+      concInsertSaleMovement.mockInsertError();
       printedProductsPresenter.mockGetTotalLiquid(0);
 
       await sut.liquidateCommand(
@@ -479,7 +480,7 @@ void main() {
       );
     });
     test(
-        "Should call finishSaleRequestConcentrador with correct values if commandEntity.pdv is not null",
+        "Should call concInsertSaleMovement with correct values if commandEntity.pdv is not null",
         () async {
       sut.successfulPayments.add(
         ConcentratorFinalizationModel(
@@ -497,45 +498,21 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => finishSaleRequestConcentrador.finish(
-            pdvNumber:
-                homePresenter.commandEntityController!.pdv!.PdvNumber!.toInt(),
-            commandNumber:
-                homePresenter.commandEntityController!.commandNumber!.toInt(),
-            finalizations: sut.successfulPayments,
-          )).called(1);
-    });
-    test(
-        "Should call finishSaleRequestConcentrador with correct values if commandEntity.pdv is null",
-        () async {
-      sut.successfulPayments.add(
-        ConcentratorFinalizationModel(
-          FinalizationId: faker.randomGenerator.integer(100),
-          Value: totalLiquidMocked,
-          ValueLiquid: totalLiquidMocked,
-          PortionQuantity: faker.randomGenerator.integer(100),
-        ),
-      );
-
-      homePresenter.commandEntityController = CommandEntity(
-        commandNumber: commandNumber,
-        isFixedCommandNumber: true,
-        pdv: null,
-      );
-
-      await sut.liquidateCommand(
-        showErrorMessageReturnedByBs: (error) {},
-        showSuccessAndCloseUntilHomePage: () {},
-        homePresenter: homePresenter,
-        printedProductsPresenter: printedProductsPresenter,
-      );
-
-      verify(() => finishSaleRequestConcentrador.finish(
-            pdvNumber: 100,
-            commandNumber:
-                homePresenter.commandEntityController!.commandNumber!.toInt(),
-            finalizations: sut.successfulPayments,
-          )).called(1);
+      verify(() => concInsertSaleMovement.insert(
+            pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
+            pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
+            covenantCode: null,
+            customerCode: null,
+            cpfCnpj: null,
+            incrementType: 1,
+            incrementValue: totalLiquidMocked,
+            totalLiquid: totalLiquidMocked,
+            couponFiscalNumber: sut.couponNumber ?? 1,
+            finalizations:
+                sut.successfulPayments.map((e) => e.toEntity()).toList(),
+            products: printedProductsPresenter.printed!.Products,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
+          ));
     });
 
     test("Should load printed products in success", () async {
@@ -636,13 +613,12 @@ void main() {
 
       final incrementValue = printedProductsPresenter
           .getServiceChargeValue(printedProductsPresenter.printed);
-      final products = printedProductsPresenter.printed?.Products
-              .map((e) => e.toEntity())
-              .toList() ??
-          [];
+      final printed =
+          PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity();
 
       verify(() => generateXmlForNfce.generate(
-            products: products,
+            printed: printed,
             finalizations: sut.successfulPayments,
             customer: null,
             cpfCnpj: null,
@@ -673,13 +649,12 @@ void main() {
 
       final incrementValue = printedProductsPresenter
           .getServiceChargeValue(printedProductsPresenter.printed);
-      final products = printedProductsPresenter.printed?.Products
-              .map((e) => e.toEntity())
-              .toList() ??
-          [];
+      final printed =
+          PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity();
 
       verifyNever(() => generateXmlForNfce.generate(
-            products: products,
+            printed: printed,
             finalizations: sut.successfulPayments,
             customer: null,
             cpfCnpj: null,
@@ -1624,13 +1599,12 @@ void main() {
 
       final incrementValue = printedProductsPresenter
           .getServiceChargeValue(printedProductsPresenter.printed);
-      final products = printedProductsPresenter.printed?.Products
-              .map((e) => e.toEntity())
-              .toList() ??
-          [];
+      final printed =
+          PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity();
 
       verify(() => generateXmlForNfce.generate(
-            products: products,
+            printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
             cpfCnpj: cpfCnpj,
@@ -1661,13 +1635,12 @@ void main() {
 
       final incrementValue = printedProductsPresenter
           .getServiceChargeValue(printedProductsPresenter.printed);
-      final products = printedProductsPresenter.printed?.Products
-              .map((e) => e.toEntity())
-              .toList() ??
-          [];
+      final printed =
+          PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity();
 
       verifyNever(() => generateXmlForNfce.generate(
-            products: products,
+            printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
             cpfCnpj: cpfCnpj,
@@ -1758,12 +1731,12 @@ void main() {
 
       final incrementValue = printedProductsPresenter
           .getServiceChargeValue(printedProductsPresenter.printed);
-      final products = printedProductsPresenter.printed?.Products
-              .map((e) => e.toEntity())
-              .toList() ??
-          [];
+      final printed =
+          PrintedModel.fromViewModel(printedProductsPresenter.printed!)
+              .toEntity();
+
       verify(() => generateXmlForNfce.generate(
-            products: products,
+            printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
             cpfCnpj: cpfCnpj,
@@ -1828,7 +1801,7 @@ void main() {
       expect(sut.lastRequestedPaymentFinalization, null);
     });
     test("Should clear successfulPayments", () async {
-      finishSaleRequestConcentrador.mockError();
+      concInsertSaleMovement.mockInsertError();
 
       await sut.callPayment(
         longAmountValue: longAmountValue,

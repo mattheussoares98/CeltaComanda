@@ -3,7 +3,7 @@ import '../../entities/entities.dart';
 
 abstract class GenerateXmlForNfce {
   Future<String> generate({
-    required List<PrintedProductsEntity> products,
+    required PrintedEntity printed,
     required List<ConcentratorFinalizationModel> finalizations,
     required CustomerEntity? customer,
     required int? cpfCnpj,

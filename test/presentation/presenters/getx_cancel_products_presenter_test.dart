@@ -76,6 +76,9 @@ void main() {
     registerFallbackValue(PrintedProductsPresenterSpy());
     registerFallbackValue(MenuPresenterSpy());
     registerFallbackValue(CartPresenterSpy());
+    registerFallbackValue(
+      EntityFactory.makeSaleRequestModel(covenantCode: 0, customerCode: 0),
+    );
   });
 
   group("Load printed products", () {

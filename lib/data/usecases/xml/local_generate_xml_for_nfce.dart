@@ -10,7 +10,7 @@ import '../../../ui/helpers/helpers.dart';
 class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
   @override
   Future<String> generate({
-    required List<PrintedProductsEntity> products,
+    required PrintedEntity printed,
     required List<ConcentratorFinalizationModel> finalizations,
     required CustomerEntity? customer,
     required int? cpfCnpj,
@@ -56,8 +56,11 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
           nest: DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()));
       builder.element('PDVTYPE', nest: '1');
 
-      for (var index = 0; index < products.length; index++) {
-        final product = products[index];
+      for (var index = 0;
+          index < printed.Products.where((e) => e.IsCancelled != true).length;
+          index++) {
+        final product = printed.Products.where((e) => e.IsCancelled != true)
+            .toList()[index];
         builder.element('Produto', nest: () {
           builder.element('Item', nest: index + 1);
           builder.element('PLU', nest: product.ProductPriceLookUpCode);
@@ -203,8 +206,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
       builder.element(
         'InfAdic',
         nest: () {
-          double totalTaxFromPercImpNBPTNational = products
-              .where((e) =>
+          double totalTaxFromPercImpNBPTNational = printed.Products.where((e) =>
                   e.Product?.PercImpNBPTNational != null &&
                   e.Product!.PercImpNBPTNational! > 0)
               .map((product) => product)
@@ -213,8 +215,7 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
                 (element.Product!.PercImpNBPTNational!);
           });
 
-          double totalTaxFromPercImpNBPTState = products
-              .where((e) =>
+          double totalTaxFromPercImpNBPTState = printed.Products.where((e) =>
                   e.Product?.PercImpNBPTState != null &&
                   e.Product!.PercImpNBPTState! > 0)
               .map((product) => product)
@@ -222,10 +223,10 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
             return element.TotalLiquid! * (element.Product!.PercImpNBPTState!);
           });
 
-          double totalTaxFromPercImpNBPTMunicipal = products
-              .where((e) =>
-                  e.Product?.PercImpNBPTMunicipal != null &&
-                  e.Product!.PercImpNBPTMunicipal! > 0)
+          double totalTaxFromPercImpNBPTMunicipal = printed.Products.where(
+                  (e) =>
+                      e.Product?.PercImpNBPTMunicipal != null &&
+                      e.Product!.PercImpNBPTMunicipal! > 0)
               .map((product) => product)
               .fold(0.0, (previous, element) {
             return element.TotalLiquid! *

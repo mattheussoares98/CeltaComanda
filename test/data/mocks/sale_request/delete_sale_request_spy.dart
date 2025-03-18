@@ -3,6 +3,9 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class DeleteSaleRequestSpy extends Mock implements DeleteSaleRequest {
+  DeleteSaleRequestSpy() {
+    this.mockDelete();
+  }
   When _mockCall() => when(() => this.delete(any()));
 
   void mockDelete() {

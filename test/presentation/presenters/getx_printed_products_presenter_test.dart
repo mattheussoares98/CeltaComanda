@@ -626,8 +626,10 @@ void main() {
 
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
-      double value =
-          sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed);
+      double value = (sut.getSubtotal(sut.printed) +
+              sut.getServiceChargeValue(sut.printed))
+          .toStringAsFixed(2)
+          .toDouble();
 
       expect(sut.getTotalLiquid(sut.printed), value);
     });
@@ -640,7 +642,9 @@ void main() {
 
       expect(
         sut.getTotalLiquid(sut.printed),
-        sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed),
+        (sut.getSubtotal(sut.printed) + sut.getServiceChargeValue(sut.printed))
+            .toStringAsFixed(2)
+            .toDouble(),
       );
     });
     test("Should return correct value if incrementType is invalid", () async {

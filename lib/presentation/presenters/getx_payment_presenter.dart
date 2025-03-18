@@ -494,6 +494,7 @@ class GetxPaymentPresenter extends GetxController
             couponFiscalNumber: _couponNumber!,
             products: printedProductsPresenter.printed?.Products
                     .map((e) => e.toEntity())
+                    .where((e) => e.IsCancelled != true)
                     .toList() ??
                 [],
             finalizations: _successfulPayments,

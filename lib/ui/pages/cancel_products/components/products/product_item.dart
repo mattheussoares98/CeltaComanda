@@ -61,14 +61,7 @@ class ProductItem extends StatelessWidget {
               ),
               Expanded(
                 flex: productFlex,
-                child: Text(
-                  "${product.Product?.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: StringSize.size,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: ProductName(product: product),
               ),
               Expanded(
                 flex: quantityFlex,

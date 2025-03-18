@@ -84,18 +84,7 @@ class LoadedProductsItems extends StatelessWidget {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "${product.Product?.Name}${product.IsCancelled == "true" ? " (cancelado)" : ""}",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: StringSize.size,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: ProductName(product: product),
                           ),
                         ),
                         Padding(

@@ -43,7 +43,12 @@ class ProductDetails extends StatelessWidget {
             const SizedBox(width: 2),
             Expanded(
               flex: 3,
-              child: NameAndComment(product: product, comments: comments),
+              child: Column(
+                children: [
+                  ProductName(product: product),
+                  if (comments != null) Comment(comment: "($comments)"),
+                ],
+              ),
             ),
             if (hasMinWidth(context)) rowValue(value),
             rowValue(quantity),

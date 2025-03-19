@@ -197,12 +197,13 @@ List<ConcentratorFinalizationEntity> _getFinalizations({
 List<SaleMovementProductConcentratorEntity> _getProducts({
   required List<PrintedProductsViewModel> products,
 }) {
+  int position = 0;
   return products.map((e) {
-    int position = 1;
     final product = e.toEntity();
     final productEntity = product.Product;
 
     return SaleMovementProductConcentratorEntity(
+      Position: ++position,
       BlockadeDiscountType: 1,
       CFOP: productEntity?.CFOP,
       CofinsPercentage: productEntity?.CofinsPercentage,
@@ -229,7 +230,6 @@ List<SaleMovementProductConcentratorEntity> _getProducts({
       OfferRetailPrice: productEntity?.OfferRetailPrice,
       PisPercentage: productEntity?.PisPercentage,
       PisType: productEntity?.PisType,
-      Position: ++position,
       ProductEan: productEntity?.EanCode,
       ProductInternalCodeOnERP:
           productEntity?.InternalCodeOfProductOnERP?.toString(),

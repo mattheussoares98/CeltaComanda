@@ -171,7 +171,9 @@ class GetxPaymentPresenter extends GetxController
         totalLiquid: printedProductsPresenter
             .getTotalLiquid(printedProductsPresenter.printed),
         finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-        products: printedProductsPresenter.printed!.Products,
+        products: _getProductsToInsertInConcentrator(
+          printedProductsPresenter: printedProductsPresenter,
+        ),
         xmlToGenerateFiscal: useSharing == false ? xmlReponse?.response : null,
       );
 

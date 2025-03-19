@@ -560,10 +560,111 @@ class GetxPaymentPresenter extends GetxController
         i++) {
       final product = printedProductsPresenter.printed!.Products[i];
 
-      products.add(product);
-
       if (product.ProductIsFatherComposition == "true" &&
           product.childs.isNotEmpty) {
+        products.add(
+          PrintedProductsViewModel(
+            Product: ProductsViewModel(
+              SaleRetailPraticed: product.childs.fold("0", (previous, element) {
+                return (previous.toDouble() + element.Value!.toDouble())
+                    .toString();
+              }),
+              subgroupName: product.Product?.subgroupName,
+              MaximumQuantityForSale: product.Product?.MaximumQuantityForSale,
+              IsPromoCombox: product.Product?.IsPromoCombox,
+              ProductComplement: product.Product?.ProductComplement,
+              ProductsId: product.Product!.ProductsId,
+              PriceLookupCode: product.Product!.PriceLookupCode,
+              Name: product.Product!.Name,
+              PackingAbbreviation: product.Product?.PackingAbbreviation,
+              InternalCodeOnERP: product.Product?.InternalCodeOnERP,
+              InternalCodeOfProductOnERP:
+                  product.Product?.InternalCodeOfProductOnERP,
+              EenterpriseId: product.Product?.EenterpriseId,
+              PackingQuantity: product.Product?.PackingQuantity,
+              OfferRetailPrice: product.Product?.OfferRetailPrice,
+              WholeSalePrice: product.Product?.WholeSalePrice,
+              WholeOfferPrice: product.Product?.WholeOfferPrice,
+              OfferECommercePrice: product.Product?.OfferECommercePrice,
+              SaleECommercePrice: product.Product?.SaleECommercePrice,
+              LiquidCost: product.Product?.LiquidCost,
+              LiquidCostMiddle: product.Product?.LiquidCostMiddle,
+              LiquidCostReal: product.Product?.LiquidCostReal,
+              RepositionCost: product.Product?.RepositionCost,
+              RepositionCostMiddle: product.Product?.RepositionCostMiddle,
+              RepositionCostReal: product.Product?.RepositionCostReal,
+              IcmsAliquot: product.Product?.IcmsAliquot,
+              IcmsIVAMargin: product.Product?.IcmsIVAMargin,
+              IcmsReductionMargin: product.Product?.IcmsReductionMargin,
+              IcmsStave: product.Product?.IcmsStave,
+              PercImpNBPTState: product.Product?.PercImpNBPTState,
+              PercImpNBPTMunicipal: product.Product?.PercImpNBPTMunicipal,
+              CofinsType: product.Product?.CofinsType,
+              PisType: product.Product?.PisType,
+              ProductIsFatherComposition:
+                  product.Product?.ProductIsFatherComposition,
+              QuantityMinimumWholeSale:
+                  product.Product?.QuantityMinimumWholeSale,
+              QuantityMinimumWholeSaleByClass:
+                  product.Product?.QuantityMinimumWholeSaleByClass,
+              BalanceTare: product.Product?.BalanceTare,
+              FamilyCode: product.Product?.FamilyCode,
+              DepartmentCode: product.Product?.DepartmentCode,
+              SectionCode: product.Product?.SectionCode,
+              GroupCode: product.Product?.GroupCode,
+              SubGroupCode: product.Product?.SubGroupCode,
+              StockQuantity: product.Product?.StockQuantity,
+              AllowFractionate: product.Product?.AllowFractionate,
+              IsBalance: product.Product?.IsBalance,
+              CanBeWeightyInPdv: product.Product?.CanBeWeightyInPdv,
+              QuantityInBalance: product.Product?.QuantityInBalance,
+              AllowQuantityInPdv: product.Product?.AllowQuantityInPdv,
+              GoesForFastTable: product.Product?.GoesForFastTable,
+              IsAlcoholicProduct: product.Product?.IsAlcoholicProduct,
+              SaleRetailPrice: product.Product?.SaleRetailPrice,
+              PercImpNBPTNational: product.Product?.PercImpNBPTNational,
+              CofinsPercentage: product.Product?.CofinsPercentage,
+              PisPercentage: product.Product?.PisPercentage,
+              CFOP: product.Product?.CFOP,
+              FiscalClassificationNCM: product.Product?.FiscalClassificationNCM,
+              TributarySituationCode: product.Product?.TributarySituationCode,
+              CSTPisCofins: product.Product?.CSTPisCofins,
+              CodeClass: product.Product?.CodeClass,
+              DepartmentName: product.Product?.DepartmentName,
+              SectionName: product.Product?.SectionName,
+              DateOfLastChanged: product.Product?.DateOfLastChanged,
+              GroupName: product.Product?.GroupName,
+              SaleRetailPraticedString:
+                  product.Product?.SaleRetailPraticedString,
+              PersonalizedCode: product.Product?.PersonalizedCode,
+              EanCode: product.Product?.EanCode,
+              NameComplete: product.Product?.NameComplete,
+              NameReduced: product.Product?.NameReduced,
+              Schedule: product.Product?.Schedule,
+              childsComposition: product.Product?.childsComposition,
+              suggestions: product.Product?.suggestions,
+            ),
+            SaleRequestProductId: product.SaleRequestProductId,
+            ProductPriceLookUpCode: product.ProductPriceLookUpCode,
+            Value: product.Value,
+            Quantity: product.Quantity,
+            QuantityString: product.QuantityString,
+            UserId: product.UserId,
+            DateHourOfCreation: product.DateHourOfCreation,
+            IsCancelled: product.IsCancelled,
+            IsDelivered: product.IsDelivered,
+            IsPrinted: product.IsPrinted,
+            ProductionStatus: product.ProductionStatus,
+            TotalLiquid: product.TotalLiquid,
+            ProductInternalCodeOnErp: product.ProductInternalCodeOnErp,
+            SaleRequestId: product.SaleRequestId,
+            ProductIsFatherComposition: product.ProductIsFatherComposition,
+            SaleMovementProductCompositionId:
+                product.SaleMovementProductCompositionId,
+            UserIdOfCancellation: product.UserIdOfCancellation,
+            childs: product.childs,
+          ),
+        );
         for (var x = 0; x < product.childs.length; x++) {
           final child = product.childs[x];
           products.add(PrintedProductsViewModel(
@@ -663,10 +764,12 @@ class GetxPaymentPresenter extends GetxController
             childs: child.childs,
           ));
         }
+      } else {
+        products.add(product);
       }
     }
 
-    return products; //TODO continue testing childs prices etc
+    return products;
   }
 
   @override

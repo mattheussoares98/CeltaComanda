@@ -64,7 +64,6 @@ class LocalGenerateXmlForNfce implements GenerateXmlForNfce {
         final product = notCanceledProducts.toList()[index];
 
         if (product.childs.isNotEmpty) {
-          //TODO fix correct index
           for (var child in product.childs) {
             _addProduct(
               builder,

@@ -13,7 +13,7 @@ class GetxCancelProductsPresenter extends GetxController
     implements CancelProductsPresenter {
   final RemovePrintedProduct removePrintedProduct;
   final LoadPrintedProducts loadPrintedProducts;
-  final UpdateSaleRequest updateSaleRequest; //TODO remove if dont works
+  final UpdateSaleRequest updateSaleRequest;
 
   GetxCancelProductsPresenter({
     required this.removePrintedProduct,

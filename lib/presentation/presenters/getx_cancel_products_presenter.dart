@@ -155,8 +155,7 @@ class GetxCancelProductsPresenter extends GetxController
         saleRequestId: printedModel.SaleRequestId!,
         model: model,
       );
-      printedModel.Products.where((e) => e.IsCancelled == true).toList();
-      model.Products?.where((e) => e.IsCancelled == true).toList();
+      
       await cartPresenter.updateIncrementValue(commandNumber.toString());
 
       await loadProducts(commandNumber);

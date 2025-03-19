@@ -29,7 +29,7 @@ class GetxCancelProductsPresenter extends GetxController
     required CartPresenter cartPresenter,
     required HomePresenter homePresenter,
   }) async {
-    isLoading = true;
+    isLoading = true;//TODO remove this function and change NewCancel to Cancel
     mainError = null;
 
     try {
@@ -91,7 +91,6 @@ class GetxCancelProductsPresenter extends GetxController
     required HomePresenter homePresenter,
     required int UserIdOfCancellation,
   }) async {
-    //TODO create tests
     isLoading = true;
     mainError = null;
 

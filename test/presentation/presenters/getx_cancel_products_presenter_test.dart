@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
@@ -113,7 +114,9 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.cancelProduct(
+      await sut.newCancelProduct(
+        UserIdOfCancellation: faker.randomGenerator.integer(100),
+        printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
@@ -128,7 +131,9 @@ void main() {
 
       removePrintedProduct.mockError();
 
-      await sut.cancelProduct(
+      await sut.newCancelProduct(
+        UserIdOfCancellation: faker.randomGenerator.integer(100),
+        printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
@@ -137,9 +142,11 @@ void main() {
       );
     });
     test("Should call removePrintedProduct with correct value", () async {
-      final id = printedViewModel.Products[0].SaleRequestProductId;
+      final userIdOfCancellation = faker.randomGenerator.integer(100);
 
-      await sut.cancelProduct(
+      await sut.newCancelProduct(
+        UserIdOfCancellation: userIdOfCancellation,
+        printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
         commandNumber: commandNumber,
         showSuccessMessage: () {},
@@ -147,7 +154,69 @@ void main() {
         homePresenter: homePresenter,
       );
 
-      verify(() => removePrintedProduct.remove(id!)).called(1);
+      PrintedModel printedModel = PrintedModel.fromViewModel(printedViewModel);
+
+      verify(() => updateSaleRequest.update(
+            commandNumber: commandNumber.toString(),
+            saleRequestId: printedViewModel.SaleRequestId!.toInt(),
+            model: SaleRequestModel(
+              Products:
+                  PrintedModel.fromViewModel(printedViewModel).Products.map(
+                (e) {
+                  final bool isSameProduct = printedViewModel
+                          .Products[0].SaleRequestProductId
+                          ?.toInt() ==
+                      e.SaleRequestProductId;
+
+                  return SaleRequestProductModel.fromEntity(
+                    SaleRequestProductEntity(
+                      ProductIsFatherComposition: e.ProductIsFatherComposition,
+                      IsCancelled: isSameProduct == true ? true : e.IsCancelled,
+                      UserIdOfCancellation: isSameProduct
+                          ? userIdOfCancellation
+                          : e.UserIdOfCancellation,
+                      Product: e.Product,
+                      SaleMovementProductCompositionId:
+                          e.SaleMovementProductCompositionId,
+                      ProductPriceLookUpCode: e.ProductPriceLookUpCode,
+                      QuantityString: e.QuantityString,
+                      Comments: e.Comments,
+                      DateHourOfCreation: e.DateHourOfCreation,
+                      IsDelivered: e.IsDelivered,
+                      IsPrinted: e.IsPrinted,
+                      SaleRequestProductId: e.SaleRequestProductId,
+                      UserId: e.UserId,
+                      ProductionStatus: e.ProductionStatus,
+                      ProductInternalCodeOnErp: e.ProductInternalCodeOnErp,
+                      SaleRequestId: e.SaleRequestId,
+                      Value: e.Value,
+                      Quantity: e.Quantity,
+                      TotalLiquid: e.TotalLiquid,
+                    ),
+                  );
+                },
+              ).toList(),
+              DateOfCreation: printedModel.DateOfCreation,
+              DateHourOfCreation: printedModel.DateHourOfCreation,
+              RequestType: printedModel.RequestType,
+              FlagStatus: printedModel.FlagStatus,
+              Comments: printedModel.Comments,
+              PersonalizedCode: printedModel.PersonalizedCode,
+              SellerCode: printedModel.SellerCode,
+              IsCancelled: printedModel.IsCancelled,
+              IsUsing: printedModel.IsUsing,
+              TotalLiquid: printedModel.TotalLiquid,
+              CovenantCode: printedModel.CovenantCode,
+              CustomerCode: printedModel.CustomerCode,
+              EnterpriseId: printedModel.EnterpriseId,
+              Peoples: printedModel.Peoples,
+              FlagOrigin: printedModel.FlagOrigin,
+              DeliveryControl: printedModel.DeliveryControl,
+              SaleRequestId: printedModel.SaleRequestId,
+              IncrementValue: printedModel.IncrementValue,
+              IncrementType: printedModel.IncrementType,
+            ),
+          )).called(1);
     });
   });
 

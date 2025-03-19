@@ -86,18 +86,18 @@ class PrintedProductsViewModel extends Equatable {
         Value: entity.Value?.toStringAsFixed(2).toBrazilianNumber(),
         Quantity: entity.Quantity?.toStringAsFixed(2).toBrazilianNumber(),
         TotalLiquid: entity.TotalLiquid?.toStringAsFixed(2).toBrazilianNumber(),
-        UserId: entity.UserId.toString(),
-        IsCancelled: entity.IsCancelled.toString(),
-        IsDelivered: entity.IsDelivered.toString(),
-        IsPrinted: entity.IsPrinted.toString(),
-        ProductionStatus: entity.ProductionStatus.toString(),
-        ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp.toString(),
-        SaleRequestId: entity.SaleRequestId.toString(),
+        UserId: entity.UserId?.toString(),
+        IsCancelled: entity.IsCancelled?.toString(),
+        IsDelivered: entity.IsDelivered?.toString(),
+        IsPrinted: entity.IsPrinted?.toString(),
+        ProductionStatus: entity.ProductionStatus?.toString(),
+        ProductInternalCodeOnErp: entity.ProductInternalCodeOnErp?.toString(),
+        SaleRequestId: entity.SaleRequestId?.toString(),
         UserIdOfCancellation: entity.UserIdOfCancellation?.toString(),
         SaleMovementProductCompositionId:
-            entity.SaleMovementProductCompositionId.toString(),
+            entity.SaleMovementProductCompositionId?.toString(),
         ProductIsFatherComposition:
-            entity.ProductIsFatherComposition.toString(),
+            entity.ProductIsFatherComposition?.toString(),
         childs: entity.childs
             .map((e) => PrintedProductsViewModel.fromEntity(e))
             .toList(),

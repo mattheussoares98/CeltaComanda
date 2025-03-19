@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:xml2json/xml2json.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -101,6 +103,9 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
         atualDate.day.toString().padLeft(2, "0") +
         pdvNumber.padLeft(3, "0") +
         couponFiscalNumber.toString().padLeft(4, "0");
+
+    final correctProducts = _getProductsToInsertInConcentrator(products);
+
     return SaleMovementConcentratorEntity(
       Checks: [],
       Portions: [],
@@ -109,7 +114,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       SaleFiscalType:
           xml == null ? SaleFiscalType.nfceEmulador.id : SaleFiscalType.nfce.id,
       EletronicAccessKey: eletronicAccessKey,
-      SaleMovementId: 0,
+      SaleMovementId: null,
       PdvId: pdvId,
       PdvNumber: pdvNumber,
       CovenantCode: covenantCode,
@@ -130,7 +135,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
         finalizations: finalizations,
         totalLiquid: totalLiquid,
       ),
-      Products: _getProducts(products: products),
+      Products: correctProducts,
       SaleRequestPersonalizedCode: null,
       SellerCode: /* seller != null ? seller.SellersId : (int?)null */ null,
       SellerName: /* seller != null ? seller.Name : null */ null,
@@ -151,7 +156,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       IsCancelled: false,
       IsDelivery: false,
       IsForTravel: false,
-      IsToDelivery: 0,
+      IsToDelivery: 1,
       MotiveJustificationSaleDiscountId: null,
       MotiveJustificationSaleDiscountName: null,
       UserIdOfCancellation: null,
@@ -194,86 +199,183 @@ List<ConcentratorFinalizationEntity> _getFinalizations({
           ]
         : finalizations;
 
-List<SaleMovementProductConcentratorEntity> _getProducts({
-  required List<PrintedProductsViewModel> products,
-}) {
-  int position = 0;
-  return products.map((e) {
-    final product = e.toEntity();
-    final productEntity = product.Product;
+List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
+  List<PrintedProductsViewModel> products,
+) {
+  List<SaleMovementProductConcentratorEntity> saleMovementProducts = [];
+  try {
+    int position = 1;
 
-    return SaleMovementProductConcentratorEntity(
-      Position: ++position,
-      BlockadeDiscountType: 1,
-      CFOP: productEntity?.CFOP,
-      CofinsPercentage: productEntity?.CofinsPercentage,
-      CofinsType: productEntity?.CofinsType,
-      Comments: product.Comments ?? "",
-      CSTPisCofins: productEntity?.CSTPisCofins,
-      IcmsAliquot: productEntity?.IcmsAliquot,
-      IcmsFiscalAdjustCode: null /*  */,
-      IcmsFiscalAdjustObservationCode: null /*  */,
-      IcmsFiscalBenefitCode: null /*  */,
-      IcmsFiscalOriginalAliquot: null /*  */,
-      NatureOperationCodePisCofins: null /*  */,
-      IcmsTributarySituationCode: e.Product?.TributarySituationCode,
-      UnitValue: productEntity?.SaleRetailPraticed,
-      WholeOfferPrice: productEntity?.WholeOfferPrice,
-      WholeSalePrice: productEntity?.WholeSalePrice,
-      IcmsIVAMargin: productEntity?.IcmsIVAMargin,
-      IcmsReductionMargin: productEntity?.IcmsReductionMargin,
-      IcmsStave: productEntity?.IcmsStave,
-      LiquidCost: productEntity?.LiquidCost,
-      LiquidCostMiddle: productEntity?.LiquidCostMiddle,
-      LiquidCostReal: productEntity?.LiquidCostReal,
-      OfferECommercePrice: productEntity?.OfferECommercePrice,
-      OfferRetailPrice: productEntity?.OfferRetailPrice,
-      PisPercentage: productEntity?.PisPercentage,
-      PisType: productEntity?.PisType,
-      ProductEan: productEntity?.EanCode,
-      ProductInternalCodeOnERP:
-          productEntity?.InternalCodeOfProductOnERP?.toString(),
-      ProductIsFatherComposition:
-          productEntity?.ProductIsFatherComposition == 1,
-      ProductName: productEntity?.Name,
-      ProductPluCode: productEntity?.PriceLookupCode,
-      Quantity: e.Quantity?.toDouble(),
-      RepositionCost: productEntity?.RepositionCost,
-      RepositionCostMiddle: productEntity?.RepositionCostMiddle,
-      RepositionCostReal: productEntity?.RepositionCostReal,
-      SaleECommercePrice: productEntity?.SaleECommercePrice,
-      SaleMovementProductCompositionId: e.SaleMovementProductCompositionId,
-      SaleMovementProductId: 0,
-      SaleRetailPrice: productEntity?.SaleRetailPrice,
-      UserIdOfCancellation: e.UserIdOfCancellation?.toInt(),
-      IsCancelled: e.IsCancelled == "true",
-      SaleMovement: null,
-      SaleRequestProductInternalCodeOnERP: null,
-      SocialContributionCodePisCofins: null,
-      SaleNegotiationDiscountType: null,
-      SaleNegotiationDiscountValue: null,
-      SaleOfferCode: null,
-      SaleOfferDiscountType: null,
-      SaleOfferDiscountValue: null,
-      SaleOfferQuantity: null,
-      UserIdOfDiscount: null,
-      CRMDiscountType: null,
-      CRMDiscountValue: null,
-      DeliveryTaxType: null,
-      DeliveryTaxValue: null,
-      DiscountType: null,
-      DiscountValue: null,
-      IncrementType: null,
-      IncrementValue: null,
-      MotiveJustificationId: null,
-      MotiveJustificationName: null,
-      MotiveJustificationSaleDiscountId: null,
-      MotiveJustificationSaleDiscountName: null,
-      IsPrinted: false,
-      IsToDelivery: false,
-      // SaleMovementProducOfFatherComposition: null,
-    );
-  }).toList();
+    for (var product in products) {
+      final product1 = product.toEntity();
+      final productEntity = product1.Product;
+      final productFatherId =
+          (DateTime.now().millisecondsSinceEpoch + Random().nextInt(999999))
+              .toString();
+
+      saleMovementProducts.add(
+        SaleMovementProductConcentratorEntity(
+          UnitValue: product1.Value?.toDouble(),
+          SaleMovementProductCompositionId:
+              product1.ProductIsFatherComposition == true
+                  ? productFatherId
+                  : null,
+          SaleMovementProductId: 0,
+          Position: position++,
+          BlockadeDiscountType: 1,
+          CFOP: productEntity?.CFOP,
+          CofinsPercentage: productEntity?.CofinsPercentage,
+          CofinsType: productEntity?.CofinsType,
+          Comments: product1.Comments ?? "",
+          CSTPisCofins: productEntity?.CSTPisCofins,
+          IcmsAliquot: productEntity?.IcmsAliquot,
+          IcmsFiscalAdjustCode: null /*  */,
+          IcmsFiscalAdjustObservationCode: null /*  */,
+          IcmsFiscalBenefitCode: null /*  */,
+          IcmsFiscalOriginalAliquot: null /*  */,
+          NatureOperationCodePisCofins: null /*  */,
+          IcmsTributarySituationCode: product1.Product?.TributarySituationCode,
+          WholeOfferPrice: productEntity?.WholeOfferPrice,
+          WholeSalePrice: productEntity?.WholeSalePrice,
+          IcmsIVAMargin: productEntity?.IcmsIVAMargin,
+          IcmsReductionMargin: productEntity?.IcmsReductionMargin,
+          IcmsStave: productEntity?.IcmsStave,
+          LiquidCost: productEntity?.LiquidCost,
+          LiquidCostMiddle: productEntity?.LiquidCostMiddle,
+          LiquidCostReal: productEntity?.LiquidCostReal,
+          OfferECommercePrice: productEntity?.OfferECommercePrice,
+          OfferRetailPrice: productEntity?.OfferRetailPrice,
+          PisPercentage: productEntity?.PisPercentage,
+          PisType: productEntity?.PisType,
+          ProductEan: productEntity?.EanCode,
+          ProductInternalCodeOnERP:
+              productEntity?.InternalCodeOfProductOnERP?.toString(),
+          ProductIsFatherComposition:
+              productEntity?.ProductIsFatherComposition == 1,
+          ProductName: productEntity?.Name,
+          ProductPluCode: productEntity?.PriceLookupCode,
+          Quantity: product1.Quantity?.toDouble(),
+          RepositionCost: productEntity?.RepositionCost,
+          RepositionCostMiddle: productEntity?.RepositionCostMiddle,
+          RepositionCostReal: productEntity?.RepositionCostReal,
+          SaleECommercePrice: productEntity?.SaleECommercePrice,
+          SaleRetailPrice: productEntity?.SaleRetailPrice,
+          UserIdOfCancellation: product1.UserIdOfCancellation?.toInt(),
+          IsCancelled: product1.IsCancelled,
+          SaleMovement: null,
+          SaleRequestProductInternalCodeOnERP: null,
+          SocialContributionCodePisCofins: null,
+          SaleNegotiationDiscountType: null,
+          SaleNegotiationDiscountValue: null,
+          SaleOfferCode: null,
+          SaleOfferDiscountType: null,
+          SaleOfferDiscountValue: null,
+          SaleOfferQuantity: null,
+          UserIdOfDiscount: null,
+          CRMDiscountType: null,
+          CRMDiscountValue: null,
+          DeliveryTaxType: null,
+          DeliveryTaxValue: null,
+          DiscountType: null,
+          DiscountValue: null,
+          IncrementType: null,
+          IncrementValue: null,
+          MotiveJustificationId: null,
+          MotiveJustificationName: null,
+          MotiveJustificationSaleDiscountId: null,
+          MotiveJustificationSaleDiscountName: null,
+          IsPrinted: false,
+          IsToDelivery: true,
+          // SaleMovementProducOfFatherComposition: null,
+        ),
+      );
+
+      if (product.ProductIsFatherComposition == "true" &&
+          product.childs.isNotEmpty) {
+        for (var child in product.childs) {
+          saleMovementProducts.add(
+            SaleMovementProductConcentratorEntity(
+              Position: position++,
+              SaleMovementProductId: 0,
+              SaleMovementProductCompositionId:
+                  productFatherId, //precisa ser do pai
+              IsCancelled: product1.IsCancelled, //precisa ser do pai
+              SaleRequestProductInternalCodeOnERP: null,
+              UnitValue: child.Value?.toDouble(),
+              Quantity: child.Quantity?.toDouble(),
+              IsToDelivery: true,
+              IsPrinted: false,
+              Comments: child.Comments,
+              UserIdOfCancellation: child.UserIdOfCancellation?.toInt(),
+              ProductPluCode: child.Product?.PriceLookupCode,
+              ProductEan: child.Product?.EanCode,
+              ProductInternalCodeOnERP: child.Product?.InternalCodeOnERP,
+              ProductName: child.Product?.Name,
+              ProductIsFatherComposition: false,
+              IcmsTributarySituationCode: child.Product?.TributarySituationCode,
+              IcmsAliquot: child.Product?.IcmsAliquot?.toDouble(),
+              IcmsStave: child.Product?.IcmsStave?.toDouble(),
+              IcmsReductionMargin:
+                  child.Product?.IcmsReductionMargin?.toDouble(),
+              IcmsIVAMargin: child.Product?.IcmsIVAMargin?.toDouble(),
+              PisType: child.Product?.PisType?.toInt(),
+              CofinsType: child.Product?.CofinsType?.toInt(),
+              BlockadeDiscountType: 1,
+              PisPercentage: child.Product?.PisPercentage?.toDouble(),
+              CofinsPercentage: child.Product?.CofinsPercentage?.toDouble(),
+              SaleRetailPrice: child.Product?.SaleRetailPrice?.toDouble(),
+              OfferRetailPrice: child.Product?.OfferRetailPrice?.toDouble(),
+              WholeSalePrice: child.Product?.WholeSalePrice?.toDouble(),
+              WholeOfferPrice: child.Product?.WholeOfferPrice?.toDouble(),
+              SaleECommercePrice: child.Product?.SaleECommercePrice?.toDouble(),
+              OfferECommercePrice:
+                  child.Product?.OfferECommercePrice?.toDouble(),
+              RepositionCost: child.Product?.RepositionCost?.toDouble(),
+              RepositionCostMiddle:
+                  child.Product?.RepositionCostMiddle?.toDouble(),
+              LiquidCost: child.Product?.LiquidCost?.toDouble(),
+              LiquidCostMiddle: child.Product?.LiquidCostMiddle?.toDouble(),
+              RepositionCostReal: child.Product?.RepositionCostReal?.toDouble(),
+              LiquidCostReal: child.Product?.LiquidCostReal?.toDouble(),
+              CFOP: child.Product?.CFOP,
+              CSTPisCofins: child.Product?.CSTPisCofins,
+              NatureOperationCodePisCofins: null,
+              SocialContributionCodePisCofins: null,
+              IcmsFiscalAdjustCode: null,
+              IcmsFiscalAdjustObservationCode: null,
+              IcmsFiscalOriginalAliquot: null,
+              IcmsFiscalBenefitCode: null,
+              SaleOfferCode: null,
+              SaleOfferQuantity: null,
+              SaleOfferDiscountType: null,
+              SaleOfferDiscountValue: null,
+              SaleMovement: null,
+              MotiveJustificationId: null,
+              MotiveJustificationName: null,
+              MotiveJustificationSaleDiscountId: null,
+              MotiveJustificationSaleDiscountName: null,
+              DiscountType: null,
+              DiscountValue: null,
+              UserIdOfDiscount: null,
+              SaleNegotiationDiscountType: null,
+              SaleNegotiationDiscountValue: null,
+              CRMDiscountType: null,
+              CRMDiscountValue: null,
+              IncrementType: null,
+              IncrementValue: null,
+              DeliveryTaxType: null,
+              DeliveryTaxValue: null,
+            ),
+          );
+        }
+      }
+    }
+
+    return saleMovementProducts;
+  } catch (e) {
+    debugPrint(e.toString());
+    throw Exception();
+  }
 }
 
 enum SaleFiscalType {

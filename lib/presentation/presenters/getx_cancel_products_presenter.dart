@@ -22,30 +22,6 @@ class GetxCancelProductsPresenter extends GetxController
   });
 
   @override
-  Future<void> cancelProduct({
-    required PrintedProductsViewModel product,
-    required int commandNumber,
-    required void Function() showSuccessMessage,
-    required CartPresenter cartPresenter,
-    required HomePresenter homePresenter,
-  }) async {
-    isLoading = true;//TODO remove this function and change NewCancel to Cancel
-    mainError = null;
-
-    try {
-      await removePrintedProduct.remove(product.SaleRequestProductId!);
-      await cartPresenter.updateIncrementValue(commandNumber.toString());
-
-      await loadProducts(commandNumber);
-      showSuccessMessage();
-    } catch (e) {
-      mainError = UIError.unexpected;
-    } finally {
-      isLoading = false;
-    }
-  }
-
-  @override
   Future<void> loadProducts(int commandNumber) async {
     isLoading = true;
     mainError = null;
@@ -82,7 +58,7 @@ class GetxCancelProductsPresenter extends GetxController
   set products(PrintedViewModel? value) => _products.value = value;
 
   @override
-  Future<void> newCancelProduct({
+  Future<void> cancelProduct({
     required PrintedProductsViewModel product,
     required PrintedModel printedModel,
     required int commandNumber,
@@ -154,7 +130,7 @@ class GetxCancelProductsPresenter extends GetxController
         saleRequestId: printedModel.SaleRequestId!,
         model: model,
       );
-      
+
       await cartPresenter.updateIncrementValue(commandNumber.toString());
 
       await loadProducts(commandNumber);

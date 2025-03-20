@@ -114,7 +114,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.newCancelProduct(
+      await sut.cancelProduct(
         UserIdOfCancellation: faker.randomGenerator.integer(100),
         printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
@@ -131,7 +131,7 @@ void main() {
 
       removePrintedProduct.mockError();
 
-      await sut.newCancelProduct(
+      await sut.cancelProduct(
         UserIdOfCancellation: faker.randomGenerator.integer(100),
         printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
@@ -144,7 +144,7 @@ void main() {
     test("Should call removePrintedProduct with correct value", () async {
       final userIdOfCancellation = faker.randomGenerator.integer(100);
 
-      await sut.newCancelProduct(
+      await sut.cancelProduct(
         UserIdOfCancellation: userIdOfCancellation,
         printedModel: PrintedModel.fromViewModel(printedViewModel),
         product: printedViewModel.Products[0],
@@ -222,6 +222,8 @@ void main() {
 
   test("Should update increment value", () async {
     await sut.cancelProduct(
+      UserIdOfCancellation: faker.randomGenerator.integer(100),
+      printedModel: PrintedModel.fromViewModel(printedViewModel),
       product: printedViewModel.Products[0],
       commandNumber: commandNumber,
       showSuccessMessage: () {},

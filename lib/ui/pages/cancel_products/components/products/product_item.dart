@@ -125,7 +125,7 @@ class ProductItem extends StatelessWidget {
                               ),
                             ),
                             onPress: () async {
-                              await cancelProductsPresenter.newCancelProduct(
+                              await cancelProductsPresenter.cancelProduct(
                                   UserIdOfCancellation: configurationsPresenter
                                       .loggedUser!.UserId!,
                                   printedModel: PrintedModel.fromViewModel(

@@ -13,11 +13,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Set git safe directory
+        run: git config --global --add safe.directory $(pwd)
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.0'  # Replace with your project version
+          flutter-version: '3.29.0'
           channel: stable
 
       - name: Install dependencies
@@ -37,22 +43,31 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # This job will run after the 'build' job 
+    needs: build
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Set git safe directory
+        run: git config --global --add safe.directory $(pwd)
 
       - name: Download APK artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: app-release-apk
 
       - name: Set up environment variables (if needed)
         run: |
-          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV  # Example of using a secret
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
 
       - name: Deploy APK or run additional tasks
         run: |
-          # Use the downloaded APK for further deployment or tests
-          echo "Deploy the APK or run any further tasks here"
+          if [ -f "app-release.apk" ]; then
+            echo "Ready to deploy the APK or perform further actions."
+          else
+            echo "APK not found! Deployment step skipped." && exit 1
+          fi

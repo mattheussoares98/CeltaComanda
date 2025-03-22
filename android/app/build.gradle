@@ -94,6 +94,9 @@ android {
             shrinkResources false
             signingConfig signingConfigs.release
             // signingConfig signingConfigs.config //a GetNet disse pra deixar a configuração desse jeito
+        if (System.getenv("CI") == "true") {
+            signingConfig null // Disable signing when running in CI
+            }
         }
     }
 }

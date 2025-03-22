@@ -289,6 +289,7 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
+      
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
 
       sut.clear();

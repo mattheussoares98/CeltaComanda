@@ -129,7 +129,7 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
-      removePrintedProduct.mockError();
+      updateSaleRequest.mockUpdateSaleRequestError(DomainError.unexpected);
 
       await sut.cancelProduct(
         UserIdOfCancellation: faker.randomGenerator.integer(100),

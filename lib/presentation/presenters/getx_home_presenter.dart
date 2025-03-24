@@ -311,13 +311,13 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   set mainError(UIError? value) => _mainError.value = value;
 
   @override
-  bool get isGeneratingVersionToRede => true;
+  bool get isGeneratingVersionToRede => false;
   @override
   bool get isGeneratingVersionToGetNet => false;
   @override
   bool get isGeneratingVersionToMicrosoftStore => false;
 
-  bool _isGeneratingVersionToTablet = false;
+  bool _isGeneratingVersionToTablet = true;
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 

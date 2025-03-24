@@ -127,12 +127,21 @@ class _HomePageState extends State<HomePage>
       Navigator.of(context).popUntil((route) => route.isFirst);
       notificationDialog(
         context: context,
-        titleMessage: R.string.msgNeedUpdateApplication,
-        content: null,
+        titleMessage: EnterpriseBuilder.entity?.blockUseAppIfIsOutdated == true
+            ? R.string.msgNeedUpdateApplication
+            : R.string.msgCallWaiterToUpdateApp,
+        content: EnterpriseBuilder.entity?.blockUseAppIfIsOutdated == true
+            ? UpdateApplicationButton()
+            : null,
         showCancelAndConfirmMessage: false,
-        showCloseAction: true,
+        showCloseAction:
+            EnterpriseBuilder.entity?.blockUseAppIfIsOutdated == true
+                ? false
+                : true,
         onPress: () async {},
-        canPop: false,
+        canPop: EnterpriseBuilder.entity?.blockUseAppIfIsOutdated == true
+            ? false
+            : true,
       );
     }
   }

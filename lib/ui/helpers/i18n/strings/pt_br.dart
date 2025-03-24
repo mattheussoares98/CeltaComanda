@@ -56,8 +56,9 @@ class PtBr implements Translation {
   String get msgLowBatteryChargeDevice =>
       "Carregue o dispositivo. Ele está com pouca bateria";
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
-  String get msgNeedUpdateApplication =>
+  String get msgCallWaiterToUpdateApp =>
       "Por favor, chame o garçom para atualizar o aplicativo";
+  String get msgNeedUpdateApplication => "Você precisa atualizar o app para conseguir usá-lo";
   String get msgNewCommandMustBeEmpty => "A mesa nova precisa estar vazia";
   String get msgNewTable => "Mesa nova";
   String get msgNotFound => "Valor não encontrado";

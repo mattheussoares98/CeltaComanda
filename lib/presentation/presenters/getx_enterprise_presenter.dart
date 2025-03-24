@@ -129,6 +129,11 @@ class GetxEnterprisePresenter extends GetxController
       final pdvs = await pdvRegistration.getPdvNotUsing();
       pdvsNotUsing =
           pdvs.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList();
+      if (pdvs
+          .where((e) => e.PdvNumber != null && e.PdvNumber!.toInt() >= 100)
+          .isEmpty) {
+        throw DomainError.dontHaveUnusedPdvs;
+      }
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

@@ -550,6 +550,25 @@ void main() {
         homePresenter: homePresenter,
       );
     });
+    test(
+        "Should emit error if is generating version to tablet and dont have pdv number greater than 100",
+        () async {
+      EnterpriseBuilder.entity = clearedEnterprise;
+      homePresenter.isGeneratingVersionToTabletMock = true;
+      pdvRegistration.mockGetPdvNotUsing([
+        EntityFactory.makePdvEntity(
+            pdvNumber: faker.randomGenerator.integer(99, min: 1)),
+      ]);
+
+      expectLater(sut.mainErrorStream,
+          emitsInOrder([null, UIError.dontHaveUnusedPdvs]));
+
+      await sut.validateEnterpriseByName(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+    });
   });
 
   group("Validate enterprise input", () {

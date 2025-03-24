@@ -1354,9 +1354,10 @@ class EntityFactory {
         AllowSunday: faker.randomGenerator.integer(1, min: 0),
       );
 
-  static PdvEntity makePdvEntity() => PdvEntity(
+  static PdvEntity makePdvEntity({int? pdvNumber}) => PdvEntity(
         PdvId: faker.randomGenerator.integer(100),
-        PdvNumber: faker.randomGenerator.integer(100).toString(),
+        PdvNumber: pdvNumber?.toString() ??
+            faker.randomGenerator.integer(100).toString(),
         IPAddress: faker.randomGenerator.string(10),
         EnterpriseId: faker.randomGenerator.integer(100),
         MacAddress: faker.randomGenerator.string(10),

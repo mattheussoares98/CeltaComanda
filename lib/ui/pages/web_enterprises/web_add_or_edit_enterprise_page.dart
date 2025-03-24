@@ -337,6 +337,20 @@ class _WebAddOrEditEnterprisePageState
                           ),
                         ],
                       ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: BlockUseAppIfIsOutdatedSwitch(
+                              blockUseAppIfIsOutdated:
+                                  blockUseAppIfIsOutdated ?? false,
+                              changeBlockAppIfIsOutdated:
+                                  changeBlockUseAppIfIsOutdated,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(child: SizedBox()),
+                        ],
+                      ),
                     ],
                   ),
                 ),

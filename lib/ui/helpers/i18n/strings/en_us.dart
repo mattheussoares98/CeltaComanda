@@ -149,6 +149,7 @@ class EnUs implements Translation {
   String get avaliate => 'Evaluate';
   String get blockCommand => 'Block command';
   String get blockTable => 'Block table';
+  String get blockUseAppIfIsOutdated => 'Block use app if is outdated';
   String get cart => 'Cart';
   String get call => 'Call';
   String get cancel => 'Cancel';

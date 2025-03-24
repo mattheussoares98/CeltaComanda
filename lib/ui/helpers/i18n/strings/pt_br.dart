@@ -147,6 +147,7 @@ class PtBr implements Translation {
   String get avaliate => 'Avaliar';
   String get blockCommand => 'Bloquear comanda';
   String get blockTable => 'Bloquear mesa';
+  String get blockUseAppIfIsOutdated => 'Bloquear uso do app se estiver desatualizado';
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";

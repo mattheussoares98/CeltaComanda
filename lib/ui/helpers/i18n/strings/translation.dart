@@ -108,6 +108,7 @@ abstract class Translation {
   String get avaliate;
   String get blockCommand;
   String get blockTable;
+  String get blockUseAppIfIsOutdated;
   String get call;
   String get cancel;
   String get canceledBy;

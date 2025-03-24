@@ -20,6 +20,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final bool? useProductReducedName;
   final bool? verifyCommandBlocked;
   final bool? canInsertCommentManually;
+  final bool? blockUseAppIfIsOutdated;
   final GlobalKey<FormState> formKey;
 
   const ConfirmUpdateEnterpriseDataButton({
@@ -38,6 +39,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.useProductReducedName,
     required this.verifyCommandBlocked,
     required this.canInsertCommentManually,
+    required this.blockUseAppIfIsOutdated,
     super.key,
   });
 
@@ -90,6 +92,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                 useReducedNameOnProduct: useProductReducedName,
                 verifyCommandBlocked: verifyCommandBlocked,
                 canInsertCommentManually: canInsertCommentManually,
+                blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
               );
 
               if (updated) {

@@ -130,6 +130,7 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
       updateSaleRequest.mockUpdateSaleRequestError(DomainError.unexpected);
+      removePrintedProduct.mockError();
 
       await sut.cancelProduct(
         UserIdOfCancellation: faker.randomGenerator.integer(100),
@@ -141,7 +142,7 @@ void main() {
         homePresenter: homePresenter,
       );
     });
-    test("Should call removePrintedProduct with correct value", () async {
+    test("Should call updateSaleRequest with correct value", () async {
       final userIdOfCancellation = faker.randomGenerator.integer(100);
 
       await sut.cancelProduct(

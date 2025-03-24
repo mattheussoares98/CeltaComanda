@@ -119,6 +119,7 @@ void main() {
           useReducedNameOnProduct: faker.randomGenerator.boolean(),
           verifyCommandBlocked: faker.randomGenerator.boolean(),
           canInsertCommentManually: faker.randomGenerator.boolean(),
+          blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
         ),
       );
 
@@ -155,6 +156,7 @@ void main() {
           useReducedNameOnProduct: faker.randomGenerator.boolean(),
           verifyCommandBlocked: faker.randomGenerator.boolean(),
           canInsertCommentManually: faker.randomGenerator.boolean(),
+          blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
         ),
       );
 

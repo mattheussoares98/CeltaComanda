@@ -71,6 +71,7 @@ void main() {
               enterpriseJsonData["useReducedNameOnProduct"],
           verifyCommandBlocked: enterpriseJsonData["verifyCommandBlocked"],
           canInsertCommentManually: enterpriseJsonData["canInsertCommentManually"],
+          blockUseAppIfIsOutdated: enterpriseJsonData["blockUseAppIfIsOutdated"],
         ),
       );
     });

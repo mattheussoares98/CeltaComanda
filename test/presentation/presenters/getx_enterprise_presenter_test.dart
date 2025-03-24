@@ -105,6 +105,7 @@ void main() {
       useReducedNameOnProduct: null,
       verifyCommandBlocked: null,
       canInsertCommentManually: null,
+      blockUseAppIfIsOutdated: null,
     );
 
     pdvsNotUsing = [
@@ -255,6 +256,7 @@ void main() {
           useReducedNameOnProduct: null,
           verifyCommandBlocked: null,
           canInsertCommentManually: null,
+          blockUseAppIfIsOutdated: null,
         ),
       );
     });
@@ -399,6 +401,7 @@ void main() {
           minutesVerifyUpdateMenu: newEnterprise.minutesVerifyUpdateMenu,
           verifyCommandBlocked: newEnterprise.verifyCommandBlocked,
           canInsertCommentManually: newEnterprise.canInsertCommentManually,
+          blockUseAppIfIsOutdated: newEnterprise.blockUseAppIfIsOutdated,
         ),
       );
     });
@@ -574,6 +577,7 @@ void main() {
             useReducedNameOnProduct: null,
             verifyCommandBlocked: null,
             canInsertCommentManually: null,
+            blockUseAppIfIsOutdated: null,
           ));
     });
   });
@@ -624,6 +628,8 @@ void main() {
                 EnterpriseBuilder.entity!.verifyCommandBlocked,
             canInsertCommentManually:
                 EnterpriseBuilder.entity!.canInsertCommentManually,
+            blockUseAppIfIsOutdated:
+                EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
           ));
     });
     test("Should update last import when update enterprise parameters",
@@ -658,6 +664,7 @@ void main() {
           useReducedNameOnProduct: null,
           verifyCommandBlocked: null,
           canInsertCommentManually: null,
+          blockUseAppIfIsOutdated: null,
         ),
       );
     });

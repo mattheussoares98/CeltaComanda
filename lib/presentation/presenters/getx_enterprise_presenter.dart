@@ -94,6 +94,7 @@ class GetxEnterprisePresenter extends GetxController
             useReducedNameOnProduct: firebaseData.useReducedNameOnProduct,
             verifyCommandBlocked: firebaseData.verifyCommandBlocked,
             canInsertCommentManually: firebaseData.canInsertCommentManually,
+            blockUseAppIfIsOutdated: firebaseData.blockUseAppIfIsOutdated,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -170,6 +171,7 @@ class GetxEnterprisePresenter extends GetxController
       useReducedNameOnProduct: null,
       verifyCommandBlocked: null,
       canInsertCommentManually: null,
+      blockUseAppIfIsOutdated: null,
     );
 
     _enterpriseError.value =
@@ -233,6 +235,7 @@ class GetxEnterprisePresenter extends GetxController
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
+        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
       );
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -264,6 +267,7 @@ class GetxEnterprisePresenter extends GetxController
         useReducedNameOnProduct: null,
         verifyCommandBlocked: null,
         canInsertCommentManually: null,
+        blockUseAppIfIsOutdated: null,
       );
 
       EnterpriseBuilder.entity = newEnterprise;

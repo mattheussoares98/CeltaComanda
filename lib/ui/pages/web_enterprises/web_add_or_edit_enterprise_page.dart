@@ -39,10 +39,17 @@ class _WebAddOrEditEnterprisePageState
   bool? useProductReducedName = false;
   bool? verifyCommandBlocked = true;
   bool? canInsertCommentManually = false;
+  bool? blockUseAppIfIsOutdated = false;
 
   void changeUseProductReducedName() {
     setState(() {
       useProductReducedName = !(useProductReducedName ?? false);
+    });
+  }
+
+  void changeBlockUseAppIfIsOutdated() {
+    setState(() {
+      blockUseAppIfIsOutdated = !(blockUseAppIfIsOutdated ?? false);
     });
   }
 
@@ -149,6 +156,9 @@ class _WebAddOrEditEnterprisePageState
             }
             canInsertCommentManually = webEnterprisesPresenter
                     .selectedEnterprise?.canInsertCommentManually ==
+                true;
+            blockUseAppIfIsOutdated = webEnterprisesPresenter
+                    .selectedEnterprise?.blockUseAppIfIsOutdated ==
                 true;
             minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
                         .selectedEnterprise?.minutesVerifyUpdateMenu !=
@@ -351,6 +361,7 @@ class _WebAddOrEditEnterprisePageState
               formKey: _formKey,
               verifyCommandBlocked: verifyCommandBlocked,
               canInsertCommentManually: canInsertCommentManually,
+              blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
             ),
           ],
         ),

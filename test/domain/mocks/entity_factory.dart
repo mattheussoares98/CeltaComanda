@@ -31,6 +31,7 @@ class EntityFactory {
     bool? useReducedNameOnProduct,
     bool? verifyCommandBlocked,
     bool? canInsertCommentManually,
+    bool? blockUseAppIfIsOutdated,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -69,6 +70,9 @@ class EntityFactory {
       canInsertCommentManually: canInsertCommentManually == true
           ? null
           : atualEntity.canInsertCommentManually,
+      blockUseAppIfIsOutdated: blockUseAppIfIsOutdated == true
+          ? null
+          : atualEntity.blockUseAppIfIsOutdated,
     );
   }
 
@@ -93,6 +97,7 @@ class EntityFactory {
     bool? useReducedNameOnProduct,
     bool? verifyCommandBlocked,
     bool? canInsertCommentManually,
+    bool? blockUseAppIfIsOutdated,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -123,6 +128,8 @@ class EntityFactory {
           verifyCommandBlocked ?? faker.randomGenerator.boolean(),
       canInsertCommentManually:
           canInsertCommentManually ?? faker.randomGenerator.boolean(),
+      blockUseAppIfIsOutdated:
+          blockUseAppIfIsOutdated ?? faker.randomGenerator.boolean(),
     );
   }
 

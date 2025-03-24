@@ -191,6 +191,8 @@ void main() {
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
         canInsertCommentManually:
             EnterpriseBuilder.entity!.canInsertCommentManually,
+        blockUseAppIfIsOutdated:
+            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
       );
     });
     test("Should emit correct values on error", () async {
@@ -221,6 +223,8 @@ void main() {
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
         canInsertCommentManually:
             EnterpriseBuilder.entity!.canInsertCommentManually,
+        blockUseAppIfIsOutdated:
+            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
       );
     });
 
@@ -242,6 +246,7 @@ void main() {
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
+        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -264,6 +269,7 @@ void main() {
         useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
+        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,
@@ -293,6 +299,7 @@ void main() {
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
         canInsertCommentManually: null,
+        blockUseAppIfIsOutdated: null,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -307,6 +314,7 @@ void main() {
         useReducedNameOnProduct: null,
         verifyCommandBlocked: null,
         canInsertCommentManually: null,
+        blockUseAppIfIsOutdated: null,
         enterpriseName: enterprise.enterpriseName,
         url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
@@ -326,6 +334,7 @@ void main() {
         useReducedNameOnProduct: true,
         verifyCommandBlocked: true,
         canInsertCommentManually: true,
+        blockUseAppIfIsOutdated: true,
       );
 
       verify(() =>
@@ -353,6 +362,8 @@ void main() {
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
         canInsertCommentManually:
             EnterpriseBuilder.entity!.canInsertCommentManually,
+        blockUseAppIfIsOutdated:
+            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
       );
 
       expect(result, true);
@@ -380,6 +391,8 @@ void main() {
         verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
         canInsertCommentManually:
             EnterpriseBuilder.entity!.canInsertCommentManually,
+        blockUseAppIfIsOutdated:
+            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
       );
 
       expect(result, false);

@@ -98,6 +98,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required bool? useReducedNameOnProduct,
     required bool? verifyCommandBlocked,
     required bool? canInsertCommentManually,
+    required bool? blockUseAppIfIsOutdated,
   }) async {
     try {
       isLoading = true;
@@ -126,6 +127,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         useReducedNameOnProduct: useReducedNameOnProduct,
         verifyCommandBlocked: verifyCommandBlocked,
         canInsertCommentManually: canInsertCommentManually,
+        blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
       );
 
       await updateEnterpriseParameters.update(enterprise);

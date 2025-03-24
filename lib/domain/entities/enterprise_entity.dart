@@ -21,6 +21,7 @@ class EnterpriseEntity extends Equatable {
   final bool? useReducedNameOnProduct;
   final bool? verifyCommandBlocked;
   final bool? canInsertCommentManually;
+  final bool? blockUseAppIfIsOutdated;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -40,6 +41,7 @@ class EnterpriseEntity extends Equatable {
     required this.useReducedNameOnProduct,
     required this.verifyCommandBlocked,
     required this.canInsertCommentManually,
+    required this.blockUseAppIfIsOutdated,
   });
 
   @override
@@ -61,5 +63,6 @@ class EnterpriseEntity extends Equatable {
         useReducedNameOnProduct,
         verifyCommandBlocked,
         canInsertCommentManually,
+        blockUseAppIfIsOutdated,
       ];
 }

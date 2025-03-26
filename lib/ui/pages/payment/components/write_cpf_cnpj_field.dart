@@ -1,0 +1,61 @@
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../components/components.dart';
+import '../../../helpers/helpers.dart';
+
+class WriteCpfCnpjField extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController cpfCnpjController;
+  final FocusNode cpfCnpjFocusNode;
+  const WriteCpfCnpjField({
+    super.key,
+    required this.formKey,
+    required this.cpfCnpjController,
+    required this.cpfCnpjFocusNode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: SizedBox(
+        width: hasMinWidth(context)
+            ? MediaQuery.of(context).size.width * 0.3
+            : MediaQuery.of(context).size.width * 0.6,
+        child: TextFormField(
+          controller: cpfCnpjController,
+          focusNode: cpfCnpjFocusNode,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          inputFormatters: [LengthLimitingTextInputFormatter(14)],
+          decoration: formFieldDecoration(
+            context: context,
+            hintText: R.string.cpfCnpj,
+            labelText: R.string.cpfCnpj,
+            errorText: null,
+          ),
+          validator: (value) {
+            if (value == null) {
+              return null;
+            } else if (value.length != 11 && value.length != 14) {
+              return R.string.msgInvalidCpfCnpj;
+            } else if (value.length == 11 && CPFValidator.isValid(value)) {
+              return null;
+            } else if (value.length == 14 && CNPJValidator.isValid(value)) {
+              return null;
+            }
+
+            return R.string.msgInvalidCpfCnpj;
+          },
+          onFieldSubmitted: (_) async {
+            if (formKey.currentState?.validate() != true) {
+              return;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}

@@ -1,3 +1,6 @@
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -25,6 +28,8 @@ class _PaymentPageState extends State<PaymentPage>
   final formKey = GlobalKey<FormState>();
   final paymentController = TextEditingController();
   final paymentFocusNode = FocusNode();
+  final cpfCnpjController = TextEditingController();
+  final cpfCnpjFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -36,6 +41,8 @@ class _PaymentPageState extends State<PaymentPage>
     paymentPresenter?.disposePaymentResultHandler();
     paymentController.dispose();
     paymentFocusNode.dispose();
+    cpfCnpjController.dispose();
+    cpfCnpjFocusNode.dispose();
   }
 
   @override
@@ -178,12 +185,24 @@ class _PaymentPageState extends State<PaymentPage>
                       children: [
                         if (homePresenter.isGeneratingVersionToGetNet ||
                             homePresenter.isGeneratingVersionToRede)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: WriteAmoutValueToPay(
-                              formKey: formKey,
-                              paymentController: paymentController,
-                              paymentFocusNode: paymentFocusNode,
+                          Form(
+                            key: formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  WriteAmoutValueToPay(
+                                    paymentController: paymentController,
+                                    paymentFocusNode: paymentFocusNode,
+                                    cpfCnpjFocusNode: cpfCnpjFocusNode,
+                                  ),
+                                  WriteCpfCnpjField(
+                                    formKey: formKey,
+                                    cpfCnpjController: cpfCnpjController,
+                                    cpfCnpjFocusNode: cpfCnpjFocusNode,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         PaymentButtons(

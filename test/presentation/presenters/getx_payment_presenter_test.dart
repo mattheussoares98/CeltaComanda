@@ -1842,4 +1842,20 @@ void main() {
       expect(sut.successfulPayments, []);
     });
   });
+
+  group("Change cpf cnpj", () {
+    test("Should cpfCnpj correctly", () {
+      sut.changeCpfCnpj("abc");
+      expect(sut.cpfCnpj, isNull);
+
+      sut.changeCpfCnpj("1");
+      expect(sut.cpfCnpj, 1);
+
+      sut.changeCpfCnpj("");
+      expect(sut.cpfCnpj, null);
+      
+      sut.changeCpfCnpj("1.");
+      expect(sut.cpfCnpj, null);
+    });
+  });
 }

@@ -542,4 +542,17 @@ class GetxPaymentPresenter extends GetxController
   int? _couponNumber;
   @override
   int? get couponNumber => _couponNumber;
+
+  int? _cpfCnpj;
+  @override
+  int? get cpfCnpj => _cpfCnpj;
+
+  @override
+  void changeCpfCnpj(String? value) {
+    if (int.tryParse(value ?? "") != null) {
+      _cpfCnpj = value!.toInt();
+    } else {
+      _cpfCnpj = null;
+    }
+  }
 }

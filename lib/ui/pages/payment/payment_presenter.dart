@@ -18,6 +18,7 @@ abstract class PaymentPresenter implements Listenable {
   SelectedCustomerModel? get selectedCustomer;
   AuthorizationPendingModel? get authorizationPendingModel;
   int? get couponNumber;
+  int? get cpfCnpj;
 
   Future<void> callPayment({
     required double longAmountValue,
@@ -39,7 +40,7 @@ abstract class PaymentPresenter implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
-     required int? cpfCnpj,
+    required int? cpfCnpj,
   });
 
   void disposePaymentResultHandler();
@@ -70,4 +71,5 @@ abstract class PaymentPresenter implements Listenable {
   });
 
   void clearPayments();
+  void changeCpfCnpj(String? value);
 }

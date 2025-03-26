@@ -103,6 +103,7 @@ class GetxPaymentPresenter extends GetxController
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required int? cpfCnpj,
   }) async {
     updateScreen = true;
 
@@ -141,7 +142,7 @@ class GetxPaymentPresenter extends GetxController
               .toEntity(),
           finalizations: _successfulPayments,
           customer: null,
-          cpfCnpj: null,
+          cpfCnpj: null, //TODO receive as parameter
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
             printedProductsPresenter.printed,
@@ -165,15 +166,13 @@ class GetxPaymentPresenter extends GetxController
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
         covenantCode: _selectedCustomer?.covenantCode,
         customerCode: _selectedCustomer?.customer.Code,
-        cpfCnpj: null,
+        cpfCnpj: null, //TODO receive as parameter
         incrementType: serviceChargeValue == 0 ? null : 1,
         incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
         totalLiquid: printedProductsPresenter
             .getTotalLiquid(printedProductsPresenter.printed),
         finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-        products: _getProductsToInsertInConcentrator(
-          printedProductsPresenter: printedProductsPresenter,
-        ),
+        products: printedProductsPresenter.printed!.Products,
         xmlToGenerateFiscal: useSharing == false ? xmlReponse?.response : null,
       );
 
@@ -202,6 +201,7 @@ class GetxPaymentPresenter extends GetxController
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
+    required int? cpfCnpj,
   }) {
     if (homePresenter.isGeneratingVersionToGetNet) {
       _channel = MethodChannel(Channels.getnet.name);
@@ -219,6 +219,7 @@ class GetxPaymentPresenter extends GetxController
           call,
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
+          cpfCnpj,
         );
       } else {
         await _treatGetNetResponse(
@@ -227,6 +228,7 @@ class GetxPaymentPresenter extends GetxController
           call,
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
+          cpfCnpj,
         );
       }
     });
@@ -238,6 +240,7 @@ class GetxPaymentPresenter extends GetxController
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
     void Function(String error) showErrorMessageReturnedByBs,
+    int? cpfCnpj,
   ) async {
     try {
       final response = GetNetResponseModel.fromJson(call.arguments);
@@ -247,6 +250,7 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+          cpfCnpj: cpfCnpj,
         );
       } else if (response.result == "1") {
         mainError = UIError.paymentDeclined;
@@ -272,6 +276,7 @@ class GetxPaymentPresenter extends GetxController
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
     void Function(String error) showErrorMessageReturnedByBs,
+    int? cpfCnpj,
   ) async {
     if (call.arguments == "Pagamento Autorizado") {
       try {
@@ -280,6 +285,7 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+          cpfCnpj: cpfCnpj,
         );
       } catch (e) {
         mainError = UIError.liquidadeCommandError;
@@ -471,23 +477,12 @@ class GetxPaymentPresenter extends GetxController
             AuthorizationType: 2,
           ),
         );
-
-        if (_couponNumber == null) {
-          _couponNumber = await couponFiscalNumber.loadLastNumber() + 1;
-        } else {
-          _couponNumber = _couponNumber! + 1;
-        }
-
-        if (_couponNumber == null) {
-          throw Exception();
-        }
       }
 
       if (authorizationSoapResponse?.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(authorizationSoapResponse!.response);
       } else {
-        bool useSharing =
-            loadUseUrlSatSharing.getUse(cpfCnpj); //remove this comment
+        bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
         SoapResponse? xmlReponse;
 
         if (useSharing == false) {
@@ -548,228 +543,6 @@ class GetxPaymentPresenter extends GetxController
     } finally {
       isLoading = false;
     }
-  }
-
-  List<PrintedProductsViewModel> _getProductsToInsertInConcentrator({
-    required PrintedProductsPresenter printedProductsPresenter,
-  }) {
-    List<PrintedProductsViewModel> products = [];
-
-    for (var i = 0;
-        i < printedProductsPresenter.printed!.Products.length;
-        i++) {
-      final product = printedProductsPresenter.printed!.Products[i];
-
-      if (product.ProductIsFatherComposition == "true" &&
-          product.childs.isNotEmpty) {
-        products.add(
-          PrintedProductsViewModel(
-            Product: ProductsViewModel(
-              SaleRetailPraticed: product.childs.fold("0", (previous, element) {
-                return (previous.toDouble() + element.Value!.toDouble())
-                    .toString();
-              }),
-              subgroupName: product.Product?.subgroupName,
-              MaximumQuantityForSale: product.Product?.MaximumQuantityForSale,
-              IsPromoCombox: product.Product?.IsPromoCombox,
-              ProductComplement: product.Product?.ProductComplement,
-              ProductsId: product.Product!.ProductsId,
-              PriceLookupCode: product.Product!.PriceLookupCode,
-              Name: product.Product!.Name,
-              PackingAbbreviation: product.Product?.PackingAbbreviation,
-              InternalCodeOnERP: product.Product?.InternalCodeOnERP,
-              InternalCodeOfProductOnERP:
-                  product.Product?.InternalCodeOfProductOnERP,
-              EenterpriseId: product.Product?.EenterpriseId,
-              PackingQuantity: product.Product?.PackingQuantity,
-              OfferRetailPrice: product.Product?.OfferRetailPrice,
-              WholeSalePrice: product.Product?.WholeSalePrice,
-              WholeOfferPrice: product.Product?.WholeOfferPrice,
-              OfferECommercePrice: product.Product?.OfferECommercePrice,
-              SaleECommercePrice: product.Product?.SaleECommercePrice,
-              LiquidCost: product.Product?.LiquidCost,
-              LiquidCostMiddle: product.Product?.LiquidCostMiddle,
-              LiquidCostReal: product.Product?.LiquidCostReal,
-              RepositionCost: product.Product?.RepositionCost,
-              RepositionCostMiddle: product.Product?.RepositionCostMiddle,
-              RepositionCostReal: product.Product?.RepositionCostReal,
-              IcmsAliquot: product.Product?.IcmsAliquot,
-              IcmsIVAMargin: product.Product?.IcmsIVAMargin,
-              IcmsReductionMargin: product.Product?.IcmsReductionMargin,
-              IcmsStave: product.Product?.IcmsStave,
-              PercImpNBPTState: product.Product?.PercImpNBPTState,
-              PercImpNBPTMunicipal: product.Product?.PercImpNBPTMunicipal,
-              CofinsType: product.Product?.CofinsType,
-              PisType: product.Product?.PisType,
-              ProductIsFatherComposition:
-                  product.Product?.ProductIsFatherComposition,
-              QuantityMinimumWholeSale:
-                  product.Product?.QuantityMinimumWholeSale,
-              QuantityMinimumWholeSaleByClass:
-                  product.Product?.QuantityMinimumWholeSaleByClass,
-              BalanceTare: product.Product?.BalanceTare,
-              FamilyCode: product.Product?.FamilyCode,
-              DepartmentCode: product.Product?.DepartmentCode,
-              SectionCode: product.Product?.SectionCode,
-              GroupCode: product.Product?.GroupCode,
-              SubGroupCode: product.Product?.SubGroupCode,
-              StockQuantity: product.Product?.StockQuantity,
-              AllowFractionate: product.Product?.AllowFractionate,
-              IsBalance: product.Product?.IsBalance,
-              CanBeWeightyInPdv: product.Product?.CanBeWeightyInPdv,
-              QuantityInBalance: product.Product?.QuantityInBalance,
-              AllowQuantityInPdv: product.Product?.AllowQuantityInPdv,
-              GoesForFastTable: product.Product?.GoesForFastTable,
-              IsAlcoholicProduct: product.Product?.IsAlcoholicProduct,
-              SaleRetailPrice: product.Product?.SaleRetailPrice,
-              PercImpNBPTNational: product.Product?.PercImpNBPTNational,
-              CofinsPercentage: product.Product?.CofinsPercentage,
-              PisPercentage: product.Product?.PisPercentage,
-              CFOP: product.Product?.CFOP,
-              FiscalClassificationNCM: product.Product?.FiscalClassificationNCM,
-              TributarySituationCode: product.Product?.TributarySituationCode,
-              CSTPisCofins: product.Product?.CSTPisCofins,
-              CodeClass: product.Product?.CodeClass,
-              DepartmentName: product.Product?.DepartmentName,
-              SectionName: product.Product?.SectionName,
-              DateOfLastChanged: product.Product?.DateOfLastChanged,
-              GroupName: product.Product?.GroupName,
-              SaleRetailPraticedString:
-                  product.Product?.SaleRetailPraticedString,
-              PersonalizedCode: product.Product?.PersonalizedCode,
-              EanCode: product.Product?.EanCode,
-              NameComplete: product.Product?.NameComplete,
-              NameReduced: product.Product?.NameReduced,
-              Schedule: product.Product?.Schedule,
-              childsComposition: product.Product?.childsComposition,
-              suggestions: product.Product?.suggestions,
-            ),
-            SaleRequestProductId: product.SaleRequestProductId,
-            ProductPriceLookUpCode: product.ProductPriceLookUpCode,
-            Value: product.Value,
-            Quantity: product.Quantity,
-            QuantityString: product.QuantityString,
-            UserId: product.UserId,
-            DateHourOfCreation: product.DateHourOfCreation,
-            IsCancelled: product.IsCancelled,
-            IsDelivered: product.IsDelivered,
-            IsPrinted: product.IsPrinted,
-            ProductionStatus: product.ProductionStatus,
-            TotalLiquid: product.TotalLiquid,
-            ProductInternalCodeOnErp: product.ProductInternalCodeOnErp,
-            SaleRequestId: product.SaleRequestId,
-            ProductIsFatherComposition: product.ProductIsFatherComposition,
-            SaleMovementProductCompositionId:
-                product.SaleMovementProductCompositionId,
-            UserIdOfCancellation: product.UserIdOfCancellation,
-            childs: product.childs,
-          ),
-        );
-        for (var x = 0; x < product.childs.length; x++) {
-          final child = product.childs[x];
-          products.add(PrintedProductsViewModel(
-            Product: ProductsViewModel(
-              SaleRetailPraticed: child.Value!,
-              subgroupName: child.Product?.subgroupName,
-              MaximumQuantityForSale: child.Product?.MaximumQuantityForSale,
-              IsPromoCombox: child.Product?.IsPromoCombox,
-              ProductComplement: child.Product?.ProductComplement,
-              ProductsId: child.Product!.ProductsId,
-              PriceLookupCode: child.Product!.PriceLookupCode,
-              Name: child.Product!.Name,
-              PackingAbbreviation: child.Product?.PackingAbbreviation,
-              InternalCodeOnERP: child.Product?.InternalCodeOnERP,
-              InternalCodeOfProductOnERP:
-                  child.Product?.InternalCodeOfProductOnERP,
-              EenterpriseId: child.Product?.EenterpriseId,
-              PackingQuantity: child.Product?.PackingQuantity,
-              OfferRetailPrice: child.Product?.OfferRetailPrice,
-              WholeSalePrice: child.Product?.WholeSalePrice,
-              WholeOfferPrice: child.Product?.WholeOfferPrice,
-              OfferECommercePrice: child.Product?.OfferECommercePrice,
-              SaleECommercePrice: child.Product?.SaleECommercePrice,
-              LiquidCost: child.Product?.LiquidCost,
-              LiquidCostMiddle: child.Product?.LiquidCostMiddle,
-              LiquidCostReal: child.Product?.LiquidCostReal,
-              RepositionCost: child.Product?.RepositionCost,
-              RepositionCostMiddle: child.Product?.RepositionCostMiddle,
-              RepositionCostReal: child.Product?.RepositionCostReal,
-              IcmsAliquot: child.Product?.IcmsAliquot,
-              IcmsIVAMargin: child.Product?.IcmsIVAMargin,
-              IcmsReductionMargin: child.Product?.IcmsReductionMargin,
-              IcmsStave: child.Product?.IcmsStave,
-              PercImpNBPTState: child.Product?.PercImpNBPTState,
-              PercImpNBPTMunicipal: child.Product?.PercImpNBPTMunicipal,
-              CofinsType: child.Product?.CofinsType,
-              PisType: child.Product?.PisType,
-              ProductIsFatherComposition:
-                  child.Product?.ProductIsFatherComposition,
-              QuantityMinimumWholeSale: child.Product?.QuantityMinimumWholeSale,
-              QuantityMinimumWholeSaleByClass:
-                  child.Product?.QuantityMinimumWholeSaleByClass,
-              BalanceTare: child.Product?.BalanceTare,
-              FamilyCode: child.Product?.FamilyCode,
-              DepartmentCode: child.Product?.DepartmentCode,
-              SectionCode: child.Product?.SectionCode,
-              GroupCode: child.Product?.GroupCode,
-              SubGroupCode: child.Product?.SubGroupCode,
-              StockQuantity: child.Product?.StockQuantity,
-              AllowFractionate: child.Product?.AllowFractionate,
-              IsBalance: child.Product?.IsBalance,
-              CanBeWeightyInPdv: child.Product?.CanBeWeightyInPdv,
-              QuantityInBalance: child.Product?.QuantityInBalance,
-              AllowQuantityInPdv: child.Product?.AllowQuantityInPdv,
-              GoesForFastTable: child.Product?.GoesForFastTable,
-              IsAlcoholicProduct: child.Product?.IsAlcoholicProduct,
-              SaleRetailPrice: child.Product?.SaleRetailPrice,
-              PercImpNBPTNational: child.Product?.PercImpNBPTNational,
-              CofinsPercentage: child.Product?.CofinsPercentage,
-              PisPercentage: child.Product?.PisPercentage,
-              CFOP: child.Product?.CFOP,
-              FiscalClassificationNCM: child.Product?.FiscalClassificationNCM,
-              TributarySituationCode: child.Product?.TributarySituationCode,
-              CSTPisCofins: child.Product?.CSTPisCofins,
-              CodeClass: child.Product?.CodeClass,
-              DepartmentName: child.Product?.DepartmentName,
-              SectionName: child.Product?.SectionName,
-              DateOfLastChanged: child.Product?.DateOfLastChanged,
-              GroupName: child.Product?.GroupName,
-              SaleRetailPraticedString: child.Product?.SaleRetailPraticedString,
-              PersonalizedCode: child.Product?.PersonalizedCode,
-              EanCode: child.Product?.EanCode,
-              NameComplete: child.Product?.NameComplete,
-              NameReduced: child.Product?.NameReduced,
-              Schedule: child.Product?.Schedule,
-              childsComposition: child.Product?.childsComposition,
-              suggestions: child.Product?.suggestions,
-            ),
-            SaleRequestProductId: child.SaleRequestProductId,
-            ProductPriceLookUpCode: child.ProductPriceLookUpCode,
-            Value: child.Value,
-            Quantity: child.Quantity,
-            QuantityString: child.QuantityString,
-            UserId: child.UserId,
-            DateHourOfCreation: child.DateHourOfCreation,
-            IsCancelled: child.IsCancelled,
-            IsDelivered: child.IsDelivered,
-            IsPrinted: child.IsPrinted,
-            ProductionStatus: child.ProductionStatus,
-            TotalLiquid: child.TotalLiquid,
-            ProductInternalCodeOnErp: child.ProductInternalCodeOnErp,
-            SaleRequestId: child.SaleRequestId,
-            ProductIsFatherComposition: child.ProductIsFatherComposition,
-            SaleMovementProductCompositionId:
-                child.SaleMovementProductCompositionId,
-            UserIdOfCancellation: child.UserIdOfCancellation,
-            childs: child.childs,
-          ));
-        }
-      } else {
-        products.add(product);
-      }
-    }
-
-    return products;
   }
 
   @override

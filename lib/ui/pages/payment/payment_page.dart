@@ -50,6 +50,7 @@ class _PaymentPageState extends State<PaymentPage>
         HomePresenter homePresenter = Provider.of(context, listen: false);
 
         paymentPresenter?.initPaymentResultHandler(
+          cpfCnpj: null,
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
           showErrorMessageReturnedByBs: (error) {

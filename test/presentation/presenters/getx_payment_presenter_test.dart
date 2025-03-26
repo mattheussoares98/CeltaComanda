@@ -458,6 +458,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -473,6 +474,7 @@ void main() {
       printedProductsPresenter.mockGetTotalLiquid(0);
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -492,6 +494,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -526,6 +529,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -541,6 +545,7 @@ void main() {
       printedProductsPresenter.totalLiquidController = 1;
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -556,6 +561,7 @@ void main() {
     });
     test("Should clear succesful payments", () async {
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -566,6 +572,7 @@ void main() {
     });
     test("Should clear last requested paymento amount", () async {
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -586,6 +593,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -605,6 +613,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -641,6 +650,7 @@ void main() {
       loadUseUrlSatSharing.mockUse(true);
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -675,6 +685,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -694,6 +705,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -715,6 +727,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -731,6 +744,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -750,6 +764,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -775,6 +790,7 @@ void main() {
       ));
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -797,6 +813,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -830,6 +847,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -849,6 +867,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -1811,6 +1830,7 @@ void main() {
       );
 
       await sut.liquidateCommand(
+        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,

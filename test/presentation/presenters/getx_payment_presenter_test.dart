@@ -600,7 +600,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => loadUseUrlSatSharing.getUse(null)).called(1);
+      verify(() => loadUseUrlSatSharing.getUse(cpfCnpj)).called(1);
     });
     test("Should generate xml for nfce if is not using sharing sat", () async {
       sut.successfulPayments.add(
@@ -629,8 +629,8 @@ void main() {
       verify(() => generateXmlForNfce.generate(
             printed: printed,
             finalizations: sut.successfulPayments,
-            customer: null,
-            cpfCnpj: null,
+            customer: sut.selectedCustomer?.customer.toEntity(),
+            cpfCnpj: cpfCnpj,
             pdvNumber:
                 homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
             incrementValue: incrementValue,

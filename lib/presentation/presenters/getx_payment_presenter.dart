@@ -122,7 +122,7 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      bool useSharing = loadUseUrlSatSharing.getUse(null);
+      bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
       SoapResponse? xmlReponse;
 
       if (_couponNumber == null) {
@@ -141,8 +141,8 @@ class GetxPaymentPresenter extends GetxController
           printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
               .toEntity(),
           finalizations: _successfulPayments,
-          customer: null,
-          cpfCnpj: null, //TODO receive as parameter
+          customer: _selectedCustomer?.customer.toEntity(),
+          cpfCnpj: cpfCnpj,
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
             printedProductsPresenter.printed,
@@ -166,7 +166,7 @@ class GetxPaymentPresenter extends GetxController
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
         covenantCode: _selectedCustomer?.covenantCode,
         customerCode: _selectedCustomer?.customer.Code,
-        cpfCnpj: null, //TODO receive as parameter
+        cpfCnpj: cpfCnpj?.toString(),
         incrementType: serviceChargeValue == 0 ? null : 1,
         incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
         totalLiquid: printedProductsPresenter
@@ -177,11 +177,10 @@ class GetxPaymentPresenter extends GetxController
       );
 
       await couponFiscalNumber.save(_couponNumber!);
-
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
-      _lastRequestedPaymentFinalization = null;
-
+      _lastRequestedPaymentFinalization = null; //TODO test
+      _authorizationPendingModel = null; //TODO test
       await deleteSaleRequest
           .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(
@@ -482,61 +481,13 @@ class GetxPaymentPresenter extends GetxController
       if (authorizationSoapResponse?.responseType == SoapResponseType.error) {
         showErrorMessageReturnedByBs(authorizationSoapResponse!.response);
       } else {
-        bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
-        SoapResponse? xmlReponse;
-
-        if (useSharing == false) {
-          final xml = await generateXmlForNfce.generate(
-            couponFiscalNumber: _couponNumber!,
-            printed:
-                PrintedModel.fromViewModel(printedProductsPresenter.printed!)
-                    .toEntity(),
-            finalizations: _successfulPayments,
-            customer: _selectedCustomer?.customer.toEntity(),
-            cpfCnpj: cpfCnpj,
-            pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
-            incrementValue: printedProductsPresenter.getServiceChargeValue(
-              printedProductsPresenter.printed,
-            ),
-          );
-
-          xmlReponse = await sendSaleMovementAsNfce.send(xml);
-
-          if (xmlReponse.responseType == SoapResponseType.error) {
-            showErrorMessageReturnedByBs(xmlReponse.response);
-            return;
-          }
-        }
-
-        final double serviceChargeValue = printedProductsPresenter
-            .getServiceChargeValue(printedProductsPresenter.printed);
-
-        await concInsertSaleMovement.insert(
-          couponFiscalNumber: _couponNumber!,
-          pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
-          pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
-          covenantCode: _selectedCustomer?.covenantCode,
-          customerCode: _selectedCustomer?.customer.Code,
-          cpfCnpj: cpfCnpj?.toString(),
-          incrementType: serviceChargeValue == 0 ? null : 1,
-          incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
-          totalLiquid: printedProductsPresenter
-              .getTotalLiquid(printedProductsPresenter.printed),
-          finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-          products: printedProductsPresenter.printed!.Products,
-          xmlToGenerateFiscal:
-              useSharing == false ? xmlReponse?.response : null,
+        await liquidateCommand(
+          homePresenter: homePresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+          cpfCnpj: cpfCnpj,
         );
-
-        await couponFiscalNumber.save(_couponNumber!);
-
-        _authorizationPendingModel = null;
-        _successfulPayments.clear();
-        showSuccessAndCloseUntilHomePage();
-        await deleteSaleRequest
-            .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
-        await printedProductsPresenter
-            .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       }
     } catch (e) {
       mainError = UIError.unexpected;

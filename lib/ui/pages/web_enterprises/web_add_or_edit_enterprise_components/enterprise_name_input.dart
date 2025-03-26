@@ -29,7 +29,7 @@ class EnterpriseNameInput extends StatelessWidget {
             controller: enterpriseNameController,
             keyboardType: TextInputType.text,
             inputFormatters: [
-              LengthLimitingTextInputFormatter(20),
+              LengthLimitingTextInputFormatter(50),
             ],
             onFieldSubmitted: (_) {
               navsFocusNode.requestFocus();

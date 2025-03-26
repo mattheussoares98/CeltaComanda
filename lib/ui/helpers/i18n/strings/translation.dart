@@ -180,6 +180,7 @@ abstract class Translation {
   String get financialCredits;
   String get friday;
   String get getCustomer;
+  String get id;
   String get insertInCart;
   String get insert;
   String get internalcodeNameOrCpf;
@@ -187,6 +188,7 @@ abstract class Translation {
   String get ifWantSelectProducts;
   String get jump;
   String get lastDateUpdated;
+  String get lastUpdate;
   String get latestCompatibleVersion;
   String get liberateCancelProducts;
   String get liberateCommand;
@@ -304,6 +306,7 @@ abstract class Translation {
   String get userCode;
   String get user;
   String get validateEnterprise;
+  String get version;
   String get voucher;
   String get wait;
   String get waitDaysPreloadImage;

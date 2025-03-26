@@ -13,6 +13,7 @@ class WebDevicesInfoPage extends StatefulWidget {
 }
 
 class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
+  bool isAscending = false;
   @override
   void initState() {
     super.initState();
@@ -25,59 +26,55 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
     });
   }
 
-  void sortDownCommand(List<DeviceInfoViewModel>? data) {
+  void sortCommand(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!.sort((a, b) => a.commandNumber.compareTo(b.commandNumber));
+      if (isAscending) {
+        data!.sort((a, b) => a.commandNumber.compareTo(b.commandNumber));
+      } else {
+        data!.sort((a, b) => b.commandNumber.compareTo(a.commandNumber));
+      }
+      isAscending = !isAscending;
     });
   }
 
-  void sortUpCommand(List<DeviceInfoViewModel>? data) {
+  void sortAppVersion(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!.sort((a, b) => b.commandNumber.compareTo(a.commandNumber));
+      if (isAscending) {
+        data!.sort(
+            (a, b) => a.applicationVersion.compareTo(b.applicationVersion));
+      } else {
+        data!.sort(
+            (a, b) => b.applicationVersion.compareTo(a.applicationVersion));
+      }
+      isAscending = !isAscending;
     });
   }
 
-  void sortDownApplicationVersion(List<DeviceInfoViewModel>? data) {
+  void sortVersionDate(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!
-          .sort((a, b) => a.applicationVersion.compareTo(b.applicationVersion));
+      if (isAscending) {
+        data!.sort((a, b) => a.lastUpdatedDate.compareTo(b.lastUpdatedDate));
+      } else {
+        data!.sort((a, b) => b.lastUpdatedDate.compareTo(a.lastUpdatedDate));
+      }
+      isAscending = !isAscending;
     });
   }
 
-  void sortUpApplicationVersion(List<DeviceInfoViewModel>? data) {
+  void sortPdvNumber(List<DeviceInfoViewModel>? data) {
     setState(() {
-      data!
-          .sort((a, b) => b.applicationVersion.compareTo(a.applicationVersion));
-    });
-  }
-
-  void sortDownVersionDate(List<DeviceInfoViewModel>? data) {
-    setState(() {
-      data!.sort((a, b) => a.lastUpdatedDate.compareTo(b.lastUpdatedDate));
-    });
-  }
-
-  void sortUpVersionDate(List<DeviceInfoViewModel>? data) {
-    setState(() {
-      data!.sort((a, b) => b.lastUpdatedDate.compareTo(a.lastUpdatedDate));
-    });
-  }
-
-  void sortDownPdvNumber(List<DeviceInfoViewModel>? data) {
-    setState(() {
-      data!.sort((a, b) => a.pdvNumber
-          .toString()
-          .toInt()
-          .compareTo(b.pdvNumber.toString().toInt()));
-    });
-  }
-
-  void sortUpPdvNumber(List<DeviceInfoViewModel>? data) {
-    setState(() {
-      data!.sort((a, b) => b.pdvNumber
-          .toString()
-          .toInt()
-          .compareTo(a.pdvNumber.toString().toInt()));
+      if (isAscending) {
+        data!.sort((a, b) => a.pdvNumber
+            .toString()
+            .toInt()
+            .compareTo(b.pdvNumber.toString().toInt()));
+      } else {
+        data!.sort((a, b) => b.pdvNumber
+            .toString()
+            .toInt()
+            .compareTo(a.pdvNumber.toString().toInt()));
+      }
+      isAscending = !isAscending;
     });
   }
 
@@ -98,67 +95,69 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
           ),
         ],
       ),
-      body: StreamBuilder<List<DeviceInfoViewModel>?>(
-        stream: webEnterprisesPresenter.devicesStream,
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: TextButton.icon(
-                      onPressed: () async {
-                        await webEnterprisesPresenter.getDevicesInfo();
-                      },
-                      label: Text(
-                        R.string.reload,
-                        style: TextStyle(fontSize: StringSize.size),
+      body: SingleChildScrollView(
+        child: StreamBuilder<List<DeviceInfoViewModel>?>(
+          stream: webEnterprisesPresenter.devicesStream,
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: TextButton.icon(
+                        onPressed: () async {
+                          await webEnterprisesPresenter.getDevicesInfo();
+                        },
+                        label: Text(
+                          R.string.reload,
+                          style: TextStyle(fontSize: StringSize.size),
+                        ),
+                        icon: Icon(Icons.refresh, size: 25),
+                        iconAlignment: IconAlignment.end,
                       ),
-                      icon: Icon(Icons.refresh, size: 25),
-                      iconAlignment: IconAlignment.end,
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
+                  ],
+                ),
+              );
+            }
 
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
+            return Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  ListView.builder(
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length + 1,
+                    physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return Row(
                           children: [
-                            OrganizeUpOrDown(
+                            TitleItem(
                               data: snapshot.data!,
-                              sortDown: sortDownCommand,
-                              sortUp: sortUpCommand,
+                              sort: sortCommand,
                               title: R.string.command,
                             ),
-                            OrganizeUpOrDown(
-                              sortDown: sortDownApplicationVersion,
-                              sortUp: sortUpApplicationVersion,
-                              title: R.string.applicationVersion,
+                            TitleItem(
+                              data: snapshot.data!,
+                              sort: sortCommand,
+                              title: R.string.id,
+                            ),
+                            TitleItem(
+                              sort: sortAppVersion,
+                              title: R.string.version,
                               data: snapshot.data!,
                             ),
-                            OrganizeUpOrDown(
-                              sortDown: sortDownPdvNumber,
-                              sortUp: sortUpPdvNumber,
+                            TitleItem(
+                              sort: sortPdvNumber,
                               title: R.string.pdv,
                               data: snapshot.data!,
                             ),
-                            OrganizeUpOrDown(
-                              sortDown: sortDownVersionDate,
-                              sortUp: sortUpVersionDate,
-                              title: R.string.lastDateUpdated,
+                            TitleItem(
+                              sort: sortVersionDate,
+                              title: R.string.lastUpdate,
                               data: snapshot.data!,
                             ),
                           ],
@@ -183,6 +182,10 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                               child: Center(child: Text(device.commandNumber)),
                             ),
                             Expanded(
+                              child:
+                                  Center(child: Text(device.imeiOrWindowsId)),
+                            ),
+                            Expanded(
                               child: Center(
                                   child: Text(device.applicationVersion)),
                             ),
@@ -199,11 +202,11 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                       );
                     },
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

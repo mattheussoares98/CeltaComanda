@@ -220,6 +220,7 @@ class PtBr implements Translation {
   String get financialCredits => 'Créditos financeiros';
   String get friday => 'Sexta';
   String get getCustomer => 'Pesquisar cliente';
+  String get id => 'ID';
   String get insertInCart => 'Inserir no carrinho';
   String get insert => 'Inserir';
   String get internalcodeNameOrCpf => "Código interno, nome ou CPF";
@@ -227,6 +228,7 @@ class PtBr implements Translation {
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
   String get lastDateUpdated => 'Último dia atualizado';
+  String get lastUpdate => 'Última atualização';
   String get latestCompatibleVersion => 'Última versão compatível';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';
   String get liberateCommand => 'Liberar comanda';
@@ -354,6 +356,7 @@ class PtBr implements Translation {
   String get user => 'Usuário';
   String get url => 'Empresa ou url';
   String get validateEnterprise => 'Validar empresa';
+  String get version => 'Versão';
   String get voucher => 'Voucher';
   String get wait => 'Aguarde...';
   String get waitDaysPreloadImage => 'Dias para pré-carregar imagens';

@@ -224,12 +224,14 @@ class EnUs implements Translation {
   String get financialCredits => 'Finalcial credits';
   String get friday => 'Friday';
   String get getCustomer => 'Get customer';
+  String get id => 'ID';
   String get insertInCart => 'Add to cart';
   String get insert => 'Insert';
   String get ifWantSelectComments => 'If desired, select comments';
   String get ifWantSelectProducts => 'If desired, select a product';
   String get jump => 'Skip';
   String get lastDateUpdated => 'Last date updated';
+  String get lastUpdate => 'Last update';
   String get latestCompatibleVersion => 'Latest compatible version';
   String get liberateCancelProducts => 'Allow item cancellation';
   String get liberateCommand => 'Liberate command';
@@ -352,6 +354,7 @@ class EnUs implements Translation {
   String get user => 'User';
   String get url => 'Enterprise or URL';
   String get validateEnterprise => 'Validate enterprise';
+  String get version => 'Version';
   String get voucher => 'Voucher';
   String get wait => 'Please wait...';
   String get waitDaysPreloadImage => 'Wait days to preload image';

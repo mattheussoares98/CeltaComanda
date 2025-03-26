@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -22,6 +23,18 @@ class _CovenantsState extends State<Covenants> {
   final cpfCnpjKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final cpfCnpjController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
+        cpfCnpjController.text = paymentPresenter.cpfCnpj.toString();
+      }
+    });
+  }
 
   @override
   dispose() {

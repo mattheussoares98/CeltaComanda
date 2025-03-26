@@ -33,7 +33,6 @@ class LiquidateCommand extends StatelessWidget {
         ElevatedButton(
           onPressed: () async {
             await paymentPresenter.liquidateCommand(
-                cpfCnpj: null, //TODO receive the cofCnpj here
                 printedProductsPresenter: printedProductsPresenter,
                 homePresenter: homePresenter,
                 showErrorMessageReturnedByBs: (error) {

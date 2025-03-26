@@ -1,6 +1,3 @@
-import 'package:cpf_cnpj_validator/cnpj_validator.dart';
-import 'package:cpf_cnpj_validator/cpf_validator.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'dart:async';
@@ -57,7 +54,6 @@ class _PaymentPageState extends State<PaymentPage>
         HomePresenter homePresenter = Provider.of(context, listen: false);
 
         paymentPresenter?.initPaymentResultHandler(
-          cpfCnpj: null,
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
           showErrorMessageReturnedByBs: (error) {

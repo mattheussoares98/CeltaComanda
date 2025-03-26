@@ -32,7 +32,6 @@ abstract class PaymentPresenter implements Listenable {
     required HomePresenter homePresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
-    required int? cpfCnpj,
   });
 
   void initPaymentResultHandler({
@@ -40,7 +39,6 @@ abstract class PaymentPresenter implements Listenable {
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
-    required int? cpfCnpj,
   });
 
   void disposePaymentResultHandler();
@@ -67,7 +65,6 @@ abstract class PaymentPresenter implements Listenable {
     required void Function(String error) showErrorMessageReturnedByBs,
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
-    required int? cpfCnpj,
   });
 
   void clearPayments();

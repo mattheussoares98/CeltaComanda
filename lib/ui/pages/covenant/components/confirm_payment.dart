@@ -35,9 +35,6 @@ class ConfirmPayment extends StatelessWidget {
       customerPassword: passwordController.text,
       homePresenter: homePresenter,
       printedProductsPresenter: printedProductsPresenter,
-      cpfCnpj: cpfCnpjController.text.isEmpty
-          ? null
-          : cpfCnpjController.text.toInt(),
       showErrorMessageReturnedByBs: (error) {
         snackBarMessage(
           context,
@@ -79,6 +76,7 @@ class ConfirmPayment extends StatelessWidget {
             autofocus: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             obscureText: true,
+            onChanged: paymentPresenter.changeCpfCnpj,
             decoration: formFieldDecoration(
               context: context,
               hintText: R.string.password,

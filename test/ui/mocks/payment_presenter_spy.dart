@@ -35,7 +35,6 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
               any(named: "showSuccessAndCloseUntilHomePage"),
           showErrorMessageReturnedByBs:
               any(named: "showErrorMessageReturnedByBs"),
-          cpfCnpj: any(named: "cpfCnpj"),
         ),
       ).thenAnswer((any) async => any);
 

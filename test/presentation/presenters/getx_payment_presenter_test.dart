@@ -58,7 +58,6 @@ void main() {
   late double totalLiquidMocked;
   late int lastCouponNumber;
   late String xmlGeneratedLocally;
-  late int? cpfCnpj;
 
   late List<CustomerEntity> customersEntitys;
   late List<CustomerViewModel> customersViewModel;
@@ -132,7 +131,6 @@ void main() {
     );
     lastCouponNumber = faker.randomGenerator.integer(100);
     xmlGeneratedLocally = faker.randomGenerator.string(10);
-    cpfCnpj = faker.randomGenerator.integer(14);
   }
 
   mockSuccess() {
@@ -458,7 +456,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -474,7 +471,6 @@ void main() {
       printedProductsPresenter.mockGetTotalLiquid(0);
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -494,7 +490,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -506,7 +501,7 @@ void main() {
             pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
             covenantCode: null,
             customerCode: null,
-            cpfCnpj: null,
+            cpfCnpj: sut.cpfCnpj?.toString(),
             incrementType: 1,
             incrementValue: totalLiquidMocked,
             totalLiquid: totalLiquidMocked,
@@ -529,7 +524,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -545,7 +539,6 @@ void main() {
       printedProductsPresenter.totalLiquidController = 1;
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -561,7 +554,6 @@ void main() {
     });
     test("Should clear succesful payments", () async {
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -572,7 +564,6 @@ void main() {
     });
     test("Should clear last requested paymento amount", () async {
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -593,14 +584,13 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      verify(() => loadUseUrlSatSharing.getUse(cpfCnpj)).called(1);
+      verify(() => loadUseUrlSatSharing.getUse(sut.cpfCnpj)).called(1);
     });
     test("Should generate xml for nfce if is not using sharing sat", () async {
       sut.successfulPayments.add(
@@ -613,7 +603,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -630,7 +619,7 @@ void main() {
             printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
-            cpfCnpj: cpfCnpj,
+            cpfCnpj: sut.cpfCnpj,
             pdvNumber:
                 homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
             incrementValue: incrementValue,
@@ -650,7 +639,6 @@ void main() {
       loadUseUrlSatSharing.mockUse(true);
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -685,7 +673,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -705,7 +692,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -727,7 +713,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -744,7 +729,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -764,7 +748,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -790,7 +773,6 @@ void main() {
       ));
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -813,7 +795,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -847,7 +828,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -867,7 +847,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
@@ -1164,7 +1143,6 @@ void main() {
       expectLater(sut.mainErrorStream, emits(null));
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1182,7 +1160,6 @@ void main() {
       finishSaleRequestConcentrador.mockError();
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1200,7 +1177,6 @@ void main() {
       concInsertSaleMovement.mockInsertError();
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1225,7 +1201,6 @@ void main() {
       await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1256,7 +1231,6 @@ void main() {
       ));
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1285,7 +1259,6 @@ void main() {
       concInsertSaleMovement.mockInsertError();
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1307,7 +1280,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1329,7 +1301,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1356,7 +1327,6 @@ void main() {
       checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1384,7 +1354,6 @@ void main() {
       concInsertSaleMovement.mockInsertError();
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1408,7 +1377,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1427,7 +1395,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1445,7 +1412,7 @@ void main() {
             pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
             covenantCode: covenantCode.toInt(),
             customerCode: customersViewModel[0].Code!.toInt(),
-            cpfCnpj: cpfCnpj.toString(),
+            cpfCnpj: sut.cpfCnpj?.toString(),
             incrementType: 1,
             incrementValue: incrementValue,
             totalLiquid: totalLiquid,
@@ -1467,7 +1434,6 @@ void main() {
       concInsertSaleMovement.mockInsertError();
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1486,7 +1452,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1505,7 +1470,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1522,7 +1486,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1539,7 +1502,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1558,7 +1520,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1572,7 +1533,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1590,7 +1550,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1598,7 +1557,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      verify(() => loadUseUrlSatSharing.getUse(cpfCnpj)).called(1);
+      verify(() => loadUseUrlSatSharing.getUse(sut.cpfCnpj)).called(1);
     });
 
     test("Should generate xml if isnt using sat sharing", () async {
@@ -1608,7 +1567,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1626,7 +1584,7 @@ void main() {
             printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
-            cpfCnpj: cpfCnpj,
+            cpfCnpj: sut.cpfCnpj,
             pdvNumber:
                 homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
             incrementValue: incrementValue,
@@ -1641,10 +1599,8 @@ void main() {
       );
 
       loadUseUrlSatSharing.mockUse(true);
-      cpfCnpj = null;
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1662,7 +1618,7 @@ void main() {
             printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
-            cpfCnpj: cpfCnpj,
+            cpfCnpj: sut.cpfCnpj,
             pdvNumber:
                 homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
             incrementValue: incrementValue,
@@ -1677,7 +1633,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1701,7 +1656,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1720,7 +1674,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1740,7 +1693,6 @@ void main() {
       );
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: cpfCnpj,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1758,7 +1710,7 @@ void main() {
             printed: printed,
             finalizations: sut.successfulPayments,
             customer: sut.selectedCustomer?.customer.toEntity(),
-            cpfCnpj: cpfCnpj,
+            cpfCnpj: sut.cpfCnpj,
             pdvNumber:
                 homePresenter.commandEntityController?.pdv?.PdvNumber?.toInt(),
             incrementValue: incrementValue,
@@ -1773,7 +1725,6 @@ void main() {
 
       couponFiscalNumber.mockSaveError();
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1784,7 +1735,6 @@ void main() {
       expect(sut.authorizationPendingModel, isNotNull);
 
       await sut.finishSaleRequestByCovenant(
-        cpfCnpj: null,
         showSuccessAndCloseUntilHomePage: () {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1830,7 +1780,6 @@ void main() {
       );
 
       await sut.liquidateCommand(
-        cpfCnpj: cpfCnpj,
         showErrorMessageReturnedByBs: (error) {},
         homePresenter: homePresenter,
         printedProductsPresenter: printedProductsPresenter,
@@ -1853,7 +1802,7 @@ void main() {
 
       sut.changeCpfCnpj("");
       expect(sut.cpfCnpj, null);
-      
+
       sut.changeCpfCnpj("1.");
       expect(sut.cpfCnpj, null);
     });

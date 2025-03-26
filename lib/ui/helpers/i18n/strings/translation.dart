@@ -148,6 +148,7 @@ abstract class Translation {
   String get covenant;
   String get covenants;
   String get cpfCnpj;
+  String get cpfCnpjInFiscalNote;
   String get credit;
   String get customer;
   String get dateNotUpdated;

@@ -103,7 +103,6 @@ class GetxPaymentPresenter extends GetxController
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
-    required int? cpfCnpj,
   }) async {
     updateScreen = true;
 
@@ -122,7 +121,7 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      bool useSharing = loadUseUrlSatSharing.getUse(cpfCnpj);
+      bool useSharing = loadUseUrlSatSharing.getUse(_cpfCnpj);
       SoapResponse? xmlReponse;
 
       if (_couponNumber == null) {
@@ -142,7 +141,7 @@ class GetxPaymentPresenter extends GetxController
               .toEntity(),
           finalizations: _successfulPayments,
           customer: _selectedCustomer?.customer.toEntity(),
-          cpfCnpj: cpfCnpj,
+          cpfCnpj: _cpfCnpj,
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
             printedProductsPresenter.printed,
@@ -166,7 +165,7 @@ class GetxPaymentPresenter extends GetxController
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
         covenantCode: _selectedCustomer?.covenantCode,
         customerCode: _selectedCustomer?.customer.Code,
-        cpfCnpj: cpfCnpj?.toString(),
+        cpfCnpj: _cpfCnpj?.toString(),
         incrementType: serviceChargeValue == 0 ? null : 1,
         incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
         totalLiquid: printedProductsPresenter
@@ -200,7 +199,6 @@ class GetxPaymentPresenter extends GetxController
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
-    required int? cpfCnpj,
   }) {
     if (homePresenter.isGeneratingVersionToGetNet) {
       _channel = MethodChannel(Channels.getnet.name);
@@ -218,7 +216,6 @@ class GetxPaymentPresenter extends GetxController
           call,
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
-          cpfCnpj,
         );
       } else {
         await _treatGetNetResponse(
@@ -227,7 +224,6 @@ class GetxPaymentPresenter extends GetxController
           call,
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
-          cpfCnpj,
         );
       }
     });
@@ -239,7 +235,6 @@ class GetxPaymentPresenter extends GetxController
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
     void Function(String error) showErrorMessageReturnedByBs,
-    int? cpfCnpj,
   ) async {
     try {
       final response = GetNetResponseModel.fromJson(call.arguments);
@@ -249,7 +244,6 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
-          cpfCnpj: cpfCnpj,
         );
       } else if (response.result == "1") {
         mainError = UIError.paymentDeclined;
@@ -275,7 +269,6 @@ class GetxPaymentPresenter extends GetxController
     MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
     void Function(String error) showErrorMessageReturnedByBs,
-    int? cpfCnpj,
   ) async {
     if (call.arguments == "Pagamento Autorizado") {
       try {
@@ -284,7 +277,6 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
-          cpfCnpj: cpfCnpj,
         );
       } catch (e) {
         mainError = UIError.liquidadeCommandError;
@@ -432,7 +424,6 @@ class GetxPaymentPresenter extends GetxController
     required void Function(String error) showErrorMessageReturnedByBs,
     required void Function() showSuccessAndCloseUntilHomePage,
     required String? customerPassword,
-    required int? cpfCnpj,
   }) async {
     mainError = null;
     isLoading = true;
@@ -486,7 +477,6 @@ class GetxPaymentPresenter extends GetxController
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
-          cpfCnpj: cpfCnpj,
         );
       }
     } catch (e) {

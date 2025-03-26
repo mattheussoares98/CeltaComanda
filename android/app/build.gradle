@@ -58,7 +58,7 @@ android {
         multiDexEnabled true
         minSdkVersion 23
         targetSdk 35
-        versionCode 88
+        versionCode 89
         versionName flutterVersionName
         ndkVersion "27.1.12297006"
     }
@@ -94,9 +94,6 @@ android {
             shrinkResources false
             signingConfig signingConfigs.release
             // signingConfig signingConfigs.config //a GetNet disse pra deixar a configuração desse jeito
-        if (System.getenv("CI") == "true") {
-            signingConfig null // Disable signing when running in CI
-            }
         }
     }
 }

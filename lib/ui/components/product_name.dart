@@ -17,7 +17,8 @@ class ProductName extends StatelessWidget {
     ConfigurationsPresenter configurationsPresenter =
         Provider.of(context, listen: false);
     final canceledBy = configurationsPresenter.loadedUsers
-        ?.where((e) => e.UserId == product.UserIdOfCancellation);
+        ?.where((e) => e.UserId == product.UserIdOfCancellation)
+        .toList();
 
     return Row(
       children: [
@@ -31,7 +32,9 @@ class ProductName extends StatelessWidget {
             ),
           ),
         ),
-        if (product.IsCancelled == "true" && canceledBy != null)
+        if (product.IsCancelled == "true" &&
+            canceledBy != null &&
+            canceledBy.isNotEmpty)
           IconButton(
             onPressed: () {},
             icon: Icon(Icons.info, color: Colors.black),

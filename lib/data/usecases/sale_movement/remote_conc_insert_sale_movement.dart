@@ -156,7 +156,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
       IsCancelled: false,
       IsDelivery: false,
       IsForTravel: false,
-      IsToDelivery: 1,
+      IsToDelivery: 0,
       MotiveJustificationSaleDiscountId: null,
       MotiveJustificationSaleDiscountName: null,
       UserIdOfCancellation: null,
@@ -215,6 +215,7 @@ List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
 
       saleMovementProducts.add(
         SaleMovementProductConcentratorEntity(
+          IsToDelivery: false,
           UnitValue: product1.Value?.toDouble(),
           SaleMovementProductCompositionId:
               product1.ProductIsFatherComposition == true
@@ -285,7 +286,6 @@ List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
           MotiveJustificationSaleDiscountId: null,
           MotiveJustificationSaleDiscountName: null,
           IsPrinted: false,
-          IsToDelivery: true,
           // SaleMovementProducOfFatherComposition: null,
         ),
       );
@@ -303,7 +303,7 @@ List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
               SaleRequestProductInternalCodeOnERP: null,
               UnitValue: child.Value?.toDouble(),
               Quantity: child.Quantity?.toDouble(),
-              IsToDelivery: true,
+              IsToDelivery: false,
               IsPrinted: false,
               Comments: child.Comments,
               UserIdOfCancellation: child.UserIdOfCancellation?.toInt(),

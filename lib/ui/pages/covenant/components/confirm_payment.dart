@@ -136,6 +136,7 @@ class ConfirmPayment extends StatelessWidget {
         content: Form(
           key: cpfCnpjKey,
           child: TextFormField(
+            onChanged: paymentPresenter.changeCpfCnpj,
             controller: cpfCnpjController,
             autofocus: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,

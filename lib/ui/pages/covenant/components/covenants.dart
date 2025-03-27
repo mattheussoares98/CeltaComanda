@@ -31,7 +31,9 @@ class _CovenantsState extends State<Covenants> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-        cpfCnpjController.text = paymentPresenter.cpfCnpj.toString();
+        if (paymentPresenter.cpfCnpj != null) {
+          cpfCnpjController.text = paymentPresenter.cpfCnpj.toString();
+        }
       }
     });
   }

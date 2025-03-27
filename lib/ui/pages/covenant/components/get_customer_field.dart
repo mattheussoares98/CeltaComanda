@@ -6,12 +6,12 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class GetCustomerField extends StatelessWidget {
-  final TextEditingController textController;
+  final TextEditingController searchCustomerController;
   final String? errorText;
   final bool searchByPersonalizedCode;
   final List<CustomerViewModel> customers;
   const GetCustomerField({
-    required this.textController,
+    required this.searchCustomerController,
     required this.errorText,
     required this.searchByPersonalizedCode,
     required this.customers,
@@ -29,7 +29,7 @@ class GetCustomerField extends StatelessWidget {
         content: Text(R.string.msgPendantAuthorizationNotification),
         onPress: () async {
           await paymentPresenter.getCustomerByNameCodeOrCpf(
-            value: textController.text,
+            value: searchCustomerController.text,
             searchByPersonalizedCode: searchByPersonalizedCode,
             showErrorMessageReturnedByBs: (value) {
               snackBarMessage(context, value, backgroundColor: Colors.red);
@@ -40,7 +40,7 @@ class GetCustomerField extends StatelessWidget {
     } else {
       await paymentPresenter.getCustomerByNameCodeOrCpf(
         searchByPersonalizedCode: searchByPersonalizedCode,
-        value: textController.text,
+        value: searchCustomerController.text,
         showErrorMessageReturnedByBs: (value) {
           snackBarMessage(context, value, backgroundColor: Colors.red);
         },
@@ -48,7 +48,7 @@ class GetCustomerField extends StatelessWidget {
     }
 
     if (customers.isNotEmpty) {
-      textController.clear();
+      searchCustomerController.clear();
     }
   }
 
@@ -78,12 +78,12 @@ class GetCustomerField extends StatelessWidget {
               ),
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: textController,
+            controller: searchCustomerController,
             onFieldSubmitted: (_) async {
               await getCustomer(paymentPresenter, context);
             },
             onChanged: (value) =>
-                paymentPresenter.validateCustomerField(textController.text),
+                paymentPresenter.validateCustomerField(searchCustomerController.text),
           ),
         ),
         TextButton(

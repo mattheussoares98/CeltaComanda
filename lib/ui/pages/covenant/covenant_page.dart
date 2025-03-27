@@ -19,7 +19,7 @@ class CovenantPage extends StatefulWidget {
 
 class _CovenantPageState extends State<CovenantPage>
     with LoadingManager, UIErrorManager {
-  final textController = TextEditingController();
+  final searchCustomerController = TextEditingController();
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   bool _searchByPersonalizedCode = false;
@@ -29,7 +29,7 @@ class _CovenantPageState extends State<CovenantPage>
   void dispose() async {
     super.dispose();
 
-    textController.dispose();
+    searchCustomerController.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     await paymentPresenter.updateSelectedCustomer(null, null);
@@ -85,7 +85,7 @@ class _CovenantPageState extends State<CovenantPage>
                             return Column(
                               children: [
                                 GetCustomerField(
-                                  textController: textController,
+                                  searchCustomerController: searchCustomerController,
                                   errorText:
                                       snapshotCustomerError.data?.description,
                                   searchByPersonalizedCode:

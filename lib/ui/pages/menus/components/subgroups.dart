@@ -29,7 +29,8 @@ class Subgroups extends StatelessWidget {
         menuPresenter.treatSchedules<ProductsViewModel>().length;
 
     Color getSubgroupColor(String subgroupName) {
-      if (firstIndexIsGreaterThanAtualProductsLength()) {
+      if (firstIndexIsGreaterThanAtualProductsLength() ||
+          firstVisibleProductIndex < 0) {
         return Theme.of(context).primaryColorLight;
       }
       final element = menuPresenter
@@ -67,7 +68,8 @@ class Subgroups extends StatelessWidget {
     Future<void> scrollSubgroup(List<String?> subgroups, int index) async {
       if (!productsScrollController.hasClients ||
           hasMinWidth(context) ||
-          firstIndexIsGreaterThanAtualProductsLength()) {
+          firstIndexIsGreaterThanAtualProductsLength() ||
+          firstVisibleProductIndex < 0) {
         return;
       }
 

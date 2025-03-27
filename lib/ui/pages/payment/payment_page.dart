@@ -73,8 +73,7 @@ class _PaymentPageState extends State<PaymentPage>
 
         paymentController.text = paymentPresenter!
             .getTotalPendingValue(printedProductsPresenter)
-            .toString()
-            .toBrazilianNumber();
+            .toString().replaceAll(RegExp(r'\.'), ',');
       }
     });
   }

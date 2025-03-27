@@ -76,7 +76,6 @@ class ConfirmPayment extends StatelessWidget {
             autofocus: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             obscureText: true,
-            onChanged: paymentPresenter.changeCpfCnpj,
             decoration: formFieldDecoration(
               context: context,
               hintText: R.string.password,
@@ -129,9 +128,7 @@ class ConfirmPayment extends StatelessWidget {
         cancelMessage: R.string.jump,
         confirmMessage: R.string.confirm,
         closeDialogOnConfirmPress: false,
-        onCancelPress: () async {
-          cpfCnpjController.clear();
-        },
+        onCancelPress: () async {},
         canPop: false,
         content: Form(
           key: cpfCnpjKey,

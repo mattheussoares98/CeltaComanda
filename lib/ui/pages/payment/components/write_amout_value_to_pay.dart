@@ -34,7 +34,7 @@ class _WriteAmoutValueToPayState extends State<WriteAmoutValueToPay> {
         widget.paymentController.text = paymentPresenter
             .getTotalPendingValue(printedProductsPresenter)
             .toStringAsFixed(2)
-            .toBrazilianNumber();
+            .replaceAll(RegExp(r'\.'), ',');
       }
     });
   }

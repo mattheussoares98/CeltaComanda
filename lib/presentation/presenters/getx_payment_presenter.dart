@@ -126,11 +126,7 @@ class GetxPaymentPresenter extends GetxController
       bool useSharing = loadUseUrlSatSharing.getUse(_cpfCnpj);
       SoapResponse? xmlReponse;
 
-      if (_couponNumber == null) {
-        _couponNumber = await couponFiscalNumber.loadLastNumber() + 1;
-      } else {
-        _couponNumber = _couponNumber! + 1;
-      }
+      _couponNumber = await couponFiscalNumber.loadLastNumber();
 
       if (_couponNumber == null) {
         throw Exception();
@@ -138,7 +134,7 @@ class GetxPaymentPresenter extends GetxController
 
       if (useSharing == false) {
         final xml = await generateXmlForNfce.generate(
-          couponFiscalNumber: _couponNumber!,
+          couponFiscalNumber: _couponNumber! + 1, //TODO test
           printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
               .toEntity(),
           finalizations: _successfulPayments,
@@ -162,7 +158,7 @@ class GetxPaymentPresenter extends GetxController
           .getServiceChargeValue(printedProductsPresenter.printed);
 
       await concInsertSaleMovement.insert(
-        couponFiscalNumber: _couponNumber!,
+        couponFiscalNumber: _couponNumber! + 1, //TODO test
         pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
         covenantCode: _selectedCustomer?.covenantCode,
@@ -177,11 +173,12 @@ class GetxPaymentPresenter extends GetxController
         xmlToGenerateFiscal: useSharing == false ? xmlReponse?.response : null,
       );
 
-      await couponFiscalNumber.save(_couponNumber!);
+      await couponFiscalNumber.save(_couponNumber! + 1);//TODO test
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
       _lastRequestedPaymentFinalization = null; //TODO test
       _authorizationPendingModel = null; //TODO test
+      _couponNumber = _couponNumber! + 1; //TODO test
       await deleteSaleRequest
           .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(

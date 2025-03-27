@@ -127,14 +127,12 @@ class GetxPaymentPresenter extends GetxController
       SoapResponse? xmlReponse;
 
       _couponNumber = await couponFiscalNumber.loadLastNumber();
-
-      if (_couponNumber == null) {
-        throw Exception();
-      }
+      final newCouponNumber =
+          _couponNumber! + 1; //change the _coupomNumber only after succeeds
 
       if (useSharing == false) {
         final xml = await generateXmlForNfce.generate(
-          couponFiscalNumber: _couponNumber! + 1, //TODO test
+          couponFiscalNumber: newCouponNumber,
           printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
               .toEntity(),
           finalizations: _successfulPayments,
@@ -158,7 +156,7 @@ class GetxPaymentPresenter extends GetxController
           .getServiceChargeValue(printedProductsPresenter.printed);
 
       await concInsertSaleMovement.insert(
-        couponFiscalNumber: _couponNumber! + 1, //TODO test
+        couponFiscalNumber: newCouponNumber,
         pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
         covenantCode: _selectedCustomer?.covenantCode,
@@ -173,12 +171,12 @@ class GetxPaymentPresenter extends GetxController
         xmlToGenerateFiscal: useSharing == false ? xmlReponse?.response : null,
       );
 
-      await couponFiscalNumber.save(_couponNumber! + 1);//TODO test
+      _couponNumber = newCouponNumber;
+      await couponFiscalNumber.save(newCouponNumber);
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
-      _lastRequestedPaymentFinalization = null; //TODO test
-      _authorizationPendingModel = null; //TODO test
-      _couponNumber = _couponNumber! + 1; //TODO test
+      _lastRequestedPaymentFinalization = null;
+      _authorizationPendingModel = null;
       await deleteSaleRequest
           .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(

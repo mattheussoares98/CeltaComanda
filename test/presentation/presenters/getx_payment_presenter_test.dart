@@ -739,7 +739,7 @@ void main() {
         printedProductsPresenter: printedProductsPresenter,
       );
 
-      expect(sut.couponNumber, lastCouponNumber + 2);
+      expect(sut.couponNumber, lastCouponNumber + 1);
     });
     test("Should call send sale movement as nfce", () async {
       sut.successfulPayments.add(
@@ -1544,7 +1544,7 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      expect(sut.couponNumber, lastCouponNumber + 2);
+      expect(sut.couponNumber, lastCouponNumber + 1);
     });
 
     test("Should call load use sat sharing", () async {

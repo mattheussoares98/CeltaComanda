@@ -1,16 +1,15 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class Covenants extends StatefulWidget {
   final CustomerViewModel customer;
   final void Function() callSetState;
+  final TextEditingController cpfCnpjController;
   const Covenants({
     required this.customer,
     required this.callSetState,
+    required this.cpfCnpjController,
     super.key,
   });
 
@@ -22,28 +21,12 @@ class _CovenantsState extends State<Covenants> {
   final passwordKey = GlobalKey<FormState>();
   final cpfCnpjKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
-  final cpfCnpjController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (mounted) {
-        PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-        if (paymentPresenter.cpfCnpj != null) {
-          cpfCnpjController.text = paymentPresenter.cpfCnpj.toString();
-        }
-      }
-    });
-  }
 
   @override
   dispose() {
     super.dispose();
 
     passwordController.dispose();
-    cpfCnpjController.dispose();
   }
 
   @override
@@ -92,7 +75,7 @@ class _CovenantsState extends State<Covenants> {
           customer: widget.customer,
           passwordController: passwordController,
           passwordKey: passwordKey,
-          cpfCnpjController: cpfCnpjController,
+          cpfCnpjController: widget.cpfCnpjController,
           cpfCnpjKey: cpfCnpjKey,
         ),
       ],

@@ -20,6 +20,7 @@ class CovenantPage extends StatefulWidget {
 class _CovenantPageState extends State<CovenantPage>
     with LoadingManager, UIErrorManager {
   final searchCustomerController = TextEditingController();
+  final cpfCnpjController = TextEditingController();
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
   bool _searchByPersonalizedCode = false;
@@ -30,6 +31,7 @@ class _CovenantPageState extends State<CovenantPage>
     super.dispose();
 
     searchCustomerController.dispose();
+    cpfCnpjController.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     await paymentPresenter.updateSelectedCustomer(null, null);
@@ -43,6 +45,9 @@ class _CovenantPageState extends State<CovenantPage>
         paymentPresenter =
             Provider.of<PaymentPresenter>(context, listen: false);
         await paymentPresenter.updateSelectedCustomer(null, null);
+        if (paymentPresenter.cpfCnpj != null) {
+          cpfCnpjController.text = paymentPresenter.cpfCnpj.toString();
+        }
       }
     });
   }
@@ -85,7 +90,8 @@ class _CovenantPageState extends State<CovenantPage>
                             return Column(
                               children: [
                                 GetCustomerField(
-                                  searchCustomerController: searchCustomerController,
+                                  searchCustomerController:
+                                      searchCustomerController,
                                   errorText:
                                       snapshotCustomerError.data?.description,
                                   searchByPersonalizedCode:
@@ -136,7 +142,10 @@ class _CovenantPageState extends State<CovenantPage>
                           },
                         ),
                       ),
-                      Customers(customers: snapshotCustomers.data ?? []),
+                      Customers(
+                        customers: snapshotCustomers.data ?? [],
+                        cpfCnpjController: cpfCnpjController,
+                      ),
                     ],
                   ),
                 ),

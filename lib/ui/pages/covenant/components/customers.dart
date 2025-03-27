@@ -5,8 +5,10 @@ import '../../pages.dart';
 
 class Customers extends StatefulWidget {
   final List<CustomerViewModel> customers;
+  final TextEditingController cpfCnpjController;
   const Customers({
     required this.customers,
+    required this.cpfCnpjController,
     super.key,
   });
 
@@ -97,6 +99,7 @@ class _CustomersState extends State<Customers> {
                 if (customer.CustomerCovenants != null &&
                     customer.CustomerCovenants!.isNotEmpty)
                   Covenants(
+                    cpfCnpjController: widget.cpfCnpjController,
                     customer: customer,
                     callSetState: () {
                       setState(() {});

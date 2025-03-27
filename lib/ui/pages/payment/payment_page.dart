@@ -40,6 +40,7 @@ class _PaymentPageState extends State<PaymentPage>
     paymentFocusNode.dispose();
     cpfCnpjController.dispose();
     cpfCnpjFocusNode.dispose();
+    paymentPresenter?.changeCpfCnpj(null);
   }
 
   @override
@@ -73,7 +74,12 @@ class _PaymentPageState extends State<PaymentPage>
 
         paymentController.text = paymentPresenter!
             .getTotalPendingValue(printedProductsPresenter)
-            .toString().replaceAll(RegExp(r'\.'), ',');
+            .toString()
+            .replaceAll(RegExp(r'\.'), ',');
+
+        if (paymentPresenter?.cpfCnpj != null) {
+          cpfCnpjController.text = paymentPresenter!.cpfCnpj.toString();
+        }
       }
     });
   }

@@ -48,6 +48,7 @@ void main() {
   late CouponFiscalNumberSpy couponFiscalNumber;
   late LoadUseUrlSatSharingSpy loadUseUrlSatSharing;
   late DeleteSaleRequestSpy deleteSaleRequest;
+  late ValidateCpfCnpjSpy validateCpfCnpj;
 
   late double longAmountValue;
   late int portionQuantity;
@@ -80,6 +81,7 @@ void main() {
     couponFiscalNumber = CouponFiscalNumberSpy();
     loadUseUrlSatSharing = LoadUseUrlSatSharingSpy();
     deleteSaleRequest = DeleteSaleRequestSpy();
+    validateCpfCnpj = ValidateCpfCnpjSpy();
   }
 
   initPresenters() {
@@ -99,6 +101,7 @@ void main() {
       couponFiscalNumber: couponFiscalNumber,
       loadUseUrlSatSharing: loadUseUrlSatSharing,
       deleteSaleRequest: deleteSaleRequest,
+      validateCpfCnpj: validateCpfCnpj,
     );
     homePresenter = HomePresenterSpy();
     printedProductsPresenter = PrintedProductsPresenterSpy();
@@ -154,6 +157,7 @@ void main() {
     sendSaleMovementAsNfce.mockSend(xmlSoapResponseGeneratedByBs);
     concInsertSaleMovement.mockInsert(1);
     couponFiscalNumber.mockLoad(lastCouponNumber);
+    validateCpfCnpj.mockIsValid(true);
   }
 
   setUp(() {
@@ -1793,18 +1797,30 @@ void main() {
   });
 
   group("Change cpf cnpj", () {
-    test("Should cpfCnpj correctly", () {
-      sut.changeCpfCnpj("abc");
-      expect(sut.cpfCnpj, isNull);
+    test("Should set cpfCnpj to null value if is not a int value", () {
+      sut.changeCpfCnpj(faker.randomGenerator.decimal().toString());
 
-      sut.changeCpfCnpj("1");
-      expect(sut.cpfCnpj, 1);
-
-      sut.changeCpfCnpj("");
       expect(sut.cpfCnpj, null);
+    });
+    test("Should call validateCpfCnpj usecase if is a int value", () {
+      final value = faker.randomGenerator.integer(100).toString();
+      sut.changeCpfCnpj(value);
 
-      sut.changeCpfCnpj("1.");
+      verify(() => validateCpfCnpj.isValid(value)).called(1);
+    });
+    test("Should not update cpfCnpj if usecase return false", () {
+      validateCpfCnpj.mockIsValid(false);
+
+      sut.changeCpfCnpj(faker.randomGenerator.integer(100).toString());
+
       expect(sut.cpfCnpj, null);
+    });
+    test("Should update cpfCnpj if usecase return true", () {
+      final value = faker.randomGenerator.integer(100).toString();
+
+      sut.changeCpfCnpj(value);
+
+      expect(sut.cpfCnpj, value.toInt());
     });
   });
 }

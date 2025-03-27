@@ -31,6 +31,7 @@ class GetxPaymentPresenter extends GetxController
   final CouponFiscalNumber couponFiscalNumber;
   final LoadUseUrlSatSharing loadUseUrlSatSharing;
   final DeleteSaleRequest deleteSaleRequest;
+  final ValidateCpfCnpj validateCpfCnpj;
 
   GetxPaymentPresenter({
     required this.pay,
@@ -48,6 +49,7 @@ class GetxPaymentPresenter extends GetxController
     required this.couponFiscalNumber,
     required this.loadUseUrlSatSharing,
     required this.deleteSaleRequest,
+    required this.validateCpfCnpj,
   });
 
   @override
@@ -539,7 +541,9 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   void changeCpfCnpj(String? value) {
-    if (int.tryParse(value ?? "") != null) {
+    if (int.tryParse(value ?? "") == null) {
+      _cpfCnpj = null;
+    } else if (validateCpfCnpj.isValid(value)) {
       _cpfCnpj = value!.toInt();
     } else {
       _cpfCnpj = null;

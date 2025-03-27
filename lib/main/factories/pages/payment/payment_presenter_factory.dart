@@ -21,4 +21,5 @@ PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       couponFiscalNumber: makeLocalCouponFiscalNumber(),
       loadUseUrlSatSharing: makeLocalLoadUseUrlSatSharing(),
       deleteSaleRequest: makeConcDeleteSaleRequest(),
+      validateCpfCnpj: makeLocalValidateCpfCnpj(),
     );

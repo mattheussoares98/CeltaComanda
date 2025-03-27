@@ -13,10 +13,11 @@ class LandscapeCartProductItem extends StatefulWidget {
   final int? selectedIndex;
   final int? selectedChildIndexComment;
   final void Function() updateSelectedIndex;
-  final TextEditingController controller;
+  final TextEditingController commentController;
   final void Function() callSetState;
   final void Function(int value) updateSelectedChildIndex;
   final FocusNode commentFocusNode;
+  final void Function() removeSelectedIndex;
 
   const LandscapeCartProductItem({
     required this.cartProduct,
@@ -25,10 +26,11 @@ class LandscapeCartProductItem extends StatefulWidget {
     required this.selectedIndex,
     required this.selectedChildIndexComment,
     required this.updateSelectedIndex,
-    required this.controller,
+    required this.commentController,
     required this.callSetState,
     required this.commentFocusNode,
     required this.updateSelectedChildIndex,
+    required this.removeSelectedIndex,
     super.key,
   });
 
@@ -61,8 +63,14 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
       ),
       child: Column(
         children: [
+          if (!hasMinWidth(context))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: NameOfProduct(name: widget.cartProduct.Product.Name),
+            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               InkWell(
                 onTap: () async {
@@ -106,25 +114,24 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                   ),
                 ),
               ),
-              const SizedBox(width: 3),
-              Expanded(
-                child: Column(
+              if (hasMinWidth(context))
+                Column(
                   children: [
-                    Text(
-                      widget.cartProduct.Product.Name,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: StringSize.size,
+                    const SizedBox(width: 3),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          NameOfProduct(name: widget.cartProduct.Product.Name),
+                          if (widget.cartProduct.Comments != null)
+                            SizedBox(
+                              child: Comment(
+                                  comment: widget.cartProduct.Comments!),
+                            ),
+                        ],
                       ),
                     ),
-                    if (widget.cartProduct.Comments != null)
-                      SizedBox(
-                        child: Comment(comment: widget.cartProduct.Comments!),
-                      ),
                   ],
                 ),
-              ),
               PriceAndUpdateProductQuantity(
                 product: widget.cartProduct.Product,
                 onPressedReduceQuantity:
@@ -141,26 +148,33 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
               ),
             ],
           ),
+          if (widget.cartProduct.Comments != null)
+            SizedBox(
+              child: Comment(comment: widget.cartProduct.Comments!),
+            ),
           ChangeComment(
+            childIndex: null,
             productIndex: widget.productIndex,
-            showTextFormField: widget.selectedIndex == widget.productIndex,
+            showTextFormField: widget.selectedIndex == widget.productIndex &&
+                widget.selectedChildIndexComment == null,
             updateSelectedIndex: widget.updateSelectedIndex,
-            controller: widget.controller,
+            controller: widget.commentController,
             callSetState: widget.callSetState,
             focusNode: widget.commentFocusNode,
-            childIndex: null,
+            removeSelectedIndex: widget.removeSelectedIndex,
           ),
           if (widget.cartProduct.Product.childsComposition != null)
             SelectedChilds(
-              updateSelectedChildIndex: widget.updateSelectedChildIndex,
+              cartProduct: widget.cartProduct,
               productIndex: widget.productIndex,
               selectedIndex: widget.selectedIndex,
               updateSelectedIndex: widget.updateSelectedIndex,
-              controller: widget.controller,
+              controller: widget.commentController,
               callSetState: widget.callSetState,
               focusNode: widget.commentFocusNode,
-              cartProduct: widget.cartProduct,
               selectedChildIndexComment: widget.selectedChildIndexComment,
+              updateSelectedChildIndex: widget.updateSelectedChildIndex,
+              removeSelectedIndex: widget.removeSelectedIndex,
             ),
         ],
       ),

@@ -14,6 +14,7 @@ class PortraitCartProductItem extends StatefulWidget {
   final double maxWidth;
   final void Function() updateSelectedIndex;
   final void Function() callSetState;
+  final void Function() removeSelectedIndex;
   final void Function(int value) updateSelectedChildIndex;
   final TextEditingController commentController;
   final FocusNode focusNode;
@@ -26,6 +27,7 @@ class PortraitCartProductItem extends StatefulWidget {
     required this.maxWidth,
     required this.updateSelectedIndex,
     required this.callSetState,
+    required this.removeSelectedIndex,
     required this.commentController,
     required this.focusNode,
     required this.updateSelectedChildIndex,
@@ -148,6 +150,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
             controller: widget.commentController,
             callSetState: widget.callSetState,
             focusNode: widget.focusNode,
+            removeSelectedIndex: widget.removeSelectedIndex,
           ),
           if (widget.cartProduct.Product.childsComposition != null)
             SelectedChilds(
@@ -160,6 +163,7 @@ class _LandscapeCartProductItemState extends State<PortraitCartProductItem> {
               focusNode: widget.focusNode,
               selectedChildIndexComment: widget.selectedChildIndexComment,
               updateSelectedChildIndex: widget.updateSelectedChildIndex,
+              removeSelectedIndex: widget.removeSelectedIndex,
             ),
         ],
       ),

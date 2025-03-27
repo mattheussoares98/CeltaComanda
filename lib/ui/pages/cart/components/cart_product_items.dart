@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
 
 class CartProductsItems extends StatefulWidget {
@@ -81,55 +80,62 @@ class _CartProductsItemsState extends State<CartProductsItems> {
         itemCount: cartPresenter.cartProducts.length,
         itemBuilder: (context, index) {
           final cartProduct = cartPresenter.cartProducts[index];
-          if (hasMinWidth(context)) {
-            return LandscapeCartProductItem(
-              updateSelectedChildIndex: (childIndex) {
-                updateSelectedChildIndexComment(
-                  childIndex: childIndex,
-                  productIndex: index,
-                );
-              },
-              cartProduct: cartProduct,
-              selectedChildIndexComment: selectedChildIndexComment,
-              maxWidth: constraints.maxWidth,
-              productIndex: index,
-              callSetState: () {
-                setState(() {});
-                updateSelectedProductIndexComment(index);
-              },
-              controller: commentController,
-              commentFocusNode: commentFocusNode,
-              selectedIndex: selectedProductIndexComment,
-              updateSelectedIndex: () {
-                commentController.clear();
-                updateSelectedProductIndexComment(index);
-              },
-            );
-          } else {
-            return PortraitCartProductItem(
-              selectedChildIndexComment: selectedChildIndexComment,
-              cartProduct: cartProduct,
-              focusNode: commentFocusNode,
-              productIndex: index,
-              maxWidth: constraints.maxWidth,
-              selectedIndex: selectedProductIndexComment,
-              commentController: commentController,
-              callSetState: () {
-                setState(() {});
-                updateSelectedProductIndexComment(index);
-              },
-              updateSelectedIndex: () {
-                commentController.clear();
-                updateSelectedProductIndexComment(index);
-              },
-              updateSelectedChildIndex: (childIndex) {
-                updateSelectedChildIndexComment(
-                  childIndex: childIndex,
-                  productIndex: index,
-                );
-              },
-            );
-          }
+          return LandscapeCartProductItem(
+            removeSelectedIndex: () {
+              Future.delayed(Duration.zero, () {
+                selectedChildIndexComment = null;
+                selectedProductIndexComment = null;
+              });
+              setState(() {});
+            },
+            selectedChildIndexComment: selectedChildIndexComment,
+            cartProduct: cartProduct,
+            commentFocusNode: commentFocusNode,
+            productIndex: index,
+            maxWidth: constraints.maxWidth,
+            selectedIndex: selectedProductIndexComment,
+            commentController: commentController,
+            callSetState: () {
+              setState(() {});
+              updateSelectedProductIndexComment(index);
+            },
+            updateSelectedIndex: () {
+              commentController.clear();
+              updateSelectedProductIndexComment(index);
+            },
+            updateSelectedChildIndex: (childIndex) {
+              updateSelectedChildIndexComment(
+                childIndex: childIndex,
+                productIndex: index,
+              );
+            },
+          );
+          // if (hasMinWidth(context)) {
+          // } else {
+          //   return PortraitCartProductItem(
+          //     selectedChildIndexComment: selectedChildIndexComment,
+          //     cartProduct: cartProduct,
+          //     focusNode: commentFocusNode,
+          //     productIndex: index,
+          //     maxWidth: constraints.maxWidth,
+          //     selectedIndex: selectedProductIndexComment,
+          //     commentController: commentController,
+          //     callSetState: () {
+          //       setState(() {});
+          //       updateSelectedProductIndexComment(index);
+          //     },
+          //     updateSelectedIndex: () {
+          //       commentController.clear();
+          //       updateSelectedProductIndexComment(index);
+          //     },
+          //     updateSelectedChildIndex: (childIndex) {
+          //       updateSelectedChildIndexComment(
+          //         childIndex: childIndex,
+          //         productIndex: index,
+          //       );
+          //     },
+          //   );
+          // }
         },
       );
     });

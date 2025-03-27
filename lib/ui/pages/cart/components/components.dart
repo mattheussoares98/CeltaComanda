@@ -6,5 +6,5 @@ export './empty_cart.dart';
 export './landscape_cart_product_item.dart';
 export './portrait_cart_product_item.dart';
 export './save_sale_request_button.dart';
+export 'name_of_product.dart';
 export './selected_childs.dart';
-export '../../../components/write_command_number.dart';

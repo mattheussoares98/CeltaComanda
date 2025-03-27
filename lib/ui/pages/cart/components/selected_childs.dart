@@ -15,6 +15,7 @@ class SelectedChilds extends StatelessWidget {
   final void Function() callSetState;
   final FocusNode focusNode;
   final void Function(int index) updateSelectedChildIndex;
+  final void Function() removeSelectedIndex;
   const SelectedChilds({
     required this.productIndex,
     required this.selectedIndex,
@@ -25,6 +26,7 @@ class SelectedChilds extends StatelessWidget {
     required this.focusNode,
     required this.cartProduct,
     required this.updateSelectedChildIndex,
+    required this.removeSelectedIndex,
     super.key,
   });
 
@@ -167,6 +169,7 @@ class SelectedChilds extends StatelessWidget {
                     controller: controller,
                     callSetState: callSetState,
                     focusNode: focusNode,
+                    removeSelectedIndex: removeSelectedIndex,
                   ),
                 ],
               );

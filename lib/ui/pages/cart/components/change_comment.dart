@@ -14,6 +14,7 @@ class ChangeComment extends StatelessWidget {
   final TextEditingController controller;
   final void Function() callSetState;
   final FocusNode focusNode;
+  final void Function() removeSelectedIndex;
   const ChangeComment({
     required this.productIndex,
     required this.childIndex,
@@ -22,6 +23,7 @@ class ChangeComment extends StatelessWidget {
     required this.controller,
     required this.callSetState,
     required this.focusNode,
+    required this.removeSelectedIndex,
     super.key,
   });
 
@@ -32,6 +34,7 @@ class ChangeComment extends StatelessWidget {
       productIndex: productIndex,
       childIndex: childIndex,
     );
+    removeSelectedIndex();
     callSetState();
   }
 

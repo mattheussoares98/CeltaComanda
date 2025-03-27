@@ -1,5 +1,6 @@
 export './add_more_cart_itens_button.dart';
 export './cart_product_items.dart';
+export './cart_title.dart';
 export './change_comment.dart';
 export './empty_cart.dart';
 export './landscape_cart_product_item.dart';

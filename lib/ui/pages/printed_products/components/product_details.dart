@@ -59,6 +59,7 @@ class ProductDetails extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             itemCount: product.childs.length,
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final child = product.childs[index];
 

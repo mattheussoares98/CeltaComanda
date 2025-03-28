@@ -8,7 +8,7 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 
-class LocalGenerateBytes implements GenerateBitmap {
+class LocalGenerateBitmap implements GenerateBitmap {
   @override
   Future<Uint8List> generate({
     required int commandNumber,

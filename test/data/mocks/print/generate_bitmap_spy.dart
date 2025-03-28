@@ -1,10 +1,12 @@
 // ignore_for_file: unnecessary_this
 
+import 'dart:typed_data';
+
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class GenerateBytesSpy extends Mock implements GenerateBitmap {
+class GenerateBitmapSpy extends Mock implements GenerateBitmap {
   When _mocGenerateBytesCall() => when(() => this.generate(
         commandNumber: any(named: "commandNumber"),
         pdvNumber: any(named: "pdvNumber"),
@@ -15,7 +17,7 @@ class GenerateBytesSpy extends Mock implements GenerateBitmap {
         peopleQuantity: any(named: "peopleQuantity"),
       ));
 
-  void mockGenerateBytes(List<int> bytes) {
+  void mockGenerateBytes(Uint8List bytes) {
     this._mocGenerateBytesCall().thenAnswer((any) async => bytes);
   }
 

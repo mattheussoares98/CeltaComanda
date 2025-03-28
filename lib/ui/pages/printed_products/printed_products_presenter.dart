@@ -46,9 +46,9 @@ abstract class PrintedProductsPresenter
     required bool validateUserAndPassword,
   });
 
-  Future<void> printPrintedProducts({
-    required Uint8List bitmap,
-    required void Function() closePage,
+  Future<Uint8List?> printPrintedProducts({
+    required int commandNumber,
+    required int pdvNumber,
   });
 
   void goToPrintProductsPage();

@@ -289,18 +289,28 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> printPrintedProducts({
-    required Uint8List bitmap,
-    required void Function() closePage,
+  Future<Uint8List?> printPrintedProducts({
+    required int commandNumber,
+    required int pdvNumber,
   }) async {
     isLoading = true;
     mainError = null;
 
     try {
+      final bitmap = await generateBitmap.generate(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+        printed: _printed!,
+        subTotal: getSubtotal(printed),
+        serviceChargeValue: getServiceChargeValue(printed),
+        totalLiquid: getTotalLiquid(printed),
+        peopleQuantity: peopleQuantity,
+      );
       await printBitmap.print(bitmap);
+      return bitmap;
     } catch (e) {
       mainError = UIError.unexpected;
-      closePage();
+      return null;
     } finally {
       isLoading = false;
     }
@@ -309,6 +319,7 @@ class GetxPrintedProductsPresenter
   @override
   Future<void> goToPrintProductsPage() async {
     await navigateTo.navigate(pageRoute: PageRoutes.printProducts);
+    //TODO remove this function if new print works
   }
 
   @override

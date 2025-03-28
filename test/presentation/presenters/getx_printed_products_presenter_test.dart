@@ -42,6 +42,8 @@ void main() {
   late String password;
   late String saleRequestProductId;
   late Uint8List bitmap;
+  late int commandNumber;
+  late int pdvNumber;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -91,6 +93,8 @@ void main() {
       isFixedCommandNumber: faker.randomGenerator.boolean(),
       pdv: EntityFactory.makePdvEntity(),
     );
+    commandNumber = faker.randomGenerator.integer(100);
+    pdvNumber = faker.randomGenerator.integer(100);
   }
 
   void mockSuccess() {
@@ -101,6 +105,7 @@ void main() {
     barcodeScanner
         .mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
+    generateBitmap.mockGenerateBitmap(bitmap);
   }
 
   setUp(() {
@@ -121,6 +126,7 @@ void main() {
       maximumProductQuantity: 0,
       minimumProductQuantity: 0,
     ));
+    registerFallbackValue(EntityFactory.makePrintedViewModel());
     registerFallbackValue(Uint8List(faker.randomGenerator.integer(100)));
     registerFallbackValue(HomePresenterSpy());
     registerFallbackValue(ExpansibleGroupFromProductPresenterSpy());
@@ -816,7 +822,10 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
+      await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -825,12 +834,60 @@ void main() {
 
       printBitmap.mockPrintBitmapError();
 
-      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
+      await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
+    });
+    test("Should call generate bitmap with correct values", () async {
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
+
+      await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
+
+      verify(() => generateBitmap.generate(
+            commandNumber: commandNumber,
+            pdvNumber: pdvNumber,
+            printed: sut.printed!,
+            subTotal: sut.getSubtotal(sut.printed),
+            serviceChargeValue: sut.getServiceChargeValue(sut.printed),
+            totalLiquid: sut.getTotalLiquid(sut.printed),
+            peopleQuantity: sut.peopleQuantity,
+          )).called(1);
     });
     test("Should call printBitmap with correct values", () async {
-      await sut.printPrintedProducts(bitmap: bitmap, closePage: () {});
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
+      await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
 
       verify(() => printBitmap.print(bitmap)).called(1);
+    });
+    test("Should return correct bitmap", () async {
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
+
+      final mockedBitmap = Uint8List(faker.randomGenerator.integer(100));
+      generateBitmap.mockGenerateBitmap(mockedBitmap);
+
+      final value = await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
+
+      expect(value, mockedBitmap);
+    });
+    test("Should return null if throws", () async {
+      generateBitmap.mockGenerateBitmapError();
+
+      final value = await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
+
+      expect(value, null);
     });
   });
 

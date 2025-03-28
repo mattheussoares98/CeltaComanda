@@ -1,10 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
@@ -22,108 +18,108 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
   final GlobalKey _repaintBoundaryKey = GlobalKey();
   late PrintedProductsPresenter printedProductsPresenter;
 
-  @override
-  void initState() {
-    super.initState();
+//   @override
+//   void initState() {
+//     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (!mounted) return;
+//     WidgetsBinding.instance.addPostFrameCallback((_) async {
+//       if (!mounted) return;
 
-      printedProductsPresenter =
-          Provider.of<PrintedProductsPresenter>(context, listen: false);
-      HomePresenter homePresenter =
-          Provider.of<HomePresenter>(context, listen: false);
+//       printedProductsPresenter =
+//           Provider.of<PrintedProductsPresenter>(context, listen: false);
+//       HomePresenter homePresenter =
+//           Provider.of<HomePresenter>(context, listen: false);
 
-      printedProductsPresenter.initPrinterResultHandler(
-        homePresenter: homePresenter,
-        closePage: () {
-          if (mounted) Navigator.of(context).pop();
-        },
-      );
+//       printedProductsPresenter.initPrinterResultHandler(
+//         homePresenter: homePresenter,
+//         closePage: () {
+//           if (mounted) Navigator.of(context).pop();
+//         },
+//       );
 
-      // Espera um pequeno tempo para evitar problemas de renderização
-      await Future.delayed(Duration(milliseconds: 100));
+//       // Espera um pequeno tempo para evitar problemas de renderização
+//       await Future.delayed(Duration(milliseconds: 100));
 
-      // Captura o bitmap após a renderização
-      await _print();
-    });
-  }
+//       // Captura o bitmap após a renderização
+//       await _print();
+//     });
+//   }
 
-  @override
-  void dispose() {
-    printedProductsPresenter.disposePrinterHandler();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     printedProductsPresenter.disposePrinterHandler();
+//     super.dispose();
+//   }
 
-  Future<void> _print() async {
-    try {
-      await Future.delayed(Duration(milliseconds: 50));
+//   Future<void> _print() async {
+//     try {
+//       await Future.delayed(Duration(milliseconds: 50));
 
-      if (_repaintBoundaryKey.currentContext == null) return;
+//       if (_repaintBoundaryKey.currentContext == null) return;
 
-      RenderRepaintBoundary boundary = _repaintBoundaryKey.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
+//       RenderRepaintBoundary boundary = _repaintBoundaryKey.currentContext!
+//           .findRenderObject() as RenderRepaintBoundary;
 
-      // Faz a tela expandir para capturar todo o conteúdo
-      setState(() {});
+//       // Faz a tela expandir para capturar todo o conteúdo
+//       setState(() {});
 
-      // Garante que o frame foi atualizado
-      await Future.delayed(Duration(milliseconds: 100));
+//       // Garante que o frame foi atualizado
+//       await Future.delayed(Duration(milliseconds: 100));
 
-      // Captura a imagem do widget inteiro
-      ui.Image rawImage = await boundary.toImage(pixelRatio: 3.0);
+//       // Captura a imagem do widget inteiro
+//       ui.Image rawImage = await boundary.toImage(pixelRatio: 3.0);
 
-      // Corrige a imagem invertida. Ela está ficando de ponta cabeça
-      Uint8List bitmap = await _invertImageToBeCorrectly(rawImage);
+//       // Corrige a imagem invertida. Ela está ficando de ponta cabeça
+//       Uint8List bitmap = await _invertImageToBeCorrectly(rawImage);
 
-      // Restaura o estado original
-      setState(() {});
+//       // Restaura o estado original
+//       setState(() {});
 
-      // Mostra a imagem antes de imprimir
-      // await _showPreview(bitmap);
+//       // Mostra a imagem antes de imprimir
+//       // await _showPreview(bitmap);
 
-      await printedProductsPresenter.printPrintedProducts(
-        bitmap: bitmap,
-        closePage: () {
-          if (mounted) Navigator.of(context).pop();
-        },
-      );
-    } catch (e) {
-      debugPrint("Erro ao capturar bitmap: $e");
-      if (mounted) Navigator.of(context).pop();
-    }
-  }
+//       await printedProductsPresenter.printPrintedProducts(
+//         bitmap: bitmap,
+//         closePage: () {
+//           if (mounted) Navigator.of(context).pop();
+//         },
+//       );
+//     } catch (e) {
+//       debugPrint("Erro ao capturar bitmap: $e");
+//       if (mounted) Navigator.of(context).pop();
+//     }
+//   }
 
-// Corrige a orientação da imagem
-  Future<Uint8List> _invertImageToBeCorrectly(ui.Image rawImage) async {
-    final ByteData? byteData =
-        await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-    if (byteData == null) return Uint8List(0);
+// // Corrige a orientação da imagem
+//   Future<Uint8List> _invertImageToBeCorrectly(ui.Image rawImage) async {
+//     final ByteData? byteData =
+//         await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+//     if (byteData == null) return Uint8List(0);
 
-    final int width = rawImage.width;
-    final int height = rawImage.height;
+//     final int width = rawImage.width;
+//     final int height = rawImage.height;
 
-    final ui.PictureRecorder recorder = ui.PictureRecorder();
-    final Canvas canvas = Canvas(recorder);
+//     final ui.PictureRecorder recorder = ui.PictureRecorder();
+//     final Canvas canvas = Canvas(recorder);
 
-    final Paint paint = Paint();
+//     final Paint paint = Paint();
 
-    canvas.translate(0, height.toDouble());
-    canvas.scale(1, -1);
+//     canvas.translate(0, height.toDouble());
+//     canvas.scale(1, -1);
 
-    final ui.Rect rect =
-        ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble());
-    final ui.Image newImage = rawImage.clone();
+//     final ui.Rect rect =
+//         ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble());
+//     final ui.Image newImage = rawImage.clone();
 
-    canvas.drawImageRect(newImage, rect, rect, paint);
+//     canvas.drawImageRect(newImage, rect, rect, paint);
 
-    final ui.Image correctedImage =
-        await recorder.endRecording().toImage(width, height);
+//     final ui.Image correctedImage =
+//         await recorder.endRecording().toImage(width, height);
 
-    final ByteData? newByteData =
-        await correctedImage.toByteData(format: ui.ImageByteFormat.png);
-    return newByteData!.buffer.asUint8List();
-  }
+//     final ByteData? newByteData =
+//         await correctedImage.toByteData(format: ui.ImageByteFormat.png);
+//     return newByteData!.buffer.asUint8List();
+//   }
 
   // Future<void> _showPreview(Uint8List bitmap) async {
   //   await showDialog(

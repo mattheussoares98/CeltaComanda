@@ -87,7 +87,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             content: Text(
               R.string.msgWhenConfirmProductsAreRequestAndSoonIncome,
               style: TextStyle(
-                fontSize: hasMinWidth(context) ? 23 : 17,
+                fontSize: ScreenSize.hasMinWidth ? 23 : 17,
               ),
             ),
             cancelMessage: R.string.turnBack,
@@ -125,7 +125,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
                 ),
               ),
             ),
-            SizedBox(width: hasMinWidth(context) ? 100 : 5),
+            SizedBox(width: ScreenSize.hasMinWidth ? 100 : 5),
             FittedBox(
               child: Text(
                 cartPresenter

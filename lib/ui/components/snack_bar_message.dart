@@ -15,10 +15,7 @@ void snackBarMessage(BuildContext context, String message,
         message,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize:
-              hasMinWidth(NavigatorKey.navigatorKey.currentContext ?? context)
-                  ? 25
-                  : 17,
+          fontSize: ScreenSize.hasMinWidth ? 25 : 17,
         ),
       ),
       dismissDirection: DismissDirection.down,

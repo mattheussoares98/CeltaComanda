@@ -29,7 +29,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
           child: Text(
             R.string.alwaysUseSameTable,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: hasMinWidth(context) ? 23 : 15),
+            style: TextStyle(fontSize: ScreenSize.hasMinWidth ? 23 : 15),
           ),
         ),
         const SizedBox(width: 20),
@@ -43,7 +43,7 @@ class FixedNumberCommandSwitch extends StatelessWidget {
             message: R.string.msgUseOnlyWhenIsFixedTableNumber,
             child: Icon(
               Icons.info,
-              size: hasMinWidth(context) ? 40 : 30,
+              size: ScreenSize.hasMinWidth ? 40 : 30,
             ),
           ),
         )

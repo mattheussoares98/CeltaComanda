@@ -79,7 +79,7 @@ class _OptionItemsState extends State<OptionItems> {
   Widget build(BuildContext context) {
     InsertProductPresenter insertProductPresenter =
         Provider.of(context, listen: false);
-    final double itemExtent = hasMinWidth(context) ? 82 : 42;
+    final double itemExtent = ScreenSize.hasMinWidth ? 82 : 42;
 
     return Container(
       height: widget.insertProductsViewModel.length * itemExtent,

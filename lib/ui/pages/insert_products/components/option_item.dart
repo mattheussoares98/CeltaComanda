@@ -132,7 +132,7 @@ class OptionItem extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 children: [
-                  if (hasMinWidth(context))
+                  if (ScreenSize.hasMinWidth)
                     StepNumber(stepNumber: optionIndex + 1),
                   Expanded(
                     child: Column(
@@ -171,7 +171,7 @@ class OptionItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (hasMinWidth(context))
+                        if (ScreenSize.hasMinWidth)
                           SizedBox(
                             height: itemExtent * 0.55,
                             child: Text(
@@ -185,7 +185,7 @@ class OptionItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        if (!hasMinWidth(context))
+                        if (!ScreenSize.hasMinWidth)
                           SizedBox(
                             height: itemExtent * 0.55,
                             width: double.infinity,

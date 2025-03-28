@@ -40,7 +40,7 @@ class PersonalizedDialogPage {
                 ),
               ),
               Expanded(
-                flex: hasMinWidth(context) ? 9 : 11,
+                flex: ScreenSize.hasMinWidth ? 9 : 11,
                 child: AnimatedDialog(
                     page: SingleChildScrollView(
                       child: SizedBox(

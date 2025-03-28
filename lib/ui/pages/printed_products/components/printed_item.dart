@@ -65,7 +65,7 @@ class _PrintedItemState extends State<PrintedItem> {
                     children: [
                       columnTitle(R.string.time),
                       columnTitle(R.string.productsAndComments, 3),
-                      if (hasMinWidth(context)) columnTitle(R.string.price),
+                      if (ScreenSize.hasMinWidth) columnTitle(R.string.price),
                       columnTitle(R.string.quantityAbbreviated),
                       columnTitle(R.string.total),
                     ],
@@ -100,7 +100,7 @@ class _PrintedItemState extends State<PrintedItem> {
                               comments: product.Comments,
                             ),
                           ),
-                          if (!hasMinWidth(context) &&
+                          if (!ScreenSize.hasMinWidth &&
                               index == widget.printed.Products.length - 1)
                             const Padding(
                               padding: EdgeInsets.only(top: 10),
@@ -116,7 +116,7 @@ class _PrintedItemState extends State<PrintedItem> {
               ],
             ),
           ),
-          if (hasMinWidth(context))
+          if (ScreenSize.hasMinWidth)
             const Flexible(
               child: TotalByPerson(),
             ),

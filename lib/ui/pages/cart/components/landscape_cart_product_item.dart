@@ -63,7 +63,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
       ),
       child: Column(
         children: [
-          if (!hasMinWidth(context))
+          if (!ScreenSize.hasMinWidth)
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: NameOfProduct(name: widget.cartProduct.Product.Name),
@@ -114,7 +114,7 @@ class _LandscapeCartProductItemState extends State<LandscapeCartProductItem> {
                   ),
                 ),
               ),
-              if (hasMinWidth(context))
+              if (ScreenSize.hasMinWidth)
                 Column(
                   children: [
                     const SizedBox(width: 3),

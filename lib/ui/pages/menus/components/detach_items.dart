@@ -31,7 +31,7 @@ class DetachItems extends StatelessWidget {
         autoPlayInterval: const Duration(seconds: 7),
         autoPlayAnimationDuration: const Duration(milliseconds: 1500),
         autoPlayCurve: Curves.fastOutSlowIn,
-        scrollDirection: hasMinWidth(context) ? Axis.horizontal : Axis.vertical,
+        scrollDirection: ScreenSize.hasMinWidth ? Axis.horizontal : Axis.vertical,
       ),
       items: menuPresenter.treatSchedules<ProductsViewModel>().map((product) {
         return InkWell(
@@ -57,7 +57,7 @@ class DetachItems extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 selectedProduct: product,
-                orientation: hasMinWidth(context)
+                orientation: ScreenSize.hasMinWidth
                     ? AnimationOrientation.horizontal
                     : AnimationOrientation.vertical,
               ),
@@ -78,12 +78,12 @@ class DetachItems extends StatelessWidget {
               ),
               Positioned(
                 bottom: 30,
-                left: hasMinWidth(context) ? 30 : 5,
+                left: ScreenSize.hasMinWidth ? 30 : 5,
                 child: Text(
                   product.Name.toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: hasMinWidth(context) ? 40 : 17,
+                    fontSize: ScreenSize.hasMinWidth ? 40 : 17,
                     color: Colors.white,
                   ),
                 ),

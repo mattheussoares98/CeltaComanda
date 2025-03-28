@@ -25,7 +25,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
             R.string.msgCommandDontHaveOpenValues,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: hasMinWidth(context) ? 30 : 23,
+              fontSize: ScreenSize.hasMinWidth ? 30 : 23,
               color: Theme.of(context).primaryColorLight,
             ),
           ),
@@ -46,7 +46,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
             },
             icon: Icon(
               Icons.search,
-              size: hasMinWidth(context) ? 40 : 25,
+              size: ScreenSize.hasMinWidth ? 40 : 25,
               color: Theme.of(context).primaryColorDark,
             ),
             label: Text(
@@ -55,7 +55,7 @@ class SearchDataByCommandNumber extends StatelessWidget {
                   : R.string.searchDataOfOtherCommandNumber,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: hasMinWidth(context) ? 30 : 23,
+                fontSize: ScreenSize.hasMinWidth ? 30 : 23,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).primaryColorDark,
               ),

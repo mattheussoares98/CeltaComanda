@@ -21,7 +21,7 @@ class PepperBadge extends StatelessWidget {
     }
 
     return Positioned(
-      right: hasMinWidth(context) ? width * 0.4 : 10,
+      right: ScreenSize.hasMinWidth ? width * 0.4 : 10,
       top: 5,
       child: CircleAvatar(
         minRadius: _getSize(height: height, width: width),

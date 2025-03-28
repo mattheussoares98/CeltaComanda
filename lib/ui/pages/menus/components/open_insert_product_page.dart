@@ -63,10 +63,10 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
         children: [
           Icon(
             Icons.shopping_cart,
-            size: hasMinWidth(context) ? 35 : 25,
+            size: ScreenSize.hasMinWidth ? 35 : 25,
             color: Colors.white,
           ),
-          if (hasMinWidth(context))
+          if (ScreenSize.hasMinWidth)
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 16),
@@ -95,7 +95,7 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
                 ),
               ),
             ),
-          if (!hasMinWidth(context))
+          if (!ScreenSize.hasMinWidth)
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),

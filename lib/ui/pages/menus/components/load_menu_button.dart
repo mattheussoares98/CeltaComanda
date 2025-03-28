@@ -40,13 +40,13 @@ class LoadMenuButton extends StatelessWidget {
           },
           icon: Icon(
             Icons.menu_book,
-            size: hasMinWidth(context) ? 50 : 30,
+            size: ScreenSize.hasMinWidth ? 50 : 30,
             color: Theme.of(context).primaryColorDark,
           ),
           label: Text(
             R.string.loadMenu,
             style: TextStyle(
-              fontSize: hasMinWidth(context) ? 40 : 30,
+              fontSize: ScreenSize.hasMinWidth ? 40 : 30,
               color: Theme.of(context).primaryColorDark,
             ),
           ),

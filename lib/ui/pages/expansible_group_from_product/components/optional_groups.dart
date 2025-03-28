@@ -82,7 +82,7 @@ class _CommentsState extends State<OptionalGroups> {
                 });
               },
               child: Padding(
-                padding: hasMinWidth(context)
+                padding: ScreenSize.hasMinWidth
                     ? const EdgeInsets.all(8.0)
                     : const EdgeInsets.only(left: 8),
                 child: Row(

@@ -32,11 +32,11 @@ class AppBarButton extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: Colors.white,
-                    size: hasMinWidth(context) ? 30 : 17,
+                    size: ScreenSize.hasMinWidth ? 30 : 17,
                   ),
                 ),
                 Center(
-                  child: hasMinWidth(context)
+                  child: ScreenSize.hasMinWidth
                       ? Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child: Text(buttonName.toUpperCase()),
@@ -74,7 +74,7 @@ class AppBarButton extends StatelessWidget {
           color: Colors.black,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: hasMinWidth(context) ? 16 : 1,
+              horizontal: ScreenSize.hasMinWidth ? 16 : 1,
               vertical: 1,
             ),
             child: Column(
@@ -85,9 +85,9 @@ class AppBarButton extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FittedBox(child: Icon(icon, color: Colors.white)),
-                      SizedBox(width: hasMinWidth(context) ? 3 : 0),
+                      SizedBox(width: ScreenSize.hasMinWidth ? 3 : 0),
                       Center(
-                        child: hasMinWidth(context)
+                        child: ScreenSize.hasMinWidth
                             ? Text(buttonName.toUpperCase(),
                                 style: const TextStyle(color: Colors.white))
                             : null,

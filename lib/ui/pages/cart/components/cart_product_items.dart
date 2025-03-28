@@ -110,7 +110,7 @@ class _CartProductsItemsState extends State<CartProductsItems> {
               );
             },
           );
-          // if (hasMinWidth(context)) {
+          // if (ScreenSize.hasMinWidth) {
           // } else {
           //   return PortraitCartProductItem(
           //     selectedChildIndexComment: selectedChildIndexComment,

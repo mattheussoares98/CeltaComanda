@@ -67,7 +67,7 @@ class Subgroups extends StatelessWidget {
 
     Future<void> scrollSubgroup(List<String?> subgroups, int index) async {
       if (!productsScrollController.hasClients ||
-          hasMinWidth(context) ||
+          ScreenSize.hasMinWidth ||
           firstIndexIsGreaterThanAtualProductsLength() ||
           firstVisibleProductIndex < 0) {
         return;
@@ -111,9 +111,9 @@ class Subgroups extends StatelessWidget {
           controller: subgroupScrollController,
           shrinkWrap: true,
           scrollDirection:
-              hasMinWidth(context) ? Axis.vertical : Axis.horizontal,
+              ScreenSize.hasMinWidth ? Axis.vertical : Axis.horizontal,
           itemCount: subgroups.length,
-          itemExtent: hasMinWidth(context)
+          itemExtent: ScreenSize.hasMinWidth
               ? (MediaQuery.of(context).size.height -
                       AppBar().preferredSize.height) /
                   subgroups.length

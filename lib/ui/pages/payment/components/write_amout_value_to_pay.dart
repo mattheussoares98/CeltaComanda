@@ -46,7 +46,7 @@ class _WriteAmoutValueToPayState extends State<WriteAmoutValueToPay> {
         Provider.of(context, listen: false);
 
     return SizedBox(
-      width: hasMinWidth(context)
+      width: ScreenSize.hasMinWidth
           ? MediaQuery.of(context).size.width * 0.3
           : MediaQuery.of(context).size.width * 0.6,
       child: TextFormField(

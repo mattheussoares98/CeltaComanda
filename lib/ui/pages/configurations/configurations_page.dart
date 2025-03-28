@@ -99,8 +99,8 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: hasMinWidth(context) ? 3 : 2,
-                    childAspectRatio: hasMinWidth(context) ? 5 : 3,
+                    crossAxisCount: ScreenSize.hasMinWidth ? 3 : 2,
+                    childAspectRatio: ScreenSize.hasMinWidth ? 5 : 3,
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 5,
                   ),

@@ -26,7 +26,7 @@ class WriteCpfCnpjField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: SizedBox(
-        width: hasMinWidth(context)
+        width: ScreenSize.hasMinWidth
             ? MediaQuery.of(context).size.width * 0.3
             : MediaQuery.of(context).size.width * 0.6,
         child: TextFormField(

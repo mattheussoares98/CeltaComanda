@@ -50,7 +50,7 @@ class ProductDetails extends StatelessWidget {
                 ],
               ),
             ),
-            if (hasMinWidth(context)) rowValue(value),
+            if (ScreenSize.hasMinWidth) rowValue(value),
             rowValue(quantity),
             rowValue(totalLiquid),
           ],
@@ -67,7 +67,7 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   Expanded(child: SizedBox()),
                   Expanded(
-                    flex: hasMinWidth(context) ? 7 : 6,
+                    flex: ScreenSize.hasMinWidth ? 7 : 6,
                     child: Wrap(
                       children: [
                         const SizedBox(width: 2),

@@ -83,7 +83,7 @@ class ProductsItems extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: LayoutBuilder(builder: (context, constraints) {
-                  if (hasMinWidth(context)) {
+                  if (ScreenSize.hasMinWidth) {
                     return LandscapeProductItem(
                       productsViewModel: product,
                       itemHeight: constraints.maxHeight,

@@ -21,7 +21,7 @@ class EmptyCart extends StatelessWidget {
             child: Text(
               R.string.emptyCart,
               style: TextStyle(
-                fontSize: hasMinWidth(context) ? 30 : 20,
+                fontSize: ScreenSize.hasMinWidth ? 30 : 20,
                 color: Colors.red,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
@@ -40,12 +40,12 @@ class EmptyCart extends StatelessWidget {
             label: Text(
               R.string.addItens,
               style: TextStyle(
-                fontSize: hasMinWidth(context) ? 25 : 20,
+                fontSize: ScreenSize.hasMinWidth ? 25 : 20,
               ),
             ),
             icon: Icon(
               Icons.shopping_cart,
-              size: hasMinWidth(context) ? 30 : 20,
+              size: ScreenSize.hasMinWidth ? 30 : 20,
             ),
           )
         ],

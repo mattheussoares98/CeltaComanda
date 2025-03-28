@@ -82,7 +82,7 @@ class _CartPageState extends State<CartPage>
                           buttonHeight: _buttonHeight,
                         ),
                       ),
-                      SizedBox(width: hasMinWidth(context) ? 20 : 5),
+                      SizedBox(width: ScreenSize.hasMinWidth ? 20 : 5),
                       Expanded(
                         flex: 6,
                         child: SaveSaleRequestButton(

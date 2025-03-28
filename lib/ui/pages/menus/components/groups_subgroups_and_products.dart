@@ -54,7 +54,7 @@ class _GroupsSubgroupsAndProductsState
   double getProductItemExtent(BuildContext context) {
     return (MediaQuery.of(context).size.height -
             AppBar().preferredSize.height) /
-        (hasMinWidth(context) ? 3 : 3.5);
+        (ScreenSize.hasMinWidth ? 3 : 3.5);
   }
 
   @override
@@ -79,7 +79,7 @@ class _GroupsSubgroupsAndProductsState
     }
   }
 
-  int getGroupItemFlex() => hasMinWidth(context) ? 10 : 25;
+  int getGroupItemFlex() => ScreenSize.hasMinWidth ? 10 : 25;
 
   @override
   Widget build(BuildContext context) {
@@ -104,21 +104,21 @@ class _GroupsSubgroupsAndProductsState
         ),
         if (groupIsSelected(menuPresenter, R.string.detach))
           Expanded(
-            flex: hasMinWidth(context) ? 90 : 75,
+            flex: ScreenSize.hasMinWidth ? 90 : 75,
             child: const DetachItems(),
           ),
         if (groupIsSelected(menuPresenter, R.string.searchProduct))
           Expanded(
-            flex: hasMinWidth(context) ? 90 : 75,
+            flex: ScreenSize.hasMinWidth ? 90 : 75,
             child: InsertProductBody(),
           ),
         if (!groupIsSelected(menuPresenter, R.string.detach) &&
             !groupIsSelected(menuPresenter, R.string.searchProduct))
           Expanded(
-            flex: hasMinWidth(context) ? 90 : 75,
+            flex: ScreenSize.hasMinWidth ? 90 : 75,
             child: Column(
               children: [
-                if (!hasMinWidth(context))
+                if (!ScreenSize.hasMinWidth)
                   Subgroups(
                     groupItemsFlex: getGroupItemFlex(),
                     selectedIndex: widget.selectedIndex,
@@ -130,7 +130,7 @@ class _GroupsSubgroupsAndProductsState
                   flex: 9,
                   child: Row(
                     children: [
-                      if (hasMinWidth(context))
+                      if (ScreenSize.hasMinWidth)
                         Subgroups(
                           groupItemsFlex: getGroupItemFlex(),
                           selectedIndex: widget.selectedIndex,

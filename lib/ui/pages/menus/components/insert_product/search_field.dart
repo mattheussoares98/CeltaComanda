@@ -93,7 +93,7 @@ class SearchField extends StatelessWidget {
                   Icon(
                     Icons.search,
                   ),
-                  if (hasMinWidth(context))
+                  if (ScreenSize.hasMinWidth)
                     Row(
                       children: [
                         const SizedBox(width: 4),

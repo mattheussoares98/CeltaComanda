@@ -133,7 +133,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                               ),
                             ),
                           ),
-                          body: hasMinWidth(context)
+                          body: ScreenSize.hasMinWidth
                               ? LandScapeInsertProductsPageBody(
                                   selectedProduct: selectedProduct!,
                                   totalLiquid: totalLiquid,

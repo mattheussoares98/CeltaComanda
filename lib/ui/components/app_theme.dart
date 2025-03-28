@@ -67,8 +67,8 @@ ThemeData makeAppTheme(BuildContext context) {
       buttonColor: primaryColor,
       splashColor: primaryColorLight,
       padding: EdgeInsets.symmetric(
-        vertical: hasMinWidth(context) ? 10 : 2,
-        horizontal: hasMinWidth(context) ? 20 : 5,
+        vertical: ScreenSize.hasMinWidth ? 10 : 2,
+        horizontal: ScreenSize.hasMinWidth ? 20 : 5,
       ),
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)));
@@ -76,8 +76,8 @@ ThemeData makeAppTheme(BuildContext context) {
   final elevatedButtonTheme = ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
     padding: EdgeInsets.symmetric(
-      vertical: hasMinWidth(context) ? 10 : 2,
-      horizontal: hasMinWidth(context) ? 20 : 5,
+      vertical: ScreenSize.hasMinWidth ? 10 : 2,
+      horizontal: ScreenSize.hasMinWidth ? 20 : 5,
     ),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     backgroundColor: primaryColorDark,

@@ -62,7 +62,7 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
           ),
         ),
         Positioned(
-          top: hasMinWidth(context) ? -5 : 0,
+          top: ScreenSize.hasMinWidth ? -5 : 0,
           left: 10,
           child: Container(
             color: Colors.white,

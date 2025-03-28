@@ -13,7 +13,7 @@ PreferredSize homeAppBar({
   required MenuPresenter menuPresenter,
 }) {
   return PreferredSize(
-    preferredSize: Size.fromHeight(hasMinWidth(context) ? 60 : 40),
+    preferredSize: Size.fromHeight(ScreenSize.hasMinWidth ? 60 : 40),
     child: AppBar(
       title: const TitleAppbar(),
       backgroundColor: const Color(0xFFF1F5F8),
@@ -22,7 +22,7 @@ PreferredSize homeAppBar({
             EnterpriseBuilder.entity?.useCovenant == true)
           SizedBox(
             width: MediaQuery.of(context).size.width *
-                (hasMinWidth(context) ? 0.2 : 0.16),
+                (ScreenSize.hasMinWidth ? 0.2 : 0.16),
             child: Padding(
               padding: const EdgeInsets.only(right: 1),
               child: AppBarButton(
@@ -39,7 +39,7 @@ PreferredSize homeAppBar({
           ),
         SizedBox(
           width: MediaQuery.of(context).size.width *
-              (hasMinWidth(context) ? 0.2 : 0.16),
+              (ScreenSize.hasMinWidth ? 0.2 : 0.16),
           child: Padding(
             padding: const EdgeInsets.only(right: 1),
             child: AppBarButton(
@@ -55,7 +55,7 @@ PreferredSize homeAppBar({
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width *
-              (hasMinWidth(context) ? 0.2 : 0.16),
+              (ScreenSize.hasMinWidth ? 0.2 : 0.16),
           child: AppBarButton(
             onPress: () {
               PersonalizedDialogPage.open(

@@ -52,7 +52,7 @@ class SelectedChilds extends StatelessWidget {
               Expanded(
                 flex: productAndCommentFlex,
                 child: Text(
-                  hasMinWidth(context)
+                  ScreenSize.hasMinWidth
                       ? R.string.selectedProductsAndComments
                       : R.string.productsAndComments,
                   style: TextStyle(
@@ -64,7 +64,7 @@ class SelectedChilds extends StatelessWidget {
               Expanded(
                 flex: quantityFlex,
                 child: Text(
-                  hasMinWidth(context)
+                  ScreenSize.hasMinWidth
                       ? R.string.quantity
                       : R.string.quantityAbbreviated,
                   textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class SelectedChilds extends StatelessWidget {
         const SizedBox(height: 10),
         Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: hasMinWidth(context) ? 8 : 2),
+              EdgeInsets.symmetric(horizontal: ScreenSize.hasMinWidth ? 8 : 2),
           child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

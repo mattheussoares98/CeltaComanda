@@ -43,7 +43,7 @@ class TitleAppbar extends StatelessWidget {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: hasMinWidth(context) ? 23 : 15,
+                    fontSize: ScreenSize.hasMinWidth ? 23 : 15,
                     fontWeight: FontWeight.w300,
                     fontStyle: FontStyle.italic,
                   ),

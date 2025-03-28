@@ -125,7 +125,7 @@ class CommandField extends StatelessWidget {
             icon: Row(
               children: [
                 Icon(Icons.search),
-                if (hasMinWidth(context))
+                if (ScreenSize.hasMinWidth)
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(R.string.search),

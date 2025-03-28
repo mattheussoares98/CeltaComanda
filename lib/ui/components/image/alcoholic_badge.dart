@@ -15,7 +15,7 @@ class AlcoholicBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 0,
-      right: hasMinWidth(context) ? width * 0.4 : 10,
+      right: ScreenSize.hasMinWidth ? width * 0.4 : 10,
       child: Image.asset(
         "lib/ui/assets/images/prohibed_for_minors.png",
         fit: BoxFit.cover,

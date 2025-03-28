@@ -1,2 +1,2 @@
-export 'generate_bytes.dart';
+export 'generate_bitmap.dart';
 export './print_bitmap.dart';

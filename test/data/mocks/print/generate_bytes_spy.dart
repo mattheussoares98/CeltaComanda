@@ -4,9 +4,16 @@ import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
-class GenerateBytesSpy extends Mock implements GenerateBytes {
-  When _mocGenerateBytesCall() =>
-      when(() => this.generateRowWithColumns(any()));
+class GenerateBytesSpy extends Mock implements GenerateBitmap {
+  When _mocGenerateBytesCall() => when(() => this.generate(
+        commandNumber: any(named: "commandNumber"),
+        pdvNumber: any(named: "pdvNumber"),
+        printed: any(named: "printed"),
+        subTotal: any(named: "subTotal"),
+        serviceChargeValue: any(named: "serviceChargeValue"),
+        totalLiquid: any(named: "totalLiquid"),
+        peopleQuantity: any(named: "peopleQuantity"),
+      ));
 
   void mockGenerateBytes(List<int> bytes) {
     this._mocGenerateBytesCall().thenAnswer((any) async => bytes);

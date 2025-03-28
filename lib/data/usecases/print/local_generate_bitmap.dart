@@ -47,8 +47,8 @@ class LocalGenerateBitmap implements GenerateBitmap {
                       child:
                           pw.Text(R.string.products, style: pwTextStyle(true)),
                     ),
-                    pw.SizedBox(width: 5),
-                    pw.Text(R.string.quantityAbbreviated,
+                    pw.SizedBox(width: 2),
+                    pw.Text("${R.string.price} ${R.string.quantityAbbreviated}",
                         style: pwTextStyle(true)),
                     pw.SizedBox(width: 5),
                     pw.Text(R.string.total, style: pwTextStyle(true)),
@@ -60,7 +60,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
                       child: pw.Row(
                         children: [
                           pw.Expanded(
-                            flex: 70,
+                            flex: 66,
                             child: pw.Text(
                               e.Product!.Name,
                               style: pwTextStyle(false),
@@ -68,19 +68,33 @@ class LocalGenerateBitmap implements GenerateBitmap {
                           ),
                           pw.SizedBox(width: 5),
                           pw.Expanded(
-                            flex: 15,
-                            child: pw.Text(
-                              e.Quantity.toString()
-                                  .toDouble()
-                                  .toString()
-                                  .toBrazilianNumber(2, true),
-                              textAlign: pw.TextAlign.center,
-                              style: pwTextStyle(false),
+                            flex: 18,
+                            child: pw.Row(
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text(
+                                  e.Product!.SaleRetailPraticed
+                                      .toDouble()
+                                      .toString()
+                                      .toBrazilianNumber(2),
+                                  // textAlign: pw.TextAlign.start,
+                                  style: pwTextStyle(false),
+                                ),
+                                pw.Text(
+                                  e.Quantity.toString()
+                                      .toDouble()
+                                      .toString()
+                                      .toBrazilianNumber(2, true),
+                                  textAlign: pw.TextAlign.end,
+                                  style: pwTextStyle(false),
+                                ),
+                              ],
                             ),
                           ),
-                          pw.SizedBox(width: 5),
+                          pw.SizedBox(width: 2),
                           pw.Expanded(
-                            flex: 15,
+                            flex: 14,
                             child: pw.Text(
                               e.TotalLiquid.toString(),
                               textAlign: pw.TextAlign.end,

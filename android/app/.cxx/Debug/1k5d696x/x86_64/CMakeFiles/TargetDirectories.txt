@@ -1,0 +1,2 @@
+/Users/soares/development/projects/clean_celta_mobile/android/app/.cxx/Debug/1k5d696x/x86_64/CMakeFiles/edit_cache.dir
+/Users/soares/development/projects/clean_celta_mobile/android/app/.cxx/Debug/1k5d696x/x86_64/CMakeFiles/rebuild_cache.dir

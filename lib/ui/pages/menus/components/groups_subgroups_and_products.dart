@@ -54,7 +54,7 @@ class _GroupsSubgroupsAndProductsState
   double getProductItemExtent(BuildContext context) {
     return (MediaQuery.of(context).size.height -
             AppBar().preferredSize.height) /
-        (ScreenSize.hasMinWidth ? 3 : 3.5);
+        (ScreenSize.hasMinWidth ? 3 : 6);
   }
 
   @override

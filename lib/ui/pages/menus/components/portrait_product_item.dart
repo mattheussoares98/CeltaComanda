@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../../ui/components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -42,7 +43,7 @@ class PortraitProductItem extends StatelessWidget {
                   height: itemHeight,
                   width: itemWidth,
                   selectedProduct: productsViewModel,
-                  zoomImage: true,
+                  zoomImage: EnterpriseBuilder.entity?.zoomImage ?? false,
                 ),
               ),
             ),

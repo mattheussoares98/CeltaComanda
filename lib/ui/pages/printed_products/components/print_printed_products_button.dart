@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../ui/helpers/helpers.dart';
 import '../../pages.dart';
 
 class PrintPrintedProductsButton extends StatelessWidget {
@@ -17,8 +18,25 @@ class PrintPrintedProductsButton extends StatelessWidget {
     return IconButton(
       onPressed: homePresenter.commandEntity!.commandNumber == null
           ? null
-          : () {
-              printedProductsPresenter.goToPrintProductsPage();
+          : () async {
+              // final bitmap =
+              await printedProductsPresenter.printPrintedProducts(
+                commandNumber:
+                    homePresenter.commandEntity!.commandNumber!.toInt(),
+                pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
+              );
+
+              //PARA TESTAR COMO VAI SAIR A IMPRESSÃo
+              // if (bitmap != null) {
+              //   notificationDialog(
+              //     context: context,
+              //     showCancelAndConfirmMessage: false,
+              //     showCloseAction: true,
+              //     titleMessage: "",
+              //     content: Image.memory(bitmap),
+              //     onPress: () async {},
+              //   );
+              // }
             },
       icon: Icon(Icons.print),
     );

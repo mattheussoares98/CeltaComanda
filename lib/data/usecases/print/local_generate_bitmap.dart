@@ -27,7 +27,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
         margin: pw.EdgeInsets.all(0),
         build: (pw.Context context) {
           return pw.Container(
-            color: PdfColors.amber100,
+            // color: PdfColors.amber100, only to show the page size
             child: pw.Column(
               children: [
                 pw.Center(

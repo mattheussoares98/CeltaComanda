@@ -31,56 +31,65 @@ class _PriceAndUpdateProductQuantityState
         insertProductPresenter.calculateProductTotalLiquid(widget.product);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         FittedBox(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[300],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: widget.onPressedReduceQuantity,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 3),
-                    child: Text(
-                      widget.product.productQuantity
-                          .toString()
-                          .toBrazilianNumber(
-                              widget.product.productQuantity < 0.01 ? 3 : 2),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: StringSize.size,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey[300],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove),
+                            color: Theme.of(context).primaryColor,
+                            onPressed: widget.onPressedReduceQuantity,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 3),
+                            child: Text(
+                              widget.product.productQuantity
+                                  .toString()
+                                  .toBrazilianNumber(
+                                      widget.product.productQuantity < 0.01
+                                          ? 3
+                                          : 2),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: StringSize.size,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add),
+                            color: Theme.of(context).primaryColor,
+                            onPressed: widget.onPressedAddQuantity,
+                          ),
+                        ],
                       ),
-                    ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: widget.onPressedAddQuantity,
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
-        FittedBox(
-          child: Text(
-            totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-              fontSize: StringSize.size,
-            ),
+              Text(
+                totalLiquid.toString().toBrazilianNumber().addBrazilianCoin(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                  fontSize: StringSize.size,
+                ),
+              ),
+            ],
           ),
         ),
       ],

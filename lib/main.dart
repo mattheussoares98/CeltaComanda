@@ -25,6 +25,7 @@ class App extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     StringSize.updateStringSize(context);
+    ScreenSize.updateHasMinWidth(context);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     final routeObserver = Get.put<RouteObserver>(RouteObserver<PageRoute>());
 

@@ -126,12 +126,12 @@ class GetxCancelProductsPresenter extends GetxController
         IncrementType: printedModel.IncrementType,
       );
 
-      await removePrintedProduct.remove(product.SaleRequestProductId!);//TODO remove this in next version
-      // await updateSaleRequest.update(//TODO uncomment this in next version
-      //   commandNumber: commandNumber.toString(),
-      //   saleRequestId: printedModel.SaleRequestId!,
-      //   model: model,
-      // );
+      // await removePrintedProduct.remove(product.SaleRequestProductId!);
+      await updateSaleRequest.update(
+        commandNumber: commandNumber.toString(),
+        saleRequestId: printedModel.SaleRequestId!,
+        model: model,
+      );
 
       await cartPresenter.updateIncrementValue(commandNumber.toString());
 

@@ -19,7 +19,7 @@ class ProductName extends StatelessWidget {
     final canceledBy = configurationsPresenter.loadedUsers
         ?.where((e) => e.UserId == product.UserIdOfCancellation)
         .toList();
-    final GlobalKey<TooltipState> _tooltipKey = GlobalKey<TooltipState>();
+    final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
 
     return Row(
       children: [
@@ -38,10 +38,10 @@ class ProductName extends StatelessWidget {
             canceledBy.isNotEmpty)
           InkWell(
             onTap: () {
-              _tooltipKey.currentState?.ensureTooltipVisible();
+              tooltipKey.currentState?.ensureTooltipVisible();
             },
             child: Tooltip(
-              key: _tooltipKey,
+              key: tooltipKey,
               message: "${R.string.canceledBy}: ${canceledBy.first.Name}",
               child: Icon(
                 Icons.info,

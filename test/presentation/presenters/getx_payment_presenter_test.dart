@@ -501,6 +501,8 @@ void main() {
       );
 
       verify(() => concInsertSaleMovement.insert(
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
             pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
             covenantCode: null,
@@ -806,6 +808,8 @@ void main() {
       );
 
       verify(() => concInsertSaleMovement.insert(
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
             pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
             covenantCode: null,
@@ -1412,6 +1416,8 @@ void main() {
           .getTotalLiquid(printedProductsPresenter.printed);
 
       verify(() => concInsertSaleMovement.insert(
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt(),
             pdvId: homePresenter.commandEntityController!.pdv!.PdvId!,
             pdvNumber: homePresenter.commandEntityController!.pdv!.PdvNumber!,
             covenantCode: covenantCode.toInt(),

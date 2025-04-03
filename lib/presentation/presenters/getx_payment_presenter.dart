@@ -156,6 +156,7 @@ class GetxPaymentPresenter extends GetxController
           .getServiceChargeValue(printedProductsPresenter.printed);
 
       await concInsertSaleMovement.insert(
+        commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
         couponFiscalNumber: newCouponNumber,
         pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,

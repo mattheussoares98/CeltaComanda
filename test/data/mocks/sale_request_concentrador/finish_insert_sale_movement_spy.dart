@@ -7,6 +7,7 @@ import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 class ConcInsertSaleMovementSpy extends Mock implements ConcInsertSaleMovement {
   When _mockInsertCall() => when(() => this.insert(
         pdvId: any(named: "pdvId"),
+        commandNumber: any(named: "commandNumber"),
         couponFiscalNumber: any(named: "couponFiscalNumber"),
         pdvNumber: any(named: "pdvNumber"),
         covenantCode: any(named: "covenantCode"),

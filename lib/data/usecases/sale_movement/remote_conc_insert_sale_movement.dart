@@ -31,6 +31,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,
+    required int commandNumber,
   }) async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
@@ -62,6 +63,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
         finalizations: finalizations,
         products: products,
         xml: xmlToGenerateFiscal,
+        commandNumber: commandNumber,
       );
 
       final response = await httpAdapter.request(
@@ -95,6 +97,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     required String? eletronicAccessKey,
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
+    required int commandNumber,
   }) {
     final enterprise = EnterpriseBuilder.entity;
     final atualDate = DateTime.now();
@@ -136,7 +139,7 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
         totalLiquid: totalLiquid,
       ),
       Products: correctProducts,
-      SaleRequestPersonalizedCode: null,
+      SaleRequestPersonalizedCode: commandNumber.toString().padLeft(3, "0"),
       SellerCode: /* seller != null ? seller.SellersId : (int?)null */ null,
       SellerName: /* seller != null ? seller.Name : null */ null,
       PersonalizedCode: personalizedCode,

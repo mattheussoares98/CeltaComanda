@@ -15,5 +15,6 @@ abstract class ConcInsertSaleMovement {
     required List<ConcentratorFinalizationEntity> finalizations,
     required List<PrintedProductsViewModel> products,
     required String? xmlToGenerateFiscal,
+    required int commandNumber,
   });
 }

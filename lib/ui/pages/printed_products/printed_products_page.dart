@@ -64,7 +64,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: Text(R.string.requested),
           ),
           actions: [
-            if (homePresenter.isGeneratingVersionToRede)
+            if (homePresenter.isGeneratingVersionToRede ||
+                homePresenter.isGeneratingVersionToGetNet)
               PrintPrintedProductsButton(),
             LoadPrintedProductsAgainButton(),
           ],

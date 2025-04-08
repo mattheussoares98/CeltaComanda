@@ -338,7 +338,7 @@ class GetxPrintedProductsPresenter
     required void Function() closePage,
   }) {
     if (homePresenter.isGeneratingVersionToRede) {
-      _channel = MethodChannel(Channels.redePrinter.name);
+      _channel = MethodChannel(Channels.printer.name);
     } else {
       return;
     }

@@ -15,7 +15,7 @@
 //     private val flutterEngine: FlutterEngine,
 //     private val connectorPrinter: IConnectorPrinter,
 // ) {
-//     private val channel: String = "redePrinter"
+//     private val channel: String = "printer"
 //     private val mainHandler = Handler(Looper.getMainLooper())
 
 //     fun setupMethodChannel() {
@@ -76,7 +76,7 @@
 //     }
 
 //     class PrinterCallbackImpl(
-//         private val channel: String = "redePrinter",
+//         private val channel: String = "printer",
 //         private val flutterEngine: FlutterEngine,
 //     ) : IPrinterCallback {
 //         private val mainHandler = Handler(Looper.getMainLooper())

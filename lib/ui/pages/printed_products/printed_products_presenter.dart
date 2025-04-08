@@ -54,9 +54,6 @@ abstract class PrintedProductsPresenter
   void goToPrintProductsPage();
   void updatePeopleQuantity({required bool isAdding});
 
-  void initPrinterResultHandler({
-    required HomePresenter homePresenter,
-    required void Function() closePage,
-  });
+  void initPrinterResultHandler(HomePresenter homePresenter);
   void disposePrinterHandler();
 }

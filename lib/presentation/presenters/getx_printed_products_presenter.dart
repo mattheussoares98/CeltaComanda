@@ -333,11 +333,9 @@ class GetxPrintedProductsPresenter
 
   MethodChannel? _channel;
   @override
-  void initPrinterResultHandler({
-    required HomePresenter homePresenter,
-    required void Function() closePage,
-  }) {
-    if (homePresenter.isGeneratingVersionToRede) {
+  void initPrinterResultHandler(HomePresenter homePresenter) {
+    if (homePresenter.isGeneratingVersionToRede ||
+        homePresenter.isGeneratingVersionToGetNet) {
       _channel = MethodChannel(Channels.printer.name);
     } else {
       return;
@@ -345,11 +343,10 @@ class GetxPrintedProductsPresenter
 
     _channel?.setMethodCallHandler((MethodCall call) async {
       if (call.arguments == "Success") {
-        closePage();
-        debugPrint("Success");
+        isLoading = false;
       } else {
-        closePage();
-        debugPrint("Error");
+        mainError = UIError.unexpected;
+        isLoading = false;
       }
     });
   }

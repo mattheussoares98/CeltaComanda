@@ -25,6 +25,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
   final TextEditingController personalizedCodeController =
       TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  PrintedProductsPresenter? printedProductsPresenter;
 
   @override
   void dispose() {
@@ -34,6 +35,22 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
     alertMessageSubscription?.cancel();
     personalizedCodeController.dispose();
     passwordController.dispose();
+
+    printedProductsPresenter?.disposePrinterHandler();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        printedProductsPresenter = Provider.of(context, listen: false);
+        HomePresenter homePresenter = Provider.of(context, listen: false);
+
+        printedProductsPresenter?.initPrinterResultHandler(homePresenter);
+      }
+    });
   }
 
   @override

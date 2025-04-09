@@ -99,14 +99,16 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                   backgroundColor: Theme.of(context).primaryColorDark,
                   maxRadius: 70,
                   child: Padding(
-                    padding: const EdgeInsets.all(3),
-                    child: Text(
-                      widget.quantity.toString().toBrazilianNumber(
-                            widget.quantityController == null ? 0 : 2,
-                          ),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
+                    padding: const EdgeInsets.all(8),
+                    child: FittedBox(
+                      child: Text(
+                        widget.quantity.toString().toBrazilianNumber(
+                              widget.quantityController == null ? 0 : 2,
+                            ),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 50,
+                        ),
                       ),
                     ),
                   ),

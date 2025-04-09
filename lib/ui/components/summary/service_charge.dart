@@ -25,43 +25,19 @@ class ServiceCharge extends StatefulWidget {
 }
 
 class _ServiceChargeState extends State<ServiceCharge> {
-  final passwordController = TextEditingController();
-  final passwordFocusNode = FocusNode();
-  final formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    passwordController.dispose();
-    passwordFocusNode.dispose();
-  }
-
   Future<void> removeCharge(
     PrintedProductsPresenter printedProductsPresenter,
     CancelProductsPresenter cancelProductsPresenter,
   ) async {
-    bool? isValid;
+    await printedProductsPresenter.removeServiceCharge(
+      commandNumber: widget.commandNumber.toString(),
+      printed: widget.printed,
+    );
 
     if (widget.validateUserAndPassword) {
-      isValid = formKey.currentState?.validate();
+      await cancelProductsPresenter.loadProducts(widget.commandNumber);
     } else {
-      isValid = true;
-    }
-
-    if (isValid == true) {
-      if (widget.validateUserAndPassword) {
-        Navigator.of(context).pop();
-      }
-      await printedProductsPresenter.removeServiceCharge(
-        commandNumber: widget.commandNumber.toString(),
-        printed: widget.printed,
-      );
-      if (widget.validateUserAndPassword) {
-        await cancelProductsPresenter.loadProducts(widget.commandNumber);
-      } else {
-        await widget.loadPrintedAgain();
-      }
+      await widget.loadPrintedAgain();
     }
   }
 
@@ -79,9 +55,15 @@ class _ServiceChargeState extends State<ServiceCharge> {
             await removeCharge(
                 printedProductsPresenter, cancelProductsPresenter);
           });
-      return;
+    } else {
+      notificationDialog(
+        context: context,
+        titleMessage: R.string.configurations,
+        showCancelAndConfirmMessage: false,
+        content: ConfigurationsDialogPage(),
+        onPress: () async {},
+      );
     }
-    passwordController.clear();
   }
 
   @override

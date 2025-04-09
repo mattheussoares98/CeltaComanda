@@ -4,35 +4,25 @@ import '../../ui/helpers/convert/convert.dart';
 
 class UpdateQuantity extends StatelessWidget {
   final int quantity;
-  final Function() reduceQuantity;
-  final Function() addQuantity;
+  final void Function() reduceQuantity;
+  final void Function() addQuantity;
+  final TextEditingController? quantityController;
+  final bool? canWriteQuantity;
   const UpdateQuantity({
     required this.quantity,
     required this.reduceQuantity,
     required this.addQuantity,
+    this.canWriteQuantity,
+    this.quantityController,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget getCircleAvatar({
-      required bool isAddingQuantity,
-      required void Function()? updateQuantity,
-    }) {
-      return InkWell(
-        onTap: updateQuantity,
-        child: CircleAvatar(
-          maxRadius: 40,
-          backgroundColor: Theme.of(context).primaryColorLight,
-          child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
-        ),
-      );
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        getCircleAvatar(
+        _CircleAvatar(
           isAddingQuantity: false,
           updateQuantity: quantity <= 1 ? null : reduceQuantity,
         ),
@@ -53,11 +43,33 @@ class UpdateQuantity extends StatelessWidget {
             ),
           ),
         ),
-        getCircleAvatar(
-          isAddingQuantity: true,
+        _CircleAvatar(
           updateQuantity: addQuantity,
+          isAddingQuantity: true,
         ),
       ],
+    );
+  }
+}
+
+class _CircleAvatar extends StatelessWidget {
+  final void Function()? updateQuantity;
+  final bool isAddingQuantity;
+
+  const _CircleAvatar({
+    required this.updateQuantity,
+    required this.isAddingQuantity,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: updateQuantity,
+      child: CircleAvatar(
+        maxRadius: 40,
+        backgroundColor: Theme.of(context).primaryColorLight,
+        child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
+      ),
     );
   }
 }

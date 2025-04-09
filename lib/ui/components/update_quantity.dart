@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../ui/helpers/convert/convert.dart';
+import '../helpers/helpers.dart';
+import 'components.dart';
 
 class UpdateQuantity extends StatelessWidget {
   final int quantity;
@@ -19,33 +20,64 @@ class UpdateQuantity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        _CircleAvatar(
-          isAddingQuantity: false,
-          updateQuantity: quantity <= 1 ? null : reduceQuantity,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            maxRadius: 70,
-            child: Padding(
-              padding: const EdgeInsets.all(3),
-              child: Text(
-                quantity.toString().toBrazilianNumber(0),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 50,
+        if (canWriteQuantity == true && quantityController != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: TextFormField(
+              controller: quantityController,
+              decoration: formFieldDecoration(
+                context: context,
+                hintText: R.string.quantity,
+                labelText: R.string.quantity,
+                errorText: null,
+                prefixIcon: IconButton(
+                  onPressed: () {
+                    reduceQuantity();
+                    quantityController?.text = quantity.toString();
+                  },
+                  icon: Icon(Icons.remove),
+                ),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    addQuantity();
+                    quantityController?.text = quantity.toString();
+                  },
+                  icon: Icon(Icons.add),
                 ),
               ),
             ),
           ),
-        ),
-        _CircleAvatar(
-          updateQuantity: addQuantity,
-          isAddingQuantity: true,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _CircleAvatar(
+              isAddingQuantity: false,
+              updateQuantity: quantity <= 1 ? null : reduceQuantity,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: CircleAvatar(
+                backgroundColor: Theme.of(context).primaryColorDark,
+                maxRadius: 70,
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Text(
+                    quantity.toString().toBrazilianNumber(0),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 50,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            _CircleAvatar(
+              updateQuantity: addQuantity,
+              isAddingQuantity: true,
+            ),
+          ],
         ),
       ],
     );

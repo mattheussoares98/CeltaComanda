@@ -362,7 +362,7 @@ class GetxInsertProductsPresenter extends GetxController
     if (newQuantity != null) {
       if (newQuantity <= 0) {
         totalProductsQuantity = 1;
-      } else if (maxQuantity > 1 && newQuantity > maxQuantity) {
+      } else if (newQuantity > maxQuantity) {
         mainError = null;
         mainError = UIError.maximumQuantityAchieved;
         totalProductsQuantity = maxQuantity;

@@ -51,6 +51,10 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                 controller: widget.quantityController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (value) {
+                  if (formKey.currentState?.validate() == false) {
+                    return;
+                  }
+
                   if (widget.updateQuantity != null) {
                     widget.updateQuantity!(value);
                   }
@@ -58,7 +62,12 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return R.string.msgInvalidNumber;
-                  } else if (value.toDouble() <= 0) {
+                  } else if (value.contains(".") && value.contains(",")) {
+                    return R.string.msgInvalidNumber;
+                  } else if (value.split(".").length > 2 ||
+                      value.split(",").length > 2) {
+                    return R.string.msgInvalidNumber;
+                  } else if (value.toDouble() < 0.001) {
                     return R.string.msgInvalidNumber;
                   }
                   return null;

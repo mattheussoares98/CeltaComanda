@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../main/builders/builders.dart';
 import '../helpers/helpers.dart';
 import '../pages/pages.dart';
 
@@ -58,10 +59,11 @@ class _PriceAndUpdateProductQuantityState
                             child: Text(
                               widget.product.productQuantity
                                   .toString()
-                                  .toBrazilianNumber(
-                                      widget.product.productQuantity < 0.01
-                                          ? 3
-                                          : 2),
+                                  .toBrazilianNumber(EnterpriseBuilder.entity
+                                              ?.canInsertQuantityManually ==
+                                          true
+                                      ? 3
+                                      : 2),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,

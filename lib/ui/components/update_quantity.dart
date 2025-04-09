@@ -103,7 +103,7 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                     child: FittedBox(
                       child: Text(
                         widget.quantity.toString().toBrazilianNumber(
-                              widget.quantityController == null ? 0 : 2,
+                              widget.quantityController == null ? 0 : 3,
                             ),
                         style: const TextStyle(
                           color: Colors.white,

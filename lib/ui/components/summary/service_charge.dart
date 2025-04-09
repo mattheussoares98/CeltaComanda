@@ -54,8 +54,6 @@ class _ServiceChargeState extends State<ServiceCharge> {
         Navigator.of(context).pop();
       }
       await printedProductsPresenter.removeServiceCharge(
-        validateUserAndPassword: widget.validateUserAndPassword,
-        password: passwordController.text,
         commandNumber: widget.commandNumber.toString(),
         printed: widget.printed,
       );

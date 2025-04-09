@@ -239,10 +239,8 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> removeServiceCharge({
-    required String password,
     required String commandNumber,
     required PrintedViewModel printed,
-    required bool validateUserAndPassword,
   }) async {
     isLoading = true;
     mainError = null;

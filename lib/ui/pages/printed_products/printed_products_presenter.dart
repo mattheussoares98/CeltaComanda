@@ -39,10 +39,8 @@ abstract class PrintedProductsPresenter
   });
 
   Future<void> removeServiceCharge({
-    required String password,
     required String commandNumber,
     required PrintedViewModel printed,
-    required bool validateUserAndPassword,
   });
 
   Future<Uint8List?> printPrintedProducts({

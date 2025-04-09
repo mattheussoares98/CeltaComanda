@@ -1630,6 +1630,29 @@ void main() {
 
       expect(sut.totalProductsQuantity, quantity);
     });
+    test("Should update quantity to 1 if is minor than zero", () {
+      double quantity = faker.randomGenerator.decimal() - 1;
+
+      sut.updateTotalProductsQuantity(newQuantity: quantity);
+
+      expect(sut.totalProductsQuantity, 1);
+    });
+    test(
+        "Should update to maximum quantity if try to insert a quantity greater than the maximum",
+        () {
+      sut.updateSelectedProduct(
+        product: selectedProduct,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      double maximumQuantity =
+          (selectedProduct.MaximumQuantityForSale?.toDouble() ?? 99);
+      double newQuantity = maximumQuantity + 1;
+
+      sut.updateTotalProductsQuantity(newQuantity: newQuantity);
+
+      expect(sut.totalProductsQuantity, maximumQuantity);
+    });
   });
 
   group("Update total liquid", () {

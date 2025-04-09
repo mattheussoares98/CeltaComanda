@@ -51,9 +51,6 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                 controller: widget.quantityController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (value) {
-                  if (formKey.currentState?.validate() != true) {
-                    return;
-                  }
                   if (widget.updateQuantity != null) {
                     widget.updateQuantity!(value);
                   }

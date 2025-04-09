@@ -22,7 +22,7 @@ class PaymentDetails extends StatelessWidget {
           child: Text(
             "${R.string.total}: ${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed).toDouble().toString().toBrazilianNumber()} R\$",
             style: TextStyle(
-              fontSize: StringSize.size * 2,
+              fontSize: StringSize.size * 1.2,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -35,7 +35,7 @@ class PaymentDetails extends StatelessWidget {
                 child: Text(
                   "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                   style: TextStyle(
-                    fontSize: StringSize.size * 2,
+                    fontSize: StringSize.size * 1.2,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -44,7 +44,7 @@ class PaymentDetails extends StatelessWidget {
                 child: Text(
                   "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
                   style: TextStyle(
-                    fontSize: StringSize.size * 2,
+                    fontSize: StringSize.size * 1.2,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -54,7 +54,7 @@ class PaymentDetails extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 8,
-            vertical: 20,
+            vertical: 10,
           ),
           child: Text(
             R.string.selectPaymentOption,

@@ -57,7 +57,7 @@ class PaymentButtons extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
                     await callPayment(
@@ -73,7 +73,7 @@ class PaymentButtons extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
                     await callPayment(
@@ -89,7 +89,7 @@ class PaymentButtons extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
                     await callPayment(
@@ -108,7 +108,7 @@ class PaymentButtons extends StatelessWidget {
           ),
         if (EnterpriseBuilder.entity?.useCovenant == true)
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 8),
             child: ElevatedButton(
               onPressed: () {
                 paymentPresenter.goToCovenantPage();

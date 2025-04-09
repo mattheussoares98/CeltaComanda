@@ -188,27 +188,27 @@ class _PaymentPageState extends State<PaymentPage>
                             homePresenter.isGeneratingVersionToRede)
                           Form(
                             key: formKey,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  WriteAmoutValueToPay(
-                                    paymentController: paymentController,
-                                    paymentFocusNode: paymentFocusNode,
-                                    cpfCnpjFocusNode: cpfCnpjFocusNode,
-                                  ),
-                                  WriteCpfCnpjField(
-                                    formKey: formKey,
-                                    cpfCnpjController: cpfCnpjController,
-                                    cpfCnpjFocusNode: cpfCnpjFocusNode,
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              children: [
+                                WriteAmoutValueToPay(
+                                  paymentController: paymentController,
+                                  paymentFocusNode: paymentFocusNode,
+                                  cpfCnpjFocusNode: cpfCnpjFocusNode,
+                                ),
+                                WriteCpfCnpjField(
+                                  formKey: formKey,
+                                  cpfCnpjController: cpfCnpjController,
+                                  cpfCnpjFocusNode: cpfCnpjFocusNode,
+                                ),
+                              ],
                             ),
                           ),
-                        PaymentButtons(
-                          paymentController: paymentController,
-                          formKey: formKey,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: PaymentButtons(
+                            paymentController: paymentController,
+                            formKey: formKey,
+                          ),
                         ),
                       ],
                     ),

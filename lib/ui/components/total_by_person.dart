@@ -45,6 +45,14 @@ class _TotalByPersonState extends State<TotalByPerson> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (printedProductsPresenter.printed == null)
+              Text(
+                R.string.msgCommandDontHaveOpenValues,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColorLight,
+                  fontSize: StringSize.size,
+                ),
+              ),
             if (printedProductsPresenter.printed != null)
               Column(
                 children: [
@@ -79,11 +87,6 @@ class _TotalByPersonState extends State<TotalByPerson> {
                     style: TextStyle(fontSize: StringSize.size),
                   ),
                 ],
-              ),
-            if (printedProductsPresenter.printed == null)
-              Text(
-                R.string.emptyTable,
-                style: TextStyle(color: Colors.red, fontSize: StringSize.size),
               ),
             if (homePresenter.commandEntity?.isFixedCommandNumber == false)
               Padding(

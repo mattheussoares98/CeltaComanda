@@ -235,4 +235,23 @@ void main() {
     verify(() => cartPresenter.updateIncrementValue(commandNumber.toString()))
         .called(1);
   });
+  test("Should not update increment value if increment type is not 1",
+      () async {
+    printedViewModel = PrintedViewModel.fromEntity(
+      EntityFactory.makePrintedEntity(incrementType: 0),
+    );
+
+    await sut.cancelProduct(
+      UserIdOfCancellation: faker.randomGenerator.integer(100),
+      printedModel: PrintedModel.fromViewModel(printedViewModel),
+      product: printedViewModel.Products[0],
+      commandNumber: commandNumber,
+      showSuccessMessage: () {},
+      cartPresenter: cartPresenter,
+      homePresenter: homePresenter,
+    );
+
+    verifyNever(
+        () => cartPresenter.updateIncrementValue(commandNumber.toString()));
+  });
 }

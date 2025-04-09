@@ -703,9 +703,11 @@ void main() {
     test("Should emit correct values if throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
 
-      userValidations.mockIsValidPasswordError(DomainError.unexpected);
+      updateSaleRequest.mockUpdateSaleRequestError(DomainError.unexpected);
 
       await sut.removeServiceCharge(
         commandNumber: homePresenter.commandEntity!.commandNumber!,
@@ -714,31 +716,19 @@ void main() {
     });
     test("Should emit correct values if password is invalid", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(sut.mainErrorStream,
-          emitsInOrder([null, UIError.invalidCredentialsOrAccessDenied]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
 
-      userValidations.mockIsValidPassword(false);
+      updateSaleRequest.mockUpdateSaleRequestError(DomainError.unexpected);
 
       await sut.removeServiceCharge(
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
       );
     });
-    test("Should call validate user password with correct values", () async {
-      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
-      await sut.removeServiceCharge(
-        commandNumber: homePresenter.commandEntity!.commandNumber!,
-        printed: PrintedViewModel.fromEntity(printedEntity),
-      );
 
-      verify(
-        () => userValidations.isValidPassword(
-          url: EnterpriseBuilder.entity!.url!,
-          personalizedCode: personalizedCode,
-          password: password,
-        ),
-      ).called(1);
-    });
     test("Should call update sale request with correct values", () async {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(

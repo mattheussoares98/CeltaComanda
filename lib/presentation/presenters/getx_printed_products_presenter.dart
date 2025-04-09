@@ -261,13 +261,8 @@ class GetxPrintedProductsPresenter
       );
 
       await loadPrinted(commandNumber);
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = UIError.unexpected;
     } finally {
       isLoading = false;
     }

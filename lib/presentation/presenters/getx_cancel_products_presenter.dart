@@ -133,7 +133,9 @@ class GetxCancelProductsPresenter extends GetxController
         model: model,
       );
 
-      await cartPresenter.updateIncrementValue(commandNumber.toString());
+      if (printedModel.IncrementType == 1) {
+        await cartPresenter.updateIncrementValue(commandNumber.toString());
+      }
 
       await loadProducts(commandNumber);
       showSuccessMessage();

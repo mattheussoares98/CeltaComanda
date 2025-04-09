@@ -152,16 +152,18 @@ class _LandScapeInsertProductsPageBodyState
                       quantity: insertProductPresenter.totalProductsQuantity,
                       quantityController: widget.quantityController,
                       reduceQuantity: () {
-                        insertProductPresenter
-                            .updateTotalProductsQuantity(false);
+                        insertProductPresenter.updateTotalProductsQuantity(
+                          isAddingQuantity: false,
+                        );
                         widget.quantityController?.text = widget
                             .selectedProduct.productQuantity
                             .toString()
                             .toBrazilianNumber();
                       },
                       addQuantity: () {
-                        insertProductPresenter
-                            .updateTotalProductsQuantity(true);
+                        insertProductPresenter.updateTotalProductsQuantity(
+                          isAddingQuantity: true,
+                        );
                         widget.quantityController?.text = widget
                             .selectedProduct.productQuantity
                             .toString()

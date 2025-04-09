@@ -351,8 +351,11 @@ class GetxInsertProductsPresenter extends GetxController
   }
 
   @override
-  void updateTotalProductsQuantity(bool isAddingQuantity) {
-    if (isAddingQuantity) {
+  void updateTotalProductsQuantity({
+    double? newQuantity,
+    bool? isAddingQuantity,
+  }) {
+    if (isAddingQuantity == true) {
       final maxQuantity =
           selectedProductValue?.MaximumQuantityForSale?.toDouble() == 0
               ? 99.00

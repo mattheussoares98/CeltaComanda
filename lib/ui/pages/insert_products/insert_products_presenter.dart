@@ -28,7 +28,10 @@ abstract class InsertProductPresenter implements Listenable {
     required List<ProductCompositionViewModel> productsCompositions,
   }); //usa só pra validar se o total do combo está calculando corretamente
 
-  void updateTotalProductsQuantity(bool isAddingQuantity);
+  void updateTotalProductsQuantity({
+    double? newQuantity,
+    bool? isAddingQuantity,
+  });
 
   double calculateProductCompositionTotalLiquid(
       {required ProductCompositionViewModel product});

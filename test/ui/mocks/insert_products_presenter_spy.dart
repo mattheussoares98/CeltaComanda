@@ -31,7 +31,8 @@ class InsertProductsPresenterSpy extends Mock
     when(() => this.updateSelectedIndexOfProduct(
           father: any(named: "father"),
           index: any(named: "index"),
-          expansibleGroupFromProductPresenter: any(named: "expansibleGroupFromProductPresenter"),
+          expansibleGroupFromProductPresenter:
+              any(named: "expansibleGroupFromProductPresenter"),
         )).thenAnswer((any) => any);
     when(() => this.calculateProductCompositionPrice(any()))
         .thenAnswer((_) => 0);
@@ -39,7 +40,10 @@ class InsertProductsPresenterSpy extends Mock
         .thenAnswer((_) => 0);
     when(() => this.calculateProductCompositionTotalLiquid(
         product: any(named: "product"))).thenAnswer((_) => 0);
-    when(() => this.updateTotalProductsQuantity(any())).thenAnswer((any) => any);
+    when(() => this.updateTotalProductsQuantity(
+          newQuantity: any(named: "newQuantity"),
+          isAddingQuantity: any(named: "isAddingQuantity"),
+        )).thenAnswer((any) => any);
     when(() => this.updateSaleRequest(
           homePresenter: any(named: "homePresenter"),
           cartPresenter: any(named: "cartPresenter"),

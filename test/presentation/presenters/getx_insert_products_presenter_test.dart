@@ -255,11 +255,11 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 2);
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 3);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
       expect(sut.totalProductsQuantity, 2);
 
       await sut.updateSelectedProduct(
@@ -438,7 +438,7 @@ void main() {
             expansibleGroupFromProductPresenter,
       );
 
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 2);
 
       sut.clearData(
@@ -450,9 +450,9 @@ void main() {
     });
 
     test("Should not reduce quantity when atual quantity is 1", () {
-      sut.updateTotalProductsQuantity(false);
-      sut.updateTotalProductsQuantity(false);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
       expect(sut.totalProductsQuantity, 1);
     });
 
@@ -1268,9 +1268,9 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateTotalProductsQuantity(true);
-      sut.updateTotalProductsQuantity(true);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
     });
     test("Should update total liquid when update selected product", () async {
       expectLater(
@@ -1396,9 +1396,9 @@ void main() {
         expansibleGroupFromProductPresenter:
             expansibleGroupFromProductPresenter,
       );
-      sut.updateTotalProductsQuantity(true);
-      sut.updateTotalProductsQuantity(true);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
     });
     test("Should update total liquid when update selected product", () async {
       expectLater(
@@ -1538,7 +1538,7 @@ void main() {
 
       expect(sut.totalProductsQuantity, 1);
 
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
 
       expect(sut.totalProductsQuantity, 2);
     });
@@ -1555,12 +1555,12 @@ void main() {
       expectLater(sut.mainErrorStream,
           emitsInOrder([null, UIError.maximumQuantityAchieved]));
 
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 2);
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 3);
       sut.updateTotalProductsQuantity(
-          true); //o máximo é 3, por isso aqui emite o erro
+          isAddingQuantity: true); //o máximo é 3, por isso aqui emite o erro
       expect(sut.totalProductsQuantity, 3);
     });
     test(
@@ -1568,8 +1568,8 @@ void main() {
         () async {
       expect(sut.totalProductsQuantity, 1);
 
-      sut.updateTotalProductsQuantity(false);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
       expect(sut.totalProductsQuantity, 1);
     });
     test("Should reduce quantity if atual quantity is more than 2", () async {
@@ -1581,9 +1581,9 @@ void main() {
 
       expect(sut.totalProductsQuantity, 1);
 
-      sut.updateTotalProductsQuantity(true);
+      sut.updateTotalProductsQuantity(isAddingQuantity: true);
       expect(sut.totalProductsQuantity, 2);
-      sut.updateTotalProductsQuantity(false);
+      sut.updateTotalProductsQuantity(isAddingQuantity: false);
       expect(sut.totalProductsQuantity, 1);
     });
   });

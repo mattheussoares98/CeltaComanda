@@ -167,6 +167,9 @@ class _WebAddOrEditEnterprisePageState
             blockUseAppIfIsOutdated = webEnterprisesPresenter
                     .selectedEnterprise?.blockUseAppIfIsOutdated ==
                 true;
+            canInsertQuantityManually = webEnterprisesPresenter
+                    .selectedEnterprise?.canInsertQuantityManually ==
+                true;
             minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
                         .selectedEnterprise?.minutesVerifyUpdateMenu !=
                     null
@@ -340,7 +343,12 @@ class _WebAddOrEditEnterprisePageState
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: GoToDevicesInfoPageButton(),
+                            child: CanInsertQuantityManuallySwitch(
+                              canInsertQuantityManually:
+                                  canInsertQuantityManually ?? false,
+                              changeCanInsertQuantityManually:
+                                  changeCanInsertQuantityManually,
+                            ),
                           ),
                         ],
                       ),
@@ -355,7 +363,9 @@ class _WebAddOrEditEnterprisePageState
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Expanded(child: SizedBox()),
+                          Expanded(
+                            child: GoToDevicesInfoPageButton(),
+                          ),
                         ],
                       ),
                     ],

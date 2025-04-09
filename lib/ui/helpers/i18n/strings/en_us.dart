@@ -160,6 +160,7 @@ class EnUs implements Translation {
       'Cancel products or remove service charge';
   String get cancelProduct => 'Cancel product';
   String get canInsertCommentManually => 'Can insert comment manually';
+  String get canInsertQuantityManually => 'Can insert quantity manually';
   String get ccsUrl => 'CCS URL';
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';

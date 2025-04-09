@@ -58,7 +58,8 @@ class PtBr implements Translation {
   String get msgMaximumQuantityAchieved => "Quantidade máxima atingida";
   String get msgCallWaiterToUpdateApp =>
       "Por favor, chame o garçom para atualizar o aplicativo";
-  String get msgNeedUpdateApplication => "Você precisa atualizar o app para conseguir usá-lo";
+  String get msgNeedUpdateApplication =>
+      "Você precisa atualizar o app para conseguir usá-lo";
   String get msgNewCommandMustBeEmpty => "A mesa nova precisa estar vazia";
   String get msgNewTable => "Mesa nova";
   String get msgNotFound => "Valor não encontrado";
@@ -148,7 +149,8 @@ class PtBr implements Translation {
   String get avaliate => 'Avaliar';
   String get blockCommand => 'Bloquear comanda';
   String get blockTable => 'Bloquear mesa';
-  String get blockUseAppIfIsOutdated => 'Bloquear uso do app se estiver desatualizado';
+  String get blockUseAppIfIsOutdated =>
+      'Bloquear uso do app se estiver desatualizado';
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";
@@ -157,6 +159,7 @@ class PtBr implements Translation {
       "Cancelar produtos ou remover taxa de serviço";
   String get cancelProduct => "Cancelar produto";
   String get canInsertCommentManually => "Pode inserir comentário manualmente";
+  String get canInsertQuantityManually => "Pode inserir quantitade manualmente";
   String get ccsUrl => "Url do CCS";
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";

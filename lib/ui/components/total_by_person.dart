@@ -45,37 +45,46 @@ class _TotalByPersonState extends State<TotalByPerson> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              R.string.peopleQuantity,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: StringSize.size),
-            ),
-            const SizedBox(height: 10),
-            FittedBox(
-              child: UpdateQuantity(
-                quantity: printedProductsPresenter.peopleQuantity.toDouble(),
-                reduceQuantity: () {
-                  setState(() {
-                    printedProductsPresenter.updatePeopleQuantity(
-                      isAdding: false,
-                    );
-                  });
-                },
-                addQuantity: () {
-                  setState(() {
-                    printedProductsPresenter.updatePeopleQuantity(
-                      isAdding: true,
-                    );
-                  });
-                },
+            if (printedProductsPresenter.printed != null)
+              Column(
+                children: [
+                  Text(
+                    R.string.peopleQuantity,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: StringSize.size),
+                  ),
+                  const SizedBox(height: 10),
+                  UpdateQuantity(
+                    quantity:
+                        printedProductsPresenter.peopleQuantity.toDouble(),
+                    reduceQuantity: () {
+                      setState(() {
+                        printedProductsPresenter.updatePeopleQuantity(
+                          isAdding: false,
+                        );
+                      });
+                    },
+                    addQuantity: () {
+                      setState(() {
+                        printedProductsPresenter.updatePeopleQuantity(
+                          isAdding: true,
+                        );
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: StringSize.size),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: StringSize.size),
-            ),
+            if (printedProductsPresenter.printed == null)
+              Text(
+                R.string.emptyTable,
+                style: TextStyle(color: Colors.red, fontSize: StringSize.size),
+              ),
             if (homePresenter.commandEntity?.isFixedCommandNumber == false)
               Padding(
                 padding: const EdgeInsets.only(top: 10),

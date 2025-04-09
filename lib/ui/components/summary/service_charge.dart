@@ -58,10 +58,12 @@ class _ServiceChargeState extends State<ServiceCharge> {
     } else {
       notificationDialog(
         context: context,
-        titleMessage: R.string.configurations,
+        titleMessage: R.string.removeServiceCharge,
         showCancelAndConfirmMessage: false,
-        content: ConfigurationsDialogPage(),
-        onPress: () async {},
+        content: ConfigurationsDialogPage(onlyRemoveServiceChargeOnSuccess: true),
+        onPress: () async {
+          debugPrint("Caiu aqui ué, só fechar a tela");
+        },
       );
     }
   }

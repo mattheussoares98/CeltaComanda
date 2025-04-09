@@ -15,7 +15,9 @@ class TableConfigurationsItemDrawer extends StatelessWidget {
         notificationDialog(
           context: context,
           titleMessage: R.string.accessConfigurations,
-          content: ConfigurationsDialogPage(),
+          content: ConfigurationsDialogPage(
+            onlyRemoveServiceChargeOnSuccess: false,
+          ),
           showCancelAndConfirmMessage: false,
           onPress: () async {},
         );

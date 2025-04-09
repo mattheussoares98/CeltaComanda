@@ -5,7 +5,11 @@ import '../../../../../../ui/helpers/helpers.dart';
 import '../../../pages.dart';
 
 class ConfigurationsDialogPage extends StatefulWidget {
-  const ConfigurationsDialogPage({super.key});
+  final bool onlyRemoveServiceChargeOnSuccess;
+  const ConfigurationsDialogPage({
+    super.key,
+    required this.onlyRemoveServiceChargeOnSuccess,
+  });
 
   @override
   State<ConfigurationsDialogPage> createState() =>
@@ -40,6 +44,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   Future<void> goToConfigurationsPage(
     HomePresenter homePresenter,
     ConfigurationsPresenter configurationsPresenter,
+    PrintedProductsPresenter printedProductsPresenter,
   ) async {
     bool? isValid = formKey.currentState?.validate();
 
@@ -48,11 +53,18 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
 
       Navigator.of(context).pop();
 
-      await homePresenter.newGoToConfigurationsPage(
-        username: selectedUser!.Name!,
-        password: passwordController.text,
-        configurationsPresenter: configurationsPresenter,
-      );
+      if (widget.onlyRemoveServiceChargeOnSuccess) {
+        printedProductsPresenter.removeServiceCharge(
+          commandNumber: homePresenter.commandEntity!.commandNumber!,
+          printed: printedProductsPresenter.printed!,
+        );
+      } else {
+        await homePresenter.newGoToConfigurationsPage(
+          username: selectedUser!.Name!,
+          password: passwordController.text,
+          configurationsPresenter: configurationsPresenter,
+        );
+      }
     }
   }
 
@@ -60,6 +72,8 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
     ConfigurationsPresenter configurationsPresenter =
+        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
     return GestureDetector(
@@ -92,6 +106,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                             await goToConfigurationsPage(
                               homePresenter,
                               configurationsPresenter,
+                              printedProductsPresenter,
                             );
                           }),
                     ],
@@ -104,6 +119,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                       await goToConfigurationsPage(
                         homePresenter,
                         configurationsPresenter,
+                        printedProductsPresenter,
                       );
                     },
                   ),

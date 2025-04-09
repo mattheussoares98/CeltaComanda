@@ -53,8 +53,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             const SizedBox(height: 10),
             FittedBox(
               child: UpdateQuantity(
-                quantity: printedProductsPresenter.peopleQuantity
-                    .toDouble(), //TODO test if appears as double or int
+                quantity: printedProductsPresenter.peopleQuantity.toDouble(),
                 reduceQuantity: () {
                   setState(() {
                     printedProductsPresenter.updatePeopleQuantity(

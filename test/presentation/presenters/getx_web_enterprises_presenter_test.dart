@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:mocktail/mocktail.dart';
@@ -193,6 +194,8 @@ void main() {
             EnterpriseBuilder.entity!.canInsertCommentManually,
         blockUseAppIfIsOutdated:
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
+        canInsertQuantityManually:
+            EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
     });
     test("Should emit correct values on error", () async {
@@ -225,6 +228,8 @@ void main() {
             EnterpriseBuilder.entity!.canInsertCommentManually,
         blockUseAppIfIsOutdated:
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
+        canInsertQuantityManually:
+            EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
     });
 
@@ -247,6 +252,7 @@ void main() {
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
+        canInsertQuantityManually: enterprise.canInsertQuantityManually,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -300,45 +306,33 @@ void main() {
         useReducedNameOnProduct: null,
         canInsertCommentManually: null,
         blockUseAppIfIsOutdated: null,
+        canInsertQuantityManually: null,
       );
 
-      var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
+      final enterpriseWithCorrectValue = EnterpriseEntity(
+        enterpriseName: enterprise.enterpriseName,
+        url: enterprise.url!,
+        concentradorUrl: enterprise.concentradorUrl!,
+        urlCCS: enterprise.urlCCS!,
+        enterpriseId: enterprise.enterpriseId!,
+        enterpriseConcentradorParametersEntity: null,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
         persistApp: false,
-        serviceChargePercentageOrValue: null,
+        verifyCommandBlocked: null,
         latestCompatibleVersion: null,
+        serviceChargePercentageOrValue: null,
         zoomImage: null,
         useCovenant: null,
         minutesVerifyUpdateMenu: null,
         useReducedNameOnProduct: null,
-        verifyCommandBlocked: null,
         canInsertCommentManually: null,
         blockUseAppIfIsOutdated: null,
-        enterpriseName: enterprise.enterpriseName,
-        url: enterprise.url,
-        enterpriseId: enterprise.enterpriseId,
-        concentradorUrl: enterprise.concentradorUrl,
-        urlCCS: enterprise.urlCCS,
-        enterpriseConcentradorParametersEntity:
-            enterprise.enterpriseConcentradorParametersEntity,
-      );
-      enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
-        atualEntity: enterpriseWithCorrectValues,
-        enterpriseConcentradorParametersEntity: true,
-        latestCompatibleVersion: true,
-        serviceChargePercentageOrValue: true,
-        zoomImage: true,
-        useCovenant: true,
-        minutesVerifyUpdateMenu: true,
-        useReducedNameOnProduct: true,
-        verifyCommandBlocked: true,
-        canInsertCommentManually: true,
-        blockUseAppIfIsOutdated: true,
+        canInsertQuantityManually: null,
       );
 
       verify(() =>
-              updateEnterpriseParameters.update(enterpriseWithCorrectValues))
+              updateEnterpriseParameters.update(enterpriseWithCorrectValue))
           .called(1);
     });
 
@@ -364,6 +358,8 @@ void main() {
             EnterpriseBuilder.entity!.canInsertCommentManually,
         blockUseAppIfIsOutdated:
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
+        canInsertQuantityManually:
+            EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
 
       expect(result, true);
@@ -393,6 +389,8 @@ void main() {
             EnterpriseBuilder.entity!.canInsertCommentManually,
         blockUseAppIfIsOutdated:
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
+        canInsertQuantityManually:
+            EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
 
       expect(result, false);

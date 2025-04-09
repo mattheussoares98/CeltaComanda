@@ -22,6 +22,7 @@ class EnterpriseModel {
   final bool? verifyCommandBlocked;
   final bool? canInsertCommentManually;
   final bool? blockUseAppIfIsOutdated;
+  final bool? canInsertQuantityManually;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -42,6 +43,7 @@ class EnterpriseModel {
     required this.verifyCommandBlocked,
     required this.canInsertCommentManually,
     required this.blockUseAppIfIsOutdated,
+    required this.canInsertQuantityManually,
   });
 
   factory EnterpriseModel.fromJson(
@@ -83,6 +85,7 @@ class EnterpriseModel {
       verifyCommandBlocked: json["verifyCommandBlocked"],
       canInsertCommentManually: json["canInsertCommentManually"],
       blockUseAppIfIsOutdated: json["blockUseAppIfIsOutdated"],
+      canInsertQuantityManually: json["canInsertQuantityManually"],
     );
   }
 
@@ -107,6 +110,7 @@ class EnterpriseModel {
         verifyCommandBlocked: entity.verifyCommandBlocked,
         canInsertCommentManually: entity.canInsertCommentManually,
         blockUseAppIfIsOutdated: entity.blockUseAppIfIsOutdated,
+        canInsertQuantityManually: entity.canInsertQuantityManually,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -129,6 +133,7 @@ class EnterpriseModel {
         verifyCommandBlocked: verifyCommandBlocked,
         canInsertCommentManually: canInsertCommentManually,
         blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
+        canInsertQuantityManually: canInsertQuantityManually,
       );
 
   Map<String, dynamic> toJson() => {
@@ -155,5 +160,6 @@ class EnterpriseModel {
         'verifyCommandBlocked': verifyCommandBlocked,
         'canInsertCommentManually': canInsertCommentManually,
         'blockUseAppIfIsOutdated': blockUseAppIfIsOutdated,
+        'canInsertQuantityManually': canInsertQuantityManually,
       };
 }

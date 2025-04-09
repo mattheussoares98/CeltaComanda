@@ -99,6 +99,7 @@ class GetxWebEnterprisesPresenter extends GetxController
     required bool? verifyCommandBlocked,
     required bool? canInsertCommentManually,
     required bool? blockUseAppIfIsOutdated,
+    required bool? canInsertQuantityManually,
   }) async {
     try {
       isLoading = true;
@@ -128,6 +129,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         verifyCommandBlocked: verifyCommandBlocked,
         canInsertCommentManually: canInsertCommentManually,
         blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
+        canInsertQuantityManually: canInsertQuantityManually,
       );
 
       await updateEnterpriseParameters.update(enterprise);

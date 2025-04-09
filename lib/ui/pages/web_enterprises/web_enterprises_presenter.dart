@@ -30,6 +30,7 @@ abstract class WebEnterprisesPresenter implements Listenable {
     required bool? verifyCommandBlocked,
     required bool? canInsertCommentManually,
     required bool? blockUseAppIfIsOutdated,
+    required bool? canInsertQuantityManually,
   });
 
   Future<bool> deleteEnterpriseData();

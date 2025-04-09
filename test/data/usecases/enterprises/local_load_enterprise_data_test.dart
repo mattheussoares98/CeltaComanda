@@ -72,6 +72,7 @@ void main() {
           verifyCommandBlocked: enterpriseJsonData["verifyCommandBlocked"],
           canInsertCommentManually: enterpriseJsonData["canInsertCommentManually"],
           blockUseAppIfIsOutdated: enterpriseJsonData["blockUseAppIfIsOutdated"],
+          canInsertQuantityManually: enterpriseJsonData["canInsertQuantityManually"],
         ),
       );
     });

@@ -95,6 +95,7 @@ class GetxEnterprisePresenter extends GetxController
             verifyCommandBlocked: firebaseData.verifyCommandBlocked,
             canInsertCommentManually: firebaseData.canInsertCommentManually,
             blockUseAppIfIsOutdated: firebaseData.blockUseAppIfIsOutdated,
+            canInsertQuantityManually: firebaseData.canInsertQuantityManually,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -177,6 +178,7 @@ class GetxEnterprisePresenter extends GetxController
       verifyCommandBlocked: null,
       canInsertCommentManually: null,
       blockUseAppIfIsOutdated: null,
+      canInsertQuantityManually: null,
     );
 
     _enterpriseError.value =
@@ -241,6 +243,7 @@ class GetxEnterprisePresenter extends GetxController
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
+        canInsertQuantityManually: enterprise.canInsertQuantityManually,
       );
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -273,6 +276,7 @@ class GetxEnterprisePresenter extends GetxController
         verifyCommandBlocked: null,
         canInsertCommentManually: null,
         blockUseAppIfIsOutdated: null,
+        canInsertQuantityManually: null,
       );
 
       EnterpriseBuilder.entity = newEnterprise;

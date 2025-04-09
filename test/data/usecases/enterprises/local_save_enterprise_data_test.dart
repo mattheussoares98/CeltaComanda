@@ -38,6 +38,7 @@ void main() {
       verifyCommandBlocked: faker.randomGenerator.boolean(),
       canInsertCommentManually: faker.randomGenerator.boolean(),
       blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
+      canInsertQuantityManually: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

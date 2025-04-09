@@ -40,6 +40,7 @@ class _WebAddOrEditEnterprisePageState
   bool? verifyCommandBlocked = true;
   bool? canInsertCommentManually = false;
   bool? blockUseAppIfIsOutdated = false;
+  bool? canInsertQuantityManually = false;
 
   void changeUseProductReducedName() {
     setState(() {
@@ -50,6 +51,12 @@ class _WebAddOrEditEnterprisePageState
   void changeBlockUseAppIfIsOutdated() {
     setState(() {
       blockUseAppIfIsOutdated = !(blockUseAppIfIsOutdated ?? false);
+    });
+  }
+
+  void changeCanInsertQuantityManually() {
+    setState(() {
+      canInsertQuantityManually = !(canInsertQuantityManually ?? false);
     });
   }
 
@@ -376,6 +383,7 @@ class _WebAddOrEditEnterprisePageState
               verifyCommandBlocked: verifyCommandBlocked,
               canInsertCommentManually: canInsertCommentManually,
               blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
+              canInsertQuantityManually: canInsertQuantityManually,
             ),
           ],
         ),

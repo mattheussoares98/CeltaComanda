@@ -10,11 +10,13 @@ class PortraitInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final double totalLiquid;
   final int indexOfAtualOption;
+  final TextEditingController? quantityController;
   const PortraitInsertProductsPageBody({
     required this.insertProductsViewModel,
     required this.selectedProduct,
     required this.totalLiquid,
     required this.indexOfAtualOption,
+    required this.quantityController,
     super.key,
   });
 
@@ -178,19 +180,26 @@ class _PortraitInsertProductsPageBodyState
                         padding: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                         ),
-                        child: FittedBox(
-                          child: UpdateQuantity(
-                            quantity:
-                                insertProductPresenter.totalProductsQuantity,
-                            reduceQuantity: () {
-                              insertProductPresenter
-                                  .updateTotalProductsQuantity(false);
-                            },
-                            addQuantity: () {
-                              insertProductPresenter
-                                  .updateTotalProductsQuantity(true);
-                            },
-                          ),
+                        child: UpdateQuantity(
+                          quantityController: widget.quantityController,
+                          quantity:
+                              insertProductPresenter.totalProductsQuantity,
+                          reduceQuantity: () {
+                            insertProductPresenter
+                                .updateTotalProductsQuantity(false);
+                            widget.quantityController?.text = widget
+                                .selectedProduct.productQuantity
+                                .toString()
+                                .toBrazilianNumber();
+                          },
+                          addQuantity: () {
+                            insertProductPresenter
+                                .updateTotalProductsQuantity(true);
+                            widget.quantityController?.text = widget
+                                .selectedProduct.productQuantity
+                                .toString()
+                                .toBrazilianNumber();
+                          },
                         ),
                       ),
                   ],

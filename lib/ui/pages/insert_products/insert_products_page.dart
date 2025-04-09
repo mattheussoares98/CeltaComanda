@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../../ui/helpers/sizes/sizes.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -19,6 +20,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
     with KeyboardManager, LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  TextEditingController? quantityController;
 
   bool showObligatoryOptions = false;
   bool showComments = false;
@@ -27,11 +29,22 @@ class _InsertProductsPageState extends State<InsertProductsPage>
   bool showUpdateQuantity = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (EnterpriseBuilder.entity?.canInsertQuantityManually == true) {
+      quantityController = TextEditingController();
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+
+    quantityController?.dispose();
   }
 
   ProductsViewModel? selectedProduct;
@@ -71,6 +84,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
 
   @override
   Widget build(BuildContext context) {
+    ScreenSize.updateHasMinWidth(context);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
     InsertProductPresenter insertProductPresenter =
@@ -140,6 +154,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                   indexOfAtualOption: indexOfAtualOption,
                                   insertProductsViewModel:
                                       snapshotInsertProduct.data,
+                                  quantityController: quantityController,
                                 )
                               : PortraitInsertProductsPageBody(
                                   selectedProduct: selectedProduct!,
@@ -147,6 +162,7 @@ class _InsertProductsPageState extends State<InsertProductsPage>
                                   indexOfAtualOption: indexOfAtualOption,
                                   insertProductsViewModel:
                                       snapshotInsertProduct.data,
+                                  quantityController: quantityController,
                                 ),
                         );
                       });

@@ -120,7 +120,7 @@ class ProductCompositionViewModel extends Equatable {
             .toList(),
       );
 
-  ProductCompositionEntity toEntity([int productQuantity = 1]) =>
+  ProductCompositionEntity toEntity([double productQuantity = 1]) =>
       ProductCompositionEntity(
         ProductCompositionId: int.tryParse(ProductCompositionId.toString()),
         EnterpriseId: int.tryParse(EnterpriseId.toString()),

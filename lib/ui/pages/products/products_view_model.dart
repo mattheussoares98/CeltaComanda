@@ -402,7 +402,7 @@ class ProductsViewModel extends Equatable {
         childsComposition: childsComposition?.map((e) => e.toEntity()).toList(),
       );
 
-  ProductEntity toEntityWithSelectedChilds(int productQuantity) =>
+  ProductEntity toEntityWithSelectedChilds(double productQuantity) =>
       ProductEntity(
         Schedule: Schedule?.toEntity(),
         ProductComplement: ProductComplement,

@@ -3,48 +3,70 @@ import 'package:flutter/material.dart';
 import '../helpers/helpers.dart';
 import 'components.dart';
 
-class UpdateQuantity extends StatelessWidget {
-  final int quantity;
+class UpdateQuantity extends StatefulWidget {
+  final double quantity;
   final void Function() reduceQuantity;
   final void Function() addQuantity;
   final TextEditingController? quantityController;
-  final bool? canWriteQuantity;
   const UpdateQuantity({
     required this.quantity,
     required this.reduceQuantity,
     required this.addQuantity,
-    this.canWriteQuantity,
     this.quantityController,
     super.key,
   });
 
   @override
+  State<UpdateQuantity> createState() => _UpdateQuantityState();
+}
+
+class _UpdateQuantityState extends State<UpdateQuantity> {
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted && widget.quantityController != null) {
+        widget.quantityController?.text =
+            widget.quantity.toString().toBrazilianNumber();
+      }
+    });
+  }
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (canWriteQuantity == true && quantityController != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: TextFormField(
-              controller: quantityController,
-              decoration: formFieldDecoration(
-                context: context,
-                hintText: R.string.quantity,
-                labelText: R.string.quantity,
-                errorText: null,
-                prefixIcon: IconButton(
-                  onPressed: () {
-                    reduceQuantity();
-                    quantityController?.text = quantity.toString();
-                  },
-                  icon: Icon(Icons.remove),
-                ),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    addQuantity();
-                    quantityController?.text = quantity.toString();
-                  },
-                  icon: Icon(Icons.add),
+        if (widget.quantityController != null)
+          Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: TextFormField(
+                controller: widget.quantityController,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onChanged: (value) {
+                  if (formKey.currentState?.validate() != true) {
+                    return;
+                  }
+                  //TODO change quantity
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return R.string.msgInvalidNumber;
+                  } else if (value.toDouble() <= 0) {
+                    return R.string.msgInvalidNumber;
+                  }
+                  return null;
+                },
+                decoration: formFieldDecoration(
+                  context: context,
+                  hintText: R.string.quantity,
+                  labelText: R.string.quantity,
+                  errorText: null,
                 ),
               ),
             ),
@@ -52,30 +74,38 @@ class UpdateQuantity extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _CircleAvatar(
-              isAddingQuantity: false,
-              updateQuantity: quantity <= 1 ? null : reduceQuantity,
+            Expanded(
+              child: _CircleAvatar(
+                isAddingQuantity: false,
+                updateQuantity:
+                    widget.quantity <= 1 ? null : widget.reduceQuantity,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColorDark,
-                maxRadius: 70,
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Text(
-                    quantity.toString().toBrazilianNumber(0),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: CircleAvatar(
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  maxRadius: 70,
+                  child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: Text(
+                      widget.quantity.toString().toBrazilianNumber(0),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            _CircleAvatar(
-              updateQuantity: addQuantity,
-              isAddingQuantity: true,
+            Expanded(
+              child: _CircleAvatar(
+                updateQuantity: widget.addQuantity,
+                isAddingQuantity: true,
+              ),
             ),
           ],
         ),

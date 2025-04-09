@@ -9,7 +9,7 @@ import '../../pages.dart';
 class AdvanceButton extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int leftSelectedIndex;
-  final int quantity;
+  final double quantity;
   final double totalPrice;
   final SelectedOptionType? atualOption;
   final InsertProductsViewModel insertProductsViewModel;

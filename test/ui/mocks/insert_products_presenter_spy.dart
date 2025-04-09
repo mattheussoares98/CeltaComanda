@@ -17,7 +17,7 @@ class InsertProductsPresenterSpy extends Mock
   final isLoadingController = StreamController<bool>();
   final enterpriseNameTextEditingController = TextEditingController();
   final bool isUpdatedEnterpriseNameController = false;
-  final int totalComboxQuantityController = 0;
+  final double totalComboxQuantityController = 0;
 
   InsertProductsPresenterSpy() {
     when(() => this.mainErrorStream)

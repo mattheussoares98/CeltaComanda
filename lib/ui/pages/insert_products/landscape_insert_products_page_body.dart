@@ -10,11 +10,13 @@ class LandScapeInsertProductsPageBody extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final double totalLiquid;
   final int indexOfAtualOption;
+  final TextEditingController? quantityController;
   const LandScapeInsertProductsPageBody({
     required this.insertProductsViewModel,
     required this.selectedProduct,
     required this.totalLiquid,
     required this.indexOfAtualOption,
+    required this.quantityController,
     super.key,
   });
 
@@ -148,13 +150,22 @@ class _LandScapeInsertProductsPageBodyState
                     Expanded(
                         child: UpdateQuantity(
                       quantity: insertProductPresenter.totalProductsQuantity,
+                      quantityController: widget.quantityController,
                       reduceQuantity: () {
                         insertProductPresenter
                             .updateTotalProductsQuantity(false);
+                        widget.quantityController?.text = widget
+                            .selectedProduct.productQuantity
+                            .toString()
+                            .toBrazilianNumber();
                       },
                       addQuantity: () {
                         insertProductPresenter
                             .updateTotalProductsQuantity(true);
+                        widget.quantityController?.text = widget
+                            .selectedProduct.productQuantity
+                            .toString()
+                            .toBrazilianNumber();
                       },
                     )),
                   if (atualOption == SelectedOptionType.fatherComposition)

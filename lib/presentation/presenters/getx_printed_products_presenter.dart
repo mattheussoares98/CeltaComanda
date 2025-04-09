@@ -239,7 +239,6 @@ class GetxPrintedProductsPresenter
 
   @override
   Future<void> removeServiceCharge({
-    required int userPersonalizedCode,
     required String password,
     required String commandNumber,
     required PrintedViewModel printed,
@@ -248,18 +247,6 @@ class GetxPrintedProductsPresenter
     isLoading = true;
     mainError = null;
     try {
-      if (validateUserAndPassword) {
-        bool isValid = await userValidations.isValidPassword(
-          url: EnterpriseBuilder.entity!.url!,
-          personalizedCode: userPersonalizedCode,
-          password: password,
-        );
-
-        if (!isValid) {
-          throw DomainError.invalidCredentialsOrAccessDenied;
-        }
-      }
-
       final model = SaleRequestModel(
         CovenantCode: null,
         CustomerCode: null,

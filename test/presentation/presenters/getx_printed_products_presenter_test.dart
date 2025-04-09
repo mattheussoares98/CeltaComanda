@@ -696,7 +696,6 @@ void main() {
       // expectLater(sut.mainErrorStream, emits(null)); //dont works because in the loadPrinted already put null value in mainStream
 
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -711,7 +710,6 @@ void main() {
       userValidations.mockIsValidPasswordError(DomainError.unexpected);
 
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -726,7 +724,6 @@ void main() {
       userValidations.mockIsValidPassword(false);
 
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -736,7 +733,6 @@ void main() {
     test("Should call validate user password with correct values", () async {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -754,7 +750,6 @@ void main() {
     test("Should call update sale request with correct values", () async {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -780,7 +775,6 @@ void main() {
     test("Should call loadPrinted", () async {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),
@@ -800,7 +794,6 @@ void main() {
         () async {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
       await sut.removeServiceCharge(
-        userPersonalizedCode: personalizedCode,
         password: password,
         commandNumber: homePresenter.commandEntity!.commandNumber!,
         printed: PrintedViewModel.fromEntity(printedEntity),

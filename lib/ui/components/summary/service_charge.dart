@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,6 @@ class ServiceCharge extends StatefulWidget {
 }
 
 class _ServiceChargeState extends State<ServiceCharge> {
-  final userController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordFocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
@@ -35,7 +33,6 @@ class _ServiceChargeState extends State<ServiceCharge> {
   void dispose() {
     super.dispose();
 
-    userController.dispose();
     passwordController.dispose();
     passwordFocusNode.dispose();
   }
@@ -58,7 +55,6 @@ class _ServiceChargeState extends State<ServiceCharge> {
       }
       await printedProductsPresenter.removeServiceCharge(
         validateUserAndPassword: widget.validateUserAndPassword,
-        userPersonalizedCode: userController.text.toInt(),
         password: passwordController.text,
         commandNumber: widget.commandNumber.toString(),
         printed: widget.printed,
@@ -87,87 +83,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
           });
       return;
     }
-    userController.clear();
     passwordController.clear();
-    notificationDialog(
-      context: context,
-      titleMessage: R.string.removeServiceCharge,
-      showCancelAndConfirmMessage: false,
-      content: SizedBox(
-        height: MediaQuery.of(context).size.height / 3,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    controller: userController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    keyboardType: TextInputType.number,
-                    onFieldSubmitted: (value) {
-                      if (FocusScope.of(context).canRequestFocus) {
-                        FocusScope.of(
-                                NavigatorKey.navigatorKey.currentState!.context)
-                            .requestFocus(passwordFocusNode);
-                      }
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return R.string.msgWriteUserCode;
-                      }
-                      return null;
-                    },
-                    decoration: formFieldDecoration(
-                      context: context,
-                      hintText: R.string.userCode,
-                      labelText: R.string.userCode,
-                      errorText: null,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    obscureText: true,
-                    controller: passwordController,
-                    focusNode: passwordFocusNode,
-                    onFieldSubmitted: (value) async {
-                      await removeCharge(
-                          printedProductsPresenter, cancelProductsPresenter);
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return R.string.msgWritePassword;
-                      }
-                      return null;
-                    },
-                    decoration: formFieldDecoration(
-                      context: context,
-                      hintText: R.string.password,
-                      labelText: R.string.password,
-                      errorText: null,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await removeCharge(
-                          printedProductsPresenter, cancelProductsPresenter);
-                    },
-                    child: Text(
-                      R.string.confirm,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      onPress: () async {},
-    );
   }
 
   @override

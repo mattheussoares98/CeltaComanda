@@ -39,7 +39,6 @@ abstract class PrintedProductsPresenter
   });
 
   Future<void> removeServiceCharge({
-    required int userPersonalizedCode,
     required String password,
     required String commandNumber,
     required PrintedViewModel printed,

@@ -1,6 +1,3 @@
-export './block_use_app_if_is_outdated_switch.dart';
-export './can_insert_comment_manually_switch.dart';
-export './can_insert_quantity_manually_switch.dart';
 export './ccs_url_input.dart';
 export './concentrator_url_input.dart';
 export './confirm_update_enterprise_data_button.dart';
@@ -12,10 +9,6 @@ export './info_icon_button.dart';
 export './latest_compatible_version_input.dart';
 export './minutes_verify_update_menu_input.dart';
 export './navs_url_input.dart';
+export './personalized_switch.dart';
 export './service_charge_percentage_input.dart';
 export './update_menu_in_devices_button.dart';
-export './use_covenant_switch.dart';
-export './use_product_reduced_name_switch.dart';
-export './verify_blocked_command_switch.dart';
-export './zoom_image_switch.dart';
-

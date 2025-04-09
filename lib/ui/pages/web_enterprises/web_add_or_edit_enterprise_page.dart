@@ -297,16 +297,18 @@ class _WebAddOrEditEnterprisePageState
                       Row(
                         children: [
                           Expanded(
-                            child: ZoomImageSwitch(
-                              zoomImage: zoomImage ?? false,
-                              changeZoom: changeZoom,
+                            child: PersonalizedSwitch(
+                              value: zoomImage ?? false,
+                              changeValue: changeZoom,
+                              title: R.string.zoomImage,
                             ),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: UseCovenantSwitch(
-                              useCovenant: useCovenant ?? false,
-                              changeUseCovenant: changeUseCovenant,
+                            child: PersonalizedSwitch(
+                              value: useCovenant ?? false,
+                              changeValue: changeUseCovenant,
+                              title: R.string.enableCovenant,
                             ),
                           ),
                         ],
@@ -314,19 +316,18 @@ class _WebAddOrEditEnterprisePageState
                       Row(
                         children: [
                           Expanded(
-                            child: UseProductReducedNameSwitch(
-                              useReducedName: useProductReducedName ?? false,
-                              changeUseProductReducedName:
-                                  changeUseProductReducedName,
+                            child: PersonalizedSwitch(
+                              value: useProductReducedName ?? false,
+                              changeValue: changeUseProductReducedName,
+                              title: R.string.useProductReducedName,
                             ),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: VerifyBlockedCommandSwitch(
-                              verifyCommandIsBlocked:
-                                  verifyCommandBlocked ?? false,
-                              changeVerifyCommandIsBlocked:
-                                  changeVerifyCommandIsBlocked,
+                            child: PersonalizedSwitch(
+                              value: verifyCommandBlocked ?? false,
+                              changeValue: changeVerifyCommandIsBlocked,
+                              title: R.string.needLiberateCommand,
                             ),
                           ),
                         ],
@@ -334,20 +335,18 @@ class _WebAddOrEditEnterprisePageState
                       Row(
                         children: [
                           Expanded(
-                            child: CanInsertCommentManuallySwitch(
-                              canInsertCommentManually:
-                                  canInsertCommentManually ?? false,
-                              changeCanInsertCommentManually:
-                                  changeCanInsertCommentManually,
+                            child: PersonalizedSwitch(
+                              value: canInsertCommentManually ?? false,
+                              changeValue: changeCanInsertCommentManually,
+                              title: R.string.canInsertCommentManually,
                             ),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: CanInsertQuantityManuallySwitch(
-                              canInsertQuantityManually:
-                                  canInsertQuantityManually ?? false,
-                              changeCanInsertQuantityManually:
-                                  changeCanInsertQuantityManually,
+                            child: PersonalizedSwitch(
+                              value: canInsertQuantityManually ?? false,
+                              changeValue: changeCanInsertQuantityManually,
+                              title: R.string.canInsertQuantityManually,
                             ),
                           ),
                         ],
@@ -355,11 +354,10 @@ class _WebAddOrEditEnterprisePageState
                       Row(
                         children: [
                           Expanded(
-                            child: BlockUseAppIfIsOutdatedSwitch(
-                              blockUseAppIfIsOutdated:
-                                  blockUseAppIfIsOutdated ?? false,
-                              changeBlockAppIfIsOutdated:
-                                  changeBlockUseAppIfIsOutdated,
+                            child: PersonalizedSwitch(
+                              value: blockUseAppIfIsOutdated ?? false,
+                              changeValue: changeBlockUseAppIfIsOutdated,
+                              title: R.string.blockUseAppIfIsOutdated,
                             ),
                           ),
                           const SizedBox(width: 8),

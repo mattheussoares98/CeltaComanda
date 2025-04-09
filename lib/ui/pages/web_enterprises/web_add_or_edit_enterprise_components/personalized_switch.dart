@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/helpers.dart';
-
-class BlockUseAppIfIsOutdatedSwitch extends StatelessWidget {
-  final bool blockUseAppIfIsOutdated;
-  final void Function() changeBlockAppIfIsOutdated;
-  const BlockUseAppIfIsOutdatedSwitch({
-    required this.blockUseAppIfIsOutdated,
-    required this.changeBlockAppIfIsOutdated,
+class PersonalizedSwitch extends StatelessWidget {
+  final bool value;
+  final void Function() changeValue;
+  final String title;
+  const PersonalizedSwitch({
+    required this.value,
+    required this.changeValue,
     super.key,
+    required this.title,
   });
 
   @override
@@ -16,7 +16,9 @@ class BlockUseAppIfIsOutdatedSwitch extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: InkWell(
-        onTap: changeBlockAppIfIsOutdated,
+        onTap: () {
+          changeValue();
+        },
         child: Container(
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -26,11 +28,11 @@ class BlockUseAppIfIsOutdatedSwitch extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Expanded(child: Text(R.string.blockUseAppIfIsOutdated)),
+              Expanded(child: Text(title)),
               Switch(
-                value: blockUseAppIfIsOutdated,
+                value: value,
                 onChanged: (_) {
-                  changeBlockAppIfIsOutdated();
+                  changeValue();
                 },
               ),
             ],

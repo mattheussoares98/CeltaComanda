@@ -1710,5 +1710,27 @@ void main() {
 
       sut.updateTotalLiquid(selectedProduct);
     });
+    test("Should emit false value if total liquid is minor than 0.01",
+        () async {
+      expectLater(sut.canAdvanceIndexStream, emits(false));
+
+      sut.updateTotalLiquid(
+        EntityFactory.makeProductsViewModel(
+          productQuantity: 1,
+          saleRetailPrice: faker.randomGenerator.integer(1) / 100,
+        ),
+      );
+    });
+    test("Should emit true value if total liquid equal or greater than 0.01",
+        () async {
+      expectLater(sut.canAdvanceIndexStream, emits(true));
+
+      sut.updateTotalLiquid(
+        EntityFactory.makeProductsViewModel(
+          productQuantity: 0.001,
+          saleRetailPrice: faker.randomGenerator.integer(10000, min: 1) / 100,
+        ),
+      );
+    });
   });
 }

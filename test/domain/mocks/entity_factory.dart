@@ -355,6 +355,7 @@ class EntityFactory {
     double? productQuantity,
     String? subgroupName,
     bool? insertOfferPrice = true,
+    double? saleRetailPrice,
   }) {
     return ProductsViewModel(
       Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
@@ -365,7 +366,8 @@ class EntityFactory {
           : faker.randomGenerator.decimal().toString(),
       ProductComplement: faker.randomGenerator.string(10),
       IsPromoCombox: faker.randomGenerator.boolean().toString(),
-      SaleRetailPraticed: faker.randomGenerator.decimal(min: 0.01).toString(),
+      SaleRetailPraticed: saleRetailPrice?.toString() ??
+          faker.randomGenerator.decimal(min: 0.01).toString(),
       PackingAbbreviation: faker.randomGenerator.string(10),
       Name: faker.food.random.string(10),
       EanCode: faker.randomGenerator.integer(20).toString(),

@@ -144,6 +144,7 @@ class _AdvanceButtonState extends State<AdvanceButton> {
             ),
             onPressed: snapshot.data == true
                 ? () async {
+                    //TODO make null button when the total value is minor than 1 cents
                     await _advanceOrAddInCart(
                       cartPresenter: cartPresenter,
                       context: context,

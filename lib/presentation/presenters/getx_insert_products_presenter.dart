@@ -196,7 +196,7 @@ class GetxInsertProductsPresenter extends GetxController
     }
     totalPrice = newPrice;
 
-    if (newPrice < 0.01) {
+    if (newPrice < 0.01 || totalProductsQuantity < 0.001) {
       canAdvanceIndex = false;
     } else {
       canAdvanceIndex = true;
@@ -360,12 +360,12 @@ class GetxInsertProductsPresenter extends GetxController
     double? newQuantity,
     bool? isAddingQuantity,
   }) {
-    final maxQuantity =
-        selectedProductValue?.MaximumQuantityForSale?.toDouble() ??
-            99; //TODO test if is working the maximum quantity
+    final maxProduct =
+        selectedProductValue?.MaximumQuantityForSale?.toDouble() ?? 99;
+    final double maxQuantity = maxProduct <= 0 ? 99 : maxProduct;
 
     if (newQuantity != null) {
-      if (newQuantity <= 0) {
+      if (newQuantity < 0.001) {
         totalProductsQuantity = 1;
       } else if (newQuantity > maxQuantity) {
         mainError = null;

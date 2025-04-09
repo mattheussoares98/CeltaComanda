@@ -1710,14 +1710,14 @@ void main() {
 
       sut.updateTotalLiquid(selectedProduct);
     });
-    test("Should emit false value if total liquid is minor than 0.01",
+    test("Should emit false value if total liquid is minor than 0.001",
         () async {
       expectLater(sut.canAdvanceIndexStream, emits(false));
 
       sut.updateTotalLiquid(
         EntityFactory.makeProductsViewModel(
           productQuantity: 1,
-          saleRetailPrice: faker.randomGenerator.integer(1) / 100,
+          saleRetailPrice: faker.randomGenerator.integer(1) / 1000,
         ),
       );
     });
@@ -1731,6 +1731,15 @@ void main() {
           saleRetailPrice: faker.randomGenerator.integer(10000, min: 1) / 100,
         ),
       );
+    });
+    test("Should emit false if quantity is minor than 0.001", () async {
+      expectLater(sut.canAdvanceIndexStream, emits(false));
+
+      sut.updateTotalProductsQuantity(
+        newQuantity: 0.001,
+      );
+
+      sut.updateTotalLiquid(selectedProduct);
     });
   });
 }

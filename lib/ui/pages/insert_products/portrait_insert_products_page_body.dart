@@ -181,6 +181,11 @@ class _PortraitInsertProductsPageBodyState
                           horizontal: MediaQuery.of(context).size.width * 0.1,
                         ),
                         child: UpdateQuantity(
+                          updateQuantity: (value) {
+                            insertProductPresenter.updateTotalProductsQuantity(
+                              newQuantity: value?.toDouble(),
+                            );
+                          },
                           quantityController: widget.quantityController,
                           quantity:
                               insertProductPresenter.totalProductsQuantity,

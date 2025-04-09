@@ -1621,6 +1621,15 @@ void main() {
             selectedProduct.productQuantity,
       );
     });
+
+    test("Should update quantity correctly when pass quantity as parameter",
+        () {
+      double quantity = faker.randomGenerator.decimal();
+
+      sut.updateTotalProductsQuantity(newQuantity: quantity);
+
+      expect(sut.totalProductsQuantity, quantity);
+    });
   });
 
   group("Update total liquid", () {

@@ -151,6 +151,11 @@ class _LandScapeInsertProductsPageBodyState
                         child: UpdateQuantity(
                       quantity: insertProductPresenter.totalProductsQuantity,
                       quantityController: widget.quantityController,
+                      updateQuantity: (value) {
+                        insertProductPresenter.updateTotalProductsQuantity(
+                          newQuantity: value?.toDouble(),
+                        );
+                      },
                       reduceQuantity: () {
                         insertProductPresenter.updateTotalProductsQuantity(
                           isAddingQuantity: false,

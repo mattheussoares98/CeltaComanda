@@ -355,7 +355,9 @@ class GetxInsertProductsPresenter extends GetxController
     double? newQuantity,
     bool? isAddingQuantity,
   }) {
-    if (isAddingQuantity == true) {
+    if (newQuantity != null) {
+      totalProductsQuantity = newQuantity;
+    } else if (isAddingQuantity == true) {
       final maxQuantity =
           selectedProductValue?.MaximumQuantityForSale?.toDouble() == 0
               ? 99.00

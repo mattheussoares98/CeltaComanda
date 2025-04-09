@@ -8,10 +8,12 @@ class UpdateQuantity extends StatefulWidget {
   final void Function() reduceQuantity;
   final void Function() addQuantity;
   final TextEditingController? quantityController;
+  final void Function(String?)? updateQuantity;
   const UpdateQuantity({
     required this.quantity,
     required this.reduceQuantity,
     required this.addQuantity,
+    this.updateQuantity,
     this.quantityController,
     super.key,
   });
@@ -52,7 +54,9 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                   if (formKey.currentState?.validate() != true) {
                     return;
                   }
-                  //TODO change quantity
+                  if (widget.updateQuantity != null) {
+                    widget.updateQuantity!(value);
+                  }
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -91,7 +95,9 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                   child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: Text(
-                      widget.quantity.toString().toBrazilianNumber(0),
+                      widget.quantity.toString().toBrazilianNumber(
+                            widget.quantityController == null ? 0 : 2,
+                          ),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 50,

@@ -276,6 +276,7 @@ void main() {
         verifyCommandBlocked: enterprise.verifyCommandBlocked,
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
+        canInsertQuantityManually: enterprise.canInsertQuantityManually,
       );
       enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
         atualEntity: enterpriseWithCorrectValues,

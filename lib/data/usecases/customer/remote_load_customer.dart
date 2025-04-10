@@ -13,7 +13,7 @@ class RemoteLoadCustomer implements LoadCustomer {
   @override
   Future<SoapResponse> load({
     required String value,
-    required int searchTypeInt,
+    required bool searchByPersonalizedCode,
   }) async {
     try {
       if (EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity ==
@@ -21,8 +21,29 @@ class RemoteLoadCustomer implements LoadCustomer {
           EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity!
                   .celtaBSCrossIdentity!.isEmpty ==
               true) {
-        throw DomainError.unexpected;
+        throw Exception();
+      } else if (value.isEmpty) {
+        throw Exception();
       }
+
+      int? valueInInt = int.tryParse(value);
+      int? searchTypeInt;
+      // 1=ExactCnpjCpfNumber
+      // 2=ExactCode
+      // 3=ApproximateName
+      // 4=PersonalizedCode
+
+      if (valueInInt == null) {
+        searchTypeInt = 3;
+      } else if (searchByPersonalizedCode) {
+        searchTypeInt = 4;
+      } else if (valueInInt.toString().length == 11 ||
+          valueInInt.toString().length == 14) {
+        searchTypeInt = 1;
+      } else {
+        searchTypeInt = 2;
+      }
+
       final soapResponse = await soapAdapter.post(
         parameters: {
           "filters": json.encode({

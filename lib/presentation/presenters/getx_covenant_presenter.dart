@@ -45,8 +45,6 @@ class GetxCovenantPresenter extends GetxController
 
       _authorizationPendingModel = null;
 
-      int? valueInInt = int.tryParse(value);
-
       SoapResponse? soapResponse;
 
 // 1=ExactCnpjCpfNumber
@@ -55,26 +53,10 @@ class GetxCovenantPresenter extends GetxController
 // 4=PersonalizedCode
       if (value.isEmpty) {
         return;
-      } else if (valueInInt == null) {
-        soapResponse = await loadCustomer.load(
-          value: value,
-          searchTypeInt: 3,
-        );
-      } else if (searchByPersonalizedCode) {
-        soapResponse = await loadCustomer.load(
-          value: value,
-          searchTypeInt: 4,
-        );
-      } else if (valueInInt.toString().length == 11 ||
-          valueInInt.toString().length == 14) {
-        soapResponse = await loadCustomer.load(
-          value: value,
-          searchTypeInt: 1,
-        );
       } else {
         soapResponse = await loadCustomer.load(
           value: value,
-          searchTypeInt: 2,
+          searchByPersonalizedCode: searchByPersonalizedCode,
         );
       }
 
@@ -184,8 +166,7 @@ class GetxCovenantPresenter extends GetxController
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
           ),
-          commandNumber: homePresenter
-              .commandEntity!.commandNumber!
+          commandNumber: homePresenter.commandEntity!.commandNumber!
               .toString()
               .padLeft(3, "0"),
           saleRequestId:

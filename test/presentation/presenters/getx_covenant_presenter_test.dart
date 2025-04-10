@@ -147,120 +147,24 @@ void main() {
           showErrorMessageReturnedByBs: (_) {},
           value: faker.randomGenerator.string(10));
     });
-    test(
-        "Should call loadCustomer with searchType 3 when cant convert value to int",
+    test("Should call loadCustomer with correct searchByPersonalizedCode",
         () async {
       final valueToSearch = faker.randomGenerator.string(100);
+      final searchByPersonalizedCode = faker.randomGenerator.boolean();
 
       await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: false,
+          searchByPersonalizedCode: searchByPersonalizedCode,
           showErrorMessageReturnedByBs: (_) {},
           value: valueToSearch);
 
       verify(
         () => loadCustomer.load(
           value: valueToSearch,
-          searchTypeInt: 3, //ApproximatedName
+          searchByPersonalizedCode: searchByPersonalizedCode,
         ),
       ).called(1);
     });
-    test("Should call loadCustomer with searchType 1 when is CPF", () async {
-      final valueToSearch =
-          faker.randomGenerator.decimal(min: 10000000000).toInt().toString();
 
-      await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: false,
-          showErrorMessageReturnedByBs: (_) {},
-          value: valueToSearch);
-
-      verify(
-        () => loadCustomer.load(
-          value: valueToSearch,
-          searchTypeInt: 1, //ExactCnpjCpfNumber
-        ),
-      ).called(1);
-    });
-    test("Should call loadCustomer with searchType 1 when is CNPJ", () async {
-      final valueToSearch =
-          faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
-
-      await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: false,
-          showErrorMessageReturnedByBs: (_) {},
-          value: valueToSearch);
-
-      verify(
-        () => loadCustomer.load(
-          value: valueToSearch,
-          searchTypeInt: 1, //ExactCnpjCpfNumber
-        ),
-      ).called(1);
-    });
-    test(
-        "Should call loadCustomer with searchType 2 when is number and dont is cpf",
-        () async {
-      loadCustomer.mockLoadCustomer(
-        const SoapResponse(
-          response: "response",
-          responseType: SoapResponseType.error,
-        ),
-      );
-
-      final valueToSearch = faker.randomGenerator.decimal().toInt().toString();
-
-      await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: false,
-          showErrorMessageReturnedByBs: (_) {},
-          value: valueToSearch);
-
-      verify(
-        () => loadCustomer.load(
-          value: valueToSearch,
-          searchTypeInt: 2, //ExactCode
-        ),
-      ).called(1);
-    });
-    test(
-        "Should call loadCustomer with searchType 4 when searchByPersonalizedCode",
-        () async {
-      final valueToSearch =
-          faker.randomGenerator.decimal(min: 10000000000000).toInt().toString();
-
-      await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: true,
-          showErrorMessageReturnedByBs: (_) {},
-          value: valueToSearch);
-
-      verify(
-        () => loadCustomer.load(
-          value: valueToSearch,
-          searchTypeInt: 4,
-        ),
-      ).called(1);
-    });
-    test("Should not get customer if value is empty", () async {
-      await sut.getCustomerByNameCodeOrCpf(
-          searchByPersonalizedCode: false,
-          showErrorMessageReturnedByBs: (_) {},
-          value: "");
-
-      verifyNever(() => loadCustomer.load(
-            value: "",
-            searchTypeInt: 1,
-          ));
-      verifyNever(() => loadCustomer.load(
-            value: "",
-            searchTypeInt: 2,
-          ));
-      verifyNever(() => loadCustomer.load(
-            value: "",
-            searchTypeInt: 3,
-          ));
-      verifyNever(() => loadCustomer.load(
-            value: "",
-            searchTypeInt: 4,
-          ));
-    });
     test("Should emit correct value on customerViewModelStream", () async {
       expectLater(
           sut.customersViewModelStream,

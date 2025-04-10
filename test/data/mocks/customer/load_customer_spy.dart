@@ -8,7 +8,7 @@ import 'package:mocktail/mocktail.dart';
 class LoadCustomerSpy extends Mock implements LoadCustomer {
   When _mockLoadCustomerCall() => when(() => this.load(
         value: any(named: "value"),
-        searchTypeInt: any(named: "searchTypeInt"),
+        searchByPersonalizedCode: any(named: "searchByPersonalizedCode"),
       ));
 
   void mockLoadCustomer(SoapResponse result) {

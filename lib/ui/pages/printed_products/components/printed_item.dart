@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
@@ -121,26 +122,26 @@ class _PrintedItemState extends State<PrintedItem> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //TODO add new property in enterprise and show this widget according the property
-                  Column(
-                    children: [
-                      if (widget.printed.CustomerCode != null)
-                        Text(widget.printed.CustomerCode!),
-                      TextButton(
-                        onPressed: () {
-                          PersonalizedDialogPage.open(
-                            context: context,
-                            page: InsertCustomer(),
-                          );
-                        },
-                        child: Text(
-                          widget.printed.CustomerCode == null
-                              ? R.string.addCustomer
-                              : R.string.changeCustomer,
+                  if (EnterpriseBuilder.entity?.canInsertCustomer == true)
+                    Column(
+                      children: [
+                        if (widget.printed.CustomerCode != null)
+                          Text(widget.printed.CustomerCode!),
+                        TextButton(
+                          onPressed: () {
+                            PersonalizedDialogPage.open(
+                              context: context,
+                              page: InsertCustomer(),
+                            );
+                          },
+                          child: Text(
+                            widget.printed.CustomerCode == null
+                                ? R.string.addCustomer
+                                : R.string.changeCustomer,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                   TotalByPerson(),
                 ],
               ),

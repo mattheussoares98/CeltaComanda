@@ -11,4 +11,5 @@ PrintedProductsPresenter makeGetxPrintedProductsPresenter() =>
       printBitmap: makeRedePrintBitMap(),
       navigateTo: makeNavigateTo(),
       generateBitmap: makeLocalGenerateBitmap(),
+      loadCustomer: makeRemoteLoadCustomer(),
     );

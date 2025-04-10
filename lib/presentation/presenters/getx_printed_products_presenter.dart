@@ -20,6 +20,7 @@ class GetxPrintedProductsPresenter
   final PrintBitmap printBitmap;
   final NavigateTo navigateTo;
   final GenerateBitmap generateBitmap;
+  final LoadCustomer loadCustomer;
 
   GetxPrintedProductsPresenter({
     required this.userValidations,
@@ -29,6 +30,7 @@ class GetxPrintedProductsPresenter
     required this.printBitmap,
     required this.navigateTo,
     required this.generateBitmap,
+    required this.loadCustomer,
   });
 
   @override

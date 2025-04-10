@@ -34,6 +34,7 @@ void main() {
   late PrintBitmapSpy printBitmap;
   late NavigateToSpy navigateTo;
   late GenerateBitmapSpy generateBitmap;
+  late LoadCustomerSpy loadCustomer;
 
   late PrintedEntity printedEntity;
   late SaleRequestTempEntity saleRequestTempEntity;
@@ -61,6 +62,7 @@ void main() {
       printBitmap: printBitmap,
       navigateTo: navigateTo,
       generateBitmap: generateBitmap,
+      loadCustomer: loadCustomer,
     );
   }
 
@@ -74,6 +76,7 @@ void main() {
     printBitmap = PrintBitmapSpy();
     navigateTo = NavigateToSpy();
     generateBitmap = GenerateBitmapSpy();
+    loadCustomer = LoadCustomerSpy();
   }
 
   void initEntitys() {

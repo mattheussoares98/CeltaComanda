@@ -335,4 +335,10 @@ class GetxPrintedProductsPresenter
   void disposePrinterHandler() {
     _channel?.setMethodCallHandler(null);
   }
+
+  final _customers = Rx<List<CustomerViewModel>?>(null);
+  @override
+  Stream<List<CustomerViewModel>?> get customersStream => _customers.stream;
+  set customers(List<CustomerViewModel>? customers) =>
+      _customers.value = customers;
 }

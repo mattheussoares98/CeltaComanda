@@ -100,6 +100,8 @@ class GetxWebEnterprisesPresenter extends GetxController
     required bool? canInsertCommentManually,
     required bool? blockUseAppIfIsOutdated,
     required bool? canInsertQuantityManually,
+    required bool? canInsertCustomer,
+    //TODO pass a enterpriseEntity as parameter
   }) async {
     try {
       isLoading = true;
@@ -130,6 +132,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         canInsertCommentManually: canInsertCommentManually,
         blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
         canInsertQuantityManually: canInsertQuantityManually,
+        canInsertCustomer: canInsertCustomer,
       );
 
       await updateEnterpriseParameters.update(enterprise);

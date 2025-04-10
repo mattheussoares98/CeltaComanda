@@ -196,6 +196,7 @@ void main() {
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
         canInsertQuantityManually:
             EnterpriseBuilder.entity!.canInsertQuantityManually,
+        canInsertCustomer: EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
     });
     test("Should emit correct values on error", () async {
@@ -230,6 +231,7 @@ void main() {
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
         canInsertQuantityManually:
             EnterpriseBuilder.entity!.canInsertQuantityManually,
+        canInsertCustomer: EnterpriseBuilder.entity!.canInsertQuantityManually,
       );
     });
 
@@ -253,6 +255,7 @@ void main() {
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
+        canInsertCustomer: enterprise.canInsertCustomer,
       );
 
       var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
@@ -308,6 +311,7 @@ void main() {
         canInsertCommentManually: null,
         blockUseAppIfIsOutdated: null,
         canInsertQuantityManually: null,
+        canInsertCustomer: null,
       );
 
       final enterpriseWithCorrectValue = EnterpriseEntity(
@@ -330,6 +334,7 @@ void main() {
         canInsertCommentManually: null,
         blockUseAppIfIsOutdated: null,
         canInsertQuantityManually: null,
+        canInsertCustomer: null,
       );
 
       verify(() =>
@@ -361,6 +366,7 @@ void main() {
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
         canInsertQuantityManually:
             EnterpriseBuilder.entity!.canInsertQuantityManually,
+        canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
       );
 
       expect(result, true);
@@ -392,6 +398,7 @@ void main() {
             EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
         canInsertQuantityManually:
             EnterpriseBuilder.entity!.canInsertQuantityManually,
+        canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
       );
 
       expect(result, false);

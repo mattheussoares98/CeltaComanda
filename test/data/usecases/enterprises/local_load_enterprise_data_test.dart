@@ -70,9 +70,13 @@ void main() {
           useReducedNameOnProduct:
               enterpriseJsonData["useReducedNameOnProduct"],
           verifyCommandBlocked: enterpriseJsonData["verifyCommandBlocked"],
-          canInsertCommentManually: enterpriseJsonData["canInsertCommentManually"],
-          blockUseAppIfIsOutdated: enterpriseJsonData["blockUseAppIfIsOutdated"],
-          canInsertQuantityManually: enterpriseJsonData["canInsertQuantityManually"],
+          canInsertCommentManually:
+              enterpriseJsonData["canInsertCommentManually"],
+          blockUseAppIfIsOutdated:
+              enterpriseJsonData["blockUseAppIfIsOutdated"],
+          canInsertQuantityManually:
+              enterpriseJsonData["canInsertQuantityManually"],
+          canInsertCustomer: enterpriseJsonData["canInsertCustomer"],
         ),
       );
     });

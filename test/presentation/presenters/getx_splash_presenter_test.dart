@@ -121,6 +121,7 @@ void main() {
           canInsertCommentManually: faker.randomGenerator.boolean(),
           blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
           canInsertQuantityManually: faker.randomGenerator.boolean(),
+          canInsertCustomer: faker.randomGenerator.boolean(),
         ),
       );
 
@@ -159,6 +160,7 @@ void main() {
           canInsertCommentManually: faker.randomGenerator.boolean(),
           blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
           canInsertQuantityManually: faker.randomGenerator.boolean(),
+          canInsertCustomer: faker.randomGenerator.boolean(),
         ),
       );
 

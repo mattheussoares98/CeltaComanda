@@ -107,6 +107,7 @@ void main() {
       canInsertCommentManually: null,
       blockUseAppIfIsOutdated: null,
       canInsertQuantityManually: null,
+      canInsertCustomer: null,
     );
 
     pdvsNotUsing = [
@@ -259,6 +260,7 @@ void main() {
           canInsertCommentManually: null,
           blockUseAppIfIsOutdated: null,
           canInsertQuantityManually: null,
+          canInsertCustomer: null,
         ),
       );
     });
@@ -405,6 +407,7 @@ void main() {
           canInsertCommentManually: newEnterprise.canInsertCommentManually,
           blockUseAppIfIsOutdated: newEnterprise.blockUseAppIfIsOutdated,
           canInsertQuantityManually: newEnterprise.canInsertQuantityManually,
+          canInsertCustomer: newEnterprise.canInsertCustomer,
         ),
       );
     });
@@ -601,6 +604,7 @@ void main() {
             canInsertCommentManually: null,
             blockUseAppIfIsOutdated: null,
             canInsertQuantityManually: null,
+            canInsertCustomer: null,
           ));
     });
   });
@@ -655,6 +659,7 @@ void main() {
                 EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
             canInsertQuantityManually:
                 EnterpriseBuilder.entity!.canInsertQuantityManually,
+            canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
           ));
     });
     test("Should update last import when update enterprise parameters",
@@ -691,6 +696,7 @@ void main() {
           canInsertCommentManually: null,
           blockUseAppIfIsOutdated: null,
           canInsertQuantityManually: null,
+          canInsertCustomer: null,
         ),
       );
     });

@@ -41,6 +41,7 @@ class _WebAddOrEditEnterprisePageState
   bool? canInsertCommentManually = false;
   bool? blockUseAppIfIsOutdated = false;
   bool? canInsertQuantityManually = false;
+  bool? canInsertCustomer = false;
 
   void changeUseProductReducedName() {
     setState(() {
@@ -57,6 +58,12 @@ class _WebAddOrEditEnterprisePageState
   void changeCanInsertQuantityManually() {
     setState(() {
       canInsertQuantityManually = !(canInsertQuantityManually ?? false);
+    });
+  }
+
+  void changeCanInsertCustomer() {
+    setState(() {
+      canInsertCustomer = !(canInsertCustomer ?? false);
     });
   }
 
@@ -170,6 +177,9 @@ class _WebAddOrEditEnterprisePageState
             canInsertQuantityManually = webEnterprisesPresenter
                     .selectedEnterprise?.canInsertQuantityManually ==
                 true;
+            canInsertCustomer =
+                webEnterprisesPresenter.selectedEnterprise?.canInsertCustomer ==
+                    true;
             minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
                         .selectedEnterprise?.minutesVerifyUpdateMenu !=
                     null
@@ -392,6 +402,7 @@ class _WebAddOrEditEnterprisePageState
               canInsertCommentManually: canInsertCommentManually,
               blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
               canInsertQuantityManually: canInsertQuantityManually,
+              canInsertCustomer: canInsertCustomer,
             ),
           ],
         ),

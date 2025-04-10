@@ -23,6 +23,7 @@ class EnterpriseEntity extends Equatable {
   final bool? canInsertCommentManually;
   final bool? blockUseAppIfIsOutdated;
   final bool? canInsertQuantityManually;
+  final bool? canInsertCustomer;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -44,6 +45,7 @@ class EnterpriseEntity extends Equatable {
     required this.canInsertCommentManually,
     required this.blockUseAppIfIsOutdated,
     required this.canInsertQuantityManually,
+    required this.canInsertCustomer,
   });
 
   @override
@@ -67,5 +69,6 @@ class EnterpriseEntity extends Equatable {
         canInsertCommentManually,
         blockUseAppIfIsOutdated,
         canInsertQuantityManually,
+        canInsertCustomer,
       ];
 }

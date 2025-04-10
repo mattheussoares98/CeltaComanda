@@ -21,6 +21,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final bool? verifyCommandBlocked;
   final bool? canInsertCommentManually;
   final bool? blockUseAppIfIsOutdated;
+  final bool? canInsertCustomer;
   final bool? canInsertQuantityManually;
   final GlobalKey<FormState> formKey;
 
@@ -41,6 +42,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.verifyCommandBlocked,
     required this.canInsertCommentManually,
     required this.blockUseAppIfIsOutdated,
+    required this.canInsertCustomer,
     required this.canInsertQuantityManually,
     super.key,
   });
@@ -96,6 +98,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                 canInsertCommentManually: canInsertCommentManually,
                 blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
                 canInsertQuantityManually: canInsertQuantityManually,
+                canInsertCustomer: canInsertCustomer,
               );
 
               if (updated) {

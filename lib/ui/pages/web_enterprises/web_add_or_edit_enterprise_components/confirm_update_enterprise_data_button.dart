@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/entities/entities.dart';
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -74,31 +76,37 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
               }
 
               bool updated = await webEnterprisesPresenter.updateEnterprise(
-                enterpriseName: enterpriseNameController.text,
-                navsUrl: navsUrlController.text,
-                concentratorUrl: concentratorUrlController.text,
-                ccsUrl: ccsUrlController.text,
-                enterpriseId: enterpriseIdController.text.toInt(),
-                // daysPreloadImage: daysPreloadImageController.text.isEmpty
-                //     ? null
-                //     : daysPreloadImageController.text.toInt(),
-                latestCompatibleVersion: latestCompatibleVersionController.text,
-                serviceChargePercentage:
-                    serviceChargePercentageController.text.isEmpty
-                        ? null
-                        : serviceChargePercentageController.text.toDouble(),
-                zoomImage: zoomImage,
-                useCovenant: useCovenant,
-                minutesVerifyUpdateMenu:
-                    minutesVerifyUpdateMenuController.text.isEmpty
-                        ? null
-                        : minutesVerifyUpdateMenuController.text.toInt(),
-                useReducedNameOnProduct: useProductReducedName,
-                verifyCommandBlocked: verifyCommandBlocked,
-                canInsertCommentManually: canInsertCommentManually,
-                blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
-                canInsertQuantityManually: canInsertQuantityManually,
-                canInsertCustomer: canInsertCustomer,
+                EnterpriseEntity(
+                  enterpriseConcentradorParametersEntity: EnterpriseBuilder
+                      .entity?.enterpriseConcentradorParametersEntity,
+                  persistApp: EnterpriseBuilder.entity?.persistApp,
+                  updateDevicesInformations:
+                      EnterpriseBuilder.entity?.updateDevicesInformations,
+                  updateEnterprise: EnterpriseBuilder.entity?.updateEnterprise,
+                  enterpriseName: enterpriseNameController.text,
+                  url: navsUrlController.text,
+                  concentradorUrl: concentratorUrlController.text,
+                  urlCCS: ccsUrlController.text,
+                  enterpriseId: enterpriseIdController.text.toInt(),
+                  latestCompatibleVersion:
+                      latestCompatibleVersionController.text,
+                  serviceChargePercentageOrValue:
+                      serviceChargePercentageController.text.isEmpty
+                          ? null
+                          : serviceChargePercentageController.text.toDouble(),
+                  zoomImage: zoomImage,
+                  useCovenant: useCovenant,
+                  minutesVerifyUpdateMenu:
+                      minutesVerifyUpdateMenuController.text.isEmpty
+                          ? null
+                          : minutesVerifyUpdateMenuController.text.toInt(),
+                  useReducedNameOnProduct: useProductReducedName,
+                  verifyCommandBlocked: verifyCommandBlocked,
+                  canInsertCommentManually: canInsertCommentManually,
+                  blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
+                  canInsertQuantityManually: canInsertQuantityManually,
+                  canInsertCustomer: canInsertCustomer,
+                ),
               );
 
               if (updated) {

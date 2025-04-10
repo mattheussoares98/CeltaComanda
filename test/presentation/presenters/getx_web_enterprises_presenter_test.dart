@@ -173,31 +173,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
-      await sut.updateEnterprise(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        navsUrl: EnterpriseBuilder.entity!.url!,
-        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
-        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
-        serviceChargePercentage:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        minutesVerifyUpdateMenu:
-            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct:
-            EnterpriseBuilder.entity!.useReducedNameOnProduct,
-        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
-        canInsertCommentManually:
-            EnterpriseBuilder.entity!.canInsertCommentManually,
-        blockUseAppIfIsOutdated:
-            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
-        canInsertQuantityManually:
-            EnterpriseBuilder.entity!.canInsertQuantityManually,
-        canInsertCustomer: EnterpriseBuilder.entity!.canInsertQuantityManually,
-      );
+      await sut.updateEnterprise(EnterpriseBuilder.entity!);
     });
     test("Should emit correct values on error", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -208,70 +184,32 @@ void main() {
 
       updateEnterpriseParameters.mockUpdateError();
 
-      await sut.updateEnterprise(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        navsUrl: EnterpriseBuilder.entity!.url!,
-        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
-        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
-        serviceChargePercentage:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        minutesVerifyUpdateMenu:
-            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct:
-            EnterpriseBuilder.entity!.useReducedNameOnProduct,
-        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
-        canInsertCommentManually:
-            EnterpriseBuilder.entity!.canInsertCommentManually,
-        blockUseAppIfIsOutdated:
-            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
-        canInsertQuantityManually:
-            EnterpriseBuilder.entity!.canInsertQuantityManually,
-        canInsertCustomer: EnterpriseBuilder.entity!.canInsertQuantityManually,
-      );
+      await sut.updateEnterprise(EnterpriseBuilder.entity!);
     });
 
     test("Should update enterprise with correct values", () async {
       final enterprise = EnterpriseBuilder.entity!;
       sut.goToAddOrEditEnterprise(enterprise);
 
-      await sut.updateEnterprise(
-        enterpriseName: enterprise.enterpriseName,
-        navsUrl: enterprise.url!,
-        concentratorUrl: enterprise.concentradorUrl!,
-        ccsUrl: enterprise.urlCCS!,
-        enterpriseId: enterprise.enterpriseId!,
-        latestCompatibleVersion: enterprise.latestCompatibleVersion,
-        serviceChargePercentage: enterprise.serviceChargePercentageOrValue,
-        zoomImage: enterprise.zoomImage,
-        useCovenant: enterprise.useCovenant,
-        minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
-        verifyCommandBlocked: enterprise.verifyCommandBlocked,
-        canInsertCommentManually: enterprise.canInsertCommentManually,
-        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
-        canInsertQuantityManually: enterprise.canInsertQuantityManually,
-        canInsertCustomer: enterprise.canInsertCustomer,
-      );
+      await sut.updateEnterprise(EnterpriseBuilder.entity!);
 
-      var enterpriseWithCorrectValues = EntityFactory.makeEnterpriseData(
-        updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
-        updateEnterprise: enterprise.updateEnterprise! + 1,
+      var enterpriseWithCorrectValues = EnterpriseEntity(
+        enterpriseName:
+            enterprise.enterpriseName.toLowerCase().removeWhiteSpaces(),
+        url: enterprise.url?.toLowerCase().removeWhiteSpaces(),
+        concentradorUrl:
+            enterprise.concentradorUrl?.toLowerCase().removeWhiteSpaces(),
+        urlCCS: enterprise.urlCCS?.toLowerCase().removeWhiteSpaces(),
+        canInsertCustomer: enterprise.canInsertCustomer,
+        updateDevicesInformations:
+            (enterprise.updateDevicesInformations ?? 0) + 1,
+        updateEnterprise: (enterprise.updateEnterprise ?? 0) + 1,
         serviceChargePercentageOrValue:
             enterprise.serviceChargePercentageOrValue,
-        enterpriseName: enterprise.enterpriseName,
-        url: enterprise.url,
         enterpriseId: enterprise.enterpriseId,
-        concentradorUrl: enterprise.concentradorUrl,
         persistApp: false,
-        urlCCS: enterprise.urlCCS,
         useCovenant: enterprise.useCovenant,
-        enterpriseConcentradorParametersEntity:
-            enterprise.enterpriseConcentradorParametersEntity,
+        enterpriseConcentradorParametersEntity: null,
         zoomImage: enterprise.zoomImage,
         latestCompatibleVersion: enterprise.latestCompatibleVersion,
         minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
@@ -280,10 +218,6 @@ void main() {
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
-      );
-      enterpriseWithCorrectValues = EntityFactory.makeEnterpriseWithNullValue(
-        atualEntity: enterpriseWithCorrectValues,
-        enterpriseConcentradorParametersEntity: true,
       );
 
       verify(() =>
@@ -295,35 +229,16 @@ void main() {
       final enterprise = EnterpriseBuilder.entity!;
       sut.goToAddOrEditEnterprise(enterprise);
 
-      await sut.updateEnterprise(
+      final newEntity = EnterpriseEntity(
+        persistApp: false,
         enterpriseName: enterprise.enterpriseName,
-        navsUrl: enterprise.url!,
-        concentratorUrl: enterprise.concentradorUrl!,
-        ccsUrl: enterprise.urlCCS!,
         enterpriseId: enterprise.enterpriseId!,
-        verifyCommandBlocked: null,
-        latestCompatibleVersion: null,
-        serviceChargePercentage: null,
-        zoomImage: null,
-        useCovenant: null,
-        minutesVerifyUpdateMenu: null,
-        useReducedNameOnProduct: null,
-        canInsertCommentManually: null,
-        blockUseAppIfIsOutdated: null,
-        canInsertQuantityManually: null,
-        canInsertCustomer: null,
-      );
-
-      final enterpriseWithCorrectValue = EnterpriseEntity(
-        enterpriseName: enterprise.enterpriseName,
-        url: enterprise.url!,
-        concentradorUrl: enterprise.concentradorUrl!,
-        urlCCS: enterprise.urlCCS!,
-        enterpriseId: enterprise.enterpriseId!,
-        enterpriseConcentradorParametersEntity: null,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
-        persistApp: false,
+        enterpriseConcentradorParametersEntity: null,
+        url: null,
+        concentradorUrl: null,
+        urlCCS: null,
         verifyCommandBlocked: null,
         latestCompatibleVersion: null,
         serviceChargePercentageOrValue: null,
@@ -337,37 +252,13 @@ void main() {
         canInsertCustomer: null,
       );
 
-      verify(() =>
-              updateEnterpriseParameters.update(enterpriseWithCorrectValue))
-          .called(1);
+      await sut.updateEnterprise(newEntity);
+
+      verify(() => updateEnterpriseParameters.update(newEntity)).called(1);
     });
 
     test("Should return true on success", () async {
-      final result = await sut.updateEnterprise(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        navsUrl: EnterpriseBuilder.entity!.url!,
-        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
-        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
-        serviceChargePercentage:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        minutesVerifyUpdateMenu:
-            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct:
-            EnterpriseBuilder.entity!.useReducedNameOnProduct,
-        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
-        canInsertCommentManually:
-            EnterpriseBuilder.entity!.canInsertCommentManually,
-        blockUseAppIfIsOutdated:
-            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
-        canInsertQuantityManually:
-            EnterpriseBuilder.entity!.canInsertQuantityManually,
-        canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
-      );
+      final result = await sut.updateEnterprise(EnterpriseBuilder.entity!);
 
       expect(result, true);
     });
@@ -375,31 +266,7 @@ void main() {
     test("Should return false on error", () async {
       updateEnterpriseParameters.mockUpdateError();
 
-      final result = await sut.updateEnterprise(
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-        navsUrl: EnterpriseBuilder.entity!.url!,
-        concentratorUrl: EnterpriseBuilder.entity!.concentradorUrl!,
-        ccsUrl: EnterpriseBuilder.entity!.urlCCS!,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId!,
-        latestCompatibleVersion:
-            EnterpriseBuilder.entity!.latestCompatibleVersion,
-        serviceChargePercentage:
-            EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-        zoomImage: EnterpriseBuilder.entity!.zoomImage,
-        useCovenant: EnterpriseBuilder.entity!.useCovenant,
-        minutesVerifyUpdateMenu:
-            EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct:
-            EnterpriseBuilder.entity!.useReducedNameOnProduct,
-        verifyCommandBlocked: EnterpriseBuilder.entity!.verifyCommandBlocked,
-        canInsertCommentManually:
-            EnterpriseBuilder.entity!.canInsertCommentManually,
-        blockUseAppIfIsOutdated:
-            EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
-        canInsertQuantityManually:
-            EnterpriseBuilder.entity!.canInsertQuantityManually,
-        canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
-      );
+      final result = await sut.updateEnterprise(EnterpriseBuilder.entity!);
 
       expect(result, false);
     });

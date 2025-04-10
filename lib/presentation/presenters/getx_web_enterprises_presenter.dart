@@ -84,55 +84,39 @@ class GetxWebEnterprisesPresenter extends GetxController
   }
 
   @override
-  Future<bool> updateEnterprise({
-    required String navsUrl,
-    required String concentratorUrl,
-    required String ccsUrl,
-    required int enterpriseId,
-    required String? latestCompatibleVersion,
-    required double? serviceChargePercentage,
-    required bool? zoomImage,
-    required bool? useCovenant,
-    required String enterpriseName,
-    required int? minutesVerifyUpdateMenu,
-    required bool? useReducedNameOnProduct,
-    required bool? verifyCommandBlocked,
-    required bool? canInsertCommentManually,
-    required bool? blockUseAppIfIsOutdated,
-    required bool? canInsertQuantityManually,
-    required bool? canInsertCustomer,
-    //TODO pass a enterpriseEntity as parameter
-  }) async {
+  Future<bool> updateEnterprise(EnterpriseEntity entity) async {
     try {
       isLoading = true;
       mainError = null;
 
       final enterprise = EnterpriseEntity(
-        enterpriseName: (_selectedEnterprise?.enterpriseName ?? enterpriseName)
-            .toLowerCase()
-            .removeWhiteSpaces(),
-        url: navsUrl.toLowerCase().removeWhiteSpaces(),
-        enterpriseId: enterpriseId,
-        concentradorUrl: concentratorUrl.toLowerCase().removeWhiteSpaces(),
-        persistApp: false,
-        urlCCS: ccsUrl.toLowerCase().removeWhiteSpaces(),
-        useCovenant: useCovenant,
-        enterpriseConcentradorParametersEntity: null,
-        serviceChargePercentageOrValue: serviceChargePercentage,
+        enterpriseName:
+            (_selectedEnterprise?.enterpriseName ?? entity.enterpriseName)
+                .toLowerCase()
+                .removeWhiteSpaces(),
         updateDevicesInformations:
             _selectedEnterprise?.updateDevicesInformations == null
                 ? null
                 : (_selectedEnterprise!.updateDevicesInformations! + 1),
+        persistApp: false,
+        enterpriseConcentradorParametersEntity: null,
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
-        zoomImage: zoomImage,
-        latestCompatibleVersion: latestCompatibleVersion,
-        minutesVerifyUpdateMenu: minutesVerifyUpdateMenu,
-        useReducedNameOnProduct: useReducedNameOnProduct,
-        verifyCommandBlocked: verifyCommandBlocked,
-        canInsertCommentManually: canInsertCommentManually,
-        blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
-        canInsertQuantityManually: canInsertQuantityManually,
-        canInsertCustomer: canInsertCustomer,
+        url: entity.url?.toLowerCase().removeWhiteSpaces(),
+        enterpriseId: entity.enterpriseId,
+        concentradorUrl:
+            entity.concentradorUrl?.toLowerCase().removeWhiteSpaces(),
+        urlCCS: entity.urlCCS?.toLowerCase().removeWhiteSpaces(),
+        useCovenant: entity.useCovenant,
+        serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
+        zoomImage: entity.zoomImage,
+        latestCompatibleVersion: entity.latestCompatibleVersion,
+        minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
+        useReducedNameOnProduct: entity.useReducedNameOnProduct,
+        verifyCommandBlocked: entity.verifyCommandBlocked,
+        canInsertCommentManually: entity.canInsertCommentManually,
+        blockUseAppIfIsOutdated: entity.blockUseAppIfIsOutdated,
+        canInsertQuantityManually: entity.canInsertQuantityManually,
+        canInsertCustomer: entity.canInsertCustomer,
       );
 
       await updateEnterpriseParameters.update(enterprise);

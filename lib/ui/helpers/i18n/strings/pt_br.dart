@@ -141,6 +141,7 @@ class PtBr implements Translation {
   String get advance => 'Avançar';
   String get addAccount => 'Criar conta';
   String get addCommentError => 'Ocorreu um erro para adicionar o comentário';
+  String get addCustomer => "Adicionar cliente";
   String get addFlagOrTable => "Adicionar número da bandeira/mesa";
   String get addItens => "Adicionar itens";
   String get addMoreItens => "Adicionar mais itens";
@@ -164,6 +165,7 @@ class PtBr implements Translation {
   String get cashCredit => "Crédito à vista";
   String get cellPhone => "Celular";
   String get change => "Alterar";
+  String get changeCustomer => "Alterar cliente";
   String get changeDate => "Alterar data";
   String get check => "Cheque";
   String get child => "Filho";

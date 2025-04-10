@@ -101,6 +101,7 @@ abstract class Translation {
   String get advance;
   String get addAccount;
   String get addCommentError;
+  String get addCustomer;
   String get addFlagOrTable;
   String get addItens;
   String get addMoreItens;
@@ -122,6 +123,7 @@ abstract class Translation {
   String get cashCredit;
   String get cellPhone;
   String get change;
+  String get changeCustomer;
   String get changeDate;
   String get check;
   String get child;

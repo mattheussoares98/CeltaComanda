@@ -117,8 +117,33 @@ class _PrintedItemState extends State<PrintedItem> {
             ),
           ),
           if (ScreenSize.hasMinWidth)
-            const Flexible(
-              child: TotalByPerson(),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //TODO add new property in enterprise and show this widget according the property
+                  Column(
+                    children: [
+                      if (widget.printed.CustomerCode != null)
+                        Text(widget.printed.CustomerCode!),
+                      TextButton(
+                        onPressed: () {
+                          PersonalizedDialogPage.open(
+                            context: context,
+                            page: InsertCustomer(),
+                          );
+                        },
+                        child: Text(
+                          widget.printed.CustomerCode == null
+                              ? R.string.addCustomer
+                              : R.string.changeCustomer,
+                        ),
+                      ),
+                    ],
+                  ),
+                  TotalByPerson(),
+                ],
+              ),
             ),
         ],
       ),

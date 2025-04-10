@@ -143,6 +143,7 @@ class EnUs implements Translation {
   String get advance => 'Advance';
   String get addAccount => 'Create account';
   String get addCommentError => 'An error occurred while adding the comment';
+  String get addCustomer => 'Add customer';
   String get addFlagOrTable => 'Add flag/table number';
   String get addItens => 'Add items';
   String get addMoreItens => 'Add more items';
@@ -165,6 +166,7 @@ class EnUs implements Translation {
   String get cashCredit => 'Cash credit';
   String get cellPhone => 'Cell phone';
   String get change => 'Change';
+  String get changeCustomer => 'Change customer';
   String get changeDate => 'Change date';
   String get check => 'Check';
   String get child => 'Child';

@@ -341,4 +341,8 @@ class GetxPrintedProductsPresenter
   Stream<List<CustomerViewModel>?> get customersStream => _customers.stream;
   set customers(List<CustomerViewModel>? customers) =>
       _customers.value = customers;
+
+  final _selectedCustomer = Rx<CustomerViewModel?>(null);
+  @override
+  CustomerViewModel? get selectedCustomer => _selectedCustomer.value;
 }

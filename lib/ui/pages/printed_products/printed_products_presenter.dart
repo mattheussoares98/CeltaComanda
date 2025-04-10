@@ -12,6 +12,7 @@ abstract class PrintedProductsPresenter
   Stream<bool> get isLoadingStream;
   Stream<String?> get alertMessageStream;
   Stream<List<CustomerViewModel>?> get customersStream;
+  CustomerViewModel? get selectedCustomer;
   int get peopleQuantity;
   bool get canCancelProducts;
   double getTotalLiquid(PrintedViewModel? printed);

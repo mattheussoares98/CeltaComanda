@@ -9,12 +9,14 @@ class UpdateQuantity extends StatefulWidget {
   final void Function() addQuantity;
   final TextEditingController? quantityController;
   final void Function(String?)? updateQuantity;
+  final double? maxQuantity;
   const UpdateQuantity({
     required this.quantity,
     required this.reduceQuantity,
     required this.addQuantity,
     this.updateQuantity,
     this.quantityController,
+    this.maxQuantity,
     super.key,
   });
 
@@ -77,6 +79,14 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                   hintText: R.string.quantity,
                   labelText: R.string.quantity,
                   errorText: null,
+                  suffixIcon: widget.maxQuantity == null
+                      ? null
+                      : Text(
+                          "${R.string.maximumAbbreviated} ${widget.maxQuantity.toString().toBrazilianNumber(0)}  ",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColorLight,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -105,9 +115,9 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                         widget.quantity.toString().toBrazilianNumber(
                               widget.quantityController == null ? 0 : 3,
                             ),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 50,
+                          fontSize: StringSize.size * 1.5,
                         ),
                       ),
                     ),

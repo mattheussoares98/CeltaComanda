@@ -151,6 +151,12 @@ class _LandScapeInsertProductsPageBodyState
                         child: UpdateQuantity(
                       quantity: insertProductPresenter.totalProductsQuantity,
                       quantityController: widget.quantityController,
+                      maxQuantity: widget.selectedProduct.MaximumQuantityForSale
+                                  ?.toDouble() ==
+                              0
+                          ? 99
+                          : widget.selectedProduct.MaximumQuantityForSale
+                              ?.toDouble(),
                       updateQuantity: (value) {
                         insertProductPresenter.updateTotalProductsQuantity(
                           newQuantity: value?.toDouble(),

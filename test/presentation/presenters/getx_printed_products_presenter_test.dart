@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -45,6 +47,7 @@ void main() {
   late Uint8List bitmap;
   late int commandNumber;
   late int pdvNumber;
+  late SoapResponse customersSoapResponse;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -109,6 +112,14 @@ void main() {
         .mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
     generateBitmap.mockGenerateBitmap(bitmap);
+    customersSoapResponse = SoapResponse(
+      response: json.encode([
+        CustomerViewModel.fromEntity(EntityFactory.makeCustomersEntitys()[0])
+            .toJson(),
+      ]),
+      responseType: SoapResponseType.success,
+    );
+    loadCustomer.mockLoadCustomer(customersSoapResponse);
   }
 
   setUp(() {
@@ -901,6 +912,78 @@ void main() {
 
       sut.updatePeopleQuantity(isAdding: false);
       expect(sut.peopleQuantity, 1);
+    });
+  });
+
+  group("Search customer", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(
+          sut.customersStream,
+          emitsInOrder([
+            null,
+            json
+                .decode(customersSoapResponse.response)
+                .map((e) => CustomerViewModel.fromJson(e))
+                .toList()
+                .cast<CustomerViewModel>()
+          ]));
+
+      await sut.getCustomers(
+        value: faker.randomGenerator.string(10),
+        showErrorMessageReturnedByBs: (_) {},
+        searchByPersonalizedCode: false,
+      );
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.customersStream, emits(null));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+
+      loadCustomer.mockError();
+
+      await sut.getCustomers(
+        value: faker.randomGenerator.string(10),
+        showErrorMessageReturnedByBs: (_) {},
+        searchByPersonalizedCode: false,
+      );
+    });
+
+    test("Should emit correct values if soap response type is error", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.customersStream, emits(null));
+      expectLater(sut.mainErrorStream, emits(null));
+
+      loadCustomer.mockLoadCustomer(
+        SoapResponse(
+            response: faker.randomGenerator.string(10),
+            responseType: SoapResponseType.error),
+      );
+
+      await sut.getCustomers(
+        value: faker.randomGenerator.string(10),
+        showErrorMessageReturnedByBs: (_) {},
+        searchByPersonalizedCode: faker.randomGenerator.boolean(),
+      );
+    });
+    test("Should call load customer with correct values", () async {
+      final value = faker.randomGenerator.string(10);
+      final searchByPersonalizedCode = faker.randomGenerator.boolean();
+
+      await sut.getCustomers(
+        value: value,
+        showErrorMessageReturnedByBs: (_) {},
+        searchByPersonalizedCode: searchByPersonalizedCode,
+      );
+
+      verify(() => loadCustomer.load(
+            value: value,
+            searchByPersonalizedCode: searchByPersonalizedCode,
+          )).called(1);
     });
   });
 }

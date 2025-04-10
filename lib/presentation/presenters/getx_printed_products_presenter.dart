@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -353,5 +356,30 @@ class GetxPrintedProductsPresenter
     required String value,
     required void Function(String error) showErrorMessageReturnedByBs,
     required bool searchByPersonalizedCode,
-  }) async {}
+  }) async {
+    isLoading = true;
+    mainError = null;
+    customers = null;
+
+    try {
+      final soapResponse = await loadCustomer.load(
+        value: value,
+        searchByPersonalizedCode: searchByPersonalizedCode,
+      );
+
+      if (soapResponse.responseType == SoapResponseType.error) {
+        showErrorMessageReturnedByBs(soapResponse.response);
+      } else {
+        customers = json
+            .decode(soapResponse.response)
+            .map((e) => CustomerViewModel.fromJson(e))
+            .toList()
+            .cast<CustomerViewModel>();
+      }
+    } catch (e) {
+      mainError = UIError.unexpected;
+    } finally {
+      isLoading = false;
+    }
+  }
 }

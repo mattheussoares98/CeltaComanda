@@ -345,4 +345,11 @@ class GetxPrintedProductsPresenter
   final _selectedCustomer = Rx<CustomerViewModel?>(null);
   @override
   CustomerViewModel? get selectedCustomer => _selectedCustomer.value;
+
+  @override
+  Future<void> getCustomers({
+    required String value,
+    required void Function(String error) showErrorMessageReturnedByBs,
+    required bool searchByPersonalizedCode,
+  }) async {}
 }

@@ -55,4 +55,10 @@ abstract class PrintedProductsPresenter
 
   void initPrinterResultHandler(HomePresenter homePresenter);
   void disposePrinterHandler();
+
+  Future<void> getCustomers({
+    required String value,
+    required void Function(String error) showErrorMessageReturnedByBs,
+    required bool searchByPersonalizedCode,
+  });
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
 class InsertCustomerPage extends StatefulWidget {
@@ -39,7 +38,6 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       body: Padding(
@@ -67,16 +65,7 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
                       child: Column(
                         children: [
                           CustomersItems(customers: snapCustomers.data!),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await printedProductsPresenter
-                                    .updateCustomerInSaleRequest(homePresenter);
-                              },
-                              child: Text(R.string.confirm),
-                            ),
-                          ),
+                          ConfirmUpdateCustomerButton(),
                         ],
                       ),
                     ),

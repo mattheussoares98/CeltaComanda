@@ -1,3 +1,4 @@
+export './confirm_update_customer_button.dart';
 export './customers_items.dart';
 export './insert_customer_page.dart';
 export './personalized_code_check_box.dart';

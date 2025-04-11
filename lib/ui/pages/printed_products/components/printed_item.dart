@@ -131,7 +131,7 @@ class _PrintedItemState extends State<PrintedItem> {
                           onPressed: () {
                             PersonalizedDialogPage.open(
                               context: context,
-                              page: InsertCustomer(),
+                              page: InsertCustomerPage(),
                             );
                           },
                           child: Text(

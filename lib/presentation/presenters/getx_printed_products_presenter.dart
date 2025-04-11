@@ -85,6 +85,21 @@ class GetxPrintedProductsPresenter
         _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation!)
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
       }
+
+      if (_printed?.CustomerCode != null) {
+        final response = await loadCustomer.load(
+          value: _printed!.CustomerCode!,
+          searchByPersonalizedCode: false,
+        );
+
+        if (response.responseType == SoapResponseType.success) {
+          _customerInSaleRequest = CustomerViewModel.fromJson(
+            json.decode(response.response).first,
+          );
+        } else {
+          _customerInSaleRequest = null;
+        }
+      }
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -435,4 +450,8 @@ class GetxPrintedProductsPresenter
       isLoading = false;
     }
   }
+
+  CustomerViewModel? _customerInSaleRequest;
+  @override
+  CustomerViewModel? get customerInSaleRequest => _customerInSaleRequest;
 }

@@ -623,6 +623,111 @@ void main() {
       await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!,
           showIsLoading: false);
     });
+    test('Should load customer if sale request has customer inserted',
+        () async {
+      loadPrintedProducts.mockLoadPrintedEntity(
+        PrintedEntity(
+          CustomerCode: faker.randomGenerator.integer(100),
+          CovenantCode: printedEntity.CovenantCode,
+          Products: printedEntity.Products,
+          PersonalizedCode: printedEntity.PersonalizedCode,
+          DateOfCreation: printedEntity.DateOfCreation,
+          DateHourOfCreation: printedEntity.DateHourOfCreation,
+          FlagStatus: printedEntity.FlagStatus,
+          Comments: printedEntity.Comments,
+          EnterpriseId: printedEntity.EnterpriseId,
+          RequestType: printedEntity.RequestType,
+          IsCancelled: printedEntity.IsCancelled,
+          IsUsing: printedEntity.IsUsing,
+          TotalLiquid: printedEntity.TotalLiquid,
+          Peoples: printedEntity.Peoples,
+          SaleRequestId: printedEntity.SaleRequestId,
+          FlagOrigin: printedEntity.FlagOrigin,
+          DeliveryControl: printedEntity.DeliveryControl,
+          IncrementType: printedEntity.IncrementType,
+          IncrementValue: printedEntity.IncrementValue,
+          SellerCode: printedEntity.SellerCode,
+        ),
+      );
+
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      verify(() => loadCustomer.load(
+            value: sut.printed!.CustomerCode!,
+            searchByPersonalizedCode: false,
+          )).called(1);
+    });
+    test('Should not load customer if sale request has customer inserted',
+        () async {
+      loadPrintedProducts.mockLoadPrintedEntity(
+        PrintedEntity(
+          CustomerCode: null,
+          CovenantCode: printedEntity.CovenantCode,
+          Products: printedEntity.Products,
+          PersonalizedCode: printedEntity.PersonalizedCode,
+          DateOfCreation: printedEntity.DateOfCreation,
+          DateHourOfCreation: printedEntity.DateHourOfCreation,
+          FlagStatus: printedEntity.FlagStatus,
+          Comments: printedEntity.Comments,
+          EnterpriseId: printedEntity.EnterpriseId,
+          RequestType: printedEntity.RequestType,
+          IsCancelled: printedEntity.IsCancelled,
+          IsUsing: printedEntity.IsUsing,
+          TotalLiquid: printedEntity.TotalLiquid,
+          Peoples: printedEntity.Peoples,
+          SaleRequestId: printedEntity.SaleRequestId,
+          FlagOrigin: printedEntity.FlagOrigin,
+          DeliveryControl: printedEntity.DeliveryControl,
+          IncrementType: printedEntity.IncrementType,
+          IncrementValue: printedEntity.IncrementValue,
+          SellerCode: printedEntity.SellerCode,
+        ),
+      );
+
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      verifyNever(() => loadCustomer.load(
+            value: sut.printed?.CustomerCode ?? "0",
+            searchByPersonalizedCode: false,
+          ));
+    });
+    test('Should update customer in sale request correctly in success',
+        () async {
+      loadCustomer.mockLoadCustomer(SoapResponse(
+        response: json.encode([customerViewModel]),
+        responseType: SoapResponseType.success,
+      ));
+
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      expect(sut.customerInSaleRequest, customerViewModel);
+    });
+    test('Should update customer in sale request correctly in error', () async {
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      loadCustomer.mockLoadCustomer(SoapResponse(
+        response: json.encode([customerViewModel]),
+        responseType: SoapResponseType.error,
+      ));
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      expect(sut.customerInSaleRequest, null);
+    });
   });
 
   group("Do on close page", () {

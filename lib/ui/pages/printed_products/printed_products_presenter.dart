@@ -15,6 +15,7 @@ abstract class PrintedProductsPresenter
   CustomerViewModel? get selectedCustomer;
   int get peopleQuantity;
   bool get canCancelProducts;
+  CustomerViewModel? get customerInSaleRequest;
   double getTotalLiquid(PrintedViewModel? printed);
   double getSubtotal(PrintedViewModel? printed);
   double getServiceChargeValue(PrintedViewModel? printed);

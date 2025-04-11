@@ -13,6 +13,7 @@ class InsertCustomerPage extends StatefulWidget {
 
 class _InsertCustomerPageState extends State<InsertCustomerPage> {
   final controller = TextEditingController();
+  final focusNode = FocusNode();
   bool searchByPersonalizedCode = false;
 
   @override
@@ -20,6 +21,18 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
     super.dispose();
 
     controller.dispose();
+    focusNode.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        focusNode.requestFocus();
+      }
+    });
   }
 
   @override
@@ -39,6 +52,7 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
                   SearchCustomerField(
                     searchByPersonalizedCode: searchByPersonalizedCode,
                     controller: controller,
+                    focusNode: focusNode,
                   ),
                   PersonalizedCodeCheckBox(
                       searchByPersonalizedCode: searchByPersonalizedCode,

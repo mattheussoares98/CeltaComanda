@@ -8,10 +8,12 @@ import '../../../pages.dart';
 class SearchCustomerField extends StatelessWidget {
   final bool searchByPersonalizedCode;
   final TextEditingController controller;
+  final FocusNode focusNode;
   const SearchCustomerField({
     super.key,
     required this.searchByPersonalizedCode,
     required this.controller,
+    required this.focusNode,
   });
 
   Future<void> loadCustomers(
@@ -34,7 +36,7 @@ class SearchCustomerField extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return TextFormField(
-      autofocus: true,
+      focusNode: focusNode,
       decoration: formFieldDecoration(
         errorText: null,
         context: context,

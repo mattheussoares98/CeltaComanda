@@ -48,6 +48,7 @@ void main() {
   late int commandNumber;
   late int pdvNumber;
   late SoapResponse customersSoapResponse;
+  late CustomerViewModel customerViewModel;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -101,6 +102,8 @@ void main() {
     );
     commandNumber = faker.randomGenerator.integer(100);
     pdvNumber = faker.randomGenerator.integer(100);
+    customerViewModel =
+        CustomerViewModel.fromEntity(EntityFactory.makeCustomersEntitys()[0]);
   }
 
   void mockSuccess() {
@@ -971,7 +974,7 @@ void main() {
       );
     });
     test("Should call load customer with correct values", () async {
-      final value = faker.randomGenerator.string(10);
+      final value = faker.randomGenerator.string(10); //TODO create a variable
       final searchByPersonalizedCode = faker.randomGenerator.boolean();
 
       await sut.getCustomers(
@@ -984,6 +987,30 @@ void main() {
             value: value,
             searchByPersonalizedCode: searchByPersonalizedCode,
           )).called(1);
+    });
+    test("Should clear selected customer", () async {
+      sut.updateSelectedCustomer(customerViewModel);
+
+      await sut.getCustomers(
+        value: faker.randomGenerator.string(10),
+        showErrorMessageReturnedByBs: (_) {},
+        searchByPersonalizedCode: faker.randomGenerator.boolean(),
+      );
+
+      expect(sut.selectedCustomer, null);
+    });
+  });
+
+  group("Update selected customer", () {
+    test("Should update selected customer correctly", () {
+      sut.updateSelectedCustomer(customerViewModel);
+
+      expect(sut.selectedCustomer, customerViewModel);
+    });
+    test("Should update selected customer to null value", () {
+      sut.updateSelectedCustomer(null);
+
+      expect(sut.selectedCustomer, null);
     });
   });
 }

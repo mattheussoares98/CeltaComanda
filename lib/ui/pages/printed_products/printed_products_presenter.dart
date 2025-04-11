@@ -61,4 +61,5 @@ abstract class PrintedProductsPresenter
     required void Function(String error) showErrorMessageReturnedByBs,
     required bool searchByPersonalizedCode,
   });
+  void updateSelectedCustomer(CustomerViewModel? customer);
 }

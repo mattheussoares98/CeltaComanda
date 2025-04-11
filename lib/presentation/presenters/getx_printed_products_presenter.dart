@@ -360,6 +360,7 @@ class GetxPrintedProductsPresenter
     isLoading = true;
     mainError = null;
     customers = null;
+    _selectedCustomer.value = null;
 
     try {
       final soapResponse = await loadCustomer.load(
@@ -381,5 +382,10 @@ class GetxPrintedProductsPresenter
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  void updateSelectedCustomer(CustomerViewModel? customer) {
+    _selectedCustomer.value = customer;
   }
 }

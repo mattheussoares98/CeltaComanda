@@ -91,49 +91,50 @@ class _InsertCustomerState extends State<InsertCustomer> {
                         snapCustomers.data!.isNotEmpty)
                       Column(
                         children: [
-                          StreamBuilder<CustomerViewModel?>(
-                              stream: null,
-                              builder: (context, snapSelectedCustomer) {
-                                return ListView.builder(
-                                  itemCount: snapCustomers.data!.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    final customer = snapCustomers.data![index];
+                          ListView.builder(
+                            itemCount: snapCustomers.data!.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final customer = snapCustomers.data![index];
 
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 4),
-                                      child: CheckboxMenuButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              WidgetStateProperty.all(
-                                            Theme.of(context)
-                                                .primaryColorLight
-                                                .withAlpha(
-                                                    index % 2 == 0 ? 10 : 30),
-                                          ),
-                                        ),
-                                        value: false, //TODO fix the value
-                                        onChanged: (value) {},
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(2),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text("${customer.Name}"),
-                                              Text(
-                                                  "${R.string.code}: ${customer.Code}"),
-                                              Text(
-                                                  "${R.string.cpfCnpj}: ${customer.CpfCnpjNumber}"),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: CheckboxMenuButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStateProperty.all(
+                                      Theme.of(context)
+                                          .primaryColorLight
+                                          .withAlpha(index % 2 == 0 ? 10 : 30),
+                                    ),
+                                  ),
+                                  value: printedProductsPresenter
+                                          .selectedCustomer ==
+                                      customer, //TODO fix the value
+                                  onChanged: (value) {
+                                    setState(() {
+                                      printedProductsPresenter
+                                          .updateSelectedCustomer(customer);
+                                    });
                                   },
-                                );
-                              }),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("${customer.Name}"),
+                                        Text(
+                                            "${R.string.code}: ${customer.Code}"),
+                                        Text(
+                                            "${R.string.cpfCnpj}: ${customer.CpfCnpjNumber}"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                           ElevatedButton(
                             onPressed: () {},
                             child: Text(R.string.confirm),

@@ -47,6 +47,8 @@ class _CustomersItemsState extends State<CustomersItems> {
                   children: [
                     Text("${customer.Name}"),
                     Text("${R.string.code}: ${customer.Code}"),
+                    if(customer.PersonalizedCode != null)
+                    Text("${R.string.personalizedCode}: ${customer.PersonalizedCode}"),
                     Text("${R.string.cpfCnpj}: ${customer.CpfCnpjNumber}"),
                   ],
                 ),

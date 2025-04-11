@@ -23,7 +23,7 @@ class SearchCustomerField extends StatelessWidget {
     await printedProductsPresenter.getCustomers(
       value: controller.text,
       showErrorMessageReturnedByBs: (error) {
-        snackBarMessage(context, error);
+        snackBarMessage(context, error, backgroundColor: Colors.red);
       },
       searchByPersonalizedCode: searchByPersonalizedCode,
     );

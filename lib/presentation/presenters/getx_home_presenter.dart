@@ -553,12 +553,12 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
   }) {
     if (lastImported == null && loadType == LoadTypeEnum.images) {
       return true;
-    } else if (exports == null || exports.isEmpty) {
+    } else if ((exports == null || exports.isEmpty) && lastImported != null) {
       return false;
     }
 
     final latestExportByLoadType = exports
-        .where((entity) => entity.LoadType == loadType)
+        ?.where((entity) => entity.LoadType == loadType)
         .fold<ExportChargingEntity?>(null, (latest, entity) {
       if (latest == null ||
           (entity.Date != null && entity.Date!.isAfter(latest.Date!))) {

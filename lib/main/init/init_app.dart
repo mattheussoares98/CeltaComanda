@@ -22,15 +22,8 @@ Future<void> initApp() async {
 }
 
 Future<void> initFirebase() async {
-  FirebaseOptions platform;
-  if (kIsWeb) {
-    platform = DefaultFirebaseOptions.currentPlatform;
-  } else if (Platform.isIOS) {
-    platform = DefaultFirebaseOptions.ios;
-  } else {
-    platform = DefaultFirebaseOptions.currentPlatform;
-  }
-  await Firebase.initializeApp(options: platform);
+  await Firebase.initializeApp(
+      options: kIsWeb ? DefaultFirebaseOptions.currentPlatform : null);
 }
 
 void _deletePath(String path) {

@@ -409,12 +409,17 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<bool> updateCustomerInSaleRequest(HomePresenter homePresenter) async {
+  Future<bool> updateCustomerInSaleRequest(
+    HomePresenter homePresenter, {
+    bool? isRemoving,
+  }) async {
     isLoading = true;
     mainError = null;
 
     try {
-      if (_selectedCustomer.value?.Code == null) {
+      if (isRemoving == true) {
+        //continue
+      } else if (_selectedCustomer.value?.Code == null) {
         throw DomainError.selectCustomer;
       } else if (_printed?.SaleRequestId == null ||
           homePresenter.commandEntity?.commandNumber == null) {
@@ -426,7 +431,9 @@ class GetxPrintedProductsPresenter
         saleRequestId: _printed!.SaleRequestId!.toInt(),
         model: SaleRequestModel(
           CovenantCode: null,
-          CustomerCode: _selectedCustomer.value!.Code!.toInt(),
+          CustomerCode: isRemoving == true
+              ? null
+              : _selectedCustomer.value!.Code!.toInt(),
           TotalLiquid: printed!.TotalLiquid!.toDouble(),
           EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
         ),

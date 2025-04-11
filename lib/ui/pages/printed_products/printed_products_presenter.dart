@@ -63,5 +63,8 @@ abstract class PrintedProductsPresenter
     required bool searchByPersonalizedCode,
   });
   void updateSelectedCustomer(CustomerViewModel? customer);
-  Future<bool> updateCustomerInSaleRequest(HomePresenter homePresenter);
+  Future<bool> updateCustomerInSaleRequest(
+    HomePresenter homePresenter, {
+    bool? isRemoving,
+  });
 }

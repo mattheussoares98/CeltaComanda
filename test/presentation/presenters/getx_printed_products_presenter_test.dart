@@ -1199,6 +1199,25 @@ void main() {
             ),
           ));
     });
+    test(
+        "Should update sale request with null customer code when is removing customer",
+        () async {
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+      sut.updateSelectedCustomer(customerViewModel);
+      await sut.updateCustomerInSaleRequest(homePresenter, isRemoving: true);
+
+      verify(() => updateSaleRequest.update(
+            commandNumber: homePresenter.commandEntity!.commandNumber!,
+            saleRequestId: printedEntity.SaleRequestId!.toInt(),
+            model: SaleRequestModel(
+              CovenantCode: null,
+              CustomerCode: null,
+              TotalLiquid: printedEntity.TotalLiquid!.toDouble(),
+              EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
+            ),
+          ));
+    });
     test("Should call load printed again", () async {
       await sut
           .loadPrinted(homePresenter.commandEntityController!.commandNumber!);

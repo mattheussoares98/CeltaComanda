@@ -21,6 +21,8 @@ class ConcentratorLoadImages implements LoadImages {
     required this.httpClient,
   });
 
+  int counter = 0;
+
   @override
   Future<List<ImageModel>> load({
     required bool getLocalImages,
@@ -34,30 +36,30 @@ class ConcentratorLoadImages implements LoadImages {
               .map((e) => ImageModel.fromJson(e))
               .toList();
 
-      if (getLocalImages) {
-        return localImages;
-      } else if (updatedImages.isNotEmpty && localImages.isNotEmpty) {
-        final newImages = await _loadConcentratorImages(updatedImages);
+      // if (getLocalImages) {
+      //   return localImages;
+      // } else if (updatedImages.isNotEmpty && localImages.isNotEmpty) {
+      //   final newImages = await _loadConcentratorImages(updatedImages);
 
-        for (var updatedImage in newImages) {
-          int indexInLocalImages = localImages
-              .indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
+      //   for (var updatedImage in newImages) {
+      //     int indexInLocalImages = localImages
+      //         .indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
 
-          if (indexInLocalImages != -1) {
-            localImages[indexInLocalImages] = updatedImage;
-          } else {
-            localImages.add(updatedImage);
-          }
-        }
+      //     if (indexInLocalImages != -1) {
+      //       localImages[indexInLocalImages] = updatedImage;
+      //     } else {
+      //       localImages.add(updatedImage);
+      //     }
+      //   }
 
-        await hiveStorage.delete(CacheKeys.images.name);
-        await hiveStorage.put(
-          CacheKeys.images.name,
-          localImages.map((e) => e.toJson()).toList(),
-        );
+      //   await hiveStorage.delete(CacheKeys.images.name);
+      //   await hiveStorage.put(
+      //     CacheKeys.images.name,
+      //     localImages.map((e) => e.toJson()).toList(),
+      //   );
 
-        return localImages;
-      }
+      //   return localImages;
+      // }
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpClient.request(
         url: "$concentratorUrl/api/APIImport/GetImages",
@@ -70,10 +72,191 @@ class ConcentratorLoadImages implements LoadImages {
           .toList()
           .cast<String>();
 
-      final loadedImages = await _loadConcentratorImages(
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      _loadConcentratorImages(
         plusAndEansThatContainsImagesInConcentrator,
       );
 
+      final loadedImages = await _loadConcentratorImages(
+        plusAndEansThatContainsImagesInConcentrator,
+      );
+      await Future.delayed(Duration(minutes: 2));
       await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
         CacheKeys.images.name,
@@ -95,7 +278,7 @@ class ConcentratorLoadImages implements LoadImages {
     if (enterpriseImage != null) {
       images.add(enterpriseImage);
     }
-
+    debugPrint("começou");
     for (var pluOrEan in imagesNames) {
       try {
         final maxSizeInBytes = 1 * 1024 * 1024;
@@ -142,6 +325,8 @@ class ConcentratorLoadImages implements LoadImages {
         debugPrint(e.toString());
       }
     }
+    counter++;
+    debugPrint("download número: $counter. Qtd imagens: ${images.length}");
 
     return images;
   }

@@ -86,7 +86,8 @@ class GetxPrintedProductsPresenter
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
       }
 
-      if (_printed?.CustomerCode != null) {
+      if (_printed?.CustomerCode != null &&
+          _printed?.CustomerCode != _customerInSaleRequest?.Code) {
         final response = await loadCustomer.load(
           value: _printed!.CustomerCode!,
           searchByPersonalizedCode: false,

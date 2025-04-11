@@ -40,8 +40,7 @@ class SelectedCustomer extends StatelessWidget {
             TextSpan(
               text: getCustomerDescription(printedProductsPresenter),
               style: TextStyle(
-                color: Theme.of(context)
-                    .primaryColorLight, //TODO if customer is not null, dont search again when load sale request
+                color: Theme.of(context).primaryColorLight,
                 fontStyle: FontStyle.italic,
               ),
             ),

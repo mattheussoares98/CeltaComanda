@@ -120,10 +120,7 @@ void main() {
     homePresenter.mockLoadCommandData();
     generateBitmap.mockGenerateBitmap(bitmap);
     customersSoapResponse = SoapResponse(
-      response: json.encode([
-        CustomerViewModel.fromEntity(EntityFactory.makeCustomersEntitys()[0])
-            .toJson(),
-      ]),
+      response: json.encode([customerViewModel.toJson()]),
       responseType: SoapResponseType.success,
     );
     loadCustomer.mockLoadCustomer(customersSoapResponse);
@@ -727,6 +724,47 @@ void main() {
       );
 
       expect(sut.customerInSaleRequest, null);
+    });
+    test(
+        'Should not load customer again if the customerInSaleRequest.Code is equal printed.CustomerCode',
+        () async {
+      loadPrintedProducts.mockLoadPrintedEntity(
+        PrintedEntity(
+          CustomerCode: customerViewModel.Code?.toInt(),
+          Products: printedEntity.Products,
+          PersonalizedCode: printedEntity.PersonalizedCode,
+          DateOfCreation: printedEntity.DateOfCreation,
+          DateHourOfCreation: printedEntity.DateHourOfCreation,
+          FlagStatus: printedEntity.FlagStatus,
+          Comments: printedEntity.Comments,
+          EnterpriseId: printedEntity.EnterpriseId,
+          RequestType: printedEntity.RequestType,
+          IsCancelled: printedEntity.IsCancelled,
+          IsUsing: printedEntity.IsUsing,
+          TotalLiquid: printedEntity.TotalLiquid,
+          Peoples: printedEntity.Peoples,
+          SaleRequestId: printedEntity.SaleRequestId,
+          FlagOrigin: printedEntity.FlagOrigin,
+          DeliveryControl: printedEntity.DeliveryControl,
+          IncrementType: printedEntity.IncrementType,
+          IncrementValue: printedEntity.IncrementValue,
+          CovenantCode: printedEntity.CovenantCode,
+          SellerCode: printedEntity.SellerCode,
+        ),
+      );
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      verify(() => loadCustomer.load(
+            value: sut.printed?.CustomerCode ?? "0",
+            searchByPersonalizedCode: false,
+          )).called(1);
     });
   });
 

@@ -394,7 +394,7 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> updateCustomerInSaleRequest(HomePresenter homePresenter) async {
+  Future<bool> updateCustomerInSaleRequest(HomePresenter homePresenter) async {
     isLoading = true;
     mainError = null;
 
@@ -415,7 +415,11 @@ class GetxPrintedProductsPresenter
         ),
       );
 
+      _selectedCustomer.value = null;
+
       await loadPrinted(homePresenter.commandEntity!.commandNumber!);
+
+      return true;
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.selectCustomer:
@@ -424,6 +428,7 @@ class GetxPrintedProductsPresenter
         default:
           mainError = UIError.unexpected;
       }
+      return false;
     } finally {
       isLoading = false;
     }

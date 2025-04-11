@@ -1104,5 +1104,26 @@ void main() {
                 homePresenter.commandEntityController!.commandNumber!.toInt()),
       ).called(2);
     });
+    test("Should clear selected customer", () async {
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+      sut.updateSelectedCustomer(customerViewModel);
+      await sut.updateCustomerInSaleRequest(homePresenter);
+
+      expect(sut.selectedCustomer, null);
+    });
+    test("Should return true in success", () async {
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+      sut.updateSelectedCustomer(customerViewModel);
+      final result = await sut.updateCustomerInSaleRequest(homePresenter);
+
+      expect(result, true);
+    });
+    test("Should return false in error", () async {
+      final result = await sut.updateCustomerInSaleRequest(homePresenter);
+
+      expect(result, false);
+    });
   });
 }

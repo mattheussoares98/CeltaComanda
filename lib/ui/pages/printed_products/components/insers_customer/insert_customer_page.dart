@@ -26,6 +26,7 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
+    HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Scaffold(
       body: Padding(
@@ -55,7 +56,10 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await printedProductsPresenter
+                                    .updateCustomerInSaleRequest(homePresenter);
+                              },
                               child: Text(R.string.confirm),
                             ),
                           ),

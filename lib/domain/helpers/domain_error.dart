@@ -19,6 +19,7 @@ enum DomainError {
   obligatoryFixedCommandNumber,
   oldCommandIsEmpty,
   productNotFound,
+  selectCustomer,
   selectProducts,
   unexpected,
 }

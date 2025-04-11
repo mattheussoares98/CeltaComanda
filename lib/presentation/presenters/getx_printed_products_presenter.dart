@@ -392,4 +392,40 @@ class GetxPrintedProductsPresenter
       _selectedCustomer.value = customer;
     }
   }
+
+  @override
+  Future<void> updateCustomerInSaleRequest(HomePresenter homePresenter) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      if (_selectedCustomer.value?.Code == null) {
+        throw DomainError.selectCustomer;
+      } else if (_printed?.SaleRequestId == null ||
+          homePresenter.commandEntity?.commandNumber == null) {
+        throw DomainError.unexpected;
+      }
+
+      await updateSaleRequest.update(
+        commandNumber: homePresenter.commandEntity!.commandNumber!,
+        saleRequestId: _printed!.SaleRequestId!.toInt(),
+        model: SaleRequestModel(
+          CovenantCode: null,
+          CustomerCode: _selectedCustomer.value!.Code!.toInt(),
+        ),
+      );
+
+      await loadPrinted(homePresenter.commandEntity!.commandNumber!);
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.selectCustomer:
+          mainError = UIError.selectCustomer;
+          break;
+        default:
+          mainError = UIError.unexpected;
+      }
+    } finally {
+      isLoading = false;
+    }
+  }
 }

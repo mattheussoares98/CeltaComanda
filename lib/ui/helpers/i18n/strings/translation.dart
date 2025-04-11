@@ -59,6 +59,7 @@ abstract class Translation {
   String get msgRequiredField;
   String get msgSearchCommandToPay;
   String get msgSelectCommand;
+  String get msgSelectCustomer;
   String get msgSelectDifferentTables;
   String get msgSelectPeopleNumbers;
   String get msgSelectProducts;

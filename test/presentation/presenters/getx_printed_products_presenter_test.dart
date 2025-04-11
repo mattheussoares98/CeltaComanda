@@ -49,6 +49,8 @@ void main() {
   late int pdvNumber;
   late SoapResponse customersSoapResponse;
   late CustomerViewModel customerViewModel;
+  late bool searchByPersonalizedCode;
+  late String valueToSearchCustomer;
 
   void initPresenters() {
     cartPresenter = CartPresenterSpy();
@@ -104,6 +106,8 @@ void main() {
     pdvNumber = faker.randomGenerator.integer(100);
     customerViewModel =
         CustomerViewModel.fromEntity(EntityFactory.makeCustomersEntitys()[0]);
+    searchByPersonalizedCode = faker.randomGenerator.boolean();
+    valueToSearchCustomer = faker.randomGenerator.string(10);
   }
 
   void mockSuccess() {
@@ -934,7 +938,7 @@ void main() {
           ]));
 
       await sut.getCustomers(
-        value: faker.randomGenerator.string(10),
+        value: valueToSearchCustomer,
         showErrorMessageReturnedByBs: (_) {},
         searchByPersonalizedCode: false,
       );
@@ -950,7 +954,7 @@ void main() {
       loadCustomer.mockError();
 
       await sut.getCustomers(
-        value: faker.randomGenerator.string(10),
+        value: valueToSearchCustomer,
         showErrorMessageReturnedByBs: (_) {},
         searchByPersonalizedCode: false,
       );
@@ -963,28 +967,25 @@ void main() {
 
       loadCustomer.mockLoadCustomer(
         SoapResponse(
-            response: faker.randomGenerator.string(10),
+            response: valueToSearchCustomer,
             responseType: SoapResponseType.error),
       );
 
       await sut.getCustomers(
-        value: faker.randomGenerator.string(10),
+        value: valueToSearchCustomer,
         showErrorMessageReturnedByBs: (_) {},
-        searchByPersonalizedCode: faker.randomGenerator.boolean(),
+        searchByPersonalizedCode: searchByPersonalizedCode,
       );
     });
     test("Should call load customer with correct values", () async {
-      final value = faker.randomGenerator.string(10); //TODO create a variable
-      final searchByPersonalizedCode = faker.randomGenerator.boolean();
-
       await sut.getCustomers(
-        value: value,
+        value: valueToSearchCustomer,
         showErrorMessageReturnedByBs: (_) {},
         searchByPersonalizedCode: searchByPersonalizedCode,
       );
 
       verify(() => loadCustomer.load(
-            value: value,
+            value: valueToSearchCustomer,
             searchByPersonalizedCode: searchByPersonalizedCode,
           )).called(1);
     });
@@ -994,7 +995,7 @@ void main() {
       await sut.getCustomers(
         value: faker.randomGenerator.string(10),
         showErrorMessageReturnedByBs: (_) {},
-        searchByPersonalizedCode: faker.randomGenerator.boolean(),
+        searchByPersonalizedCode: searchByPersonalizedCode,
       );
 
       expect(sut.selectedCustomer, null);
@@ -1019,6 +1020,89 @@ void main() {
       sut.updateSelectedCustomer(null);
 
       expect(sut.selectedCustomer, null);
+    });
+  });
+
+  group("Update customer in sale request", () {
+    test("Should emit correct values on success", () async {
+      expectLater(sut.mainErrorStream, emits(null));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+
+      sut.updateSelectedCustomer(customerViewModel);
+
+      await sut.updateCustomerInSaleRequest(homePresenter);
+    });
+    test("Should emit correct values on error", () async {
+      expectLater(
+          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      sut.updateSelectedCustomer(customerViewModel);
+
+      await sut.updateCustomerInSaleRequest(homePresenter);
+    });
+
+    test("Should emit error if printed is null", () async {
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      sut.updateSelectedCustomer(customerViewModel);
+      await sut.updateCustomerInSaleRequest(homePresenter);
+    });
+    test("Should emit error if command number is null", () async {
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.unexpected]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      sut.updateSelectedCustomer(customerViewModel);
+      homePresenter.commandEntityController = null;
+
+      await sut.updateCustomerInSaleRequest(homePresenter);
+    });
+    test("Should emit correct value if doesnt has selected customer", () async {
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.selectCustomer]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.updateCustomerInSaleRequest(homePresenter);
+    });
+
+    test("Should call update sale request with correct values", () async {
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+      sut.updateSelectedCustomer(customerViewModel);
+      await sut.updateCustomerInSaleRequest(homePresenter);
+
+      verify(() => updateSaleRequest.update(
+            commandNumber: homePresenter.commandEntity!.commandNumber!,
+            saleRequestId: printedEntity.SaleRequestId!.toInt(),
+            model: SaleRequestModel(
+              CovenantCode: null,
+              CustomerCode: customerViewModel.Code!.toInt(),
+            ),
+          ));
+    });
+    test("Should call load printed again", () async {
+      await sut
+          .loadPrinted(homePresenter.commandEntityController!.commandNumber!);
+      sut.updateSelectedCustomer(customerViewModel);
+      await sut.updateCustomerInSaleRequest(homePresenter);
+
+      verify(
+        () => loadPrintedProducts.load(
+            commandNumber:
+                homePresenter.commandEntityController!.commandNumber!.toInt()),
+      ).called(2);
     });
   });
 }

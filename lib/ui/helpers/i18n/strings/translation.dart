@@ -260,6 +260,7 @@ abstract class Translation {
   String get selectAll;
   String get selectAllProducts;
   String get selectDate;
+  String get selectedCustomer;
   String get selectedDate;
   String get selectOneComment;
   String get selectedProductsAndComments;

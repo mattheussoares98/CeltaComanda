@@ -305,6 +305,7 @@ class EnUs implements Translation {
   String get selectAll => "Select all";
   String get selectAllProducts => "Select all products";
   String get selectDate => "Select one date";
+  String get selectedCustomer => "Selected customer";
   String get selectedDate => "Selected date";
   String get selectOneComment => "Select one comment";
   String get selectedProductsAndComments => 'Selected products and comments';

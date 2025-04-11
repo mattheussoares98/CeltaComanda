@@ -120,13 +120,29 @@ class _PrintedItemState extends State<PrintedItem> {
           if (ScreenSize.hasMinWidth)
             Flexible(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   if (EnterpriseBuilder.entity?.canInsertCustomer == true)
                     Column(
                       children: [
                         if (widget.printed.CustomerCode != null)
-                          Text(widget.printed.CustomerCode!),
+                          RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColorLight,
+                                  fontSize: StringSize.size,
+                                ),
+                                text: R.string.selectedCustomer,
+                                children: [
+                                  TextSpan(
+                                    text: "\n${widget.printed.CustomerCode}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        Text(widget.printed.CustomerCode!),
                         TextButton(
                           onPressed: () {
                             PersonalizedDialogPage.open(

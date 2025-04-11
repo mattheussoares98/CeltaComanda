@@ -1007,6 +1007,14 @@ void main() {
 
       expect(sut.selectedCustomer, customerViewModel);
     });
+    test(
+        "Should update selected customer to null value if pass the same customer as parameter",
+        () {
+      sut.updateSelectedCustomer(customerViewModel);
+      sut.updateSelectedCustomer(customerViewModel);
+
+      expect(sut.selectedCustomer, null);
+    });
     test("Should update selected customer to null value", () {
       sut.updateSelectedCustomer(null);
 

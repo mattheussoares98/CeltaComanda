@@ -386,6 +386,10 @@ class GetxPrintedProductsPresenter
 
   @override
   void updateSelectedCustomer(CustomerViewModel? customer) {
-    _selectedCustomer.value = customer;
+    if (customer == _selectedCustomer.value) {
+      _selectedCustomer.value = null;
+    } else {
+      _selectedCustomer.value = customer;
+    }
   }
 }

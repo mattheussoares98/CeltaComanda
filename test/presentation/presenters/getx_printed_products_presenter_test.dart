@@ -1212,7 +1212,7 @@ void main() {
             saleRequestId: printedEntity.SaleRequestId!.toInt(),
             model: SaleRequestModel(
               CovenantCode: null,
-              CustomerCode: null,
+              CustomerCode: 0,
               TotalLiquid: printedEntity.TotalLiquid!.toDouble(),
               EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
             ),

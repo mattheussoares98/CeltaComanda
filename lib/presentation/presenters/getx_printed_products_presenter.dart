@@ -431,9 +431,8 @@ class GetxPrintedProductsPresenter
         saleRequestId: _printed!.SaleRequestId!.toInt(),
         model: SaleRequestModel(
           CovenantCode: null,
-          CustomerCode: isRemoving == true
-              ? null
-              : _selectedCustomer.value!.Code!.toInt(),
+          CustomerCode:
+              isRemoving == true ? 0 : _selectedCustomer.value!.Code!.toInt(),
           TotalLiquid: printed!.TotalLiquid!.toDouble(),
           EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
         ),

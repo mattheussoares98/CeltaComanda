@@ -19,7 +19,7 @@ abstract class CovenantPresenter implements Listenable {
     required void Function(String error) showErrorMessageReturnedByBs,
   });
   void validateCustomerField(String value);
-  Future<void> updateSelectedCovenant(
+  void updateSelectedCovenant(
     CustomerViewModel? customer,
     String? newValue,
   );

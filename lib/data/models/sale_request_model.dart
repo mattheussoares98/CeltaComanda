@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/models.dart';
@@ -38,7 +36,7 @@ class SaleRequestModel extends Equatable {
     this.PersonalizedCode,
     this.IsCancelled,
     this.IsUsing,
-    this.TotalLiquid,
+    required this.TotalLiquid,
     required this.CovenantCode,
     required this.CustomerCode,
     this.IncrementValue,

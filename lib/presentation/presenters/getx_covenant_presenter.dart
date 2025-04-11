@@ -106,10 +106,10 @@ class GetxCovenantPresenter extends GetxController
   Map<String, String?> get selectedCovenant => _selectedCovenant;
 
   @override
-  Future<void> updateSelectedCovenant(
+  void updateSelectedCovenant(
     CustomerViewModel? customer,
     String? covenantCode,
-  ) async {
+  ) {
     _authorizationPendingModel = null;
 
     if (customer == null) {
@@ -165,6 +165,8 @@ class GetxCovenantPresenter extends GetxController
           model: SaleRequestModel(
             CustomerCode: _selectedCovenant.keys.first.toInt(),
             CovenantCode: _selectedCovenant.values.first!.toInt(),
+            TotalLiquid:
+                printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
           ),
           commandNumber: homePresenter.commandEntity!.commandNumber!
               .toString()

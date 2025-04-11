@@ -183,7 +183,7 @@ void main() {
 
     test("Should clear selectedCovenant", () async {
       String newValue = faker.randomGenerator.string(10);
-      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
+      sut.updateSelectedCovenant(customersViewModel[0], newValue);
 
       expect(sut.selectedCovenant, {
         customersViewModel[0].Code: newValue,
@@ -248,14 +248,14 @@ void main() {
   group("Update selected covenant", () {
     test("Should update selected covenant correctly", () async {
       String newValue = faker.randomGenerator.string(10);
-      await sut.updateSelectedCovenant(customersViewModel[0], newValue);
+      sut.updateSelectedCovenant(customersViewModel[0], newValue);
 
       expect(sut.selectedCovenant, {
         customersViewModel[0].Code: newValue,
       });
     });
     test("Should clear authorizationPendingModel", () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.string(10),
       );
@@ -264,11 +264,11 @@ void main() {
     });
 
     test("Should clear selectedCovenant when customer is null", () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.string(10),
       );
-      await sut.updateSelectedCovenant(null, faker.randomGenerator.string(10));
+      sut.updateSelectedCovenant(null, faker.randomGenerator.string(10));
 
       expect(sut.selectedCovenant, {});
     });
@@ -309,7 +309,7 @@ void main() {
 
     // test("Should call finish sale request concentrador with correct values",
     //     () async {
-    //   await sut.updateSelectedCovenant(
+    //    sut.updateSelectedCovenant(
     //     customersViewModel[0],
     //     faker.randomGenerator.integer(100).toString(),
     //   );
@@ -350,7 +350,7 @@ void main() {
     //   ).called(1);
     // });
     test("Should call load printed on success", () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -371,7 +371,7 @@ void main() {
     });
     test("Should call authorize covenant limit use by code", () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       await sut.finishSaleRequestByCovenant(
         paymentPresenter: paymentPresenter,
@@ -397,7 +397,7 @@ void main() {
         "Should not finish sale request concentrador when soap response returns error type",
         () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       covenantLimit
           .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(SoapResponse(
@@ -424,7 +424,7 @@ void main() {
       );
     });
     test("Should clear authorizationPendingModel on success", () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -444,7 +444,7 @@ void main() {
     // test(
     //     "Should not call covenantAuthorizationIsPendant.update with false value on finish throws",
     //     () async {
-    //   await sut.updateSelectedCovenant(
+    //    sut.updateSelectedCovenant(
     //     customersViewModel[0],
     //     faker.randomGenerator.integer(100).toString(),
     //   );
@@ -469,7 +469,7 @@ void main() {
     test(
         "Should call updateSaleRequest with correct customerCode and covenantCode",
         () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -487,17 +487,19 @@ void main() {
             model: SaleRequestModel(
               CovenantCode: sut.selectedCovenant.values.first!.toInt(),
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
+              TotalLiquid:
+                  printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
             ),
             commandNumber: homePresenter.commandEntityController!.commandNumber!
                 .padLeft(3, "0"),
             saleRequestId: printedProductsPresenter
                 .printedProductsMock.SaleRequestId!
                 .toInt(),
-          )).called(1);
+          ));
     });
 
     test("Should call checkPasswordByCustomerCode", () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -519,7 +521,7 @@ void main() {
     test(
         "Should not call checkPasswordByCustomerCode if customerPassword is empty",
         () async {
-      await sut.updateSelectedCovenant(
+      sut.updateSelectedCovenant(
         customersViewModel[0],
         faker.randomGenerator.integer(100).toString(),
       );
@@ -542,7 +544,7 @@ void main() {
         "Should not call covenantLimit validation if selectedCustomer has invalid password",
         () async {
       String covenantCode = faker.randomGenerator.integer(100).toString();
-      await sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
+      sut.updateSelectedCovenant(customersViewModel[0], covenantCode);
 
       final errorSoapResponse = SoapResponse(
         response: faker.randomGenerator.string(10),

@@ -4,6 +4,7 @@ export './load_printed_products_again_button.dart';
 export './print_printed_products_button.dart';
 export 'printed_item.dart';
 export './product_details.dart';
+export 'sale_request_customer_handler.dart';
 export './search_data_of_other_command_number.dart';
 export './user_input.dart';
 export 'validate_user_and_cancel_product.dart';

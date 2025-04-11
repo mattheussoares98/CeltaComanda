@@ -103,10 +103,16 @@ class _PrintedItemState extends State<PrintedItem> {
                           ),
                           if (!ScreenSize.hasMinWidth &&
                               index == widget.printed.Products.length - 1)
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(top: 10),
-                              child: SizedBox(
-                                child: TotalByPerson(),
+                              child: Column(
+                                children: [
+                                  if (EnterpriseBuilder
+                                          .entity?.canInsertCustomer ==
+                                      true)
+                                    SaleRequestCustomerHandler(),
+                                  TotalByPerson(),
+                                ],
                               ),
                             ),
                         ],
@@ -123,41 +129,7 @@ class _PrintedItemState extends State<PrintedItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   if (EnterpriseBuilder.entity?.canInsertCustomer == true)
-                    Column(
-                      children: [
-                        if (widget.printed.CustomerCode != null)
-                          RichText(
-                            text: TextSpan(
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColorLight,
-                                  fontSize: StringSize.size,
-                                ),
-                                text: R.string.selectedCustomer,
-                                children: [
-                                  TextSpan(
-                                    text: "\n${widget.printed.CustomerCode}",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        Text(widget.printed.CustomerCode!),
-                        TextButton(
-                          onPressed: () {
-                            PersonalizedDialogPage.open(
-                              context: context,
-                              page: InsertCustomerPage(),
-                            );
-                          },
-                          child: Text(
-                            widget.printed.CustomerCode == null
-                                ? R.string.addCustomer
-                                : R.string.changeCustomer,
-                          ),
-                        ),
-                      ],
-                    ),
+                    SaleRequestCustomerHandler(),
                   TotalByPerson(),
                 ],
               ),

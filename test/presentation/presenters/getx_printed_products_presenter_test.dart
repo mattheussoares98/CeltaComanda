@@ -1089,6 +1089,8 @@ void main() {
             model: SaleRequestModel(
               CovenantCode: null,
               CustomerCode: customerViewModel.Code!.toInt(),
+              TotalLiquid: printedEntity.TotalLiquid!.toDouble(),
+              EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
             ),
           ));
     });

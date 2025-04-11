@@ -412,6 +412,8 @@ class GetxPrintedProductsPresenter
         model: SaleRequestModel(
           CovenantCode: null,
           CustomerCode: _selectedCustomer.value!.Code!.toInt(),
+          TotalLiquid: printed!.TotalLiquid!.toDouble(),
+          EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
         ),
       );
 

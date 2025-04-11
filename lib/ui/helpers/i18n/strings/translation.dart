@@ -117,6 +117,7 @@ abstract class Translation {
   String get cancelProductsOrRemoveServiceCharge;
   String get cancelProduct;
   String get canInsertCommentManually;
+  String get canInsertCustomer;
   String get canInsertQuantityManually;
   String get cart;
   String get ccsUrl;

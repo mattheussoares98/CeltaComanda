@@ -160,6 +160,7 @@ class PtBr implements Translation {
       "Cancelar produtos ou remover taxa de serviço";
   String get cancelProduct => "Cancelar produto";
   String get canInsertCommentManually => "Pode inserir comentário manualmente";
+  String get canInsertCustomer => "Pode inserir cliente na venda";
   String get canInsertQuantityManually => "Pode inserir quantitade manualmente";
   String get ccsUrl => "Url do CCS";
   String get cashCredit => "Crédito à vista";

@@ -34,60 +34,60 @@ class _WebAddOrEditEnterprisePageState
   final latestCompatibleVersionFocusNode = FocusNode();
   final serviceChargePercentageFocusNode = FocusNode();
   final minutesVerifyUpdateMenuFocusNode = FocusNode();
-  bool? zoomImage = false;
-  bool? useCovenant = false;
-  bool? useProductReducedName = false;
-  bool? verifyCommandBlocked = true;
-  bool? canInsertCommentManually = false;
-  bool? blockUseAppIfIsOutdated = false;
-  bool? canInsertQuantityManually = false;
-  bool? canInsertCustomer = false;
+  bool zoomImage = false;
+  bool useCovenant = false;
+  bool useProductReducedName = false;
+  bool verifyCommandBlocked = true;
+  bool canInsertCommentManually = false;
+  bool blockUseAppIfIsOutdated = false;
+  bool canInsertQuantityManually = false;
+  bool canInsertCustomer = false;
 
   void changeUseProductReducedName() {
     setState(() {
-      useProductReducedName = !(useProductReducedName ?? false);
+      useProductReducedName = !(useProductReducedName);
     });
   }
 
   void changeBlockUseAppIfIsOutdated() {
     setState(() {
-      blockUseAppIfIsOutdated = !(blockUseAppIfIsOutdated ?? false);
+      blockUseAppIfIsOutdated = !(blockUseAppIfIsOutdated);
     });
   }
 
   void changeCanInsertQuantityManually() {
     setState(() {
-      canInsertQuantityManually = !(canInsertQuantityManually ?? false);
+      canInsertQuantityManually = !(canInsertQuantityManually);
     });
   }
 
   void changeCanInsertCustomer() {
     setState(() {
-      canInsertCustomer = !(canInsertCustomer ?? false);
+      canInsertCustomer = !(canInsertCustomer);
     });
   }
 
   void changeCanInsertCommentManually() {
     setState(() {
-      canInsertCommentManually = !(canInsertCommentManually ?? false);
+      canInsertCommentManually = !(canInsertCommentManually);
     });
   }
 
   void changeVerifyCommandIsBlocked() {
     setState(() {
-      verifyCommandBlocked = !(verifyCommandBlocked ?? true);
+      verifyCommandBlocked = !(verifyCommandBlocked);
     });
   }
 
   void changeZoom() {
     setState(() {
-      zoomImage = !(zoomImage ?? false);
+      zoomImage = !(zoomImage);
     });
   }
 
   void changeUseCovenant() {
     setState(() {
-      useCovenant = !(useCovenant ?? false);
+      useCovenant = !(useCovenant);
     });
   }
 
@@ -308,7 +308,7 @@ class _WebAddOrEditEnterprisePageState
                         children: [
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: zoomImage ?? false,
+                              value: zoomImage,
                               changeValue: changeZoom,
                               title: R.string.zoomImage,
                             ),
@@ -316,7 +316,7 @@ class _WebAddOrEditEnterprisePageState
                           const SizedBox(width: 8),
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: useCovenant ?? false,
+                              value: useCovenant,
                               changeValue: changeUseCovenant,
                               title: R.string.enableCovenant,
                             ),
@@ -327,7 +327,7 @@ class _WebAddOrEditEnterprisePageState
                         children: [
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: useProductReducedName ?? false,
+                              value: useProductReducedName,
                               changeValue: changeUseProductReducedName,
                               title: R.string.useProductReducedName,
                             ),
@@ -335,7 +335,7 @@ class _WebAddOrEditEnterprisePageState
                           const SizedBox(width: 8),
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: verifyCommandBlocked ?? false,
+                              value: verifyCommandBlocked,
                               changeValue: changeVerifyCommandIsBlocked,
                               title: R.string.needLiberateCommand,
                             ),
@@ -346,7 +346,7 @@ class _WebAddOrEditEnterprisePageState
                         children: [
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: canInsertCommentManually ?? false,
+                              value: canInsertCommentManually,
                               changeValue: changeCanInsertCommentManually,
                               title: R.string.canInsertCommentManually,
                             ),
@@ -354,7 +354,7 @@ class _WebAddOrEditEnterprisePageState
                           const SizedBox(width: 8),
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: canInsertQuantityManually ?? false,
+                              value: canInsertQuantityManually,
                               changeValue: changeCanInsertQuantityManually,
                               title: R.string.canInsertQuantityManually,
                             ),
@@ -365,11 +365,24 @@ class _WebAddOrEditEnterprisePageState
                         children: [
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: blockUseAppIfIsOutdated ?? false,
+                              value: blockUseAppIfIsOutdated,
                               changeValue: changeBlockUseAppIfIsOutdated,
                               title: R.string.blockUseAppIfIsOutdated,
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: PersonalizedSwitch(
+                              value: canInsertCustomer,
+                              changeValue: changeCanInsertCustomer,
+                              title: R.string.canInsertCustomer,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: SizedBox()),
                           const SizedBox(width: 8),
                           Expanded(
                             child: GoToDevicesInfoPageButton(),

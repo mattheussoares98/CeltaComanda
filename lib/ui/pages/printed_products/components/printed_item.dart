@@ -110,7 +110,7 @@ class _PrintedItemState extends State<PrintedItem> {
                                   if (EnterpriseBuilder
                                           .entity?.canInsertCustomer ==
                                       true)
-                                    SaleRequestCustomerHandler(),
+                                    UpdateCustomer(),
                                   TotalByPerson(),
                                 ],
                               ),
@@ -129,7 +129,7 @@ class _PrintedItemState extends State<PrintedItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   if (EnterpriseBuilder.entity?.canInsertCustomer == true)
-                    SaleRequestCustomerHandler(),
+                    UpdateCustomer(),
                   TotalByPerson(),
                 ],
               ),

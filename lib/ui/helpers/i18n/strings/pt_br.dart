@@ -287,6 +287,7 @@ class PtBr implements Translation {
   String get quantityAbbreviated => 'Qtd';
   String get register => 'Registrar';
   String get reload => 'Recarregar';
+  String get removeCustomer => 'Remover cliente';
   String get removeProduct => 'Remover produto';
   String get removeServiceCharge => 'Remover taxa';
   String get requested => 'Solicitados';

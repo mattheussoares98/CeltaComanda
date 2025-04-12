@@ -30,9 +30,11 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
   void sortCommand(List<DeviceInfoViewModel>? data) {
     setState(() {
       if (isAscending) {
-        data!.sort((a, b) => a.commandNumber.compareTo(b.commandNumber));
+        data!.sort((a, b) =>
+            a.commandNumber.toInt().compareTo(b.commandNumber.toInt()));
       } else {
-        data!.sort((a, b) => b.commandNumber.compareTo(a.commandNumber));
+        data!.sort((a, b) =>
+            b.commandNumber.toInt().compareTo(a.commandNumber.toInt()));
       }
       isAscending = !isAscending;
     });

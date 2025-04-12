@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/helpers.dart';
@@ -51,11 +52,17 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
   }
 
   void sortVersionDate(List<DeviceInfoViewModel>? data) {
+    final format = DateFormat("dd/MM/yyyy HH:mm:ss");
+
     setState(() {
       if (isAscending) {
-        data!.sort((a, b) => a.lastUpdatedDate.compareTo(b.lastUpdatedDate));
+        data!.sort((a, b) => format
+            .parse(a.lastUpdatedDate)
+            .compareTo(format.parse(b.lastUpdatedDate)));
       } else {
-        data!.sort((a, b) => b.lastUpdatedDate.compareTo(a.lastUpdatedDate));
+        data!.sort((a, b) => format
+            .parse(b.lastUpdatedDate)
+            .compareTo(format.parse(a.lastUpdatedDate)));
       }
       isAscending = !isAscending;
     });

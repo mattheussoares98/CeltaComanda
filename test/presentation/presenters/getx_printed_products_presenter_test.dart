@@ -766,6 +766,47 @@ void main() {
             searchByPersonalizedCode: false,
           )).called(1);
     });
+    test(
+        'Should update customerInSaleRequest to null if saleRequest.CustomerCode is null',
+        () async {
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      expect(sut.customerInSaleRequest, customerViewModel);
+
+      loadPrintedProducts.mockLoadPrintedEntity(
+        PrintedEntity(
+          CustomerCode: null,
+          Products: printedEntity.Products,
+          PersonalizedCode: printedEntity.PersonalizedCode,
+          DateOfCreation: printedEntity.DateOfCreation,
+          DateHourOfCreation: printedEntity.DateHourOfCreation,
+          FlagStatus: printedEntity.FlagStatus,
+          Comments: printedEntity.Comments,
+          EnterpriseId: printedEntity.EnterpriseId,
+          RequestType: printedEntity.RequestType,
+          IsCancelled: printedEntity.IsCancelled,
+          IsUsing: printedEntity.IsUsing,
+          TotalLiquid: printedEntity.TotalLiquid,
+          Peoples: printedEntity.Peoples,
+          SaleRequestId: printedEntity.SaleRequestId,
+          FlagOrigin: printedEntity.FlagOrigin,
+          DeliveryControl: printedEntity.DeliveryControl,
+          IncrementType: printedEntity.IncrementType,
+          IncrementValue: printedEntity.IncrementValue,
+          CovenantCode: printedEntity.CovenantCode,
+          SellerCode: printedEntity.SellerCode,
+        ),
+      );
+      await sut.loadPrinted(
+        homePresenter.commandEntity!.commandNumber!,
+        showIsLoading: false,
+      );
+
+      expect(sut.customerInSaleRequest, null);
+    });
   });
 
   group("Do on close page", () {

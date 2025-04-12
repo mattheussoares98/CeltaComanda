@@ -27,6 +27,7 @@ class ConcentratorLoadImages implements LoadImages {
     required List<String> updatedImages,
   }) async {
     try {
+      //TODO verify if has the same quantity of images as has in concentrator. If not, download all
       final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
       var localImages = localImagesJson == null
           ? <ImageModel>[]

@@ -63,7 +63,6 @@ class ConcentratorLoadImages implements LoadImages {
               .where((e) =>
                   e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
               .isNotEmpty) {
-        //TODO fix when do login is trying to download again what already is downloaded
         imagesOfAtualEnterprise = await _mergedOldAndNewImages(
           localImages: localImages,
           updatedImages: updatedImages,

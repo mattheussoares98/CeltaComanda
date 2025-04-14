@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
+import '../../../main/builders/builders.dart';
 import '../../../ui/pages/pages.dart';
 import '../../database/database.dart';
+import '../../models/models.dart';
 
 class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
   final HiveStorage hiveStorage;
@@ -13,26 +17,76 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
   @override
   Future<List<LoadedMenuViewModel>> load() async {
     try {
-      final response = await hiveStorage.get(CacheKeys.menu.name);
+      final allMenus = await _getAllMenus();
 
-      final menu = (jsonDecode(response) as List)
-          .map((e) => LoadedMenuViewModel.fromJson(e))
-          .toList();
-      return menu;
+      final enterpriseMenu = allMenus
+              .where((e) =>
+                  e.enterpriseName == EnterpriseBuilder.entity!.enterpriseName)
+              .firstOrNull
+              ?.menu ??
+          [];
+      return enterpriseMenu;
     } catch (e) {
-      throw Exception();
+      return [];
     }
   }
 
   @override
   Future<void> save(List<LoadedMenuViewModel> menu) async {
     try {
-      await hiveStorage.delete(CacheKeys.menu.name);
+      final allMenus = await _getAllMenus();
 
-      await hiveStorage.put(CacheKeys.menu.name,
-          jsonEncode(menu.map((e) => e.toJson()).toList()));
+      int indexMenuInDatabase = allMenus.indexWhere((element) =>
+          element.enterpriseName == EnterpriseBuilder.entity!.enterpriseName);
+
+      if (indexMenuInDatabase != -1) {
+        allMenus[indexMenuInDatabase] = LoadedMenuModel(
+          menu: menu,
+          enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        );
+      } else {
+        allMenus.add(LoadedMenuModel(
+          menu: menu,
+          enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        ));
+      }
+
+      await hiveStorage.delete(CacheKeys.menu.name);
+      await hiveStorage.put(
+        CacheKeys.menu.name,
+        allMenus.map((e) => jsonEncode(e.toJson())).toList(),
+      );
     } catch (e) {
       throw Exception();
+    }
+  }
+
+  Future<List<LoadedMenuModel>> _getAllMenus() async {
+    var response = await hiveStorage.get(CacheKeys.menu.name);
+
+    try {
+      //new way
+      debugPrint("new");
+      return (response as List)
+          .map((e) => LoadedMenuModel.fromJson(jsonDecode(e)))
+          .toList();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    try {
+      //old way
+      debugPrint("old");
+      return [
+        LoadedMenuModel(
+          menu: (jsonDecode(response) as List)
+              .map((e) => LoadedMenuViewModel.fromJson(e))
+              .toList(),
+          enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        ),
+      ];
+    } catch (e) {
+      return [];
     }
   }
 }

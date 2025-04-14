@@ -27,7 +27,6 @@ class ConcentratorLoadImages implements LoadImages {
     required List<String> updatedImages,
   }) async {
     try {
-      //TODO verify if has the same quantity of images as has in concentrator. If not, download all
       final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
       var localImages = localImagesJson == null
           ? <ImageModel>[]
@@ -35,30 +34,40 @@ class ConcentratorLoadImages implements LoadImages {
               .map((e) => ImageModel.fromJson(e))
               .toList();
 
-      if (getLocalImages) {
+      final plusAndEansThatContainsImages =
+          await _getPlusAndEansThatContainsImages();
+
+      if (plusAndEansThatContainsImages.length >
+          (localImages.length - 1 /* -1 because enterprise image */)) {
+        //all images that are not in localImages, but has in concentrator
+
+        final missingConcentratorImages = plusAndEansThatContainsImages
+            .where(
+              (ean) => !localImages.any((local) => local.pluOrEan == ean),
+            )
+            .toList();
+
+        return await _mergedOldAndNewImages(
+          localImages: localImages,
+          updatedImages: [...missingConcentratorImages, ...updatedImages],
+        );
+      } else if (getLocalImages) {
         return localImages;
       } else if (updatedImages.isNotEmpty && localImages.isNotEmpty) {
-        final newImages = await _loadConcentratorImages(updatedImages);
-
-        for (var updatedImage in newImages) {
-          int indexInLocalImages = localImages
-              .indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
-
-          if (indexInLocalImages != -1) {
-            localImages[indexInLocalImages] = updatedImage;
-          } else {
-            localImages.add(updatedImage);
-          }
-        }
-
-        await hiveStorage.delete(CacheKeys.images.name);
-        await hiveStorage.put(
-          CacheKeys.images.name,
-          localImages.map((e) => e.toJson()).toList(),
+        return await _mergedOldAndNewImages(
+          localImages: localImages,
+          updatedImages: updatedImages,
         );
-
-        return localImages;
+      } else {
+        return await reloadAllImages(plusAndEansThatContainsImages);
       }
+    } catch (e) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  Future<List<String>> _getPlusAndEansThatContainsImages() async {
+    try {
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpClient.request(
         url: "$concentratorUrl/api/APIImport/GetImages",
@@ -66,11 +75,19 @@ class ConcentratorLoadImages implements LoadImages {
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );
 
-      final plusAndEansThatContainsImagesInConcentrator = (response as List)
+      return (response as List)
           .map<String>((e) => e.toString())
           .toList()
           .cast<String>();
+    } catch (e) {
+      return [];
+    }
+  }
 
+  Future<List<ImageModel>> reloadAllImages(
+    List<String> plusAndEansThatContainsImagesInConcentrator,
+  ) async {
+    try {
       final loadedImages = await _loadConcentratorImages(
         plusAndEansThatContainsImagesInConcentrator,
       );
@@ -82,7 +99,7 @@ class ConcentratorLoadImages implements LoadImages {
       );
       return loadedImages;
     } catch (e) {
-      throw DomainError.unexpected;
+      return [];
     }
   }
 
@@ -97,7 +114,8 @@ class ConcentratorLoadImages implements LoadImages {
       images.add(enterpriseImage);
     }
 
-    for (var pluOrEan in imagesNames) {
+    for (var pluOrEan
+        in imagesNames.toSet() /* sometimes duplicate imageNames */) {
       try {
         final maxSizeInBytes = 1 * 1024 * 1024;
         final client = http.Client();
@@ -163,6 +181,36 @@ class ConcentratorLoadImages implements LoadImages {
       );
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<List<ImageModel>> _mergedOldAndNewImages({
+    required List<ImageModel> localImages,
+    required List<String> updatedImages,
+  }) async {
+    try {
+      final newImages = await _loadConcentratorImages(updatedImages);
+
+      for (var updatedImage in newImages) {
+        int indexInLocalImages =
+            localImages.indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
+
+        if (indexInLocalImages != -1) {
+          localImages[indexInLocalImages] = updatedImage;
+        } else {
+          localImages.add(updatedImage);
+        }
+      }
+
+      await hiveStorage.delete(CacheKeys.images.name);
+      await hiveStorage.put(
+        CacheKeys.images.name,
+        localImages.map((e) => e.toJson()).toList(),
+      );
+
+      return localImages;
+    } catch (e) {
+      return []; //return empty list
     }
   }
 }

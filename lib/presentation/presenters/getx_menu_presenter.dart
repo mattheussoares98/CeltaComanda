@@ -53,6 +53,7 @@ class GetxMenuPresenter extends GetxController
   void clear() {
     _loadedMenu.clear();
     searchedProduct = null;
+    _downloadedImages.clear();
   }
 
   @override

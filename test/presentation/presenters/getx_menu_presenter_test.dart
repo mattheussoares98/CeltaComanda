@@ -282,20 +282,6 @@ void main() {
       expect(sut.loadedMenu, menuListWithoutPromoCombox);
     });
 
-    test('Should clear expansibleGroups', () async {
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        loadLocally: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-      
-      expect(sut.loadedMenu, menuListWithoutPromoCombox);
-
-      sut.clear();
-      expect(sut.loadedMenu, []);
-    });
-
     test('Should put "destaques" in first group list', () async {
       final avaliationGroup = ExpansibleGroupsViewModel(
         Name: R.string.avaliate,
@@ -1557,6 +1543,46 @@ void main() {
             getLocalImages: true,
             updatedImages: [],
           ));
+    });
+  });
+
+  group("Clear", () {
+    test('Should clear expansibleGroups', () async {
+      await sut.getGroupsAndProducts(
+        commandEntity: homePresenter.commandEntityController,
+        loadLocally: false,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+
+      expect(sut.loadedMenu, menuListWithoutPromoCombox);
+
+      sut.clear();
+      expect(sut.loadedMenu, []);
+    });
+
+    test("Should emit null value", () async {
+      expectLater(
+          sut.searchedProductStream,
+          emitsInOrder(
+            [null, productsViewModel, null],
+          ));
+
+      await sut.searchProduct(productEan);
+      sut.clear();
+    });
+
+    test("Should clear downloaded images", () async {
+      await sut.loadAllImages(
+        loadLocally: false,
+        updatedImages: [],
+      );
+
+      expect(sut.downloadedImages, isNotEmpty);
+
+      sut.clear();
+
+      expect(sut.downloadedImages, []);
     });
   });
 }

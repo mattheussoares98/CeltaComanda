@@ -81,7 +81,6 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       CacheKeys.cartProducts,
       CacheKeys.commandData,
       CacheKeys.comments,
-      CacheKeys.lastImport,
       CacheKeys.parameters,
       CacheKeys.paidInformations,
       CacheKeys.printRequest,

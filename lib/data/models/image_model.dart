@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import '../../main/builders/builders.dart';
+
 class ImageModel {
   final String pluOrEan;
   final String enterpriseName;
@@ -18,7 +20,8 @@ class ImageModel {
   factory ImageModel.fromJson(Map json) {
     return ImageModel(
       pluOrEan: json['pluOrEan'],
-      enterpriseName: json['enterpriseName'],
+      enterpriseName:
+          json['enterpriseName'] ?? EnterpriseBuilder.entity!.enterpriseName,
       image: json['image'],
       keyIsEan: json['keyIsEan'],
       isEnterpriseImage: json['isEnterpriseImage'],
@@ -28,7 +31,7 @@ class ImageModel {
   Map<String, dynamic> toJson() {
     return {
       'pluOrEan': pluOrEan,
-      'enterpriseName': enterpriseName,
+      'enterpriseName': EnterpriseBuilder.entity!.enterpriseName,
       'image': image,
       'keyIsEan': keyIsEan,
       'isEnterpriseImage': isEnterpriseImage,

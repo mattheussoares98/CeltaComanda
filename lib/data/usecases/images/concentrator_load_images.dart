@@ -32,6 +32,9 @@ class ConcentratorLoadImages implements LoadImages {
           ? <ImageModel>[]
           : (localImagesJson as List)
               .map((e) => ImageModel.fromJson(e))
+              .toList()
+              .where((e) =>
+                  e.enterpriseName == EnterpriseBuilder.entity!.enterpriseName)
               .toList();
 
       final plusAndEansThatContainsImages =

@@ -145,6 +145,7 @@ class ConcentratorLoadImages implements LoadImages {
                 image: Uint8List.fromList(buffer),
                 keyIsEan: pluOrEan.length > 11,
                 isEnterpriseImage: false,
+                enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
               ),
             );
             completer.complete();
@@ -178,6 +179,7 @@ class ConcentratorLoadImages implements LoadImages {
         image: enterpriseImageResponse.bodyBytes,
         keyIsEan: false,
         isEnterpriseImage: true,
+        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
       );
     } catch (e) {
       return null;

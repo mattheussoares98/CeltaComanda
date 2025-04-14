@@ -2,12 +2,14 @@ import 'dart:typed_data';
 
 class ImageModel {
   final String pluOrEan;
+  final String enterpriseName;
   final Uint8List image;
   final bool keyIsEan;
   final bool isEnterpriseImage;
 
   ImageModel({
     required this.pluOrEan,
+    required this.enterpriseName,
     required this.image,
     required this.keyIsEan,
     required this.isEnterpriseImage,
@@ -16,6 +18,7 @@ class ImageModel {
   factory ImageModel.fromJson(Map json) {
     return ImageModel(
       pluOrEan: json['pluOrEan'],
+      enterpriseName: json['enterpriseName'],
       image: json['image'],
       keyIsEan: json['keyIsEan'],
       isEnterpriseImage: json['isEnterpriseImage'],
@@ -25,6 +28,7 @@ class ImageModel {
   Map<String, dynamic> toJson() {
     return {
       'pluOrEan': pluOrEan,
+      'enterpriseName': enterpriseName,
       'image': image,
       'keyIsEan': keyIsEan,
       'isEnterpriseImage': isEnterpriseImage,

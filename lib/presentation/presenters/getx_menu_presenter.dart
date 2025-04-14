@@ -174,6 +174,7 @@ class GetxMenuPresenter extends GetxController
       isLoading = true;
 
       if (loadLocally) {
+        //TODO only load locally if has local data
         final localMenu = await menuDatabaseManagement.load();
         _loadedMenu.clear();
         _loadedMenu.addAll(localMenu);

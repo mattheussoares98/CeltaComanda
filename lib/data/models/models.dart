@@ -15,6 +15,7 @@ export './getnet_response_model.dart';
 export './group_user_concentrator_model.dart';
 export './image_model.dart';
 export './last_import_model.dart';
+export './loaded_menu_model.dart';
 export 'parameter_model.dart';
 export './pdv_model.dart';
 export './print_parameters_model.dart';

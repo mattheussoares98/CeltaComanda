@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
+import '../../../main/builders/builders.dart';
 import '../../database/database.dart';
 import '../../models/models.dart';
 
@@ -46,6 +47,7 @@ class LocalLastImport implements LastImport {
         enterprise: typesToUpdate.contains(LoadTypeEnum.enterprise)
             ? DateTime.now()
             : lastImportEntity?.enterprise,
+        enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
       );
 
       await hiveStorage.delete(CacheKeys.lastImport.name);

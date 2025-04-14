@@ -1381,6 +1381,7 @@ void main() {
             images: null,
             users: null,
             enterprise: null,
+            enterpriseName: null,
           ),
         );
         loadExportCharging.mockLoad(
@@ -1413,6 +1414,7 @@ void main() {
             images: null,
             users: null,
             enterprise: null,
+            enterpriseName: null,
           ),
         );
         loadExportCharging.mockLoad(
@@ -1444,6 +1446,7 @@ void main() {
             images: null,
             users: null,
             enterprise: null,
+            enterpriseName: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.products,
@@ -1477,6 +1480,7 @@ void main() {
             images: null,
             users: null,
             enterprise: null,
+            enterpriseName: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.products,
@@ -1515,6 +1519,7 @@ void main() {
             images: null,
             users: null,
             enterprise: null,
+            enterpriseName: null,
           ),
         );
 
@@ -1543,6 +1548,7 @@ void main() {
             images: DateTime(2024),
             users: null,
             enterprise: null,
+            enterpriseName: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.images,
@@ -1574,6 +1580,7 @@ void main() {
             images: DateTime(2025),
             users: null,
             enterprise: null,
+            enterpriseName: null,
           );
           final lastExport = EntityFactory.makeExportChargingEntity(
             LoadTypeEnum.images,
@@ -1610,6 +1617,7 @@ void main() {
             images: faker.date.dateTime(),
             users: null,
             enterprise: null,
+            enterpriseName: null,
           ),
         );
 
@@ -1635,6 +1643,7 @@ void main() {
           images: null,
           users: DateTime(2024),
           enterprise: null,
+          enterpriseName: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1660,6 +1669,7 @@ void main() {
           images: null,
           users: DateTime(2025),
           enterprise: null,
+          enterpriseName: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1688,6 +1698,7 @@ void main() {
           images: null,
           users: null,
           enterprise: DateTime(2024),
+          enterpriseName: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1713,6 +1724,7 @@ void main() {
           images: null,
           users: null,
           enterprise: null,
+          enterpriseName: null,
         ));
 
         loadExportCharging.mockLoad([
@@ -1739,6 +1751,7 @@ void main() {
           images: null,
           users: null,
           enterprise: DateTime(2025),
+          enterpriseName: null,
         ));
 
         loadExportCharging.mockLoad([

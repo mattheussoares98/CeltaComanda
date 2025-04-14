@@ -39,8 +39,13 @@ class ConcentratorLoadImages implements LoadImages {
       final plusAndEansThatContainsImages =
           await _getPlusAndEansThatContainsImages();
 
+      final localImagesLength = localImages
+          .where((e) =>
+              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+          .length;
+
       if (plusAndEansThatContainsImages.length >
-          (localImages.length - 1 /* -1 because enterprise image */)) {
+          (localImagesLength - 1 /* -1 because enterprise image */)) {
         //all images that are not in localImages, but has in concentrator
 
         final missingConcentratorImages = plusAndEansThatContainsImages

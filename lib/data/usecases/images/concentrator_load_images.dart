@@ -32,10 +32,9 @@ class ConcentratorLoadImages implements LoadImages {
           ? <ImageModel>[]
           : (localImagesJson as List)
               .map((e) => ImageModel.fromJson(e))
-              .toList()
-              .where((e) =>
-                  e.enterpriseName == EnterpriseBuilder.entity!.enterpriseName)
               .toList();
+
+      List<ImageModel> imagesOfAtualEnterprise = [];
 
       final plusAndEansThatContainsImages =
           await _getPlusAndEansThatContainsImages();
@@ -46,24 +45,38 @@ class ConcentratorLoadImages implements LoadImages {
 
         final missingConcentratorImages = plusAndEansThatContainsImages
             .where(
-              (ean) => !localImages.any((local) => local.pluOrEan == ean),
+              (ean) => !localImages.any((local) =>
+                  local.pluOrEan == ean &&
+                  local.enterpriseName ==
+                      EnterpriseBuilder.entity?.enterpriseName),
             )
             .toList();
 
-        return await _mergedOldAndNewImages(
+        imagesOfAtualEnterprise = await _mergedOldAndNewImages(
           localImages: localImages,
           updatedImages: [...missingConcentratorImages, ...updatedImages],
         );
       } else if (getLocalImages) {
-        return localImages;
-      } else if (updatedImages.isNotEmpty && localImages.isNotEmpty) {
-        return await _mergedOldAndNewImages(
+        imagesOfAtualEnterprise = localImages;
+      } else if (updatedImages.isNotEmpty &&
+          localImages
+              .where((e) =>
+                  e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+              .isNotEmpty) {
+        //TODO fix when do login is trying to download again what already is downloaded
+        imagesOfAtualEnterprise = await _mergedOldAndNewImages(
           localImages: localImages,
           updatedImages: updatedImages,
         );
       } else {
-        return await reloadAllImages(plusAndEansThatContainsImages);
+        imagesOfAtualEnterprise =
+            await reloadAllImages(plusAndEansThatContainsImages);
       }
+
+      return imagesOfAtualEnterprise
+          .where((e) =>
+              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+          .toList();
     } catch (e) {
       throw DomainError.unexpected;
     }
@@ -91,6 +104,8 @@ class ConcentratorLoadImages implements LoadImages {
     List<String> plusAndEansThatContainsImagesInConcentrator,
   ) async {
     try {
+      final localImages = await hiveStorage.get(CacheKeys.images.name);
+
       final loadedImages = await _loadConcentratorImages(
         plusAndEansThatContainsImagesInConcentrator,
       );
@@ -98,7 +113,7 @@ class ConcentratorLoadImages implements LoadImages {
       await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
         CacheKeys.images.name,
-        loadedImages.map((e) => e.toJson()).toList(),
+        [...loadedImages.map((e) => e.toJson()), ...localImages],
       );
       return loadedImages;
     } catch (e) {
@@ -148,7 +163,7 @@ class ConcentratorLoadImages implements LoadImages {
                 image: Uint8List.fromList(buffer),
                 keyIsEan: pluOrEan.length > 11,
                 isEnterpriseImage: false,
-                enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+                enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
               ),
             );
             completer.complete();
@@ -182,7 +197,7 @@ class ConcentratorLoadImages implements LoadImages {
         image: enterpriseImageResponse.bodyBytes,
         keyIsEan: false,
         isEnterpriseImage: true,
-        enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
+        enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
       );
     } catch (e) {
       return null;
@@ -197,8 +212,9 @@ class ConcentratorLoadImages implements LoadImages {
       final newImages = await _loadConcentratorImages(updatedImages);
 
       for (var updatedImage in newImages) {
-        int indexInLocalImages =
-            localImages.indexWhere((e) => e.pluOrEan == updatedImage.pluOrEan);
+        int indexInLocalImages = localImages.indexWhere((e) =>
+            e.pluOrEan == updatedImage.pluOrEan &&
+            e.enterpriseName == updatedImage.enterpriseName);
 
         if (indexInLocalImages != -1) {
           localImages[indexInLocalImages] = updatedImage;

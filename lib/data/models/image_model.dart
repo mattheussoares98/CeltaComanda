@@ -4,7 +4,7 @@ import '../../main/builders/builders.dart';
 
 class ImageModel {
   final String pluOrEan;
-  final String enterpriseName;
+  final String? enterpriseName;
   final Uint8List image;
   final bool keyIsEan;
   final bool isEnterpriseImage;
@@ -31,7 +31,8 @@ class ImageModel {
   Map<String, dynamic> toJson() {
     return {
       'pluOrEan': pluOrEan,
-      'enterpriseName': EnterpriseBuilder.entity!.enterpriseName,
+      'enterpriseName':
+          enterpriseName ?? EnterpriseBuilder.entity!.enterpriseName,
       'image': image,
       'keyIsEan': keyIsEan,
       'isEnterpriseImage': isEnterpriseImage,

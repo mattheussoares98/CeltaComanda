@@ -306,7 +306,6 @@ void main() {
               CacheKeys.cartProducts,
               CacheKeys.commandData,
               CacheKeys.comments,
-              CacheKeys.images,
               CacheKeys.lastImport,
               CacheKeys.parameters,
               CacheKeys.paidInformations,

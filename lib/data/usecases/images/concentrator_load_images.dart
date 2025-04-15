@@ -43,7 +43,7 @@ class ConcentratorLoadImages implements LoadImages {
 
       final updatedSet = {...updatedImages}; // Remove duplicatas
 
-      if (plusAndEans.length > localImagesLength - 1) {
+      if (plusAndEans.length > localImagesLength - 1 && localImagesLength > 0) {
         debugPrint("Downloading only missing images");
 
         final missingImages = plusAndEans
@@ -143,9 +143,10 @@ class ConcentratorLoadImages implements LoadImages {
               totalBytes += data.length;
               buffer.addAll(data);
 
-            if (totalBytes > maxSizeInBytes) {
-              subscription.cancel();
-              completer.completeError('Tamanho máximo da imagem excedido $url');
+              if (totalBytes > maxSizeInBytes) {
+                subscription.cancel();
+                completer
+                    .completeError('Tamanho máximo da imagem excedido $url');
               }
             },
             onDone: () {

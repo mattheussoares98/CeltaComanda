@@ -44,8 +44,10 @@ class LandscapeProductItem extends StatelessWidget {
               ),
               if (!ScreenSize.hasMinWidth)
                 Expanded(
-                    child: Center(
-                        child: _Price(productsViewModel: productsViewModel))),
+                  child: Center(
+                    child: _Price(productsViewModel: productsViewModel),
+                  ),
+                ),
               if (ScreenSize.hasMinWidth)
                 Expanded(
                   child: Center(
@@ -129,7 +131,7 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: itemHeight,
-      width: itemHeight * (ScreenSize.hasMinWidth ? 1.5 : 0.7),
+      width: itemHeight * (ScreenSize.hasMinWidth ? 1.5 : 1),
       child: GestureDetector(
         onTap: () {
           showLargeImage(
@@ -151,9 +153,7 @@ class _Image extends StatelessWidget {
               width: itemHeight * (ScreenSize.hasMinWidth ? 1.5 : 0.9),
               selectedProduct: productsViewModel,
               zoomImage: true,
-              orientation: ScreenSize.hasMinWidth
-                  ? AnimationOrientation.horizontal
-                  : AnimationOrientation.vertical,
+              orientation: AnimationOrientation.horizontal,
             ),
             if (ScreenSize.hasMinWidth)
               Positioned(

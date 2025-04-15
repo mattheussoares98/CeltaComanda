@@ -69,7 +69,6 @@ class ConcentratorLoadImages implements LoadImages {
               localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
           //in .toJson, add the enterprise name property
 
-          await hiveStorage.delete(CacheKeys.images.name);
           await hiveStorage.put(
             CacheKeys.images.name,
             localImages.map((e) => e.toJson()).toList(),
@@ -127,7 +126,6 @@ class ConcentratorLoadImages implements LoadImages {
         plusAndEansThatContainsImagesInConcentrator,
       );
 
-      await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
         CacheKeys.images.name,
         [
@@ -137,7 +135,8 @@ class ConcentratorLoadImages implements LoadImages {
       );
       return loadedImages;
     } catch (e) {
-      return [];
+      debugPrint(e.toString());
+      throw Exception();
     }
   }
 
@@ -244,7 +243,6 @@ class ConcentratorLoadImages implements LoadImages {
         }
       }
 
-      await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
         CacheKeys.images.name,
         localImages.map((e) => e.toJson()).toList(),
@@ -252,7 +250,8 @@ class ConcentratorLoadImages implements LoadImages {
 
       return localImages;
     } catch (e) {
-      return []; //return empty list
+      debugPrint(e.toString());
+      throw Exception();
     }
   }
 }

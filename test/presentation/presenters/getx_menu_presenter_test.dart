@@ -1584,5 +1584,37 @@ void main() {
 
       expect(sut.downloadedImages, []);
     });
+    test("Should clear index of atual suggestion", () async {
+      final mockedSuggestions = [
+        SuggestionSaleEntity(
+          ProductPackingCode: products[0].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+        ),
+        SuggestionSaleEntity(
+          ProductPackingCode: products[1].InternalCodeOnERP!,
+          ProductPackingCodeSuggestionForSale:
+              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+        ),
+      ];
+
+      await sut.getGroupsAndProducts(
+        commandEntity: homePresenter.commandEntityController,
+        loadLocally: false,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      final loadedProducts = sut.loadedMenu.first.productsViewModel;
+      loadedProducts[0].suggestions = mockedSuggestions;
+      suggestionsProductsViewModel[0].suggestions = mockedSuggestions;
+
+      sut.updateSuggestionsProducts(loadedProducts[0]);
+      sut.advanceIndexOfAtualSuggestion();
+
+      expect(sut.indexOfAtualSuggestion, isNot(-1));
+
+      sut.clear();
+      expect(sut.indexOfAtualSuggestion, -1);
+    });
   });
 }

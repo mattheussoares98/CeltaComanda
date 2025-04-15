@@ -1616,5 +1616,14 @@ void main() {
       sut.clear();
       expect(sut.indexOfAtualSuggestion, -1);
     });
+
+    test('Should clear index of selected group', () async {
+      expectLater(sut.indexOfSelectedGroupStream, emitsInOrder([1, 0, 2, 0]));
+
+      sut.updateIndexOfSelectedGroup(1);
+      sut.clear();
+      sut.updateIndexOfSelectedGroup(2);
+      sut.clear();
+    });
   });
 }

@@ -138,16 +138,13 @@ class Subgroups extends StatelessWidget {
                   color: getSubgroupColor(subgroupName),
                 ),
                 child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(3),
-                    child: Text(
-                      subgroups[index].toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: StringSize.size,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  child: Text(
+                    subgroups[index].toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: StringSize.size,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

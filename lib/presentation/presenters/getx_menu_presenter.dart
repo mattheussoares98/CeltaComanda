@@ -54,6 +54,8 @@ class GetxMenuPresenter extends GetxController
     _loadedMenu.clear();
     searchedProduct = null;
     _downloadedImages.clear();
+    _indexOfAtualSuggestion = 0; //TODO create teste
+    indexOfSelectedGroup = 0; //TODO create teste
   }
 
   @override

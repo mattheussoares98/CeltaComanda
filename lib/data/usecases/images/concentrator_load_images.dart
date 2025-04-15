@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
@@ -93,7 +92,7 @@ class ConcentratorLoadImages implements LoadImages {
           .where((e) => e.enterpriseName == enterpriseName)
           .toList();
     } catch (e) {
-      throw DomainError.unexpected;
+      rethrow;
     }
   }
 
@@ -107,7 +106,7 @@ class ConcentratorLoadImages implements LoadImages {
       );
       return List<String>.from(response); // mais direto
     } catch (e) {
-      return [];
+      rethrow;
     }
   }
 
@@ -136,7 +135,7 @@ class ConcentratorLoadImages implements LoadImages {
       return loadedImages;
     } catch (e) {
       debugPrint(e.toString());
-      throw Exception();
+      rethrow;
     }
   }
 
@@ -250,8 +249,7 @@ class ConcentratorLoadImages implements LoadImages {
 
       return localImages;
     } catch (e) {
-      debugPrint(e.toString());
-      throw Exception();
+      rethrow;
     }
   }
 }

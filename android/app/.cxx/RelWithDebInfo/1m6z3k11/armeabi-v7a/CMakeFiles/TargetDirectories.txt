@@ -1,0 +1,2 @@
+C:/Development/Projects/celta_comanda/android/app/.cxx/RelWithDebInfo/1m6z3k11/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Development/Projects/celta_comanda/android/app/.cxx/RelWithDebInfo/1m6z3k11/armeabi-v7a/CMakeFiles/rebuild_cache.dir

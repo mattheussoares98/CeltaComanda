@@ -90,7 +90,7 @@ class ConcentratorLoadImages implements LoadImages {
       }
 
       debugPrint("Downloading all images");
-      return (await _reloadAllImages(plusAndEans))
+      return (await _downloadAllImages(plusAndEans))
           .where((e) => e.enterpriseName == enterpriseName)
           .toList();
     } catch (e) {
@@ -112,11 +112,16 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<List<ImageModel>> _reloadAllImages(
+  Future<List<ImageModel>> _downloadAllImages(
     List<String> plusAndEansThatContainsImagesInConcentrator,
   ) async {
     try {
-      final localImages = await hiveStorage.get(CacheKeys.images.name);
+      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
+      var localImages = localImagesJson == null
+          ? <ImageModel>[]
+          : (localImagesJson as List)
+              .map((e) => ImageModel.fromJson(e))
+              .toList();
 
       final loadedImages = await _loadConcentratorImages(
         plusAndEansThatContainsImagesInConcentrator,

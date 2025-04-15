@@ -82,7 +82,7 @@ class ConcentratorLoadImages implements LoadImages {
       }
 
       if (updatedSet.isNotEmpty && filteredLocalImages.length > 1) {
-        debugPrint("Updating images");
+        debugPrint("Updating ${updatedSet.length} images");
         return await _mergedOldAndNewImages(
           localImages: localImages,
           updatedImages: updatedSet.toList(),
@@ -130,7 +130,10 @@ class ConcentratorLoadImages implements LoadImages {
       await hiveStorage.delete(CacheKeys.images.name);
       await hiveStorage.put(
         CacheKeys.images.name,
-        [...loadedImages.map((e) => e.toJson()), ...localImages],
+        [
+          ...loadedImages.map((e) => e.toJson()),
+          ...localImages.map((e) => e.toJson()),
+        ],
       );
       return loadedImages;
     } catch (e) {

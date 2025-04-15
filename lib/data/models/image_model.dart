@@ -20,8 +20,7 @@ class ImageModel {
   factory ImageModel.fromJson(Map json) {
     return ImageModel(
       pluOrEan: json['pluOrEan'],
-      enterpriseName:
-          json['enterpriseName'] ?? EnterpriseBuilder.entity!.enterpriseName,
+      enterpriseName: json['enterpriseName'],
       image: json['image'],
       keyIsEan: json['keyIsEan'],
       isEnterpriseImage: json['isEnterpriseImage'],

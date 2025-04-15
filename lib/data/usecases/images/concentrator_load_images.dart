@@ -60,10 +60,28 @@ class ConcentratorLoadImages implements LoadImages {
 
       if (getLocalImages) {
         debugPrint("Getting local images");
+
+        if (localImages.any((element) => element.enterpriseName == null)) {
+          debugPrint(
+              "has null enterprise name property in local image models, updating....");
+
+          localImages =
+              localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
+          //in .toJson, add the enterprise name property
+
+          await hiveStorage.delete(CacheKeys.images.name);
+          await hiveStorage.put(
+            CacheKeys.images.name,
+            localImages.map((e) => e.toJson()).toList(),
+          );
+          return localImages
+              .where((e) => e.enterpriseName == enterpriseName)
+              .toList();
+        }
         return filteredLocalImages;
       }
 
-      if (updatedSet.isNotEmpty && filteredLocalImages.isNotEmpty) {
+      if (updatedSet.isNotEmpty && filteredLocalImages.length > 1) {
         debugPrint("Updating images");
         return await _mergedOldAndNewImages(
           localImages: localImages,
@@ -72,7 +90,7 @@ class ConcentratorLoadImages implements LoadImages {
       }
 
       debugPrint("Downloading all images");
-      return (await reloadAllImages(plusAndEans))
+      return (await _reloadAllImages(plusAndEans))
           .where((e) => e.enterpriseName == enterpriseName)
           .toList();
     } catch (e) {
@@ -94,7 +112,7 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<List<ImageModel>> reloadAllImages(
+  Future<List<ImageModel>> _reloadAllImages(
     List<String> plusAndEansThatContainsImagesInConcentrator,
   ) async {
     try {

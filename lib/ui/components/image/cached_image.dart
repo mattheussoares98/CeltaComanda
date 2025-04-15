@@ -53,8 +53,11 @@ class CachedImageState extends State<CachedImage> {
   }
 
   Widget _defaultImage(MenuPresenter menuPresenter) {
-    final indexOfEnterpriseImage =
-        menuPresenter.downloadedImages.indexWhere((e) => e.isEnterpriseImage);
+    final indexOfEnterpriseImage = menuPresenter.downloadedImages.indexWhere(
+        (e) =>
+            e.isEnterpriseImage &&
+            (e.enterpriseName == null ||
+                e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName));
 
     if (indexOfEnterpriseImage == -1) {
       return Image.asset(

@@ -94,12 +94,10 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: _CircleAvatar(
-                isAddingQuantity: false,
-                updateQuantity:
-                    widget.quantity <= 1 ? null : widget.reduceQuantity,
-              ),
+            _CircleAvatar(
+              isAddingQuantity: false,
+              updateQuantity:
+                  widget.quantity <= 1 ? null : widget.reduceQuantity,
             ),
             Expanded(
               flex: 2,
@@ -107,7 +105,7 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: CircleAvatar(
                   backgroundColor: Theme.of(context).primaryColorDark,
-                  maxRadius: 70,
+                  maxRadius: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: FittedBox(
@@ -125,11 +123,9 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
                 ),
               ),
             ),
-            Expanded(
-              child: _CircleAvatar(
-                updateQuantity: widget.addQuantity,
-                isAddingQuantity: true,
-              ),
+            _CircleAvatar(
+              updateQuantity: widget.addQuantity,
+              isAddingQuantity: true,
             ),
           ],
         ),
@@ -149,13 +145,16 @@ class _CircleAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: updateQuantity,
-      child: CircleAvatar(
-        maxRadius: 40,
-        backgroundColor: Theme.of(context).primaryColorLight,
-        child: Icon(isAddingQuantity ? Icons.add : Icons.remove),
+    return Container(
+      height: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
+      width: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Theme.of(context).primaryColorLight,
       ),
+      child: InkWell(
+          onTap: updateQuantity,
+          child: Icon(isAddingQuantity ? Icons.add : Icons.remove)),
     );
   }
 }

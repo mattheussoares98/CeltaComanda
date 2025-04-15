@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/ui/helpers/sizes/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -83,28 +82,20 @@ class ProductsItems extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: LayoutBuilder(builder: (context, constraints) {
-                  if (ScreenSize.hasMinWidth) {
-                    return LandscapeProductItem(
-                      productsViewModel: product,
-                      itemHeight: constraints.maxHeight,
-                      itemWidth: constraints.maxWidth,
-                      onTapInsertInCart: () async {
-                        await onTapInsertInCart(
-                          insertProductsPresenter: insertProductsPresenter,
-                          expansibleGroupFromProductPresenter:
-                              expansibleGroupFromProductPresenter,
-                          product: product,
-                          menuPresenter: menuPresenter,
-                        );
-                      },
-                    );
-                  } else {
-                    return PortraitProductItem(
-                      productsViewModel: product,
-                      itemHeight: constraints.maxHeight,
-                      itemWidth: constraints.maxWidth,
-                    );
-                  }
+                  return LandscapeProductItem(
+                    productsViewModel: product,
+                    itemHeight: constraints.maxHeight,
+                    itemWidth: constraints.maxWidth,
+                    onTapInsertInCart: () async {
+                      await onTapInsertInCart(
+                        insertProductsPresenter: insertProductsPresenter,
+                        expansibleGroupFromProductPresenter:
+                            expansibleGroupFromProductPresenter,
+                        product: product,
+                        menuPresenter: menuPresenter,
+                      );
+                    },
+                  );
                 }),
               ),
             ),

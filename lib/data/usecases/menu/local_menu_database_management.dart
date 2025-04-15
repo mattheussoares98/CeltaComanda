@@ -66,10 +66,12 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
 
     try {
       //new way
-      debugPrint("new");
-      return (response as List)
+      final value = (response as List)
           .map((e) => LoadedMenuModel.fromJson(jsonDecode(e)))
           .toList();
+
+      debugPrint("restored menu in new way");
+      return value;
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -77,7 +79,7 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
     try {
       //old way
       debugPrint("old");
-      return [
+      final value = [
         LoadedMenuModel(
           menu: (jsonDecode(response) as List)
               .map((e) => LoadedMenuViewModel.fromJson(e))
@@ -85,7 +87,10 @@ class LocalMenuDatabaseManagement implements MenuDatabaseManagement {
           enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
         ),
       ];
+      debugPrint("Restored menu in old way");
+      return value;
     } catch (e) {
+      debugPrint("Throws to restore menu in old way");
       return [];
     }
   }

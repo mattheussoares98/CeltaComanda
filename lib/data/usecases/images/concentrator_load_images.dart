@@ -27,6 +27,7 @@ class ConcentratorLoadImages implements LoadImages {
     required List<String> updatedImages,
   }) async {
     try {
+      final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
       final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
       var localImages = localImagesJson == null
           ? <ImageModel>[]
@@ -34,52 +35,45 @@ class ConcentratorLoadImages implements LoadImages {
               .map((e) => ImageModel.fromJson(e))
               .toList();
 
-      List<ImageModel> imagesOfAtualEnterprise = [];
+      final plusAndEans = await _getPlusAndEansThatContainsImages();
+      final filteredLocalImages =
+          localImages.where((e) => e.enterpriseName == enterpriseName).toList();
 
-      final plusAndEansThatContainsImages =
-          await _getPlusAndEansThatContainsImages();
+      final localImagesLength = filteredLocalImages.length;
 
-      final localImagesLength = localImages
-          .where((e) =>
-              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
-          .length;
+      final updatedSet = {...updatedImages}; // Remove duplicatas
 
-      if (plusAndEansThatContainsImages.length >
-          (localImagesLength - 1 /* -1 because enterprise image */)) {
-        //all images that are not in localImages, but has in concentrator
+      if (plusAndEans.length > localImagesLength - 1) {
+        debugPrint("Downloading only missing images");
 
-        final missingConcentratorImages = plusAndEansThatContainsImages
-            .where(
-              (ean) => !localImages.any((local) =>
-                  local.pluOrEan == ean &&
-                  local.enterpriseName ==
-                      EnterpriseBuilder.entity?.enterpriseName),
-            )
+        final missingImages = plusAndEans
+            .where((ean) => !filteredLocalImages.any(
+                  (local) => local.pluOrEan == ean,
+                ))
             .toList();
 
-        imagesOfAtualEnterprise = await _mergedOldAndNewImages(
+        return await _mergedOldAndNewImages(
           localImages: localImages,
-          updatedImages: [...missingConcentratorImages, ...updatedImages],
+          updatedImages: [...missingImages, ...updatedSet],
         );
-      } else if (getLocalImages) {
-        imagesOfAtualEnterprise = localImages;
-      } else if (updatedImages.isNotEmpty &&
-          localImages
-              .where((e) =>
-                  e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
-              .isNotEmpty) {
-        imagesOfAtualEnterprise = await _mergedOldAndNewImages(
-          localImages: localImages,
-          updatedImages: updatedImages,
-        );
-      } else {
-        imagesOfAtualEnterprise =
-            await reloadAllImages(plusAndEansThatContainsImages);
       }
 
-      return imagesOfAtualEnterprise
-          .where((e) =>
-              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+      if (getLocalImages) {
+        debugPrint("Getting local images");
+        return filteredLocalImages;
+      }
+
+      if (updatedSet.isNotEmpty && filteredLocalImages.isNotEmpty) {
+        debugPrint("Updating images");
+        return await _mergedOldAndNewImages(
+          localImages: localImages,
+          updatedImages: updatedSet.toList(),
+        );
+      }
+
+      debugPrint("Downloading all images");
+      return (await reloadAllImages(plusAndEans))
+          .where((e) => e.enterpriseName == enterpriseName)
           .toList();
     } catch (e) {
       throw DomainError.unexpected;
@@ -94,11 +88,7 @@ class ConcentratorLoadImages implements LoadImages {
         method: "get",
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );
-
-      return (response as List)
-          .map<String>((e) => e.toString())
-          .toList()
-          .cast<String>();
+      return List<String>.from(response); // mais direto
     } catch (e) {
       return [];
     }
@@ -127,62 +117,62 @@ class ConcentratorLoadImages implements LoadImages {
 
   Future<List<ImageModel>> _loadConcentratorImages(
       List<String> imagesNames) async {
-    final List<ImageModel> images = [];
-
+    final images = <ImageModel>[];
     final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
     final enterpriseImage = await _loadEnterpriseConcentratorImage();
 
-    if (enterpriseImage != null) {
-      images.add(enterpriseImage);
-    }
+    if (enterpriseImage != null) images.add(enterpriseImage);
 
-    for (var pluOrEan
-        in imagesNames.toSet() /* sometimes duplicate imageNames */) {
-      try {
-        final maxSizeInBytes = 1 * 1024 * 1024;
-        final client = http.Client();
-        final url = "$concentratorUrl/Images/$pluOrEan";
-        final request = http.Request('GET', Uri.parse(url));
-        final response = await client.send(request);
+    final client = http.Client();
+    try {
+      for (final pluOrEan in imagesNames.toSet()) {
+        try {
+          final maxSizeInBytes = 1 * 1024 * 1024;
+          final url = "$concentratorUrl/Images/$pluOrEan";
+          final request = http.Request('GET', Uri.parse(url));
+          final response = await client.send(request);
 
-        StreamSubscription<List<int>>? subscription;
-        int totalBytes = 0;
-        final completer = Completer<void>();
-        final List<int> buffer = [];
+          final buffer = <int>[];
+          final completer = Completer<void>();
+          int totalBytes = 0;
 
-        subscription = response.stream.listen(
-          (List<int> data) {
-            totalBytes += data.length;
-            buffer.addAll(data);
+          late StreamSubscription<List<int>> subscription;
+
+          subscription = response.stream.listen(
+            (data) {
+              totalBytes += data.length;
+              buffer.addAll(data);
 
             if (totalBytes > maxSizeInBytes) {
-              subscription?.cancel();
+              subscription.cancel();
               completer.completeError('Tamanho máximo da imagem excedido $url');
-            }
-          },
-          onDone: () {
-            images.add(
-              ImageModel(
-                pluOrEan: pluOrEan,
-                image: Uint8List.fromList(buffer),
-                keyIsEan: pluOrEan.length > 11,
-                isEnterpriseImage: false,
-                enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-              ),
-            );
-            completer.complete();
-          },
-          onError: (error) {
-            completer.completeError(error);
-          },
-          cancelOnError: true,
-        );
+              }
+            },
+            onDone: () {
+              if (!completer.isCompleted) {
+                images.add(ImageModel(
+                  pluOrEan: pluOrEan,
+                  image: Uint8List.fromList(buffer),
+                  keyIsEan: pluOrEan.length > 11,
+                  isEnterpriseImage: false,
+                  enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
+                ));
+                completer.complete();
+              }
+            },
+            onError: (error) {
+              if (!completer.isCompleted) completer.completeError(error);
+            },
+            cancelOnError: true,
+          );
 
-        // Wait for the download to complete or fail before moving to the next image
-        await completer.future;
-      } catch (e) {
-        debugPrint(e.toString());
+          await completer.future;
+        } catch (e) {
+          debugPrint(e.toString());
+        }
       }
+    } finally {
+      client.close();
     }
 
     return images;

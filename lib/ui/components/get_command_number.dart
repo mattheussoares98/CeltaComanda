@@ -13,11 +13,26 @@ class GetCommandNumber {
   static Future<int?> get() async {
     int? commandNumber;
 
+    void onSubmit() {
+      bool? isValid = commandKey.currentState?.validate();
+      if (isValid == true) {
+        commandNumber = commandNumberController.text.toInt();
+        commandNumberController.clear();
+        Navigator.of(NavigatorKey.navigatorKey.currentState!.context).pop();
+      } else {
+        focusNode.requestFocus();
+      }
+    }
+
     await notificationDialog(
       context: NavigatorKey.navigatorKey.currentState!.context,
       titleMessage: R.string.msgInsertCommandNumber,
       confirmMessage: R.string.confirm,
       cancelMessage: R.string.cancel,
+      closeDialogOnConfirmPress: false,
+      onPress: () async {
+        onSubmit();
+      },
       content: Row(
         children: [
           const Expanded(child: SizedBox()),
@@ -44,12 +59,7 @@ class GetCommandNumber {
                   return null;
                 },
                 onFieldSubmitted: (value) async {
-                  bool? isValid = commandKey.currentState?.validate();
-                  if (isValid == true) {
-                    commandNumber = commandNumberController.text.toInt();
-                  } else {
-                    focusNode.requestFocus();
-                  }
+                  onSubmit();
                 },
               ),
             ),
@@ -57,8 +67,6 @@ class GetCommandNumber {
           const Expanded(child: SizedBox()),
         ],
       ),
-      closeDialogOnConfirmPress: false,
-      onPress: () async {},
     );
 
     return commandNumber;

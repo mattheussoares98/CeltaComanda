@@ -38,9 +38,18 @@ class SearchDataByCommandNumber extends StatelessWidget {
                   homePresenter.commandEntity!.commandNumber!,
                 );
               } else {
-                writeCommandNumber(
-                  context: context,
-                  onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
+                final commandNumber = await GetCommandNumber.get();
+
+                if (commandNumber == null) return;
+
+                await homePresenter.updateCommandEntity(
+                  commandNumber: commandNumber.toString(),
+                  isFixedCommandNumber:
+                      homePresenter.commandEntity?.isFixedCommandNumber == true,
+                  pdv: homePresenter.commandEntity?.pdv,
+                );
+                await printedProductsPresenter.loadPrinted(
+                  homePresenter.commandEntity!.commandNumber!,
                 );
               }
             },

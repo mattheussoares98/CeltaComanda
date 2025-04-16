@@ -18,6 +18,7 @@ class SaleRequestTempEntity extends Equatable {
   final int? CovenantCode;
   final double? IncrementValue;
   final int? IncrementType; //1 == value && 2 == percentage
+  final String? PlaceId; //1 == value && 2 == percentage
 
   const SaleRequestTempEntity({
     required this.Products,
@@ -33,6 +34,7 @@ class SaleRequestTempEntity extends Equatable {
     required this.CovenantCode,
     required this.IncrementValue,
     required this.IncrementType,
+    required this.PlaceId,
   });
 
   @override
@@ -50,5 +52,6 @@ class SaleRequestTempEntity extends Equatable {
         CovenantCode,
         IncrementValue,
         IncrementType,
+        PlaceId,
       ];
 }

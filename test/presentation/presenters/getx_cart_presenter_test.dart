@@ -180,6 +180,7 @@ void main() {
       CovenantCode: saleRequestTempEntity.CovenantCode,
       IncrementValue: 0,
       IncrementType: 0,
+      PlaceId: saleRequestTempEntity.PlaceId,
     );
 
     cartProductViewModelWithChilds =
@@ -1176,6 +1177,7 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
       final teste = UpdateSaleRequestTempEntity(
+        PlaceId: updateSaleRequestTempEntity.PlaceId,
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1246,6 +1248,7 @@ void main() {
           .fold(0.0,
               (previousValue, element) => element.TotalLiquid + previousValue);
       final entity = UpdateSaleRequestTempEntity(
+        PlaceId: updateSaleRequestTempEntity.PlaceId,
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1851,6 +1854,7 @@ void main() {
       );
 
       final teste = UpdateSaleRequestTempEntity(
+        PlaceId: updateSaleRequestTempEntity.PlaceId,
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1905,6 +1909,7 @@ void main() {
       );
 
       final teste = UpdateSaleRequestTempEntity(
+        PlaceId: updateSaleRequestTempEntity.PlaceId,
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,

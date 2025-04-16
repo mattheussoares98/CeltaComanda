@@ -20,6 +20,7 @@ class SaleRequestTempViewModel extends Equatable {
   final String? CovenantCode;
   final String? IncrementValue;
   final String? IncrementType;
+  final String? PlaceId;
 
   @override
   List get props => [
@@ -36,6 +37,7 @@ class SaleRequestTempViewModel extends Equatable {
         CovenantCode,
         IncrementValue,
         IncrementType,
+        PlaceId,
       ];
 
   const SaleRequestTempViewModel({
@@ -52,6 +54,7 @@ class SaleRequestTempViewModel extends Equatable {
     required this.CustomerCode,
     required this.IncrementValue,
     required this.IncrementType,
+    required this.PlaceId,
   });
 
   factory SaleRequestTempViewModel.fromEntity(SaleRequestTempEntity entity) =>
@@ -71,6 +74,7 @@ class SaleRequestTempViewModel extends Equatable {
         CustomerCode: entity.CustomerCode?.toString(),
         IncrementValue: entity.IncrementValue?.toString(),
         IncrementType: entity.IncrementType?.toString(),
+        PlaceId: entity.PlaceId?.toString(),
       );
 
   SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
@@ -87,6 +91,7 @@ class SaleRequestTempViewModel extends Equatable {
         CovenantCode: CovenantCode?.toInt(),
         IncrementValue: IncrementValue?.toDouble(),
         IncrementType: IncrementType?.toInt(),
+        PlaceId: PlaceId?.toString(),
       );
 
   Map toJson() => {
@@ -103,5 +108,6 @@ class SaleRequestTempViewModel extends Equatable {
         "CovenantCode": CovenantCode,
         "IncrementValue": IncrementValue,
         "IncrementType": IncrementType,
+        "PlaceId": PlaceId,
       };
 }

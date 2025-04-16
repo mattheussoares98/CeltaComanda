@@ -1,5 +1,3 @@
-
-
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
@@ -17,6 +15,7 @@ class SaleRequestTempModel {
   final int? CovenantCode;
   final double? IncrementValue;
   final int? IncrementType; //1 == value && 2 == percentage
+  final String? PlaceId;
 
   SaleRequestTempModel({
     required this.Products,
@@ -32,6 +31,7 @@ class SaleRequestTempModel {
     required this.CovenantCode,
     required this.IncrementValue,
     required this.IncrementType,
+    required this.PlaceId,
   });
 
   factory SaleRequestTempModel.fromJson(Map json) {
@@ -65,6 +65,7 @@ class SaleRequestTempModel {
       CovenantCode: json["CovenantCode"],
       IncrementValue: json["IncrementValue"],
       IncrementType: json["IncrementType"],
+      PlaceId: json["PlaceId"],
     );
   }
 
@@ -83,6 +84,7 @@ class SaleRequestTempModel {
         CustomerCode: entity.CustomerCode,
         IncrementValue: entity.IncrementValue,
         IncrementType: entity.IncrementType,
+        PlaceId: entity.PlaceId,
       );
 
   SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
@@ -99,6 +101,7 @@ class SaleRequestTempModel {
         CovenantCode: CovenantCode,
         IncrementValue: IncrementValue,
         IncrementType: IncrementType,
+        PlaceId: PlaceId,
       );
   Map<String, dynamic> toJson() => {
         "Products": Products.map(
@@ -116,5 +119,6 @@ class SaleRequestTempModel {
         "CovenantCode": CovenantCode,
         "IncrementValue": IncrementValue,
         "IncrementType": IncrementType,
+        "PlaceId": PlaceId,
       };
 }

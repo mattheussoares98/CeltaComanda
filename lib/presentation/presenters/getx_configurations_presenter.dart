@@ -224,10 +224,11 @@ class GetxConfigurationsPresenter extends GetxController
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
           Products: [],
           SellerCode: sellerCode,
-          CustomerCode: null,
-          CovenantCode: null,
-          IncrementValue: null,
-          IncrementType: null,
+          CustomerCode: saleRequestTempEntity.CustomerCode,
+          CovenantCode: saleRequestTempEntity.CovenantCode,
+          IncrementValue: saleRequestTempEntity.IncrementValue,
+          IncrementType: saleRequestTempEntity.IncrementType,
+          PlaceId: saleRequestTempEntity.PlaceId,
         ),
       );
 

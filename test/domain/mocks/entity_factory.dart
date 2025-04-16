@@ -350,6 +350,7 @@ class EntityFactory {
       TotalLiquid: faker.randomGenerator.decimal(min: 0.01).toString(),
       IncrementValue: faker.randomGenerator.decimal(min: 0.01).toString(),
       IncrementType: faker.randomGenerator.integer(2, min: 1).toString(),
+      PlaceId: faker.randomGenerator.integer(99).toString(),
     );
   }
 
@@ -693,6 +694,7 @@ class EntityFactory {
       Comments: faker.randomGenerator.string(50),
       IncrementValue: faker.randomGenerator.decimal(min: 0.01),
       IncrementType: faker.randomGenerator.integer(2, min: 1),
+      PlaceId: faker.randomGenerator.integer(99).toString(),
     );
   }
 
@@ -787,6 +789,7 @@ class EntityFactory {
       CustomerCode: faker.randomGenerator.integer(100),
       IncrementValue: faker.randomGenerator.decimal(),
       IncrementType: faker.randomGenerator.integer(2, min: 1),
+      PlaceId: faker.randomGenerator.integer(99).toString(),
     );
   }
 
@@ -824,6 +827,7 @@ class EntityFactory {
         IncrementType: 1,
         IncrementValue:
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
+        PlaceId: faker.randomGenerator.integer(99).toString(),
       );
 
   static SaleRequestTempProductEntity makeSaleRequestTempProductEntity() =>

@@ -1,5 +1,3 @@
-
-
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 
@@ -17,6 +15,7 @@ class UpdateSaleRequestTempModel {
   final int? CovenantCode;
   final double? IncrementValue;
   final int? IncrementType; //1 == value && 2 == percentage
+  final String? PlaceId;
 
   UpdateSaleRequestTempModel({
     required this.DeliveryControl,
@@ -32,6 +31,7 @@ class UpdateSaleRequestTempModel {
     required this.CovenantCode,
     required this.IncrementValue,
     required this.IncrementType,
+    required this.PlaceId,
   });
 
   factory UpdateSaleRequestTempModel.fromJson(Map json) {
@@ -62,6 +62,7 @@ class UpdateSaleRequestTempModel {
       CustomerCode: json["CustomerCode"],
       IncrementValue: json["IncrementValue"],
       IncrementType: json["IncrementType"],
+      PlaceId: json["PlaceId"],
     );
   }
 
@@ -81,6 +82,7 @@ class UpdateSaleRequestTempModel {
         CovenantCode: entity.CovenantCode,
         IncrementValue: entity.IncrementValue,
         IncrementType: entity.IncrementType,
+        PlaceId: entity.PlaceId,
       );
 
   UpdateSaleRequestTempEntity toEntity() => UpdateSaleRequestTempEntity(
@@ -97,6 +99,7 @@ class UpdateSaleRequestTempModel {
         CovenantCode: CovenantCode,
         IncrementValue: IncrementValue,
         IncrementType: IncrementType,
+        PlaceId: PlaceId,
       );
 
   Map<dynamic, dynamic> toJson() => {
@@ -114,5 +117,6 @@ class UpdateSaleRequestTempModel {
         "CovenantCode": CovenantCode,
         "IncrementValue": IncrementValue,
         "IncrementType": IncrementType,
+        "PlaceId": PlaceId,
       };
 }

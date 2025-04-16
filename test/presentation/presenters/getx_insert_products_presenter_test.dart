@@ -47,6 +47,7 @@ void main() {
     required double productValue,
   }) {
     final updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
+        PlaceId: cartPresenter.saleRequestTempMock!.PlaceId,
         Peoples: cartPresenter.saleRequestTempMock!.Peoples?.toInt(),
         SellerCode: cartPresenter.saleRequestTempMock!.SellerCode,
         Comments: cartPresenter.saleRequestTempMock!.Comments,

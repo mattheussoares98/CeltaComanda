@@ -472,6 +472,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         CustomerCode: _saleRequestTemp?.CustomerCode?.toInt(),
         IncrementValue: 0,
         IncrementType: 0,
+        PlaceId: tableNumber?.toString(),
       );
 
       bool? cartProductsAlreadyConfirmed =

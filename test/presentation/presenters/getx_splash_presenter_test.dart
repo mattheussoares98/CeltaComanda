@@ -122,6 +122,7 @@ void main() {
           blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
           canInsertQuantityManually: faker.randomGenerator.boolean(),
           canInsertCustomer: faker.randomGenerator.boolean(),
+          requestTableNumber: faker.randomGenerator.boolean(),
         ),
       );
 
@@ -161,6 +162,7 @@ void main() {
           blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
           canInsertQuantityManually: faker.randomGenerator.boolean(),
           canInsertCustomer: faker.randomGenerator.boolean(),
+          requestTableNumber: faker.randomGenerator.boolean(),
         ),
       );
 

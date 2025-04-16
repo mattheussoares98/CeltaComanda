@@ -218,6 +218,7 @@ void main() {
         canInsertCommentManually: enterprise.canInsertCommentManually,
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
+        requestTableNumber: enterprise.requestTableNumber,
       );
 
       verify(() =>
@@ -250,6 +251,7 @@ void main() {
         blockUseAppIfIsOutdated: null,
         canInsertQuantityManually: null,
         canInsertCustomer: null,
+        requestTableNumber: null,
       );
 
       await sut.updateEnterprise(newEntity);

@@ -117,6 +117,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         blockUseAppIfIsOutdated: entity.blockUseAppIfIsOutdated,
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
+        requestTableNumber: entity.requestTableNumber,
       );
 
       await updateEnterpriseParameters.update(enterprise);

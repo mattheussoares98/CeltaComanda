@@ -108,6 +108,7 @@ void main() {
       blockUseAppIfIsOutdated: null,
       canInsertQuantityManually: null,
       canInsertCustomer: null,
+      requestTableNumber: null,
     );
 
     pdvsNotUsing = [
@@ -261,6 +262,7 @@ void main() {
           blockUseAppIfIsOutdated: null,
           canInsertQuantityManually: null,
           canInsertCustomer: null,
+          requestTableNumber: null,
         ),
       );
     });
@@ -408,6 +410,7 @@ void main() {
           blockUseAppIfIsOutdated: newEnterprise.blockUseAppIfIsOutdated,
           canInsertQuantityManually: newEnterprise.canInsertQuantityManually,
           canInsertCustomer: newEnterprise.canInsertCustomer,
+          requestTableNumber: newEnterprise.requestTableNumber,
         ),
       );
     });
@@ -605,6 +608,7 @@ void main() {
             blockUseAppIfIsOutdated: null,
             canInsertQuantityManually: null,
             canInsertCustomer: null,
+            requestTableNumber: null,
           ));
     });
   });
@@ -660,6 +664,7 @@ void main() {
             canInsertQuantityManually:
                 EnterpriseBuilder.entity!.canInsertQuantityManually,
             canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
+            requestTableNumber: EnterpriseBuilder.entity!.requestTableNumber,
           ));
     });
     test("Should update last import when update enterprise parameters",
@@ -697,6 +702,7 @@ void main() {
           blockUseAppIfIsOutdated: null,
           canInsertQuantityManually: null,
           canInsertCustomer: null,
+          requestTableNumber: null,
         ),
       );
     });

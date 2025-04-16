@@ -34,6 +34,7 @@ class EntityFactory {
     bool? blockUseAppIfIsOutdated,
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
+    bool? requestTableNumber,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -80,6 +81,8 @@ class EntityFactory {
           : atualEntity.canInsertQuantityManually,
       canInsertCustomer:
           canInsertCustomer == true ? null : atualEntity.canInsertCustomer,
+      requestTableNumber:
+          requestTableNumber == true ? null : atualEntity.requestTableNumber,
     );
   }
 
@@ -107,6 +110,7 @@ class EntityFactory {
     bool? blockUseAppIfIsOutdated,
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
+    bool? requestTableNumber,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -142,6 +146,7 @@ class EntityFactory {
       canInsertQuantityManually:
           canInsertQuantityManually ?? faker.randomGenerator.boolean(),
       canInsertCustomer: canInsertCustomer ?? faker.randomGenerator.boolean(),
+      requestTableNumber: requestTableNumber ?? faker.randomGenerator.boolean(),
     );
   }
 

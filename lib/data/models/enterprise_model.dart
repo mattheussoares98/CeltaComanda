@@ -24,6 +24,7 @@ class EnterpriseModel {
   final bool? blockUseAppIfIsOutdated;
   final bool? canInsertQuantityManually;
   final bool? canInsertCustomer;
+  final bool? requestTableNumber;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -46,6 +47,7 @@ class EnterpriseModel {
     required this.blockUseAppIfIsOutdated,
     required this.canInsertQuantityManually,
     required this.canInsertCustomer,
+    required this.requestTableNumber,
   });
 
   factory EnterpriseModel.fromJson(
@@ -89,6 +91,7 @@ class EnterpriseModel {
       blockUseAppIfIsOutdated: json["blockUseAppIfIsOutdated"],
       canInsertQuantityManually: json["canInsertQuantityManually"],
       canInsertCustomer: json["canInsertCustomer"],
+      requestTableNumber: json["requestTableNumber"],
     );
   }
 
@@ -115,6 +118,7 @@ class EnterpriseModel {
         blockUseAppIfIsOutdated: entity.blockUseAppIfIsOutdated,
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
+        requestTableNumber: entity.requestTableNumber,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -139,6 +143,7 @@ class EnterpriseModel {
         blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
         canInsertQuantityManually: canInsertQuantityManually,
         canInsertCustomer: canInsertCustomer,
+        requestTableNumber: requestTableNumber,
       );
 
   Map<String, dynamic> toJson() => {
@@ -167,5 +172,6 @@ class EnterpriseModel {
         'blockUseAppIfIsOutdated': blockUseAppIfIsOutdated,
         'canInsertQuantityManually': canInsertQuantityManually,
         'canInsertCustomer': canInsertCustomer,
+        'requestTableNumber': requestTableNumber,
       };
 }

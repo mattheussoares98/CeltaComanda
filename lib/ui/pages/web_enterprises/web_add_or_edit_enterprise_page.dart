@@ -42,6 +42,7 @@ class _WebAddOrEditEnterprisePageState
   bool blockUseAppIfIsOutdated = false;
   bool canInsertQuantityManually = false;
   bool canInsertCustomer = false;
+  bool requestTableNumber = false;
 
   void changeUseProductReducedName() {
     setState(() {
@@ -416,6 +417,7 @@ class _WebAddOrEditEnterprisePageState
               blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
               canInsertQuantityManually: canInsertQuantityManually,
               canInsertCustomer: canInsertCustomer,
+              requestTableNumber: requestTableNumber,
             ),
           ],
         ),

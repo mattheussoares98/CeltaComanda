@@ -13,14 +13,12 @@ class HiveAdapter implements HiveStorage {
 
   @override
   Future<dynamic> get(String key) async {
-    return await box.get(key); //TODO compact
+    return await box.get(key);
   }
-
-  //TODO create a function to validate when loaded last time the data of determinated enterprise to clean
 
   @override
   Future<void> put(String key, value) async {
     await box.delete(key);
-    await box.put(key, value); //TODO compact
+    await box.put(key, value);
   }
 }

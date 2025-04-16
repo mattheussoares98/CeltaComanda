@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
@@ -25,78 +26,56 @@ class ConcentratorLoadImages implements LoadImages {
     required bool getLocalImages,
     required List<String> updatedImages,
   }) async {
-    try {
-      final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
-      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
-      var localImages = localImagesJson == null
-          ? <ImageModel>[]
-          : (localImagesJson as List)
-              .map((e) => ImageModel.fromJson(e))
-              .toList();
+    final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
-      final plusAndEans = await _getPlusAndEansThatContainsImages();
+    try {
+      var localImages = await _getLocalImages();
+
+      if (localImages.any((element) => element.enterpriseName == null)) {
+        localImages = await _updateEnterpriseNullProperty(localImages);
+      }
+
+      List<String> imagesToDownload = await _getMissingImages(localImages);
+
+      if (getLocalImages && imagesToDownload.isEmpty) {
+        final enterpriseImages = localImages
+            .where((e) => e.enterpriseName == enterpriseName)
+            .toList();
+        debugPrint(
+            "All local images: ${localImages.length}\nAll enterprise images: ${enterpriseImages.length}");
+
+        return enterpriseImages;
+      }
+
       final filteredLocalImages =
           localImages.where((e) => e.enterpriseName == enterpriseName).toList();
+      final updatedSet = updatedImages.toSet(); // Remove duplicatas
+      if (updatedSet.isNotEmpty && filteredLocalImages.length > 1) {
+        debugPrint("${updatedSet.length} images to update");
 
-      final localImagesLength = filteredLocalImages.length;
-
-      final updatedSet = {...updatedImages}; // Remove duplicatas
-
-      if (plusAndEans.length > localImagesLength - 1 && localImagesLength > 0) {
-        debugPrint("Downloading only missing images");
-
-        final missingImages = plusAndEans
-            .where((ean) => !filteredLocalImages.any(
-                  (local) => local.pluOrEan == ean,
-                ))
-            .toList();
-
-        return await _mergedOldAndNewImages(
-          localImages: localImages,
-          updatedImages: [...missingImages, ...updatedSet],
-        );
+        imagesToDownload.addAll(updatedSet);
       }
 
-      if (getLocalImages) {
-        debugPrint("Getting local images");
-
-        if (localImages.any((element) => element.enterpriseName == null)) {
-          debugPrint(
-              "has null enterprise name property in local image models, updating....");
-
-          localImages =
-              localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
-          //in .toJson, add the enterprise name property
-
-          await hiveStorage.put(
-            CacheKeys.images.name,
-            localImages.map((e) => e.toJson()).toList(),
-          );
-          return localImages
+      return await _getImages(
+        localImages: localImages,
+        imagesToDownload: imagesToDownload,
+      );
+    } on DomainError catch (e) {
+      switch (e) {
+        case DomainError.unexpected:
+          //só cai aqui se tentar obter os plus que tem imagem
+          debugPrint("Returning local images");
+          return (await _getLocalImages())
               .where((e) => e.enterpriseName == enterpriseName)
               .toList();
-        }
-        return filteredLocalImages;
-      }
 
-      if (updatedSet.isNotEmpty && filteredLocalImages.length > 1) {
-        debugPrint("Updating ${updatedSet.length} images");
-        return await _mergedOldAndNewImages(
-          localImages: localImages,
-          updatedImages: updatedSet.toList(),
-        );
+        default:
+          rethrow;
       }
-
-      debugPrint("Downloading all images");
-      return (await _downloadAllImages(plusAndEans))
-          .where((e) => e.enterpriseName == enterpriseName)
-          .toList();
-    } catch (e) {
-      rethrow;
     }
   }
 
-  Future<List<String>> _getPlusAndEansThatContainsImages() async {
+  Future<List<String>> _getPlusWithImages() async {
     try {
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpClient.request(
@@ -106,41 +85,11 @@ class ConcentratorLoadImages implements LoadImages {
       );
       return List<String>.from(response); // mais direto
     } catch (e) {
-      rethrow;
+      throw DomainError.unexpected;
     }
   }
 
-  Future<List<ImageModel>> _downloadAllImages(
-    List<String> plusAndEansThatContainsImagesInConcentrator,
-  ) async {
-    try {
-      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
-      var localImages = localImagesJson == null
-          ? <ImageModel>[]
-          : (localImagesJson as List)
-              .map((e) => ImageModel.fromJson(e))
-              .toList();
-
-      final loadedImages = await _loadConcentratorImages(
-        plusAndEansThatContainsImagesInConcentrator,
-      );
-
-      await hiveStorage.put(
-        CacheKeys.images.name,
-        [
-          ...loadedImages.map((e) => e.toJson()),
-          ...localImages.map((e) => e.toJson()),
-        ],
-      );
-      return loadedImages;
-    } catch (e) {
-      debugPrint(e.toString());
-      rethrow;
-    }
-  }
-
-  Future<List<ImageModel>> _loadConcentratorImages(
-      List<String> imagesNames) async {
+  Future<List<ImageModel>> _downloadImages(List<String> imagesNames) async {
     final images = <ImageModel>[];
     final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
     final enterpriseImage = await _loadEnterpriseConcentratorImage();
@@ -149,6 +98,8 @@ class ConcentratorLoadImages implements LoadImages {
 
     final client = http.Client();
     try {
+      debugPrint("Downloading ${imagesNames.toSet().length} images");
+
       for (final pluOrEan in imagesNames.toSet()) {
         try {
           final maxSizeInBytes = 1 * 1024 * 1024;
@@ -223,12 +174,13 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<List<ImageModel>> _mergedOldAndNewImages({
+  Future<List<ImageModel>> _getImages({
     required List<ImageModel> localImages,
-    required List<String> updatedImages,
+    required List<String> imagesToDownload,
   }) async {
     try {
-      final newImages = await _loadConcentratorImages(updatedImages);
+      final newImages = await _downloadImages(imagesToDownload);
+      var allImages = [...localImages];
 
       for (var updatedImage in newImages) {
         int indexInLocalImages = localImages.indexWhere((e) =>
@@ -236,16 +188,81 @@ class ConcentratorLoadImages implements LoadImages {
             e.enterpriseName == updatedImage.enterpriseName);
 
         if (indexInLocalImages != -1) {
-          localImages[indexInLocalImages] = updatedImage;
+          allImages[indexInLocalImages] = updatedImage;
         } else {
-          localImages.add(updatedImage);
+          allImages.add(updatedImage);
         }
       }
 
       await hiveStorage.put(
         CacheKeys.images.name,
+        allImages.map((e) => e.toJson()).toList(),
+      );
+
+      return allImages
+          .where((e) =>
+              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<ImageModel>> _updateEnterpriseNullProperty(
+    List<ImageModel> localImages,
+  ) async {
+    try {
+      debugPrint(
+          "updating images because has null enterprise name property...");
+
+      final updated =
+          localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
+      //in .toJson, add the enterprise name property
+
+      await hiveStorage.put(
+        CacheKeys.images.name,
         localImages.map((e) => e.toJson()).toList(),
       );
+
+      return updated;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<String>> _getMissingImages(List<ImageModel> localImages) async {
+    try {
+      final filteredLocalImages = localImages
+          .where((e) =>
+              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
+          .toList();
+      final plusWithImages = await _getPlusWithImages();
+
+      if (plusWithImages.length > filteredLocalImages.length - 1) {
+        final missingImages = plusWithImages
+            .where((ean) => !filteredLocalImages.any(
+                  (local) => local.pluOrEan == ean,
+                ))
+            .toList();
+
+        debugPrint("missing: ${missingImages.length} images");
+        return missingImages;
+      }
+
+      return [];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<ImageModel>> _getLocalImages() async {
+    try {
+      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
+      List<ImageModel> localImages = localImagesJson == null
+          ? []
+          : (localImagesJson as List)
+              .map((e) => ImageModel.fromJson(e))
+              .toList();
 
       return localImages;
     } catch (e) {

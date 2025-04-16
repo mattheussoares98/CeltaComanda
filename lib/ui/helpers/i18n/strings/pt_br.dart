@@ -292,6 +292,7 @@ class PtBr implements Translation {
   String get removeServiceCharge => 'Remover taxa';
   String get requested => 'Solicitados';
   String get requestedAt => 'Solicitado às';
+  String get requestTableNumber => 'Solicitar número da mesa';
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';

@@ -14,13 +14,13 @@ class PersonalizedSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 5),
       child: InkWell(
         onTap: () {
           changeValue();
         },
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
           decoration: BoxDecoration(
             border: Border.all(width: 0.2),
             color: Theme.of(context).primaryColorLight.withAlpha(30),

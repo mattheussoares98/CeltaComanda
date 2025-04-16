@@ -36,7 +36,7 @@ class _WebAddOrEditEnterprisePageState
   final minutesVerifyUpdateMenuFocusNode = FocusNode();
   bool zoomImage = false;
   bool useCovenant = false;
-  bool useProductReducedName = false;
+  bool useReducedNameOnProduct = false;
   bool verifyCommandBlocked = true;
   bool canInsertCommentManually = false;
   bool blockUseAppIfIsOutdated = false;
@@ -46,7 +46,13 @@ class _WebAddOrEditEnterprisePageState
 
   void changeUseProductReducedName() {
     setState(() {
-      useProductReducedName = !(useProductReducedName);
+      useReducedNameOnProduct = !(useReducedNameOnProduct);
+    });
+  }
+
+  void changeRequestTableNumber() {
+    setState(() {
+      requestTableNumber = !(requestTableNumber);
     });
   }
 
@@ -158,8 +164,11 @@ class _WebAddOrEditEnterprisePageState
                 webEnterprisesPresenter.selectedEnterprise?.zoomImage == true;
             useCovenant =
                 webEnterprisesPresenter.selectedEnterprise?.useCovenant == true;
-            useProductReducedName = webEnterprisesPresenter
+            useReducedNameOnProduct = webEnterprisesPresenter
                     .selectedEnterprise?.useReducedNameOnProduct ==
+                true;
+            requestTableNumber = webEnterprisesPresenter
+                    .selectedEnterprise?.requestTableNumber ==
                 true;
 
             if (webEnterprisesPresenter
@@ -328,7 +337,7 @@ class _WebAddOrEditEnterprisePageState
                         children: [
                           Expanded(
                             child: PersonalizedSwitch(
-                              value: useProductReducedName,
+                              value: useReducedNameOnProduct,
                               changeValue: changeUseProductReducedName,
                               title: R.string.useProductReducedName,
                             ),
@@ -383,7 +392,13 @@ class _WebAddOrEditEnterprisePageState
                       ),
                       Row(
                         children: [
-                          Expanded(child: SizedBox()),
+                          Expanded(
+                            child: PersonalizedSwitch(
+                              value: requestTableNumber,
+                              changeValue: changeRequestTableNumber,
+                              title: R.string.requestTableNumber,
+                            ),
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: GoToDevicesInfoPageButton(),
@@ -410,7 +425,7 @@ class _WebAddOrEditEnterprisePageState
                   minutesVerifyUpdateMenuController,
               zoomImage: zoomImage,
               useCovenant: useCovenant,
-              useProductReducedName: useProductReducedName,
+              useProductReducedName: useReducedNameOnProduct,
               formKey: _formKey,
               verifyCommandBlocked: verifyCommandBlocked,
               canInsertCommentManually: canInsertCommentManually,

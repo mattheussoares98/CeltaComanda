@@ -291,6 +291,7 @@ class EnUs implements Translation {
   String get removeServiceCharge => 'Remove service';
   String get requested => 'Requested';
   String get requestedAt => 'Requested at';
+  String get requestTableNumber => 'Request table number';
   String get requestSentSuccessfully => 'The request was sent successfully';
   String get reserved => 'Reserved';
   String get reserveTable => 'Reserve table';

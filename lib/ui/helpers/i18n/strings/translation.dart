@@ -248,6 +248,7 @@ abstract class Translation {
   String get removeServiceCharge;
   String get requested;
   String get requestedAt;
+  String get requestTableNumber;
   String get reserved;
   String get reserveTable;
   String get sales;

@@ -51,6 +51,7 @@ void main() {
   late PrintRequestEntity printRequestEntity;
   late SaleRequestEntity saleRequestEntity;
   late SaleRequestModel saleRequestModel;
+  late PrintedEntity printedEntity;
 
   void initUsecases() {
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
@@ -180,7 +181,7 @@ void main() {
       CovenantCode: saleRequestTempEntity.CovenantCode,
       IncrementValue: 0,
       IncrementType: 0,
-      PlaceId: saleRequestTempEntity.PlaceId,
+      PlaceId: tableNumber.toString(),
     );
 
     cartProductViewModelWithChilds =
@@ -197,6 +198,7 @@ void main() {
       isFixedCommandNumber: true,
       pdv: EntityFactory.makePdvEntity(),
     );
+    printedEntity = EntityFactory.makePrintedEntity();
   }
 
   void initMockSuccess() {
@@ -207,6 +209,7 @@ void main() {
     barcodeScanner
         .mockRead(homePresenter.commandEntityController!.commandNumber!);
     loadSaleRequest.mockLoadSaleRequest(saleRequestModel);
+    loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
   }
 
   setUp(() {
@@ -1177,7 +1180,7 @@ void main() {
       verify(() => confirmedCartProducts.updateValue(false)).called(1);
 
       final teste = UpdateSaleRequestTempEntity(
-        PlaceId: updateSaleRequestTempEntity.PlaceId,
+        PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1248,7 +1251,7 @@ void main() {
           .fold(0.0,
               (previousValue, element) => element.TotalLiquid + previousValue);
       final entity = UpdateSaleRequestTempEntity(
-        PlaceId: updateSaleRequestTempEntity.PlaceId,
+        PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1854,7 +1857,7 @@ void main() {
       );
 
       final teste = UpdateSaleRequestTempEntity(
-        PlaceId: updateSaleRequestTempEntity.PlaceId,
+        PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1909,7 +1912,7 @@ void main() {
       );
 
       final teste = UpdateSaleRequestTempEntity(
-        PlaceId: updateSaleRequestTempEntity.PlaceId,
+        PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,

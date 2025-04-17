@@ -148,38 +148,42 @@ class _LandScapeInsertProductsPageBodyState
                     ),
                   if (atualOption == SelectedOptionType.quantity)
                     Expanded(
-                        child: UpdateQuantity(
-                      quantity: insertProductPresenter.totalProductsQuantity,
-                      quantityController: widget.quantityController,
-                      maxQuantity: widget.selectedProduct.MaximumQuantityForSale
-                                  ?.toDouble() ==
-                              0
-                          ? 99
-                          : widget.selectedProduct.MaximumQuantityForSale
-                              ?.toDouble(),
-                      updateQuantity: (value) {
-                        insertProductPresenter.updateTotalProductsQuantity(
-                          newQuantity: value?.toDouble(),
-                        );
-                      },
-                      reduceQuantity: () {
-                        insertProductPresenter.updateTotalProductsQuantity(
-                          isAddingQuantity: false,
-                        );
-                        widget.quantityController?.text = widget
-                            .selectedProduct.productQuantity
-                            .toString()
-                            .toBrazilianNumber();
-                      },
-                      addQuantity: () {
-                        insertProductPresenter.updateTotalProductsQuantity(
-                          isAddingQuantity: true,
-                        );
-                        widget.quantityController?.text = widget
-                            .selectedProduct.productQuantity
-                            .toString()
-                            .toBrazilianNumber();
-                      },
+                        child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: UpdateQuantity(
+                        quantity: insertProductPresenter.totalProductsQuantity,
+                        quantityController: widget.quantityController,
+                        maxQuantity: widget
+                                    .selectedProduct.MaximumQuantityForSale
+                                    ?.toDouble() ==
+                                0
+                            ? 99
+                            : widget.selectedProduct.MaximumQuantityForSale
+                                ?.toDouble(),
+                        updateQuantity: (value) {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            newQuantity: value?.toDouble(),
+                          );
+                        },
+                        reduceQuantity: () {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            isAddingQuantity: false,
+                          );
+                          widget.quantityController?.text = widget
+                              .selectedProduct.productQuantity
+                              .toString()
+                              .toBrazilianNumber();
+                        },
+                        addQuantity: () {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            isAddingQuantity: true,
+                          );
+                          widget.quantityController?.text = widget
+                              .selectedProduct.productQuantity
+                              .toString()
+                              .toBrazilianNumber();
+                        },
+                      ),
                     )),
                   if (atualOption == SelectedOptionType.fatherComposition)
                     Expanded(

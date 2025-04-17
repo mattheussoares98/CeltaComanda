@@ -38,81 +38,90 @@ class _TotalByPersonState extends State<TotalByPerson> {
         context); //need listen to update total by person correctly when remove service charge
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 3),
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (printedProductsPresenter.printed == null)
-              Text(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.4,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (printedProductsPresenter.printed == null)
+            Expanded(
+              child: Text(
                 R.string.msgCommandDontHaveOpenValues,
                 style: TextStyle(
                   color: Theme.of(context).primaryColorLight,
                   fontSize: StringSize.size,
                 ),
               ),
-            if (printedProductsPresenter.printed != null)
-              Column(
+            ),
+          if (printedProductsPresenter.printed != null)
+            Expanded(
+              flex: 9,
+              child: Column(
                 children: [
-                  Text(
-                    R.string.peopleQuantity,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: StringSize.size),
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(
+                        R.string.peopleQuantity,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: StringSize.size),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  UpdateQuantity(
-                    quantity:
-                        printedProductsPresenter.peopleQuantity.toDouble(),
-                    reduceQuantity: () {
-                      setState(() {
-                        printedProductsPresenter.updatePeopleQuantity(
-                          isAdding: false,
-                        );
-                      });
-                    },
-                    addQuantity: () {
-                      setState(() {
-                        printedProductsPresenter.updatePeopleQuantity(
-                          isAdding: true,
-                        );
-                      });
-                    },
+                  Expanded(
+                    flex: 5,
+                    child: UpdateQuantity(
+                      quantity:
+                          printedProductsPresenter.peopleQuantity.toDouble(),
+                      reduceQuantity: () {
+                        setState(() {
+                          printedProductsPresenter.updatePeopleQuantity(
+                            isAdding: false,
+                          );
+                        });
+                      },
+                      addQuantity: () {
+                        setState(() {
+                          printedProductsPresenter.updatePeopleQuantity(
+                            isAdding: true,
+                          );
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: StringSize.size),
+                  Expanded(
+                    child: FittedBox(
+                      child: Text(
+                        "${R.string.totalByPerson}: ${(printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed) / printedProductsPresenter.peopleQuantity).toString().toBrazilianNumber().addBrazilianCoin()}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: StringSize.size),
+                      ),
+                    ),
                   ),
                 ],
               ),
-            if (homePresenter.commandEntity?.isFixedCommandNumber == false)
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    writeCommandNumber(
-                      context: context,
-                      onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(3),
-                    child: FittedBox(
-                      child: Text(
-                        R.string.searchDataOfOtherCommandNumber,
-                        style: TextStyle(
-                          fontSize: StringSize.size,
-                        ),
-                      ),
+            ),
+          if (homePresenter.commandEntity?.isFixedCommandNumber == false)
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () async {
+                  writeCommandNumber(
+                    context: context,
+                    onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
+                  );
+                },
+                child: FittedBox(
+                  child: Text(
+                    R.string.searchDataOfOtherCommandNumber,
+                    style: TextStyle(
+                      fontSize: StringSize.size,
                     ),
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

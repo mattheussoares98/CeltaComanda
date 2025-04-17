@@ -24,8 +24,6 @@ class PrintedItem extends StatefulWidget {
 }
 
 class _PrintedItemState extends State<PrintedItem> {
-  final double rightMargin = 2;
-
   Widget columnTitle(String name, [int flex = 1]) {
     return Expanded(
       flex: flex,
@@ -85,7 +83,7 @@ class _PrintedItemState extends State<PrintedItem> {
                           Container(
                             width: (MediaQuery.of(context).size.width /
                                     getItensPerLine(context)) -
-                                rightMargin,
+                                2,
                             margin: const EdgeInsets.only(right: 2, left: 2),
                             padding: const EdgeInsets.all(8),
                             color: getColor(index, product),
@@ -104,15 +102,21 @@ class _PrintedItemState extends State<PrintedItem> {
                           if (!ScreenSize.hasMinWidth &&
                               index == widget.printed.Products.length - 1)
                             Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Column(
-                                children: [
-                                  if (EnterpriseBuilder
-                                          .entity?.canInsertCustomer ==
-                                      true)
-                                    UpdateCustomer(),
-                                  TotalByPerson(),
-                                ],
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 4),
+                              child: SizedBox(
+                                height: 300,
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  children: [
+                                    if (EnterpriseBuilder
+                                            .entity?.canInsertCustomer ==
+                                        true)
+                                      Expanded(child: UpdateCustomer()),
+                                    const SizedBox(height: 4),
+                                    Expanded(child: TotalByPerson()),
+                                  ],
+                                ),
                               ),
                             ),
                         ],
@@ -124,14 +128,21 @@ class _PrintedItemState extends State<PrintedItem> {
             ),
           ),
           if (ScreenSize.hasMinWidth)
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (EnterpriseBuilder.entity?.canInsertCustomer == true)
-                    UpdateCustomer(),
-                  TotalByPerson(),
-                ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LayoutBuilder(
+                  builder: (context, constraints) => Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      if (EnterpriseBuilder.entity?.canInsertCustomer == true)
+                        Expanded(
+                          child: UpdateCustomer(),
+                        ),
+                      TotalByPerson(),
+                    ],
+                  ),
+                ),
               ),
             ),
         ],

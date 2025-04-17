@@ -13,20 +13,17 @@ class OpenInsertCustomerPageButton extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter =
         Provider.of(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 15),
-      child: ElevatedButton(
-        onPressed: () {
-          PersonalizedDialogPage.open(
-            context: context,
-            page: InsertCustomerPage(),
-          );
-        },
-        child: Text(
-          printedProductsPresenter.customerInSaleRequest == null
-              ? R.string.addCustomer
-              : R.string.changeCustomer,
-        ),
+    return ElevatedButton(
+      onPressed: () {
+        PersonalizedDialogPage.open(
+          context: context,
+          page: InsertCustomerPage(),
+        );
+      },
+      child: Text(
+        printedProductsPresenter.customerInSaleRequest == null
+            ? R.string.addCustomer
+            : R.string.changeCustomer,
       ),
     );
   }

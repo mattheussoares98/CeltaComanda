@@ -91,43 +91,51 @@ class _UpdateQuantityState extends State<UpdateQuantity> {
               ),
             ),
           ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _CircleAvatar(
-              isAddingQuantity: false,
-              updateQuantity:
-                  widget.quantity <= 1 ? null : widget.reduceQuantity,
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  maxRadius: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: FittedBox(
-                      child: Text(
-                        widget.quantity.toString().toBrazilianNumber(
-                              widget.quantityController == null ? 0 : 3,
-                            ),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: StringSize.size * 1.5,
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: _CircleAvatar(
+                  isAddingQuantity: false,
+                  updateQuantity:
+                      widget.quantity <= 1 ? null : widget.reduceQuantity,
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColorDark,
+                    maxRadius: ScreenSize.hasMinWidth
+                        ? 100
+                        : MediaQuery.of(context).size.width * 0.2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: FittedBox(
+                        child: Text(
+                          widget.quantity.toString().toBrazilianNumber(
+                                widget.quantityController == null ? 0 : 3,
+                              ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: StringSize.size * 1.5,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            _CircleAvatar(
-              updateQuantity: widget.addQuantity,
-              isAddingQuantity: true,
-            ),
-          ],
+              Expanded(
+                child: _CircleAvatar(
+                  updateQuantity: widget.addQuantity,
+                  isAddingQuantity: true,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -146,8 +154,12 @@ class _CircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
-      width: ScreenSize.hasMinWidth ? 100 : MediaQuery.of(context).size.width * 0.2,
+      height: ScreenSize.hasMinWidth
+          ? 100
+          : MediaQuery.of(context).size.width * 0.2,
+      width: ScreenSize.hasMinWidth
+          ? 100
+          : MediaQuery.of(context).size.width * 0.2,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Theme.of(context).primaryColorLight,

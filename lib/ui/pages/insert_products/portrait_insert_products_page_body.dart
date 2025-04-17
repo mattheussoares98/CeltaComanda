@@ -79,145 +79,139 @@ class _PortraitInsertProductsPageBodyState
               _animateToEnd(0);
             }
             return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    ImageAndComplement(
-                      selectedProduct: widget.selectedProduct,
-                      width: 100,
-                    ),
-                    if (widget.insertProductsViewModel != null)
-                      OptionItems(
-                        selectedProduct: widget.selectedProduct,
-                        insertProductIndex: widget.indexOfAtualOption,
-                        insertProductsViewModel:
-                            widget.insertProductsViewModel!,
+                ImageAndComplement(
+                  selectedProduct: widget.selectedProduct,
+                  width: 100,
+                ),
+                if (widget.insertProductsViewModel != null)
+                  OptionItems(
+                    selectedProduct: widget.selectedProduct,
+                    insertProductIndex: widget.indexOfAtualOption,
+                    insertProductsViewModel: widget.insertProductsViewModel!,
+                  ),
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: Column(
+                            children: [
+                              if (widget.insertProductsViewModel != null)
+                                TitleText(
+                                  selectedProduct: widget.selectedProduct,
+                                  insertProductsViewModel:
+                                      widget.insertProductsViewModel![
+                                          widget.indexOfAtualOption],
+                                ),
+                            ],
+                          ),
+                        ),
                       ),
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: Column(
-                                children: [
-                                  if (widget.insertProductsViewModel != null)
-                                    TitleText(
-                                      selectedProduct: widget.selectedProduct,
-                                      insertProductsViewModel:
-                                          widget.insertProductsViewModel![
-                                              widget.indexOfAtualOption],
-                                    ),
-                                ],
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (widget.insertProductsViewModel != null)
+                              AdvanceButton(
+                                totalPrice: widget.totalLiquid,
+                                quantity: insertProductPresenter
+                                    .totalProductsQuantity,
+                                selectedProduct: widget.selectedProduct,
+                                leftSelectedIndex: widget.indexOfAtualOption,
+                                atualOption: atualOption,
+                                insertProductsViewModel:
+                                    widget.insertProductsViewModel![
+                                        widget.indexOfAtualOption],
+                              ),
+                            Text(
+                              widget.totalLiquid
+                                  .toString()
+                                  .toBrazilianNumber()
+                                  .addBrazilianCoin(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: StringSize.size * 1.5,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                if (widget.insertProductsViewModel != null)
-                                  AdvanceButton(
-                                    totalPrice: widget.totalLiquid,
-                                    quantity: insertProductPresenter
-                                        .totalProductsQuantity,
-                                    selectedProduct: widget.selectedProduct,
-                                    leftSelectedIndex:
-                                        widget.indexOfAtualOption,
-                                    atualOption: atualOption,
-                                    insertProductsViewModel:
-                                        widget.insertProductsViewModel![
-                                            widget.indexOfAtualOption],
-                                  ),
-                                Text(
-                                  widget.totalLiquid
-                                      .toString()
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: StringSize.size * 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (atualOption == SelectedOptionType.fatherComposition)
+                  ChildsRadios(
+                    callSetState: () {
+                      setState(() {});
+                    },
+                    selectedFather: insertProductPresenter
+                        .getLastSelectedFather(widget.indexOfAtualOption)!,
+                    selectedProduct: widget.selectedProduct,
+                  ),
+                if (atualOption == SelectedOptionType.optionalExpansibleGroup)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: OptionalGroups(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfAtualOption,
+                    ),
+                  ),
+                if (atualOption == SelectedOptionType.obligatoryExpansibleGroup)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: ObligatoryGroups(
+                      selectedProduct: widget.selectedProduct,
+                      selectedLeftIndex: widget.indexOfAtualOption,
+                    ),
+                  ),
+                if (atualOption == SelectedOptionType.quantity)
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.1,
+                          vertical: 8),
+                      child: UpdateQuantity(
+                        maxQuantity: widget
+                                    .selectedProduct.MaximumQuantityForSale
+                                    ?.toDouble() ==
+                                0
+                            ? 99
+                            : widget.selectedProduct.MaximumQuantityForSale
+                                ?.toDouble(),
+                        updateQuantity: (value) {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            newQuantity: value?.toDouble(),
+                          );
+                        },
+                        quantityController: widget.quantityController,
+                        quantity: insertProductPresenter.totalProductsQuantity,
+                        reduceQuantity: () {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            isAddingQuantity: false,
+                          );
+                          widget.quantityController?.text = widget
+                              .selectedProduct.productQuantity
+                              .toString()
+                              .toBrazilianNumber();
+                        },
+                        addQuantity: () {
+                          insertProductPresenter.updateTotalProductsQuantity(
+                            isAddingQuantity: true,
+                          );
+                          widget.quantityController?.text = widget
+                              .selectedProduct.productQuantity
+                              .toString()
+                              .toBrazilianNumber();
+                        },
                       ),
                     ),
-                    if (atualOption == SelectedOptionType.fatherComposition)
-                      ChildsRadios(
-                        callSetState: () {
-                          setState(() {});
-                        },
-                        selectedFather: insertProductPresenter
-                            .getLastSelectedFather(widget.indexOfAtualOption)!,
-                        selectedProduct: widget.selectedProduct,
-                      ),
-                    if (atualOption ==
-                        SelectedOptionType.optionalExpansibleGroup)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: OptionalGroups(
-                          selectedProduct: widget.selectedProduct,
-                          selectedLeftIndex: widget.indexOfAtualOption,
-                        ),
-                      ),
-                    if (atualOption ==
-                        SelectedOptionType.obligatoryExpansibleGroup)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: ObligatoryGroups(
-                          selectedProduct: widget.selectedProduct,
-                          selectedLeftIndex: widget.indexOfAtualOption,
-                        ),
-                      ),
-                    if (atualOption == SelectedOptionType.quantity)
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.1,
-                        ),
-                        child: UpdateQuantity(
-                          maxQuantity: widget
-                                      .selectedProduct.MaximumQuantityForSale
-                                      ?.toDouble() ==
-                                  0
-                              ? 99
-                              : widget.selectedProduct.MaximumQuantityForSale
-                                  ?.toDouble(),
-                          updateQuantity: (value) {
-                            insertProductPresenter.updateTotalProductsQuantity(
-                              newQuantity: value?.toDouble(),
-                            );
-                          },
-                          quantityController: widget.quantityController,
-                          quantity:
-                              insertProductPresenter.totalProductsQuantity,
-                          reduceQuantity: () {
-                            insertProductPresenter.updateTotalProductsQuantity(
-                              isAddingQuantity: false,
-                            );
-                            widget.quantityController?.text = widget
-                                .selectedProduct.productQuantity
-                                .toString()
-                                .toBrazilianNumber();
-                          },
-                          addQuantity: () {
-                            insertProductPresenter.updateTotalProductsQuantity(
-                              isAddingQuantity: true,
-                            );
-                            widget.quantityController?.text = widget
-                                .selectedProduct.productQuantity
-                                .toString()
-                                .toBrazilianNumber();
-                          },
-                        ),
-                      ),
-                  ],
-                ),
+                  ),
               ],
             );
           }),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
@@ -50,6 +51,9 @@ class _PrintedItemState extends State<PrintedItem> {
 
   @override
   Widget build(BuildContext context) {
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Row(
@@ -105,14 +109,27 @@ class _PrintedItemState extends State<PrintedItem> {
                               padding: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 4),
                               child: SizedBox(
-                                height: 300,
+                                height: MediaQuery.of(context).size.height * 0.5,
                                 width: MediaQuery.of(context).size.width,
                                 child: Column(
                                   children: [
                                     if (EnterpriseBuilder
                                             .entity?.canInsertCustomer ==
                                         true)
-                                      Expanded(child: UpdateCustomer()),
+                                      SizedBox(
+                                        height: printedProductsPresenter
+                                                    .customerInSaleRequest !=
+                                                null
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.25
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.08,
+                                        child: UpdateCustomer(),
+                                      ),
                                     const SizedBox(height: 4),
                                     Expanded(child: TotalByPerson()),
                                   ],
@@ -131,17 +148,23 @@ class _PrintedItemState extends State<PrintedItem> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: LayoutBuilder(
-                  builder: (context, constraints) => Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (EnterpriseBuilder.entity?.canInsertCustomer == true)
-                        Expanded(
-                          child: UpdateCustomer(),
-                        ),
-                      TotalByPerson(),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (EnterpriseBuilder.entity?.canInsertCustomer == true)
+                      SizedBox(
+                        height:
+                            printedProductsPresenter.customerInSaleRequest !=
+                                    null
+                                ? MediaQuery.of(context).size.height * 0.3
+                                : MediaQuery.of(context).size.height * 0.1,
+                        child: UpdateCustomer(),
+                      ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: TotalByPerson(),
+                    ),
+                  ],
                 ),
               ),
             ),

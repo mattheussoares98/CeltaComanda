@@ -55,7 +55,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
             ),
           if (printedProductsPresenter.printed != null)
             Expanded(
-              flex: 9,
+              flex: 6,
               child: Column(
                 children: [
                   Expanded(
@@ -69,7 +69,7 @@ class _TotalByPersonState extends State<TotalByPerson> {
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    flex: 5,
+                    flex: 3,
                     child: UpdateQuantity(
                       quantity:
                           printedProductsPresenter.peopleQuantity.toDouble(),

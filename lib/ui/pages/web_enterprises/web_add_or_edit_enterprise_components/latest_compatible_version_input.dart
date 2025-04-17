@@ -19,7 +19,7 @@ class LatestCompatibleVersionInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 8),
       child: TextFormField(
         focusNode: latestCompatibleVersionFocusNode,
         controller: latestCompatibleVersionController,

@@ -13,7 +13,7 @@ class GoToDevicesInfoPageButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 8),
       child: ElevatedButton(
         onPressed: () {
           webEnterprisesPresenter.goToDevicesInfoPage();

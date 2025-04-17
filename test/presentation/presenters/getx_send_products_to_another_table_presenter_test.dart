@@ -122,6 +122,7 @@ void main() {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -140,6 +141,7 @@ void main() {
       changeSaleRequestPersonalizedCodeProducts
           .mockError(DomainError.unexpected);
 
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -148,27 +150,10 @@ void main() {
       );
     });
 
-    test("Should emit correct values on DomainError.selectProducts", () async {
-      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-      expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.selectProducts]));
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-    });
     test(
         "Should call changeSaleRequestPersonalizedCodeProducts with correct values",
         () async {
-      int firstSelected = faker.randomGenerator.integer(100);
-      int secondSelected = faker.randomGenerator.integer(100);
-
-      sut.updateProductIsSelected(firstSelected);
-      sut.updateProductIsSelected(secondSelected);
-
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -180,7 +165,10 @@ void main() {
         () => changeSaleRequestPersonalizedCodeProducts.change(
           oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
           newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-          saleRequestProductsIds: [firstSelected, secondSelected],
+          saleRequestProductsIds:
+              printedEntity.Products.where((e) => e.IsCancelled == false)
+                  .map((e) => e.SaleRequestProductId!.toInt())
+                  .toList(),
         ),
       ).called(1);
     });
@@ -189,6 +177,7 @@ void main() {
       int firstSelected = faker.randomGenerator.integer(100);
       sut.updateProductIsSelected(firstSelected);
 
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -209,6 +198,7 @@ void main() {
       int firstSelected = faker.randomGenerator.integer(100);
       sut.updateProductIsSelected(firstSelected);
 
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -223,26 +213,9 @@ void main() {
       );
     });
 
-    test(
-        "Should not add service charge product in destiny command if doesnt already exists",
-        () async {
-      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
-
-      await sut.sendProductsToAnotherTable(
-        oldPersonalizedCode: oldPersonalizedCode,
-        newPersonalizedCode: newPersonalizedCode,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
-
-      verifyNever(() => cartPresenter.updateIncrementValue(
-            newPersonalizedCode.toString(),
-          ));
-    });
     test("Should update increment value in old and new personalized codes",
         () async {
-      sut.updateProductIsSelected(faker.randomGenerator.integer(100));
-
+      await sut.loadProducts(commandNumber);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,

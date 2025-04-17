@@ -63,15 +63,13 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     mainError = null;
 
     try {
-      if (_selectedSaleRequestProductsIds.isEmpty) {
-        throw DomainError.selectProducts;
-      }
-
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-        saleRequestProductsIds:
-            _selectedSaleRequestProductsIds.map((e) => e).toList(),
+        saleRequestProductsIds: _printedProducts.value!.Products
+            .where((e) => e.IsCancelled == "false")
+            .map((e) => e.SaleRequestProductId!.toInt())
+            .toList(),
       );
 
       await cartPresenter.updateIncrementValue(

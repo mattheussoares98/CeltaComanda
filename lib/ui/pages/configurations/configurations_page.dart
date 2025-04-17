@@ -74,7 +74,10 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
       onPopInvokedWithResult: (didPop, result) async {},
       child: Scaffold(
         appBar: AppBar(
-          title: Text(R.string.configurations),
+          title: Text(R.string.configurations +
+              (homePresenter.commandEntity?.pdv?.PdvNumber != null
+                  ? "  ${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}"
+                  : "")),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () async {

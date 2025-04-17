@@ -38,13 +38,10 @@ class SearchDataByCommandNumber extends StatelessWidget {
                   homePresenter.commandEntity!.commandNumber!,
                 );
               } else {
-                final commandNumber = await GetCommandNumber.get(homePresenter);
-
-                if (commandNumber != null) {
-                  await printedProductsPresenter.loadPrinted(
-                    commandNumber.toString(),
-                  );
-                }
+                writeCommandNumber(
+                  context: context,
+                  onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
+                );
               }
             },
             icon: Icon(

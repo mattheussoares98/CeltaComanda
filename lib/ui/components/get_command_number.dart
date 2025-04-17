@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../ui/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
+import '../pages/home/home.dart';
 import 'components.dart';
 
 class GetCommandNumber {
@@ -10,7 +11,7 @@ class GetCommandNumber {
   static final commandKey = GlobalKey<FormState>();
   static final focusNode = FocusNode();
 
-  static Future<int?> get() async {
+  static Future<int?> get(HomePresenter homePresenter) async {
     int? commandNumber;
 
     void onSubmit() {
@@ -68,6 +69,15 @@ class GetCommandNumber {
         ],
       ),
     );
+
+    if (commandNumber != null) {
+      await homePresenter.updateCommandEntity(
+        commandNumber: commandNumber.toString(),
+        isFixedCommandNumber:
+            homePresenter.commandEntity?.isFixedCommandNumber == true,
+        pdv: homePresenter.commandEntity?.pdv,
+      );
+    }
 
     return commandNumber;
   }

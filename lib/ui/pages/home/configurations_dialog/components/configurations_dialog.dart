@@ -86,6 +86,12 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                if (homePresenter.commandEntity?.pdv?.PdvNumber != null)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        "${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}"),
+                  ),
                 Form(
                   key: formKey,
                   child: Column(

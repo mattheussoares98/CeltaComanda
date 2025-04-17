@@ -24,7 +24,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
   TextEditingController commandNumberController = TextEditingController();
   GlobalKey<FormState> commandNumberKey = GlobalKey<FormState>();
 
-  _addProducts({
+  Future<void> _addProducts({
     required CartPresenter cartPresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required ExpansibleGroupFromProductPresenter
@@ -81,7 +81,7 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
         commandNumberController.clear();
 
         if (homePresenter.commandEntity?.isFixedCommandNumber == true) {
-          notificationDialog(
+          await notificationDialog(
             context: context,
             titleMessage: R.string.sendRequest,
             content: Text(
@@ -93,12 +93,16 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             cancelMessage: R.string.turnBack,
             confirmMessage: R.string.send,
             onPress: () async {
+              String? tableNumber;
+              if (EnterpriseBuilder.entity?.requestTableNumber == true) {
+                tableNumber = await WriteNumber.writeAndReturnNumber(null);
+              }
               await _addProducts(
                 insertProductPresenter: insertProductPresenter,
                 cartPresenter: cartPresenter,
                 context: context,
                 printedProductsPresenter: printedProductsPresenter,
-                tableNumber: null,
+                tableNumber: tableNumber?.toInt(),
                 homePresenter: homePresenter,
                 expansibleGroupFromProductPresenter:
                     expansibleGroupFromProductPresenter,
@@ -106,8 +110,20 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             },
           );
         } else {
-          WriteCommandNumber.writeAndGetCommandNumber(
+          String? tableNumber;
+          if (EnterpriseBuilder.entity?.requestTableNumber == true) {
+            tableNumber = await WriteNumber.writeAndReturnNumber(
+              null,
+              title: R.string.msgTableNumber,
+              cancelMessage: R.string.jump,
+              maxLength: 2,
+            );
+          }
+          await Future.delayed(Duration.zero);
+
+          await WriteNumber.writeAndReturnNumber(
             ActionType.saveProducts,
+            tableNumber: tableNumber?.toInt(),
           );
         }
       },

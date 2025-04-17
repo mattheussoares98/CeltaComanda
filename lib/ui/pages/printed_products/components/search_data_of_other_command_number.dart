@@ -12,7 +12,7 @@ class SearchDataOfOtherCommandNumber extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: ElevatedButton(
         onPressed: () async {
-          WriteCommandNumber.writeAndGetCommandNumber(
+          WriteNumber.writeAndReturnNumber(
             ActionType.loadPrintedProducts,
           );
         },

@@ -13,19 +13,22 @@ enum ActionType {
   loadPrintedProducts,
 }
 
-class WriteCommandNumber {
-  WriteCommandNumber._();
+class WriteNumber {
+  WriteNumber._();
   static final _commandNumberController = TextEditingController();
-  static final _focusNode = FocusNode();
-  static final _commandKey = GlobalKey<FormState>();
   static final _context = NavigatorKey.navigatorKey.currentContext!;
+  static final _focusNode = FocusNode();
 
-  static Future<String?> writeAndGetCommandNumber(
+  static Future<String?> writeAndReturnNumber(
     ActionType? action, {
     int? tableNumber,
+    String? title,
+    String? cancelMessage,
+    int? maxLength,
   }) async {
     //is action is null, dont do anything
 
+    final commandKey = GlobalKey<FormState>();
     CartPresenter cartPresenter = Provider.of(_context, listen: false);
     HomePresenter homePresenter = Provider.of(_context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
@@ -37,59 +40,67 @@ class WriteCommandNumber {
 
     await notificationDialog(
       context: _context,
-      titleMessage: R.string.msgInsertCommandNumber,
+      titleMessage: title ?? R.string.msgInsertCommandNumber,
       confirmMessage: R.string.confirm,
-      cancelMessage: R.string.cancel,
+      cancelMessage: cancelMessage ?? R.string.cancel,
+      canPop: false,
       content: Row(
         children: [
           const Expanded(child: SizedBox()),
           Expanded(
             flex: 4,
             child: Form(
-              key: _commandKey,
+              key: commandKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: TextFormField(
-                autofocus: true,
-                controller: _commandNumberController,
-                keyboardType: TextInputType.number,
-                maxLength: 3,
-                focusNode: _focusNode,
-                decoration: InputDecoration(
-                  label: Text(R.string.command),
-                  hintText: "Exp: 1",
-                ),
-                validator: (value) {
-                  if (value?.isEmpty == true) {
-                    return R.string.msgWriteCommandNumber;
-                  } else if (int.tryParse(value!) == null) {
-                    return R.string.msgInvalidNumber;
-                  } else if (int.parse(value) <= 0) {
-                    return R.string.msgInvalidNumber;
-                  }
-                  return null;
-                },
-                onFieldSubmitted: (value) async {
-                  bool? isValid = _commandKey.currentState?.validate();
-                  if (isValid == true) {
-                    await _onPress(
-                      tableNumber: tableNumber,
-                      context: _context,
-                      cartPresenter: cartPresenter,
-                      printedProductsPresenter: printedProductsPresenter,
-                      homePresenter: homePresenter,
-                      commandNumber: _commandNumberController.text,
-                      commandKey: _commandKey,
-                      action: action,
-                      focusNode: _focusNode,
-                      expansibleGroupFromProductPresenter:
-                          expansibleGroupFromProductPresenter,
-                      insertProductPresenter: insertProductPresenter,
-                    );
-                  } else {
-                    _focusNode.requestFocus();
-                  }
-                },
-              ),
+              child: Builder(builder: (context) {
+                Future.delayed(Duration.zero, () {
+                  _focusNode.unfocus();
+                  _focusNode.requestFocus();
+                });
+
+                return TextFormField(
+                  autofocus: false,
+                  controller: _commandNumberController,
+                  keyboardType: TextInputType.number,
+                  maxLength: maxLength ?? 3,
+                  focusNode: _focusNode,
+                  decoration: InputDecoration(
+                    label: Text(R.string.command),
+                    hintText: "Exp: 1",
+                  ),
+                  validator: (value) {
+                    if (value?.isEmpty == true) {
+                      return R.string.msgWriteCommandNumber;
+                    } else if (int.tryParse(value!) == null) {
+                      return R.string.msgInvalidNumber;
+                    } else if (int.parse(value) <= 0) {
+                      return R.string.msgInvalidNumber;
+                    }
+                    return null;
+                  },
+                  onFieldSubmitted: (value) async {
+                    bool? isValid = commandKey.currentState?.validate();
+                    if (isValid == true) {
+                      await _onPress(
+                        tableNumber: tableNumber,
+                        context: _context,
+                        cartPresenter: cartPresenter,
+                        printedProductsPresenter: printedProductsPresenter,
+                        homePresenter: homePresenter,
+                        commandNumber: _commandNumberController.text,
+                        commandKey: commandKey,
+                        action: action,
+                        focusNode: _focusNode,
+                        expansibleGroupFromProductPresenter:
+                            expansibleGroupFromProductPresenter,
+                        insertProductPresenter: insertProductPresenter,
+                      );
+                    } else {
+                      _focusNode.requestFocus();
+                    }
+                  },
+                );
+              }),
             ),
           ),
           const Expanded(child: SizedBox()),
@@ -105,7 +116,7 @@ class WriteCommandNumber {
           printedProductsPresenter: printedProductsPresenter,
           homePresenter: homePresenter,
           commandNumber: _commandNumberController.text,
-          commandKey: _commandKey,
+          commandKey: commandKey,
           action: action,
           focusNode: _focusNode,
           expansibleGroupFromProductPresenter:
@@ -117,7 +128,8 @@ class WriteCommandNumber {
     final commandNumberText = _commandNumberController.text;
     _commandNumberController.clear();
 
-    if (_commandKey.currentState?.validate() == true) {
+    if (int.tryParse(commandNumberText) != null &&
+        int.parse(commandNumberText) > 0) {
       return commandNumberText;
     } else {
       return null;

@@ -106,9 +106,8 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             },
           );
         } else {
-          writeCommandNumber(
-            context: context,
-            onWriteCommandAction: OnWriteCommand.saveProducts,
+          WriteCommandNumber.writeAndGetCommandNumber(
+            ActionType.saveProducts,
           );
         }
       },

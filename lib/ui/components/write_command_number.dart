@@ -7,108 +7,122 @@ import 'components.dart';
 import '../helpers/helpers.dart';
 import '../pages/pages.dart';
 
-enum OnWriteCommand {
+enum ActionType {
   saveProducts,
   loadCommandData,
   loadPrintedProducts,
 }
 
-void writeCommandNumber({
-  required BuildContext context,
-  required OnWriteCommand onWriteCommandAction,
-}) {
-  GlobalKey<FormState> commandKey = GlobalKey<FormState>();
-  TextEditingController commandNumberController = TextEditingController();
-  MenuPresenter menuPresenter = Provider.of(context, listen: false);
-  CartPresenter cartPresenter = Provider.of(context, listen: false);
-  HomePresenter homePresenter = Provider.of(context, listen: false);
-  ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
-      Provider.of(context, listen: false);
-  PrintedProductsPresenter printedProductsPresenter =
-      Provider.of(context, listen: false);
-  PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
-  InsertProductPresenter insertProductPresenter =
-      Provider.of(context, listen: false);
-  FocusNode focusNode = FocusNode();
+class WriteCommandNumber {
+  WriteCommandNumber._();
+  static final _commandNumberController = TextEditingController();
+  static final _focusNode = FocusNode();
+  static final _commandKey = GlobalKey<FormState>();
+  static final _context = NavigatorKey.navigatorKey.currentContext!;
 
-  notificationDialog(
-    context: context,
-    titleMessage: R.string.msgInsertCommandNumber,
-    confirmMessage: R.string.confirm,
-    cancelMessage: R.string.cancel,
-    content: Row(
-      children: [
-        const Expanded(child: SizedBox()),
-        Expanded(
-          flex: 4,
-          child: Form(
-            key: commandKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: TextFormField(
-              autofocus: true,
-              controller: commandNumberController,
-              keyboardType: TextInputType.number,
-              maxLength: 3,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                label: Text(R.string.command),
-                hintText: "Exp: 1",
+  static Future<String?> writeAndGetCommandNumber(
+    ActionType? action, {
+    int? tableNumber,
+  }) async {
+    //is action is null, dont do anything
+
+    CartPresenter cartPresenter = Provider.of(_context, listen: false);
+    HomePresenter homePresenter = Provider.of(_context, listen: false);
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
+        Provider.of(_context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(_context, listen: false);
+    InsertProductPresenter insertProductPresenter =
+        Provider.of(_context, listen: false);
+
+    await notificationDialog(
+      context: _context,
+      titleMessage: R.string.msgInsertCommandNumber,
+      confirmMessage: R.string.confirm,
+      cancelMessage: R.string.cancel,
+      content: Row(
+        children: [
+          const Expanded(child: SizedBox()),
+          Expanded(
+            flex: 4,
+            child: Form(
+              key: _commandKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: TextFormField(
+                autofocus: true,
+                controller: _commandNumberController,
+                keyboardType: TextInputType.number,
+                maxLength: 3,
+                focusNode: _focusNode,
+                decoration: InputDecoration(
+                  label: Text(R.string.command),
+                  hintText: "Exp: 1",
+                ),
+                validator: (value) {
+                  if (value?.isEmpty == true) {
+                    return R.string.msgWriteCommandNumber;
+                  } else if (int.tryParse(value!) == null) {
+                    return R.string.msgInvalidNumber;
+                  } else if (int.parse(value) <= 0) {
+                    return R.string.msgInvalidNumber;
+                  }
+                  return null;
+                },
+                onFieldSubmitted: (value) async {
+                  bool? isValid = _commandKey.currentState?.validate();
+                  if (isValid == true) {
+                    await _onPress(
+                      tableNumber: tableNumber,
+                      context: _context,
+                      cartPresenter: cartPresenter,
+                      printedProductsPresenter: printedProductsPresenter,
+                      homePresenter: homePresenter,
+                      commandNumber: _commandNumberController.text,
+                      commandKey: _commandKey,
+                      action: action,
+                      focusNode: _focusNode,
+                      expansibleGroupFromProductPresenter:
+                          expansibleGroupFromProductPresenter,
+                      insertProductPresenter: insertProductPresenter,
+                    );
+                  } else {
+                    _focusNode.requestFocus();
+                  }
+                },
               ),
-              validator: (value) {
-                if (value?.isEmpty == true) {
-                  return R.string.msgWriteCommandNumber;
-                } else if (int.tryParse(value!) == null) {
-                  return R.string.msgInvalidNumber;
-                }
-                return null;
-              },
-              onFieldSubmitted: (value) async {
-                bool? isValid = commandKey.currentState?.validate();
-                if (isValid == true) {
-                  await _onPress(
-                    context: context,
-                    cartPresenter: cartPresenter,
-                    printedProductsPresenter: printedProductsPresenter,
-                    homePresenter: homePresenter,
-                    menuPresenter: menuPresenter,
-                    commandNumber: commandNumberController.text,
-                    commandKey: commandKey,
-                    onWriteCommand: onWriteCommandAction,
-                    focusNode: focusNode,
-                    paymentPresenter: paymentPresenter,
-                    expansibleGroupFromProductPresenter:
-                        expansibleGroupFromProductPresenter,
-                    insertProductPresenter: insertProductPresenter,
-                  );
-                } else {
-                  focusNode.requestFocus();
-                }
-              },
             ),
           ),
-        ),
-        const Expanded(child: SizedBox()),
-      ],
-    ),
-    closeDialogOnConfirmPress: false,
-    onPress: () async {
-      await _onPress(
-        insertProductPresenter: insertProductPresenter,
-        context: context,
-        cartPresenter: cartPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        homePresenter: homePresenter,
-        menuPresenter: menuPresenter,
-        commandNumber: commandNumberController.text,
-        commandKey: commandKey,
-        onWriteCommand: onWriteCommandAction,
-        focusNode: focusNode,
-        paymentPresenter: paymentPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-    },
-  );
+          const Expanded(child: SizedBox()),
+        ],
+      ),
+      closeDialogOnConfirmPress: false,
+      onPress: () async {
+        await _onPress(
+          tableNumber: tableNumber,
+          insertProductPresenter: insertProductPresenter,
+          context: _context,
+          cartPresenter: cartPresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          homePresenter: homePresenter,
+          commandNumber: _commandNumberController.text,
+          commandKey: _commandKey,
+          action: action,
+          focusNode: _focusNode,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
+      },
+    );
+
+    final commandNumberText = _commandNumberController.text;
+    _commandNumberController.clear();
+
+    if (_commandKey.currentState?.validate() == true) {
+      return commandNumberText;
+    } else {
+      return null;
+    }
+  }
 }
 
 Future<void> _onPress({
@@ -116,15 +130,14 @@ Future<void> _onPress({
   required CartPresenter cartPresenter,
   required PrintedProductsPresenter printedProductsPresenter,
   required HomePresenter homePresenter,
-  required MenuPresenter menuPresenter,
   required String commandNumber,
   required GlobalKey<FormState> commandKey,
-  required OnWriteCommand onWriteCommand,
+  required ActionType? action,
   required FocusNode focusNode,
-  required PaymentPresenter paymentPresenter,
   required ExpansibleGroupFromProductPresenter
       expansibleGroupFromProductPresenter,
   required InsertProductPresenter insertProductPresenter,
+  required int? tableNumber,
 }) async {
   bool? isValid = commandKey.currentState?.validate();
 
@@ -134,11 +147,12 @@ Future<void> _onPress({
   }
   Navigator.of(context).pop();
 
-  if (onWriteCommand == OnWriteCommand.saveProducts) {
+  //is action is null, dont do anything
+  if (action == ActionType.saveProducts) {
     bool isUpdated = await cartPresenter.saveProducts(
       insertProductPresenter: insertProductPresenter,
       printedProductsPresenter: printedProductsPresenter,
-      tableNumber: 0,
+      tableNumber: tableNumber,
       commandNumber: commandNumber,
       homePresenter: homePresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
@@ -154,13 +168,13 @@ Future<void> _onPress({
         );
       });
     }
-  } else if (onWriteCommand == OnWriteCommand.loadCommandData) {
+  } else if (action == ActionType.loadCommandData) {
     await homePresenter.loadCommandData(
       printedProductsPresenter: printedProductsPresenter,
       cartPresenter: cartPresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
-  } else {
+  } else if (action == ActionType.loadPrintedProducts) {
     await homePresenter.updateCommandEntity(
       commandNumber: commandNumber,
       isFixedCommandNumber:

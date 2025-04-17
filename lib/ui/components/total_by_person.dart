@@ -106,9 +106,8 @@ class _TotalByPersonState extends State<TotalByPerson> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
-                  writeCommandNumber(
-                    context: context,
-                    onWriteCommandAction: OnWriteCommand.loadPrintedProducts,
+                  WriteCommandNumber.writeAndGetCommandNumber(
+                    ActionType.loadPrintedProducts,
                   );
                 },
                 child: FittedBox(

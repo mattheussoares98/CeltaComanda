@@ -65,7 +65,7 @@ class _SendProductsToAnotherTablePageState
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(
-          child: Text(R.string.sendOneOrMoreProductsToAnotherTable),
+          child: Text(R.string.sendAllProductsToAnotherTable),
         ),
       ),
       body: SafeArea(
@@ -90,7 +90,7 @@ class _SendProductsToAnotherTablePageState
                               loadData: () async {
                                 bool? isValid =
                                     formKey.currentState?.validate();
-                
+
                                 if (isValid == true) {
                                   await sendProductsToAnotherTablePresenter
                                       .loadProducts(
@@ -118,28 +118,15 @@ class _SendProductsToAnotherTablePageState
                           },
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: SelectOrUnselectAllProducts(
-                              printedViewModel: snapshot.data,
-                              callSetState: () {
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: ConfirmButton(
-                              formKey: formKey,
-                              originCommandNumberController:
-                                  originCommandNumberController,
-                              destinyCommandNumberController:
-                                  destinyCommandNumberController,
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: ConfirmButton(
+                          formKey: formKey,
+                          originCommandNumberController:
+                              originCommandNumberController,
+                          destinyCommandNumberController:
+                              destinyCommandNumberController,
+                        ),
                       ),
                     ],
                   );

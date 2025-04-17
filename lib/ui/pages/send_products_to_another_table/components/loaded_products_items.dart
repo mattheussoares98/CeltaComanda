@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
@@ -27,9 +26,6 @@ class LoadedProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
-        Provider.of(context, listen: false);
-
     return Builder(builder: (context) {
       if (printedViewModel == null) {
         return Center(
@@ -59,15 +55,7 @@ class LoadedProductsItems extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 4),
             child: InkWell(
-              onTap: product.IsCancelled == "true"
-                  ? null
-                  : () {
-                      updateProductIsSelected(
-                        sendProductsToAnotherTablePresenter:
-                            sendProductsToAnotherTablePresenter,
-                        product: product,
-                      );
-                    },
+              onTap: null,
               child: Container(
                 color: product.IsCancelled == "true"
                     ? Colors.red
@@ -90,27 +78,12 @@ class LoadedProductsItems extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 8),
                           child: Text(
-                            product.TotalLiquid!.toDouble()
+                            product.TotalLiquid!
+                                .toDouble()
                                 .toString()
                                 .toBrazilianNumber()
                                 .addBrazilianCoin(),
                           ),
-                        ),
-                        Checkbox(
-                          value: sendProductsToAnotherTablePresenter
-                              .selectedsSaleRequestProductsIds
-                              .contains(
-                            product.SaleRequestProductId!.toInt(),
-                          ),
-                          onChanged: product.IsCancelled == "true"
-                              ? null
-                              : (value) {
-                                  updateProductIsSelected(
-                                    sendProductsToAnotherTablePresenter:
-                                        sendProductsToAnotherTablePresenter,
-                                    product: product,
-                                  );
-                                },
                         ),
                       ],
                     ),

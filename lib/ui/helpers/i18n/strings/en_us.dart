@@ -317,6 +317,7 @@ class EnUs implements Translation {
   String get selectQuantity => 'Enter the quantity';
   String get selectUser => 'Select one user';
   String get seller => 'Seller';
+  String get sendAllProducts => "Send all products";
   String get sendAllProductsToAnotherTable =>
       'Send ALL products to another table';
   String get sendOneOrMoreProductsToAnotherTable =>

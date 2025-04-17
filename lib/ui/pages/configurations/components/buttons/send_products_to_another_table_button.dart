@@ -5,8 +5,8 @@ import '../../../../../domain/helpers/helpers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../pages.dart';
 
-class SendOneOrMoreProductsToAnotherTableButton extends StatelessWidget {
-  const SendOneOrMoreProductsToAnotherTableButton({super.key});
+class SendProductsToAnotherTableButton extends StatelessWidget {
+  const SendProductsToAnotherTableButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SendOneOrMoreProductsToAnotherTableButton extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return DefaultButton(
-      name: R.string.sendOneOrMoreProductsToAnotherTable,
+      name: R.string.sendAllProductsToAnotherTable,
       permissionName: PermissionName.trocarProdutosEntreComandas,
       function: () async {
         configurationsPresenter.goToSendProductsToAnotherTablePage();

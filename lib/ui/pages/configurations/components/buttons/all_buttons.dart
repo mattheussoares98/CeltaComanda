@@ -12,7 +12,7 @@ List<Widget> allButtons(BuildContext context) {
     CancelProductsOrRemoveServiceChargeButton(),
     TableConfigurationsButton(),
     // SendAllProductsToAnotherTableButton(),
-    SendOneOrMoreProductsToAnotherTableButton(),
+    SendProductsToAnotherTableButton(),
     DoLogoutButton(),
     CloseCommandButton(),
     LiberateOrBlockTableButton(),

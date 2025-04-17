@@ -11,9 +11,7 @@ class PdvNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
-    if ((homePresenter.isGeneratingVersionToGetNet ||
-            homePresenter.isGeneratingVersionToRede) &&
-        homePresenter.commandEntity?.pdv?.PdvNumber != null) {
+    if (homePresenter.commandEntity?.pdv?.PdvNumber != null) {
       return Padding(
         padding: EdgeInsets.only(top: 8),
         child: Text(

@@ -39,7 +39,9 @@ class _TotalByPersonState extends State<TotalByPerson> {
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: printedProductsPresenter.printed != null
+          ? MediaQuery.of(context).size.height * 0.4
+          : 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -95,7 +95,9 @@ class GetxPaymentPresenter extends GetxController
           mainError = UIError.unexpected;
       }
     } finally {
-      isLoading = false;
+      Future.delayed(Duration(seconds: 20), () {
+        isLoading = false;
+      });
     }
   }
 
@@ -259,6 +261,7 @@ class GetxPaymentPresenter extends GetxController
     } catch (e) {
       mainError = UIError.unexpected;
     }
+    isLoading = false;
   }
 
   Future<void> _treatRedeResponse(
@@ -288,6 +291,7 @@ class GetxPaymentPresenter extends GetxController
     } else {
       mainError = UIError.paymentUnexpectedError;
     }
+    isLoading = false;
   }
 
   @override

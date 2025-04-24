@@ -203,7 +203,7 @@ void main() {
     registerFallbackValue(EntityFactory.makePrintedEntity());
   });
 
-  group("Call payment", () {
+  group("Rede payment", () {
     test('Should call payment correctly with pix', () async {
       await sut.callPayment(
         homePresenter: homePresenter,
@@ -283,6 +283,24 @@ void main() {
               paymentMode: PaymentMode.pix,
             ),
           )).called(1);
+    });
+    test('Should not call is is not generating version to rede', () async {
+      homePresenter.isGeneratingVersionToRedeMock = false;
+
+      await sut.callPayment(
+        homePresenter: homePresenter,
+        longAmountValue: longAmountValue,
+        portionQuantity: portionQuantity,
+        paymentMode: PaymentMode.pix,
+      );
+
+      verifyNever(() => redePay.pay(
+            PayParamsModel(
+              longAmountValue: (longAmountValue * 100).toInt(),
+              portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.pix,
+            ),
+          ));
     });
     test('Should emit correct values on success', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

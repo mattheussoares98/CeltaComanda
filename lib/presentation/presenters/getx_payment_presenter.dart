@@ -79,13 +79,23 @@ class GetxPaymentPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      await redePay.pay(
-        PayParamsModel(
-          longAmountValue: (longAmountValue * 100).toInt(),
-          portionQuantity: portionQuantity,
-          paymentMode: paymentMode,
-        ),
-      );
+      if (homePresenter.isGeneratingVersionToRede) {
+        await redePay.pay(
+          PayParamsModel(
+            longAmountValue: (longAmountValue * 100).toInt(),
+            portionQuantity: portionQuantity,
+            paymentMode: paymentMode,
+          ),
+        );
+      } else if (homePresenter.isGeneratingVersionToGetNet) {
+        await getnetPay.pay(
+          PayParamsModel(
+            longAmountValue: (longAmountValue * 100).toInt(),
+            portionQuantity: portionQuantity,
+            paymentMode: paymentMode,
+          ),
+        );
+      }
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.blockedCommand:

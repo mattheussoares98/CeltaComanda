@@ -204,40 +204,27 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
-  MethodChannel? _channel;
+  MethodChannel redeChannel = MethodChannel(Channels.getnet.name);
+
   @override
-  void initPaymentResultHandler({
+  void initRedePaymentResultHandler({
     required HomePresenter homePresenter,
     required PrintedProductsPresenter printedProductsPresenter,
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   }) {
-    if (homePresenter.isGeneratingVersionToGetNet) {
-      _channel = MethodChannel(Channels.getnet.name);
-    } else if (homePresenter.isGeneratingVersionToRede) {
-      _channel = MethodChannel(Channels.rede.name);
-    } else {
+    if (!homePresenter.isGeneratingVersionToRede) {
       return;
     }
 
-    _channel?.setMethodCallHandler((MethodCall call) async {
-      if (homePresenter.isGeneratingVersionToRede) {
-        await _treatRedeResponse(
-          homePresenter,
-          printedProductsPresenter,
-          call,
-          showSuccessAndCloseUntilHomePage,
-          showErrorMessageReturnedByBs,
-        );
-      } else {
-        await _treatGetNetResponse(
-          homePresenter,
-          printedProductsPresenter,
-          call,
-          showSuccessAndCloseUntilHomePage,
-          showErrorMessageReturnedByBs,
-        );
-      }
+    redeChannel.setMethodCallHandler((MethodCall call) async {
+      await _treatRedeResponse(
+        homePresenter,
+        printedProductsPresenter,
+        call,
+        showSuccessAndCloseUntilHomePage,
+        showErrorMessageReturnedByBs,
+      );
     });
   }
 
@@ -308,7 +295,7 @@ class GetxPaymentPresenter extends GetxController
 
   @override
   void disposePaymentResultHandler() {
-    _channel?.setMethodCallHandler(null);
+    redeChannel.setMethodCallHandler(null);
   }
 
   @override

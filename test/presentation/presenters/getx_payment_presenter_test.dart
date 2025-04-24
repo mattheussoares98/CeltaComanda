@@ -30,7 +30,8 @@ void main() {
   late HomePresenterSpy homePresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
-  late PaySpy redePay;
+  late RedePaySpy redePay;
+  late GetnetPaySpy getnetPay;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
@@ -63,7 +64,8 @@ void main() {
   late List<CustomerViewModel> customersViewModel;
 
   initUseCases() {
-    redePay = PaySpy();
+    redePay = RedePaySpy();
+    getnetPay = GetnetPaySpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
@@ -86,6 +88,7 @@ void main() {
   initPresenters() {
     sut = GetxPaymentPresenter(
       redePay: redePay,
+      getnetPay: getnetPay,
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       navigateTo: navigateTo,

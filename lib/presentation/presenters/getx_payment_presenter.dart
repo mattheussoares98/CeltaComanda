@@ -17,6 +17,7 @@ class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements PaymentPresenter {
   final RedePay redePay;
+  final GetnetPay getnetPay;
   final CommandInformations commandInformations;
   final ConcFinishSaleRequest finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
@@ -35,6 +36,7 @@ class GetxPaymentPresenter extends GetxController
 
   GetxPaymentPresenter({
     required this.redePay,
+    required this.getnetPay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.navigateTo,

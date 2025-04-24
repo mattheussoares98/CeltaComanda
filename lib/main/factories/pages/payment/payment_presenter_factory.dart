@@ -6,7 +6,8 @@ import '../../../../ui/pages/pages.dart';
 import '../../factories.dart';
 
 PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
-      redePay: makeRedePay(),
+      redePay: makePosRedePay(),
+      getnetPay: makePosGetnetPay(),
       commandInformations: makeRemoteCommandInformations(),
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
       navigateTo: makeNavigateTo(),

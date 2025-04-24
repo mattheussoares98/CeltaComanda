@@ -4,8 +4,8 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
-class PaySpy extends Mock implements RedePay {
-  PaySpy() {
+class RedePaySpy extends Mock implements RedePay {
+  RedePaySpy() {
     this.mockPay();
   }
 

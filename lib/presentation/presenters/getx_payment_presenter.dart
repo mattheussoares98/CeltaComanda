@@ -16,7 +16,7 @@ import '../protocols/protocols.dart';
 class GetxPaymentPresenter extends GetxController
     with LoadingManager, UIErrorManager
     implements PaymentPresenter {
-  final Pay pay;
+  final RedePay redePay;
   final CommandInformations commandInformations;
   final ConcFinishSaleRequest finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
@@ -34,7 +34,7 @@ class GetxPaymentPresenter extends GetxController
   final ValidateCpfCnpj validateCpfCnpj;
 
   GetxPaymentPresenter({
-    required this.pay,
+    required this.redePay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.navigateTo,
@@ -77,14 +77,11 @@ class GetxPaymentPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      await pay.pay(
-        paymentMode: paymentMode,
-        channel: homePresenter.isGeneratingVersionToRede
-            ? Channels.rede
-            : Channels.getnet,
-        params: PayParams(
+      await redePay.pay(
+        PayParamsModel(
           longAmountValue: (longAmountValue * 100).toInt(),
           portionQuantity: portionQuantity,
+          paymentMode: paymentMode,
         ),
       );
     } on DomainError catch (e) {

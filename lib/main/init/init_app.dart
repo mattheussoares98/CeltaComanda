@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
+// import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../firebase_options.dart';
@@ -16,8 +16,8 @@ Future<void> initApp() async {
 
   await initFirebase();
   await _initHive();
-  _hideNavigationButtons();
-  WakelockPlus.enable();
+  // _hideNavigationButtons();
+  // WakelockPlus.enable();
   _deletePath("AppData\\Local\\firestore");
 }
 
@@ -44,10 +44,10 @@ void _deletePath(String path) {
   }
 }
 
-void _hideNavigationButtons() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-}
+// void _hideNavigationButtons() {
+//   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+//   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+// }
 
 Future<void> _initHive() async {
   String? path;

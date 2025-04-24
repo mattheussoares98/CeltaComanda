@@ -1,2 +1,3 @@
 export './already_paid.dart';
-export './pay.dart';
+export './getnet_pay.dart';
+export 'rede_pay.dart';

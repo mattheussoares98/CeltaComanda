@@ -56,7 +56,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         multiDexEnabled true
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdk 35
         versionCode 101
         versionName flutterVersionName
@@ -103,11 +103,11 @@ flutter {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:33.7.0')
-    implementation 'com.google.firebase:firebase-analytics'
+    // implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    // implementation 'com.google.firebase:firebase-analytics'
     
     //adding getnet library
-    // implementation files('libs/libposdigital-1.8.1-13-release.aar')
+    implementation files('libs/libposdigital-1.8.1-13-release.aar')
     // //below, are the rede sdk dependencies
     // implementation files('libs/smartrede-sdk-l400-4.0.6.release.aar')
     // implementation 'com.google.guava:guava:33.3.0-android'
@@ -122,9 +122,9 @@ dependencies {
     // implementation 'io.insert-koin:koin-core:3.5.6'
 }
 
-// configurations {
-//     all {
-//         exclude group: 'androidx.profileinstaller', module: 'profileinstaller'
-//     }
-// }
+configurations {
+    all {
+        exclude group: 'androidx.profileinstaller', module: 'profileinstaller'
+    }
+}
 

@@ -4,16 +4,12 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 
-class PaySpy extends Mock implements Pay {
+class PaySpy extends Mock implements RedePay {
   PaySpy() {
     this.mockPay();
   }
 
-  When mockPaytCall() => when(() => this.pay(
-        paymentMode: any(named: "paymentMode"),
-        params: any(named: "params"),
-        channel: any(named: "channel"),
-      ));
+  When mockPaytCall() => when(() => this.pay(any()));
   void mockPay() => this.mockPaytCall().thenAnswer((any) async => any);
   void mockPayError(DomainError error) => this.mockPaytCall().thenThrow(error);
 }

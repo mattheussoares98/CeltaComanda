@@ -17,6 +17,7 @@ export './image_model.dart';
 export './last_import_model.dart';
 export './loaded_menu_model.dart';
 export 'parameter_model.dart';
+export './pay_params_model.dart';
 export './pdv_model.dart';
 export './print_parameters_model.dart';
 export './print_request_model.dart';

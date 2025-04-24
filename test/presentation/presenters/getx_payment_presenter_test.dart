@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/domain/usecases/payment/payment.dart';
 import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -31,7 +30,7 @@ void main() {
   late HomePresenterSpy homePresenter;
   late PrintedProductsPresenterSpy printedProductsPresenter;
 
-  late PaySpy pay;
+  late PaySpy redePay;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
@@ -64,7 +63,7 @@ void main() {
   late List<CustomerViewModel> customersViewModel;
 
   initUseCases() {
-    pay = PaySpy();
+    redePay = PaySpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
@@ -86,7 +85,7 @@ void main() {
 
   initPresenters() {
     sut = GetxPaymentPresenter(
-      pay: pay,
+      redePay: redePay,
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       navigateTo: navigateTo,
@@ -137,7 +136,7 @@ void main() {
   }
 
   mockSuccess() {
-    pay.mockPay();
+    redePay.mockPay();
     loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
     barcodeScanner.mockRead(commandNumber);
     homePresenter.mockLoadCommandData();
@@ -169,15 +168,22 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(
-      const PayParams(longAmountValue: 0, portionQuantity: 0),
+      PayParamsModel(
+        longAmountValue: 0,
+        portionQuantity: 0,
+        paymentMode: PaymentMode.credit,
+      ),
     );
     registerFallbackValue(EntityFactory.makeProductsViewModel());
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());
-    registerFallbackValue(PaymentMode.credit);
-    registerFallbackValue(Channels.getnet);
-    registerFallbackValue(Channels.persistent);
-    registerFallbackValue(Channels.rede);
+    for (var mode in PaymentMode.values) {
+      registerFallbackValue(mode);
+    }
+    for (var channel in Channels.values) {
+      registerFallbackValue(channel);
+    }
+
     registerFallbackValue(EntityFactory.makeConcentratorFinaliztionModel());
     registerFallbackValue(
       EntityFactory.makeSaleRequestModel(covenantCode: 1, customerCode: 1),
@@ -203,12 +209,11 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      verify(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.pix,
-            params: PayParams(
+      verify(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.pix,
             ),
           )).called(1);
     });
@@ -220,12 +225,11 @@ void main() {
         paymentMode: PaymentMode.debit,
       );
 
-      verify(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.debit,
-            params: PayParams(
+      verify(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.debit,
             ),
           )).called(1);
     });
@@ -237,12 +241,11 @@ void main() {
         paymentMode: PaymentMode.credit,
       );
 
-      verify(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.credit,
-            params: PayParams(
+      verify(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.credit,
             ),
           )).called(1);
     });
@@ -254,12 +257,11 @@ void main() {
         paymentMode: PaymentMode.voucher,
       );
 
-      verify(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.voucher,
-            params: PayParams(
+      verify(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.voucher,
             ),
           )).called(1);
     });
@@ -271,12 +273,11 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      verify(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.pix,
-            params: PayParams(
+      verify(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: 28000,
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.pix,
             ),
           )).called(1);
     });
@@ -292,7 +293,7 @@ void main() {
       );
     });
     test('Should emit correct values on throws unexpected', () async {
-      pay.mockPayError(DomainError.unexpected);
+      redePay.mockPayError(DomainError.unexpected);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -306,7 +307,7 @@ void main() {
       );
     });
     test('Should emit correct values on throws blockedCommand', () async {
-      pay.mockPayError(DomainError.blockedCommand);
+      redePay.mockPayError(DomainError.blockedCommand);
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -359,12 +360,11 @@ void main() {
         paymentMode: PaymentMode.pix,
       );
 
-      verifyNever(() => pay.pay(
-            channel: Channels.rede,
-            paymentMode: PaymentMode.pix,
-            params: PayParams(
+      verifyNever(() => redePay.pay(
+            PayParamsModel(
               longAmountValue: (longAmountValue * 100).toInt(),
               portionQuantity: portionQuantity,
+              paymentMode: PaymentMode.pix,
             ),
           ));
     });

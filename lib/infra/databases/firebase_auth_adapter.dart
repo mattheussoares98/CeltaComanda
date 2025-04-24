@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../data/database/database.dart';
 import '../../domain/helpers/helpers.dart';
 
 class FirebaseAuthAdapter implements FirebaseAuthStorage {
-  final FirebaseAuth firebaseAuth;
+  // final FirebaseAuth firebaseAuth;
 
-  FirebaseAuthAdapter({required this.firebaseAuth});
+  // FirebaseAuthAdapter({required this.firebaseAuth});
 
   @override
   Future<void> login({
@@ -16,14 +16,14 @@ class FirebaseAuthAdapter implements FirebaseAuthStorage {
     required String password,
   }) async {
     try {
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      // final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+      //   email: email,
+      //   password: password,
+      // );
 
-      if (userCredential.user == null) {
-        throw Exception();
-      }
+      // if (userCredential.user == null) {
+      //   throw Exception();
+      // }
     } catch (e) {
       throw DomainError.unexpected;
     }
@@ -32,7 +32,7 @@ class FirebaseAuthAdapter implements FirebaseAuthStorage {
   @override
   Future<void> logout() async {
     try {
-      await firebaseAuth.signOut();
+      // await firebaseAuth.signOut();
     } catch (e) {
       throw DomainError.unexpected;
     }
@@ -41,14 +41,14 @@ class FirebaseAuthAdapter implements FirebaseAuthStorage {
   @override
   Future<bool> isLoggedIn() async {
     bool logged = false;
-    final loginSubscription =
-        firebaseAuth.authStateChanges().listen((User? user) {
-      if (user != null) {
-        logged = true;
-      }
-    });
-    await Future.delayed(Duration(seconds: 3));
-    loginSubscription.cancel();
+    // final loginSubscription =
+    //     firebaseAuth.authStateChanges().listen((User? user) {
+    //   if (user != null) {
+    //     logged = true;
+    //   }
+    // });
+    // await Future.delayed(Duration(seconds: 3));
+    // loginSubscription.cancel();
     return logged;
   }
 }

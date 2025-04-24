@@ -3,7 +3,7 @@ package br.com.celtaware.comanda
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-// import br.com.celtaware.comanda.getnet_channel.GetNetPayment
+import br.com.celtaware.comanda.getnet.GetNetPaymentHandler
 // import br.com.celtaware.comanda.getnet_channel.GetNetPrinter
 //import br.com.celtaware.comanda.rede_channel.RedePayment
 //import br.com.celtaware.comanda.rede_channel.RedePrinter
@@ -25,7 +25,8 @@ class MainActivity : FlutterActivity() {
     private lateinit var persistentChannelManager: PersistentChannelManager
 
     //    private lateinit var redePaymentHandler: RedePayment
-    // private lateinit var getnetPayment: GetNetPayment
+    private lateinit var getnetPaymentHandler: GetNetPaymentHandler
+
     // private lateinit var getnetPrinter: GetNetPrinter
     private var engine: FlutterEngine? = null
 
@@ -40,8 +41,8 @@ class MainActivity : FlutterActivity() {
 //        redePrinter = RedePrinter(flutterEngine, terminalFunctions.getConnectorPrinter())
 //        redePrinter.setupMethodChannel()
 
-        // getnetPayment = GetNetPayment(this, flutterEngine)
-        // getnetPayment.setupMethodChannel()
+        getnetPaymentHandler = GetNetPaymentHandler(this)
+        getnetPaymentHandler.setupMethodChannel(flutterEngine)
 
         // getnetPrinter = GetNetPrinter(this, flutterEngine)
         // getnetPrinter.setupMethodChannel()
@@ -50,7 +51,7 @@ class MainActivity : FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //        redePaymentHandler.handleActivityResult(requestCode, resultCode, data)
-        // getnetPayment.handleActivityResult(requestCode, resultCode, data)
+        getnetPaymentHandler.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

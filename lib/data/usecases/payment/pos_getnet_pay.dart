@@ -30,13 +30,15 @@ class PosGetnetPay implements GetnetPay {
       var uuid = Uuid();
       String callerId = uuid.v4();
 
+      final totalAmount = params.longAmountValue
+          .toString()
+          .replaceAll(RegExp(r','), '')
+          .replaceAll(RegExp(r'\.'), '')
+          .padLeft(12, "0");
+
       Map<String, String> intentParams = {
         PARAM_PAYMENT_TYPE: params.paymentMode.name,
-        PARAM_AMOUNT: params.longAmountValue
-            .toString()
-            .replaceAll(RegExp(r','), '')
-            .replaceAll(RegExp(r'\.'), '')
-            .padLeft(12, "0"), //TODO test this
+        PARAM_AMOUNT: totalAmount, //TODO test this
         PARAM_CUR_POS: 'CURRENCY_AFTER_AMOUNT',
         PARAM_CUR_CODE: '986',
         PARAM_CALLER_ID: callerId

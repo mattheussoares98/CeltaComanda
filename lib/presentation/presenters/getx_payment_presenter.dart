@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -88,13 +89,15 @@ class GetxPaymentPresenter extends GetxController
           ),
         );
       } else if (homePresenter.isGeneratingVersionToGetNet) {
-        await getnetPay.pay(
+        final result = await getnetPay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
             portionQuantity: portionQuantity,
             paymentMode: paymentMode,
           ),
         );
+
+        debugPrint(result.toString());
       }
     } on DomainError catch (e) {
       switch (e) {

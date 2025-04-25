@@ -23,6 +23,6 @@ class PayParamsModel extends Equatable {
   Map toJson() => {
         'longAmountValue': longAmountValue,
         'portionQuantity': portionQuantity,
-        'paymentMode': paymentMode,
+        'paymentMode': paymentMode.name,
       };
 }

@@ -7,7 +7,7 @@ import '../../models/models.dart';
 
 class PosGetnetPay implements GetnetPay {
   @override
-  Future<Map<String, dynamic>?> pay(PayParamsModel params) async {
+  Future<GetNetResponseModel?> pay(PayParamsModel params) async {
     try {
       final int REQUEST_CODE = 10001;
       // final String ARG_RESULT = 'result';
@@ -38,7 +38,7 @@ class PosGetnetPay implements GetnetPay {
 
       Map<String, String> intentParams = {
         PARAM_PAYMENT_TYPE: params.paymentMode.name,
-        PARAM_AMOUNT: totalAmount, //TODO test this
+        PARAM_AMOUNT: totalAmount,
         PARAM_CUR_POS: 'CURRENCY_AFTER_AMOUNT',
         PARAM_CUR_CODE: '986',
         PARAM_CALLER_ID: callerId
@@ -66,7 +66,7 @@ class PosGetnetPay implements GetnetPay {
         // String brand = resultMap[ARG_BRAND];
         // String callerId = resultMap[ARG_CALLER_ID];
 
-        return resultMap;
+        return GetNetResponseModel.fromJson(resultMap);
       }
     } catch (e) {
       debugPrint('Error launching intent: $e');

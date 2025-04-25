@@ -106,6 +106,7 @@ class GetxPaymentPresenter extends GetxController
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
         );
+        isLoading = false;
       }
     } on DomainError catch (e) {
       switch (e) {
@@ -113,6 +114,7 @@ class GetxPaymentPresenter extends GetxController
           mainError = UIError.blockedCommand;
         default:
           mainError = UIError.unexpected;
+          isLoading = false;
       }
     } finally {
       Future.delayed(Duration(seconds: 20), () {

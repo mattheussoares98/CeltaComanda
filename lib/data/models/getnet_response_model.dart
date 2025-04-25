@@ -5,7 +5,7 @@ class GetNetResponseModel {
   final String? authorizationCode;
   final String? cardHolderName;
   final String? gmtDateTime;
-  final AutomationSlipModel? automationSlip;
+  final dynamic automationSlip;
   final String? type;
   final String? nsuLocal;
   final String? cvNumber;
@@ -48,9 +48,7 @@ class GetNetResponseModel {
         authorizationCode: json['authorizationCode'],
         cardHolderName: json['cardHolderName'],
         gmtDateTime: json['gmtDateTime'],
-        automationSlip: json['automationSlip'] != null
-            ? AutomationSlipModel.fromJson(json['automationSlip'])
-            : null,
+        automationSlip: json['automationSlip'],
         type: json['type'],
         nsuLocal: json['nsuLocal'],
         cvNumber: json['cvNumber'],
@@ -63,27 +61,6 @@ class GetNetResponseModel {
         brand: json['brand'],
         nsuLastSuccesfullMessage: json['nsuLastSuccesfullMessage'],
         cardLastDigits: json['cardLastDigits'],
-      );
-}
-
-class AutomationSlipModel {
-  final MandatoryAllReceiptsFieldsModel? mandatoryAllReceiptsFields;
-  final MandatoryClientFieldsModel? mandatoryClientFields;
-  final MandatoryEcFieldsModel? mandatoryEcFields;
-
-  AutomationSlipModel({
-    required this.mandatoryAllReceiptsFields,
-    required this.mandatoryClientFields,
-    required this.mandatoryEcFields,
-  });
-
-  factory AutomationSlipModel.fromJson(Map json) => AutomationSlipModel(
-        mandatoryAllReceiptsFields: MandatoryAllReceiptsFieldsModel.fromJson(
-            json['mandatory_all_receipts_fields']),
-        mandatoryClientFields: MandatoryClientFieldsModel.fromJson(
-            json['mandatory_client_fields']),
-        mandatoryEcFields:
-            MandatoryEcFieldsModel.fromJson(json['mandatory_ec_fields']),
       );
 }
 

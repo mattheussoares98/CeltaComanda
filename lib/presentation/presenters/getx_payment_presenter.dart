@@ -61,6 +61,9 @@ class GetxPaymentPresenter extends GetxController
     required int portionQuantity,
     required PaymentMode paymentMode,
     required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
     mainError = null;
     isLoading = true;
@@ -95,6 +98,14 @@ class GetxPaymentPresenter extends GetxController
             portionQuantity: portionQuantity,
             paymentMode: paymentMode,
           ),
+        );
+
+        await _treatGetNetResponse(
+          homePresenter,
+          result,
+          printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs,
         );
 
         debugPrint(result.toString());
@@ -230,29 +241,28 @@ class GetxPaymentPresenter extends GetxController
 
   Future<void> _treatGetNetResponse(
     HomePresenter homePresenter,
+    GetNetResponseModel? response,
     PrintedProductsPresenter printedProductsPresenter,
-    MethodCall call,
     void Function() showSuccessAndCloseUntilHomePage,
     void Function(String error) showErrorMessageReturnedByBs,
   ) async {
     try {
-      final response = GetNetResponseModel.fromJson(call.arguments);
-      if (response.result == "0") {
+      if (response?.result == "0") {
         await liquidateCommand(
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
           showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
         );
-      } else if (response.result == "1") {
+      } else if (response?.result == "1") {
         mainError = UIError.paymentDeclined;
-      } else if (response.result == "2") {
+      } else if (response?.result == "2") {
         mainError = UIError.paymentCanceled;
-      } else if (response.result == "3") {
+      } else if (response?.result == "3") {
         mainError = UIError.paymentFailed;
-      } else if (response.result == "4") {
+      } else if (response?.result == "4") {
         mainError = UIError.paymentUnexpectedError;
-      } else if (response.result == "5") {
+      } else if (response?.result == "5") {
         mainError = UIError.paymentPendant;
       } else {
         mainError = UIError.paymentUnexpectedError;

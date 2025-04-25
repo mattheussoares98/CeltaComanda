@@ -25,6 +25,9 @@ abstract class PaymentPresenter implements Listenable {
     required int portionQuantity,
     required PaymentMode paymentMode,
     required HomePresenter homePresenter,
+    required PrintedProductsPresenter printedProductsPresenter,
+    required void Function() showSuccessAndCloseUntilHomePage,
+    required void Function(String error) showErrorMessageReturnedByBs,
   });
 
   Future<void> liquidateCommand({

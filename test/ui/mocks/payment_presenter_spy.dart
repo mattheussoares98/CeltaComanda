@@ -24,6 +24,11 @@ class PaymentPresenterSpy extends Mock implements PaymentPresenter {
           portionQuantity: any(named: "portionQuantity"),
           paymentMode: any(named: "paymentMode"),
           homePresenter: any(named: "homePresenter"),
+          printedProductsPresenter: any(named: "printedProductsPresenter"),
+          showSuccessAndCloseUntilHomePage:
+              any(named: "showSuccessAndCloseUntilHomePage"),
+          showErrorMessageReturnedByBs:
+              any(named: "showErrorMessageReturnedByBs"),
         ),
       ).thenAnswer((any) async => any);
 

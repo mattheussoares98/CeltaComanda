@@ -210,6 +210,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(() => redePay.pay(
@@ -226,6 +229,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.debit,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(() => redePay.pay(
@@ -242,6 +248,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.credit,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(() => redePay.pay(
@@ -258,6 +267,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.voucher,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(() => redePay.pay(
@@ -274,6 +286,9 @@ void main() {
         longAmountValue: 280.001,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(() => redePay.pay(
@@ -292,6 +307,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verifyNever(() => redePay.pay(
@@ -311,6 +329,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
     });
     test('Should emit correct values on throws unexpected', () async {
@@ -325,6 +346,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
     });
     test('Should emit correct values on throws blockedCommand', () async {
@@ -339,6 +363,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
     });
 
@@ -348,6 +375,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verify(
@@ -369,6 +399,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
     });
     test('Should not call to do payment when is invalid datetime', () async {
@@ -379,6 +412,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       verifyNever(() => redePay.pay(
@@ -395,6 +431,9 @@ void main() {
         longAmountValue: longAmountValue,
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.pix,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       expect(
@@ -1696,6 +1735,9 @@ void main() {
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.credit,
         homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
       expect(sut.lastRequestedPaymentFinalization, isNotNull);
 
@@ -1710,6 +1752,9 @@ void main() {
         portionQuantity: portionQuantity,
         paymentMode: PaymentMode.credit,
         homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showErrorMessageReturnedByBs: (_) {},
+        showSuccessAndCloseUntilHomePage: () {},
       );
 
       await sut.liquidateCommand(

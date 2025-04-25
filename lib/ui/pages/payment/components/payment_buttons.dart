@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../domain/helpers/helpers.dart';
 import '../../../../main/builders/builders.dart';
+import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
@@ -15,26 +16,38 @@ class PaymentButtons extends StatelessWidget {
     super.key,
   });
 
-  Future<void> callPayment(
-    PaymentPresenter paymentPresenter,
-    HomePresenter homePresenter,
-    PaymentMode paymentMode,
-  ) async {
-    bool? isValid = formKey.currentState?.validate();
-    if (isValid == true) {
-      await paymentPresenter.callPayment(
-        longAmountValue: paymentController.text.toDouble(),
-        portionQuantity: 1,
-        paymentMode: paymentMode,
-        homePresenter: homePresenter,
-      );
-    }
+  void showSuccessAndCloseUntilHomePage() {
+    Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
+        .popUntil((route) => route.isFirst); //TODO change navigatorKey to key
   }
 
   @override
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter =
+        Provider.of(context, listen: false);
+
+    Future<void> callPayment(PaymentMode paymentMode) async {
+      bool? isValid = formKey.currentState?.validate();
+      if (isValid == true) {
+        await paymentPresenter.callPayment(
+          longAmountValue: paymentController.text.toDouble(),
+          portionQuantity: 1,
+          paymentMode: paymentMode,
+          homePresenter: homePresenter,
+          printedProductsPresenter: printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs: (error) {
+            snackBarMessage(
+              context,
+              error,
+              backgroundColor: Colors.red,
+            );
+          },
+        );
+      }
+    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,11 +58,7 @@ class PaymentButtons extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  await callPayment(
-                    paymentPresenter,
-                    homePresenter,
-                    PaymentMode.pix,
-                  );
+                  await callPayment(PaymentMode.pix);
                 },
                 child: Text(
                   "PIX",
@@ -60,11 +69,7 @@ class PaymentButtons extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await callPayment(
-                      paymentPresenter,
-                      homePresenter,
-                      PaymentMode.debit,
-                    );
+                    await callPayment(PaymentMode.debit);
                   },
                   child: Text(
                     R.string.debit.toUpperCase(),
@@ -76,11 +81,7 @@ class PaymentButtons extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await callPayment(
-                      paymentPresenter,
-                      homePresenter,
-                      PaymentMode.credit,
-                    );
+                    await callPayment(PaymentMode.credit);
                   },
                   child: Text(
                     R.string.cashCredit.toUpperCase(),
@@ -92,11 +93,7 @@ class PaymentButtons extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await callPayment(
-                      paymentPresenter,
-                      homePresenter,
-                      PaymentMode.voucher,
-                    );
+                    await callPayment(PaymentMode.voucher);
                   },
                   child: Text(
                     R.string.voucher.toUpperCase(),

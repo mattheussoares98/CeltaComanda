@@ -40,7 +40,7 @@ class LiquidateCommand extends StatelessWidget {
                 },
                 showSuccessAndCloseUntilHomePage: () {
                   final correctContext =
-                      NavigatorKey.navigatorKey.currentState?.context ??
+                      NavigatorKey.key.currentState?.context ??
                           context;
                   Navigator.of(correctContext).popUntil(
                     (route) => route.isFirst,

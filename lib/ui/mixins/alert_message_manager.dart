@@ -11,7 +11,7 @@ mixin AlertMessageManager {
     final streamSubscription = stream.listen((message) {
       if (message != null) {
         snackBarMessage(
-          NavigatorKey.navigatorKey.currentState?.context ?? context,
+          NavigatorKey.key.currentState?.context ?? context,
           message,
         );
       }

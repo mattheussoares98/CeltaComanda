@@ -12,7 +12,7 @@ mixin UIErrorManager {
     final streamSubscription = stream.listen((error) {
       if (error != null) {
         showErrorMessage(
-            NavigatorKey.navigatorKey.currentState?.context ?? context,
+            NavigatorKey.key.currentState?.context ?? context,
             error.description);
       }
     });

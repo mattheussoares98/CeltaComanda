@@ -16,7 +16,7 @@ enum ActionType {
 class WriteNumber {
   WriteNumber._();
   static final _commandNumberController = TextEditingController();
-  static final _context = NavigatorKey.navigatorKey.currentContext!;
+  static final _context = NavigatorKey.key.currentContext!;
   static final _focusNode = FocusNode();
 
   static Future<String?> writeAndReturnNumber(
@@ -172,7 +172,7 @@ Future<void> _onPress({
 
     if (isUpdated) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        Navigator.of(NavigatorKey.navigatorKey.currentState?.context ?? context)
+        Navigator.of(NavigatorKey.key.currentState?.context ?? context)
             .pop();
         snackBarMessage(
           context,

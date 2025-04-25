@@ -5,9 +5,9 @@ import '../helpers/helpers.dart';
 
 void snackBarMessage(BuildContext context, String message,
     {Color? backgroundColor}) {
-  ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)
+  ScaffoldMessenger.of(NavigatorKey.key.currentContext ?? context)
       .clearSnackBars();
-  ScaffoldMessenger.of(NavigatorKey.navigatorKey.currentContext ?? context)
+  ScaffoldMessenger.of(NavigatorKey.key.currentContext ?? context)
       .showSnackBar(
     SnackBar(
       backgroundColor: backgroundColor ?? Colors.green,

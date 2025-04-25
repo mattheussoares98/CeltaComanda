@@ -47,7 +47,7 @@ class App extends StatelessWidget
           hideKeyboard(context);
         },
         child: GetMaterialApp(
-          navigatorKey: NavigatorKey.navigatorKey,
+          navigatorKey: NavigatorKey.key,
           title: 'Celta restaurante',
           debugShowCheckedModeBanner: false,
           theme: makeAppTheme(context),

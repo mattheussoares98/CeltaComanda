@@ -17,8 +17,8 @@ class PaymentButtons extends StatelessWidget {
   });
 
   void showSuccessAndCloseUntilHomePage() {
-    Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
-        .popUntil((route) => route.isFirst); //TODO change navigatorKey to key
+    Navigator.of(NavigatorKey.key.currentState!.context)
+        .popUntil((route) => route.isFirst);
   }
 
   @override

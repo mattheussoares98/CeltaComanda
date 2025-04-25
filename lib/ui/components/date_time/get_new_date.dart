@@ -20,7 +20,7 @@ class GetNewDate {
     );
 
     DateTime? validityDate = await showDatePicker(
-      context: NavigatorKey.navigatorKey.currentState!.context,
+      context: NavigatorKey.key.currentState!.context,
       firstDate: initialDate,
       initialDate: now,
       lastDate: now.add(const Duration(days: 1825)),
@@ -33,12 +33,12 @@ class GetNewDate {
 
     if (validityDate != null) {
       TimeOfDay? newTime = await showTimePicker(
-        context: NavigatorKey.navigatorKey.currentState!.context,
+        context: NavigatorKey.key.currentState!.context,
         initialTime: TimeOfDay.now(),
       );
 
       if (newTime == null) {
-        snackBarMessage(NavigatorKey.navigatorKey.currentState!.context,
+        snackBarMessage(NavigatorKey.key.currentState!.context,
             R.string.dateNotUpdated);
       } else {
         DateTime selectedDateTime = DateTime(
@@ -51,7 +51,7 @@ class GetNewDate {
 
         if (selectedDateTime.isBefore(initialDate) &&
             canInsertDateBeforeNow == false) {
-          snackBarMessage(NavigatorKey.navigatorKey.currentState!.context,
+          snackBarMessage(NavigatorKey.key.currentState!.context,
               R.string.dateNotUpdated);
 
           return null;

@@ -10,7 +10,7 @@ import '../builders.dart';
 
 class CartNotEmptyInteraction {
   static CartPresenter cartPresenter = Provider.of(
-    NavigatorKey.navigatorKey.currentState!.context,
+    NavigatorKey.key.currentState!.context,
     listen: false,
   );
 
@@ -37,12 +37,12 @@ class CartNotEmptyInteraction {
     _alertMessageIsOpen = true;
     _timer.cancel();
 
-    Navigator.of(NavigatorKey.navigatorKey.currentState!.context).popUntil(
+    Navigator.of(NavigatorKey.key.currentState!.context).popUntil(
       (route) => route.isFirst,
     );
 
     await PersonalizedDialogPage.open(
-      context: NavigatorKey.navigatorKey.currentState!.context,
+      context: NavigatorKey.key.currentState!.context,
       actions: [
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
@@ -50,10 +50,10 @@ class CartNotEmptyInteraction {
             alignment: Alignment.center,
             child: ElevatedButton.icon(
               onPressed: () async {
-                Navigator.of(NavigatorKey.navigatorKey.currentState!.context)
+                Navigator.of(NavigatorKey.key.currentState!.context)
                     .pop();
                 await PersonalizedDialogPage.open(
-                    context: NavigatorKey.navigatorKey.currentState!.context,
+                    context: NavigatorKey.key.currentState!.context,
                     page: const CartPage());
                 restartTime();
               },
@@ -78,7 +78,7 @@ class CartNotEmptyInteraction {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(
-                  NavigatorKey.navigatorKey.currentState!.context,
+                  NavigatorKey.key.currentState!.context,
                 ).primaryColorDark,
                 fontSize: StringSize.size,
                 fontWeight: FontWeight.bold,
@@ -90,7 +90,7 @@ class CartNotEmptyInteraction {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(
-                  NavigatorKey.navigatorKey.currentState!.context,
+                  NavigatorKey.key.currentState!.context,
                 ).primaryColor,
               ),
             ),

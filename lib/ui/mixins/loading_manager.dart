@@ -9,9 +9,9 @@ mixin LoadingManager {
   StreamSubscription handleLoading(BuildContext context, Stream<bool> stream) {
     final streamSubscription = stream.listen((isLoading) async {
       if (isLoading == true) {
-        showLoading(NavigatorKey.navigatorKey.currentState?.context ?? context);
+        showLoading(NavigatorKey.key.currentState?.context ?? context);
       } else {
-        hideLoading(NavigatorKey.navigatorKey.currentState?.context ?? context);
+        hideLoading(NavigatorKey.key.currentState?.context ?? context);
       }
     });
 

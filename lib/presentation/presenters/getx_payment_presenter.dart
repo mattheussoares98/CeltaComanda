@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -107,8 +106,6 @@ class GetxPaymentPresenter extends GetxController
           showSuccessAndCloseUntilHomePage,
           showErrorMessageReturnedByBs,
         );
-
-        debugPrint(result.toString());
       }
     } on DomainError catch (e) {
       switch (e) {

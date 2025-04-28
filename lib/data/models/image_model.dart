@@ -5,13 +5,15 @@ import '../../main/builders/builders.dart';
 class ImageModel {
   final String pluOrEan;
   final String? enterpriseName;
-  final Uint8List image;
+  final String imagePath;
+  final Uint8List? image;
   final bool keyIsEan;
   final bool isEnterpriseImage;
 
   ImageModel({
     required this.pluOrEan,
     required this.enterpriseName,
+    required this.imagePath,
     required this.image,
     required this.keyIsEan,
     required this.isEnterpriseImage,
@@ -21,6 +23,7 @@ class ImageModel {
     return ImageModel(
       pluOrEan: json['pluOrEan'],
       enterpriseName: json['enterpriseName'],
+      imagePath: json['imagePath'],
       image: json['image'],
       keyIsEan: json['keyIsEan'],
       isEnterpriseImage: json['isEnterpriseImage'],
@@ -32,6 +35,7 @@ class ImageModel {
       'pluOrEan': pluOrEan,
       'enterpriseName':
           enterpriseName ?? EnterpriseBuilder.entity!.enterpriseName,
+      'imagePath': imagePath,
       'image': image,
       'keyIsEan': keyIsEan,
       'isEnterpriseImage': isEnterpriseImage,

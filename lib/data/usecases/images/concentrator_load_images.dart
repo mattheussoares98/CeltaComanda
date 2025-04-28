@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -124,15 +126,21 @@ class ConcentratorLoadImages implements LoadImages {
                     .completeError('Tamanho máximo da imagem excedido $url');
               }
             },
-            onDone: () {
+            onDone: () async {
               if (!completer.isCompleted) {
-                images.add(ImageModel(
+                final imagePath = await _getImagePath(pluOrEan);
+
+                final image = ImageModel(
                   pluOrEan: pluOrEan,
-                  image: Uint8List.fromList(buffer),
+                  image: null,
                   keyIsEan: pluOrEan.length > 11,
                   isEnterpriseImage: false,
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-                ));
+                  imagePath: imagePath,
+                );
+
+                await _saveImageToDevice(imagePath, Uint8List.fromList(buffer));
+                images.add(image);
                 completer.complete();
               }
             },
@@ -168,6 +176,7 @@ class ConcentratorLoadImages implements LoadImages {
         keyIsEan: false,
         isEnterpriseImage: true,
         enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
+        imagePath: await _getImagePath("Logo"),
       );
     } catch (e) {
       return null;
@@ -269,4 +278,15 @@ class ConcentratorLoadImages implements LoadImages {
       rethrow;
     }
   }
+}
+
+Future<void> _saveImageToDevice(String imagePath, Uint8List image) async {
+  final file = File(imagePath);
+
+  await file.writeAsBytes(image);
+}
+
+Future<String> _getImagePath(String pluOrEan) async {
+  final directory = await getApplicationDocumentsDirectory();
+  return '${directory.path}/${EnterpriseBuilder.entity?.enterpriseName}/$pluOrEan.png';
 }

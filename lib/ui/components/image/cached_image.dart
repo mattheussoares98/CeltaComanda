@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,8 +42,10 @@ class CachedImageState extends State<CachedImage> {
     if (indexOfProduct == -1) {
       return _defaultImage(menuPresenter);
     } else {
-      return Image.memory(
-        menuPresenter.downloadedImages[indexOfProduct].image,
+      return Image.file(
+        File(
+          menuPresenter.downloadedImages[indexOfProduct].imagePath,
+        ),
         height: widget.height,
         width: widget.width,
         fit: EnterpriseBuilder.entity?.zoomImage == true &&
@@ -70,8 +74,10 @@ class CachedImageState extends State<CachedImage> {
             : BoxFit.contain,
       );
     } else {
-      return Image.memory(
-        menuPresenter.downloadedImages[indexOfEnterpriseImage].image,
+      return Image.file(
+        File(
+          menuPresenter.downloadedImages[indexOfEnterpriseImage].imagePath,
+        ),
         height: widget.height,
         width: widget.width,
         fit: EnterpriseBuilder.entity?.zoomImage == true &&

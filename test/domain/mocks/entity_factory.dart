@@ -1585,6 +1585,7 @@ class EntityFactory {
         keyIsEan: faker.randomGenerator.boolean(),
         isEnterpriseImage: faker.randomGenerator.boolean(),
         enterpriseName: faker.company.name(),
+        imagePath: faker.guid.guid(),
       );
 
   static ExportChargingEntity makeExportChargingEntity(LoadTypeEnum loadType,

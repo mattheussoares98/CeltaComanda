@@ -23,7 +23,7 @@ class ImageModel {
     return ImageModel(
       pluOrEan: json['pluOrEan'],
       enterpriseName: json['enterpriseName'],
-      imagePath: json['imagePath'],
+      imagePath: json['imagePath'] ?? "",
       image: json['image'],
       keyIsEan: json['keyIsEan'],
       isEnterpriseImage: json['isEnterpriseImage'],

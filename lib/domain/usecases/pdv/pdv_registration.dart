@@ -12,6 +12,8 @@ abstract class PdvRegistration {
   });
 
   Future<PdvEntity?> getById(int pdvId);
+  
+  Future<List<PdvEntity>> getByEnterpriseId();
 
   Future<void> updatePdvRegister({
     required PdvEntity entity,

@@ -142,4 +142,37 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       //tudo bem, depois atualiza o registro. Já foi certificado de que é o mesmo dispositivo
     }
   }
+
+  @override
+  Future<List<PdvEntity>> getByEnterpriseId() async {
+    try {
+      var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
+
+      final url = EnterpriseBuilder.entity!.concentradorUrl;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
+
+      final response = await httpAdapter.request(
+        url: '$url/api/APIPdvs/GetByEnterprise?enterpriseId=$enterpriseId',
+        method: "get",
+        headers: headers,
+      );
+
+      if (response.isEmpty) {
+        throw DomainError.dontHaveUnusedPdvs;
+      } else if (response == null) {
+        throw DomainError.unexpected;
+      } else {
+        return (response as List)
+            .map((e) => PdvModel.fromJson(e).toEntity())
+            .toList();
+      }
+    } on DomainError catch (error) {
+      switch (error) {
+        case DomainError.dontHaveUnusedPdvs:
+          throw DomainError.dontHaveUnusedPdvs;
+        default:
+          throw DomainError.unexpected;
+      }
+    }
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -129,11 +131,23 @@ class GetxEnterprisePresenter extends GetxController
         await persistent.makeNotPersistent();
       }
 
-      final pdvs = await pdvRegistration.getPdvNotUsing();
-      pdvsNotUsing =
-          pdvs.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList();
+      var pdvs = await pdvRegistration.getByEnterpriseId();
+
+      bool removedAny = await _removeRegistration(pdvs);
+      if (removedAny) {
+        pdvs = await pdvRegistration.getByEnterpriseId();
+      }
+
+      pdvsNotUsing = pdvs
+          .where((e) => e.IsUsing == false)
+          .map((e) => PdvNotUsingViewModel.fromEntity(e))
+          .toList();
+
       if (pdvs
-          .where((e) => e.PdvNumber != null && e.PdvNumber!.toInt() >= 100)
+          .where((e) =>
+              e.PdvNumber != null &&
+              e.PdvNumber!.toInt() >= 100 &&
+              e.IsUsing != true)
           .isEmpty) {
         throw DomainError.dontHaveUnusedPdvs;
       }
@@ -153,6 +167,47 @@ class GetxEnterprisePresenter extends GetxController
       }
     } finally {
       isLoading = false;
+    }
+  }
+
+  Future<bool> _removeRegistration(List<PdvEntity> pdvs) async {
+    try {
+      bool removedAny = false;
+
+      if (pdvs.isNotEmpty) {
+        final atualDate = DateTime.now();
+        for (var pdv in pdvs) {
+          if (pdv.VersionNumber?.contains("=") == false) {
+            continue;
+          }
+
+          final parts = pdv.VersionNumber?.split('=');
+          if (parts?.length == 2) {
+            final lastUpdatedDate = parts![1].trim();
+            final differenceDays = DateFormat('dd/MM/yyyy')
+                .parse(lastUpdatedDate)
+                .difference(atualDate)
+                .inDays
+                .abs();
+
+            differenceDays.toString();
+
+            if (differenceDays > 30) {
+              await pdvRegistration.setPdvRegister(
+                pdvId: pdv.PdvId?.toInt() ?? 99999,
+                imeiOrWindowsId: "",
+                versionNumber: "",
+                ip: "",
+                isUsing: false,
+              );
+              removedAny = true;
+            }
+          }
+        }
+      }
+      return removedAny;
+    } catch (e) {
+      return false;
     }
   }
 

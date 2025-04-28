@@ -203,10 +203,9 @@ class ConcentratorLoadImages implements LoadImages {
         }
       }
 
-      await hiveStorage.put(
-        CacheKeys.images.name,
-        allImages.map((e) => e.toJson()).toList(),
-      );
+      for (var image in allImages) {
+        await _saveImageToDevice(image.imagePath, image.image!);
+      }
 
       return allImages
           .where((e) =>
@@ -228,10 +227,9 @@ class ConcentratorLoadImages implements LoadImages {
           localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
       //in .toJson, add the enterprise name property
 
-      await hiveStorage.put(
-        CacheKeys.images.name,
-        localImages.map((e) => e.toJson()).toList(),
-      );
+      for (var image in updated) {
+        await _saveImageToDevice(image.imagePath, image.image!);
+      }
 
       return updated;
     } catch (e) {
@@ -293,7 +291,7 @@ class ConcentratorLoadImages implements LoadImages {
 Future<void> _saveImageToDevice(String imagePath, Uint8List image) async {
   final file = File(imagePath);
 
-  await file.writeAsBytes(image);
+  await file.writeAsBytes(image, flush: true);
 }
 
 Future<String> _getImagePath(String pluOrEan) async {

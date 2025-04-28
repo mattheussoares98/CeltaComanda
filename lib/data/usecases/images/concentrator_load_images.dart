@@ -44,8 +44,7 @@ class ConcentratorLoadImages implements LoadImages {
         final enterpriseImages = localImages
             .where((e) => e.enterpriseName == enterpriseName)
             .toList();
-        debugPrint(
-            "All local images: ${localImages.length}\nAll enterprise images: ${enterpriseImages.length}");
+        debugPrint("Enterprise local images: ${localImages.length}");
 
         return enterpriseImages;
       }

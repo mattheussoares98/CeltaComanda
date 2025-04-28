@@ -5,6 +5,7 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:intl/intl.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -572,6 +573,39 @@ void main() {
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
       );
+    });
+    test("Should remove registration correctly", () async {
+      EnterpriseBuilder.entity = clearedEnterprise;
+      final versionNumber =
+          "1.8.1 = ${DateFormat('dd/MM/yyyy').format(DateTime.now().subtract(Duration(days: 31)))}";
+      final entities = [
+        EntityFactory.makePdvEntity(
+          pdvNumber: faker.randomGenerator.integer(999, min: 100),
+          versionNumber: versionNumber,
+          isUsing: true,
+        ),
+        EntityFactory.makePdvEntity(
+          pdvNumber: faker.randomGenerator.integer(999, min: 100),
+          versionNumber: "1.8.1 = ${DateTime.now()}",
+          isUsing: true,
+        ),
+      ];
+
+      pdvRegistration.mockGetByEnterpriseId(entities);
+
+      await sut.validateEnterpriseByName(
+        isFixedCommandNumber: isFixedCommandNumber,
+        commandNumber: commandNumber.toString(),
+        homePresenter: homePresenter,
+      );
+
+      verify(() => pdvRegistration.setPdvRegister(
+            pdvId: entities[0].PdvId?.toInt() ?? 99999,
+            imeiOrWindowsId: "",
+            versionNumber: "",
+            ip: "",
+            isUsing: false,
+          )).called(1);
     });
   });
 

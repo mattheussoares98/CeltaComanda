@@ -129,6 +129,7 @@ void main() {
     loadEnterpriseConcentradorParameters
         .mockLoadEnterprise(enterpriseConcentradorParametersEntity);
     pdvRegistration.mockGetPdvNotUsing(pdvsNotUsing);
+    pdvRegistration.mockGetByEnterpriseId(pdvsNotUsing);
     loadDeviceData.mockGetApplicationVersion(applicationVersion);
     loadDeviceData.mockGetImeiOrWindowsId(imeiOrWindowsId);
   }
@@ -524,22 +525,13 @@ void main() {
         "Should get pdvs not using when is generating version to rede or getnet",
         () async {
       EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToGetNetMock = true;
-      await sut.validateEnterpriseByName(
-        isFixedCommandNumber: isFixedCommandNumber,
-        commandNumber: commandNumber.toString(),
-        homePresenter: homePresenter,
-      );
-      verify(() => pdvRegistration.getPdvNotUsing()).called(1);
-
-      EnterpriseBuilder.entity = clearedEnterprise;
       homePresenter.isGeneratingVersionToRedeMock = true;
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
         homePresenter: homePresenter,
       );
-      verify(() => pdvRegistration.getPdvNotUsing()).called(1);
+      verify(() => pdvRegistration.getByEnterpriseId()).called(1);
     });
 
     test("Should emit correct values on enterprises not using", () async {
@@ -549,7 +541,10 @@ void main() {
       expectLater(
         sut.pdvsNotUsingStream,
         emits(
-          pdvsNotUsing.map((e) => PdvNotUsingViewModel.fromEntity(e)).toList(),
+          pdvsNotUsing
+              .where((x) => x.PdvNumber!.toInt() > 100 && x.IsUsing == false)
+              .map((e) => PdvNotUsingViewModel.fromEntity(e))
+              .toList(),
         ),
       );
 

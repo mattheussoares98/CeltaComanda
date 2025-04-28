@@ -311,7 +311,7 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
     if (file is File && file.path.endsWith('.png')) {
       images.add(
         ImageModel(
-          pluOrEan: file.path, //TODO get the plu/ean here
+          pluOrEan: _getPluEanFromPath(file.path),
           image: null,
           keyIsEan: false, // ajuste se precisar
           isEnterpriseImage: false, // ajuste se precisar
@@ -323,4 +323,14 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
   }
 
   return images;
+}
+
+String _getPluEanFromPath(String path) {
+  final regex = RegExp(r'([^\/]+)\.png$');
+  final match = regex.firstMatch(path);
+  if (match != null) {
+    return match.group(1)!;
+  } else {
+    throw Exception('pluOrEan not found in path: $path');
+  }
 }

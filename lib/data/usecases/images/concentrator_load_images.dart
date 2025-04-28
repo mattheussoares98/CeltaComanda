@@ -267,13 +267,23 @@ class ConcentratorLoadImages implements LoadImages {
   Future<List<ImageModel>> _getLocalImages() async {
     try {
       final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
-      List<ImageModel> localImages = localImagesJson == null
-          ? []
-          : (localImagesJson as List)
-              .map((e) => ImageModel.fromJson(e))
-              .toList();
 
-      return localImages;
+      if (localImagesJson != null) {
+        List<ImageModel> localImages = (localImagesJson as List)
+            .map((e) => ImageModel.fromJson(e))
+            .toList();
+
+        //save all images in device, instead of hive
+        for (var image in localImages) {
+          await _saveImageToDevice(image.imagePath, image.image!);
+        }
+        //delete all images in hive
+        await hiveStorage.delete(CacheKeys.images.name);
+
+        return localImages;
+      } else {
+        return await _getImagesFromDevice();
+      }
     } catch (e) {
       rethrow;
     }
@@ -289,4 +299,28 @@ Future<void> _saveImageToDevice(String imagePath, Uint8List image) async {
 Future<String> _getImagePath(String pluOrEan) async {
   final directory = await getApplicationDocumentsDirectory();
   return '${directory.path}/${EnterpriseBuilder.entity?.enterpriseName}/$pluOrEan.png';
+}
+
+Future<List<ImageModel>> _getImagesFromDevice() async {
+  final directory = await getApplicationDocumentsDirectory();
+  final files = directory.listSync();
+
+  List<ImageModel> images = [];
+
+  for (final file in files) {
+    if (file is File && file.path.endsWith('.png')) {
+      images.add(
+        ImageModel(
+          pluOrEan: file.path, //TODO get the plu/ean here
+          image: null,
+          keyIsEan: false, // ajuste se precisar
+          isEnterpriseImage: false, // ajuste se precisar
+          enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
+          imagePath: file.path,
+        ),
+      );
+    }
+  }
+
+  return images;
 }

@@ -33,7 +33,8 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       var localImages = await _getLocalImages();
 
-      if (localImages.any((element) => element.enterpriseName == null)) {
+      if (localImages.any((element) =>
+          element.enterpriseName == null || element.imagePath.isEmpty)) {
         localImages = await _updateEnterpriseNullProperty(localImages);
       }
 
@@ -293,16 +294,23 @@ class ConcentratorLoadImages implements LoadImages {
 }
 
 Future<void> _saveImageToDevice(ImageModel image) async {
-  final file = File(await _getImagePath(
-    image.isEnterpriseImage ? "Logo.png" : image.pluOrEan,
-  ));
+  final file = File(
+    await _getImagePath(
+      image.isEnterpriseImage ? "Logo.png" : image.pluOrEan,
+      enterpriseName:
+          image.enterpriseName ?? EnterpriseBuilder.entity?.enterpriseName,
+    ),
+  );
 
   await file.parent.create(recursive: true);
 
   await file.writeAsBytes(image.image!, flush: true);
 }
 
-Future<String> _getImagePath(String pluOrEanPng) async {
+Future<String> _getImagePath(
+  String pluOrEanPng, {
+  String? enterpriseName,
+}) async {
   late Directory directory;
   if (Platform.isWindows) {
     final userProfile = Platform.environment['USERPROFILE'];
@@ -313,7 +321,7 @@ Future<String> _getImagePath(String pluOrEanPng) async {
 
   final separator = Platform.pathSeparator;
 
-  return '${directory.path}${Platform.pathSeparator}images$separator${EnterpriseBuilder.entity?.enterpriseName}$separator$pluOrEanPng';
+  return '${directory.path}${Platform.pathSeparator}images$separator$enterpriseName$separator$pluOrEanPng';
 }
 
 Future<List<ImageModel>> _getImagesFromDevice() async {

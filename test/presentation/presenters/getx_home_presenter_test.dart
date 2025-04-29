@@ -188,6 +188,16 @@ void main() {
 
   group("Navigation", () {
     group("Do logout", () {
+      test('Should emit correct values', () async {
+        expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+      });
       test('Should go to SplashPage', () async {
         await sut.doLogout(
           printedProductsPresenter: printedProductsPresenter,

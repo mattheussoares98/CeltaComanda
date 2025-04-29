@@ -57,38 +57,43 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required MenuPresenter menuPresenter,
     required EnterprisePresenter enterprisePresenter,
   }) async {
+    isLoading = true;
     menuPresenter.clear();
     printedProductsPresenter.clear();
     cartPresenter.clear();
 
-    final localEntity = await localCommandData.load();
+    try {
+      final localEntity = await localCommandData.load();
+      if (localEntity?.pdv?.PdvId != null) {
+        await pdvRegistration.setPdvRegister(
+          pdvId: localEntity!.pdv!.PdvId!,
+          imeiOrWindowsId: "",
+          versionNumber: "",
+          ip: "",
+          isUsing: false,
+        );
+      }
 
-    if (localEntity?.pdv?.PdvId != null) {
-      await pdvRegistration.setPdvRegister(
-        pdvId: localEntity!.pdv!.PdvId!,
-        imeiOrWindowsId: "",
-        versionNumber: "",
-        ip: "",
-        isUsing: false,
-      );
+      await enterprisePresenter.clearEnterpriseData();
+      await persistent.makeNotPersistent();
+      await clear();
+      await deleteData.delete([
+        CacheKeys.alreadyPaid,
+        CacheKeys.cartProducts,
+        CacheKeys.commandData,
+        CacheKeys.comments,
+        CacheKeys.parameters,
+        CacheKeys.paidInformations,
+        CacheKeys.printRequest,
+        CacheKeys.updatedAllImages,
+        CacheKeys.updatedSaleRequestTemp,
+      ]);
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
+      isLoading = false;
     }
-
-    await enterprisePresenter.clearEnterpriseData();
-    await persistent.makeNotPersistent();
-    await clear();
-    await deleteData.delete([
-      CacheKeys.alreadyPaid,
-      CacheKeys.cartProducts,
-      CacheKeys.commandData,
-      CacheKeys.comments,
-      CacheKeys.parameters,
-      CacheKeys.paidInformations,
-      CacheKeys.printRequest,
-      CacheKeys.updatedAllImages,
-      CacheKeys.updatedSaleRequestTemp,
-    ]);
-
-    await navigateTo.navigate(pageRoute: PageRoutes.splash, clear: true);
   }
 
   @override

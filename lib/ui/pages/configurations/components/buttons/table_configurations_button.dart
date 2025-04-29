@@ -12,7 +12,7 @@ class TableConfigurationsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.tableConfigurations,
-        permissionName: PermissionName.configuracoesDaMesa,
+        permissionName: Permissions.configuracoesDaMesa,
         function: () async {
           notificationDialog(
               context: context,

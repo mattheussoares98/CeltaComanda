@@ -1639,7 +1639,7 @@ class EntityFactory {
 
   static GroupPermissionConcentratorEntity
       makeGroupPermissionConcentratorEntity(
-    PermissionName permissionName, {
+    Permissions permissionName, {
     bool? isActive,
     int? groupId,
   }) =>
@@ -1650,7 +1650,7 @@ class EntityFactory {
             Permission: makePermissionEntity(permissionName),
           );
 
-  static PermissionEntity makePermissionEntity(PermissionName permissionName) =>
+  static PermissionEntity makePermissionEntity(Permissions permissionName) =>
       PermissionEntity(
         Name: permissionName.description,
         PermissionId: faker.randomGenerator.integer(100),

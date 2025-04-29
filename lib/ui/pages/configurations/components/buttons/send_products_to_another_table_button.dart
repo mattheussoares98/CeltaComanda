@@ -15,7 +15,7 @@ class SendProductsToAnotherTableButton extends StatelessWidget {
 
     return DefaultButton(
       name: R.string.sendAllProductsToAnotherTable,
-      permissionName: PermissionName.trocarProdutosEntreComandas,
+      permissionName: Permissions.trocarProdutosEntreComandas,
       function: () async {
         configurationsPresenter.goToSendProductsToAnotherTablePage();
       },

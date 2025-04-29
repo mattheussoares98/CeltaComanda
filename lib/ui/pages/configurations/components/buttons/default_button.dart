@@ -9,7 +9,7 @@ class DefaultButton extends StatelessWidget {
   final String name;
   final Function() function;
   final bool isNew;
-  final PermissionName permissionName;
+  final Permissions permissionName;
 
   const DefaultButton({
     super.key,

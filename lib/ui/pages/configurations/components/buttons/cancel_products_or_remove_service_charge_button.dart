@@ -15,7 +15,7 @@ class CancelProductsOrRemoveServiceChargeButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.cancelProductsOrRemoveServiceCharge,
-        permissionName: PermissionName.cancelarItens,
+        permissionName: Permissions.cancelarItens,
         function: () async {
           await configurationsPresenter.goToCancelProductsPage();
         });

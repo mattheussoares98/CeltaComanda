@@ -17,7 +17,7 @@ class UpdateMenuButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.updateMenu,
-        permissionName: PermissionName.atualizarMenu,
+        permissionName: Permissions.atualizarMenu,
         function: () async {
           notificationDialog(
               context: context,

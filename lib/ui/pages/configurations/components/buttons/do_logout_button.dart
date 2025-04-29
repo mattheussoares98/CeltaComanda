@@ -21,7 +21,7 @@ class DoLogoutButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.doLogout,
-        permissionName: PermissionName.fazerLogout,
+        permissionName: Permissions.fazerLogout,
         function: () {
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             notificationDialog(

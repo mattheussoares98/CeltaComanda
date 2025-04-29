@@ -12,7 +12,7 @@ class SendAllProductsToAnotherTableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.sendAllProductsToAnotherTable,
-        permissionName: PermissionName.trocarProdutosEntreComandas,
+        permissionName: Permissions.trocarProdutosEntreComandas,
         function: () {
           notificationDialog(
               context: context,

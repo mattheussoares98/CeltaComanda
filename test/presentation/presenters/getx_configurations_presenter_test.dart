@@ -151,25 +151,25 @@ void main() {
     ];
     groupPermissions = [
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.agendamentoDeProdutos),
+          Permissions.agendamentoDeProdutos),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.atualizarMenu),
+          Permissions.atualizarMenu),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.cancelarItens),
+          Permissions.cancelarItens),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.configuracoesDaMesa),
+          Permissions.configuracoesDaMesa),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.fazerLogout),
+          Permissions.fazerLogout),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.fecharMesa),
+          Permissions.fecharMesa),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.liberarBloquearMesa),
+          Permissions.liberarBloquearMesa),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.parametros),
+          Permissions.parametros),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.reservarMesa),
+          Permissions.reservarMesa),
       EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.trocarProdutosEntreComandas),
+          Permissions.trocarProdutosEntreComandas),
     ];
   }
 
@@ -912,7 +912,7 @@ void main() {
       expect(sut.loggedUser, null);
 
       final result =
-          sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
+          sut.userCanAccessResource(Permissions.agendamentoDeProdutos);
 
       expect(result, false);
     });
@@ -921,7 +921,7 @@ void main() {
       final isActive = faker.randomGenerator.boolean();
       loadGroupPermissions.mockGetAll([
         EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.agendamentoDeProdutos,
+          Permissions.agendamentoDeProdutos,
           groupId: groupId,
           isActive: isActive,
         ),
@@ -932,14 +932,14 @@ void main() {
       );
 
       final result =
-          sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
+          sut.userCanAccessResource(Permissions.agendamentoDeProdutos);
       expect(result, isActive);
     });
     test("Should emit access danied if dont has permission", () async {
       final groupId = faker.randomGenerator.integer(100);
       loadGroupPermissions.mockGetAll([
         EntityFactory.makeGroupPermissionConcentratorEntity(
-          PermissionName.agendamentoDeProdutos,
+          Permissions.agendamentoDeProdutos,
           groupId: groupId,
           isActive: false,
         ),
@@ -953,7 +953,7 @@ void main() {
         sut.mainErrorStream,
         emitsInOrder({null, UIError.accessDenied}),
       );
-      sut.userCanAccessResource(PermissionName.agendamentoDeProdutos);
+      sut.userCanAccessResource(Permissions.agendamentoDeProdutos);
     });
   });
 }

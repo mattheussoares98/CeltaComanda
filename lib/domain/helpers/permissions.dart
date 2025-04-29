@@ -1,4 +1,4 @@
-enum PermissionName {
+enum Permissions {
   agendamentoDeProdutos,
   atualizarMenu,
   cancelarItens,
@@ -12,30 +12,30 @@ enum PermissionName {
   trocarProdutosEntreComandas,
 }
 
-extension PermissionNameExtension on PermissionName {
+extension PermissionsExtension on Permissions {
   String get description {
     switch (this) {
-      case PermissionName.agendamentoDeProdutos:
+      case Permissions.agendamentoDeProdutos:
         return "Agendamento de produtos";
-      case PermissionName.atualizarMenu:
+      case Permissions.atualizarMenu:
         return "Atualizar menu";
-      case PermissionName.cancelarItens:
+      case Permissions.cancelarItens:
         return "Cancelar itens";
-      case PermissionName.configuracoesDaMesa:
+      case Permissions.configuracoesDaMesa:
         return "Configurações da Mesa";
-      case PermissionName.consultarVendas:
+      case Permissions.consultarVendas:
         return "Consultar vendas";
-      case PermissionName.fazerLogout:
+      case Permissions.fazerLogout:
         return "Fazer logout";
-      case PermissionName.fecharMesa:
+      case Permissions.fecharMesa:
         return "Fechar mesa";
-      case PermissionName.liberarBloquearMesa:
+      case Permissions.liberarBloquearMesa:
         return "Liberar/Bloquear mesa";
-      case PermissionName.parametros:
+      case Permissions.parametros:
         return "Parâmetros";
-      case PermissionName.reservarMesa:
+      case Permissions.reservarMesa:
         return "Reservar mesa";
-      case PermissionName.trocarProdutosEntreComandas:
+      case Permissions.trocarProdutosEntreComandas:
         return "Trocar produtos entre comandas";
     }
   }

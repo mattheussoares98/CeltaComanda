@@ -12,7 +12,7 @@ class LiberateOrBlockTableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.liberateOrBlockTable,
-        permissionName: PermissionName.liberarBloquearMesa,
+        permissionName: Permissions.liberarBloquearMesa,
         function: () {
           notificationDialog(
               context: context,

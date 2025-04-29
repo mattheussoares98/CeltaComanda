@@ -15,7 +15,7 @@ class ParametersButton extends StatelessWidget {
 
     return DefaultButton(
       name: R.string.parameters,
-      permissionName: PermissionName.parametros,
+      permissionName: Permissions.parametros,
       function: configurationsPresenter.goToParametersPage,
     );
   }

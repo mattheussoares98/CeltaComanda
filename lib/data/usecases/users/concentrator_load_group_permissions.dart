@@ -41,38 +41,11 @@ class ConcentratorLoadGroupPermissions implements LoadGroupPermissions {
             .map((e) => GroupPermissionConcentratorModel.fromJson(e).toEntity())
             .toList()
             .where(
-          (e) {
-            final permissionName = e.Permission?.Name?.toLowerCase();
-            String permissionDescription(PermissionName permission) {
-              return permission.description.toLowerCase();
-            }
-
-            return permissionName ==
-                    permissionDescription(
-                        PermissionName.agendamentoDeProdutos) ||
-                permissionName ==
-                    permissionDescription(PermissionName.atualizarMenu) ||
-                permissionName ==
-                    permissionDescription(PermissionName.cancelarItens) ||
-                permissionName ==
-                    permissionDescription(PermissionName.configuracoesDaMesa) ||
-                permissionName ==
-                    permissionDescription(PermissionName.consultarVendas) ||
-                permissionName ==
-                    permissionDescription(PermissionName.fazerLogout) ||
-                permissionName ==
-                    permissionDescription(PermissionName.fecharMesa) ||
-                permissionName ==
-                    permissionDescription(PermissionName.liberarBloquearMesa) ||
-                permissionName ==
-                    permissionDescription(PermissionName.parametros) ||
-                permissionName ==
-                    permissionDescription(PermissionName.reservarMesa) ||
-                permissionName ==
-                    permissionDescription(
-                        PermissionName.trocarProdutosEntreComandas);
-          },
-        ).toList();
+              (e) => Permissions.values.any((p) =>
+                  p.description.toLowerCase() ==
+                  e.Permission?.Name?.toLowerCase()),
+            )
+            .toList();
         await hiveStorage.delete(CacheKeys.groupPermissions.name);
         await hiveStorage.put(
             CacheKeys.groupPermissions.name,

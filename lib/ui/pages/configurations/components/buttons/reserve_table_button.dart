@@ -12,7 +12,7 @@ class ReserveTableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultButton(
         name: R.string.reserveTable,
-        permissionName: PermissionName.reservarMesa,
+        permissionName: Permissions.reservarMesa,
         function: () async {
           Navigator.of(NavigatorKey.key.currentState!.context)
               .popUntil(

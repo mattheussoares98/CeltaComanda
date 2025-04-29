@@ -15,7 +15,7 @@ class SaleMovementButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.sales,
-        permissionName: PermissionName.consultarVendas,
+        permissionName: Permissions.consultarVendas,
         function: () async {
           configurationsPresenter.goToSaleMovementsPage();
         });

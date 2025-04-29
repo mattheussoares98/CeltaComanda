@@ -15,7 +15,7 @@ class ProductsSchedulesButton extends StatelessWidget {
 
     return DefaultButton(
         name: R.string.productsSchedules,
-        permissionName: PermissionName.agendamentoDeProdutos,
+        permissionName: Permissions.agendamentoDeProdutos,
         function: () async {
           await configurationsPresenter.goToSchedulesPage();
         });

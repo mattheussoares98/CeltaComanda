@@ -59,5 +59,5 @@ abstract class ConfigurationsPresenter implements Listenable {
 
   void updateLoggedUser(UserConcentratorEntity? user);
 
-  bool userCanAccessResource(PermissionName permission);
+  bool userCanAccessResource(Permissions permission);
 }

@@ -32,7 +32,7 @@ class _CloseCommandButtonState extends State<CloseCommandButton> {
 
     return DefaultButton(
       name: R.string.closeTable,
-      permissionName: PermissionName.fecharMesa,
+      permissionName: Permissions.fecharMesa,
       function: () async {
         await notificationDialog(
             context: context,

@@ -392,7 +392,7 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  bool userCanAccessResource(PermissionName permission) {
+  bool userCanAccessResource(Permissions permission) {
     if (_loggedUser == null ||
         _loadedPermissions == null ||
         _loadedPermissions?.isEmpty == true) {

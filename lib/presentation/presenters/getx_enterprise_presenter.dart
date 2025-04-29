@@ -139,7 +139,10 @@ class GetxEnterprisePresenter extends GetxController
       }
 
       pdvsNotUsing = pdvs
-          .where((e) => e.IsUsing == false)
+          .where((e) =>
+              e.IsUsing == false &&
+              e.PdvNumber?.toInt() != null &&
+              e.PdvNumber!.toInt() >= 100)
           .map((e) => PdvNotUsingViewModel.fromEntity(e))
           .toList();
 

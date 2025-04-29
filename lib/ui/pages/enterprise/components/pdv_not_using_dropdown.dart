@@ -42,9 +42,14 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                   value: widget.selectedPdv,
                   isExpanded: true,
                   alignment: Alignment.center,
-                  hint: Text(snapshot.data == null
-                      ? R.string.msgValidateEnterpriseFirst
-                      : R.string.selectPdv),
+                  hint: Text(
+                    snapshot.data == null
+                        ? R.string.msgValidateEnterpriseFirst
+                        : R.string.selectPdv,
+                    style: TextStyle(
+                      color: snapshot.data == null ? Colors.red : Colors.green,
+                    ),
+                  ),
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: StringSize.size,

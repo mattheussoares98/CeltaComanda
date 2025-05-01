@@ -11,7 +11,7 @@ class ConfirmedCartProductsSpy extends Mock implements ConfirmedCartProducts {
   }
 
   When mockIsConfirmedCall() => when(() => this.isConfirmed());
-  void mockIsConfirmed([bool? isConfirmed = false]) =>
+  void mockIsConfirmed([bool isConfirmed = false]) =>
       this.mockIsConfirmedCall().thenAnswer((_) async => isConfirmed);
   void mockRemoteAddError() =>
       this.mockIsConfirmedCall().thenThrow(DomainError.unexpected);

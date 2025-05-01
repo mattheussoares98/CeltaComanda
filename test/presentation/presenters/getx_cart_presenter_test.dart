@@ -1631,24 +1631,7 @@ void main() {
             entity: updateSaleRequestTempEntity,
           )).called(1);
     });
-    test(
-        "Should call updateSaleRequestTemp when confirmedCartProducts return null",
-        () async {
-      confirmedCartProducts.mockIsConfirmed(null);
-      await sut.saveProducts(
-        insertProductPresenter: insertProductPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        tableNumber: tableNumber,
-        homePresenter: homePresenter,
-      );
 
-      verify(() => updateSaleRequestTemp.update(
-            url: EnterpriseBuilder.entity!.url!,
-            entity: updateSaleRequestTempEntity,
-          )).called(1);
-    });
     test("Should clear cartProducts on saveProducts succeeds", () async {
       sut.addProductInCart(
         writtedComment: null,

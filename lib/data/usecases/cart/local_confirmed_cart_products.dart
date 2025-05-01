@@ -10,11 +10,11 @@ class LocalConfirmedCartProducts implements ConfirmedCartProducts {
   LocalConfirmedCartProducts({required this.hiveStorage});
 
   @override
-  Future<bool?> isConfirmed() async {
+  Future<bool> isConfirmed() async {
     try {
       final value =
           await hiveStorage.get(CacheKeys.updatedSaleRequestTemp.name);
-      return value;
+      return value == true;
     } catch (e) {
       throw DomainError.unexpected;
     }

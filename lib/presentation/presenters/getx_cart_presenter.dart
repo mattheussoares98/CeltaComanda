@@ -475,10 +475,10 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         PlaceId: tableNumber?.toString(),
       );
 
-      bool? cartProductsAlreadyConfirmed =
+      bool cartProductsAlreadyConfirmed =
           await confirmedCartProducts.isConfirmed();
 
-      if (cartProductsAlreadyConfirmed != true) {
+      if (!cartProductsAlreadyConfirmed) {
         await updateSaleRequestTemp.update(
           url: EnterpriseBuilder.entity!.url!,
           entity: entity,
@@ -490,7 +490,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         _saleRequestTemp!.SaleRequestTempId.toInt(),
       );
 
-      await confirmedCartProducts.updateValue(false);
       await cartInformations.clearCartProducts();
 
       await updateIncrementValue(
@@ -502,6 +501,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       _cartProducts.clear();
 
+      await confirmedCartProducts.updateValue(false);
       return true;
     } on DomainError catch (e) {
       switch (e) {

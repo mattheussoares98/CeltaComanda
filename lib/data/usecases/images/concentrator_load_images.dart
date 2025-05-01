@@ -98,6 +98,7 @@ class ConcentratorLoadImages implements LoadImages {
 
     if (enterpriseImage != null) {
       images.add(enterpriseImage);
+      _saveImageToDevice(enterpriseImage);
     }
 
     final client = http.Client();
@@ -105,11 +106,18 @@ class ConcentratorLoadImages implements LoadImages {
       debugPrint("Downloading ${imagesNames.toSet().length} images");
 
       for (final pluOrEanPng in imagesNames.toSet()) {
+        if (pluOrEanPng == "Logo.png") continue;
         try {
           final maxSizeInBytes = 1 * 1024 * 1024;
           final url = "$concentratorUrl/Images/$pluOrEanPng";
           final request = http.Request('GET', Uri.parse(url));
           final response = await client.send(request);
+
+          if (response.statusCode != 200) {
+            debugPrint(
+                "Image not found or server error ${response.statusCode}: $url");
+            continue;
+          }
 
           final buffer = <int>[];
           final completer = Completer<void>();
@@ -142,26 +150,23 @@ class ConcentratorLoadImages implements LoadImages {
                 );
 
                 images.add(image);
+                _saveImageToDevice(image);
                 completer.complete();
               }
             },
             onError: (error) {
               if (!completer.isCompleted) completer.completeError(error);
             },
-            cancelOnError: true,
+            cancelOnError: false,
           );
 
-          await completer.future;
+          await completer.future.timeout(Duration(seconds: 5));
         } catch (e) {
           debugPrint(e.toString());
         }
       }
     } finally {
       client.close();
-    }
-
-    for (var image in images) {
-      await _saveImageToDevice(image);
     }
 
     return images;
@@ -171,14 +176,21 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
-      final enterpriseImageResponse = await http.get(
-        Uri.parse("$concentratorUrl/Images/Enterprise$enterpriseId/Logo.png"),
-      );
+      final response = await http
+          .get(
+            Uri.parse(
+                "$concentratorUrl/Images/Enterprise$enterpriseId/Logo.png"),
+          )
+          .timeout(Duration(seconds: 5));
+
+      if (response.statusCode != 200) {
+        throw Exception("Erro ao baixar imagem: ${response.statusCode}");
+      }
 
       final path = await _getImagePath("Logo.png");
       return ImageModel(
         pluOrEan: "",
-        image: enterpriseImageResponse.bodyBytes,
+        image: response.bodyBytes,
         keyIsEan: false,
         isEnterpriseImage: true,
         enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
@@ -241,20 +253,21 @@ class ConcentratorLoadImages implements LoadImages {
 
   Future<List<String>> _getMissingImages(List<ImageModel> localImages) async {
     try {
-      final filteredLocalImages = localImages
-          .where((e) =>
-              e.enterpriseName == EnterpriseBuilder.entity?.enterpriseName)
-          .toList();
       final plusWithImages = await _getPlusWithImages();
 
-      if (plusWithImages.length > filteredLocalImages.length - 1) {
+      if (plusWithImages.length > localImages.length - 1) {
         final missingImages = plusWithImages
             .where(
-              (ean) => !filteredLocalImages.any(
-                (local) => local.pluOrEan == ean,
+              (ean) => !localImages.any(
+                (local) {
+                  return local.pluOrEan.toLowerCase() == ean.toLowerCase();
+                },
               ),
             )
             .toList();
+        if (localImages.where((e) => e.isEnterpriseImage).isEmpty) {
+          missingImages.add("Logo.png");
+        }
 
         debugPrint("missing: ${missingImages.length} images");
         return missingImages;
@@ -301,9 +314,13 @@ Future<void> _saveImageToDevice(ImageModel image) async {
     ),
   );
 
-  await file.parent.create(recursive: true);
-
-  await file.writeAsBytes(image.image!, flush: true);
+  try {
+    await file.parent.create(recursive: true);
+    await file.writeAsBytes(image.image!, flush: true);
+    debugPrint("Saved image");
+  } catch (e) {
+    debugPrint("Erro ao salvar imagem: ${file.path} - $e");
+  }
 }
 
 Future<String> _getImagePath(
@@ -337,29 +354,39 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
 
   List<ImageModel> images = [];
 
-  for (final file in files) {
-    if (file is File && file.path.toLowerCase().endsWith('.png')) {
-      images.add(
-        ImageModel(
-          pluOrEan: _getPluEanFromPath(file.path),
-          image: null,
-          keyIsEan: false, // ajuste se precisar
-          isEnterpriseImage: file.path.contains("Logo"), // ajuste se precisar
-          enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-          imagePath: file.path,
-        ),
-      );
+  try {
+    for (final file in files) {
+      final pluOrEan = _getPluEanFromPath(file.path);
+
+      if (file is File &&
+          (file.path.toLowerCase().endsWith('.png') ||
+              file.path.toLowerCase().endsWith('.jpg'))) {
+        images.add(
+          ImageModel(
+            pluOrEan: pluOrEan,
+            image: null,
+            keyIsEan: !pluOrEan.contains("-"),
+            isEnterpriseImage: file.path.contains("Logo"),
+            enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
+            imagePath: file.path,
+          ),
+        );
+      }
     }
+  } catch (e) {
+    debugPrint(e.toString());
   }
 
   return images;
 }
 
 String _getPluEanFromPath(String path) {
-  final regex = RegExp(r'([^\\/]+)\.png$', caseSensitive: false);
+  final regex = RegExp(r'([^\\/]+)\.(png|jpg)$', caseSensitive: false);
   final match = regex.firstMatch(path);
   if (match != null) {
-    return "${match.group(1)!}.png";
+    final name = match.group(1)!;
+    final extension = match.group(2)!.toLowerCase(); // normalize to lowercase
+    return "$name.$extension";
   } else {
     throw Exception('pluOrEan not found in path: $path');
   }

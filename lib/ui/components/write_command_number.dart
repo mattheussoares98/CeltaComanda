@@ -161,24 +161,27 @@ Future<void> _onPress({
 
   //is action is null, dont do anything
   if (action == ActionType.saveProducts) {
-    bool isUpdated = await cartPresenter.saveProducts(
-      insertProductPresenter: insertProductPresenter,
-      printedProductsPresenter: printedProductsPresenter,
-      tableNumber: tableNumber,
-      commandNumber: commandNumber,
-      homePresenter: homePresenter,
-      expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
-    );
-
-    if (isUpdated) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        Navigator.of(NavigatorKey.key.currentState?.context ?? context)
-            .pop();
-        snackBarMessage(
-          context,
-          R.string.msgRequestSentSuccessfully,
-        );
-      });
+    try {
+      bool isUpdated = await cartPresenter.saveProducts(
+        insertProductPresenter: insertProductPresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        tableNumber: tableNumber,
+        commandNumber: commandNumber,
+        homePresenter: homePresenter,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+      );
+      if (isUpdated) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          Navigator.of(NavigatorKey.key.currentState?.context ?? context).pop();
+          snackBarMessage(
+            context,
+            R.string.msgRequestSentSuccessfully,
+          );
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   } else if (action == ActionType.loadCommandData) {
     await homePresenter.loadCommandData(

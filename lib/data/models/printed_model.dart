@@ -103,7 +103,7 @@ class PrintedModel {
       IncrementValue: json["IncrementValue"],
       CovenantCode: json["CovenantCode"],
       CustomerCode: json["CustomerCode"],
-      SellerCode: json["SellerCode"],
+      SellerCode: json["SellerCode"]?.toString().toInt(),
     );
   }
 

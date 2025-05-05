@@ -8,7 +8,7 @@ class AddPendingDeviceToUpdateSpy extends Mock
     implements AddPendingDeviceToUpdate {
   When _mockAddCall(String identifier) => when(() => this.add(
         imeiOrWindowsId: any(named: "imeiOrWindowsId"),
-        enterpriseName: any(named: "enterpriseName"),
+        enterpriseId: any(named: "enterpriseId"),
       ));
 
   void mockAdd(String identifier) {

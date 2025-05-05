@@ -37,7 +37,7 @@ class FirebaseAdapter implements FirebaseStorage {
           .collection('requests')
           .doc(mesAnoAtual)
           .collection("requestsInformations")
-          .doc(EnterpriseBuilder.entity!.enterpriseName);
+          .doc(EnterpriseBuilder.entity!.firebaseEnterpriseId);
 
       var incremento = FieldValue.increment(entity.timesUsed);
       var adicionarData = FieldValue.arrayUnion(entity.dates);
@@ -56,7 +56,7 @@ class FirebaseAdapter implements FirebaseStorage {
     try {
       var docRef = firestore
           .collection('clients')
-          .doc(EnterpriseBuilder.entity!.enterpriseName)
+          .doc(EnterpriseBuilder.entity!.firebaseEnterpriseId)
           .collection("devices")
           .doc("loadedDevices");
 
@@ -69,11 +69,11 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseName) async {
+  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseId) async {
     try {
       var docRef = firestore
           .collection('clients')
-          .doc(enterpriseName)
+          .doc(enterpriseId)
           .collection("devices")
           .doc("loadedDevices");
 
@@ -96,8 +96,8 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> updateMenu(String enterpriseName) async {
-    var docRef = firestore.collection('clients').doc(enterpriseName);
+  Future<void> updateMenu(String firebaseEnterpriseId) async {
+    var docRef = firestore.collection('clients').doc(firebaseEnterpriseId);
 
     await docRef.set(
       {
@@ -120,9 +120,9 @@ class FirebaseAdapter implements FirebaseStorage {
   @override
   Future<void> addPendingDeviceToUpdate({
     required String imeiOrWindowsId,
-    required String enterpriseName,
+    required String enterpriseId,
   }) async {
-    var docRef = firestore.collection('clients').doc(enterpriseName);
+    var docRef = firestore.collection('clients').doc(enterpriseId);
 
     await docRef.set(
       {
@@ -148,9 +148,9 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> updateDeviceInformations(String enterpriseName) async {
+  Future<void> updateDeviceInformations(String firebaeEnterpriseId) async {
     try {
-      var docRef = firestore.collection('clients').doc(enterpriseName);
+      var docRef = firestore.collection('clients').doc(firebaeEnterpriseId);
       var devicesRef = docRef.collection("devices").doc("loadedDevices");
       await devicesRef.delete();
 
@@ -166,9 +166,9 @@ class FirebaseAdapter implements FirebaseStorage {
   }
 
   @override
-  Future<void> deleteEnterprise(String enterpriseName) async {
+  Future<void> deleteEnterprise(String firebaseEnterpriseId) async {
     try {
-      var docRef = firestore.collection('clients').doc(enterpriseName);
+      var docRef = firestore.collection('clients').doc(firebaseEnterpriseId);
       await docRef.delete();
     } catch (e) {
       rethrow;

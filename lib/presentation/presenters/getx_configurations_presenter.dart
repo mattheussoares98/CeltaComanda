@@ -150,7 +150,7 @@ class GetxConfigurationsPresenter extends GetxController
   }
 
   @override
-  Future<bool> loadMenuAgain(String enterpriseName) async {
+  Future<bool> loadMenuAgain(String enterpriseId) async {
     isLoading = true;
     mainError = null;
 
@@ -159,9 +159,9 @@ class GetxConfigurationsPresenter extends GetxController
           isRedeVersion: false /* tanto faz, não usa mais essa função */);
       await addPendingDeviceToUpdate.add(
         imeiOrWindowsId: imeiOrWindowsId,
-        enterpriseName: enterpriseName,
+        enterpriseId: enterpriseId,
       );
-      await updateMenu.update(enterpriseName);
+      await updateMenu.update(enterpriseId);
       return true;
     } catch (e) {
       mainError = UIError.unexpected;

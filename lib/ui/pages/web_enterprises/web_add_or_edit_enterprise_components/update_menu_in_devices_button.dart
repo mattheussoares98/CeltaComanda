@@ -24,7 +24,7 @@ class UpdateMenuInDevicesButton extends StatelessWidget {
             content: Text(R.string.msgWantUpdateMenuInAllDevices),
             onPress: () async {
               await configurationsPresenter.loadMenuAgain(
-                EnterpriseBuilder.entity?.enterpriseName ?? "",
+                EnterpriseBuilder.entity?.firebaseEnterpriseId ?? "",
               );
             },
           );

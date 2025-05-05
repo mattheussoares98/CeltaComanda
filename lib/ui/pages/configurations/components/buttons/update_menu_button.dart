@@ -25,7 +25,7 @@ class UpdateMenuButton extends StatelessWidget {
               content: Text(R.string.msgWantUpdateMenuInAllDevices),
               onPress: () async {
                 final updated = await configurationsPresenter.loadMenuAgain(
-                    EnterpriseBuilder.entity?.enterpriseName ?? "");
+                    EnterpriseBuilder.entity?.firebaseEnterpriseId ?? "");
 
                 if (updated) {
                   snackBarMessage(

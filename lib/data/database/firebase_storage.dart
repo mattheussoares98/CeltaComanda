@@ -11,18 +11,18 @@ abstract class FirebaseStorage {
   Future<void> addNewPrintRequest(PrintRequestEntity entity);
 
   Future<void> addDeviceInfo(DeviceInfoEntity entity);
-  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseName);
+  Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseId);
 
-  Future<void> updateMenu(String enterpriseName);
+  Future<void> updateMenu(String enterpriseId);
 
   Future<void> addPendingDeviceToUpdate({
     required String imeiOrWindowsId,
-    required String enterpriseName,
+    required String enterpriseId,
   });
 
   Future<void> updateEnterpriseParameters(EnterpriseEntity enterprise);
 
-  Future<void> updateDeviceInformations(String enterpriseName);
+  Future<void> updateDeviceInformations(String enterpriseId);
 
-  Future<void> deleteEnterprise(String enterpriseName);
+  Future<void> deleteEnterprise(String enterpriseId);
 }

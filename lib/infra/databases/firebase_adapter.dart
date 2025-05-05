@@ -136,7 +136,7 @@ class FirebaseAdapter implements FirebaseStorage {
   Future<void> updateEnterpriseParameters(EnterpriseEntity enterprise) async {
     try {
       var docRef =
-          firestore.collection('clients').doc(enterprise.enterpriseName);
+          firestore.collection('clients').doc(enterprise.firebaseEnterpriseId);
 
       await docRef.set(
         EnterpriseModel.fromEntity(enterprise).toJson(),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
@@ -54,6 +55,8 @@ class GetxWebEnterprisesPresenter extends GetxController
       mainError = null;
 
       _selectedEnterprise = enterprise;
+      //TODO add test and remove selectedEnterprise
+      EnterpriseBuilder.entity = enterprise;
       navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
     } catch (e) {
       mainError = UIError.unexpected;
@@ -101,6 +104,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         persistApp: false,
         enterpriseConcentradorParametersEntity: null,
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
+        firebaseEnterpriseId: _selectedEnterprise?.firebaseEnterpriseId,
         url: entity.url?.toLowerCase().removeWhiteSpaces(),
         enterpriseId: entity.enterpriseId,
         concentradorUrl:
@@ -118,7 +122,6 @@ class GetxWebEnterprisesPresenter extends GetxController
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
         requestTableNumber: entity.requestTableNumber,
-        firebaseEnterpriseId: entity.firebaseEnterpriseId,
       );
 
       await updateEnterpriseParameters.update(enterprise);
@@ -141,7 +144,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         throw Exception();
       }
 
-      await deleteEnterprise.delete(_selectedEnterprise!.enterpriseName);
+      await deleteEnterprise.delete(_selectedEnterprise!.firebaseEnterpriseId!);
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -168,7 +171,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       }
 
       final result =
-          await loadDevicesInfo.load(_selectedEnterprise!.enterpriseName);
+          await loadDevicesInfo.load(_selectedEnterprise!.firebaseEnterpriseId!);
 
       devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
     } on DomainError catch (e) {

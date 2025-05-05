@@ -48,7 +48,8 @@ class EnterpriseNameInput extends StatelessWidget {
         ),
         if (EnterpriseBuilder.entity != null)
           InfoIconButton(
-            toltipMessage: R.string.msgCantChangeEnterpriseName,
+            toltipMessage:
+                "${R.string.id}: ${EnterpriseBuilder.entity?.firebaseEnterpriseId ?? ""}",
           ),
       ],
     );

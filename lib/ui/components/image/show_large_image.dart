@@ -34,22 +34,23 @@ void showLargeImage({
           child: ImageWidget(
             ean: ean,
             plu: plu,
-            height: productComplement != null && productComplement.isNotEmpty
+            height: /* productComplement != null && productComplement.isNotEmpty
                 ? deviceHeight * 0.8
-                : deviceHeight,
+                : */
+                deviceHeight,
             width: deviceWidth,
             selectedProduct: selectedProduct,
             orientation: AnimationOrientation.vertical,
             zoomImage: true,
           ),
         ),
-        if (productComplement != null &&
-            productComplement.removeComplementConfigurations().isNotEmpty)
-          Expanded(
-            child: ProductComplement(
-              productComplement: productComplement,
-            ),
-          ),
+        // if (productComplement != null &&
+        //     productComplement.removeComplementConfigurations().isNotEmpty)
+        //   Expanded(
+        //     child: ProductComplement(
+        //       productComplement: productComplement,
+        //     ),
+        //   ),
         if (showInsertButton == true && selectedProduct != null)
           Padding(
             padding: const EdgeInsets.all(8.0),

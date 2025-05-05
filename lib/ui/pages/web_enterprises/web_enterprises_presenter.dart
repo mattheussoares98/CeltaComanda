@@ -10,8 +10,6 @@ abstract class WebEnterprisesPresenter implements Listenable {
   Stream<List<EnterpriseEntity>?> get enterprisesStream;
   Stream<List<DeviceInfoViewModel>?> get devicesStream;
 
-  EnterpriseEntity? get selectedEnterprise;
-
   Future<void> loadEnterprises();
   void goToAddOrEditEnterprise(EnterpriseEntity? enterprise);
   Future<void> updateDevicesData();

@@ -34,7 +34,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       final localCommandEntity = await localCommandData.load();
 
-      if (isWeb || 1 == 1 /* TODO remove this */) {
+      if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
       } else if (EnterpriseBuilder.entity?.enterpriseId == null ||
           EnterpriseBuilder.entity?.url == null) {

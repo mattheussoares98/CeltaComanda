@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
-import '../../pages.dart';
 import 'web_add_or_edit_enterprise_components.dart';
 
 class EnterpriseNameInput extends StatelessWidget {
@@ -18,14 +17,11 @@ class EnterpriseNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WebEnterprisesPresenter webEnterprisesPresenter =
-        Provider.of(context, listen: false);
-
     return Row(
       children: [
         Expanded(
           child: TextFormField(
-            enabled: webEnterprisesPresenter.selectedEnterprise == null,
+            enabled: EnterpriseBuilder.entity == null,
             controller: enterpriseNameController,
             keyboardType: TextInputType.text,
             inputFormatters: [
@@ -40,7 +36,8 @@ class EnterpriseNameInput extends StatelessWidget {
               labelText: R.string.enterprise,
               errorText: null,
               fontSize: 14,
-              suffixIcon: Icon(Icons.business, color: Theme.of(context).primaryColor),
+              suffixIcon:
+                  Icon(Icons.business, color: Theme.of(context).primaryColor),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -50,7 +47,7 @@ class EnterpriseNameInput extends StatelessWidget {
             },
           ),
         ),
-        if (webEnterprisesPresenter.selectedEnterprise != null)
+        if (EnterpriseBuilder.entity != null)
           InfoIconButton(
             toltipMessage: R.string.msgCantChangeEnterpriseName,
           ),

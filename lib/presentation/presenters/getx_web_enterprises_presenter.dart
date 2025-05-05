@@ -54,8 +54,6 @@ class GetxWebEnterprisesPresenter extends GetxController
     try {
       mainError = null;
 
-      _selectedEnterprise = enterprise;
-      //TODO add test and remove selectedEnterprise
       EnterpriseBuilder.entity = enterprise;
       navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
     } catch (e) {
@@ -63,22 +61,18 @@ class GetxWebEnterprisesPresenter extends GetxController
     }
   }
 
-  EnterpriseEntity? _selectedEnterprise;
-  @override
-  EnterpriseEntity? get selectedEnterprise => _selectedEnterprise;
-
   @override
   Future<void> updateDevicesData() async {
     try {
       isLoading = true;
       mainError = null;
 
-      if (_selectedEnterprise == null) {
+      if (EnterpriseBuilder.entity?.firebaseEnterpriseId == null) {
         throw Exception();
       }
 
       await updateDeviceInformations
-          .update(_selectedEnterprise!.enterpriseName);
+          .update(EnterpriseBuilder.entity!.firebaseEnterpriseId!);
     } catch (e) {
       mainError = UIError.unexpected;
     } finally {
@@ -92,19 +86,20 @@ class GetxWebEnterprisesPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
+      final oldEnterprise = EnterpriseBuilder.entity;
+
       final enterprise = EnterpriseEntity(
-        enterpriseName:
-            (_selectedEnterprise?.enterpriseName ?? entity.enterpriseName)
-                .toLowerCase()
-                .removeWhiteSpaces(),
+        enterpriseName: (oldEnterprise?.enterpriseName ?? entity.enterpriseName)
+            .toLowerCase()
+            .removeWhiteSpaces(),
         updateDevicesInformations:
-            _selectedEnterprise?.updateDevicesInformations == null
+            oldEnterprise?.updateDevicesInformations == null
                 ? null
-                : (_selectedEnterprise!.updateDevicesInformations! + 1),
+                : (oldEnterprise!.updateDevicesInformations! + 1),
         persistApp: false,
         enterpriseConcentradorParametersEntity: null,
-        updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
-        firebaseEnterpriseId: _selectedEnterprise?.firebaseEnterpriseId,
+        updateEnterprise: (oldEnterprise?.updateEnterprise ?? 0) + 1,
+        firebaseEnterpriseId: oldEnterprise?.firebaseEnterpriseId,
         url: entity.url?.toLowerCase().removeWhiteSpaces(),
         enterpriseId: entity.enterpriseId,
         concentradorUrl:
@@ -140,11 +135,13 @@ class GetxWebEnterprisesPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      if (_selectedEnterprise == null) {
+      final oldEnterprise = EnterpriseBuilder.entity;
+
+      if (oldEnterprise?.firebaseEnterpriseId == null) {
         throw Exception();
       }
 
-      await deleteEnterprise.delete(_selectedEnterprise!.firebaseEnterpriseId!);
+      await deleteEnterprise.delete(oldEnterprise!.firebaseEnterpriseId!);
       return true;
     } catch (e) {
       mainError = UIError.unexpected;
@@ -166,12 +163,14 @@ class GetxWebEnterprisesPresenter extends GetxController
       mainError = null;
       devices = null;
 
-      if (_selectedEnterprise == null) {
+      final oldEnterprise = EnterpriseBuilder.entity;
+
+      if (oldEnterprise?.firebaseEnterpriseId == null) {
         throw DomainError.unexpected;
       }
 
       final result =
-          await loadDevicesInfo.load(_selectedEnterprise!.firebaseEnterpriseId!);
+          await loadDevicesInfo.load(oldEnterprise!.firebaseEnterpriseId!);
 
       devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
     } on DomainError catch (e) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main/builders/builders.dart';
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
@@ -11,8 +12,6 @@ class UpdateMenuInDevicesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ConfigurationsPresenter configurationsPresenter =
-        Provider.of(context, listen: false);
-    WebEnterprisesPresenter webEnterprisesPresenter =
         Provider.of(context, listen: false);
 
     return Padding(
@@ -25,8 +24,7 @@ class UpdateMenuInDevicesButton extends StatelessWidget {
             content: Text(R.string.msgWantUpdateMenuInAllDevices),
             onPress: () async {
               await configurationsPresenter.loadMenuAgain(
-                webEnterprisesPresenter.selectedEnterprise?.enterpriseName ??
-                    "",
+                EnterpriseBuilder.entity?.enterpriseName ?? "",
               );
             },
           );

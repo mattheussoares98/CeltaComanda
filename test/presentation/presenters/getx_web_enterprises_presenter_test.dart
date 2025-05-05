@@ -129,11 +129,13 @@ void main() {
       ).called(1);
     });
     test("Should update selected enterprise correctly", () {
-      sut.goToAddOrEditEnterprise(EnterpriseBuilder.entity);
-      expect(sut.selectedEnterprise, EnterpriseBuilder.entity);
+      final newEnterprise = EntityFactory.makeEnterpriseData();
+
+      sut.goToAddOrEditEnterprise(newEnterprise);
+      expect(EnterpriseBuilder.entity, newEnterprise);
 
       sut.goToAddOrEditEnterprise(null);
-      expect(sut.selectedEnterprise, null);
+      expect(EnterpriseBuilder.entity, null);
     });
   });
 
@@ -163,6 +165,8 @@ void main() {
         sut.mainErrorStream,
         emitsInOrder([null, UIError.unexpected]),
       );
+
+      EnterpriseBuilder.entity = null;
 
       await sut.updateDevicesData();
     });
@@ -237,6 +241,7 @@ void main() {
         enterpriseId: enterprise.enterpriseId!,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
+        firebaseEnterpriseId: enterprise.firebaseEnterpriseId,
         enterpriseConcentradorParametersEntity: null,
         url: null,
         concentradorUrl: null,
@@ -253,7 +258,6 @@ void main() {
         canInsertQuantityManually: null,
         canInsertCustomer: null,
         requestTableNumber: null,
-        firebaseEnterpriseId: null,
       );
 
       await sut.updateEnterprise(newEntity);
@@ -305,6 +309,8 @@ void main() {
         emitsInOrder([null, UIError.unexpected]),
       );
 
+      EnterpriseBuilder.entity = null;
+
       await sut.deleteEnterpriseData();
     });
     test("Should call deleteEnterprise with correct value", () async {
@@ -313,7 +319,8 @@ void main() {
       await sut.deleteEnterpriseData();
 
       verify(
-        () => deleteEnterprise.delete(sut.selectedEnterprise!.enterpriseName),
+        () => deleteEnterprise
+            .delete(EnterpriseBuilder.entity!.firebaseEnterpriseId!),
       ).called(1);
     });
     test("Should return true on success", () async {
@@ -375,6 +382,8 @@ void main() {
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
       expectLater(sut.devicesStream, emits(null));
 
+      EnterpriseBuilder.entity = null;
+
       await sut.getDevicesInfo();
     });
     test("Should call loadDevicesInfo with correct parameter", () async {
@@ -382,9 +391,8 @@ void main() {
 
       await sut.getDevicesInfo();
 
-      verify(() =>
-              loadDevicesInfo.load(EnterpriseBuilder.entity!.enterpriseName))
-          .called(1);
+      verify(() => loadDevicesInfo
+          .load(EnterpriseBuilder.entity!.firebaseEnterpriseId!)).called(1);
     });
   });
 

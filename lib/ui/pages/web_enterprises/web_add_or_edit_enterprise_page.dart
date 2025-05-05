@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
@@ -127,76 +128,48 @@ class _WebAddOrEditEnterprisePageState
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
-        WebEnterprisesPresenter webEnterprisesPresenter =
-            Provider.of(context, listen: false);
-
         // daysPreloadImageController.text = (webEnterprisesPresenter
         //             .selectedEnterprise?.waitDaysToPreloadImages ??
         //         1)
         //     .toString();
-        if (webEnterprisesPresenter.selectedEnterprise != null) {
-          setState(() {
-            enterpriseNameController.text =
-                webEnterprisesPresenter.selectedEnterprise?.enterpriseName ??
-                    "ERROR";
-            navsUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise?.url ?? "";
-            concentratorUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise?.concentradorUrl ??
-                    "";
-            ccsUrlController.text =
-                webEnterprisesPresenter.selectedEnterprise?.urlCCS ?? "";
-            enterpriseIdController.text =
-                (webEnterprisesPresenter.selectedEnterprise?.enterpriseId ?? 0)
-                    .toString();
-            latestCompatibleVersionController.text = webEnterprisesPresenter
-                    .selectedEnterprise?.latestCompatibleVersion ??
-                "".toString();
-            serviceChargePercentageController.text = webEnterprisesPresenter
-                        .selectedEnterprise?.serviceChargePercentageOrValue ==
-                    null
-                ? ""
-                : webEnterprisesPresenter
-                    .selectedEnterprise!.serviceChargePercentageOrValue!
-                    .toInt()
-                    .toString();
-            zoomImage =
-                webEnterprisesPresenter.selectedEnterprise?.zoomImage == true;
-            useCovenant =
-                webEnterprisesPresenter.selectedEnterprise?.useCovenant == true;
-            useReducedNameOnProduct = webEnterprisesPresenter
-                    .selectedEnterprise?.useReducedNameOnProduct ==
-                true;
-            requestTableNumber = webEnterprisesPresenter
-                    .selectedEnterprise?.requestTableNumber ==
-                true;
 
-            if (webEnterprisesPresenter
-                    .selectedEnterprise?.verifyCommandBlocked !=
-                null) {
-              verifyCommandBlocked = webEnterprisesPresenter
-                      .selectedEnterprise?.verifyCommandBlocked ==
-                  true;
+        final enterprise = EnterpriseBuilder.entity;
+        if (enterprise != null) {
+          setState(() {
+            enterpriseNameController.text = enterprise.enterpriseName;
+            navsUrlController.text = enterprise.url ?? "";
+            concentratorUrlController.text = enterprise.concentradorUrl ?? "";
+            ccsUrlController.text = enterprise.urlCCS ?? "";
+            enterpriseIdController.text =
+                (enterprise.enterpriseId ?? 0).toString();
+            latestCompatibleVersionController.text =
+                enterprise.latestCompatibleVersion ?? "".toString();
+            serviceChargePercentageController.text =
+                enterprise.serviceChargePercentageOrValue == null
+                    ? ""
+                    : enterprise.serviceChargePercentageOrValue!
+                        .toInt()
+                        .toString();
+            zoomImage = enterprise.zoomImage == true;
+            useCovenant = enterprise.useCovenant == true;
+            useReducedNameOnProduct =
+                enterprise.useReducedNameOnProduct == true;
+            requestTableNumber = enterprise.requestTableNumber == true;
+
+            if (enterprise.verifyCommandBlocked != null) {
+              verifyCommandBlocked = enterprise.verifyCommandBlocked == true;
             }
-            canInsertCommentManually = webEnterprisesPresenter
-                    .selectedEnterprise?.canInsertCommentManually ==
-                true;
-            blockUseAppIfIsOutdated = webEnterprisesPresenter
-                    .selectedEnterprise?.blockUseAppIfIsOutdated ==
-                true;
-            canInsertQuantityManually = webEnterprisesPresenter
-                    .selectedEnterprise?.canInsertQuantityManually ==
-                true;
-            canInsertCustomer =
-                webEnterprisesPresenter.selectedEnterprise?.canInsertCustomer ==
-                    true;
-            minutesVerifyUpdateMenuController.text = webEnterprisesPresenter
-                        .selectedEnterprise?.minutesVerifyUpdateMenu !=
-                    null
-                ? webEnterprisesPresenter
-                    .selectedEnterprise!.minutesVerifyUpdateMenu!
-                    .toString()
-                : "5";
+            canInsertCommentManually =
+                enterprise.canInsertCommentManually == true;
+            blockUseAppIfIsOutdated =
+                enterprise.blockUseAppIfIsOutdated == true;
+            canInsertQuantityManually =
+                enterprise.canInsertQuantityManually == true;
+            canInsertCustomer = enterprise.canInsertCustomer == true;
+            minutesVerifyUpdateMenuController.text =
+                enterprise.minutesVerifyUpdateMenu != null
+                    ? enterprise.minutesVerifyUpdateMenu!.toString()
+                    : "5";
           });
         }
       }
@@ -211,7 +184,7 @@ class _WebAddOrEditEnterprisePageState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          webEnterprisesPresenter.selectedEnterprise?.enterpriseName ?? '',
+          EnterpriseBuilder.entity?.enterpriseName ?? '',
         ),
         actions: [
           IconButton(

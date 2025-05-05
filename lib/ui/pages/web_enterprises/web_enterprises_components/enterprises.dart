@@ -26,6 +26,9 @@ class Enterprises extends StatelessWidget {
               ),
             );
           }
+
+          snapshot.data!
+              .sort((a, b) => a.enterpriseName.compareTo(b.enterpriseName));
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(

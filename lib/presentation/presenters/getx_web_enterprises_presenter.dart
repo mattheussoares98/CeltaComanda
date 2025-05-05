@@ -89,9 +89,8 @@ class GetxWebEnterprisesPresenter extends GetxController
       final oldEnterprise = EnterpriseBuilder.entity;
 
       final enterprise = EnterpriseEntity(
-        enterpriseName: (oldEnterprise?.enterpriseName ?? entity.enterpriseName)
-            .toLowerCase()
-            .removeWhiteSpaces(),
+        enterpriseName:
+            (entity.enterpriseName).toLowerCase().removeWhiteSpaces(),
         updateDevicesInformations:
             oldEnterprise?.updateDevicesInformations == null
                 ? null

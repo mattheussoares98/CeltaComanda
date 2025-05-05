@@ -21,7 +21,6 @@ class EnterpriseNameInput extends StatelessWidget {
       children: [
         Expanded(
           child: TextFormField(
-            enabled: EnterpriseBuilder.entity == null,
             controller: enterpriseNameController,
             keyboardType: TextInputType.text,
             inputFormatters: [

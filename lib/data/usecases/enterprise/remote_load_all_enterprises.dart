@@ -30,7 +30,9 @@ class RemoteLoadAllEnterprises implements LoadAllEnterprises {
         throw Exception();
       } else {
         return querySnapshot.docs
-            .map((e) => EnterpriseModel.fromJson(e.data()).toEntity())
+            .map((e) =>
+                EnterpriseModel.fromJson(e.data(), firebaseEnterpriseId: e.id)
+                    .toEntity())
             .toList();
       }
     } catch (error) {

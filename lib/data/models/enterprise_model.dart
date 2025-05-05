@@ -56,6 +56,7 @@ class EnterpriseModel {
     Map json, {
     EnterpriseConcentradorParametersEntity?
         enterpriseConcentradorParametersEntity,
+    String? firebaseEnterpriseId,
   }) {
     if (!json.keys.toSet().containsAll([
       'url',
@@ -94,7 +95,7 @@ class EnterpriseModel {
       canInsertQuantityManually: json["canInsertQuantityManually"],
       canInsertCustomer: json["canInsertCustomer"],
       requestTableNumber: json["requestTableNumber"],
-      firebaseEnterpriseId: json["firebaseEnterpriseId"],
+      firebaseEnterpriseId: firebaseEnterpriseId,
     );
   }
 

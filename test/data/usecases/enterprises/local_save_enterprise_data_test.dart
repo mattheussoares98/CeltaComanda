@@ -41,6 +41,7 @@ void main() {
       canInsertQuantityManually: faker.randomGenerator.boolean(),
       canInsertCustomer: faker.randomGenerator.boolean(),
       requestTableNumber: faker.randomGenerator.boolean(),
+      firebaseEnterpriseId: faker.guid.guid(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

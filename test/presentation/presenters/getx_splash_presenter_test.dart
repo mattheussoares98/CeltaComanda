@@ -123,6 +123,7 @@ void main() {
           canInsertQuantityManually: faker.randomGenerator.boolean(),
           canInsertCustomer: faker.randomGenerator.boolean(),
           requestTableNumber: faker.randomGenerator.boolean(),
+          firebaseEnterpriseId: faker.guid.guid(),
         ),
       );
 
@@ -163,6 +164,7 @@ void main() {
           canInsertQuantityManually: faker.randomGenerator.boolean(),
           canInsertCustomer: faker.randomGenerator.boolean(),
           requestTableNumber: faker.randomGenerator.boolean(),
+          firebaseEnterpriseId: faker.guid.guid(),
         ),
       );
 

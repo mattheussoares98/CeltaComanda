@@ -35,6 +35,7 @@ class EntityFactory {
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
     bool? requestTableNumber,
+    bool? firebaseEnterpriseId,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -83,6 +84,9 @@ class EntityFactory {
           canInsertCustomer == true ? null : atualEntity.canInsertCustomer,
       requestTableNumber:
           requestTableNumber == true ? null : atualEntity.requestTableNumber,
+      firebaseEnterpriseId: firebaseEnterpriseId == true
+          ? null
+          : atualEntity.firebaseEnterpriseId,
     );
   }
 
@@ -111,6 +115,7 @@ class EntityFactory {
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
     bool? requestTableNumber,
+    String? firebaseEnterpriseId,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -147,6 +152,7 @@ class EntityFactory {
           canInsertQuantityManually ?? faker.randomGenerator.boolean(),
       canInsertCustomer: canInsertCustomer ?? faker.randomGenerator.boolean(),
       requestTableNumber: requestTableNumber ?? faker.randomGenerator.boolean(),
+      firebaseEnterpriseId: firebaseEnterpriseId ?? faker.guid.guid(),
     );
   }
 

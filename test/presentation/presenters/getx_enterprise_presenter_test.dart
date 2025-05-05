@@ -110,6 +110,7 @@ void main() {
       canInsertQuantityManually: null,
       canInsertCustomer: null,
       requestTableNumber: null,
+      firebaseEnterpriseId: null,
     );
 
     pdvsNotUsing = [
@@ -265,6 +266,7 @@ void main() {
           canInsertQuantityManually: null,
           canInsertCustomer: null,
           requestTableNumber: null,
+          firebaseEnterpriseId: null,
         ),
       );
     });
@@ -413,6 +415,7 @@ void main() {
           canInsertQuantityManually: newEnterprise.canInsertQuantityManually,
           canInsertCustomer: newEnterprise.canInsertCustomer,
           requestTableNumber: newEnterprise.requestTableNumber,
+          firebaseEnterpriseId: newEnterprise.firebaseEnterpriseId,
         ),
       );
     });
@@ -638,6 +641,7 @@ void main() {
             canInsertQuantityManually: null,
             canInsertCustomer: null,
             requestTableNumber: null,
+            firebaseEnterpriseId: null,
           ));
     });
   });
@@ -694,6 +698,7 @@ void main() {
                 EnterpriseBuilder.entity!.canInsertQuantityManually,
             canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
             requestTableNumber: EnterpriseBuilder.entity!.requestTableNumber,
+            firebaseEnterpriseId: EnterpriseBuilder.entity!.firebaseEnterpriseId,
           ));
     });
     test("Should update last import when update enterprise parameters",
@@ -732,6 +737,7 @@ void main() {
           canInsertQuantityManually: null,
           canInsertCustomer: null,
           requestTableNumber: null,
+          firebaseEnterpriseId: null,
         ),
       );
     });

@@ -219,6 +219,7 @@ void main() {
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
         requestTableNumber: enterprise.requestTableNumber,
+        firebaseEnterpriseId: enterprise.firebaseEnterpriseId,
       );
 
       verify(() =>
@@ -252,6 +253,7 @@ void main() {
         canInsertQuantityManually: null,
         canInsertCustomer: null,
         requestTableNumber: null,
+        firebaseEnterpriseId: null,
       );
 
       await sut.updateEnterprise(newEntity);

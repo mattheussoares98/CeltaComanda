@@ -85,6 +85,8 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                   updateDevicesInformations:
                       EnterpriseBuilder.entity?.updateDevicesInformations,
                   updateEnterprise: EnterpriseBuilder.entity?.updateEnterprise,
+                  firebaseEnterpriseId:
+                      EnterpriseBuilder.entity?.firebaseEnterpriseId,
                   enterpriseName: enterpriseNameController.text,
                   url: navsUrlController.text,
                   concentradorUrl: concentratorUrlController.text,

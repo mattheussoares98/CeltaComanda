@@ -25,6 +25,7 @@ class EnterpriseModel {
   final bool? canInsertQuantityManually;
   final bool? canInsertCustomer;
   final bool? requestTableNumber;
+  final String? firebaseEnterpriseId;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -48,6 +49,7 @@ class EnterpriseModel {
     required this.canInsertQuantityManually,
     required this.canInsertCustomer,
     required this.requestTableNumber,
+    required this.firebaseEnterpriseId,
   });
 
   factory EnterpriseModel.fromJson(
@@ -92,6 +94,7 @@ class EnterpriseModel {
       canInsertQuantityManually: json["canInsertQuantityManually"],
       canInsertCustomer: json["canInsertCustomer"],
       requestTableNumber: json["requestTableNumber"],
+      firebaseEnterpriseId: json["firebaseEnterpriseId"],
     );
   }
 
@@ -119,6 +122,7 @@ class EnterpriseModel {
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
         requestTableNumber: entity.requestTableNumber,
+        firebaseEnterpriseId: entity.firebaseEnterpriseId,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -144,6 +148,7 @@ class EnterpriseModel {
         canInsertQuantityManually: canInsertQuantityManually,
         canInsertCustomer: canInsertCustomer,
         requestTableNumber: requestTableNumber,
+        firebaseEnterpriseId: firebaseEnterpriseId,
       );
 
   Map<String, dynamic> toJson() => {
@@ -173,5 +178,6 @@ class EnterpriseModel {
         'canInsertQuantityManually': canInsertQuantityManually,
         'canInsertCustomer': canInsertCustomer,
         'requestTableNumber': requestTableNumber,
+        'firebaseEnterpriseId': firebaseEnterpriseId,
       };
 }

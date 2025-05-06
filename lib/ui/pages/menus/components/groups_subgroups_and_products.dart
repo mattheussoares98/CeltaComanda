@@ -145,6 +145,7 @@ class _GroupsSubgroupsAndProductsState
                               menuPresenter.treatSchedules<ProductsViewModel>(),
                           productsScrollController: productsScrollController,
                           itemExtent: getProductItemExtent(context),
+                          setState: () => setState(() {}),
                         ),
                       ),
                     ],

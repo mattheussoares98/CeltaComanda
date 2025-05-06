@@ -7,11 +7,13 @@ class ProductsItems extends StatelessWidget {
   final List<ProductsViewModel> products;
   final ScrollController productsScrollController;
   final double itemExtent;
+  final void Function() setState;
 
   const ProductsItems({
     required this.products,
     required this.productsScrollController,
     required this.itemExtent,
+    required this.setState,
     super.key,
   });
 
@@ -28,6 +30,12 @@ class ProductsItems extends StatelessWidget {
     );
     menuPresenter.goToInsertProductPage(product);
     menuPresenter.updateSuggestionsProducts(product);
+    // await menuPresenter.getGroupsAndProducts(
+    //   commandEntity: null,
+    //   expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
+    //   loadLocally: false,
+    // );
+    setState();
   }
 
   @override

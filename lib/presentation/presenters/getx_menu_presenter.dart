@@ -411,10 +411,22 @@ class GetxMenuPresenter extends GetxController
     ProductsViewModel product,
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   ) async {
-    navigateTo.navigate(
-      pageRoute: PageRoutes.insertProducts,
-      arguments: product,
-    );
+    if (product.ProductIsFatherComposition == "1" &&
+        (product.childsComposition == null ||
+            product.childsComposition!.isEmpty)) {
+      await getGroupsAndProducts(
+        commandEntity: null,
+        expansibleGroupFromProductPresenter:
+            expansibleGroupFromProductPresenter,
+        loadLocally: false,
+      );
+      //TODO test this
+    } else {
+      navigateTo.navigate(
+        pageRoute: PageRoutes.insertProducts,
+        arguments: product,
+      );
+    }
   }
 
   @override

@@ -28,7 +28,10 @@ class ProductsItems extends StatelessWidget {
       product: product,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
-    menuPresenter.goToInsertProductPage(product);
+    await menuPresenter.goToInsertProductPage(
+      product,
+      expansibleGroupFromProductPresenter,
+    );
     menuPresenter.updateSuggestionsProducts(product);
     // await menuPresenter.getGroupsAndProducts(
     //   commandEntity: null,

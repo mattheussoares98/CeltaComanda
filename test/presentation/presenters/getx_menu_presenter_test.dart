@@ -831,7 +831,10 @@ void main() {
     test('Should go to InsertProductsPage', () async {
       await sut.searchProduct(productEan);
 
-      sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
+      sut.goToInsertProductPage(
+        ProductsViewModel.fromEntity(productEntity),
+        expansibleGroupFromProductPresenter,
+      );
 
       verify(
         () => navigateTo.navigate(
@@ -866,7 +869,10 @@ void main() {
 
       sut.updateSuggestionsProducts(loadedProducts[0]);
 
-      sut.goToInsertProductPage(ProductsViewModel.fromEntity(productEntity));
+      sut.goToInsertProductPage(
+        ProductsViewModel.fromEntity(productEntity),
+        expansibleGroupFromProductPresenter,
+      );
 
       verify(
         () => navigateTo.navigate(

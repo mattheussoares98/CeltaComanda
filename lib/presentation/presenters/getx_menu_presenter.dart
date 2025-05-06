@@ -407,7 +407,10 @@ class GetxMenuPresenter extends GetxController
   }
 
   @override
-  void goToInsertProductPage(ProductsViewModel product) {
+  Future<void> goToInsertProductPage(
+    ProductsViewModel product,
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  ) async {
     navigateTo.navigate(
       pageRoute: PageRoutes.insertProducts,
       arguments: product,

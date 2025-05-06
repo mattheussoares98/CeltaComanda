@@ -56,7 +56,10 @@ class _OpenInsertProductPageState extends State<OpenInsertProductPage>
           expansibleGroupFromProductPresenter:
               expansibleGroupFromProductPresenter,
         );
-        menuPresenter.goToInsertProductPage(widget.selectedProduct);
+        await menuPresenter.goToInsertProductPage(
+          widget.selectedProduct,
+          expansibleGroupFromProductPresenter,
+        );
         menuPresenter.updateSuggestionsProducts(widget.selectedProduct);
       },
       child: Row(

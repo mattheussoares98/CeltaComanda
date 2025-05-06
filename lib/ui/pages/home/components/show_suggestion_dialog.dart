@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
@@ -61,6 +62,10 @@ void showSuggestionDialog(
         menuPresenter.advanceIndexOfAtualSuggestion();
       },
       onPress: () async {
-        menuPresenter.goToInsertProductPage(product);
+        await menuPresenter.goToInsertProductPage(
+          product,
+          Provider.of<ExpansibleGroupFromProductPresenter>(context,
+              listen: false), //TODO test suggestion
+        );
       });
 }

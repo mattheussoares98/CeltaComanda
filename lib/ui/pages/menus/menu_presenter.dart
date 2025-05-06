@@ -28,7 +28,10 @@ abstract class MenuPresenter implements Listenable {
   Future<void> searchProduct(String value);
   Future<String> readBarcodeAndSearchProduct();
 
-  void goToInsertProductPage(ProductsViewModel product);
+  Future<void> goToInsertProductPage(
+    ProductsViewModel product,
+    ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
+  );
   void clear();
   void updateIndexOfSelectedGroup(int index);
 

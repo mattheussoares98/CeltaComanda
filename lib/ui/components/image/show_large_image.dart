@@ -43,13 +43,13 @@ void showLargeImage({
             zoomImage: true,
           ),
         ),
-        if (productComplement != null &&
-            productComplement.removeComplementConfigurations().isNotEmpty)
-          Expanded(
-            child: ProductComplement(
-              productComplement: productComplement,
-            ),
-          ),
+        // if (productComplement != null &&
+        //     productComplement.removeComplementConfigurations().isNotEmpty)
+        //   Expanded(
+        //     child: ProductComplement(
+        //       productComplement: productComplement,
+        //     ),
+        //   ),
         if (showInsertButton == true && selectedProduct != null)
           Padding(
             padding: const EdgeInsets.all(8.0),

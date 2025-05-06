@@ -367,6 +367,7 @@ class EntityFactory {
     String? subgroupName,
     bool? insertOfferPrice = true,
     double? saleRetailPrice,
+    bool? productIsFatherComposition = true,
   }) {
     return ProductsViewModel(
       Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
@@ -409,7 +410,8 @@ class EntityFactory {
       PercImpNBPTMunicipal: faker.randomGenerator.decimal().toString(),
       CofinsType: faker.randomGenerator.integer(100).toString(),
       PisType: faker.randomGenerator.integer(100).toString(),
-      ProductIsFatherComposition: faker.randomGenerator.integer(100).toString(),
+      ProductIsFatherComposition:
+          productIsFatherComposition == true ? '1' : "0",
       QuantityMinimumWholeSale: faker.randomGenerator.decimal().toString(),
       QuantityMinimumWholeSaleByClass:
           faker.randomGenerator.decimal().toString(),

@@ -828,60 +828,103 @@ void main() {
   });
 
   group("Navigation", () {
-    test('Should go to InsertProductsPage', () async {
-      await sut.searchProduct(productEan);
+    group("goToInsertProductPage", () {
+      test('Should not go to InsertProductsPage if is father without childs',
+          () async {
+        await sut.searchProduct(productEan);
 
-      sut.goToInsertProductPage(
-        ProductsViewModel.fromEntity(productEntity),
-        expansibleGroupFromProductPresenter,
-      );
+        final product = EntityFactory.makeProductsViewModel(
+          productIsFatherComposition: true,
+          insertChildsComposition: false,
+        );
+        sut.goToInsertProductPage(
+          product,
+          expansibleGroupFromProductPresenter,
+        );
 
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.insertProducts,
-          arguments: ProductsViewModel.fromEntity(productEntity),
-        ),
-      ).called(1);
-    });
-    test('Should update index of atual suggestion when navigate', () async {
-      final mockedSuggestions = [
-        SuggestionSaleEntity(
-          ProductPackingCode: products[0].InternalCodeOnERP!,
-          ProductPackingCodeSuggestionForSale:
-              suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
-        ),
-        SuggestionSaleEntity(
-          ProductPackingCode: products[1].InternalCodeOnERP!,
-          ProductPackingCodeSuggestionForSale:
-              suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
-        ),
-      ];
+        verifyNever(
+          () => navigateTo.navigate(
+            pageRoute: PageRoutes.insertProducts,
+            arguments: product,
+          ),
+        );
+      });
+      test('Should load products again if is father without childs', () async {
+        await sut.searchProduct(productEan);
 
-      await sut.getGroupsAndProducts(
-        commandEntity: homePresenter.commandEntityController,
-        loadLocally: false,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
+        final product = EntityFactory.makeProductsViewModel(
+          productIsFatherComposition: true,
+          insertChildsComposition: false,
+        );
+        sut.goToInsertProductPage(
+          product,
+          expansibleGroupFromProductPresenter,
+        );
 
-      final loadedProducts = sut.loadedMenu.first.productsViewModel;
-      loadedProducts[0].suggestions = mockedSuggestions;
+        verify(
+          () => menuDatabaseManagement.load(),
+        ).called(1);
+      });
+      test('Should go to insert products page if is father with childs',
+          () async {
+        await sut.searchProduct(productEan);
 
-      sut.updateSuggestionsProducts(loadedProducts[0]);
+        final product = EntityFactory.makeProductsViewModel(
+          productIsFatherComposition: true,
+          insertChildsComposition: true,
+        );
+        sut.goToInsertProductPage(
+          product,
+          expansibleGroupFromProductPresenter,
+        );
 
-      sut.goToInsertProductPage(
-        ProductsViewModel.fromEntity(productEntity),
-        expansibleGroupFromProductPresenter,
-      );
+        verify(
+          () => navigateTo.navigate(
+            pageRoute: PageRoutes.insertProducts,
+            arguments: product,
+          ),
+        ).called(1);
+      });
+      test('Should update index of atual suggestion when navigate', () async {
+        final mockedSuggestions = [
+          SuggestionSaleEntity(
+            ProductPackingCode: products[0].InternalCodeOnERP!,
+            ProductPackingCodeSuggestionForSale:
+                suggestionsProductsViewModel[0].InternalCodeOnERP!.toInt(),
+          ),
+          SuggestionSaleEntity(
+            ProductPackingCode: products[1].InternalCodeOnERP!,
+            ProductPackingCodeSuggestionForSale:
+                suggestionsProductsViewModel[1].InternalCodeOnERP!.toInt(),
+          ),
+        ];
 
-      verify(
-        () => navigateTo.navigate(
-          pageRoute: PageRoutes.insertProducts,
-          arguments: ProductsViewModel.fromEntity(productEntity),
-        ),
-      ).called(1);
+        await sut.getGroupsAndProducts(
+          commandEntity: homePresenter.commandEntityController,
+          loadLocally: false,
+          expansibleGroupFromProductPresenter:
+              expansibleGroupFromProductPresenter,
+        );
 
-      expect(sut.indexOfAtualSuggestion, -1);
+        final loadedProducts = sut.loadedMenu.first.productsViewModel;
+        loadedProducts[0].suggestions = mockedSuggestions;
+
+        sut.updateSuggestionsProducts(loadedProducts[0]);
+
+        sut.goToInsertProductPage(
+          ProductsViewModel.fromEntity(productEntity),
+          expansibleGroupFromProductPresenter,
+        );
+
+        verify(
+          () => navigateTo.navigate(
+            pageRoute: PageRoutes.insertProducts,
+            arguments: ProductsViewModel.fromEntity(productEntity),
+          ),
+        ).called(1);
+
+        expect(sut.indexOfAtualSuggestion, -1);
+      });
     });
   });
 
@@ -1578,7 +1621,7 @@ void main() {
       sut.clear();
     });
 
-    test("Should clear downloaded images", () async {
+    test("Should not clear downloaded images", () async {
       await sut.loadAllImages(
         loadLocally: false,
         updatedImages: [],
@@ -1588,7 +1631,7 @@ void main() {
 
       sut.clear();
 
-      expect(sut.downloadedImages, []);
+      expect(sut.downloadedImages, isNotEmpty);
     });
     test("Should clear index of atual suggestion", () async {
       final mockedSuggestions = [

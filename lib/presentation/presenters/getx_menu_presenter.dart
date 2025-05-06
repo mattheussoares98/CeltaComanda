@@ -224,10 +224,10 @@ class GetxMenuPresenter extends GetxController
           .toList();
 
       for (var product in allProducts) {
-        if (product.PriceLookupCode == "10538-5") {
-          //TODO remove this
-          continue;
-        }
+        // if (product.PriceLookupCode == "10538-5") {
+        //   //TODO remove this
+        //   continue;
+        // }
         if (product.IsPromoCombox == "true") {
           final fathers = await getProductComposition.getFathers(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
@@ -420,7 +420,6 @@ class GetxMenuPresenter extends GetxController
             expansibleGroupFromProductPresenter,
         loadLocally: false,
       );
-      //TODO test this
     } else {
       navigateTo.navigate(
         pageRoute: PageRoutes.insertProducts,

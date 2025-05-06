@@ -64,8 +64,10 @@ void showSuggestionDialog(
       onPress: () async {
         await menuPresenter.goToInsertProductPage(
           product,
-          Provider.of<ExpansibleGroupFromProductPresenter>(context,
-              listen: false), //TODO test suggestion
+          Provider.of<ExpansibleGroupFromProductPresenter>(
+            context,
+            listen: false,
+          ),
         );
       });
 }

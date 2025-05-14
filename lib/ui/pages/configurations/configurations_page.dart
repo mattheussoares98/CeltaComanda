@@ -97,7 +97,10 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (!applicationIsInLatestVersion) UpdateApplicationButton(),
+                if (!applicationIsInLatestVersion &&
+                    !homePresenter.isGeneratingVersionToRede &&
+                    !homePresenter.isGeneratingVersionToGetNet)
+                  UpdateApplicationButton(),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

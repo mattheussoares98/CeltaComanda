@@ -84,7 +84,6 @@ class MainActivity : FlutterActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // getnetPayment.onDestroy()
         // getnetPrinter.onDestroy()
     }
 }

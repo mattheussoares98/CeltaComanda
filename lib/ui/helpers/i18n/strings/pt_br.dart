@@ -153,6 +153,7 @@ class PtBr implements Translation {
   String get blockTable => 'Bloquear mesa';
   String get blockUseAppIfIsOutdated =>
       'Bloquear uso do app se estiver desatualizado';
+  String get by => "Por";
   String get cart => "Carrinho";
   String get call => "Ligar";
   String get cancel => "Cancelar";
@@ -227,6 +228,7 @@ class PtBr implements Translation {
   String get father => 'Pai';
   String get financialCredits => 'Créditos financeiros';
   String get friday => 'Sexta';
+  String get from => 'De';
   String get getCustomer => 'Pesquisar cliente';
   String get id => 'ID';
   String get insertInCart => 'Inserir no carrinho';

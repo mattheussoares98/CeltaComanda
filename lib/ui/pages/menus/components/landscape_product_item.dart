@@ -179,16 +179,50 @@ class _Price extends StatelessWidget {
 
   final ProductsViewModel productsViewModel;
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
-      textAlign: TextAlign.center,
-      style: TextStyle(
+  bool get hasOfferPrice {
+    if (productsViewModel.OfferRetailPrice == null) {
+      return false;
+    } else if ((productsViewModel.OfferRetailPrice?.toDouble() ?? 0) <= 0) {
+      return false;
+    }
+    return true;
+  }
+
+  TextStyle get defaultStyle => TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: StringSize.size,
-        color: Theme.of(context).primaryColor,
-      ),
+        color: Theme.of(NavigatorKey.key.currentState!.context).primaryColor,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (hasOfferPrice)
+          Text(
+            productsViewModel.SaleRetailPrice.toString().addBrazilianCoin(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: StringSize.size,
+              color: Theme.of(context).colorScheme.error,
+              decoration: TextDecoration.lineThrough,
+              decorationColor: Theme.of(context).colorScheme.error,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        Text(
+          productsViewModel.SaleRetailPraticed.addBrazilianCoin(),
+          textAlign: TextAlign.center,
+          style: hasOfferPrice
+              ? TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: StringSize.size,
+                )
+              : defaultStyle,
+        ),
+      ],
     );
   }
 }

@@ -154,6 +154,7 @@ class EnUs implements Translation {
   String get blockCommand => 'Block command';
   String get blockTable => 'Block table';
   String get blockUseAppIfIsOutdated => 'Block use app if is outdated';
+  String get by => 'By';
   String get cart => 'Cart';
   String get call => 'Call';
   String get cancel => 'Cancel';
@@ -229,6 +230,7 @@ class EnUs implements Translation {
   String get father => 'Father';
   String get financialCredits => 'Finalcial credits';
   String get friday => 'Friday';
+  String get from => 'From';
   String get getCustomer => 'Get customer';
   String get id => 'ID';
   String get insertInCart => 'Add to cart';

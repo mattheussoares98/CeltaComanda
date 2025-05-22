@@ -112,6 +112,7 @@ abstract class Translation {
   String get blockCommand;
   String get blockTable;
   String get blockUseAppIfIsOutdated;
+  String get by;
   String get call;
   String get cancel;
   String get canceledBy;
@@ -185,6 +186,7 @@ abstract class Translation {
   String get father;
   String get financialCredits;
   String get friday;
+  String get from;
   String get getCustomer;
   String get id;
   String get insertInCart;

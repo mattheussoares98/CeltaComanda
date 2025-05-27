@@ -167,6 +167,7 @@ class GetxCovenantPresenter extends GetxController
             CovenantCode: _selectedCovenant.values.first!.toInt(),
             TotalLiquid:
                 printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
+            PlaceId: printedProductsPresenter.printed?.PlaceId,
           ),
           commandNumber: homePresenter.commandEntity!.commandNumber!
               .toString()

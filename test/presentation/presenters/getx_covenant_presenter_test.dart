@@ -489,6 +489,7 @@ void main() {
               CustomerCode: sut.selectedCovenant.keys.first.toInt(),
               TotalLiquid:
                   printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
+              PlaceId: printedProductsPresenter.printed!.PlaceId,
             ),
             commandNumber: homePresenter.commandEntityController!.commandNumber!
                 .padLeft(3, "0"),

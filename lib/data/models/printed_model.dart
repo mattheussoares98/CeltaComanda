@@ -24,6 +24,7 @@ class PrintedModel {
   final int? CovenantCode;
   final int? CustomerCode;
   final int? SellerCode;
+  final String? PlaceId;
 
   PrintedModel({
     required this.Products,
@@ -46,6 +47,7 @@ class PrintedModel {
     required this.CovenantCode,
     required this.CustomerCode,
     required this.SellerCode,
+    required this.PlaceId,
   });
 
   factory PrintedModel.fromJson(Map json) {
@@ -104,6 +106,7 @@ class PrintedModel {
       CovenantCode: json["CovenantCode"],
       CustomerCode: json["CustomerCode"],
       SellerCode: json["SellerCode"]?.toString().toInt(),
+      PlaceId: json["PlaceId"]?.toString(),
     );
   }
 
@@ -128,6 +131,7 @@ class PrintedModel {
         CovenantCode: entity.CovenantCode,
         CustomerCode: entity.CustomerCode,
         SellerCode: entity.SellerCode,
+        PlaceId: entity.PlaceId,
       );
 
   PrintedEntity toEntity() => PrintedEntity(
@@ -151,6 +155,7 @@ class PrintedModel {
         CovenantCode: CovenantCode,
         CustomerCode: CustomerCode,
         SellerCode: SellerCode,
+        PlaceId: PlaceId,
       );
 
   Map<String, dynamic> toJson() => {
@@ -174,6 +179,7 @@ class PrintedModel {
         "CovenantCode": CovenantCode,
         "CustomerCode": CustomerCode,
         "SellerCode": SellerCode,
+        "PlaceId": PlaceId,
       };
 
   factory PrintedModel.fromViewModel(PrintedViewModel viewModel) =>
@@ -198,5 +204,6 @@ class PrintedModel {
         CovenantCode: viewModel.CovenantCode?.toInt(),
         CustomerCode: viewModel.CustomerCode?.toInt(),
         SellerCode: viewModel.SellerCode?.toInt(),
+        PlaceId: viewModel.PlaceId,
       );
 }

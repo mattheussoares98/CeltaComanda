@@ -124,6 +124,7 @@ class GetxCancelProductsPresenter extends GetxController
         SaleRequestId: printedModel.SaleRequestId,
         IncrementValue: printedModel.IncrementValue,
         IncrementType: printedModel.IncrementType,
+        PlaceId: printedModel.PlaceId,
       );
 
       // await removePrintedProduct.remove(product.SaleRequestProductId!);

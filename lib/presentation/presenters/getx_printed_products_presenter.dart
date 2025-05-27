@@ -272,6 +272,7 @@ class GetxPrintedProductsPresenter
         CustomerCode: null,
         IncrementType: 0,
         IncrementValue: 0,
+        PlaceId: printed.PlaceId,
         TotalLiquid: printed.TotalLiquid!.toDouble(),
         EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
       );
@@ -436,6 +437,7 @@ class GetxPrintedProductsPresenter
           CustomerCode:
               isRemoving == true ? 0 : _selectedCustomer.value!.Code!.toInt(),
           TotalLiquid: printed!.TotalLiquid!.toDouble(),
+          PlaceId: printed?.PlaceId,
           EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
         ),
       );

@@ -634,6 +634,7 @@ class EntityFactory {
       FlagOrigin: faker.randomGenerator.string(10),
       IncrementType: faker.randomGenerator.integer(2, min: 1).toString(),
       IncrementValue: faker.randomGenerator.decimal().toString(),
+      PlaceId: faker.randomGenerator.string(10),
     );
   }
 
@@ -736,6 +737,7 @@ class EntityFactory {
           childs: [],
         ),
       ],
+      PlaceId: faker.randomGenerator.string(10),
       Comments: faker.randomGenerator.string(10),
       CovenantCode: faker.randomGenerator.integer(100),
       CustomerCode: faker.randomGenerator.integer(100),
@@ -1278,6 +1280,7 @@ class EntityFactory {
         SaleRequestId: faker.randomGenerator.integer(100),
         IncrementValue: faker.randomGenerator.decimal(),
         IncrementType: faker.randomGenerator.integer(100),
+        PlaceId: faker.randomGenerator.integer(100).toString(),
       );
 
   static SaleRequestProductEntity makeSaleRequestProductEntity() =>
@@ -1330,6 +1333,7 @@ class EntityFactory {
         SaleRequestId: faker.randomGenerator.integer(100),
         IncrementValue: faker.randomGenerator.decimal(),
         IncrementType: faker.randomGenerator.integer(2, min: 1),
+        PlaceId: faker.randomGenerator.integer(100).toString(),
       );
 
   static makeConcentratorFinaliztionModel() => ConcentratorFinalizationModel(

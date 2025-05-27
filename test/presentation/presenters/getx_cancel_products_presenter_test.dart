@@ -216,6 +216,7 @@ void main() {
               SaleRequestId: printedModel.SaleRequestId,
               IncrementValue: printedModel.IncrementValue,
               IncrementType: printedModel.IncrementType,
+              PlaceId: printedModel.PlaceId,
             ),
           )).called(1);
     });

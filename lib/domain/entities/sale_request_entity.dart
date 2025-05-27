@@ -9,6 +9,7 @@ class SaleRequestEntity {
   final String FlagStatus;
   final String Comments;
   final String PersonalizedCode;
+  final String? PlaceId;
   final bool IsCancelled;
   final bool IsUsing;
   final double TotalLiquid;
@@ -31,6 +32,7 @@ class SaleRequestEntity {
     required this.FlagStatus,
     required this.Comments,
     required this.PersonalizedCode,
+    required this.PlaceId,
     required this.IsCancelled,
     required this.IsUsing,
     required this.TotalLiquid,

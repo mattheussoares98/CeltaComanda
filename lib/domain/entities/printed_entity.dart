@@ -23,6 +23,7 @@ class PrintedEntity extends Equatable {
   final int? CustomerCode;
   final int? SellerCode;
   final String? Comments;
+  final String? PlaceId;
 
   const PrintedEntity({
     required this.Products,
@@ -31,6 +32,7 @@ class PrintedEntity extends Equatable {
     required this.DateHourOfCreation,
     required this.FlagStatus,
     required this.Comments,
+    required this.PlaceId,
     required this.EnterpriseId,
     required this.RequestType,
     required this.IsCancelled,
@@ -55,6 +57,7 @@ class PrintedEntity extends Equatable {
         DateHourOfCreation,
         FlagStatus,
         Comments,
+        PlaceId,
         EnterpriseId,
         RequestType,
         IsCancelled,

@@ -586,6 +586,7 @@ void main() {
     test("Should not update printedProducts if the list of products is empty",
         () async {
       loadPrintedProducts.mockLoadPrintedEntity(PrintedEntity(
+        PlaceId: faker.randomGenerator.string(10),
         Comments: faker.randomGenerator.string(10),
         CovenantCode: faker.randomGenerator.integer(10),
         CustomerCode: faker.randomGenerator.integer(10),
@@ -624,6 +625,7 @@ void main() {
         () async {
       loadPrintedProducts.mockLoadPrintedEntity(
         PrintedEntity(
+          PlaceId: faker.randomGenerator.string(10),
           CustomerCode: faker.randomGenerator.integer(100),
           CovenantCode: printedEntity.CovenantCode,
           Products: printedEntity.Products,
@@ -661,6 +663,7 @@ void main() {
         () async {
       loadPrintedProducts.mockLoadPrintedEntity(
         PrintedEntity(
+          PlaceId: faker.randomGenerator.string(10),
           CustomerCode: null,
           CovenantCode: printedEntity.CovenantCode,
           Products: printedEntity.Products,
@@ -730,6 +733,7 @@ void main() {
         () async {
       loadPrintedProducts.mockLoadPrintedEntity(
         PrintedEntity(
+          PlaceId: faker.randomGenerator.string(10),
           CustomerCode: customerViewModel.Code?.toInt(),
           Products: printedEntity.Products,
           PersonalizedCode: printedEntity.PersonalizedCode,
@@ -778,6 +782,7 @@ void main() {
 
       loadPrintedProducts.mockLoadPrintedEntity(
         PrintedEntity(
+          PlaceId: faker.randomGenerator.string(10),
           CustomerCode: null,
           Products: printedEntity.Products,
           PersonalizedCode: printedEntity.PersonalizedCode,
@@ -950,6 +955,7 @@ void main() {
             IncrementValue: 0,
             TotalLiquid: sut.printed!.TotalLiquid!.toDouble(),
             EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
+            PlaceId: sut.printed!.PlaceId,
           ),
           commandNumber: homePresenter.commandEntityController!.commandNumber!
               .padLeft(3, "0"),
@@ -1274,6 +1280,7 @@ void main() {
               CovenantCode: null,
               CustomerCode: customerViewModel.Code!.toInt(),
               TotalLiquid: printedEntity.TotalLiquid!.toDouble(),
+              PlaceId: printedEntity.PlaceId,
               EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
             ),
           ));
@@ -1292,6 +1299,7 @@ void main() {
             model: SaleRequestModel(
               CovenantCode: null,
               CustomerCode: 0,
+              PlaceId: printedEntity.PlaceId,
               TotalLiquid: printedEntity.TotalLiquid!.toDouble(),
               EnterpriseId: EnterpriseBuilder.entity?.enterpriseId,
             ),

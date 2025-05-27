@@ -25,6 +25,7 @@ class PrintedViewModel extends Equatable {
   final String? CovenantCode;
   final String? CustomerCode;
   final String? SellerCode;
+  final String? PlaceId;
 
   @override
   List get props => [
@@ -48,6 +49,7 @@ class PrintedViewModel extends Equatable {
         CovenantCode,
         CustomerCode,
         SellerCode,
+        PlaceId,
       ];
 
   const PrintedViewModel({
@@ -71,6 +73,7 @@ class PrintedViewModel extends Equatable {
     required this.CovenantCode,
     required this.CustomerCode,
     required this.SellerCode,
+    required this.PlaceId,
   });
 
   factory PrintedViewModel.fromEntity(PrintedEntity entity) => PrintedViewModel(
@@ -96,5 +99,6 @@ class PrintedViewModel extends Equatable {
         CovenantCode: entity.CovenantCode?.toString(),
         CustomerCode: entity.CustomerCode?.toString(),
         SellerCode: entity.SellerCode?.toString(),
+        PlaceId: entity.PlaceId?.toString(),
       );
 }

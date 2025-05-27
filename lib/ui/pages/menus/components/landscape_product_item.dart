@@ -184,6 +184,9 @@ class _Price extends StatelessWidget {
       return false;
     } else if ((productsViewModel.OfferRetailPrice?.toDouble() ?? 0) <= 0) {
       return false;
+    } else if (productsViewModel.OfferRetailPrice ==
+        productsViewModel.SaleRetailPraticed) {
+      return false;
     }
     return true;
   }

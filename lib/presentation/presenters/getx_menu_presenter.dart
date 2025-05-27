@@ -55,6 +55,7 @@ class GetxMenuPresenter extends GetxController
     searchedProduct = null;
     _indexOfAtualSuggestion = -1;
     indexOfSelectedGroup = 0;
+    _downloadedImages.clear();
   }
 
   @override

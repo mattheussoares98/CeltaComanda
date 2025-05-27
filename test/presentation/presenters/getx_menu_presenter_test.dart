@@ -1621,7 +1621,7 @@ void main() {
       sut.clear();
     });
 
-    test("Should not clear downloaded images", () async {
+    test("Should clear downloaded images", () async {
       await sut.loadAllImages(
         loadLocally: false,
         updatedImages: [],
@@ -1631,7 +1631,7 @@ void main() {
 
       sut.clear();
 
-      expect(sut.downloadedImages, isNotEmpty);
+      expect(sut.downloadedImages, isEmpty);
     });
     test("Should clear index of atual suggestion", () async {
       final mockedSuggestions = [

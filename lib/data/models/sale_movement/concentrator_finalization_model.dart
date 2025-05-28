@@ -25,11 +25,9 @@ class ConcentratorFinalizationModel extends Equatable {
   final String? TEFModalityPaymentCode;
   final String? TEFModalityDescription;
   final String? TEFPlanCardCode;
-//  public virtual ModelSaleMovement SaleMovement
-//  public virtual IList<ModelSaleMovementFinalizationCheck> Checks
-//  public virtual IList<ModelSaleMovementFinalizationPortion> Portions
+  final String uniqueId;
 
-  const ConcentratorFinalizationModel({
+  ConcentratorFinalizationModel({
     required this.FinalizationId,
     required this.Value,
     required this.ValueLiquid,
@@ -51,10 +49,12 @@ class ConcentratorFinalizationModel extends Equatable {
     this.TEFModalityPaymentCode,
     this.TEFModalityDescription,
     this.TEFPlanCardCode,
-  });
+    String? uniqueId,
+  }) : uniqueId = uniqueId ?? DateTime.now().millisecondsSinceEpoch.toString();
 
   @override
   List<Object?> get props => [
+        uniqueId,
         SaleMovementFinalizationId,
         FinalizationId,
         Value,

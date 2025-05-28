@@ -50,8 +50,9 @@ class _SalesDetailsState extends State<SalesDetails> {
             itemBuilder: (context, index) {
               final pdv = pdvs[index];
 
-              final salesByPdv =
-                  snapshot.data!.where((e) => e.PdvNumber == pdv).toList();
+              final salesByPdv = snapshot.data!
+                  .where((e) => e.PdvNumber == pdv && e.IsCancelled != true)
+                  .toList();
 
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -61,7 +62,7 @@ class _SalesDetailsState extends State<SalesDetails> {
                       index: index,
                       updateSelectedIndex: updateSelectedIndex,
                       pdv: pdv,
-                      sales: snapshot.data!,
+                      sales: salesByPdv,
                     ),
                     if (index == selectedIndex)
                       SalesByFinalizations(

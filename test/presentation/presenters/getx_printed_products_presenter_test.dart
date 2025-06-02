@@ -812,6 +812,20 @@ void main() {
 
       expect(sut.customerInSaleRequest, null);
     });
+
+    test("Should not call load customer if customerCode is equal zero",
+        () async {
+      loadPrintedProducts.mockLoadPrintedEntity(
+        EntityFactory.makePrintedEntity(customerCode: 0),
+      );
+
+      await sut.loadPrinted(homePresenter.commandEntity!.commandNumber!);
+
+      verifyNever(() => loadCustomer.load(
+            value: valueToSearchCustomer,
+            searchByPersonalizedCode: searchByPersonalizedCode,
+          ));
+    });
   });
 
   group("Do on close page", () {

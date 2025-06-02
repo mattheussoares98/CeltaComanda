@@ -709,6 +709,7 @@ class EntityFactory {
   static PrintedEntity makePrintedEntity({
     int? incrementType,
     String? productPriceLookUpCode,
+    int? customerCode,
   }) {
     return PrintedEntity(
       Products: [
@@ -740,7 +741,7 @@ class EntityFactory {
       PlaceId: faker.randomGenerator.string(10),
       Comments: faker.randomGenerator.string(10),
       CovenantCode: faker.randomGenerator.integer(100),
-      CustomerCode: faker.randomGenerator.integer(100),
+      CustomerCode: customerCode ?? faker.randomGenerator.integer(100),
       SellerCode: faker.randomGenerator.integer(100),
       IncrementType: incrementType ?? faker.randomGenerator.integer(2, min: 1),
       IncrementValue: faker.randomGenerator.decimal(),

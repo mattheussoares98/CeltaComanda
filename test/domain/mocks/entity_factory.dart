@@ -1595,7 +1595,8 @@ class EntityFactory {
         pluOrEan: faker.guid.guid(),
         image: Uint8List.fromList(faker.randomGenerator.string(10).codeUnits),
         keyIsEan: faker.randomGenerator.boolean(),
-        isEnterpriseImage: faker.randomGenerator.boolean(),
+        isLogoImage: faker.randomGenerator.boolean(),
+        isMarketingImage: faker.randomGenerator.boolean(),
         enterpriseName: faker.company.name(),
         imagePath: faker.guid.guid(),
       );

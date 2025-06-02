@@ -32,11 +32,6 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       var localImages = await _getImagesFromDevice();
 
-      if (localImages.any((element) =>
-          element.enterpriseName == null || element.imagePath.isEmpty)) {
-        localImages = await _updateEnterpriseNullProperty(localImages);
-      }
-
       List<String> imagesToDownload = await _getMissingImages(localImages);
 
       if (getLocalImages && imagesToDownload.isEmpty) {
@@ -99,10 +94,10 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       debugPrint("Downloading ${imagesNames.toSet().length} images");
 
-      for (final pluOrEanPng in imagesNames.toSet()) {
+      for (final imageName in imagesNames.toSet()) {
         try {
           final maxSizeInBytes = 1 * 1024 * 1024;
-          final url = "$concentratorUrl/Images/$pluOrEanPng";
+          final url = "$concentratorUrl/Images/$imageName";
           final request = http.Request('GET', Uri.parse(url));
           final response = await client.send(request);
 
@@ -131,15 +126,16 @@ class ConcentratorLoadImages implements LoadImages {
             },
             onDone: () async {
               if (!completer.isCompleted) {
-                final imagePath = await _getImagePath() + pluOrEanPng;
+                final imagePath = await _getImagePath() + imageName;
 
                 final image = ImageModel(
-                  pluOrEan: pluOrEanPng,
+                  pluOrEan: imageName,
                   image: Uint8List.fromList(buffer),
-                  keyIsEan: pluOrEanPng.length > 11,
-                  isEnterpriseImage: false,
+                  keyIsEan: imageName.length > 11,
+                  isLogoImage: false,
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
                   imagePath: imagePath,
+                  isMarketingImage: imageName.toLowerCase().contains("market"),
                 );
 
                 images.add(image);
@@ -194,27 +190,6 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<List<ImageModel>> _updateEnterpriseNullProperty(
-    List<ImageModel> localImages,
-  ) async {
-    try {
-      debugPrint(
-          "updating images because has null enterprise name property...");
-
-      final updated =
-          localImages.map((e) => ImageModel.fromJson(e.toJson())).toList();
-      //in .toJson, add the enterprise name property
-
-      for (var image in updated) {
-        await _saveImageToDevice(image);
-      }
-
-      return updated;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   Future<List<String>> _getMissingImages(List<ImageModel> localImages) async {
     try {
       final plusWithImages = await _getPlusWithImages();
@@ -229,7 +204,7 @@ class ConcentratorLoadImages implements LoadImages {
               ),
             )
             .toList();
-        if (localImages.where((e) => e.isEnterpriseImage).isEmpty) {
+        if (localImages.where((e) => e.isLogoImage).isEmpty) {
           missingImages.add("Logo.png");
         }
 
@@ -247,7 +222,7 @@ class ConcentratorLoadImages implements LoadImages {
 Future<void> _saveImageToDevice(ImageModel image) async {
   final rootPath = await _getImagePath();
   final filePath =
-      "$rootPath${image.isEnterpriseImage ? "Logo.png" : image.pluOrEan}";
+      "$rootPath${image.isLogoImage ? "Logo.png" : image.pluOrEan}";
 
   final file = File(filePath);
 
@@ -299,9 +274,10 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
             pluOrEan: pluOrEan,
             image: null,
             keyIsEan: !pluOrEan.contains("-"),
-            isEnterpriseImage: file.path.toLowerCase().contains("logo"),
+            isLogoImage: file.path.toLowerCase().contains("logo"),
             enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
             imagePath: file.path,
+            isMarketingImage: file.path.toLowerCase().contains("market"),
           ),
         );
       }

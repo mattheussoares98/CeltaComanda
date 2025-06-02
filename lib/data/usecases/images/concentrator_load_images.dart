@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../database/database.dart';
 import '../../http/http.dart';
@@ -31,7 +30,7 @@ class ConcentratorLoadImages implements LoadImages {
     final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
     try {
-      var localImages = await _getLocalImages();
+      var localImages = await _getImagesFromDevice();
 
       if (localImages.any((element) =>
           element.enterpriseName == null || element.imagePath.isEmpty)) {
@@ -67,7 +66,7 @@ class ConcentratorLoadImages implements LoadImages {
         case DomainError.unexpected:
           //só cai aqui se tentar obter os plus que tem imagem
           debugPrint("Returning local images");
-          return (await _getLocalImages())
+          return (await _getImagesFromDevice())
               .where((e) => e.enterpriseName == enterpriseName)
               .toList();
 
@@ -81,7 +80,8 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
       final response = await httpClient.request(
-        url: "$concentratorUrl/api/APIImport/GetImages",
+        url:
+            "$concentratorUrl/api/APIImport/GetImages?enterpriseId=${EnterpriseBuilder.entity?.enterpriseId}",
         method: "get",
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );
@@ -94,19 +94,12 @@ class ConcentratorLoadImages implements LoadImages {
   Future<List<ImageModel>> _downloadImages(List<String> imagesNames) async {
     final images = <ImageModel>[];
     final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
-    final enterpriseImage = await _loadEnterpriseConcentratorImage();
-
-    if (enterpriseImage != null) {
-      images.add(enterpriseImage);
-      _saveImageToDevice(enterpriseImage);
-    }
 
     final client = http.Client();
     try {
       debugPrint("Downloading ${imagesNames.toSet().length} images");
 
       for (final pluOrEanPng in imagesNames.toSet()) {
-        if (pluOrEanPng == "Logo.png") continue;
         try {
           final maxSizeInBytes = 1 * 1024 * 1024;
           final url = "$concentratorUrl/Images/$pluOrEanPng";
@@ -138,7 +131,7 @@ class ConcentratorLoadImages implements LoadImages {
             },
             onDone: () async {
               if (!completer.isCompleted) {
-                final imagePath = await _getImagePath(pluOrEanPng);
+                final imagePath = await _getImagePath() + pluOrEanPng;
 
                 final image = ImageModel(
                   pluOrEan: pluOrEanPng,
@@ -170,35 +163,6 @@ class ConcentratorLoadImages implements LoadImages {
     }
 
     return images;
-  }
-
-  Future<ImageModel?> _loadEnterpriseConcentratorImage() async {
-    try {
-      final concentratorUrl = EnterpriseBuilder.entity?.concentradorUrl;
-      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
-      final response = await http
-          .get(
-            Uri.parse(
-                "$concentratorUrl/Images/Enterprise$enterpriseId/Logo.png"),
-          )
-          .timeout(Duration(seconds: 5));
-
-      if (response.statusCode != 200) {
-        throw Exception("Erro ao baixar imagem: ${response.statusCode}");
-      }
-
-      final path = await _getImagePath("Logo.png");
-      return ImageModel(
-        pluOrEan: "",
-        image: response.bodyBytes,
-        keyIsEan: false,
-        isEnterpriseImage: true,
-        enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-        imagePath: path,
-      );
-    } catch (e) {
-      return null;
-    }
   }
 
   Future<List<ImageModel>> _getImages({
@@ -255,7 +219,7 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       final plusWithImages = await _getPlusWithImages();
 
-      if (plusWithImages.length > localImages.length - 1) {
+      if (plusWithImages.length > localImages.length) {
         final missingImages = plusWithImages
             .where(
               (ean) => !localImages.any(
@@ -278,41 +242,14 @@ class ConcentratorLoadImages implements LoadImages {
       rethrow;
     }
   }
-
-  Future<List<ImageModel>> _getLocalImages() async {
-    try {
-      final localImagesJson = await hiveStorage.get(CacheKeys.images.name);
-
-      if (localImagesJson != null) {
-        List<ImageModel> localImages = (localImagesJson as List)
-            .map((e) => ImageModel.fromJson(e))
-            .toList();
-
-        //save all images in device, instead of hive
-        for (var image in localImages) {
-          await _saveImageToDevice(image);
-        }
-        //delete all images in hive
-        await hiveStorage.delete(CacheKeys.images.name);
-
-        return localImages;
-      } else {
-        return await _getImagesFromDevice();
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
 }
 
 Future<void> _saveImageToDevice(ImageModel image) async {
-  final file = File(
-    await _getImagePath(
-      image.isEnterpriseImage ? "Logo.png" : image.pluOrEan,
-      enterpriseName:
-          image.enterpriseName ?? EnterpriseBuilder.entity?.enterpriseName,
-    ),
-  );
+  final rootPath = await _getImagePath();
+  final filePath =
+      "$rootPath${image.isEnterpriseImage ? "Logo.png" : image.pluOrEan}";
+
+  final file = File(filePath);
 
   try {
     await file.parent.create(recursive: true);
@@ -323,34 +260,30 @@ Future<void> _saveImageToDevice(ImageModel image) async {
   }
 }
 
-Future<String> _getImagePath(
-  String pluOrEanPng, {
-  String? enterpriseName,
-}) async {
+Future<String> _getImagePath() async {
   late Directory directory;
+  final separator = Platform.pathSeparator;
+
   if (Platform.isWindows) {
     final userProfile = Platform.environment['USERPROFILE'];
-    directory = Directory('$userProfile\\Documents');
+    directory = Directory('$userProfile$separator' "Documents");
   } else {
     directory = await getApplicationDocumentsDirectory();
   }
 
-  final separator = Platform.pathSeparator;
+  final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
-  return '${directory.path}${Platform.pathSeparator}images$separator$enterpriseName$separator$pluOrEanPng';
+  return '${directory.path}${Platform.pathSeparator}images$separator$enterpriseName$separator';
 }
 
 Future<List<ImageModel>> _getImagesFromDevice() async {
-  final rootDirectory = await getApplicationDocumentsDirectory();
-
-  final correctDirectory = Directory(
-      '${rootDirectory.path}${Platform.pathSeparator}images${Platform.pathSeparator}${EnterpriseBuilder.entity?.enterpriseName}');
+  final correctDirectory = Directory(await _getImagePath());
 
   if (!correctDirectory.existsSync()) {
     correctDirectory.createSync(recursive: true);
   }
 
-  final files = correctDirectory.listSync();
+  final files = correctDirectory.listSync(recursive: true);
 
   List<ImageModel> images = [];
 
@@ -366,7 +299,7 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
             pluOrEan: pluOrEan,
             image: null,
             keyIsEan: !pluOrEan.contains("-"),
-            isEnterpriseImage: file.path.contains("Logo"),
+            isEnterpriseImage: file.path.toLowerCase().contains("logo"),
             enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
             imagePath: file.path,
           ),
@@ -388,6 +321,6 @@ String _getPluEanFromPath(String path) {
     final extension = match.group(2)!.toLowerCase(); // normalize to lowercase
     return "$name.$extension";
   } else {
-    throw Exception('pluOrEan not found in path: $path');
+    return "";
   }
 }

@@ -884,6 +884,7 @@ class EntityFactory {
           comment: faker.randomGenerator.string(10),
           indexOfSelectedChild: null,
           Schedule: makeProductScheduleEntity(),
+          ProductIsFatherComposition: faker.randomGenerator.boolean(),
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -901,6 +902,7 @@ class EntityFactory {
           comment: faker.randomGenerator.string(10),
           indexOfSelectedChild: null,
           Schedule: makeProductScheduleEntity(),
+          ProductIsFatherComposition: faker.randomGenerator.boolean(),
         ),
       ];
 
@@ -929,6 +931,7 @@ class EntityFactory {
         ProductOptions: "",
         indexOfSelectedChild: indexOfSelectedChild,
         Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
+        ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
         childs: !insertChilds
             ? []
             : [
@@ -946,6 +949,8 @@ class EntityFactory {
                   OfferPrice: offerPrice.toString(),
                   IncrementValue: childIncrement.toString(),
                   IsOptionalItem: isOptionalItem.toString(),
+                  ProductIsFatherComposition:
+                      faker.randomGenerator.boolean().toString(),
                   ProductOptions: "",
                   indexOfSelectedChild: indexOfSelectedChild,
                   childs: const [],

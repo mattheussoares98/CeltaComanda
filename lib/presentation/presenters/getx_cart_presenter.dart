@@ -277,6 +277,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
             return ProductCompositionViewModel(
               ProductCompositionId: e.ProductCompositionId,
+              ProductIsFatherComposition: e.ProductIsFatherComposition,
               EnterpriseId: e.EnterpriseId,
               InternalCodeOnERPCodeFather: e.InternalCodeOnERPCodeFather,
               InternalCodeOnERPCodeChild: e.InternalCodeOnERPCodeChild,
@@ -349,6 +350,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
           return ProductCompositionViewModel(
             ProductCompositionId: e.ProductCompositionId,
+            ProductIsFatherComposition: e.ProductIsFatherComposition,
             EnterpriseId: e.EnterpriseId,
             InternalCodeOnERPCodeFather: e.InternalCodeOnERPCodeFather,
             InternalCodeOnERPCodeChild: e.InternalCodeOnERPCodeChild,
@@ -711,6 +713,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       final newChild = ProductCompositionViewModel(
         commentFather: comment,
         ProductCompositionId: oldChild.ProductCompositionId,
+        ProductIsFatherComposition: oldChild.ProductIsFatherComposition,
         EnterpriseId: oldChild.EnterpriseId,
         InternalCodeOnERPCodeFather: oldChild.InternalCodeOnERPCodeFather,
         InternalCodeOnERPCodeChild: oldChild.InternalCodeOnERPCodeChild,

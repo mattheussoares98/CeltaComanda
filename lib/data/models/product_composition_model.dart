@@ -17,6 +17,7 @@ class ProductCompositionModel extends Equatable {
   final double? OfferPrice;
   final double? IncrementValue;
   final bool? IsOptionalItem;
+  final bool? ProductIsFatherComposition;
   final dynamic ProductOptions;
   final String? comment;
   final int? indexOfSelectedChild;
@@ -34,6 +35,7 @@ class ProductCompositionModel extends Equatable {
     required this.OfferPrice,
     required this.IncrementValue,
     required this.IsOptionalItem,
+    required this.ProductIsFatherComposition,
     required this.ProductOptions,
     required this.comment,
     required this.indexOfSelectedChild,
@@ -49,6 +51,7 @@ class ProductCompositionModel extends Equatable {
         "PluChild",
         "ChildName",
         "IsOptionalItem",
+        "ProductIsFatherComposition",
       ],
     )) {
       throw Exception();
@@ -66,6 +69,7 @@ class ProductCompositionModel extends Equatable {
       OfferPrice: json["OfferPrice"],
       IncrementValue: json["IncrementValue"],
       IsOptionalItem: json["IsOptionalItem"],
+      ProductIsFatherComposition: json["ProductIsFatherComposition"],
       ProductOptions: json["ProductOptions"],
       comment: json["comment"],
       indexOfSelectedChild: json["indexOfSelectedChild"],
@@ -88,6 +92,7 @@ class ProductCompositionModel extends Equatable {
       OfferPrice: entity.OfferPrice,
       IncrementValue: entity.IncrementValue,
       IsOptionalItem: entity.IsOptionalItem,
+      ProductIsFatherComposition: entity.ProductIsFatherComposition,
       ProductOptions: entity.ProductOptions,
       comment: entity.comment,
       indexOfSelectedChild: entity.indexOfSelectedChild,
@@ -107,6 +112,7 @@ class ProductCompositionModel extends Equatable {
         "OfferPrice": OfferPrice,
         "IncrementValue": IncrementValue,
         "IsOptionalItem": IsOptionalItem,
+        "ProductIsFatherComposition": ProductIsFatherComposition,
         "ProductOptions": ProductOptions,
         "comment": comment,
         "Schedule": Schedule,
@@ -124,6 +130,7 @@ class ProductCompositionModel extends Equatable {
         OfferPrice: OfferPrice,
         IncrementValue: IncrementValue,
         IsOptionalItem: IsOptionalItem,
+        ProductIsFatherComposition: ProductIsFatherComposition,
         ProductOptions: ProductOptions,
         comment: comment,
         indexOfSelectedChild: indexOfSelectedChild,
@@ -143,6 +150,7 @@ class ProductCompositionModel extends Equatable {
         OfferPrice,
         IncrementValue,
         IsOptionalItem,
+        ProductIsFatherComposition,
         ProductOptions,
         Schedule,
       ];

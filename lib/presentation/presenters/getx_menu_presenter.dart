@@ -244,6 +244,8 @@ class GetxMenuPresenter extends GetxController
               ProductCompositionViewModel(
                 ProductCompositionId:
                     childs[0].ProductCompositionId?.toString(),
+                ProductIsFatherComposition:
+                    childs[0].ProductIsFatherComposition?.toString(),
                 EnterpriseId: childs[0].EnterpriseId?.toString(),
                 InternalCodeOnERPCodeFather: product.InternalCodeOnERP,
                 InternalCodeOnERPCodeChild: product.InternalCodeOnERP,

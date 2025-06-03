@@ -19,6 +19,7 @@ class ProductCompositionViewModel extends Equatable {
   final String? IncrementValue;
   final String? IsOptionalItem;
   final String? ProductOptions;
+  final String? ProductIsFatherComposition;
   final List<ProductCompositionViewModel>? childs;
   final ProductScheduleModel? Schedule;
 
@@ -38,6 +39,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductOptions,
+    required this.ProductIsFatherComposition,
     required this.Schedule,
     this.indexOfSelectedChild,
     this.childs,
@@ -58,6 +60,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue,
         IsOptionalItem,
         ProductOptions,
+        ProductIsFatherComposition,
         childs,
         indexOfSelectedChild,
         childs,
@@ -82,6 +85,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
+        ProductIsFatherComposition: entity.ProductIsFatherComposition?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
@@ -111,6 +115,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
+        ProductIsFatherComposition: entity.ProductIsFatherComposition?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
             ? ProductScheduleModel.fromEntity(entity.Schedule!)
@@ -136,6 +141,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: IncrementValue!.toDouble(),
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
+        ProductIsFatherComposition: ProductIsFatherComposition == "true",
         comment: commentFather,
         childsComposition: childs?.isEmpty == true
             ? null
@@ -157,6 +163,7 @@ class ProductCompositionViewModel extends Equatable {
         "IncrementValue": IncrementValue,
         "IsOptionalItem": IsOptionalItem,
         "ProductOptions": ProductOptions,
+        "ProductIsFatherComposition": ProductIsFatherComposition,
         "childs": childs,
         "indexOfSelectedChild": indexOfSelectedChild,
         "commentFather": commentFather,
@@ -177,6 +184,7 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: json["IncrementValue"],
         IsOptionalItem: json["IsOptionalItem"],
         ProductOptions: json["ProductOptions"],
+        ProductIsFatherComposition: json["ProductIsFatherComposition"],
         indexOfSelectedChild: json["indexOfSelectedChild"],
         childs: json["childs"]
             ?.map<ProductCompositionViewModel>(

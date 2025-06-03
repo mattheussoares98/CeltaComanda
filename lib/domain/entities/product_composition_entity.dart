@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import 'entities.dart';
@@ -17,6 +15,7 @@ class ProductCompositionEntity extends Equatable {
   final double? OfferPrice;
   final double? IncrementValue;
   final bool? IsOptionalItem;
+  final bool? ProductIsFatherComposition;
   final dynamic ProductOptions;
   final ProductScheduleEntity? Schedule;
   String? comment;
@@ -35,6 +34,7 @@ class ProductCompositionEntity extends Equatable {
     required this.OfferPrice,
     required this.IncrementValue,
     required this.IsOptionalItem,
+    required this.ProductIsFatherComposition,
     required this.ProductOptions,
     required this.comment,
     required this.indexOfSelectedChild,
@@ -55,6 +55,7 @@ class ProductCompositionEntity extends Equatable {
         OfferPrice,
         IncrementValue,
         IsOptionalItem,
+        ProductIsFatherComposition,
         ProductOptions,
         childsComposition,
         indexOfSelectedChild,
@@ -77,6 +78,8 @@ class ProductCompositionEntity extends Equatable {
         other.OfferPrice == OfferPrice &&
         other.IncrementValue == IncrementValue &&
         other.IsOptionalItem == IsOptionalItem &&
+        other.IsOptionalItem == IsOptionalItem &&
+        other.ProductIsFatherComposition == ProductIsFatherComposition &&
         other.ProductOptions == ProductOptions &&
         other.comment == comment &&
         other.indexOfSelectedChild == indexOfSelectedChild &&
@@ -98,6 +101,7 @@ class ProductCompositionEntity extends Equatable {
       OfferPrice,
       IncrementValue,
       IsOptionalItem,
+      ProductIsFatherComposition,
       ProductOptions,
       comment,
       indexOfSelectedChild,

@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 class ConcentratorFinalizationEntity extends Equatable {
@@ -23,11 +21,12 @@ class ConcentratorFinalizationEntity extends Equatable {
   final String? TEFModalityPaymentCode;
   final String? TEFModalityDescription;
   final String? TEFPlanCardCode;
+  final String uniqueId;
 //  public virtual ModelSaleMovement SaleMovement
 //  public virtual IList<ModelSaleMovementFinalizationCheck> Checks
 //  public virtual IList<ModelSaleMovementFinalizationPortion> Portions
 
-  const ConcentratorFinalizationEntity({
+  ConcentratorFinalizationEntity({
     required this.SaleMovementFinalizationId,
     required this.FinalizationId,
     required this.Value,
@@ -48,7 +47,8 @@ class ConcentratorFinalizationEntity extends Equatable {
     required this.TEFModalityPaymentCode,
     required this.TEFModalityDescription,
     required this.TEFPlanCardCode,
-  });
+    String? uniqueId,
+  }) : uniqueId = uniqueId ?? DateTime.now().millisecondsSinceEpoch.toString();
 
   @override
   List<Object?> get props => [
@@ -72,5 +72,6 @@ class ConcentratorFinalizationEntity extends Equatable {
         TEFModalityPaymentCode,
         TEFModalityDescription,
         TEFPlanCardCode,
+        uniqueId,
       ];
 }

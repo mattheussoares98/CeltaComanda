@@ -100,6 +100,7 @@ class ConcentratorFinalizationModel extends Equatable {
         TEFModalityPaymentCode: data["TEFModalityPaymentCode"],
         TEFModalityDescription: data["TEFModalityDescription"],
         TEFPlanCardCode: data["TEFPlanCardCode"],
+        uniqueId: data["uniqueId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -123,6 +124,7 @@ class ConcentratorFinalizationModel extends Equatable {
         "TEFModalityPaymentCode": TEFModalityPaymentCode,
         "TEFModalityDescription": TEFModalityDescription,
         "TEFPlanCardCode": TEFPlanCardCode,
+        "uniqueId": uniqueId,
       };
 
   ConcentratorFinalizationEntity toEntity() => ConcentratorFinalizationEntity(
@@ -149,8 +151,11 @@ class ConcentratorFinalizationModel extends Equatable {
       );
 
   factory ConcentratorFinalizationModel.fromEntity(
-          ConcentratorFinalizationEntity entity) =>
+    ConcentratorFinalizationEntity entity, {
+    String? uniqueId,
+  }) =>
       ConcentratorFinalizationModel(
+        uniqueId: uniqueId ?? entity.uniqueId,
         SaleMovementFinalizationId: entity.SaleMovementFinalizationId,
         FinalizationId: entity.FinalizationId,
         finalizationType: entity.FinalizationId!.finalizationId,

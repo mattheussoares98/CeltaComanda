@@ -430,7 +430,7 @@ class EntityFactory {
       GoesForFastTable: faker.randomGenerator.boolean().toString(),
       IsAlcoholicProduct: faker.randomGenerator.boolean().toString(),
       SaleRetailPrice: faker.randomGenerator.decimal().toString(),
-      PercImpNBPTNational: faker.randomGenerator.string(10),
+      PercImpNBPTNational: faker.randomGenerator.integer(100).toString(),
       CofinsPercentage: faker.randomGenerator.string(10),
       PisPercentage: faker.randomGenerator.string(10),
       CFOP: faker.randomGenerator.string(10),

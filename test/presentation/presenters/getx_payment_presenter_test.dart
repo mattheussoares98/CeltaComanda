@@ -1154,16 +1154,14 @@ void main() {
         customerPassword: customersViewModel[0].HasPassword,
       );
 
-      expect(sut.successfulPayments, [
-        ConcentratorFinalizationModel(
-          FinalizationId: FinalizationType.covenant.id,
-          Value: totalLiquidMocked,
-          ValueLiquid: totalLiquidMocked,
-          PortionQuantity: 1,
-          AuthorizationCode: authorizationSoapResponse.response,
-          AuthorizationType: 2,
-        )
-      ]);
+      final payment = sut.successfulPayments[0];
+      expect(payment.FinalizationId, FinalizationType.covenant.id);
+      expect(payment.Value, totalLiquidMocked);
+      expect(payment.ValueLiquid, totalLiquidMocked);
+      expect(payment.PortionQuantity, 1);
+      expect(payment.AuthorizationCode, authorizationSoapResponse.response);
+      expect(payment.AuthorizationType, 2);
+      expect(sut.successfulPayments.length, 1);
     });
 
     test("Should call authorize covenant limit use by code", () async {

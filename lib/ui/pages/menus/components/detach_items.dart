@@ -24,34 +24,36 @@ class DetachItems extends StatelessWidget {
     }
 
     return CarouselSlider(
-      options: CarouselOptions(
-        height: double.infinity,
-        autoPlay: true,
-        viewportFraction: 1,
-        enableInfiniteScroll: true,
-        autoPlayInterval: const Duration(seconds: 7),
-        autoPlayAnimationDuration: const Duration(milliseconds: 1500),
-        autoPlayCurve: Curves.fastOutSlowIn,
-        scrollDirection:
-            ScreenSize.hasMinWidth ? Axis.horizontal : Axis.vertical,
-      ),
-      items: menuPresenter.treatSchedules<ProductsViewModel>().map((product) {
-        return _DetachItem(
-          popOnImageClick: popOnImageClick!,
-          product: product,
-          marketingImage: null,
-        );
-      }).toList()
-        ..addAll(
-          menuPresenter.downloadedImages.where((e) => e.isMarketingImage).map(
-                (e) => _DetachItem(
-                  popOnImageClick: popOnImageClick!,
-                  product: null,
-                  marketingImage: e,
-                ),
-              ),
+        options: CarouselOptions(
+          height: double.infinity,
+          autoPlay: true,
+          viewportFraction: 1,
+          enableInfiniteScroll: true,
+          autoPlayInterval: const Duration(seconds: 7),
+          autoPlayAnimationDuration: const Duration(milliseconds: 1500),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          scrollDirection:
+              ScreenSize.hasMinWidth ? Axis.horizontal : Axis.vertical,
         ),
-    );
+        items: menuPresenter.downloadedImages
+            .where((e) => e.isMarketingImage)
+            .map(
+              (e) => _DetachItem(
+                popOnImageClick: popOnImageClick!,
+                product: null,
+                marketingImage: e,
+              ),
+            )
+            .toList()
+          ..addAll(
+            menuPresenter.treatSchedules<ProductsViewModel>().map((product) {
+              return _DetachItem(
+                popOnImageClick: popOnImageClick!,
+                product: product,
+                marketingImage: null,
+              );
+            }).toList(),
+          ));
   }
 }
 
@@ -74,6 +76,7 @@ class _DetachItem extends StatelessWidget {
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
         showLargeImage(
+          imagePath: marketingImage?.imagePath,
           context: context,
           ean: product?.EanCode,
           productComplement: product?.ProductComplement,
@@ -86,6 +89,7 @@ class _DetachItem extends StatelessWidget {
       child: Stack(
         children: [
           ImageWidget(
+            imagePath: marketingImage?.imagePath,
             ean: product?.EanCode,
             plu: product?.PriceLookupCode ?? "",
             width: MediaQuery.of(context).size.width,

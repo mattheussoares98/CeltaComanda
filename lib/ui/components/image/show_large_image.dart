@@ -10,7 +10,8 @@ void showLargeImage({
   required String? productComplement,
   ProductsViewModel? selectedProduct,
   bool? showInsertButton,
-  required String plu, //TODO remove this and use only imagePath
+  required String plu,
+  String? imagePath,
   String? productName,
 }) {
   final deviceHeight = MediaQuery.of(context).size.height;
@@ -32,6 +33,7 @@ void showLargeImage({
         Expanded(
           flex: 3,
           child: ImageWidget(
+            imagePath: imagePath,
             ean: ean,
             plu: plu,
             height: productComplement != null && productComplement.isNotEmpty

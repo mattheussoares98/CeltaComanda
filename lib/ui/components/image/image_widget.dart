@@ -15,6 +15,7 @@ class ImageWidget extends StatefulWidget {
   final ProductsViewModel? selectedProduct;
   final AnimationOrientation orientation;
   final bool zoomImage;
+  final String? imagePath;
 
   const ImageWidget({
     this.height = 65,
@@ -22,6 +23,7 @@ class ImageWidget extends StatefulWidget {
     required this.ean,
     required this.plu,
     required this.selectedProduct,
+    this.imagePath,
     this.orientation = AnimationOrientation.horizontal,
     this.zoomImage = false,
     super.key,
@@ -72,6 +74,7 @@ class _ImageWidgetState extends State<ImageWidget>
                     ? Offset(0, _animation.value)
                     : Offset(_animation.value, 0),
                 child: CachedImage(
+                  imagePath: widget.imagePath,
                   ean: widget.ean,
                   plu: widget.plu,
                   height: widget.height,

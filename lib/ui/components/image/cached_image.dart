@@ -12,11 +12,13 @@ class CachedImage extends StatefulWidget {
   final double height;
   final double width;
   final bool zoomImage;
+  final String? imagePath;
   const CachedImage({
     required this.ean,
     required this.plu,
     required this.height,
     required this.width,
+    required this.imagePath,
     this.zoomImage = false,
     super.key,
   });
@@ -39,22 +41,13 @@ class CachedImageState extends State<CachedImage> {
       }
     });
 
-    if (indexOfProduct == -1) {
+    if (indexOfProduct == -1 && widget.imagePath == null) {
       return _defaultImage(menuPresenter);
-    } else if (menuPresenter.downloadedImages[indexOfProduct].image != null) {
-      return Image.memory(
-        menuPresenter.downloadedImages[indexOfProduct].image!,
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
-            ? BoxFit.fitWidth
-            : BoxFit.contain,
-      );
     } else {
       return Image.file(
         File(
-          menuPresenter.downloadedImages[indexOfProduct].imagePath,
+          widget.imagePath ??
+              menuPresenter.downloadedImages[indexOfProduct].imagePath,
         ),
         height: widget.height,
         width: widget.width,

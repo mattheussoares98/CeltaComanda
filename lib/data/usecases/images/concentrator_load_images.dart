@@ -144,7 +144,7 @@ class ConcentratorLoadImages implements LoadImages {
                   pluOrEan: imageName,
                   image: Uint8List.fromList(buffer),
                   keyIsEan: imageName.length > 11,
-                  isLogoImage: false,
+                  isLogoImage: imageName.toLowerCase().contains("logo"),
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
                   imagePath: imagePath,
                   isMarketingImage: imageName.toLowerCase().contains("market"),

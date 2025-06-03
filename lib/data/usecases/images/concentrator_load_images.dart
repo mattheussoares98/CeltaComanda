@@ -106,6 +106,8 @@ class ConcentratorLoadImages implements LoadImages {
 
     for (var removedImage in removedImagesInConcentrator) {
       final file = File(removedImage.imagePath);
+
+      localImages.remove(removedImage);
       if (file.existsSync()) {
         await file.delete();
         debugPrint("removed image: ${removedImage.imagePath}");

@@ -67,8 +67,8 @@ class CachedImageState extends State<CachedImage> {
   }
 
   Widget _defaultImage(MenuPresenter menuPresenter) {
-    final indexOfEnterpriseImage =
-        menuPresenter.downloadedImages.indexWhere((e) => e.isLogoImage);
+    final indexOfEnterpriseImage = menuPresenter.downloadedImages
+        .indexWhere((e) => e.isLogoImage && File(e.imagePath).existsSync());
 
     if (indexOfEnterpriseImage == -1) {
       return Image.asset(

@@ -6,6 +6,5 @@ export './group_items.dart';
 export 'groups_subgroups_and_products.dart';
 export './load_menu_button.dart';
 export 'open_insert_product_page.dart';
-export 'portrait_product_item.dart';
 export 'landscape_product_item.dart';
 export './products_items.dart';

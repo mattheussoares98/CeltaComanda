@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../database/database.dart';
 import '../../http/http.dart';
@@ -33,9 +34,14 @@ class ConcentratorLoadImages implements LoadImages {
 
     try {
       var localImages = await _getLocalImages();
-      List<String> imagesToDownload = await _getMissingImages(localImages);
+      final plusWithImages = await _getPlusWithImages();
 
-      await deleteOldEnterprisePath(localImages);
+      List<String> imagesToDownload = await _getMissingImages(
+        localImages,
+        plusWithImages,
+      );
+
+      await deleteNotExistedImages(localImages, plusWithImages);
 
       if (getLocalImages && imagesToDownload.isEmpty) {
         final enterpriseImages = localImages
@@ -74,14 +80,36 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<void> deleteOldEnterprisePath(List<ImageModel> localImages) async {
-    final imagesToRemove = localImages
+  Future<void> deleteNotExistedImages(
+    List<ImageModel> localImages,
+    List<String> plusWithImages,
+  ) async {
+    await hiveStorage.delete(CacheKeys.images.name);
+
+    final oldEnterpriseImage = localImages
         .where((e) =>
             e.isLogoImage && !e.imagePath.toLowerCase().contains("enterprise"))
         .toList();
 
-    if (imagesToRemove.isNotEmpty) {
-      await File(imagesToRemove.first.imagePath).delete();
+    if (oldEnterpriseImage.isNotEmpty) {
+      await File(oldEnterpriseImage.first.imagePath).delete();
+    }
+
+    final removedImagesInConcentrator = localImages
+        .where((e) => !plusWithImages.any((x) => e.imagePath
+            .toLowerCase()
+            .contains(x
+                .toLowerCase()
+                .replaceAll('/', separator)
+                .replaceAll("\\", separator))))
+        .toList();
+
+    for (var removedImage in removedImagesInConcentrator) {
+      final file = File(removedImage.imagePath);
+      if (file.existsSync()) {
+        await file.delete();
+        debugPrint("removed image: ${removedImage.imagePath}");
+      }
     }
   }
 
@@ -206,10 +234,11 @@ class ConcentratorLoadImages implements LoadImages {
     }
   }
 
-  Future<List<String>> _getMissingImages(List<ImageModel> localImages) async {
+  Future<List<String>> _getMissingImages(
+    List<ImageModel> localImages,
+    List<String> plusWithImages,
+  ) async {
     try {
-      final plusWithImages = await _getPlusWithImages();
-
       final missingImages = plusWithImages.where((e) {
         final path = e.replaceAll('/', separator).replaceAll("\\", separator);
         return !localImages

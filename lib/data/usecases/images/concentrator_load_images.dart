@@ -22,6 +22,8 @@ class ConcentratorLoadImages implements LoadImages {
     required this.httpClient,
   });
 
+  String get separator => Platform.pathSeparator;
+
   @override
   Future<List<ImageModel>> load({
     required bool getLocalImages,
@@ -146,7 +148,9 @@ class ConcentratorLoadImages implements LoadImages {
                   keyIsEan: imageName.length > 11,
                   isLogoImage: imageName.toLowerCase().contains("logo"),
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-                  imagePath: imagePath,
+                  imagePath: imagePath
+                      .replaceAll('/', separator)
+                      .replaceAll("\\", separator),
                   isMarketingImage: imageName.toLowerCase().contains("market"),
                 );
 
@@ -206,96 +210,91 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       final plusWithImages = await _getPlusWithImages();
 
-      final separator = Platform.pathSeparator;
       final missingImages = plusWithImages.where((e) {
         final path = e.replaceAll('/', separator).replaceAll("\\", separator);
-        return !localImages.any((x) => x.imagePath.contains(path));
+        return !localImages
+            .any((x) => x.imagePath.toLowerCase().contains(path.toLowerCase()));
       }).toList();
 
       debugPrint("missing: ${missingImages.length} images");
-      return missingImages;
+      return missingImages.toSet().toList();
     } catch (e) {
       rethrow;
     }
   }
-}
 
-Future<void> _saveImageToDevice(ImageModel image) async {
-  final rootPath = await _getImagePath();
-  final filePath =
-      "$rootPath${image.isLogoImage ? "Logo.png" : image.pluOrEan}";
+  Future<String> _getImagePath() async {
+    late Directory directory;
 
-  final file = File(filePath);
-
-  try {
-    await file.parent.create(recursive: true);
-    await file.writeAsBytes(image.image!, flush: true);
-    debugPrint("Saved image");
-  } catch (e) {
-    debugPrint("Erro ao salvar imagem: ${file.path} - $e");
-  }
-}
-
-Future<String> _getImagePath() async {
-  late Directory directory;
-  final separator = Platform.pathSeparator;
-
-  if (Platform.isWindows) {
-    final userProfile = Platform.environment['USERPROFILE'];
-    directory = Directory('$userProfile$separator' "Documents");
-  } else {
-    directory = await getApplicationDocumentsDirectory();
-  }
-
-  final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
-
-  return '${directory.path}${Platform.pathSeparator}images$separator$enterpriseName$separator';
-}
-
-Future<List<ImageModel>> _getLocalImages() async {
-  final correctDirectory = Directory(await _getImagePath());
-
-  if (!correctDirectory.existsSync()) {
-    correctDirectory.createSync(recursive: true);
-  }
-
-  final files = correctDirectory.listSync(recursive: true, followLinks: true);
-
-  List<ImageModel> images = [];
-
-  try {
-    for (final file in files) {
-      final pluOrEan = _getPluEanFromPath(file.path);
-
-      if (file is File) {
-        images.add(
-          ImageModel(
-            pluOrEan: pluOrEan,
-            image: null,
-            keyIsEan: !pluOrEan.contains("-"),
-            isLogoImage: file.path.toLowerCase().contains("logo"),
-            enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
-            imagePath: file.path,
-            isMarketingImage: file.path.toLowerCase().contains("market"),
-          ),
-        );
-      }
+    if (Platform.isWindows) {
+      final userProfile = Platform.environment['USERPROFILE'];
+      directory = Directory('$userProfile$separator' "Documents");
+    } else {
+      directory = await getApplicationDocumentsDirectory();
     }
-  } catch (e) {
-    debugPrint(e.toString());
+
+    final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
+
+    return '${directory.path}${separator}images$separator$enterpriseName$separator';
   }
 
-  return images;
-}
+  Future<void> _saveImageToDevice(ImageModel image) async {
+    final file = File(image.imagePath);
 
-String _getPluEanFromPath(String path) {
-  final regex = RegExp(r'([^\\/]+)\.(png|jpg)$', caseSensitive: false);
-  final match = regex.firstMatch(path);
-  if (match != null) {
-    final name = match.group(1)!;
-    final extension = match.group(2)!.toLowerCase(); // normalize to lowercase
-    return "$name.$extension";
-  } else {
-    return "";
+    try {
+      await file.parent.create(recursive: true);
+      await file.writeAsBytes(image.image!, flush: true);
+      debugPrint("Saved image");
+    } catch (e) {
+      debugPrint("Erro ao salvar imagem: ${file.path} - $e");
+    }
+  }
+
+  Future<List<ImageModel>> _getLocalImages() async {
+    final correctDirectory = Directory(await _getImagePath());
+
+    if (!correctDirectory.existsSync()) {
+      correctDirectory.createSync(recursive: true);
+    }
+
+    final files = correctDirectory.listSync(recursive: true, followLinks: true);
+
+    List<ImageModel> images = [];
+
+    try {
+      for (final file in files) {
+        final pluOrEan = _getPluEanFromPath(file.path);
+
+        if (file is File) {
+          images.add(
+            ImageModel(
+              pluOrEan: pluOrEan,
+              image: null,
+              keyIsEan: !pluOrEan.contains("-"),
+              isLogoImage: file.path.toLowerCase().contains("logo"),
+              enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
+              imagePath: file.path,
+              isMarketingImage: file.path.toLowerCase().contains("market"),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    return images;
+  }
+
+  String _getPluEanFromPath(String path) {
+    final regex = RegExp(r'([^\\/]+)\.(png|jpg)$', caseSensitive: false);
+    final match = regex.firstMatch(path);
+    if (match != null) {
+      final name = match.group(1)!;
+      final extension = match.group(2)!.toLowerCase(); // normalize to lowercase
+      return "$name.$extension";
+    } else {
+      return "";
+    }
   }
 }

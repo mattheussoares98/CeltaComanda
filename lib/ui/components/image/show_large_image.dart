@@ -10,7 +10,7 @@ void showLargeImage({
   required String? productComplement,
   ProductsViewModel? selectedProduct,
   bool? showInsertButton,
-  required String plu,
+  required String plu, //TODO remove this and use only imagePath
   String? productName,
 }) {
   final deviceHeight = MediaQuery.of(context).size.height;

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../../data/models/models.dart';
 import '../../../../ui/components/components.dart';
 import '../../../../ui/helpers/sizes/sizes.dart';
 import '../../pages.dart';
@@ -31,67 +32,98 @@ class DetachItems extends StatelessWidget {
         autoPlayInterval: const Duration(seconds: 7),
         autoPlayAnimationDuration: const Duration(milliseconds: 1500),
         autoPlayCurve: Curves.fastOutSlowIn,
-        scrollDirection: ScreenSize.hasMinWidth ? Axis.horizontal : Axis.vertical,
+        scrollDirection:
+            ScreenSize.hasMinWidth ? Axis.horizontal : Axis.vertical,
       ),
       items: menuPresenter.treatSchedules<ProductsViewModel>().map((product) {
-        return InkWell(
-          onTap: () {
-            if (popOnImageClick == true) {
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            }
-            showLargeImage(
-              context: context,
-              ean: product.EanCode,
-              productComplement: product.ProductComplement,
-              plu: product.PriceLookupCode,
-              productName: product.Name,
-              selectedProduct: product,
-              showInsertButton: true,
-            );
-          },
-          child: Stack(
-            children: [
-              ImageWidget(
-                ean: product.EanCode,
-                plu: product.PriceLookupCode,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                selectedProduct: product,
-                orientation: ScreenSize.hasMinWidth
-                    ? AnimationOrientation.horizontal
-                    : AnimationOrientation.vertical,
-              ),
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      Colors.transparent,
-                      Colors.black45,
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 30,
-                left: ScreenSize.hasMinWidth ? 30 : 5,
-                child: Text(
-                  product.Name.toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: ScreenSize.hasMinWidth ? 40 : 17,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
+        return _DetachItem(
+          popOnImageClick: popOnImageClick!,
+          product: product,
+          marketingImage: null,
         );
-      }).toList(),
+      }).toList()
+        ..addAll(
+          menuPresenter.downloadedImages.where((e) => e.isMarketingImage).map(
+                (e) => _DetachItem(
+                  popOnImageClick: popOnImageClick!,
+                  product: null,
+                  marketingImage: e,
+                ),
+              ),
+        ),
+    );
+  }
+}
+
+class _DetachItem extends StatelessWidget {
+  final bool popOnImageClick;
+  final ProductsViewModel? product;
+  final ImageModel? marketingImage;
+
+  const _DetachItem({
+    required this.popOnImageClick,
+    required this.product,
+    required this.marketingImage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (popOnImageClick == true) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        }
+        showLargeImage(
+          context: context,
+          ean: product?.EanCode,
+          productComplement: product?.ProductComplement,
+          plu: product?.PriceLookupCode ?? "",
+          productName: product?.Name,
+          selectedProduct: product,
+          showInsertButton: true,
+        );
+      },
+      child: Stack(
+        children: [
+          ImageWidget(
+            ean: product?.EanCode,
+            plu: product?.PriceLookupCode ?? "",
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            selectedProduct: product,
+            orientation: ScreenSize.hasMinWidth
+                ? AnimationOrientation.horizontal
+                : AnimationOrientation.vertical,
+          ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.transparent,
+                  Colors.black45,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 30,
+            left: ScreenSize.hasMinWidth ? 30 : 5,
+            child: Text(
+              product?.Name.toUpperCase() ?? "",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ScreenSize.hasMinWidth ? 40 : 17,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

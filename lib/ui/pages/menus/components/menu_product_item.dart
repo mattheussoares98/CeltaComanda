@@ -5,12 +5,12 @@ import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
 
-class LandscapeProductItem extends StatelessWidget {
+class MenuProductItem extends StatelessWidget {
   final ProductsViewModel productsViewModel;
   final double itemHeight;
   final double itemWidth;
   final Future<void> Function() onTapInsertInCart;
-  const LandscapeProductItem({
+  const MenuProductItem({
     required this.productsViewModel,
     required this.itemHeight,
     required this.itemWidth,

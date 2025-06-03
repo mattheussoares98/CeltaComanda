@@ -93,7 +93,7 @@ class ProductsItems extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: LayoutBuilder(builder: (context, constraints) {
-                  return LandscapeProductItem(
+                  return MenuProductItem(
                     productsViewModel: product,
                     itemHeight: constraints.maxHeight,
                     itemWidth: constraints.maxWidth,

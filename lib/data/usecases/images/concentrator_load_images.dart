@@ -30,9 +30,10 @@ class ConcentratorLoadImages implements LoadImages {
     final enterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
     try {
-      var localImages = await _getImagesFromDevice();
-
+      var localImages = await _getLocalImages();
       List<String> imagesToDownload = await _getMissingImages(localImages);
+
+      await deleteOldEnterprisePath(localImages);
 
       if (getLocalImages && imagesToDownload.isEmpty) {
         final enterpriseImages = localImages
@@ -61,13 +62,24 @@ class ConcentratorLoadImages implements LoadImages {
         case DomainError.unexpected:
           //só cai aqui se tentar obter os plus que tem imagem
           debugPrint("Returning local images");
-          return (await _getImagesFromDevice())
+          return (await _getLocalImages())
               .where((e) => e.enterpriseName == enterpriseName)
               .toList();
 
         default:
           rethrow;
       }
+    }
+  }
+
+  Future<void> deleteOldEnterprisePath(List<ImageModel> localImages) async {
+    final imagesToRemove = localImages
+        .where((e) =>
+            e.isLogoImage && !e.imagePath.toLowerCase().contains("enterprise"))
+        .toList();
+
+    if (imagesToRemove.isNotEmpty) {
+      await File(imagesToRemove.first.imagePath).delete();
     }
   }
 
@@ -194,25 +206,14 @@ class ConcentratorLoadImages implements LoadImages {
     try {
       final plusWithImages = await _getPlusWithImages();
 
-      if (plusWithImages.length > localImages.length) {
-        final missingImages = plusWithImages
-            .where(
-              (ean) => !localImages.any(
-                (local) {
-                  return local.pluOrEan.toLowerCase() == ean.toLowerCase();
-                },
-              ),
-            )
-            .toList();
-        if (localImages.where((e) => e.isLogoImage).isEmpty) {
-          missingImages.add("Logo.png");
-        }
+      final separator = Platform.pathSeparator;
+      final missingImages = plusWithImages.where((e) {
+        final path = e.replaceAll('/', separator).replaceAll("\\", separator);
+        return !localImages.any((x) => x.imagePath.contains(path));
+      }).toList();
 
-        debugPrint("missing: ${missingImages.length} images");
-        return missingImages;
-      }
-
-      return [];
+      debugPrint("missing: ${missingImages.length} images");
+      return missingImages;
     } catch (e) {
       rethrow;
     }
@@ -251,14 +252,14 @@ Future<String> _getImagePath() async {
   return '${directory.path}${Platform.pathSeparator}images$separator$enterpriseName$separator';
 }
 
-Future<List<ImageModel>> _getImagesFromDevice() async {
+Future<List<ImageModel>> _getLocalImages() async {
   final correctDirectory = Directory(await _getImagePath());
 
   if (!correctDirectory.existsSync()) {
     correctDirectory.createSync(recursive: true);
   }
 
-  final files = correctDirectory.listSync(recursive: true);
+  final files = correctDirectory.listSync(recursive: true, followLinks: true);
 
   List<ImageModel> images = [];
 
@@ -266,9 +267,7 @@ Future<List<ImageModel>> _getImagesFromDevice() async {
     for (final file in files) {
       final pluOrEan = _getPluEanFromPath(file.path);
 
-      if (file is File &&
-          (file.path.toLowerCase().endsWith('.png') ||
-              file.path.toLowerCase().endsWith('.jpg'))) {
+      if (file is File) {
         images.add(
           ImageModel(
             pluOrEan: pluOrEan,

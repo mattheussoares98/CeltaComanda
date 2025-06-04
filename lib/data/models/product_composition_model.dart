@@ -51,7 +51,6 @@ class ProductCompositionModel extends Equatable {
         "PluChild",
         "ChildName",
         "IsOptionalItem",
-        "ProductIsFatherComposition",
       ],
     )) {
       throw Exception();

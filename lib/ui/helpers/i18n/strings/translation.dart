@@ -37,6 +37,7 @@ abstract class Translation {
   String get msgLiquidadeCommandError;
   String get msgLowBatteryChargeDevice;
   String get msgMaximumQuantityAchieved;
+  String get msgMissingChilds;
   String get msgNeedUpdateApplication;
   String get msgNewCommandMustBeEmpty;
   String get msgNewTable;

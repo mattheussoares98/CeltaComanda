@@ -88,6 +88,18 @@ class ChildsRadios extends StatelessWidget {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
+    if (selectedFather.ProductIsFatherComposition == "true" &&
+        (selectedFather.childs == null || selectedFather.childs!.isEmpty)) {
+      return Text(
+        "${R.string.msgMissingChilds} (${selectedFather.ChildName})",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: StringSize.size,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
     if (!haveAnActiveChild()) {
       Future.delayed(Duration.zero, () {
         insertProductsPresenter.updateCanAdvanceIndex(

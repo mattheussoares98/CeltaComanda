@@ -30,8 +30,7 @@ class EnUs implements Translation {
       "Search command to view products";
   String get msgDaysToPreloadImage =>
       "The application pre load the images at least one time a day. If you change this value, the application will pre load according the paramter";
-  String get minutesVerifyUpdateMenu =>
-      "Minutes to verify need update the menu";
+
   String get msgDontHaveUnusedPdvs =>
       "There are no PDVs released for registration";
   String get msgEmailInUse => 'Email already in use';
@@ -66,6 +65,8 @@ class EnUs implements Translation {
   String get msgNumberCopiedSuccessfully => "Number copied successfully";
   String get msgMinutesVerifyUpdateMenu =>
       "The application will verify if the menu needs to be updated every X minutes";
+  String get msgMissingChilds =>
+      "At least one child is missing. Request the waiter to check the register of products";
   String get msgObligatoryFixedCommandNumber =>
       'The command number is mandatory';
   String get msgOldCommandIsEmpty => "The old table is empty";
@@ -252,6 +253,8 @@ class EnUs implements Translation {
   String get login => 'Login';
   String get maximumAbbreviated => "Max";
   String get minimumAbbreviated => "Min";
+  String get minutesVerifyUpdateMenu =>
+      "Minutes to verify need update the menu";
   String get missing => 'Missing';
   String get monday => 'Monday';
   String get money => 'Money';

@@ -234,10 +234,13 @@ class GetxMenuPresenter extends GetxController
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
           );
 
-          final childs = await getProductComposition.getChildsOfFather(
-            internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
-            fathers: fathers,
-          );
+          List<ProductCompositionEntity> childs = [];
+          if (fathers.any((e) => e.ProductIsFatherComposition == true)) {
+            childs = await getProductComposition.getChildsOfFather(
+              internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+              fathers: fathers,
+            );
+          }
 
           if (ProductCompositionEntity.listEquals(fathers, childs)) {
             product.childsComposition = [

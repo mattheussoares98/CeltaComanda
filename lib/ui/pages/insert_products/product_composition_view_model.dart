@@ -85,7 +85,8 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
-        ProductIsFatherComposition: entity.ProductIsFatherComposition?.toString(),
+        ProductIsFatherComposition:
+            entity.ProductIsFatherComposition?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
@@ -115,7 +116,8 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toDouble().toString(),
         IsOptionalItem: entity.IsOptionalItem?.toString(),
         ProductOptions: entity.ProductOptions?.toString(),
-        ProductIsFatherComposition: entity.ProductIsFatherComposition?.toString(),
+        ProductIsFatherComposition:
+            entity.ProductIsFatherComposition?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
             ? ProductScheduleModel.fromEntity(entity.Schedule!)
@@ -141,7 +143,8 @@ class ProductCompositionViewModel extends Equatable {
         IncrementValue: IncrementValue!.toDouble(),
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
-        ProductIsFatherComposition: ProductIsFatherComposition == "true",
+        ProductIsFatherComposition:
+            bool.tryParse(ProductIsFatherComposition.toString()),
         comment: commentFather,
         childsComposition: childs?.isEmpty == true
             ? null

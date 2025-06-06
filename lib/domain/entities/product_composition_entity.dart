@@ -78,7 +78,6 @@ class ProductCompositionEntity extends Equatable {
         other.OfferPrice == OfferPrice &&
         other.IncrementValue == IncrementValue &&
         other.IsOptionalItem == IsOptionalItem &&
-        other.IsOptionalItem == IsOptionalItem &&
         other.ProductIsFatherComposition == ProductIsFatherComposition &&
         other.ProductOptions == ProductOptions &&
         other.comment == comment &&

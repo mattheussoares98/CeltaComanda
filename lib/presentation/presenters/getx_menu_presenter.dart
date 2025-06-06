@@ -55,7 +55,6 @@ class GetxMenuPresenter extends GetxController
     searchedProduct = null;
     _indexOfAtualSuggestion = -1;
     indexOfSelectedGroup = 0;
-    _downloadedImages.clear();
   }
 
   @override
@@ -235,11 +234,14 @@ class GetxMenuPresenter extends GetxController
           );
 
           List<ProductCompositionEntity> childs = [];
-          if (fathers.any((e) => e.ProductIsFatherComposition == true)) {
-            childs = await getProductComposition.getChildsOfFather(
-              internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
-              fathers: fathers,
-            );
+
+          childs = await getProductComposition.getChildsOfFather(
+            internalCodeOnErp: product.InternalCodeOnERP!.toInt(),
+            fathers: fathers,
+          );
+
+          if (product.Name.toLowerCase().contains("refrigerante gp")) {
+            debugPrint("stop here");
           }
 
           if (ProductCompositionEntity.listEquals(fathers, childs)) {
@@ -420,6 +422,7 @@ class GetxMenuPresenter extends GetxController
     if (product.ProductIsFatherComposition == "1" &&
         (product.childsComposition == null ||
             product.childsComposition!.isEmpty)) {
+      debugPrint("product is father and dont has childs");
       await getGroupsAndProducts(
         commandEntity: null,
         expansibleGroupFromProductPresenter:

@@ -240,6 +240,10 @@ class GetxMenuPresenter extends GetxController
             fathers: fathers,
           );
 
+          if (product.Name.toLowerCase().contains("refrigerante gp")) {
+            debugPrint("stop here");
+          }
+
           if (ProductCompositionEntity.listEquals(fathers, childs)) {
             product.childsComposition = [
               ProductCompositionViewModel(

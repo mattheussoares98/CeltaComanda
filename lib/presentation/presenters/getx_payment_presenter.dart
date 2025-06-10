@@ -214,7 +214,7 @@ class GetxPaymentPresenter extends GetxController
     }
   }
 
-  MethodChannel redeChannel = MethodChannel(Channels.getnet.name);
+  MethodChannel redeChannel = MethodChannel(Channels.rede.name);
 
   @override
   void initRedePaymentResultHandler({

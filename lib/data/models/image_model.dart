@@ -8,6 +8,7 @@ class ImageModel {
   final bool keyIsEan;
   final bool isLogoImage;
   final bool isMarketingImage;
+  final String uniqueId;
 
   ImageModel({
     required this.pluOrEan,
@@ -17,5 +18,6 @@ class ImageModel {
     required this.keyIsEan,
     required this.isLogoImage,
     required this.isMarketingImage,
-  });
+    String? uniqueId,
+  }) : uniqueId = uniqueId ?? DateTime.now().millisecondsSinceEpoch.toString();
 }

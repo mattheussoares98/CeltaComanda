@@ -297,10 +297,11 @@ class ConcentratorLoadImages implements LoadImages {
         final pluOrEan = _getPluEanFromPath(file.path);
 
         if (file is File) {
+          final bytes = file.readAsBytesSync();
           images.add(
             ImageModel(
               pluOrEan: pluOrEan,
-              image: null,
+              image: bytes,
               keyIsEan: !pluOrEan.contains("-"),
               isLogoImage: file.path.toLowerCase().contains("logo"),
               enterpriseName: EnterpriseBuilder.entity?.enterpriseName,

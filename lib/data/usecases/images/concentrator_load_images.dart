@@ -171,10 +171,13 @@ class ConcentratorLoadImages implements LoadImages {
             onDone: () async {
               if (!completer.isCompleted) {
                 final imagePath = await _getImagePath() + imageName;
+                final bytes = Uint8List.fromList(buffer);
+                final file = File(imagePath);
 
                 final image = ImageModel(
                   pluOrEan: imageName,
-                  image: Uint8List.fromList(buffer),
+                  image: bytes,
+                  file: file,
                   keyIsEan: imageName.length > 11,
                   isLogoImage: imageName.toLowerCase().contains("logo"),
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
@@ -182,6 +185,7 @@ class ConcentratorLoadImages implements LoadImages {
                       .replaceAll('/', separator)
                       .replaceAll("\\", separator),
                   isMarketingImage: imageName.toLowerCase().contains("market"),
+                  uniqueId: DateTime.now().millisecondsSinceEpoch.toString(),
                 );
 
                 images.add(image);
@@ -273,6 +277,10 @@ class ConcentratorLoadImages implements LoadImages {
     final file = File(image.imagePath);
 
     try {
+      if (file.existsSync()) {
+        debugPrint("Deleted image");
+        await file.delete();
+      }
       await file.parent.create(recursive: true);
       await file.writeAsBytes(image.image!, flush: true);
       debugPrint("Saved image");
@@ -297,16 +305,20 @@ class ConcentratorLoadImages implements LoadImages {
         final pluOrEan = _getPluEanFromPath(file.path);
 
         if (file is File) {
-          final bytes = file.readAsBytesSync();
+          final newBytes =
+              Uint8List.fromList(await File(file.path).readAsBytes());
+
           images.add(
             ImageModel(
               pluOrEan: pluOrEan,
-              image: bytes,
+              image: newBytes,
+              file: file,
               keyIsEan: !pluOrEan.contains("-"),
               isLogoImage: file.path.toLowerCase().contains("logo"),
               enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
               imagePath: file.path,
               isMarketingImage: file.path.toLowerCase().contains("market"),
+              uniqueId: DateTime.now().millisecondsSinceEpoch.toString(),
             ),
           );
         }

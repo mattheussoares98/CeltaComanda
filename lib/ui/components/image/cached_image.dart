@@ -43,6 +43,23 @@ class CachedImageState extends State<CachedImage> {
 
     if (indexOfProduct == -1 && widget.imagePath == null) {
       return _defaultImage(menuPresenter);
+    } else if (indexOfProduct != -1 &&
+        menuPresenter.downloadedImages[indexOfProduct].image != null) {
+      final image = menuPresenter.downloadedImages[indexOfProduct];
+      // if (image.pluOrEan.toLowerCase().contains("11039")) {
+      //   debugPrint("Combo dia dos namorados da base de teste");
+      // }
+
+      return Image.memory(
+        image.image!,
+        key: Key(image.uniqueId),
+        height: widget.height,
+        width: widget.width,
+        fit: EnterpriseBuilder.entity?.zoomImage == true &&
+                widget.zoomImage == true
+            ? BoxFit.fitWidth
+            : BoxFit.contain,
+      );
     } else {
       return Image.file(
         File(

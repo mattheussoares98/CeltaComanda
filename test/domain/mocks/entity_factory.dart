@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
@@ -1604,6 +1606,7 @@ class EntityFactory {
         isMarketingImage: faker.randomGenerator.boolean(),
         enterpriseName: faker.company.name(),
         imagePath: faker.guid.guid(),
+        file: File(""),
       );
 
   static ExportChargingEntity makeExportChargingEntity(LoadTypeEnum loadType,

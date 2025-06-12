@@ -812,10 +812,15 @@ class GetxMenuPresenter extends GetxController
     try {
       if (loadLocally && _downloadedImages.isNotEmpty) return;
 
-      _downloadedImages = await loadImages.load(
+      final newImages = await loadImages.load(
         getLocalImages: loadLocally,
         updatedImages: updatedImages,
       );
+
+      if (newImages.isNotEmpty) {
+        _downloadedImages.clear();
+        _downloadedImages = newImages;
+      }
 
       await lastImport.save([LoadTypeEnum.images]);
     } catch (e) {

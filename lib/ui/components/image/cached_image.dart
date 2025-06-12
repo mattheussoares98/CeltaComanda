@@ -41,17 +41,14 @@ class CachedImageState extends State<CachedImage> {
       }
     });
 
-    if (indexOfProduct == -1 && widget.imagePath == null) {
-      return _defaultImage(menuPresenter);
-    } else if (indexOfProduct != -1 &&
-        menuPresenter.downloadedImages[indexOfProduct].image != null) {
-      final image = menuPresenter.downloadedImages[indexOfProduct];
-      // if (image.pluOrEan.toLowerCase().contains("11039")) {
-      //   debugPrint("Combo dia dos namorados da base de teste");
-      // }
+    final imagePathIndex = menuPresenter.downloadedImages.indexWhere((e) {
+      return e.imagePath == widget.imagePath;
+    });
 
-      return Image.memory(
-        image.image!,
+    if (imagePathIndex != -1) {
+      final image = menuPresenter.downloadedImages[imagePathIndex];
+      return Image.file(
+        image.file!,
         key: Key(image.uniqueId),
         height: widget.height,
         width: widget.width,
@@ -60,12 +57,11 @@ class CachedImageState extends State<CachedImage> {
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );
-    } else {
+    } else if (indexOfProduct != -1) {
+      final image = menuPresenter.downloadedImages[indexOfProduct];
       return Image.file(
-        File(
-          widget.imagePath ??
-              menuPresenter.downloadedImages[indexOfProduct].imagePath,
-        ),
+        image.file!,
+        key: Key(image.uniqueId),
         height: widget.height,
         width: widget.width,
         fit: EnterpriseBuilder.entity?.zoomImage == true &&
@@ -74,6 +70,7 @@ class CachedImageState extends State<CachedImage> {
             : BoxFit.contain,
       );
     }
+    return _defaultImage(menuPresenter);
   }
 
   Widget _defaultImage(MenuPresenter menuPresenter) {
@@ -92,8 +89,10 @@ class CachedImageState extends State<CachedImage> {
       );
     } else if (menuPresenter.downloadedImages[indexOfEnterpriseImage].image !=
         null) {
+      final image = menuPresenter.downloadedImages[indexOfEnterpriseImage];
       return Image.memory(
-        menuPresenter.downloadedImages[indexOfEnterpriseImage].image!,
+        key: Key(image.uniqueId),
+        image.image!,
         height: widget.height,
         width: widget.width,
         fit: EnterpriseBuilder.entity?.zoomImage == true &&

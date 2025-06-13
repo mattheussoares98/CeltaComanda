@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/models/models.dart';
 import '../../../main/builders/builders.dart';
 import '../../pages/pages.dart';
 
-class CachedImage extends StatefulWidget {
+class CachedImage extends StatelessWidget {
   final String? ean;
   final String plu;
   final double height;
@@ -24,66 +25,48 @@ class CachedImage extends StatefulWidget {
   });
 
   @override
-  CachedImageState createState() => CachedImageState();
-}
-
-class CachedImageState extends State<CachedImage> {
-  @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
 
-    final indexOfProduct = menuPresenter.downloadedImages.indexWhere((e) {
-      if (e.keyIsEan) {
-        return e.pluOrEan.toLowerCase() ==
-            "${widget.ean ?? ""}.PNG".toLowerCase();
-      } else {
-        return e.pluOrEan.toLowerCase() == "${widget.plu}.PNG".toLowerCase();
-      }
-    });
+    final pathIndex = menuPresenter.downloadedImages
+        .indexWhere((e) => e.imagePath == imagePath);
 
-    final imagePathIndex = menuPresenter.downloadedImages.indexWhere((e) {
-      return e.imagePath == widget.imagePath;
-    });
+    final productIndex = menuPresenter.downloadedImages.indexWhere((e) =>
+        e.pluOrEan.toLowerCase() ==
+        "${e.keyIsEan ? ean : plu}.PNG".toLowerCase());
 
-    if (imagePathIndex != -1) {
-      final image = menuPresenter.downloadedImages[imagePathIndex];
-      return Image.memory(
-        image.image!,
-        key: Key(image.uniqueId),
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
-            ? BoxFit.fitWidth
-            : BoxFit.contain,
-      );
-    } else if (indexOfProduct != -1) {
-      final image = menuPresenter.downloadedImages[indexOfProduct];
-      return Image.memory(
-        image.image!,
-        key: Key(image.uniqueId),
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
-            ? BoxFit.fitWidth
-            : BoxFit.contain,
-      );
+    ImageModel? image;
+    if (pathIndex != -1) {
+      image = menuPresenter.downloadedImages[pathIndex];
+    } else if (productIndex != -1) {
+      image = menuPresenter.downloadedImages[productIndex];
     }
-    return _defaultImage(menuPresenter);
+
+    if (image?.image == null) {
+      return _defaultImage(menuPresenter);
+    }
+
+    return Image.memory(
+      image!.image!,
+      key: Key(image.uniqueId),
+      height: height,
+      width: width,
+      fit: EnterpriseBuilder.entity?.zoomImage == true && zoomImage == true
+          ? BoxFit.fitWidth
+          : BoxFit.contain,
+    );
   }
 
-  Widget _defaultImage(MenuPresenter menuPresenter) {
+  Image _defaultImage(MenuPresenter menuPresenter) {
     final indexOfEnterpriseImage = menuPresenter.downloadedImages
         .indexWhere((e) => e.isLogoImage && File(e.imagePath).existsSync());
 
     if (indexOfEnterpriseImage == -1) {
       return Image.asset(
         "lib/ui/assets/images/imageNotFound.png",
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
+        height: height,
+        width: width,
+        fit: EnterpriseBuilder.entity?.zoomImage == true && zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );
@@ -93,10 +76,9 @@ class CachedImageState extends State<CachedImage> {
       return Image.memory(
         key: Key(image.uniqueId),
         image.image!,
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
+        height: height,
+        width: width,
+        fit: EnterpriseBuilder.entity?.zoomImage == true && zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );
@@ -105,10 +87,9 @@ class CachedImageState extends State<CachedImage> {
         File(
           menuPresenter.downloadedImages[indexOfEnterpriseImage].imagePath,
         ),
-        height: widget.height,
-        width: widget.width,
-        fit: EnterpriseBuilder.entity?.zoomImage == true &&
-                widget.zoomImage == true
+        height: height,
+        width: width,
+        fit: EnterpriseBuilder.entity?.zoomImage == true && zoomImage == true
             ? BoxFit.fitWidth
             : BoxFit.contain,
       );

@@ -221,11 +221,12 @@ class ConcentratorLoadImages implements LoadImages {
 
       for (var updatedImage in newImages) {
         int indexInLocalImages = localImages.indexWhere((e) =>
-            e.pluOrEan == updatedImage.pluOrEan &&
-            e.enterpriseName == updatedImage.enterpriseName);
+            e.pluOrEan.toLowerCase() == updatedImage.pluOrEan.toLowerCase() &&
+            e.enterpriseName?.toLowerCase() == updatedImage.enterpriseName?.toLowerCase());
 
         if (indexInLocalImages != -1) {
-          allImages[indexInLocalImages] = updatedImage;
+          allImages.removeAt(indexInLocalImages);
+          allImages.add(updatedImage);
         } else {
           allImages.add(updatedImage);
         }

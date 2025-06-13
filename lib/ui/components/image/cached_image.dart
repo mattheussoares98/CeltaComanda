@@ -47,8 +47,8 @@ class CachedImageState extends State<CachedImage> {
 
     if (imagePathIndex != -1) {
       final image = menuPresenter.downloadedImages[imagePathIndex];
-      return Image.file(
-        image.file!,
+      return Image.memory(
+        image.image!,
         key: Key(image.uniqueId),
         height: widget.height,
         width: widget.width,
@@ -59,8 +59,8 @@ class CachedImageState extends State<CachedImage> {
       );
     } else if (indexOfProduct != -1) {
       final image = menuPresenter.downloadedImages[indexOfProduct];
-      return Image.file(
-        image.file!,
+      return Image.memory(
+        image.image!,
         key: Key(image.uniqueId),
         height: widget.height,
         width: widget.width,

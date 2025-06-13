@@ -233,6 +233,36 @@ void main() {
 
         verify(() => enterprisePresenter.clearEnterpriseData()).called(1);
       });
+      test('Should call menuPresenter.clear with cleaning images', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => menuPresenter.clear(clearImages: true)).called(1);
+      });
+      test('Should call printedProductsPresenter.clear', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => printedProductsPresenter.clear()).called(1);
+      });
+      test('Should call cartPresenter.clear', () async {
+        await sut.doLogout(
+          printedProductsPresenter: printedProductsPresenter,
+          cartPresenter: cartPresenter,
+          menuPresenter: menuPresenter,
+          enterprisePresenter: enterprisePresenter,
+        );
+
+        verify(() => cartPresenter.clear()).called(1);
+      });
       test('Should call localCommandData.update correctly', () async {
         await sut.doLogout(
           printedProductsPresenter: printedProductsPresenter,

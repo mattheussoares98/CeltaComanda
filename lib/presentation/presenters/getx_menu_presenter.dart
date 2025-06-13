@@ -50,11 +50,15 @@ class GetxMenuPresenter extends GetxController
   });
 
   @override
-  void clear() {
+  void clear({bool? clearImages}) {
     _loadedMenu.clear();
     searchedProduct = null;
     _indexOfAtualSuggestion = -1;
     indexOfSelectedGroup = 0;
+
+    if (clearImages == true) {
+      _downloadedImages.clear();
+    }
   }
 
   @override
@@ -193,7 +197,7 @@ class GetxMenuPresenter extends GetxController
         commandNumber: commandEntity?.commandNumber ?? "001",
       );
 
-      clear();
+      clear(clearImages: false);
       var expansibleGroups = await loadExpansibleGroups.load();
 
       if (expansibleGroups != null) {
@@ -224,10 +228,6 @@ class GetxMenuPresenter extends GetxController
           .toList();
 
       for (var product in allProducts) {
-        // if (product.PriceLookupCode == "10538-5") {
-        //   //TODO remove this
-        //   continue;
-        // }
         if (product.IsPromoCombox == "true") {
           final fathers = await getProductComposition.getFathers(
             internalCodeOnErp: product.InternalCodeOnERP!.toInt(),

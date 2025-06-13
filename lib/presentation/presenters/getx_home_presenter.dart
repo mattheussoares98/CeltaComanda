@@ -58,7 +58,7 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
     required EnterprisePresenter enterprisePresenter,
   }) async {
     isLoading = true;
-    menuPresenter.clear();
+    menuPresenter.clear(clearImages: true);
     printedProductsPresenter.clear();
     cartPresenter.clear();
 

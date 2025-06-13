@@ -32,7 +32,7 @@ abstract class MenuPresenter implements Listenable {
     ProductsViewModel product,
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter,
   );
-  void clear();
+  void clear({bool? clearImages});
   void updateIndexOfSelectedGroup(int index);
 
   void updateSuggestionsProducts(ProductsViewModel selectedProduct);

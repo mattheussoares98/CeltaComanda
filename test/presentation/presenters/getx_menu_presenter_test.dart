@@ -1621,18 +1621,6 @@ void main() {
       sut.clear();
     });
 
-    test("Should clear downloaded images", () async {
-      await sut.loadAllImages(
-        loadLocally: false,
-        updatedImages: [],
-      );
-
-      expect(sut.downloadedImages, isNotEmpty);
-
-      sut.clear();
-
-      expect(sut.downloadedImages, isEmpty);
-    });
     test("Should clear index of atual suggestion", () async {
       final mockedSuggestions = [
         SuggestionSaleEntity(
@@ -1673,6 +1661,28 @@ void main() {
       sut.clear();
       sut.updateIndexOfSelectedGroup(2);
       sut.clear();
+    });
+    test('Should clear images when pass true in parameter', () async {
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
+
+      expect(sut.downloadedImages, isNotEmpty);
+
+      sut.clear(clearImages: true);
+      expect(sut.downloadedImages, isEmpty);
+    });
+    test('Should NOT clear images when dont pass value in parameter', () async {
+      await sut.loadAllImages(
+        loadLocally: true,
+        updatedImages: [],
+      );
+
+      expect(sut.downloadedImages, isNotEmpty);
+
+      sut.clear();
+      expect(sut.downloadedImages, isNotEmpty);
     });
   });
 }

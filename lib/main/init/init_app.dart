@@ -18,7 +18,7 @@ Future<void> initApp() async {
   await _initHive();
   _hideNavigationButtons();
   WakelockPlus.enable();
-  _deletePath("AppData\\Local\\firestore");
+  _deletePath();
 }
 
 Future<void> initFirebase() async {
@@ -27,15 +27,17 @@ Future<void> initFirebase() async {
   );
 }
 
-void _deletePath(String path) {
-  if (kIsWeb || !Platform.isWindows) return;
-
-  final userHome =
-      Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
-  final pathToDelete = '$userHome/$path';
-  final directoryToDelete = Directory(pathToDelete);
-
+void _deletePath() {
   try {
+    if (kIsWeb || !Platform.isWindows) return;
+
+    final separator = Platform.pathSeparator;
+    final path = "AppData${separator}Local${separator}firestore";
+
+    final userHome =
+        Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
+    final pathToDelete = '$userHome/$path';
+    final directoryToDelete = Directory(pathToDelete);
     if (directoryToDelete.existsSync()) {
       directoryToDelete.deleteSync(recursive: true);
     }

@@ -9,11 +9,13 @@ class PdvNotUsingDropdown extends StatefulWidget {
   final TextEditingController commandNumberController;
   final PdvNotUsingViewModel? selectedPdv;
   final void Function(PdvNotUsingViewModel? pdv) updateSelectedPdv;
+  final bool? Function() validateKey;
   const PdvNotUsingDropdown({
     required this.isFixedCommandNumber,
     required this.commandNumberController,
     required this.selectedPdv,
     required this.updateSelectedPdv,
+    required this.validateKey,
     super.key,
   });
 
@@ -78,6 +80,9 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                   onPressed: widget.selectedPdv == null
                       ? null
                       : () async {
+                          if (widget.validateKey() != true) {
+                            return;
+                          }
                           await enterprisePresenter.registerPdvAndGoToHomePage(
                             selectedPdv: widget.selectedPdv!,
                             commandNumber:

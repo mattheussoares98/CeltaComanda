@@ -65,8 +65,7 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
     required EnterprisePresenter enterprisePresenter,
     required HomePresenter homePresenter,
   }) async {
-    if ((_formKey.currentState == null || !_formKey.currentState!.validate()) &&
-        isFixedCommandNumber) {
+    if (_formKey.currentState?.validate() != true && isFixedCommandNumber) {
       return;
     }
 
@@ -100,29 +99,29 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
             Headline1(text: R.string.validateEnterprise),
             Padding(
               padding: const EdgeInsets.all(25),
-              child: Column(
-                children: [
-                  EnterpriseInput(
-                    enterpriseController: enterpriseController,
-                    commandNumberController: commandNumberController,
-                    isFixedCommandNumber: isFixedCommandNumber,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Column(
-                      children: [
-                        FixedNumberCommandSwitch(
-                          isFixedCommandNumber: isFixedCommandNumber,
-                          updateIsFixedCommandNumber: () {
-                            setState(() {
-                              isFixedCommandNumber = !isFixedCommandNumber;
-                            });
-                          },
-                        ),
-                        if (isFixedCommandNumber)
-                          Form(
-                            key: _formKey,
-                            child: CommandField(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    EnterpriseInput(
+                      enterpriseController: enterpriseController,
+                      commandNumberController: commandNumberController,
+                      isFixedCommandNumber: isFixedCommandNumber,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Column(
+                        children: [
+                          FixedNumberCommandSwitch(
+                            isFixedCommandNumber: isFixedCommandNumber,
+                            updateIsFixedCommandNumber: () {
+                              setState(() {
+                                isFixedCommandNumber = !isFixedCommandNumber;
+                              });
+                            },
+                          ),
+                          if (isFixedCommandNumber)
+                            CommandField(
                               commandNumberController: commandNumberController,
                               validateField: true,
                               onFieldSubmitted: (_) async {
@@ -132,33 +131,36 @@ class _EnterpriseValidationPageState extends State<EnterpriseValidationPage>
                                 );
                               },
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  EnterpriseValidateButton(
-                    validateEnterprise: () async {
-                      await _validateEnterprise(
-                        homePresenter: homePresenter,
-                        enterprisePresenter: enterprisePresenter,
-                      );
-                      setState(() {
-                        selectedPdv = null;
-                      });
-                    },
-                  ),
-                  PdvNotUsingDropdown(
-                    isFixedCommandNumber: isFixedCommandNumber,
-                    commandNumberController: commandNumberController,
-                    selectedPdv: selectedPdv,
-                    updateSelectedPdv: (value) {
-                      setState(() {
-                        selectedPdv = value;
-                      });
-                    },
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    EnterpriseValidateButton(
+                      validateEnterprise: () async {
+                        await _validateEnterprise(
+                          homePresenter: homePresenter,
+                          enterprisePresenter: enterprisePresenter,
+                        );
+                        setState(() {
+                          selectedPdv = null;
+                        });
+                      },
+                    ),
+                    PdvNotUsingDropdown(
+                      isFixedCommandNumber: isFixedCommandNumber,
+                      commandNumberController: commandNumberController,
+                      selectedPdv: selectedPdv,
+                      validateKey: () {
+                        return _formKey.currentState?.validate();
+                      },
+                      updateSelectedPdv: (value) {
+                        setState(() {
+                          selectedPdv = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             )
           ],

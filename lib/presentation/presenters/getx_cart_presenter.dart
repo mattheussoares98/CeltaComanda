@@ -492,8 +492,6 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         _saleRequestTemp!.SaleRequestTempId.toInt(),
       );
 
-      await cartInformations.clearCartProducts();
-
       await updateIncrementValue(
         homePresenter.commandEntity!.commandNumber!,
       );
@@ -501,6 +499,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await printedProductsPresenter
           .loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
+      await cartInformations.clearCartProducts();
       _cartProducts.clear();
 
       await confirmedCartProducts.updateValue(false);

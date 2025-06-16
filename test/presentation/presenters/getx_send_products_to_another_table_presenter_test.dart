@@ -118,7 +118,8 @@ void main() {
 
   group("Send products to another table", () {
     final int oldPersonalizedCode = faker.randomGenerator.integer(100);
-    final int newPersonalizedCode = faker.randomGenerator.integer(100);
+    final int newPersonalizedCode =
+        oldPersonalizedCode + faker.randomGenerator.integer(100);
 
     test("Should emit correct values on success", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
@@ -147,6 +148,24 @@ void main() {
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should emit correct values if select same command", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.sameCommand]),
+      );
+
+      await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(faker.randomGenerator.integer(0));
+
+      final command = faker.randomGenerator.integer(100);
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: command,
+        newPersonalizedCode: command,
         cartPresenter: cartPresenter,
         homePresenter: homePresenter,
       );

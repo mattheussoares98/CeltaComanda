@@ -65,6 +65,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     try {
       if (_selectedProducts.isEmpty) {
         throw DomainError.selectProducts;
+      } else if (oldPersonalizedCode == newPersonalizedCode) {
+        throw DomainError.sameCommand;
       }
 
       await changeSaleRequestPersonalizedCodeProducts.change(
@@ -84,6 +86,9 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
+        case DomainError.sameCommand:
+          mainError = UIError.sameCommand;
+          break;
         case DomainError.cantSendServiceChargeProduct:
           mainError = UIError.cantSendServiceChargeProduct;
           break;

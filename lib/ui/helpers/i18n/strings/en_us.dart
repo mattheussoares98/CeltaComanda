@@ -84,6 +84,7 @@ class EnUs implements Translation {
   String get msgRequestSentSuccessfully => 'The request was sent successfully';
   String get msgRequiredField => 'Required field';
   String get msgReleasesCommand => "Command released";
+  String get msgSameCommand => "Can't select the same command";
   String get msgSearchCommandToPay => 'Look up a command to make the payment';
   String get msgSelectCommand => 'Select the command';
   String get msgSelectCustomer => 'Select a customer';

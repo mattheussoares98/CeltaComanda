@@ -86,6 +86,7 @@ class PtBr implements Translation {
   String get msgRequestSentSuccessfully => 'O pedido foi enviado com sucesso';
   String get msgRequiredField => 'Campo obrigatório';
   String get msgReleasesCommand => "Comanda liberada";
+  String get msgSameCommand => "Selecione comandas diferentes";
   String get msgSearchCommandToPay =>
       'Consulte alguma comanda para efetuar o pagamento dela';
   String get msgSelectCommand => 'Selecione a comanda';

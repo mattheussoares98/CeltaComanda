@@ -58,6 +58,7 @@ abstract class Translation {
   String get msgReleasesCommand;
   String get msgRequestSentSuccessfully;
   String get msgRequiredField;
+  String get msgSameCommand;
   String get msgSearchCommandToPay;
   String get msgSelectCommand;
   String get msgSelectCustomer;

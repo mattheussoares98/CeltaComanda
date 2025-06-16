@@ -8,7 +8,7 @@ import 'components.dart';
 class ChildsItems extends StatelessWidget {
   final ProductsViewModel product;
   final ExpansibleGroupsViewModel expansibleGroup;
-  final void Function() callSetState;
+  final StateSetter callSetState;
   final Color backgroundColor;
   const ChildsItems({
     required this.product,
@@ -99,9 +99,7 @@ class ChildsItems extends StatelessWidget {
                               expansibleGroup: expansibleGroup,
                               scheduleType: ScheduleType.child,
                               child: child,
-                              callSetState: () {
-                                callSetState();
-                              },
+                              callSetState: callSetState,
                             ),
                           );
                         },

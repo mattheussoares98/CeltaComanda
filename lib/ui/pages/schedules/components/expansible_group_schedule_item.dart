@@ -7,7 +7,7 @@ import 'components.dart';
 
 class ExpansibleGroupScheduleItem extends StatelessWidget {
   final ExpansibleGroupsViewModel expansibleGroup;
-  final void Function() callSetSate;
+  final StateSetter callSetSate;
   final void Function() updateSelectedGroupIndex;
   final bool groupIsSelected;
 
@@ -54,9 +54,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
                   child: null,
                   expansibleGroup: expansibleGroup,
                   scheduleType: ScheduleType.expansibleGroup,
-                  callSetState: () {
-                    callSetSate();
-                  },
+                  callSetState: callSetSate,
                 ),
               );
             },

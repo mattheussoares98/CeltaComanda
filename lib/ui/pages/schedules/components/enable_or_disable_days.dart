@@ -10,7 +10,7 @@ import 'components.dart';
 class EnableOrDisableDays extends StatefulWidget {
   final ProductsViewModel? product;
   final ExpansibleGroupsViewModel expansibleGroup;
-  final void Function() callSetState;
+  final StateSetter callSetState;
   final ScheduleType scheduleType;
   final ProductCompositionViewModel? child;
   const EnableOrDisableDays({

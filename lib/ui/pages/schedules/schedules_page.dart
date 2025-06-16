@@ -114,7 +114,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                     },
                     child: ExpansibleGroupScheduleItem(
                       expansibleGroup: group,
-                      callSetSate: () => setState(() {}),
+                      callSetSate: setState,
                       updateSelectedGroupIndex: () {
                         updateSelectedGroupIndex(groupIndex);
                       },
@@ -130,7 +130,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                       child: ProductsSchedulesItems(
                         products: productsOfGroup,
                         expansibleGroup: group,
-                        callSetState: () => setState(() {}),
+                        callSetState: setState,
                       ),
                     ),
                 ],

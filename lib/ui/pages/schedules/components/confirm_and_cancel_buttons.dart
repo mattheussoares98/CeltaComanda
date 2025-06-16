@@ -13,7 +13,7 @@ class ConfirmAndCancelButtons extends StatelessWidget {
   final ProductScheduleViewModel? productSchedule;
   final ExpansibleGroupsViewModel expansibleGroup;
   final ProductCompositionViewModel? child;
-  final void Function() callSetState;
+  final StateSetter callSetState;
   final ProductsViewModel? product;
   const ConfirmAndCancelButtons({
     required this.scheduleType,
@@ -80,9 +80,7 @@ class ConfirmAndCancelButtons extends StatelessWidget {
                             expansibleGroup.ExpansibleGroupId.toInt(),
                         menuPresenter: menuPresenter,
                         configurationsPresenter: configurationsPresenter,
-                        callSetState: () {
-                          callSetState();
-                        },
+                        callSetState: callSetState,
                       );
                     }
                   : null,
@@ -100,7 +98,7 @@ class ConfirmAndCancelButtons extends StatelessWidget {
     required HomePresenter homePresenter,
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
-    required void Function() callSetState,
+    required StateSetter callSetState,
     required int expansibleGroupId,
     required BuildContext context,
     required ProductsViewModel? product,
@@ -137,7 +135,7 @@ class ConfirmAndCancelButtons extends StatelessWidget {
         if (updated) {
           Navigator.of(context).pop();
 
-          callSetState();
+          callSetState(() {});
           // await notificationDialog(
           //     context: context,
           //     titleMessage: R.string.msgSuccessToUpdateSchedule,

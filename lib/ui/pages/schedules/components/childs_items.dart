@@ -26,9 +26,49 @@ class ChildsItems extends StatelessWidget {
       itemCount: product.childsComposition!.length,
       itemBuilder: (context, fatherIndex) {
         final father = product.childsComposition![fatherIndex];
+        product.childsComposition!.sort(
+            (a, b) => (a.childs?.length ?? 0).compareTo(b.childs?.length ?? 0));
 
         if (father.childs == null || father.childs!.isEmpty) {
-          return SizedBox();
+          return InkWell(
+            onTap: () {
+              PersonalizedDialogPage.open(
+                context: context,
+                page: EnableOrDisableDays(
+                  product: product,
+                  expansibleGroup: expansibleGroup,
+                  scheduleType: ScheduleType.child,
+                  child: father,
+                  callSetState: callSetState,
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "- ${father.ChildName}   (${R.string.product.toUpperCase()})",
+                      style: TextStyle(
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ScheduleEnabledDays(
+                    allowMonday: father.Schedule?.AllowMonday != false,
+                    allowTuesday: father.Schedule?.AllowTuesday != false,
+                    allowWednesday: father.Schedule?.AllowWednesday != false,
+                    allowThursday: father.Schedule?.AllowThursday != false,
+                    allowFriday: father.Schedule?.AllowFriday != false,
+                    allowSaturday: father.Schedule?.AllowSaturday != false,
+                    allowSunday: father.Schedule?.AllowSunday != false,
+                  ),
+                ],
+              ),
+            ),
+          );
         }
 
         return Stack(

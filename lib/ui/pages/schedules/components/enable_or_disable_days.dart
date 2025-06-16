@@ -79,6 +79,7 @@ class _EnableOrDisableDaysState extends State<EnableOrDisableDays> {
             sunday: widget.expansibleGroup.Schedule?.AllowSunday != false,
           );
         }
+        widget.callSetState(() {});
       }
     });
   }

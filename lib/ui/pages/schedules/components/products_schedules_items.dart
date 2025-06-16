@@ -105,7 +105,6 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                 ChildsItems(
                   product: product,
                   expansibleGroup: widget.expansibleGroup,
-                  callSetState: widget.callSetState,
                   backgroundColor: color,
                 ),
             ],

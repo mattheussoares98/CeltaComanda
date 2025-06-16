@@ -39,6 +39,7 @@ class ExpansibleGroupScheduleItem extends StatelessWidget {
           IconButton(
             onPressed: () {
               updateSelectedGroupIndex();
+              callSetSate(() {});
             },
             icon: Icon(
               groupIsSelected ? Icons.arrow_drop_up : Icons.arrow_drop_down,

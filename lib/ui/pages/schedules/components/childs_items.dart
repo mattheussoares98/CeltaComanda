@@ -5,29 +5,37 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 import 'components.dart';
 
-class ChildsItems extends StatelessWidget {
+class ChildsItems extends StatefulWidget {
   final ProductsViewModel product;
   final ExpansibleGroupsViewModel expansibleGroup;
-  final StateSetter callSetState;
   final Color backgroundColor;
   const ChildsItems({
     required this.product,
     required this.expansibleGroup,
-    required this.callSetState,
     required this.backgroundColor,
     super.key,
   });
+
+  @override
+  State<ChildsItems> createState() => _ChildsItemsState();
+}
+
+class _ChildsItemsState extends State<ChildsItems> {
+  @override
+  void initState() {
+    super.initState();
+    widget.product.childsComposition!.sort(
+        (a, b) => (a.childs?.length ?? 0).compareTo(b.childs?.length ?? 0));
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: product.childsComposition!.length,
+      itemCount: widget.product.childsComposition!.length,
       itemBuilder: (context, fatherIndex) {
-        final father = product.childsComposition![fatherIndex];
-        product.childsComposition!.sort(
-            (a, b) => (a.childs?.length ?? 0).compareTo(b.childs?.length ?? 0));
+        final father = widget.product.childsComposition![fatherIndex];
 
         if (father.childs == null || father.childs!.isEmpty) {
           return InkWell(
@@ -35,11 +43,11 @@ class ChildsItems extends StatelessWidget {
               PersonalizedDialogPage.open(
                 context: context,
                 page: EnableOrDisableDays(
-                  product: product,
-                  expansibleGroup: expansibleGroup,
+                  product: widget.product,
+                  expansibleGroup: widget.expansibleGroup,
                   scheduleType: ScheduleType.child,
                   child: father,
-                  callSetState: callSetState,
+                  callSetState: setState,
                 ),
               );
             },
@@ -95,11 +103,11 @@ class ChildsItems extends StatelessWidget {
                           PersonalizedDialogPage.open(
                             context: context,
                             page: EnableOrDisableDays(
-                              product: product,
-                              expansibleGroup: expansibleGroup,
+                              product: widget.product,
+                              expansibleGroup: widget.expansibleGroup,
                               scheduleType: ScheduleType.child,
                               child: child,
-                              callSetState: callSetState,
+                              callSetState: setState,
                             ),
                           );
                         },
@@ -149,7 +157,7 @@ class ChildsItems extends StatelessWidget {
                 child: Text(
                   "${father.ChildName!} (${R.string.father.toUpperCase()})",
                   style: TextStyle(
-                    backgroundColor: backgroundColor,
+                    backgroundColor: widget.backgroundColor,
                     fontWeight: FontWeight.bold,
                     fontSize: StringSize.size,
                     color: Colors.red,

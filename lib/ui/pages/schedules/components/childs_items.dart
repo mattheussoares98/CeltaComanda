@@ -22,13 +22,6 @@ class ChildsItems extends StatefulWidget {
 
 class _ChildsItemsState extends State<ChildsItems> {
   @override
-  void initState() {
-    super.initState();
-    widget.product.childsComposition!.sort(
-        (a, b) => (a.childs?.length ?? 0).compareTo(b.childs?.length ?? 0));
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,

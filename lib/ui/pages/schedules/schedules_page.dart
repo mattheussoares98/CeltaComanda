@@ -130,7 +130,6 @@ class _SchedulesPageState extends State<SchedulesPage>
                       child: ProductsSchedulesItems(
                         products: productsOfGroup,
                         expansibleGroup: group,
-                        callSetState: setState,
                       ),
                     ),
                 ],

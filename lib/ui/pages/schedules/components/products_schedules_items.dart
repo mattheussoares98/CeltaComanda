@@ -9,11 +9,9 @@ import 'components.dart';
 class ProductsSchedulesItems extends StatefulWidget {
   final List<ProductsViewModel> products;
   final ExpansibleGroupsViewModel expansibleGroup;
-  final StateSetter callSetState;
   const ProductsSchedulesItems({
     required this.products,
     required this.expansibleGroup,
-    required this.callSetState,
     super.key,
   });
 
@@ -54,7 +52,7 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
                       expansibleGroup: widget.expansibleGroup,
                       child: null,
                       scheduleType: ScheduleType.product,
-                      callSetState: widget.callSetState,
+                      callSetState: setState,
                     ),
                   );
                 },

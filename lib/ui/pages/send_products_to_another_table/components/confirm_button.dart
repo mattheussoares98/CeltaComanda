@@ -45,7 +45,7 @@ class ConfirmButton extends StatelessWidget {
               });
         }
       },
-      child: Text(R.string.sendAllProducts),
+      child: Text(R.string.sendProducts),
     );
   }
 }

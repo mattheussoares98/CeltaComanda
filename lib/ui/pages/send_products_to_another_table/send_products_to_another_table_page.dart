@@ -65,7 +65,7 @@ class _SendProductsToAnotherTablePageState
     return Scaffold(
       appBar: AppBar(
         title: FittedBox(
-          child: Text(R.string.sendAllProductsToAnotherTable),
+          child: Text(R.string.sendProductsToAnotherTable),
         ),
       ),
       body: SafeArea(

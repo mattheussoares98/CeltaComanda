@@ -330,6 +330,7 @@ class PtBr implements Translation {
       'Enviar UM OU MAIS produtos para outra mesa';
   String get sendEvaluation => 'Enviar avaliação';
   String get sendMessage => 'Enviar mensagem';
+  String get sendProducts => "Enviar produtos";
   String get sendProductsToAnotherTable => 'Enviar produtos para outra mesa';
   String get sendRequest => 'Enviar pedido';
   String get send => 'Enviar';

@@ -329,6 +329,7 @@ class EnUs implements Translation {
       'Send ONE OR MORE products to another table';
   String get sendEvaluation => 'Send evaluation';
   String get sendMessage => 'Send message';
+  String get sendProducts => 'Send products';
   String get sendProductsToAnotherTable => 'Send products to another table';
   String get sendRequest => 'Send request';
   String get send => 'Send';

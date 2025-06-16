@@ -5,31 +5,25 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-class LoadedProductsItems extends StatelessWidget {
+class LoadedProductsItems extends StatefulWidget {
   final PrintedViewModel? printedViewModel;
-  final void Function() callSetState;
   const LoadedProductsItems({
     required this.printedViewModel,
-    required this.callSetState,
     super.key,
   });
 
-  void updateProductIsSelected({
-    required SendProductsToAnotherTablePresenter
-        sendProductsToAnotherTablePresenter,
-    required int index,
-  }) {
-    sendProductsToAnotherTablePresenter.updateProductIsSelected(index);
-    callSetState();
-  }
+  @override
+  State<LoadedProductsItems> createState() => _LoadedProductsItemsState();
+}
 
+class _LoadedProductsItemsState extends State<LoadedProductsItems> {
   @override
   Widget build(BuildContext context) {
     SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
         Provider.of(context, listen: false);
 
     return Builder(builder: (context) {
-      if (printedViewModel == null) {
+      if (widget.printedViewModel == null) {
         return Center(
           child: Text(
             R.string.originTableIsEmpty,
@@ -41,14 +35,14 @@ class LoadedProductsItems extends StatelessWidget {
           ),
         );
       }
-      if (printedViewModel == null) {
+      if (widget.printedViewModel == null) {
         return SizedBox();
       }
       return ListView.builder(
         shrinkWrap: true,
-        itemCount: printedViewModel!.Products.length,
+        itemCount: widget.printedViewModel!.Products.length,
         itemBuilder: (context, index) {
-          final product = printedViewModel!.Products[index];
+          final product = widget.printedViewModel!.Products[index];
 
           DateTime data = DateTime.parse(product.DateHourOfCreation!);
           String horasEMinutos =
@@ -58,16 +52,20 @@ class LoadedProductsItems extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4),
             child: InkWell(
               onTap: () {
-                updateProductIsSelected(
-                  index: index,
-                  sendProductsToAnotherTablePresenter:
-                      sendProductsToAnotherTablePresenter,
-                );
+                setState(() {
+                  sendProductsToAnotherTablePresenter
+                      .updateProductIsSelected(index);
+                });
               },
               child: Container(
                 color: product.IsCancelled == "true"
                     ? Colors.red
-                    : Theme.of(context).primaryColorLight.withAlpha(30),
+                    : Theme.of(context).primaryColorLight.withAlpha(
+                        sendProductsToAnotherTablePresenter.selectedProducts
+                                    ?.contains(product) ==
+                                true
+                            ? 75
+                            : 30),
                 child: Row(
                   children: [
                     Expanded(
@@ -115,11 +113,10 @@ class LoadedProductsItems extends StatelessWidget {
                             .selectedProducts
                             ?.contains(product),
                         onChanged: (_) {
-                          updateProductIsSelected(
-                            index: index,
-                            sendProductsToAnotherTablePresenter:
-                                sendProductsToAnotherTablePresenter,
-                          );
+                          setState(() {
+                            sendProductsToAnotherTablePresenter
+                                .updateProductIsSelected(index);
+                          });
                         },
                       )
                   ],

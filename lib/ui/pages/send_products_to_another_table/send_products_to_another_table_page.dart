@@ -117,9 +117,6 @@ class _SendProductsToAnotherTablePageState
                       Expanded(
                         child: LoadedProductsItems(
                           printedViewModel: snapshot.data,
-                          callSetState: () {
-                            setState(() {});
-                          },
                         ),
                       ),
                       Padding(

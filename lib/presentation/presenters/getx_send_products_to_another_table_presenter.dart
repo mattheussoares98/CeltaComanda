@@ -67,6 +67,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
         throw DomainError.selectProducts;
       } else if (oldPersonalizedCode == newPersonalizedCode) {
         throw DomainError.sameCommand;
+      } else if (oldPersonalizedCode < 1 || newPersonalizedCode < 1) {
+        throw DomainError.invalidCommandNumber;
       }
 
       await changeSaleRequestPersonalizedCodeProducts.change(
@@ -86,11 +88,14 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
       await loadProducts(oldPersonalizedCode);
     } on DomainError catch (e) {
       switch (e) {
-        case DomainError.sameCommand:
-          mainError = UIError.sameCommand;
+        case DomainError.invalidCommandNumber:
+          mainError = UIError.invalidCommandNumber;
           break;
         case DomainError.cantSendServiceChargeProduct:
           mainError = UIError.cantSendServiceChargeProduct;
+          break;
+        case DomainError.sameCommand:
+          mainError = UIError.sameCommand;
           break;
         case DomainError.selectProducts:
           mainError = UIError.selectProducts;

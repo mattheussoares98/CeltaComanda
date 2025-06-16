@@ -170,6 +170,25 @@ void main() {
         homePresenter: homePresenter,
       );
     });
+    test("Should emit correct values if command is minor than zero", () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.invalidCommandNumber]),
+      );
+
+      await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(faker.randomGenerator.integer(0));
+
+      final command = faker.randomGenerator.integer(0, min: -100);
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: command,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+
     test("Should emit correct values when dont has selected products",
         () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));

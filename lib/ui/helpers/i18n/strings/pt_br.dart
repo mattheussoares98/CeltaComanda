@@ -43,6 +43,7 @@ class PtBr implements Translation {
   String get msgIfLogoutClearCart =>
       'Se você fizer o logout, o carrinho será limpo';
   String get msgInsertCommandNumber => "Informe o número da comanda";
+  String get msgInvalidCommandNumber => "Número de comanda inválido";
   String get msgInvalidCombox =>
       'Selecione todos produtos que são obrigatórios para conseguir salvar o combo';
   String get msgInvalidCpfCnpj => 'CPF/CNPJ inválido';

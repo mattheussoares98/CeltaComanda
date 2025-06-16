@@ -10,6 +10,7 @@ enum DomainError {
   dontHaveUnusedPdvs,
   enterpriseOrUrlNotFound,
   emptySales,
+  invalidCommandNumber,
   invalidCombox,
   invalidCredentials,
   invalidCredentialsOrAccessDenied,

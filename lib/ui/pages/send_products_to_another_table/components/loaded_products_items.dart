@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
@@ -16,16 +17,17 @@ class LoadedProductsItems extends StatelessWidget {
   void updateProductIsSelected({
     required SendProductsToAnotherTablePresenter
         sendProductsToAnotherTablePresenter,
-    required PrintedProductsViewModel product,
+    required int index,
   }) {
-    sendProductsToAnotherTablePresenter.updateProductIsSelected(
-      product.SaleRequestProductId!.toInt(),
-    );
+    sendProductsToAnotherTablePresenter.updateProductIsSelected(index);
     callSetState();
   }
 
   @override
   Widget build(BuildContext context) {
+    SendProductsToAnotherTablePresenter sendProductsToAnotherTablePresenter =
+        Provider.of(context, listen: false);
+
     return Builder(builder: (context) {
       if (printedViewModel == null) {
         return Center(
@@ -55,44 +57,71 @@ class LoadedProductsItems extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(top: 4),
             child: InkWell(
-              onTap: null,
+              onTap: () {
+                updateProductIsSelected(
+                  index: index,
+                  sendProductsToAnotherTablePresenter:
+                      sendProductsToAnotherTablePresenter,
+                );
+              },
               child: Container(
                 color: product.IsCancelled == "true"
                     ? Colors.red
                     : Theme.of(context).primaryColorLight.withAlpha(30),
-                child: Column(
+                child: Row(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: Text(horasEMinutos),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: ProductName(product: product),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(horasEMinutos),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: ProductName(product: product),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Text(
+                                  product.TotalLiquid!
+                                      .toDouble()
+                                      .toString()
+                                      .toBrazilianNumber()
+                                      .addBrazilianCoin(),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Text(
-                            product.TotalLiquid!
-                                .toDouble()
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin(),
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (product.Comments != null &&
-                        product.Comments!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: Comment(comment: product.Comments!),
+                          if (product.Comments != null &&
+                              product.Comments!.isNotEmpty)
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
+                              child: Comment(comment: product.Comments!),
+                            ),
+                        ],
                       ),
+                    ),
+                    if (product.IsCancelled != "true")
+                      Checkbox(
+                        value: sendProductsToAnotherTablePresenter
+                            .selectedProducts
+                            ?.contains(product),
+                        onChanged: (_) {
+                          updateProductIsSelected(
+                            index: index,
+                            sendProductsToAnotherTablePresenter:
+                                sendProductsToAnotherTablePresenter,
+                          );
+                        },
+                      )
                   ],
                 ),
               ),

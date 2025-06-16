@@ -21,6 +21,7 @@ class _SendProductsToAnotherTablePageState
     extends State<SendProductsToAnotherTablePage>
     with LoadingManager, UIErrorManager {
   final formKey = GlobalKey<FormState>();
+  final formKeyOriginTable = GlobalKey<FormState>();
   bool tableIsEmpty = true;
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -81,24 +82,28 @@ class _SendProductsToAnotherTablePageState
                       Row(
                         children: [
                           Expanded(
-                            child: CommandField(
-                              commandNumberController:
-                                  originCommandNumberController,
-                              hintText: R.string.msgOldTable,
-                              labelText: R.string.msgOldTable,
-                              focusNode: originFocusNode,
-                              loadData: () async {
-                                bool? isValid =
-                                    formKey.currentState?.validate();
+                            child: Form(
+                              key: formKeyOriginTable,
+                              child: CommandField(
+                                commandNumberController:
+                                    originCommandNumberController,
+                                hintText: R.string.msgOldTable,
+                                labelText: R.string.msgOldTable,
+                                focusNode: originFocusNode,
+                                loadData: () async {
+                                  bool? isValid = formKeyOriginTable
+                                      .currentState
+                                      ?.validate();
 
-                                if (isValid == true) {
-                                  await sendProductsToAnotherTablePresenter
-                                      .loadProducts(
-                                          originCommandNumberController.text
-                                              .toInt());
-                                }
-                                unfocus();
-                              },
+                                  if (isValid == true) {
+                                    await sendProductsToAnotherTablePresenter
+                                        .loadProducts(
+                                            originCommandNumberController.text
+                                                .toInt());
+                                  }
+                                  unfocus();
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -107,7 +112,6 @@ class _SendProductsToAnotherTablePageState
                         commandNumberController: destinyCommandNumberController,
                         hintText: R.string.msgNewTable,
                         labelText: R.string.msgNewTable,
-                        validateField: false,
                         focusNode: destinyFocusNode,
                       ),
                       Expanded(

@@ -19,9 +19,10 @@ class SelectOrUnselectAllProducts extends StatelessWidget {
       return false;
     }
 
-    return printedViewModel?.Products.where((e) => e.IsCancelled == "false").length ==
-        sendProductsToAnotherTablePresenter
-            .selectedsSaleRequestProductsIds.length;
+    return printedViewModel?.Products
+            .where((e) => e.IsCancelled == "false")
+            .length ==
+        sendProductsToAnotherTablePresenter.selectedProducts?.length;
   }
 
   @override

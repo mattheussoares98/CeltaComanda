@@ -63,11 +63,14 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
     mainError = null;
 
     try {
+      if (_selectedProducts.isEmpty) {
+        throw DomainError.selectProducts;
+      }
+
       await changeSaleRequestPersonalizedCodeProducts.change(
         oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
         newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
-        saleRequestProductsIds: _printedProducts.value!.Products
-            .where((e) => e.IsCancelled == "false")
+        saleRequestProductsIds: _selectedProducts
             .map((e) => e.SaleRequestProductId!.toInt())
             .toList(),
       );
@@ -96,17 +99,19 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
   }
 
   @override
-  void updateProductIsSelected(int saleRequestProductId) {
-    if (_selectedSaleRequestProductsIds.contains(saleRequestProductId)) {
-      _selectedSaleRequestProductsIds.remove(saleRequestProductId);
+  void updateProductIsSelected(int index) {
+    final product = _printedProducts.value?.Products[index];
+
+    if (_selectedProducts.contains(product)) {
+      _selectedProducts.remove(product);
     } else {
-      _selectedSaleRequestProductsIds.add(saleRequestProductId);
+      _selectedProducts.add(product!);
     }
   }
 
   @override
   void clearAllSelectedsSaleRequestProductsIds() {
-    _selectedSaleRequestProductsIds.clear();
+    _selectedProducts.clear();
   }
 
   final _printedProducts = Rx<PrintedViewModel?>(null);
@@ -114,20 +119,18 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
   Stream<PrintedViewModel?> get printedProducts => _printedProducts.stream;
   set products(PrintedViewModel? value) => _printedProducts.value = value;
 
-  final _selectedSaleRequestProductsIds = <int>[];
+  final _selectedProducts = <PrintedProductsViewModel>[];
   @override
-  List<int> get selectedsSaleRequestProductsIds =>
-      _selectedSaleRequestProductsIds;
+  List<PrintedProductsViewModel>? get selectedProducts => _selectedProducts;
 
   @override
   void selectAllProducts() {
     if (_printedProducts.value == null) {
       return;
     }
-    _selectedSaleRequestProductsIds.clear();
-    _selectedSaleRequestProductsIds.addAll(_printedProducts.value!.Products
+    _selectedProducts.clear();
+    _selectedProducts.addAll(_printedProducts.value!.Products
         .where((e) => e.IsCancelled == "false")
-        .map((e) => e.SaleRequestProductId!.toInt())
         .toList());
   }
 }

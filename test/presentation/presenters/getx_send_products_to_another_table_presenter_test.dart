@@ -106,11 +106,13 @@ void main() {
       await sut.loadProducts(commandNumber);
     });
     test("Should clear all selecteds products sale request ids", () async {
+      await sut.loadProducts(commandNumber);
+
       sut.updateProductIsSelected(0);
-      expect(sut.selectedsSaleRequestProductsIds, [0]);
+      expect(sut.selectedProducts, [printedViewModel.Products[0]]);
 
       await sut.loadProducts(commandNumber);
-      expect(sut.selectedsSaleRequestProductsIds, []);
+      expect(sut.selectedProducts, []);
     });
   });
 
@@ -136,12 +138,27 @@ void main() {
       expectLater(
           sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
+      await sut.loadProducts(commandNumber);
       sut.updateProductIsSelected(faker.randomGenerator.integer(0));
 
       changeSaleRequestPersonalizedCodeProducts
           .mockError(DomainError.unexpected);
 
-      await sut.loadProducts(commandNumber);
+      await sut.sendProductsToAnotherTable(
+        oldPersonalizedCode: oldPersonalizedCode,
+        newPersonalizedCode: newPersonalizedCode,
+        cartPresenter: cartPresenter,
+        homePresenter: homePresenter,
+      );
+    });
+    test("Should emit correct values when dont has selected products",
+        () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.selectProducts]),
+      );
+
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -154,6 +171,7 @@ void main() {
         "Should call changeSaleRequestPersonalizedCodeProducts with correct values",
         () async {
       await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(0);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -166,18 +184,16 @@ void main() {
           oldPersonalizedCode: oldPersonalizedCode.toString().padLeft(3, "0"),
           newPersonalizedCode: newPersonalizedCode.toString().padLeft(3, "0"),
           saleRequestProductsIds:
-              printedEntity.Products.where((e) => e.IsCancelled == false)
-                  .map((e) => e.SaleRequestProductId!.toInt())
+              printedEntity.Products.map((e) => e.SaleRequestProductId!.toInt())
                   .toList(),
         ),
       ).called(1);
     });
     test("Should reload products after send products to another table",
         () async {
-      int firstSelected = faker.randomGenerator.integer(100);
-      sut.updateProductIsSelected(firstSelected);
-
       await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(0);
+
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -186,19 +202,16 @@ void main() {
       );
 
       verify(
-        () => loadPrintedProducts.load(
-          commandNumber: oldPersonalizedCode,
-        ),
+        () => loadPrintedProducts.load(commandNumber: oldPersonalizedCode),
       ).called(1);
     });
 
     test(
         "Should not call cartPresenter.insertServiceChargeProduct with in old command number when dont has service charge product",
         () async {
-      int firstSelected = faker.randomGenerator.integer(100);
-      sut.updateProductIsSelected(firstSelected);
-
       await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(0);
+
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -216,6 +229,7 @@ void main() {
     test("Should update increment value in old and new personalized codes",
         () async {
       await sut.loadProducts(commandNumber);
+      sut.updateProductIsSelected(0);
       await sut.sendProductsToAnotherTable(
         oldPersonalizedCode: oldPersonalizedCode,
         newPersonalizedCode: newPersonalizedCode,
@@ -230,39 +244,27 @@ void main() {
     });
   });
 
-  group("Update product is selected", () {
-    test("Should update product is selected correctly", () {
-      sut.updateProductIsSelected(0);
-      sut.updateProductIsSelected(1);
-      sut.updateProductIsSelected(2);
-      expect(sut.selectedsSaleRequestProductsIds, [0, 1, 2]);
-
-      sut.updateProductIsSelected(2);
-      expect(sut.selectedsSaleRequestProductsIds, [0, 1]);
-    });
-  });
-
   group("Clear all selecteds sale request products ids", () {
-    test("Should clear selectedsSaleRequestProductsIds", () {
+    test("Should clear selectedsSaleRequestProductsIds", () async {
+      await sut.loadProducts(commandNumber);
+
       sut.updateProductIsSelected(0);
-      sut.updateProductIsSelected(1);
-      expect(sut.selectedsSaleRequestProductsIds, [0, 1]);
+      expect(sut.selectedProducts, [printedViewModel.Products[0]]);
 
       sut.clearAllSelectedsSaleRequestProductsIds();
-      expect(sut.selectedsSaleRequestProductsIds, []);
+      expect(sut.selectedProducts, []);
     });
   });
 
   group("Select all products", () {
     test("Should select all products correctly", () async {
       await sut.loadProducts(commandNumber);
-      expect(sut.selectedsSaleRequestProductsIds, isEmpty);
+      expect(sut.selectedProducts, isEmpty);
 
       sut.selectAllProducts();
       expect(
-          sut.selectedsSaleRequestProductsIds,
+          sut.selectedProducts,
           printedViewModel.Products.where((e) => e.IsCancelled == "false")
-              .map((e) => e.SaleRequestProductId!.toInt())
               .toList());
     });
   });

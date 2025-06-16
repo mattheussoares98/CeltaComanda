@@ -76,6 +76,8 @@ class CommandField extends StatelessWidget {
                     return R.string.msgInvalidNumber;
                   } else if (value.toInt() > 1000 || value.toInt() == 0) {
                     return R.string.msgInvalidNumber;
+                  } else if (value.toInt() < 1) {
+                    return R.string.msgInvalidNumber;
                   }
 
                   return null;

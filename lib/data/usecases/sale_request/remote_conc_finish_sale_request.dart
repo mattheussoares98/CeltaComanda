@@ -1,10 +1,12 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteConcFinishSaleRequest implements ConcFinishSaleRequest {
+class RemoteConcFinishSaleRequest
+    with ErrorHandling
+    implements ConcFinishSaleRequest {
   final HttpClient httpAdapter;
 
   RemoteConcFinishSaleRequest({required this.httpAdapter});
@@ -38,8 +40,8 @@ class RemoteConcFinishSaleRequest implements ConcFinishSaleRequest {
       if (response == null) {
         throw Error();
       }
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

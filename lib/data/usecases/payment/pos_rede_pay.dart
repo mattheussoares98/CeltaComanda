@@ -1,11 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class PosRedePay implements RedePay {
+class PosRedePay with ErrorHandling implements RedePay {
   @override
   Future<void> pay(PayParamsModel params) async {
     final platform = MethodChannel("rede");
@@ -18,7 +18,7 @@ class PosRedePay implements RedePay {
 
       debugPrint(result);
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

@@ -12,9 +12,10 @@ import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../database/database.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class ConcentratorLoadImages implements LoadImages {
+class ConcentratorLoadImages with ErrorHandling implements LoadImages {
   final HiveStorage hiveStorage;
   final HttpClient httpClient;
 
@@ -126,7 +127,7 @@ class ConcentratorLoadImages implements LoadImages {
       );
       return List<String>.from(response); // mais direto
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 
@@ -222,7 +223,8 @@ class ConcentratorLoadImages implements LoadImages {
       for (var updatedImage in newImages) {
         int indexInLocalImages = localImages.indexWhere((e) =>
             e.pluOrEan.toLowerCase() == updatedImage.pluOrEan.toLowerCase() &&
-            e.enterpriseName?.toLowerCase() == updatedImage.enterpriseName?.toLowerCase());
+            e.enterpriseName?.toLowerCase() ==
+                updatedImage.enterpriseName?.toLowerCase());
 
         if (indexInLocalImages != -1) {
           allImages.removeAt(indexInLocalImages);

@@ -1,12 +1,12 @@
-import 'package:clean_celta_mobile/data/models/models.dart';
-
+import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
 class RemoteLoadExpansibleGroupsByProductsCodes
+    with ErrorHandling
     implements LoadExpansibleGroupsByProductsCodes {
   final HttpClient httpAdapter;
 
@@ -36,8 +36,8 @@ class RemoteLoadExpansibleGroupsByProductsCodes
         return ExpansibleGroupFromProductsCompleteModel.fromJson(element)
             .toEntity();
       }).toList();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

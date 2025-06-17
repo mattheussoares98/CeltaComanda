@@ -3,8 +3,11 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
+class RemoteCheckPasswordByCustomerCode
+    with ErrorHandling
+    implements CheckPasswordByCustomerCode {
   final SoapRequest soapAdapter;
   RemoteCheckPasswordByCustomerCode({required this.soapAdapter});
 
@@ -14,11 +17,8 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
     required String password,
   }) async {
     try {
-      if (EnterpriseBuilder
-              .entity!
-              .enterpriseConcentradorParametersEntity!
-              .celtaBSCrossIdentity!
-              .isEmpty ==
+      if (EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity!
+              .celtaBSCrossIdentity!.isEmpty ==
           true) {
         throw DomainError.unexpected;
       }
@@ -38,7 +38,7 @@ class RemoteCheckPasswordByCustomerCode implements CheckPasswordByCustomerCode {
 
       return soapResponse;
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

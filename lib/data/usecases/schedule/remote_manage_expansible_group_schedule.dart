@@ -1,11 +1,12 @@
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
 class RemoteManageExpansibleGroupSchedule
+    with ErrorHandling
     implements ManageExpansibleGroupSchedule {
   final HttpClient httpAdapter;
 
@@ -15,15 +16,14 @@ class RemoteManageExpansibleGroupSchedule
   Future<void> delete(int expansibleGroupId) async {
     try {
       final url = EnterpriseBuilder.entity!.url;
-      final enterpriseId =
-          EnterpriseBuilder.entity!.enterpriseId;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
       await httpAdapter.request(
         url:
             "$url/api/APIGroups/DeleteExpansibleGroupSchedule?enterpriseId=$enterpriseId&expansibleGroupId=$expansibleGroupId",
         method: "delete",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -43,8 +43,8 @@ class RemoteManageExpansibleGroupSchedule
       }
 
       return [];
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -60,7 +60,7 @@ class RemoteManageExpansibleGroupSchedule
         body: body,
       );
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

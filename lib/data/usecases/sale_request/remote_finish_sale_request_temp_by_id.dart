@@ -1,9 +1,11 @@
 import '../../../main/builders/builders.dart';
 import '../../http/http_client.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteFinishSaleRequestTempById implements FinishSaleRequestTempById {
+class RemoteFinishSaleRequestTempById
+    with ErrorHandling
+    implements FinishSaleRequestTempById {
   final HttpClient httpAdapter;
 
   RemoteFinishSaleRequestTempById({required this.httpAdapter});
@@ -16,8 +18,8 @@ class RemoteFinishSaleRequestTempById implements FinishSaleRequestTempById {
             "${EnterpriseBuilder.entity!.url}/api/apiSaleRequest/FinishTempById?saleRequestTempId=$saleRequestTempId",
         method: "post",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

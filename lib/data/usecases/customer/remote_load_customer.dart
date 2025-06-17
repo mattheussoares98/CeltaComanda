@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteLoadCustomer implements LoadCustomer {
+class RemoteLoadCustomer with ErrorHandling implements LoadCustomer {
   final SoapRequest soapAdapter;
   RemoteLoadCustomer({required this.soapAdapter});
 
@@ -62,7 +62,7 @@ class RemoteLoadCustomer implements LoadCustomer {
 
       return soapResponse;
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

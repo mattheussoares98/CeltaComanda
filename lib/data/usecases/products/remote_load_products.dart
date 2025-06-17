@@ -5,8 +5,9 @@ import '../../../domain/usecases/products/products.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteLoadProducts implements LoadProducts {
+class RemoteLoadProducts with ErrorHandling implements LoadProducts {
   final HttpClient httpAdapter;
 
   RemoteLoadProducts({
@@ -26,8 +27,8 @@ class RemoteLoadProducts implements LoadProducts {
       return response.map<ProductEntity>((element) {
         return ProductModel.fromJson(element).toEntity();
       }).toList();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

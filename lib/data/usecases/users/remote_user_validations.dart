@@ -1,8 +1,9 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteUserValidations implements UserValidations {
+class RemoteUserValidations with ErrorHandling implements UserValidations {
   final HttpClient httpAdapter;
 
   RemoteUserValidations({required this.httpAdapter});
@@ -25,7 +26,7 @@ class RemoteUserValidations implements UserValidations {
 
       return isValidPassword;
     } catch (error) {
-      if(error == HttpError.serverError){
+      if (error == HttpError.serverError) {
         throw DomainError.invalidCredentialsOrAccessDenied;
       }
       throw DomainError.unexpected;
@@ -46,8 +47,8 @@ class RemoteUserValidations implements UserValidations {
       }
 
       return canCancel;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

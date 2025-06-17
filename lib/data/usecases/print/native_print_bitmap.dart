@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../mixins/mixins.dart';
 
-class NativePrintBitmap implements PrintBitmap {
+class NativePrintBitmap with ErrorHandling implements PrintBitmap {
   @override
   Future<void> print(Uint8List bitmap) async {
     try {
@@ -17,7 +18,7 @@ class NativePrintBitmap implements PrintBitmap {
 
       debugPrint((result));
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

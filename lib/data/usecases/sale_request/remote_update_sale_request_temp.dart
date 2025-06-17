@@ -1,10 +1,12 @@
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteUpdateSaleRequestTemp implements UpdateSaleRequestTemp {
+class RemoteUpdateSaleRequestTemp
+    with ErrorHandling
+    implements UpdateSaleRequestTemp {
   final HttpClient httpAdapter;
 
   RemoteUpdateSaleRequestTemp({
@@ -25,8 +27,8 @@ class RemoteUpdateSaleRequestTemp implements UpdateSaleRequestTemp {
       );
 
       response != null;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

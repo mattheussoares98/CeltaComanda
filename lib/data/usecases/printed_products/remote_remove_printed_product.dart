@@ -1,9 +1,11 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteRemovePrintedProduct implements RemovePrintedProduct {
+class RemoteRemovePrintedProduct
+    with ErrorHandling
+    implements RemovePrintedProduct {
   final HttpClient httpAdapter;
 
   RemoteRemovePrintedProduct({
@@ -18,8 +20,8 @@ class RemoteRemovePrintedProduct implements RemovePrintedProduct {
             "${EnterpriseBuilder.entity!.url}/api/APISaleRequestProduct/DeleteSaleRequestProduct?id=$productId",
         method: "get",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

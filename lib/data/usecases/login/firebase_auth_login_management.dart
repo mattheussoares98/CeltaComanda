@@ -1,8 +1,10 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/databases/databases.dart';
+import '../../mixins/mixins.dart';
 
-class FirebaseAuthLoginManagement implements LoginManagement {
+class FirebaseAuthLoginManagement
+    with ErrorHandling
+    implements LoginManagement {
   final FirebaseAuthAdapter firebaseAuthAdapter;
 
   FirebaseAuthLoginManagement({required this.firebaseAuthAdapter});
@@ -15,7 +17,7 @@ class FirebaseAuthLoginManagement implements LoginManagement {
     try {
       await firebaseAuthAdapter.login(email: email, password: password);
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 
@@ -24,7 +26,7 @@ class FirebaseAuthLoginManagement implements LoginManagement {
     try {
       await firebaseAuthAdapter.logout();
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 

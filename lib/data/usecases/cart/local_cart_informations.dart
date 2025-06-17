@@ -5,8 +5,9 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../database/database.dart';
+import '../../mixins/mixins.dart';
 
-class LocalCartInformations implements CartInformations {
+class LocalCartInformations with ErrorHandling implements CartInformations {
   final HiveStorage hiveStorage;
 
   LocalCartInformations({required this.hiveStorage});
@@ -22,7 +23,7 @@ class LocalCartInformations implements CartInformations {
 
       await hiveStorage.put(CacheKeys.cartProducts.name, cartProductsEncoded);
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 
@@ -40,7 +41,7 @@ class LocalCartInformations implements CartInformations {
         return cartProducts;
       }
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 

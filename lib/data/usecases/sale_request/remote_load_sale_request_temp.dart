@@ -1,11 +1,13 @@
 import '../../../main/builders/builders.dart';
-import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../mixins/mixins.dart';
+import '../../models/models.dart';
 import '../../http/http.dart';
 
-class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
+class RemoteLoadSaleRequestTemp
+    with ErrorHandling
+    implements LoadSaleRequestTemp {
   final HttpClient httpAdapter;
 
   RemoteLoadSaleRequestTemp({
@@ -27,8 +29,8 @@ class RemoteLoadSaleRequestTemp implements LoadSaleRequestTemp {
       if (saleRequestTemp == null) throw Error();
 
       return SaleRequestTempModel.fromJson(saleRequestTemp).toEntity();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

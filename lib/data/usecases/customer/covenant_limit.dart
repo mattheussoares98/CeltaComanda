@@ -3,8 +3,9 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteCovenantLimit implements CovenantLimit {
+class RemoteCovenantLimit with ErrorHandling implements CovenantLimit {
   final SoapRequest soapAdapter;
   RemoteCovenantLimit({required this.soapAdapter});
 
@@ -16,12 +17,9 @@ class RemoteCovenantLimit implements CovenantLimit {
     required double value,
   }) async {
     try {
-      if (EnterpriseBuilder.entity!
-                  .enterpriseConcentradorParametersEntity ==
+      if (EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity ==
               null ||
-          EnterpriseBuilder
-                  .entity!
-                  .enterpriseConcentradorParametersEntity!
+          EnterpriseBuilder.entity!.enterpriseConcentradorParametersEntity!
                   .celtaBSCrossIdentity ==
               null) {
         throw DomainError.unexpected;
@@ -43,7 +41,7 @@ class RemoteCovenantLimit implements CovenantLimit {
 
       return soapResponse;
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

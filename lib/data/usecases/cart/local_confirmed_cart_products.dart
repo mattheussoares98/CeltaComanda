@@ -1,10 +1,12 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 
 import '../../database/database.dart';
+import '../../mixins/mixins.dart';
 
-class LocalConfirmedCartProducts implements ConfirmedCartProducts {
+class LocalConfirmedCartProducts
+    with ErrorHandling
+    implements ConfirmedCartProducts {
   final HiveStorage hiveStorage;
 
   LocalConfirmedCartProducts({required this.hiveStorage});
@@ -16,7 +18,7 @@ class LocalConfirmedCartProducts implements ConfirmedCartProducts {
           await hiveStorage.get(CacheKeys.updatedSaleRequestTemp.name);
       return value == true;
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 
@@ -26,7 +28,7 @@ class LocalConfirmedCartProducts implements ConfirmedCartProducts {
       await hiveStorage.delete(CacheKeys.updatedSaleRequestTemp.name);
       await hiveStorage.put(CacheKeys.updatedSaleRequestTemp.name, value);
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

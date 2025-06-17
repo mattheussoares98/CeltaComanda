@@ -1,8 +1,9 @@
 import '../../database/database.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteAddPrintRequest implements AddPrintRequest {
+class RemoteAddPrintRequest with ErrorHandling implements AddPrintRequest {
   final FirebaseStorage firebaseAdapter;
 
   RemoteAddPrintRequest({
@@ -14,7 +15,7 @@ class RemoteAddPrintRequest implements AddPrintRequest {
     try {
       await firebaseAdapter.addNewPrintRequest(entity);
     } catch (e) {
-      throw Exception();
+      treatError(e);
     }
   }
 }

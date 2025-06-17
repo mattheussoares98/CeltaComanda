@@ -1,12 +1,14 @@
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/products/products.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteLoadSuggestionSale implements LoadSuggestionSale {
+class RemoteLoadSuggestionSale
+    with ErrorHandling
+    implements LoadSuggestionSale {
   final HttpClient httpAdapter;
 
   RemoteLoadSuggestionSale({
@@ -24,8 +26,8 @@ class RemoteLoadSuggestionSale implements LoadSuggestionSale {
       return response.map<SuggestionSaleEntity>((element) {
         return SuggestionSaleModel.fromJson(element).toEntity();
       }).toList();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

@@ -3,8 +3,9 @@ import 'package:flutter_barcode_scanner_plus/flutter_barcode_scanner_plus.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
+import '../../mixins/mixins.dart';
 
-class CameraBarcodeScanner implements BarcodeScanner {
+class CameraBarcodeScanner with ErrorHandling implements BarcodeScanner {
   @override
   Future<String> read() async {
     try {
@@ -20,12 +21,8 @@ class CameraBarcodeScanner implements BarcodeScanner {
       }
 
       return barcodeScanRes;
-    } on DomainError catch (e) {
-      if (e == DomainError.unexpected) {
-        throw DomainError.unexpected;
-      } else {
-        throw DomainError.barcodeNotRead;
-      }
+    } catch (e) {
+      treatError(e);
     }
   }
 }

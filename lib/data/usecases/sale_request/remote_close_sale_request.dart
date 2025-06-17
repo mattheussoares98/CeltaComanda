@@ -1,9 +1,9 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteCloseSaleRequest implements CloseSaleRequest {
+class RemoteCloseSaleRequest with ErrorHandling implements CloseSaleRequest {
   final HttpClient httpAdapter;
 
   RemoteCloseSaleRequest({required this.httpAdapter});
@@ -14,11 +14,12 @@ class RemoteCloseSaleRequest implements CloseSaleRequest {
       final url = EnterpriseBuilder.entity!.url;
 
       await httpAdapter.request(
-        url: "$url/api/apiSaleRequest/CloseSaleRequest?_personalizedCode=$personalizedCode",
+        url:
+            "$url/api/apiSaleRequest/CloseSaleRequest?_personalizedCode=$personalizedCode",
         method: "post",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

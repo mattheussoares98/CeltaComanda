@@ -1,10 +1,10 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteLoadSaleRequest implements LoadSaleRequest {
+class RemoteLoadSaleRequest with ErrorHandling implements LoadSaleRequest {
   final HttpClient httpAdapter;
 
   RemoteLoadSaleRequest({
@@ -26,8 +26,8 @@ class RemoteLoadSaleRequest implements LoadSaleRequest {
       }
 
       return SaleRequestModel.fromJson(saleRequest);
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

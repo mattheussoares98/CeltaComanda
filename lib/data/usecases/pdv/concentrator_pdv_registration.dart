@@ -5,9 +5,12 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class ConcentratorPdvRegistration implements PdvRegistration {
+class ConcentratorPdvRegistration
+    with ErrorHandling
+    implements PdvRegistration {
   final HttpClient httpAdapter;
 
   ConcentratorPdvRegistration({required this.httpAdapter});
@@ -36,13 +39,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
             .toList()
             .cast<PdvEntity>();
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.dontHaveUnusedPdvs:
-          throw DomainError.dontHaveUnusedPdvs;
-        default:
-          throw DomainError.unexpected;
-      }
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -68,8 +66,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
         method: "post",
         headers: headers,
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -91,7 +89,7 @@ class ConcentratorPdvRegistration implements PdvRegistration {
       } else {
         return PdvModel.fromJson(response).toEntity();
       }
-    } catch (error) {
+    } catch (e) {
       return null;
     }
   }
@@ -137,8 +135,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
         headers: headers,
         body: body,
       );
-    } catch (error) {
-      debugPrint(error.toString());
+    } catch (e) {
+      debugPrint(e.toString());
       //tudo bem, depois atualiza o registro. Já foi certificado de que é o mesmo dispositivo
     }
   }
@@ -166,13 +164,8 @@ class ConcentratorPdvRegistration implements PdvRegistration {
             .map((e) => PdvModel.fromJson(e).toEntity())
             .toList();
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.dontHaveUnusedPdvs:
-          throw DomainError.dontHaveUnusedPdvs;
-        default:
-          throw DomainError.unexpected;
-      }
+    } on DomainError catch (e) {
+      treatError(e);
     }
   }
 }

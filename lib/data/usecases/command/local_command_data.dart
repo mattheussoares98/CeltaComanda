@@ -2,11 +2,11 @@ import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
-import '../../../domain/helpers/helpers.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../database/database.dart';
+import '../../mixins/mixins.dart';
 
-class LocalLoadCommandData implements LocalCommandData {
+class LocalLoadCommandData with ErrorHandling implements LocalCommandData {
   final HiveStorage hiveStorage;
 
   LocalLoadCommandData({required this.hiveStorage});
@@ -21,8 +21,8 @@ class LocalLoadCommandData implements LocalCommandData {
         return CommandModel.fromJson(json).toEntity();
       }
       return null;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -33,8 +33,8 @@ class LocalLoadCommandData implements LocalCommandData {
         CacheKeys.commandData.name,
         CommandModel.fromEntity(entity).toJson(),
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

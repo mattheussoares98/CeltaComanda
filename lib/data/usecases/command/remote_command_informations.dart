@@ -3,9 +3,12 @@ import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteCommandInformations implements CommandInformations {
+class RemoteCommandInformations
+    with ErrorHandling
+    implements CommandInformations {
   final HttpClient httpAdapter;
 
   RemoteCommandInformations({required this.httpAdapter});
@@ -28,8 +31,8 @@ class RemoteCommandInformations implements CommandInformations {
       }
 
       return isValid == true;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -50,8 +53,8 @@ class RemoteCommandInformations implements CommandInformations {
       }
 
       return ticketIsPermitted == true;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 

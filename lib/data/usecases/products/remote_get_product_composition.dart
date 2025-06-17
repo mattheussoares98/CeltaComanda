@@ -1,13 +1,15 @@
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-
-import '../../../ui/pages/insert_products/product_composition_view_model.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/helpers/helpers.dart';
+import '../../../main/builders/builders.dart';
+import '../../../ui/pages/pages.dart';
 import '../../http/http_client.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteGetProductComposition extends GetProductComposition {
+class RemoteGetProductComposition
+    with ErrorHandling
+    implements GetProductComposition {
   final HttpClient httpAdapter;
 
   RemoteGetProductComposition(this.httpAdapter);
@@ -34,8 +36,8 @@ class RemoteGetProductComposition extends GetProductComposition {
       list.sort((a, b) => a.ChildName!.compareTo(b.ChildName!));
 
       return list;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -62,8 +64,8 @@ class RemoteGetProductComposition extends GetProductComposition {
       }
 
       return childs;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

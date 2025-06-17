@@ -1,11 +1,13 @@
 import '../../../main/builders/builders.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
 
-class RemoteLoadPrintedProducts implements LoadPrintedProducts {
+class RemoteLoadPrintedProducts
+    with ErrorHandling
+    implements LoadPrintedProducts {
   final HttpClient httpAdapter;
 
   RemoteLoadPrintedProducts({
@@ -27,15 +29,14 @@ class RemoteLoadPrintedProducts implements LoadPrintedProducts {
       );
       if (printedProducts == null) return null;
 
-      final printedEntity =
-          PrintedModel.fromJson(printedProducts).toEntity();
+      final printedEntity = PrintedModel.fromJson(printedProducts).toEntity();
       final allProducts = _insertChildsInFathers(printedEntity);
       printedEntity.Products.removeRange(0, printedEntity.Products.length);
       printedEntity.Products.addAll(allProducts);
 
       return printedEntity;
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 

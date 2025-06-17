@@ -1,11 +1,12 @@
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../database/database.dart';
 
 class LocalPrintRequest
+    with ErrorHandling
     implements AddPrintRequest, LoadPrintRequest, ClearSaleRequestTemp {
   final HiveStorage hiveStorage;
 
@@ -19,7 +20,7 @@ class LocalPrintRequest
         PrintRequestModel.fromEntity(entity).toJson(),
       );
     } catch (e) {
-      throw Exception();
+      treatError(e);
     }
   }
 
@@ -35,8 +36,8 @@ class LocalPrintRequest
       } else {
         return null;
       }
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -50,7 +51,7 @@ class LocalPrintRequest
         CacheKeys.printRequest.name,
       );
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

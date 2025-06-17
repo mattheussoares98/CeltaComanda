@@ -1,11 +1,11 @@
 import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteLoadSellers implements LoadSellers {
+class RemoteLoadSellers with ErrorHandling implements LoadSellers {
   final HttpClient httpAdapter;
 
   RemoteLoadSellers({required this.httpAdapter});
@@ -29,8 +29,8 @@ class RemoteLoadSellers implements LoadSellers {
       return response.map<SellerEntity>((element) {
         return SellerModel.fromJson(element).toEntity();
       }).toList();
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

@@ -1,8 +1,10 @@
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 
-class RemoteUpdateProductQuantity implements UpdateProductQuantity {
+class RemoteUpdateProductQuantity
+    with ErrorHandling
+    implements UpdateProductQuantity {
   final HttpClient httpAdapter;
 
   RemoteUpdateProductQuantity({
@@ -20,8 +22,8 @@ class RemoteUpdateProductQuantity implements UpdateProductQuantity {
             "$url/api/APISaleRequestProduct/UpdateQuantityPlus?_saleRequestProductTempId=$saleRequestProductTempId",
         method: "get",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -36,8 +38,8 @@ class RemoteUpdateProductQuantity implements UpdateProductQuantity {
             "$url/api/APISaleRequestProduct/UpdateQuantityMinus?_saleRequestProductTempId=$saleRequestProductTempId",
         method: "get",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -52,8 +54,8 @@ class RemoteUpdateProductQuantity implements UpdateProductQuantity {
             "$url/api/APISaleRequestProduct/DeleteSaleRequestProductTemp?id=$saleRequestProductTempId",
         method: "get",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 }

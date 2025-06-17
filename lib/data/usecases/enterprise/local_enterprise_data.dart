@@ -1,11 +1,13 @@
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../infra/helpers/helpers.dart';
 import '../../database/database.dart';
 
-class LocalEnterpriseData implements LoadEnterpriseData, SaveEnterpriseData {
+class LocalEnterpriseData
+    with ErrorHandling
+    implements LoadEnterpriseData, SaveEnterpriseData {
   final HiveStorage hiveStorage;
 
   LocalEnterpriseData({required this.hiveStorage});
@@ -21,8 +23,8 @@ class LocalEnterpriseData implements LoadEnterpriseData, SaveEnterpriseData {
       } else {
         return null;
       }
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -34,8 +36,8 @@ class LocalEnterpriseData implements LoadEnterpriseData, SaveEnterpriseData {
         CacheKeys.enterprise.name,
         json,
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 

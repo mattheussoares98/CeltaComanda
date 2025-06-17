@@ -1,11 +1,13 @@
 import '../../../domain/entities/entities.dart';
-import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteManageProductSchedule implements ManageProductSchedule {
+class RemoteManageProductSchedule
+    with ErrorHandling
+    implements ManageProductSchedule {
   final HttpClient httpAdapter;
 
   RemoteManageProductSchedule({required this.httpAdapter});
@@ -14,15 +16,14 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
   Future<void> delete(int internalCodeOnErp) async {
     try {
       final url = EnterpriseBuilder.entity!.url;
-      final enterpriseId =
-          EnterpriseBuilder.entity!.enterpriseId;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
       await httpAdapter.request(
         url:
             "$url/api/APIProduct/DeleteProductSchedule?enterpriseId=$enterpriseId&internalCodeOnERP=$internalCodeOnErp",
         method: "delete",
       );
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -30,8 +31,7 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
   Future<List<ProductScheduleEntity>> get(int internalCodeOnErp) async {
     try {
       final url = EnterpriseBuilder.entity!.url;
-      final enterpriseId =
-          EnterpriseBuilder.entity!.enterpriseId;
+      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
       final result = await httpAdapter.request(
         url:
             "$url/api/APIProduct/GetProductSchedules?enterpriseId=$enterpriseId&internalCodeOnERP=$internalCodeOnErp",
@@ -43,8 +43,8 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
       }
 
       return [];
-    } catch (error) {
-      throw DomainError.unexpected;
+    } catch (e) {
+      treatError(e);
     }
   }
 
@@ -60,7 +60,7 @@ class RemoteManageProductSchedule implements ManageProductSchedule {
         body: body,
       );
     } catch (e) {
-      throw DomainError.unexpected;
+      treatError(e);
     }
   }
 }

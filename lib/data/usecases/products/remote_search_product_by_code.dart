@@ -2,9 +2,12 @@ import '../../../domain/entities/product_entity.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../http/http.dart';
+import '../../mixins/mixins.dart';
 import '../../models/models.dart';
 
-class RemoteSearchProductByCode implements SearchProductByCode {
+class RemoteSearchProductByCode
+    with ErrorHandling
+    implements SearchProductByCode {
   final HttpClient httpAdapter;
 
   RemoteSearchProductByCode({
@@ -28,13 +31,8 @@ class RemoteSearchProductByCode implements SearchProductByCode {
       }
 
       return ProductModel.fromJson(response).toEntity();
-    } catch (error) {
-      switch (error) {
-        case DomainError.productNotFound:
-          throw DomainError.productNotFound;
-        default:
-          throw DomainError.unexpected;
-      }
+    } catch (e) {
+      treatError(e);
     }
   }
 }

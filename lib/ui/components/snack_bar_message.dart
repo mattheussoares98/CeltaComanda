@@ -22,7 +22,7 @@ void snackBarMessage(BuildContext context, String message,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      showCloseIcon: true,
+      showCloseIcon: false,
       closeIconColor: Colors.black,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
       behavior: SnackBarBehavior.floating,

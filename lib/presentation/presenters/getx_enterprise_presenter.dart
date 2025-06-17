@@ -100,6 +100,7 @@ class GetxEnterprisePresenter extends GetxController
             canInsertQuantityManually: firebaseData.canInsertQuantityManually,
             canInsertCustomer: firebaseData.canInsertCustomer,
             requestTableNumber: firebaseData.requestTableNumber,
+            useOldPrintWay: firebaseData.useOldPrintWay,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -229,6 +230,7 @@ class GetxEnterprisePresenter extends GetxController
       canInsertQuantityManually: null,
       canInsertCustomer: null,
       requestTableNumber: null,
+      useOldPrintWay: null,
     );
 
     _enterpriseError.value =
@@ -296,6 +298,7 @@ class GetxEnterprisePresenter extends GetxController
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
         canInsertCustomer: enterprise.canInsertCustomer,
         requestTableNumber: enterprise.requestTableNumber,
+        useOldPrintWay: enterprise.useOldPrintWay,
       );
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -331,6 +334,7 @@ class GetxEnterprisePresenter extends GetxController
         canInsertQuantityManually: null,
         canInsertCustomer: null,
         requestTableNumber: null,
+        useOldPrintWay: null,
       );
 
       EnterpriseBuilder.entity = newEnterprise;

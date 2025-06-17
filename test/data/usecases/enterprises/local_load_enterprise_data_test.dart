@@ -78,6 +78,7 @@ void main() {
               enterpriseJsonData["canInsertQuantityManually"],
           canInsertCustomer: enterpriseJsonData["canInsertCustomer"],
           requestTableNumber: enterpriseJsonData["requestTableNumber"],
+          useOldPrintWay: enterpriseJsonData["useOldPrintWay"],
         ),
       );
     });

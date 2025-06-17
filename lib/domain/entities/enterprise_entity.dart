@@ -25,6 +25,7 @@ class EnterpriseEntity extends Equatable {
   final bool? canInsertQuantityManually;
   final bool? canInsertCustomer;
   final bool? requestTableNumber;
+  final bool? useOldPrintWay;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -48,6 +49,7 @@ class EnterpriseEntity extends Equatable {
     required this.canInsertQuantityManually,
     required this.canInsertCustomer,
     required this.requestTableNumber,
+    required this.useOldPrintWay,
   });
 
   @override
@@ -73,5 +75,6 @@ class EnterpriseEntity extends Equatable {
         canInsertQuantityManually,
         canInsertCustomer,
         requestTableNumber,
+        useOldPrintWay,
       ];
 }

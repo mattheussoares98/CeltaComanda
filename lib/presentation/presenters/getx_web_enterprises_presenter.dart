@@ -118,6 +118,7 @@ class GetxWebEnterprisesPresenter extends GetxController
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
         requestTableNumber: entity.requestTableNumber,
+        useOldPrintWay: entity.useOldPrintWay,
       );
 
       await updateEnterpriseParameters.update(enterprise);

@@ -37,10 +37,13 @@ class EntityFactory {
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
     bool? requestTableNumber,
+    bool? useOldPrintWay,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
       url: url == true ? null : atualEntity.url,
+      useOldPrintWay:
+          useOldPrintWay == true ? null : atualEntity.useOldPrintWay,
       enterpriseId: enterpriseId == true ? null : atualEntity.enterpriseId,
       concentradorUrl:
           concentradorUrl == true ? null : atualEntity.concentradorUrl,
@@ -113,6 +116,7 @@ class EntityFactory {
     bool? canInsertQuantityManually,
     bool? canInsertCustomer,
     bool? requestTableNumber,
+    bool? useOldPrintWay,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -149,6 +153,7 @@ class EntityFactory {
           canInsertQuantityManually ?? faker.randomGenerator.boolean(),
       canInsertCustomer: canInsertCustomer ?? faker.randomGenerator.boolean(),
       requestTableNumber: requestTableNumber ?? faker.randomGenerator.boolean(),
+      useOldPrintWay: useOldPrintWay ?? faker.randomGenerator.boolean(),
     );
   }
 

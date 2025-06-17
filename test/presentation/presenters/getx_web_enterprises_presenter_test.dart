@@ -219,6 +219,7 @@ void main() {
         blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
         canInsertQuantityManually: enterprise.canInsertQuantityManually,
         requestTableNumber: enterprise.requestTableNumber,
+        useOldPrintWay: enterprise.useOldPrintWay,
       );
 
       verify(() =>
@@ -252,6 +253,7 @@ void main() {
         canInsertQuantityManually: null,
         canInsertCustomer: null,
         requestTableNumber: null,
+        useOldPrintWay: null,
       );
 
       await sut.updateEnterprise(newEntity);

@@ -110,6 +110,7 @@ void main() {
       canInsertQuantityManually: null,
       canInsertCustomer: null,
       requestTableNumber: null,
+      useOldPrintWay: null,
     );
 
     pdvsNotUsing = [
@@ -265,6 +266,7 @@ void main() {
           canInsertQuantityManually: null,
           canInsertCustomer: null,
           requestTableNumber: null,
+          useOldPrintWay: null,
         ),
       );
     });
@@ -413,6 +415,7 @@ void main() {
           canInsertQuantityManually: newEnterprise.canInsertQuantityManually,
           canInsertCustomer: newEnterprise.canInsertCustomer,
           requestTableNumber: newEnterprise.requestTableNumber,
+          useOldPrintWay: newEnterprise.useOldPrintWay,
         ),
       );
     });
@@ -638,6 +641,7 @@ void main() {
             canInsertQuantityManually: null,
             canInsertCustomer: null,
             requestTableNumber: null,
+            useOldPrintWay: null,
           ));
     });
   });
@@ -694,6 +698,7 @@ void main() {
                 EnterpriseBuilder.entity!.canInsertQuantityManually,
             canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
             requestTableNumber: EnterpriseBuilder.entity!.requestTableNumber,
+            useOldPrintWay: EnterpriseBuilder.entity!.useOldPrintWay,
           ));
     });
     test("Should update last import when update enterprise parameters",
@@ -732,6 +737,7 @@ void main() {
           canInsertQuantityManually: null,
           canInsertCustomer: null,
           requestTableNumber: null,
+          useOldPrintWay: null,
         ),
       );
     });

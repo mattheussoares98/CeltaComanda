@@ -25,6 +25,7 @@ class EnterpriseModel {
   final bool? canInsertQuantityManually;
   final bool? canInsertCustomer;
   final bool? requestTableNumber;
+  final bool? useOldPrintWay;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -48,6 +49,7 @@ class EnterpriseModel {
     required this.canInsertQuantityManually,
     required this.canInsertCustomer,
     required this.requestTableNumber,
+    required this.useOldPrintWay,
   });
 
   factory EnterpriseModel.fromJson(
@@ -92,6 +94,7 @@ class EnterpriseModel {
       canInsertQuantityManually: json["canInsertQuantityManually"],
       canInsertCustomer: json["canInsertCustomer"],
       requestTableNumber: json["requestTableNumber"],
+      useOldPrintWay: json["useOldPrintWay"],
     );
   }
 
@@ -119,6 +122,7 @@ class EnterpriseModel {
         canInsertQuantityManually: entity.canInsertQuantityManually,
         canInsertCustomer: entity.canInsertCustomer,
         requestTableNumber: entity.requestTableNumber,
+        useOldPrintWay: entity.useOldPrintWay,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -144,6 +148,7 @@ class EnterpriseModel {
         canInsertQuantityManually: canInsertQuantityManually,
         canInsertCustomer: canInsertCustomer,
         requestTableNumber: requestTableNumber,
+        useOldPrintWay: useOldPrintWay,
       );
 
   Map<String, dynamic> toJson() => {
@@ -173,5 +178,6 @@ class EnterpriseModel {
         'canInsertQuantityManually': canInsertQuantityManually,
         'canInsertCustomer': canInsertCustomer,
         'requestTableNumber': requestTableNumber,
+        'useOldPrintWay': useOldPrintWay,
       };
 }

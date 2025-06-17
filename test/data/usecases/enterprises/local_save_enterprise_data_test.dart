@@ -41,6 +41,7 @@ void main() {
       canInsertQuantityManually: faker.randomGenerator.boolean(),
       canInsertCustomer: faker.randomGenerator.boolean(),
       requestTableNumber: faker.randomGenerator.boolean(),
+      useOldPrintWay: faker.randomGenerator.boolean(),
     );
     sut = LocalEnterpriseData(hiveStorage: cacheStorage);
   });

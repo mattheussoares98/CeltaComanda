@@ -82,6 +82,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                   enterpriseConcentradorParametersEntity: EnterpriseBuilder
                       .entity?.enterpriseConcentradorParametersEntity,
                   persistApp: EnterpriseBuilder.entity?.persistApp,
+                  useOldPrintWay: EnterpriseBuilder.entity?.useOldPrintWay,
                   updateDevicesInformations:
                       EnterpriseBuilder.entity?.updateDevicesInformations,
                   updateEnterprise: EnterpriseBuilder.entity?.updateEnterprise,

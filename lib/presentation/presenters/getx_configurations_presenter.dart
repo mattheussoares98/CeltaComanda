@@ -93,12 +93,16 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
-      await commandInformations.openOrBlockade(
+      final response = await commandInformations.openOrBlockade(
         commandNumber: commandNumber.toString().padLeft(3, "0"),
         isOpen: isOpen,
       );
 
-      return true;
+      if (response == false) {
+        throw DomainError.invalidCommandNumber;
+      }
+
+      return response;
     } catch (e) {
       mainError = getUIError(e);
       return false;

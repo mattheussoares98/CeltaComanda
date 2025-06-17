@@ -225,6 +225,20 @@ void main() {
         isOpen: true,
       );
     });
+    test("Should emit correct values on return false", () async {
+      commandInformations.mockOpenOrBlockade(false);
+
+      expectLater(
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.invalidCommandNumber]),
+      );
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+
+      await sut.openOrBlockadeCommand(
+        commandNumber: newFixedCommandNumber,
+        isOpen: faker.randomGenerator.boolean(),
+      );
+    });
     test("Should call with correct values", () async {
       bool isOpen = faker.randomGenerator.boolean();
 
@@ -239,11 +253,9 @@ void main() {
           )).called(1);
     });
     test("Should return true on success", () async {
-      bool isOpen = faker.randomGenerator.boolean();
-
       final value = await sut.openOrBlockadeCommand(
         commandNumber: newFixedCommandNumber,
-        isOpen: isOpen,
+        isOpen: true,
       );
 
       expect(value, true);

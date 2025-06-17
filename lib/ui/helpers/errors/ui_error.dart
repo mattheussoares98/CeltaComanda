@@ -1,116 +1,60 @@
+import 'package:equatable/equatable.dart';
+
 import '../helpers.dart';
 
-enum UIError {
-  accessDenied,
-  addComment,
-  barcodeNotRead,
-  blockedCommand,
-  cantSendServiceChargeProduct,
-  commandAlreadyPaid,
-  commandNotAvailable,
-  commandNumberObligatory,
-  dontHaveUnusedPdvs,
-  emailInUse,
-  emptySales,
-  enterpriseOrUrlNotFound,
-  invalidCommandNumber,
-  invalidCombox,
-  invalidCredentials,
-  invalidCredentialsOrAccessDenied,
-  invalidField,
-  liquidadeCommandError,
-  maximumQuantityAchieved,
-  newCommandMustBeEmpty,
-  notFound,
-  obligatoryFixedCommandNumber,
-  oldCommandIsEmpty,
-  paymentCanceled,
-  paymentDeclined,
-  paymentPendant,
-  paymentUnexpectedError,
-  paymentFailed,
-  productNotFound,
-  requiredField,
-  sameCommand,
-  selectCustomer,
-  selectProducts,
-  shortField,
-  unexpected,
-}
+class UIError extends Equatable {
+  final String description;
+  const UIError._(this.description);
+  @override
+  String toString() => description;
+  @override
+  List<Object?> get props => [description];
 
-extension UIErrorExtension on UIError {
-  String get description {
-    switch (this) {
-      case UIError.accessDenied:
-        return R.string.accessDenied;
-      case UIError.addComment:
-        return R.string.addCommentError;
-      case UIError.barcodeNotRead:
-        return R.string.msgBarcodeNotRead;
-      case UIError.blockedCommand:
-        return R.string.msgCommandBlocked;
-      case UIError.cantSendServiceChargeProduct:
-        return R.string.msgCantSendServiceChargeProduct;
-      case UIError.commandAlreadyPaid:
-        return R.string.msgCommandAlreadyPaid;
-      case UIError.commandNotAvailable:
-        return R.string.commandNotAvailable;
-      case UIError.commandNumberObligatory:
-        return R.string.msgObligatoryFixedCommandNumber;
-      case UIError.dontHaveUnusedPdvs:
-        return R.string.msgDontHaveUnusedPdvs;
-      case UIError.emailInUse:
-        return R.string.msgEmailInUse;
-      case UIError.emptySales:
-        return R.string.emptySales;
-      case UIError.enterpriseOrUrlNotFound:
-        return R.string.enterpriseOrUrlNotFound;
-      case UIError.invalidCommandNumber:
-        return R.string.msgInvalidCommandNumber;
-      case UIError.invalidCombox:
-        return R.string.msgInvalidCombox;
-      case UIError.invalidCredentials:
-        return R.string.msgInvalidCredentials;
-      case UIError.invalidCredentialsOrAccessDenied:
-        return R.string.msgInvalidCredentialsOrAccessDenied;
-      case UIError.liquidadeCommandError:
-        return R.string.msgLiquidadeCommandError;
-      case UIError.maximumQuantityAchieved:
-        return R.string.msgMaximumQuantityAchieved;
-      case UIError.newCommandMustBeEmpty:
-        return R.string.msgNewCommandMustBeEmpty;
-      case UIError.notFound:
-        return R.string.msgNotFound;
-      case UIError.obligatoryFixedCommandNumber:
-        return R.string.msgObligatoryFixedCommandNumber;
-      case UIError.oldCommandIsEmpty:
-        return R.string.msgOldCommandIsEmpty;
-      case UIError.paymentCanceled:
-        return R.string.msgPaymentCanceled;
-      case UIError.paymentDeclined:
-        return R.string.msgPaymentDeclined;
-      case UIError.paymentPendant:
-        return R.string.msgPaymentPendant;
-      case UIError.paymentUnexpectedError:
-        return R.string.msgPaymentUnexpectedError;
-      case UIError.paymentFailed:
-        return R.string.msgPaymentFailed;
-      case UIError.productNotFound:
-        return R.string.msgProductNotFound;
-      case UIError.requiredField:
-        return R.string.msgRequiredField;
-      case UIError.invalidField:
-        return R.string.msgInvalidField;
-      case UIError.sameCommand:
-        return R.string.msgSameCommand;
-      case UIError.shortField:
-        return R.string.msgVeryShortField;
-      case UIError.selectCustomer:
-        return R.string.msgSelectCustomer;
-      case UIError.selectProducts:
-        return R.string.msgSelectProducts;
-      case UIError.unexpected:
-        return R.string.msgUnexpectedError;
-    }
-  }
+  factory UIError.custom(String description) => UIError._(description);
+
+  static final accessDenied = UIError._(R.string.accessDenied);
+  static final addComment = UIError._(R.string.addCommentError);
+  static final barcodeNotRead = UIError._(R.string.msgBarcodeNotRead);
+  static final blockedCommand = UIError._(R.string.msgCommandBlocked);
+  static final cantSendServiceChargeProduct =
+      UIError._(R.string.msgCantSendServiceChargeProduct);
+  static final commandAlreadyPaid = UIError._(R.string.msgCommandAlreadyPaid);
+  static final commandNotAvailable = UIError._(R.string.commandNotAvailable);
+  static final commandNumberObligatory =
+      UIError._(R.string.msgObligatoryFixedCommandNumber);
+  static final dontHaveUnusedPdvs = UIError._(R.string.msgDontHaveUnusedPdvs);
+  static final emailInUse = UIError._(R.string.msgEmailInUse);
+  static final emptySales = UIError._(R.string.emptySales);
+  static final enterpriseOrUrlNotFound =
+      UIError._(R.string.enterpriseOrUrlNotFound);
+  static final invalidCommandNumber =
+      UIError._(R.string.msgInvalidCommandNumber);
+  static final invalidCombox = UIError._(R.string.msgInvalidCombox);
+  static final invalidCredentials = UIError._(R.string.msgInvalidCredentials);
+  static final invalidCredentialsOrAccessDenied =
+      UIError._(R.string.msgInvalidCredentialsOrAccessDenied);
+  static final liquidadeCommandError =
+      UIError._(R.string.msgLiquidadeCommandError);
+  static final maximumQuantityAchieved =
+      UIError._(R.string.msgMaximumQuantityAchieved);
+  static final newCommandMustBeEmpty =
+      UIError._(R.string.msgNewCommandMustBeEmpty);
+  static final notFound = UIError._(R.string.msgNotFound);
+  static final obligatoryFixedCommandNumber =
+      UIError._(R.string.msgObligatoryFixedCommandNumber);
+  static final oldCommandIsEmpty = UIError._(R.string.msgOldCommandIsEmpty);
+  static final paymentCanceled = UIError._(R.string.msgPaymentCanceled);
+  static final paymentDeclined = UIError._(R.string.msgPaymentDeclined);
+  static final paymentPendant = UIError._(R.string.msgPaymentPendant);
+  static final paymentUnexpectedError =
+      UIError._(R.string.msgPaymentUnexpectedError);
+  static final paymentFailed = UIError._(R.string.msgPaymentFailed);
+  static final productNotFound = UIError._(R.string.msgProductNotFound);
+  static final requiredField = UIError._(R.string.msgRequiredField);
+  static final invalidField = UIError._(R.string.msgInvalidField);
+  static final sameCommand = UIError._(R.string.msgSameCommand);
+  static final shortField = UIError._(R.string.msgVeryShortField);
+  static final selectCustomer = UIError._(R.string.msgSelectCustomer);
+  static final selectProducts = UIError._(R.string.msgSelectProducts);
+  static final unexpected = UIError._(R.string.msgUnexpectedError);
 }

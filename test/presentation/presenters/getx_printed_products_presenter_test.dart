@@ -87,7 +87,8 @@ void main() {
   void initEntitys() {
     personalizedCode = faker.randomGenerator.integer(5);
     password = faker.randomGenerator.string(5);
-    EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData();
+    EnterpriseBuilder.entity =
+        EntityFactory.makeEnterpriseData(useOldPrintWay: false);
     printedEntity = EntityFactory.makePrintedEntity();
     saleRequestProductId = faker.randomGenerator.integer(5).toString();
     loadPrintedProducts.mockLoadPrintedEntity(printedEntity);
@@ -1073,6 +1074,20 @@ void main() {
       );
 
       expect(value, null);
+    });
+
+    test("Should go to print products page if is using old way to print",
+        () async {
+      EnterpriseBuilder.entity =
+          EntityFactory.makeEnterpriseData(useOldPrintWay: true);
+
+      await sut.printPrintedProducts(
+        commandNumber: commandNumber,
+        pdvNumber: pdvNumber,
+      );
+
+      verify(() => navigateTo.navigate(pageRoute: PageRoutes.printProducts))
+          .called(1);
     });
   });
 

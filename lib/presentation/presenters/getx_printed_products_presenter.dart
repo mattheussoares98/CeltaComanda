@@ -301,6 +301,10 @@ class GetxPrintedProductsPresenter
     required int commandNumber,
     required int pdvNumber,
   }) async {
+    if (EnterpriseBuilder.entity?.useOldPrintWay == true) {
+      navigateTo.navigate(pageRoute: PageRoutes.printProducts);
+      return null;
+    }
     isLoading = true;
     mainError = null;
 

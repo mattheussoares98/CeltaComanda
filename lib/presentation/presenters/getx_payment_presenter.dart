@@ -14,7 +14,7 @@ import '../../ui/pages/pages.dart';
 import '../protocols/protocols.dart';
 
 class GetxPaymentPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements PaymentPresenter {
   final RedePay redePay;
   final GetnetPay getnetPay;
@@ -108,14 +108,9 @@ class GetxPaymentPresenter extends GetxController
         );
         isLoading = false;
       }
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.blockedCommand:
-          mainError = UIError.blockedCommand;
-        default:
-          mainError = UIError.unexpected;
-          isLoading = false;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
+      isLoading = false;
     } finally {
       Future.delayed(Duration(seconds: 20), () {
         isLoading = false;
@@ -208,7 +203,7 @@ class GetxPaymentPresenter extends GetxController
         homePresenter.commandEntity!.commandNumber!,
       );
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -267,7 +262,7 @@ class GetxPaymentPresenter extends GetxController
         mainError = UIError.paymentUnexpectedError;
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     }
     isLoading = false;
   }
@@ -365,7 +360,7 @@ class GetxPaymentPresenter extends GetxController
             .cast<CustomerViewModel>();
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -464,7 +459,7 @@ class GetxPaymentPresenter extends GetxController
         );
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

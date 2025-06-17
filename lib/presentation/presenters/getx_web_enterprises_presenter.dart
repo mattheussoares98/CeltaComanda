@@ -8,7 +8,7 @@ import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
 class GetxWebEnterprisesPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements WebEnterprisesPresenter {
   final LoadAllEnterprises loadAllEnterprises;
   final NavigateTo navigateTo;
@@ -56,7 +56,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       _selectedEnterprise = enterprise;
       navigateTo.navigate(pageRoute: PageRoutes.webAddOrEditEnterprise);
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     }
   }
 
@@ -77,7 +77,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       await updateDeviceInformations
           .update(_selectedEnterprise!.enterpriseName);
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -123,7 +123,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       await updateEnterpriseParameters.update(enterprise);
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -143,7 +143,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       await deleteEnterprise.delete(_selectedEnterprise!.enterpriseName);
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -170,14 +170,8 @@ class GetxWebEnterprisesPresenter extends GetxController
           await loadDevicesInfo.load(_selectedEnterprise!.enterpriseName);
 
       devices = result.map((e) => DeviceInfoViewModel.fromEntity(e)).toList();
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.notFound:
-          mainError = UIError.notFound;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

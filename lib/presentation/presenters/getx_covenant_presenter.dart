@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import '../protocols/protocols.dart';
 
 class GetxCovenantPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements CovenantPresenter {
   final Validation validation;
   final LoadCustomer loadCustomer;
@@ -61,7 +61,8 @@ class GetxCovenantPresenter extends GetxController
       }
 
       if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse.response);
+        showErrorMessageReturnedByBs(soapResponse
+            .response); //TODO delete all showErrorMessageReturnedByBs
       } else {
         customersViewModel = json
             .decode(soapResponse.response)
@@ -70,7 +71,7 @@ class GetxCovenantPresenter extends GetxController
             .cast<CustomerViewModel>();
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -186,7 +187,7 @@ class GetxCovenantPresenter extends GetxController
         closePagesUntilHomePage();
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

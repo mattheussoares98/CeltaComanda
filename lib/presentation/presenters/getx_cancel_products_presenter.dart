@@ -1,6 +1,5 @@
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
-import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -9,7 +8,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxCancelProductsPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements CancelProductsPresenter {
   final RemovePrintedProduct removePrintedProduct;
   final LoadPrintedProducts loadPrintedProducts;
@@ -40,13 +39,8 @@ class GetxCancelProductsPresenter extends GetxController
 
         products = printedViewModel;
       }
-    } catch (error) {
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -141,7 +135,7 @@ class GetxCancelProductsPresenter extends GetxController
       await loadProducts(commandNumber);
       showSuccessMessage();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

@@ -13,7 +13,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxConfigurationsPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements ConfigurationsPresenter {
   final UserValidations userValidations;
   final CommandInformations commandInformations;
@@ -99,14 +99,8 @@ class GetxConfigurationsPresenter extends GetxController
       );
 
       return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -164,7 +158,7 @@ class GetxConfigurationsPresenter extends GetxController
       await updateMenu.update(enterpriseName);
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -236,17 +230,8 @@ class GetxConfigurationsPresenter extends GetxController
       await printedProductsPresenter
           .loadPrinted(homePresenter.commandEntity!.commandNumber!);
       return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.blockedCommand:
-          mainError = UIError.blockedCommand;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -272,17 +257,8 @@ class GetxConfigurationsPresenter extends GetxController
         newPersonalizedCode: newPersonalizedCode.toString(),
       );
       return true;
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.newCommandMustBeEmpty:
-          mainError = UIError.newCommandMustBeEmpty;
-          break;
-        case DomainError.oldCommandIsEmpty:
-          mainError = UIError.oldCommandIsEmpty;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -302,7 +278,7 @@ class GetxConfigurationsPresenter extends GetxController
       await closeSaleRequest.close(commandNumber.toString().padLeft(3, "0"));
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -341,7 +317,7 @@ class GetxConfigurationsPresenter extends GetxController
         );
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

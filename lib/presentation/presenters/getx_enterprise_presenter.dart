@@ -13,7 +13,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxEnterprisePresenter extends GetxController
-    with LoadingManager, FormManager, UIErrorManager
+    with LoadingManager, FormManager, UIErrorManager, ErrorHandling
     implements EnterprisePresenter {
   final Validation validation;
   final LocalEnterpriseData localEntepriseData;
@@ -154,20 +154,8 @@ class GetxEnterprisePresenter extends GetxController
           .isEmpty) {
         throw DomainError.dontHaveUnusedPdvs;
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        case DomainError.dontHaveUnusedPdvs:
-          mainError = UIError.dontHaveUnusedPdvs;
-          break;
-        case DomainError.enterpriseOrUrlNotFound:
-          mainError = UIError.enterpriseOrUrlNotFound;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -390,7 +378,7 @@ class GetxEnterprisePresenter extends GetxController
 
       navigateTo.navigate(pageRoute: PageRoutes.home, clear: true);
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

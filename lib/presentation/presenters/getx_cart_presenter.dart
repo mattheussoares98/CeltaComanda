@@ -10,8 +10,11 @@ import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../mixins/mixins.dart';
 
-class GetxCartPresenter with ChangeNotifier implements CartPresenter {
+class GetxCartPresenter
+    with ChangeNotifier, ErrorHandling
+    implements CartPresenter {
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final FinishSaleRequestTempById finishSaleRequestTempById;
   final AddPrintRequest addPrintRequest;
@@ -195,7 +198,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       notifyListeners();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -213,7 +216,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _cartProducts = newCartList;
       notifyListeners();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -248,7 +251,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       _cartProducts = newCartList;
       _indexOfSelectedProduct = null;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -317,7 +320,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         _cartProducts = newCartList;
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -389,15 +392,8 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
 
       await cartInformations.updateCartProducts(newCartList);
       _cartProducts = newCartList;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.maximumQuantityAchieved:
-          mainError = UIError.maximumQuantityAchieved;
-          break;
-        default:
-          mainError = UIError.unexpected;
-          break;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -505,20 +501,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await confirmedCartProducts.updateValue(false);
       return true;
     } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.commandAlreadyPaid:
-          mainError = UIError.commandAlreadyPaid;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        case DomainError.commandNumberObligatory:
-          mainError = UIError.commandNumberObligatory;
-        case DomainError.barcodeNotRead:
-          mainError = UIError.barcodeNotRead;
-        case DomainError.blockedCommand:
-          mainError = UIError.blockedCommand;
-        default:
-          mainError = UIError.unexpected;
-      }
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -537,7 +520,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
         notifyListeners();
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -617,7 +600,7 @@ class GetxCartPresenter with ChangeNotifier implements CartPresenter {
       await cartInformations.clearCartProducts();
       notifyListeners();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

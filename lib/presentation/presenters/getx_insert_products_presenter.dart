@@ -17,7 +17,8 @@ class GetxInsertProductsPresenter extends GetxController
         SelectedProductviewmodelManager,
         TotalPriceManager,
         TotalProductsQuantityManager,
-        UIErrorManager
+        UIErrorManager,
+        ErrorHandling
     implements InsertProductPresenter {
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final ValidateCombox validateCombox;
@@ -341,15 +342,8 @@ class GetxInsertProductsPresenter extends GetxController
         homePresenter.commandEntity!.commandNumber!,
       );
       return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCombox:
-          mainError = UIError.invalidCombox;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;

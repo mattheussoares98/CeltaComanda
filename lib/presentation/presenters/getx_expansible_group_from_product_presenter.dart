@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../../domain/usecases/usecases.dart';
+import '../mixins/mixins.dart';
 
 class GetxExpansibleGroupFromProductPresenter
-    with ChangeNotifier
+    with ChangeNotifier, ErrorHandling
     implements ExpansibleGroupFromProductPresenter {
   final LoadExpansibleGroupsByProductsCodes
       loadExpansibleGroupsFromProductsComplete;
@@ -73,7 +74,7 @@ class GetxExpansibleGroupFromProductPresenter
               ))
           .toList();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       _loadedComments = [];
     } finally {
       isLoading = false;

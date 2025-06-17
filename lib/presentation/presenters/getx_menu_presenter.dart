@@ -13,7 +13,7 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxMenuPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements MenuPresenter {
   final NavigateTo navigateTo;
   final CommandInformations commandInformations;
@@ -81,13 +81,8 @@ class GetxMenuPresenter extends GetxController
       if (product != null) {
         searchedProduct = ProductsViewModel.fromEntity(product);
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.productNotFound:
-          mainError = UIError.productNotFound;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -120,15 +115,8 @@ class GetxMenuPresenter extends GetxController
       }
 
       return loadedBarcode;
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.productNotFound:
-          mainError = UIError.productNotFound;
-        case DomainError.barcodeNotRead:
-          mainError = UIError.barcodeNotRead;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return loadedBarcode;
     } finally {
       isLoading = false;
@@ -542,7 +530,7 @@ class GetxMenuPresenter extends GetxController
       );
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -714,7 +702,7 @@ class GetxMenuPresenter extends GetxController
 
       return true;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;

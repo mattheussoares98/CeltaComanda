@@ -10,8 +10,11 @@ import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../mixins/mixins.dart';
 
-class GetxHomePresenter with ChangeNotifier implements HomePresenter {
+class GetxHomePresenter
+    with ChangeNotifier, ErrorHandling
+    implements HomePresenter {
   final NavigateTo navigateTo;
   final LocalEnterpriseData localEnterpriseData;
   final CommandInformations commandInformations;
@@ -181,18 +184,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
           throw DomainError.blockedCommand;
         }
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.blockedCommand:
-          mainError = UIError.blockedCommand;
-          break;
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        default:
-          mainError = UIError.unexpected;
-          break;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
       notifyListeners();
@@ -229,14 +222,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       }
 
       return isValid;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCredentials:
-          mainError = UIError.invalidCredentials;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -269,14 +256,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       );
 
       return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;
@@ -428,18 +409,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
 
       isLoading = false;
       await navigateTo.navigate(pageRoute: PageRoutes.configurations);
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.accessDenied:
-          mainError = UIError.accessDenied;
-          break;
-        case DomainError.invalidCredentials:
-          mainError = UIError.invalidCredentials;
-          break;
-        default:
-          mainError = UIError.unexpected;
-          break;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -539,15 +510,8 @@ class GetxHomePresenter with ChangeNotifier implements HomePresenter {
       if (needUpdateEnterpriseRemotelly) {
         await enterprisePresenter.updateConcentratorEnterpriseParameters();
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-          break;
-        default:
-          mainError = UIError.unexpected;
-          break;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

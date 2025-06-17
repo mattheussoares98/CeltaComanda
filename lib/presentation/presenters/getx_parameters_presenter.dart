@@ -9,7 +9,7 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxParametersPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements ParametersPresenter {
   final NavigateTo navigateTo;
   final ParametersData parametersData;
@@ -39,7 +39,7 @@ class GetxParametersPresenter extends GetxController
 
       await parametersData.update(newParameters);
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -75,7 +75,7 @@ class GetxParametersPresenter extends GetxController
 
       parameters = loadedParameters;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

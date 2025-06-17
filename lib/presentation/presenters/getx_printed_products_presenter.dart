@@ -12,9 +12,10 @@ import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../mixins/mixins.dart';
 
 class GetxPrintedProductsPresenter
-    with ChangeNotifier
+    with ChangeNotifier, ErrorHandling
     implements PrintedProductsPresenter {
   final UserValidations userValidations;
   final LoadPrintedProducts loadPrintedProducts;
@@ -53,14 +54,9 @@ class GetxPrintedProductsPresenter
       await removePrintedProduct.remove(saleRequestProductId);
 
       await loadPrinted(commandNumber);
-    } on DomainError catch (error) {
+    } catch (e) {
       await loadPrinted(commandNumber);
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        default:
-          mainError = UIError.unexpected;
-      }
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -86,7 +82,8 @@ class GetxPrintedProductsPresenter
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
       }
 
-      if (_printed?.CustomerCode == null || _printed?.CustomerCode?.toInt() == 0) {
+      if (_printed?.CustomerCode == null ||
+          _printed?.CustomerCode?.toInt() == 0) {
         _customerInSaleRequest = null;
       } else if (_printed?.CustomerCode != _customerInSaleRequest?.Code) {
         final response = await loadCustomer.load(
@@ -159,17 +156,8 @@ class GetxPrintedProductsPresenter
         updateCanCancelProducts(true);
         alertMessage = R.string.msgSuccessToCancelProducts;
       }
-    } on DomainError catch (error) {
-      switch (error) {
-        case DomainError.invalidCredentialsOrAccessDenied:
-          mainError = UIError.invalidCredentialsOrAccessDenied;
-        case DomainError.accessDenied:
-          mainError = UIError.accessDenied;
-        case DomainError.invalidCredentials:
-          mainError = UIError.invalidCredentials;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
       notifyListeners();
@@ -285,7 +273,7 @@ class GetxPrintedProductsPresenter
 
       await loadPrinted(commandNumber);
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -312,7 +300,7 @@ class GetxPrintedProductsPresenter
       await printBitmap.print(bitmap);
       return bitmap;
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
       return null;
     } finally {
       isLoading = false;
@@ -396,7 +384,7 @@ class GetxPrintedProductsPresenter
             .cast<CustomerViewModel>();
       }
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -447,14 +435,8 @@ class GetxPrintedProductsPresenter
       await loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
       return true;
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.selectCustomer:
-          mainError = UIError.selectCustomer;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
       return false;
     } finally {
       isLoading = false;

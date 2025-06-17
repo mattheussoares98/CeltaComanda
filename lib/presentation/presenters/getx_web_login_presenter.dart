@@ -6,7 +6,7 @@ import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
 class GetxWebLoginPresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements WebLoginPresenter {
   final NavigateTo navigateTo;
   final LoginManagement loginManagement;
@@ -30,7 +30,7 @@ class GetxWebLoginPresenter extends GetxController
         clear: true,
       );
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -43,7 +43,7 @@ class GetxWebLoginPresenter extends GetxController
     try {
       await loginManagement.logout();
     } catch (e) {
-      mainError = UIError.unexpected;
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -54,8 +54,7 @@ class GetxWebLoginPresenter extends GetxController
     isLoading = true;
     bool isLogged = await loginManagement.isLoggedIn();
     if (isLogged) {
-      navigateTo.navigate(
-          pageRoute: PageRoutes.webEnterprises, clear: true);
+      navigateTo.navigate(pageRoute: PageRoutes.webEnterprises, clear: true);
     }
     isLoading = false;
   }

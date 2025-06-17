@@ -8,7 +8,7 @@ import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 
 class GetxSendProductsToAnotherTablePresenter extends GetxController
-    with LoadingManager, UIErrorManager
+    with LoadingManager, UIErrorManager, ErrorHandling
     implements SendProductsToAnotherTablePresenter {
   final LoadPrintedProducts loadPrintedProducts;
   final ChangeSaleRequestPersonalizedCodeProducts
@@ -40,13 +40,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
 
         products = printedViewModel;
       }
-    } catch (error) {
-      switch (error) {
-        case DomainError.commandNotAvailable:
-          mainError = UIError.commandNotAvailable;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
@@ -86,23 +81,8 @@ class GetxSendProductsToAnotherTablePresenter extends GetxController
         newPersonalizedCode.toString().padLeft(3, "0"),
       );
       await loadProducts(oldPersonalizedCode);
-    } on DomainError catch (e) {
-      switch (e) {
-        case DomainError.invalidCommandNumber:
-          mainError = UIError.invalidCommandNumber;
-          break;
-        case DomainError.cantSendServiceChargeProduct:
-          mainError = UIError.cantSendServiceChargeProduct;
-          break;
-        case DomainError.sameCommand:
-          mainError = UIError.sameCommand;
-          break;
-        case DomainError.selectProducts:
-          mainError = UIError.selectProducts;
-          break;
-        default:
-          mainError = UIError.unexpected;
-      }
+    } catch (e) {
+      mainError = getUIError(e);
     } finally {
       isLoading = false;
     }

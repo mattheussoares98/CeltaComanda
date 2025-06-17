@@ -345,7 +345,10 @@ class GetxPrintedProductsPresenter
 
   MethodChannel? _channel;
   @override
-  void initPrinterResultHandler(HomePresenter homePresenter) {
+  void initPrinterResultHandler({
+    required HomePresenter homePresenter,
+    required void Function() closePageForOldPrintWay,
+  }) {
     if (homePresenter.isGeneratingVersionToRede ||
         homePresenter.isGeneratingVersionToGetNet) {
       _channel = MethodChannel(Channels.printer.name);

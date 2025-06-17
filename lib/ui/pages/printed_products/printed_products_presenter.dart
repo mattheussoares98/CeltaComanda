@@ -58,7 +58,10 @@ abstract class PrintedProductsPresenter
   void goToPrintProductsPage();
   void updatePeopleQuantity({required bool isAdding});
 
-  void initPrinterResultHandler(HomePresenter homePresenter);
+  void initPrinterResultHandler({
+    required HomePresenter homePresenter,
+    required void Function() closePageForOldPrintWay,
+  });
   void disposePrinterHandler();
 
   Future<void> getCustomers({

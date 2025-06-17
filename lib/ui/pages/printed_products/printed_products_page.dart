@@ -48,7 +48,10 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
         printedProductsPresenter = Provider.of(context, listen: false);
         HomePresenter homePresenter = Provider.of(context, listen: false);
 
-        printedProductsPresenter?.initPrinterResultHandler(homePresenter);
+        printedProductsPresenter?.initPrinterResultHandler(
+          homePresenter: homePresenter,
+          closePageForOldPrintWay: () {},
+        );
       }
     });
   }

@@ -50,6 +50,10 @@ abstract class PrintedProductsPresenter
     required int commandNumber,
     required int pdvNumber,
   });
+  Future<void> oldPrintPrintedProducts({
+    required Uint8List bitmap,
+    required void Function() closePage,
+  });
 
   void goToPrintProductsPage();
   void updatePeopleQuantity({required bool isAdding});

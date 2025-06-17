@@ -279,6 +279,24 @@ class GetxPrintedProductsPresenter
   }
 
   @override
+  Future<void> oldPrintPrintedProducts({
+    required Uint8List bitmap,
+    required void Function() closePage,
+  }) async {
+    isLoading = true;
+    mainError = null;
+
+    try {
+      await printBitmap.print(bitmap);
+    } catch (e) {
+      mainError = UIError.unexpected;
+      closePage();
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @override
   Future<Uint8List?> printPrintedProducts({
     required int commandNumber,
     required int pdvNumber,

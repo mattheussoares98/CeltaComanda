@@ -48,8 +48,8 @@ class HttpAdapter implements HttpClient {
   dynamic _handleResponse(Response response) {
     if (response.body.isNotEmpty) {
       final body = jsonDecode(response.body);
-      if (body is Map && body.containsKey('ExceptionMessage')) {
-        throw ApiError(body['ExceptionMessage']);
+      if (body is Map && body.containsKey('Message')) {
+        throw ApiError(body['Message']);
       }
     }
     switch (response.statusCode) {

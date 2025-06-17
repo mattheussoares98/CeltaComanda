@@ -148,13 +148,14 @@ void main() {
       expect(future, throwsA(HttpError.serverError));
     });
     test('Should throw API error if contains ExceptionMessage', () async {
-      client.mockPost(200, body: '{"ExceptionMessage": "message"}');
+      final message = faker.lorem.word();
+      client.mockPost(200, body: '{"Message": "$message"}');
 
       final future = sut.request(url: url, method: 'post');
 
       expect(
         future,
-        throwsA(predicate((e) => e is ApiError && e.message == 'message')),
+        throwsA(predicate((e) => e is ApiError && e.message == message)),
       );
     });
   });

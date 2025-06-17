@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../data/models/models.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../presentation/mixins/mixins.dart';
 import '../../ui/helpers/helpers.dart';
@@ -143,7 +142,7 @@ class GetxPaymentPresenter extends GetxController
     isLoading = true;
     try {
       bool useSharing = loadUseUrlSatSharing.getUse(_cpfCnpj);
-      SoapResponse? xmlReponse;
+      dynamic xmlReponse;
 
       _couponNumber = await couponFiscalNumber.loadLastNumber();
       final newCouponNumber =
@@ -164,11 +163,6 @@ class GetxPaymentPresenter extends GetxController
         );
 
         xmlReponse = await sendSaleMovementAsNfce.send(xml);
-
-        if (xmlReponse.responseType == SoapResponseType.error) {
-          showErrorMessageReturnedByBs(xmlReponse.response);
-          return;
-        }
       }
 
       final double serviceChargeValue = printedProductsPresenter
@@ -188,7 +182,7 @@ class GetxPaymentPresenter extends GetxController
             .getTotalLiquid(printedProductsPresenter.printed),
         finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
         products: printedProductsPresenter.printed!.Products,
-        xmlToGenerateFiscal: useSharing == false ? xmlReponse?.response : null,
+        xmlToGenerateFiscal: useSharing == false ? xmlReponse : null,
       );
 
       _couponNumber = newCouponNumber;
@@ -343,22 +337,15 @@ class GetxPaymentPresenter extends GetxController
 
       _authorizationPendingModel = null;
 
-      SoapResponse? soapResponse;
-
-      soapResponse = await loadCustomer.load(
+      dynamic soapResponse = await loadCustomer.load(
         value: value,
         searchByPersonalizedCode: searchByPersonalizedCode,
       );
 
-      if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse.response);
-      } else {
-        customersViewModel = json
-            .decode(soapResponse.response)
-            .map((e) => CustomerViewModel.fromJson(e))
-            .toList()
-            .cast<CustomerViewModel>();
-      }
+      customersViewModel = (json.decode(soapResponse) as List)
+          .map((e) => CustomerViewModel.fromJson(e))
+          .toList()
+          .cast<CustomerViewModel>();
     } catch (e) {
       mainError = getUIError(e);
     } finally {
@@ -408,19 +395,15 @@ class GetxPaymentPresenter extends GetxController
     isLoading = true;
     try {
       if (customerPassword != null && customerPassword.isNotEmpty) {
-        final passwordResponse = await checkPasswordByCustomerCode.validate(
+        await checkPasswordByCustomerCode.validate(
           customerCode: _selectedCustomer!.customer.Code!,
           password: customerPassword,
         );
-        if (passwordResponse.responseType == SoapResponseType.error) {
-          showErrorMessageReturnedByBs(passwordResponse.response);
-          return;
-        }
       }
 
       double pendingValue = getTotalPendingValue(printedProductsPresenter);
 
-      SoapResponse? authorizationSoapResponse;
+      dynamic authorizationSoapResponse;
       if (_authorizationPendingModel == null) {
         authorizationSoapResponse = await covenantLimit
             .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
@@ -432,7 +415,7 @@ class GetxPaymentPresenter extends GetxController
         );
 
         _authorizationPendingModel = AuthorizationPendingModel(
-          code: authorizationSoapResponse.response,
+          code: authorizationSoapResponse,
           isPending: true,
         );
 
@@ -442,22 +425,18 @@ class GetxPaymentPresenter extends GetxController
             Value: pendingValue,
             ValueLiquid: pendingValue,
             PortionQuantity: 1,
-            AuthorizationCode: authorizationSoapResponse.response,
+            AuthorizationCode: authorizationSoapResponse,
             AuthorizationType: 2,
           ),
         );
       }
 
-      if (authorizationSoapResponse?.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(authorizationSoapResponse!.response);
-      } else {
-        await liquidateCommand(
-          homePresenter: homePresenter,
-          printedProductsPresenter: printedProductsPresenter,
-          showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
-          showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
-        );
-      }
+      await liquidateCommand(
+        homePresenter: homePresenter,
+        printedProductsPresenter: printedProductsPresenter,
+        showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+        showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+      );
     } catch (e) {
       mainError = getUIError(e);
     } finally {

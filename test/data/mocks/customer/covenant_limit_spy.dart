@@ -2,7 +2,6 @@
 
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
-import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:mocktail/mocktail.dart';
 
 class CovenantLimitSpy extends Mock implements CovenantLimit {
@@ -15,7 +14,7 @@ class CovenantLimitSpy extends Mock implements CovenantLimit {
           ));
 
   void mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
-    SoapResponse soapResponse,
+    dynamic soapResponse,
   ) {
     _mockAuthorizeCall().thenAnswer((any) async => soapResponse);
   }

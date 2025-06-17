@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
 import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:mocktail/mocktail.dart';
@@ -11,11 +10,11 @@ class LoadCustomerSpy extends Mock implements LoadCustomer {
         searchByPersonalizedCode: any(named: "searchByPersonalizedCode"),
       ));
 
-  void mockLoadCustomer(SoapResponse result) {
+  void mockLoadCustomer(dynamic result) {
     _mockLoadCustomerCall().thenAnswer((any) async => result);
   }
 
-  void mockError() {
-    _mockLoadCustomerCall().thenThrow(DomainError.unexpected);
+  void mockError(String message) {
+    _mockLoadCustomerCall().thenThrow(BsError(message));
   }
 }

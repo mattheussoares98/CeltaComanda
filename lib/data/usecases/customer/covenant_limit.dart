@@ -1,6 +1,5 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../mixins/mixins.dart';
@@ -10,7 +9,7 @@ class RemoteCovenantLimit with ErrorHandling implements CovenantLimit {
   RemoteCovenantLimit({required this.soapAdapter});
 
   @override
-  Future<SoapResponse> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({
+  Future<dynamic> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({
     required String? crossIdentity,
     required int covenantCode,
     required int customerCode,

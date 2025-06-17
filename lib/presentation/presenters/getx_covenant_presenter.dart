@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import '../../data/models/models.dart';
 import '../../domain/usecases/usecases.dart';
-import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
@@ -45,31 +44,23 @@ class GetxCovenantPresenter extends GetxController
 
       _authorizationPendingModel = null;
 
-      SoapResponse? soapResponse;
-
 // 1=ExactCnpjCpfNumber
 // 2=ExactCode
 // 3=ApproximateName
 // 4=PersonalizedCode
       if (value.isEmpty) {
         return;
-      } else {
-        soapResponse = await loadCustomer.load(
-          value: value,
-          searchByPersonalizedCode: searchByPersonalizedCode,
-        );
       }
 
-      if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse
-            .response); //TODO delete all showErrorMessageReturnedByBs
-      } else {
-        customersViewModel = json
-            .decode(soapResponse.response)
-            .map((e) => CustomerViewModel.fromJson(e))
-            .toList()
-            .cast<CustomerViewModel>();
-      }
+      dynamic soapResponse = await loadCustomer.load(
+        value: value,
+        searchByPersonalizedCode: searchByPersonalizedCode,
+      );
+
+      customersViewModel = (json.decode(soapResponse) as List)
+          .map((e) => CustomerViewModel.fromJson(e))
+          .toList()
+          .cast<CustomerViewModel>();
     } catch (e) {
       mainError = getUIError(e);
     } finally {
@@ -135,17 +126,13 @@ class GetxCovenantPresenter extends GetxController
     isLoading = true;
     try {
       if (customerPassword != null && customerPassword.isNotEmpty) {
-        final passwordResponse = await checkPasswordByCustomerCode.validate(
+        await checkPasswordByCustomerCode.validate(
           customerCode: _selectedCovenant.keys.first.toInt(),
           password: customerPassword,
         );
-        if (passwordResponse.responseType == SoapResponseType.error) {
-          showErrorMessageReturnedByBs(passwordResponse.response);
-          return;
-        }
       }
 
-      SoapResponse soapResponse = await covenantLimit
+      final soapResponse = await covenantLimit
           .authorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         crossIdentity: EnterpriseBuilder.entity!
             .enterpriseConcentradorParametersEntity?.celtaBSCrossIdentity,
@@ -154,38 +141,33 @@ class GetxCovenantPresenter extends GetxController
         value: printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
       );
 
-      if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse.response);
-      } else {
-        _authorizationPendingModel = AuthorizationPendingModel(
-          code: soapResponse.response,
-          isPending: true,
-        );
+      _authorizationPendingModel = AuthorizationPendingModel(
+        code: soapResponse,
+        isPending: true,
+      );
 
-        await updateSaleRequest.update(
-          model: SaleRequestModel(
-            CustomerCode: _selectedCovenant.keys.first.toInt(),
-            CovenantCode: _selectedCovenant.values.first!.toInt(),
-            TotalLiquid:
-                printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
-            PlaceId: printedProductsPresenter.printed?.PlaceId,
-          ),
-          commandNumber: homePresenter.commandEntity!.commandNumber!
-              .toString()
-              .padLeft(3, "0"),
-          saleRequestId:
-              printedProductsPresenter.printed!.SaleRequestId!.toInt(),
-        );
+      await updateSaleRequest.update(
+        model: SaleRequestModel(
+          CustomerCode: _selectedCovenant.keys.first.toInt(),
+          CovenantCode: _selectedCovenant.values.first!.toInt(),
+          TotalLiquid:
+              printedProductsPresenter.printed!.TotalLiquid!.toDouble(),
+          PlaceId: printedProductsPresenter.printed?.PlaceId,
+        ),
+        commandNumber: homePresenter.commandEntity!.commandNumber!
+            .toString()
+            .padLeft(3, "0"),
+        saleRequestId: printedProductsPresenter.printed!.SaleRequestId!.toInt(),
+      );
 
-        //add new finalization in paymentPresent.succesfulFinalizations and call finish
+      //add new finalization in paymentPresent.succesfulFinalizations and call finish
 
-        _authorizationPendingModel = null;
+      _authorizationPendingModel = null;
 
-        await printedProductsPresenter
-            .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+      await printedProductsPresenter
+          .loadPrinted(homePresenter.commandEntity!.commandNumber!);
 
-        closePagesUntilHomePage();
-      }
+      closePagesUntilHomePage();
     } catch (e) {
       mainError = getUIError(e);
     } finally {

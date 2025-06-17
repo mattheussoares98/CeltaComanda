@@ -1,7 +1,5 @@
-import '../../../infra/helpers/helpers.dart';
-
 abstract class CovenantLimit {
-  Future<SoapResponse> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({
+  Future<dynamic> authorizeCovenantLimitUseByCodeAndGetAuthorizeCode({
     required String? crossIdentity,
     required int covenantCode,
     required int customerCode,

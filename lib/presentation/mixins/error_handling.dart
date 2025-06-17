@@ -59,10 +59,9 @@ mixin ErrorHandling {
       }
     } else if (error is ApiError) {
       return UIError.custom(error.message);
-    } /* else if (error is BsError) {
-    //TODO create BsError
+    } else if (error is BsError) {
       return UIError.custom(error.message);
-    } */
+    }
 
     return UIError.unexpected;
   }

@@ -2,7 +2,6 @@
 
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
-import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:mocktail/mocktail.dart';
 
 class CheckPasswordByCustomerCodeSpy extends Mock
@@ -12,7 +11,7 @@ class CheckPasswordByCustomerCodeSpy extends Mock
         password: any(named: "password"),
       ));
 
-  void mockCheck(SoapResponse response) {
+  void mockCheck(dynamic response) {
     _mockCheckCall().thenAnswer((any) async => response);
   }
 

@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
@@ -47,7 +46,7 @@ void main() {
   late Uint8List bitmap;
   late int commandNumber;
   late int pdvNumber;
-  late SoapResponse customersSoapResponse;
+  late dynamic customersSoapResponse;
   late CustomerViewModel customerViewModel;
   late bool searchByPersonalizedCode;
   late String valueToSearchCustomer;
@@ -119,10 +118,7 @@ void main() {
         .mockRead(homePresenter.commandEntityController!.commandNumber!);
     homePresenter.mockLoadCommandData();
     generateBitmap.mockGenerateBitmap(bitmap);
-    customersSoapResponse = SoapResponse(
-      response: json.encode([customerViewModel.toJson()]),
-      responseType: SoapResponseType.success,
-    );
+    customersSoapResponse = json.encode([customerViewModel.toJson()]);
     loadCustomer.mockLoadCustomer(customersSoapResponse);
   }
 
@@ -699,10 +695,7 @@ void main() {
     });
     test('Should update customer in sale request correctly in success',
         () async {
-      loadCustomer.mockLoadCustomer(SoapResponse(
-        response: json.encode([customerViewModel]),
-        responseType: SoapResponseType.success,
-      ));
+      loadCustomer.mockLoadCustomer(json.encode([customerViewModel]));
 
       await sut.loadPrinted(
         homePresenter.commandEntity!.commandNumber!,
@@ -717,10 +710,8 @@ void main() {
         showIsLoading: false,
       );
 
-      loadCustomer.mockLoadCustomer(SoapResponse(
-        response: json.encode([customerViewModel]),
-        responseType: SoapResponseType.error,
-      ));
+      loadCustomer.mockError("error");
+
       await sut.loadPrinted(
         homePresenter.commandEntity!.commandNumber!,
         showIsLoading: false,
@@ -1135,7 +1126,7 @@ void main() {
           emitsInOrder([
             null,
             json
-                .decode(customersSoapResponse.response)
+                .decode(customersSoapResponse)
                 .map((e) => CustomerViewModel.fromJson(e))
                 .toList()
                 .cast<CustomerViewModel>()
@@ -1152,10 +1143,10 @@ void main() {
       expectLater(sut.customersStream, emits(null));
       expectLater(
         sut.mainErrorStream,
-        emitsInOrder([null, UIError.unexpected]),
+        emitsInOrder([null, UIError.custom("error")]),
       );
 
-      loadCustomer.mockError();
+      loadCustomer.mockError("error");
 
       await sut.getCustomers(
         value: valueToSearchCustomer,
@@ -1169,11 +1160,7 @@ void main() {
       expectLater(sut.customersStream, emits(null));
       expectLater(sut.mainErrorStream, emits(null));
 
-      loadCustomer.mockLoadCustomer(
-        SoapResponse(
-            response: valueToSearchCustomer,
-            responseType: SoapResponseType.error),
-      );
+      loadCustomer.mockError("error");
 
       await sut.getCustomers(
         value: valueToSearchCustomer,

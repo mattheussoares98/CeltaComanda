@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../mixins/mixins.dart';
@@ -11,7 +10,7 @@ class RemoteLoadCustomer with ErrorHandling implements LoadCustomer {
   RemoteLoadCustomer({required this.soapAdapter});
 
   @override
-  Future<SoapResponse> load({
+  Future<dynamic> load({
     required String value,
     required bool searchByPersonalizedCode,
   }) async {

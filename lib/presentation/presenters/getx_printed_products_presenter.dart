@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -91,14 +91,13 @@ class GetxPrintedProductsPresenter
           searchByPersonalizedCode: false,
         );
 
-        if (response.responseType == SoapResponseType.success) {
-          _customerInSaleRequest = CustomerViewModel.fromJson(
-            json.decode(response.response).first,
-          );
-        } else {
-          _customerInSaleRequest = null;
-        }
+        _customerInSaleRequest = CustomerViewModel.fromJson(
+          json.decode(response).first,
+        );
       }
+    } on BsError catch (e) {
+      mainError = UIError.custom(e.toString());
+      _customerInSaleRequest = null;
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -374,15 +373,10 @@ class GetxPrintedProductsPresenter
         searchByPersonalizedCode: searchByPersonalizedCode,
       );
 
-      if (soapResponse.responseType == SoapResponseType.error) {
-        showErrorMessageReturnedByBs(soapResponse.response);
-      } else {
-        customers = json
-            .decode(soapResponse.response)
-            .map((e) => CustomerViewModel.fromJson(e))
-            .toList()
-            .cast<CustomerViewModel>();
-      }
+      customers = (json.decode(soapResponse) as List)
+          .map((e) => CustomerViewModel.fromJson(e))
+          .toList()
+          .cast<CustomerViewModel>();
     } catch (e) {
       mainError = getUIError(e);
     } finally {

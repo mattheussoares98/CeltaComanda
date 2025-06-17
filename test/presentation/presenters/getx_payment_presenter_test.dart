@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
@@ -54,8 +53,8 @@ void main() {
   late int portionQuantity;
   late PrintedEntity printedEntity;
   late String commandNumber;
-  late SoapResponse authorizationSoapResponse;
-  late SoapResponse xmlSoapResponseGeneratedByBs;
+  late dynamic authorizationSoapResponse;
+  late dynamic xmlSoapResponseGeneratedByBs;
   late double totalLiquidMocked;
   late int lastCouponNumber;
   late String xmlGeneratedLocally;
@@ -125,15 +124,9 @@ void main() {
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
-    authorizationSoapResponse = SoapResponse(
-      response: faker.randomGenerator.string(10),
-      responseType: SoapResponseType.success,
-    );
+    authorizationSoapResponse = faker.randomGenerator.string(10);
     totalLiquidMocked = faker.randomGenerator.decimal();
-    xmlSoapResponseGeneratedByBs = SoapResponse(
-      response: faker.randomGenerator.string(10),
-      responseType: SoapResponseType.success,
-    );
+    xmlSoapResponseGeneratedByBs = faker.randomGenerator.string(10);
     lastCouponNumber = faker.randomGenerator.integer(100);
     xmlGeneratedLocally = faker.randomGenerator.string(10);
   }
@@ -144,12 +137,9 @@ void main() {
     barcodeScanner.mockRead(commandNumber);
     homePresenter.mockLoadCommandData();
     loadCustomer.mockLoadCustomer(
-      SoapResponse(
-        response: json.encode(customersEntitys
-            .map((e) => CustomerViewModel.fromEntity(e).toJson())
-            .toList()),
-        responseType: SoapResponseType.success,
-      ),
+      json.encode(customersEntitys
+          .map((e) => CustomerViewModel.fromEntity(e).toJson())
+          .toList()),
     );
     covenantLimit.mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(
         authorizationSoapResponse);
@@ -575,7 +565,7 @@ void main() {
             finalizations:
                 sut.successfulPayments.map((e) => e.toEntity()).toList(),
             products: printedProductsPresenter.printed!.Products,
-            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs,
           ));
     });
 
@@ -833,10 +823,7 @@ void main() {
         ),
       );
 
-      sendSaleMovementAsNfce.mockSend(SoapResponse(
-        response: faker.randomGenerator.string(10),
-        responseType: SoapResponseType.error,
-      ));
+      sendSaleMovementAsNfce.mockSend(faker.randomGenerator.string(10));
 
       await sut.liquidateCommand(
         showErrorMessageReturnedByBs: (error) {},
@@ -882,7 +869,7 @@ void main() {
             finalizations:
                 sut.successfulPayments.map((e) => e.toEntity()).toList(),
             products: printedProductsPresenter.printed!.Products,
-            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs,
           ));
     });
     test("Should save last coupon number locally", () async {
@@ -949,12 +936,7 @@ void main() {
     test("Should emit correct values on not found customer", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
 
-      loadCustomer.mockLoadCustomer(
-        const SoapResponse(
-          response: "response",
-          responseType: SoapResponseType.success,
-        ),
-      );
+      loadCustomer.mockLoadCustomer("response");
       await sut.getCustomerByNameCodeOrCpf(
           searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
@@ -963,9 +945,11 @@ void main() {
     test("Should emit correct values on throws", () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
-          sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
+        sut.mainErrorStream,
+        emitsInOrder([null, UIError.custom("error")]),
+      );
 
-      loadCustomer.mockError();
+      loadCustomer.mockError("error");
       await sut.getCustomerByNameCodeOrCpf(
           searchByPersonalizedCode: false,
           showErrorMessageReturnedByBs: (_) {},
@@ -1159,7 +1143,7 @@ void main() {
       expect(payment.Value, totalLiquidMocked);
       expect(payment.ValueLiquid, totalLiquidMocked);
       expect(payment.PortionQuantity, 1);
-      expect(payment.AuthorizationCode, authorizationSoapResponse.response);
+      expect(payment.AuthorizationCode, authorizationSoapResponse);
       expect(payment.AuthorizationType, 2);
       expect(sut.successfulPayments.length, 1);
     });
@@ -1192,11 +1176,7 @@ void main() {
       int covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
-      covenantLimit
-          .mockAuthorizeCovenantLimitUseByCodeAndGetAuthorizeCode(SoapResponse(
-        response: faker.randomGenerator.string(10),
-        responseType: SoapResponseType.error,
-      ));
+      covenantLimit.mockError();
 
       await sut.finishSaleRequestByCovenant(
         showSuccessAndCloseUntilHomePage: () {},
@@ -1237,7 +1217,7 @@ void main() {
       expect(
         sut.authorizationPendingModel,
         AuthorizationPendingModel(
-            code: authorizationSoapResponse.response, isPending: true),
+            code: authorizationSoapResponse, isPending: true),
       );
     });
 
@@ -1287,12 +1267,7 @@ void main() {
       int covenantCode = faker.randomGenerator.integer(100);
       await sut.updateSelectedCustomer(customersViewModel[0], covenantCode);
 
-      final errorSoapResponse = SoapResponse(
-        response: faker.randomGenerator.string(10),
-        responseType: SoapResponseType.error,
-      );
-
-      checkPasswordByCustomerCode.mockCheck(errorSoapResponse);
+      checkPasswordByCustomerCode.mockError();
 
       await sut.finishSaleRequestByCovenant(
         showSuccessAndCloseUntilHomePage: () {},
@@ -1332,7 +1307,7 @@ void main() {
       expect(
         sut.authorizationPendingModel,
         AuthorizationPendingModel(
-          code: authorizationSoapResponse.response,
+          code: authorizationSoapResponse,
           isPending: true,
         ),
       );
@@ -1390,7 +1365,7 @@ void main() {
             finalizations:
                 sut.successfulPayments.map((e) => e.toEntity()).toList(),
             products: printedProductsPresenter.printed!.Products,
-            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs.response,
+            xmlToGenerateFiscal: xmlSoapResponseGeneratedByBs,
           ));
     });
     test(
@@ -1618,12 +1593,7 @@ void main() {
         customersViewModel[0],
         faker.randomGenerator.integer(100),
       );
-      sendSaleMovementAsNfce.mockSend(
-        SoapResponse(
-          response: faker.randomGenerator.string(10),
-          responseType: SoapResponseType.error,
-        ),
-      );
+      sendSaleMovementAsNfce.mockSend(faker.randomGenerator.string(10));
 
       await sut.finishSaleRequestByCovenant(
         showSuccessAndCloseUntilHomePage: () {},

@@ -1,7 +1,5 @@
-import '../../../infra/helpers/helpers.dart';
-
 abstract class LoadCustomer {
-  Future<SoapResponse> load({
+  Future<dynamic> load({
     required String value,
     required bool searchByPersonalizedCode,
   });

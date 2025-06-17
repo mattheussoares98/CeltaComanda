@@ -1,5 +1,4 @@
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
@@ -9,7 +8,7 @@ class BsSendSaleMovementAsNfce implements SendSaleMovementAsNfce {
   BsSendSaleMovementAsNfce({required this.soapAdapter});
 
   @override
-  Future<SoapResponse> send(String xml) async {
+  Future<dynamic> send(String xml) async {
     try {
       final enterprise =
           EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity;

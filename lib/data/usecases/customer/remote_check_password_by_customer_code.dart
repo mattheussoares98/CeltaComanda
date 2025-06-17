@@ -1,6 +1,5 @@
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../infra/helpers/helpers.dart';
 import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../mixins/mixins.dart';
@@ -12,7 +11,7 @@ class RemoteCheckPasswordByCustomerCode
   RemoteCheckPasswordByCustomerCode({required this.soapAdapter});
 
   @override
-  Future<SoapResponse> validate({
+  Future<dynamic> validate({
     required int customerCode,
     required String password,
   }) async {

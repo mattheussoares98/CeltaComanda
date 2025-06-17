@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../main/builders/builders.dart';
 import '../../../../components/components.dart';
 import '../../../pages.dart';
 
@@ -35,14 +36,17 @@ class _BlockOrLiberateCommandPageState
               const SizedBox(height: 30),
               Row(
                 children: [
-                  Expanded(
-                    child: BlockOrLiberateButton(
-                      commandNumberController: commandNumberController,
-                      formKey: formKey,
-                      isLiberating: false,
+                  if (EnterpriseBuilder.entity?.verifyCommandBlocked != false)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: BlockOrLiberateButton(
+                          commandNumberController: commandNumberController,
+                          formKey: formKey,
+                          isLiberating: false,
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
                   Expanded(
                     child: BlockOrLiberateButton(
                       commandNumberController: commandNumberController,

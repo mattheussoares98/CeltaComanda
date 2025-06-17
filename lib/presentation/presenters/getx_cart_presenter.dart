@@ -500,7 +500,7 @@ class GetxCartPresenter
 
       await confirmedCartProducts.updateValue(false);
       return true;
-    } on DomainError catch (e) {
+    } catch (e) {
       mainError = getUIError(e);
       return false;
     } finally {

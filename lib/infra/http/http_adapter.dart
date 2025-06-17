@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 import '../../data/http/http.dart';
+import '../helpers/helpers.dart';
 
 class HttpAdapter implements HttpClient {
   final Client client;
@@ -48,7 +49,7 @@ class HttpAdapter implements HttpClient {
     if (response.body.isNotEmpty) {
       final body = jsonDecode(response.body);
       if (body is Map && body.containsKey('ExceptionMessage')) {
-        throw HttpError.serverError; //TODO create UIError.custom
+        throw ApiError(body['ExceptionMessage']);
       }
     }
     switch (response.statusCode) {

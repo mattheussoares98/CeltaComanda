@@ -1,4 +1,5 @@
 import 'package:clean_celta_mobile/data/http/http.dart';
+import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/http/http.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -145,6 +146,16 @@ void main() {
       final future = sut.request(url: url, method: 'post');
 
       expect(future, throwsA(HttpError.serverError));
+    });
+    test('Should throw API error if contains ExceptionMessage', () async {
+      client.mockPost(200, body: '{"ExceptionMessage": "message"}');
+
+      final future = sut.request(url: url, method: 'post');
+
+      expect(
+        future,
+        throwsA(predicate((e) => e is ApiError && e.message == 'message')),
+      );
     });
   });
 

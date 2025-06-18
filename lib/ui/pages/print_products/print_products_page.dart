@@ -73,8 +73,12 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
       // Captura a imagem do widget inteiro
       ui.Image rawImage = await boundary.toImage(pixelRatio: 3.0);
 
-      // Corrige a imagem invertida. Ela está ficando de ponta cabeça
-      Uint8List bitmap = await _invertImageToBeCorrectly(rawImage);
+      // Converte para bytes sem inverter
+      final byteData =
+          await rawImage.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) return;
+
+      Uint8List bitmap = byteData.buffer.asUint8List();
 
       // Restaura o estado original
       setState(() {});
@@ -94,36 +98,36 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
     }
   }
 
-// Corrige a orientação da imagem
-  Future<Uint8List> _invertImageToBeCorrectly(ui.Image rawImage) async {
-    final ByteData? byteData =
-        await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-    if (byteData == null) return Uint8List(0);
+// corrected the orientation, but no longer corrects it
+  // Future<Uint8List> _invertImageToBeCorrectly(ui.Image rawImage) async {
+  //   final ByteData? byteData =
+  //       await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+  //   if (byteData == null) return Uint8List(0);
 
-    final int width = rawImage.width;
-    final int height = rawImage.height;
+  //   final int width = rawImage.width;
+  //   final int height = rawImage.height;
 
-    final ui.PictureRecorder recorder = ui.PictureRecorder();
-    final Canvas canvas = Canvas(recorder);
+  //   final ui.PictureRecorder recorder = ui.PictureRecorder();
+  //   final Canvas canvas = Canvas(recorder);
 
-    final Paint paint = Paint();
+  //   final Paint paint = Paint();
 
-    canvas.translate(0, height.toDouble());
-    canvas.scale(1, -1);
+  //   canvas.translate(0, height.toDouble());
+  //   canvas.scale(1, -1);
 
-    final ui.Rect rect =
-        ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble());
-    final ui.Image newImage = rawImage.clone();
+  //   final ui.Rect rect =
+  //       ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble());
+  //   final ui.Image newImage = rawImage.clone();
 
-    canvas.drawImageRect(newImage, rect, rect, paint);
+  //   canvas.drawImageRect(newImage, rect, rect, paint);
 
-    final ui.Image correctedImage =
-        await recorder.endRecording().toImage(width, height);
+  //   final ui.Image correctedImage =
+  //       await recorder.endRecording().toImage(width, height);
 
-    final ByteData? newByteData =
-        await correctedImage.toByteData(format: ui.ImageByteFormat.png);
-    return newByteData!.buffer.asUint8List();
-  }
+  //   final ByteData? newByteData =
+  //       await correctedImage.toByteData(format: ui.ImageByteFormat.png);
+  //   return newByteData!.buffer.asUint8List();
+  // }
 
   // Future<void> _showPreview(Uint8List bitmap) async {
   //   await showDialog(

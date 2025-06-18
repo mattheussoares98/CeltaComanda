@@ -232,7 +232,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
     await Future.delayed(Duration.zero, () {});
     Uint8List? image;
     await for (var page
-        in Printing.raster(await doc.save(), pages: [0], dpi: 72)) {
+        in Printing.raster(await doc.save(), pages: [0], dpi: 203)) {
       image = await page.toPng();
     }
 

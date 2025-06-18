@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -19,11 +19,25 @@ class LocalGenerateBitmap implements GenerateBitmap {
     required double totalLiquid,
     required int peopleQuantity,
   }) async {
+    final robotoRegular = pw.Font.ttf(
+        await rootBundle.load('lib/ui/assets/fonts/Roboto-Regular.ttf'));
+    // final robotoMedium = pw.Font.ttf(
+    //     await rootBundle.load('lib/ui/assets/fonts/Roboto-Medium.ttf'));
+    final robotoBold = pw.Font.ttf(
+        await rootBundle.load('lib/ui/assets/fonts/Roboto-Bold.ttf'));
+
+    pw.TextStyle pwTextStyle(bool? isTitle) => pw.TextStyle(
+          fontSize: isTitle == true ? 10 : 6,
+          fontWeight:
+              isTitle == true ? pw.FontWeight.bold : pw.FontWeight.normal,
+          font: isTitle == true ? robotoBold : robotoRegular,
+        );
+
     final doc = pw.Document();
     // final ttf = await printing.fontFromAssetBundle('assets/open-sans.ttf');
     doc.addPage(
       pw.Page(
-        pageFormat: PdfPageFormat.roll80,
+        pageFormat: PdfPageFormat(226.77, double.infinity),
         margin: pw.EdgeInsets.all(0),
         build: (pw.Context context) {
           return pw.Container(
@@ -39,7 +53,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
                     ),
                   ]),
                 ),
-                pw.SizedBox(height: 20),
+                pw.SizedBox(height: 5),
                 pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
                   children: [
@@ -239,8 +253,3 @@ class LocalGenerateBitmap implements GenerateBitmap {
     return image!;
   }
 }
-
-pw.TextStyle pwTextStyle(bool? isTitle) => pw.TextStyle(
-      fontSize: isTitle == true ? 15 : 12,
-      fontWeight: isTitle == true ? pw.FontWeight.bold : pw.FontWeight.normal,
-    );

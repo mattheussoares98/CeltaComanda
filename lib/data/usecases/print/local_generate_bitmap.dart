@@ -1,14 +1,16 @@
+import 'dart:ui' as ui;
+import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../domain/usecases/usecases.dart';
-import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 
 class LocalGenerateBitmap implements GenerateBitmap {
+  final double _dpi = 203; // DPI típico de impressora térmica
+  final double _mmPerPx = 25.4 / 203; // mm por pixel (aprox.)
+  final double _paperWidthMm = 80; // largura do papel em mm
+
   @override
   Future<Uint8List> generate({
     required int commandNumber,
@@ -19,237 +21,179 @@ class LocalGenerateBitmap implements GenerateBitmap {
     required double totalLiquid,
     required int peopleQuantity,
   }) async {
-    final robotoRegular = pw.Font.ttf(
-        await rootBundle.load('lib/ui/assets/fonts/Roboto-Regular.ttf'));
-    // final robotoMedium = pw.Font.ttf(
-    //     await rootBundle.load('lib/ui/assets/fonts/Roboto-Medium.ttf'));
-    final robotoBold = pw.Font.ttf(
-        await rootBundle.load('lib/ui/assets/fonts/Roboto-Bold.ttf'));
+    // Converte largura em pixels usando o DPI
+    final int width = (_paperWidthMm / _mmPerPx).round();
 
-    pw.TextStyle pwTextStyle(bool? isTitle) => pw.TextStyle(
-          fontSize: isTitle == true ? 10 : 6,
-          fontWeight:
-              isTitle == true ? pw.FontWeight.bold : pw.FontWeight.normal,
-          font: isTitle == true ? robotoBold : robotoRegular,
-        );
+    // Configura gravador e canvas sem altura fixa (alteração)
+    final recorder = ui.PictureRecorder();
+// Usa Rect.largest para permitir qualquer altura
+    final canvas = Canvas(recorder, Rect.largest);
 
-    final doc = pw.Document();
-    // final ttf = await printing.fontFromAssetBundle('assets/open-sans.ttf');
-    doc.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat(226.77, double.infinity),
-        margin: pw.EdgeInsets.all(0),
-        build: (pw.Context context) {
-          return pw.Container(
-            // color: PdfColors.amber100, only to show the page size
-            child: pw.Column(
-              children: [
-                pw.Center(
-                  child: pw.Column(children: [
-                    pw.Text(
-                      "${R.string.conferenceOfTable} $commandNumber",
-                      textAlign: pw.TextAlign.center,
-                      style: pwTextStyle(true),
-                    ),
-                  ]),
-                ),
-                pw.SizedBox(height: 5),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                  children: [
-                    pw.Expanded(
-                      child:
-                          pw.Text(R.string.products, style: pwTextStyle(true)),
-                    ),
-                    pw.SizedBox(width: 2),
-                    pw.Text("${R.string.price} ${R.string.quantityAbbreviated}",
-                        style: pwTextStyle(true)),
-                    pw.SizedBox(width: 5),
-                    pw.Text(R.string.total, style: pwTextStyle(true)),
-                  ],
-                ),
-                ...printed.Products.map((e) {
-                  return pw.Padding(
-                      padding: pw.EdgeInsets.symmetric(vertical: 2),
-                      child: pw.Row(
-                        children: [
-                          pw.Expanded(
-                            flex: 66,
-                            child: pw.Text(
-                              e.Product!.Name,
-                              style: pwTextStyle(false),
-                            ),
-                          ),
-                          pw.SizedBox(width: 5),
-                          pw.Expanded(
-                            flex: 18,
-                            child: pw.Row(
-                              mainAxisAlignment:
-                                  pw.MainAxisAlignment.spaceBetween,
-                              children: [
-                                pw.Text(
-                                  e.Product!.SaleRetailPraticed
-                                      .toDouble()
-                                      .toString()
-                                      .toBrazilianNumber(2),
-                                  // textAlign: pw.TextAlign.start,
-                                  style: pwTextStyle(false),
-                                ),
-                                pw.Text(
-                                  e.Quantity.toString()
-                                      .toDouble()
-                                      .toString()
-                                      .toBrazilianNumber(2, true),
-                                  textAlign: pw.TextAlign.end,
-                                  style: pwTextStyle(false),
-                                ),
-                              ],
-                            ),
-                          ),
-                          pw.SizedBox(width: 2),
-                          pw.Expanded(
-                            flex: 14,
-                            child: pw.Text(
-                              e.TotalLiquid.toString(),
-                              textAlign: pw.TextAlign.end,
-                              style: pwTextStyle(false),
-                            ),
-                          ),
-                        ],
-                      ));
-                }),
-                pw.Divider(height: 10),
-                pw.Column(
-                  children: [
-                    pw.Row(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        if (printed.IncrementType != null &&
-                            printed.IncrementType!.isNotEmpty &&
-                            printed.IncrementType != "0")
-                          pw.Expanded(
-                            child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                  R.string.subtotal,
-                                  style: pwTextStyle(true),
-                                ),
-                                pw.FittedBox(
-                                  child: pw.Text(
-                                    subTotal
-                                        .toDouble()
-                                        .toString()
-                                        .toBrazilianNumber()
-                                        .addBrazilianCoin(),
-                                    textAlign: pw.TextAlign.end,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        if (printed.IncrementType != null &&
-                            printed.IncrementType!.isNotEmpty &&
-                            printed.IncrementType != "0" &&
-                            serviceChargeValue != null)
-                          pw.Expanded(
-                            child: pw.Column(
-                              children: [
-                                pw.Text(
-                                  R.string.serviceChargeAbbreviated,
-                                  style: pwTextStyle(true),
-                                ),
-                                pw.FittedBox(
-                                  child: pw.Text(
-                                    serviceChargeValue
-                                        .toDouble()
-                                        .toString()
-                                        .toBrazilianNumber()
-                                        .addBrazilianCoin(),
-                                    textAlign: pw.TextAlign.end,
-                                    style: pwTextStyle(false),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        pw.Expanded(
-                          child: pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.end,
-                            children: [
-                              if (printed.IncrementType != null &&
-                                  printed.IncrementType!.isNotEmpty &&
-                                  printed.IncrementType != "0")
-                                pw.Text(
-                                  R.string.total,
-                                  style: pwTextStyle(true),
-                                ),
-                              pw.FittedBox(
-                                child: pw.Text(
-                                  totalLiquid
-                                      .toString()
-                                      .toBrazilianNumber()
-                                      .addBrazilianCoin(),
-                                  textAlign: pw.TextAlign.end,
-                                  style: pwTextStyle(false),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (peopleQuantity > 1)
-                      pw.Row(
-                        children: [
-                          pw.Expanded(
-                            child: pw.Text(
-                              "${R.string.totalByPerson} ($peopleQuantity)",
-                              style: pwTextStyle(false),
-                            ),
-                          ),
-                          pw.Text(
-                            "${totalLiquid / peopleQuantity}"
-                                .toDouble()
-                                .toString()
-                                .toBrazilianNumber()
-                                .addBrazilianCoin(),
-                            style: pwTextStyle(false),
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
-                pw.Divider(height: 10),
-                pw.Text(
-                  "${R.string.pdv.toUpperCase()} $pdvNumber",
-                  textAlign: pw.TextAlign.center,
-                  style: pwTextStyle(false),
-                ),
-                pw.Text(
-                  DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()),
-                  textAlign: pw.TextAlign.center,
-                  style: pwTextStyle(false),
-                ),
-                pw.Center(
-                  child: pw.Text(
-                    R.string.developedByCeltaware,
-                    style: pwTextStyle(true),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-    await Future.delayed(Duration.zero, () {});
-    Uint8List? image;
-    await for (var page
-        in Printing.raster(await doc.save(), pages: [0], dpi: 203)) {
-      image = await page.toPng();
+    final int lineHeight =
+        (_dpi * 0.18).round(); // px por linha com base em DPI (~12pt)
+    final int margin = (_dpi * 0.06).round(); // px de margem (~5mm)
+
+    // Função auxiliar para desenhar texto
+    void drawText(
+      String text,
+      double x,
+      double y, {
+      bool rightAlign = false,
+      bool? isTitle,
+    }) {
+      final double fontSizeMm = isTitle == true ? 4.5 : 3.5;
+      final double fontSizePx = fontSizeMm / _mmPerPx;
+      final tp = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: TextStyle(
+            fontSize: fontSizePx,
+            color: const Color(0xFF000000),
+            fontFamily: isTitle == true
+                ? "lib/ui/assets/fonts/Roboto-Bold.ttf"
+                : "lib/ui/assets/fonts/Roboto-Regular.ttf",
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: width - margin * 2);
+      final dx = rightAlign ? width - margin - tp.width : x;
+      tp.paint(canvas, Offset(dx, y));
     }
 
-    return image!;
+    int y = margin;
+
+    // 1) Cabeçalho
+    drawText(
+      '${R.string.conferenceOfTable} #${commandNumber.toString().padLeft(3, "0")}',
+      margin.toDouble(),
+      y / 2.toDouble(),
+      isTitle: true,
+    );
+    y += lineHeight;
+
+    // 2) Títulos de colunas
+    final double col1X = margin.toDouble();
+    final double col2X = margin + (width - margin * 2) * 7 / 12;
+    drawText(R.string.products, col1X, y.toDouble(), isTitle: true);
+    drawText('${R.string.price}/${R.string.quantityAbbreviated}', col2X,
+        y.toDouble(),
+        isTitle: true);
+    drawText(
+      R.string.total,
+      margin.toDouble(),
+      y.toDouble(),
+      rightAlign: true,
+      isTitle: true,
+    );
+    y += lineHeight;
+
+    // 3) Lista de produtos com quebra em até 2 linhas e máximo de 40 caracteres
+    for (var e in printed.Products) {
+      String name = e.Product!.Name;
+      if (name.length > 40) name = name.substring(0, 40);
+      List<String> parts;
+      if (name.length <= 20) {
+        parts = [name];
+      } else {
+        parts = [name.substring(0, 20), name.substring(20)];
+      }
+      final priceQty =
+          '${e.Product!.SaleRetailPraticed.toDouble().toStringAsFixed(2).replaceAll('.', ',')} x ${e.Quantity}';
+      final totalItem =
+          e.TotalLiquid?.toDouble().toStringAsFixed(2).replaceAll('.', ',');
+      for (var line in parts) {
+        drawText(line, col1X, y.toDouble());
+        y += lineHeight;
+      }
+      y -= lineHeight;
+      drawText(priceQty, col2X, y.toDouble());
+      drawText(
+        '$totalItem',
+        margin.toDouble(),
+        y.toDouble(),
+        rightAlign: true,
+      );
+      y += lineHeight;
+    }
+
+    // 4) Subtotal
+    y += lineHeight;
+    drawText(R.string.subtotal, col1X, y.toDouble(), isTitle: true);
+    drawText(
+      subTotal.toStringAsFixed(2).replaceAll('.', ','),
+      margin.toDouble(),
+      y.toDouble(),
+      rightAlign: true,
+    );
+    y += lineHeight;
+
+    // 5) Taxa de serviço
+    if (serviceChargeValue != null && serviceChargeValue > 0) {
+      drawText(R.string.serviceCharge, col1X, y.toDouble(), isTitle: true);
+      drawText(
+        serviceChargeValue.toStringAsFixed(2).replaceAll('.', ','),
+        margin.toDouble(),
+        y.toDouble(),
+        rightAlign: true,
+      );
+      y += lineHeight;
+    }
+
+    // 6) Total geral
+    drawText(R.string.total, col1X, y.toDouble(), isTitle: true);
+    drawText(
+      totalLiquid.toStringAsFixed(2).replaceAll('.', ','),
+      margin.toDouble(),
+      y.toDouble(),
+      rightAlign: true,
+    );
+    y += lineHeight;
+
+    // 7) Total por pessoa
+    if (peopleQuantity > 1) {
+      final perPerson = (totalLiquid / peopleQuantity);
+      drawText(R.string.totalByPerson, col1X, y.toDouble(), isTitle: true);
+      drawText(
+        perPerson.toStringAsFixed(2).replaceAll('.', ','),
+        margin.toDouble(),
+        y.toDouble(),
+        rightAlign: true,
+      );
+      y += lineHeight;
+    }
+
+    // 8) Rodapé: PDV e data/hora
+    final now = DateTime.now();
+    final dtStr = '${now.day.toString().padLeft(2, '0')}/'
+        '${now.month.toString().padLeft(2, '0')}/'
+        '${now.year} '
+        '${now.hour.toString().padLeft(2, '0')}:'
+        '${now.minute.toString().padLeft(2, '0')}';
+    drawText('PDV: $pdvNumber', col1X, y.toDouble());
+    drawText(dtStr, margin.toDouble(), y.toDouble(), rightAlign: true);
+    y += lineHeight;
+
+    // 9) Rodapé centralizado
+    final devBy = R.string.developedByCeltaware;
+    final tp = TextPainter(
+      text: TextSpan(
+        text: devBy,
+        style:
+            TextStyle(fontSize: 2.5 / (25.4 / 203), color: Color(0xFF000000)),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: width - margin * 2);
+    tp.paint(canvas, Offset((width - tp.width) / 2, y.toDouble()));
+    y += lineHeight;
+
+    // Finaliza e converte em imagem usando altura dinâmica (alteração)
+    final picture = recorder.endRecording();
+    final int actualHeight = y + margin; // calcula altura real
+    final ui.Image finalImage = await picture.toImage(width, actualHeight);
+    final byteData = await finalImage.toByteData(
+      format: ui.ImageByteFormat.png,
+    );
+
+    return byteData!.buffer.asUint8List();
   }
 }

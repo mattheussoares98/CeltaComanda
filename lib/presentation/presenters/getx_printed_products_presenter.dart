@@ -288,6 +288,7 @@ class GetxPrintedProductsPresenter
 
     try {
       await printBitmap.print(bitmap);
+      closePage();
     } catch (e) {
       mainError = UIError.unexpected;
       closePage();

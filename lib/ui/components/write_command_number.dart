@@ -21,8 +21,10 @@ class WriteNumber {
 
   static Future<String?> writeAndReturnNumber(
     ActionType? action, {
+    required String title,
+    required String label,
+    required String hint,
     int? tableNumber,
-    String? title,
     String? cancelMessage,
     int? maxLength,
   }) async {
@@ -40,7 +42,7 @@ class WriteNumber {
 
     await notificationDialog(
       context: _context,
-      titleMessage: title ?? R.string.msgInsertCommandNumber,
+      titleMessage: title,
       confirmMessage: R.string.confirm,
       cancelMessage: cancelMessage ?? R.string.cancel,
       canPop: false,
@@ -65,8 +67,8 @@ class WriteNumber {
                   maxLength: maxLength ?? 3,
                   focusNode: _focusNode,
                   decoration: InputDecoration(
-                    label: Text(R.string.command),
-                    hintText: "Exp: 1",
+                    label: Text(label),
+                    hintText: hint,
                   ),
                   validator: (value) {
                     if (value?.isEmpty == true) {

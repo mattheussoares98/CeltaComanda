@@ -14,6 +14,9 @@ class SearchDataOfOtherCommandNumber extends StatelessWidget {
         onPressed: () async {
           WriteNumber.writeAndReturnNumber(
             ActionType.loadPrintedProducts,
+            title: R.string.msgInsertCommandNumber,
+            label: R.string.commandNumber,
+            hint: R.string.commandNumber,
           );
         },
         child: Padding(

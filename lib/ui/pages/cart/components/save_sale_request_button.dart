@@ -95,7 +95,13 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
             onPress: () async {
               String? tableNumber;
               if (EnterpriseBuilder.entity?.requestTableNumber == true) {
-                tableNumber = await WriteNumber.writeAndReturnNumber(null);
+                tableNumber = await WriteNumber.writeAndReturnNumber(
+                  null,
+                  label: R.string.table,
+                  hint: R.string.table,
+                  title: R.string.msgTableNumber,
+                  cancelMessage: R.string.jump,
+                );
               }
               await _addProducts(
                 insertProductPresenter: insertProductPresenter,
@@ -116,6 +122,8 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
               null,
               title: R.string.msgTableNumber,
               cancelMessage: R.string.jump,
+              hint: R.string.table,
+              label: R.string.table,
               maxLength: 2,
             );
           }
@@ -124,6 +132,9 @@ class _SaveSaleRequestButtonState extends State<SaveSaleRequestButton> {
           await WriteNumber.writeAndReturnNumber(
             ActionType.saveProducts,
             tableNumber: tableNumber?.toInt(),
+            hint: R.string.commandNumber,
+            label: R.string.commandNumber,
+            title: R.string.msgWriteCommandNumber,
           );
         }
       },

@@ -98,8 +98,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
     final double col2X =
         margin + (width - margin * 2) * 0.6; // Adjusted column position
     drawText(R.string.products, col1X, y, isTitle: true);
-    drawText('${R.string.price}/${R.string.quantityAbbreviated}', col2X, y,
-        isTitle: true);
+    drawText('UN ${R.string.quantityAbbreviated}', col2X, y, isTitle: true);
     drawText(R.string.total, margin.toDouble(), y,
         rightAlign: true, isTitle: true);
     y += lineHeight * 1.5;

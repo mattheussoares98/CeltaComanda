@@ -123,7 +123,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
       }
 
       final priceQty =
-          '${e.Product!.SaleRetailPraticed.toDouble().toStringAsFixed(2).replaceAll('.', ',')} x ${e.Quantity}';
+          '${e.Product!.SaleRetailPraticed.toDouble().toStringAsFixed(2).replaceAll('.', ',')} x ${e.Quantity?.toDouble().toString().toBrazilianNumber((e.Quantity?.toDouble() ?? 0) % 1 == 0 ? 0 : 2)}';
       final totalItem =
           e.TotalLiquid?.toDouble().toStringAsFixed(2).replaceAll('.', ',');
 

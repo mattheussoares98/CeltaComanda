@@ -50,9 +50,6 @@ class RemoteGetProductComposition
       List<ProductCompositionEntity> childs = [];
 
       for (var father in fathers) {
-        if (father.IsPromoCombox != true) {
-          continue;
-        }
         final childrenOfFather = await getFathers(
           internalCodeOnErp: father.InternalCodeOnERPCodeChild!,
         );

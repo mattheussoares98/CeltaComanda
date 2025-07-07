@@ -136,6 +136,7 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: null,
       insertChilds: false,
+      isPromoCombox: false,
     );
 
     selectedProduct = EntityFactory.makeProductsViewModel(
@@ -153,6 +154,7 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: null,
       insertChilds: false,
+      isPromoCombox: false,
     );
     validFather = EntityFactory.makeProductCompositionViewModel(
       quantity: faker.randomGenerator.decimal(),
@@ -163,6 +165,7 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: 0,
       insertChilds: false,
+      isPromoCombox: false,
     );
 
     optionalOptionsInsertProductsViewModel = InsertProductsViewModel(
@@ -315,6 +318,7 @@ void main() {
           isOptionalItem: false,
           indexOfSelectedChild: null,
           insertChilds: false,
+          isPromoCombox: false,
         )
       ];
 
@@ -482,6 +486,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -511,6 +516,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -540,6 +546,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -569,6 +576,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -598,6 +606,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -627,6 +636,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -656,6 +666,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -685,6 +696,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: true,
         childIncrement: 20,
+        isPromoCombox: true,
       );
 
       await sut.updateSaleRequest(
@@ -783,6 +795,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(
@@ -812,6 +825,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       );
 
       await sut.updateSaleRequest(

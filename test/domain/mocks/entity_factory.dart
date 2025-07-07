@@ -464,6 +464,7 @@ class EntityFactory {
                 childIncrement: faker.randomGenerator.decimal(),
                 isOptionalItem:
                     isOptionalChilds ?? faker.randomGenerator.boolean(),
+                isPromoCombox: faker.randomGenerator.boolean(),
                 indexOfSelectedChild: null,
                 insertChilds: false,
               )
@@ -922,6 +923,7 @@ class EntityFactory {
     required double fatherIncrement,
     required double childIncrement,
     required bool isOptionalItem,
+    required bool isPromoCombox,
     required int? indexOfSelectedChild,
     required bool insertChilds,
   }) =>
@@ -937,6 +939,7 @@ class EntityFactory {
         OfferPrice: offerPrice.toString(),
         IncrementValue: fatherIncrement.toString(),
         IsOptionalItem: isOptionalItem.toString(),
+        IsPromoCombox: isPromoCombox.toString(),
         ProductOptions: "",
         indexOfSelectedChild: indexOfSelectedChild,
         Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
@@ -958,6 +961,7 @@ class EntityFactory {
                   OfferPrice: offerPrice.toString(),
                   IncrementValue: childIncrement.toString(),
                   IsOptionalItem: isOptionalItem.toString(),
+                  IsPromoCombox: isPromoCombox.toString(),
                   ProductIsFatherComposition:
                       faker.randomGenerator.boolean().toString(),
                   ProductOptions: "",

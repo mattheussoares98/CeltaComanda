@@ -43,6 +43,7 @@ void main() {
       isOptionalItem: false,
       indexOfSelectedChild: 0,
       insertChilds: false,
+      isPromoCombox: false,
     ));
     registerFallbackValue(EntityFactory.makeCartProductEntity(
       maximumProductQuantity: 0,

@@ -140,6 +140,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       ),
       EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
@@ -150,6 +151,7 @@ void main() {
         indexOfSelectedChild: 0,
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       ),
       EntityFactory.makeProductCompositionViewModel(
         quantity: 2,
@@ -161,6 +163,7 @@ void main() {
             null, //não selecionado, por isso não considera nos produtos pra serem inseridos na comanda
         insertChilds: false,
         childIncrement: 0,
+        isPromoCombox: false,
       ),
     ];
 
@@ -233,6 +236,7 @@ void main() {
       indexOfSelectedChild: faker.randomGenerator.integer(10),
       isOptionalItem: faker.randomGenerator.boolean(),
       insertChilds: faker.randomGenerator.boolean(),
+      isPromoCombox: faker.randomGenerator.boolean(),
     ));
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());

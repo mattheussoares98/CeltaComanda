@@ -20,6 +20,7 @@ class ProductCompositionViewModel extends Equatable {
   final String? IsOptionalItem;
   final String? ProductOptions;
   final String? ProductIsFatherComposition;
+  final String? IsPromoCombox;
   final List<ProductCompositionViewModel>? childs;
   final ProductScheduleModel? Schedule;
 
@@ -40,6 +41,7 @@ class ProductCompositionViewModel extends Equatable {
     required this.IsOptionalItem,
     required this.ProductOptions,
     required this.ProductIsFatherComposition,
+    required this.IsPromoCombox,
     required this.Schedule,
     this.indexOfSelectedChild,
     this.childs,
@@ -61,6 +63,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem,
         ProductOptions,
         ProductIsFatherComposition,
+        IsPromoCombox,
         childs,
         indexOfSelectedChild,
         childs,
@@ -87,6 +90,7 @@ class ProductCompositionViewModel extends Equatable {
         ProductOptions: entity.ProductOptions?.toString(),
         ProductIsFatherComposition:
             entity.ProductIsFatherComposition?.toString(),
+        IsPromoCombox: entity.IsPromoCombox?.toString(),
         commentFather: entity.comment,
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
@@ -118,6 +122,7 @@ class ProductCompositionViewModel extends Equatable {
         ProductOptions: entity.ProductOptions?.toString(),
         ProductIsFatherComposition:
             entity.ProductIsFatherComposition?.toString(),
+        IsPromoCombox: entity.IsPromoCombox?.toString(),
         indexOfSelectedChild: entity.indexOfSelectedChild,
         Schedule: entity.Schedule != null
             ? ProductScheduleModel.fromEntity(entity.Schedule!)
@@ -168,6 +173,7 @@ class ProductCompositionViewModel extends Equatable {
         "IsOptionalItem": IsOptionalItem,
         "ProductOptions": ProductOptions,
         "ProductIsFatherComposition": ProductIsFatherComposition,
+        "IsPromoCombox": IsPromoCombox,
         "childs": childs,
         "indexOfSelectedChild": indexOfSelectedChild,
         "commentFather": commentFather,
@@ -189,6 +195,7 @@ class ProductCompositionViewModel extends Equatable {
         IsOptionalItem: json["IsOptionalItem"],
         ProductOptions: json["ProductOptions"],
         ProductIsFatherComposition: json["ProductIsFatherComposition"],
+        IsPromoCombox: json["IsPromoCombox"],
         indexOfSelectedChild: json["indexOfSelectedChild"],
         childs: json["childs"]
             ?.map<ProductCompositionViewModel>(

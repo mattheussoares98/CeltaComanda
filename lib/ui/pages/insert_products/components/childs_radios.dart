@@ -88,7 +88,7 @@ class ChildsRadios extends StatelessWidget {
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
         Provider.of(context, listen: false);
 
-    if (selectedFather.ProductIsFatherComposition == "true" &&
+    if (selectedFather.IsPromoCombox == "true" &&
         (selectedFather.childs == null || selectedFather.childs!.isEmpty)) {
       return Text(
         "${R.string.msgMissingChilds} (${selectedFather.ChildName})",

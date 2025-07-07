@@ -83,6 +83,7 @@ void main() {
       indexOfSelectedChild: faker.randomGenerator.integer(10),
       isOptionalItem: faker.randomGenerator.boolean(),
       insertChilds: faker.randomGenerator.boolean(),
+      isPromoCombox: faker.randomGenerator.boolean(),
     ));
     registerFallbackValue(
         EntityFactory.makeExpansibleGroupFromProductViewModel());

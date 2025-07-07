@@ -297,6 +297,7 @@ class GetxCartPresenter
               commentFather: e.commentFather,
               indexOfSelectedChild: e.indexOfSelectedChild,
               Schedule: e.Schedule,
+              IsPromoCombox: e.IsPromoCombox,
             );
           }).toList();
         }
@@ -359,6 +360,7 @@ class GetxCartPresenter
             InternalCodeOnERPCodeChild: e.InternalCodeOnERPCodeChild,
             PluChild: e.PluChild,
             ChildName: e.ChildName,
+            IsPromoCombox: e.IsPromoCombox,
             Quantity:
                 (e.Quantity!.toDouble() + childQuantityInCombox).toString(),
             SalePrice: e.SalePrice,
@@ -695,6 +697,7 @@ class GetxCartPresenter
       final newChild = ProductCompositionViewModel(
         commentFather: comment,
         ProductCompositionId: oldChild.ProductCompositionId,
+        IsPromoCombox: oldChild.IsPromoCombox,
         ProductIsFatherComposition: oldChild.ProductIsFatherComposition,
         EnterpriseId: oldChild.EnterpriseId,
         InternalCodeOnERPCodeFather: oldChild.InternalCodeOnERPCodeFather,

@@ -892,6 +892,7 @@ class EntityFactory {
           indexOfSelectedChild: null,
           Schedule: makeProductScheduleEntity(),
           ProductIsFatherComposition: faker.randomGenerator.boolean(),
+          IsPromoCombox: faker.randomGenerator.boolean(),
         ),
         ProductCompositionEntity(
           ProductCompositionId: faker.randomGenerator.integer(99),
@@ -910,6 +911,7 @@ class EntityFactory {
           indexOfSelectedChild: null,
           Schedule: makeProductScheduleEntity(),
           ProductIsFatherComposition: faker.randomGenerator.boolean(),
+          IsPromoCombox: faker.randomGenerator.boolean(),
         ),
       ];
 

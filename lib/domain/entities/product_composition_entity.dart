@@ -15,6 +15,7 @@ class ProductCompositionEntity extends Equatable {
   final double? OfferPrice;
   final double? IncrementValue;
   final bool? IsOptionalItem;
+  final bool? IsPromoCombox;
   final bool? ProductIsFatherComposition;
   final dynamic ProductOptions;
   final ProductScheduleEntity? Schedule;
@@ -34,6 +35,7 @@ class ProductCompositionEntity extends Equatable {
     required this.OfferPrice,
     required this.IncrementValue,
     required this.IsOptionalItem,
+    required this.IsPromoCombox,
     required this.ProductIsFatherComposition,
     required this.ProductOptions,
     required this.comment,
@@ -55,6 +57,7 @@ class ProductCompositionEntity extends Equatable {
         OfferPrice,
         IncrementValue,
         IsOptionalItem,
+        IsPromoCombox,
         ProductIsFatherComposition,
         ProductOptions,
         childsComposition,
@@ -78,6 +81,7 @@ class ProductCompositionEntity extends Equatable {
         other.OfferPrice == OfferPrice &&
         other.IncrementValue == IncrementValue &&
         other.IsOptionalItem == IsOptionalItem &&
+        other.IsPromoCombox == IsPromoCombox &&
         other.ProductIsFatherComposition == ProductIsFatherComposition &&
         other.ProductOptions == ProductOptions &&
         other.comment == comment &&
@@ -100,6 +104,7 @@ class ProductCompositionEntity extends Equatable {
       OfferPrice,
       IncrementValue,
       IsOptionalItem,
+      IsPromoCombox,
       ProductIsFatherComposition,
       ProductOptions,
       comment,

@@ -18,6 +18,7 @@ class ProductCompositionModel extends Equatable {
   final double? IncrementValue;
   final bool? IsOptionalItem;
   final bool? ProductIsFatherComposition;
+  final bool? IsPromoCombox;
   final dynamic ProductOptions;
   final String? comment;
   final int? indexOfSelectedChild;
@@ -36,6 +37,7 @@ class ProductCompositionModel extends Equatable {
     required this.IncrementValue,
     required this.IsOptionalItem,
     required this.ProductIsFatherComposition,
+    required this.IsPromoCombox,
     required this.ProductOptions,
     required this.comment,
     required this.indexOfSelectedChild,
@@ -69,6 +71,7 @@ class ProductCompositionModel extends Equatable {
       IncrementValue: json["IncrementValue"],
       IsOptionalItem: json["IsOptionalItem"],
       ProductIsFatherComposition: json["ProductIsFatherComposition"],
+      IsPromoCombox: json["IsPromoCombox"],
       ProductOptions: json["ProductOptions"],
       comment: json["comment"],
       indexOfSelectedChild: json["indexOfSelectedChild"],
@@ -92,6 +95,7 @@ class ProductCompositionModel extends Equatable {
       IncrementValue: entity.IncrementValue,
       IsOptionalItem: entity.IsOptionalItem,
       ProductIsFatherComposition: entity.ProductIsFatherComposition,
+      IsPromoCombox: entity.IsPromoCombox,
       ProductOptions: entity.ProductOptions,
       comment: entity.comment,
       indexOfSelectedChild: entity.indexOfSelectedChild,
@@ -112,6 +116,7 @@ class ProductCompositionModel extends Equatable {
         "IncrementValue": IncrementValue,
         "IsOptionalItem": IsOptionalItem,
         "ProductIsFatherComposition": ProductIsFatherComposition,
+        "IsPromoCombox": IsPromoCombox,
         "ProductOptions": ProductOptions,
         "comment": comment,
         "Schedule": Schedule,
@@ -130,6 +135,7 @@ class ProductCompositionModel extends Equatable {
         IncrementValue: IncrementValue,
         IsOptionalItem: IsOptionalItem,
         ProductIsFatherComposition: ProductIsFatherComposition,
+        IsPromoCombox: IsPromoCombox,
         ProductOptions: ProductOptions,
         comment: comment,
         indexOfSelectedChild: indexOfSelectedChild,
@@ -150,6 +156,7 @@ class ProductCompositionModel extends Equatable {
         IncrementValue,
         IsOptionalItem,
         ProductIsFatherComposition,
+        IsPromoCombox,
         ProductOptions,
         Schedule,
       ];

@@ -142,6 +142,7 @@ class ProductCompositionViewModel extends Equatable {
         OfferPrice: OfferPrice!.toDouble(),
         IncrementValue: IncrementValue!.toDouble(),
         IsOptionalItem: bool.tryParse(IsOptionalItem.toString()),
+        IsPromoCombox: bool.tryParse(IsOptionalItem.toString()),
         ProductOptions: ProductOptions,
         ProductIsFatherComposition:
             bool.tryParse(ProductIsFatherComposition.toString()),

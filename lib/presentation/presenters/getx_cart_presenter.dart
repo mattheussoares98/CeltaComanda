@@ -536,9 +536,12 @@ class GetxCartPresenter
     List<UpdateSaleRequestTempProductEntity> productsEntitys = [];
     for (var product in _cartProducts) {
       int indexOfProductEntity = 0;
-      late UpdateSaleRequestTempProductEntity productEntity;
 
-      productEntity = UpdateSaleRequestTempProductEntity(
+      bool productIsFather = product.Product.childsComposition != null &&
+          product.Product.childsComposition!.isNotEmpty;
+
+      UpdateSaleRequestTempProductEntity productEntity =
+          UpdateSaleRequestTempProductEntity(
         ProductInternalCodeOnErp:
             product.toEntity().Product.InternalCodeOnERP!.toInt(),
         ProductPriceLookUpCode: product.toEntity().ProductPriceLookUpCode,
@@ -546,20 +549,20 @@ class GetxCartPresenter
         SaleRequestTempId: saleRequestTempId,
         TotalLiquid: product.TotalLiquid.toDouble(),
         Value: product.Value.toDouble(),
-        Comments: product.Comments,
-        ProductIsFatherComposition: product.Product.childsComposition != null &&
-            product.Product.childsComposition!.isNotEmpty,
+        Comments: productIsFather ? null : product.Comments,
+        ProductIsFatherComposition: productIsFather,
         SaleRequestProductIdOfFather: null,
       );
 
       productsEntitys.add(productEntity);
       indexOfProductEntity += productsEntitys.lastIndexOf(productEntity);
 
-      if (product.Product.childsComposition == null ||
-          product.Product.childsComposition!.isEmpty) {
+      final childs = product.Product.childsComposition;
+
+      if (childs == null || childs.isEmpty) {
         continue;
       }
-      for (var child in product.Product.childsComposition!) {
+      for (var child in childs) {
         if (child.indexOfSelectedChild == null) {
           continue;
         }
@@ -582,7 +585,7 @@ class GetxCartPresenter
           TotalLiquid: insertProductPresenter
               .calculateProductCompositionTotalLiquid(product: child),
           Value: insertProductPresenter.calculateProductCompositionPrice(child),
-          Comments: child.commentFather,
+          Comments: childs.length == 1 ? product.Comments : child.commentFather,
         );
 
         productsEntitys.add(childEntity);

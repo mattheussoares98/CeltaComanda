@@ -29,17 +29,17 @@ class UpdateCustomer extends StatelessWidget {
 
     return Container(
       decoration: containerDecoration(context),
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (printedProductsPresenter.customerInSaleRequest != null)
-            Expanded(flex: 3, child: FittedBox(child: SelectedCustomer())),
-          Expanded(child: OpenInsertCustomerPageButton()),
+            const Expanded(flex: 3, child: FittedBox(child: SelectedCustomer())),
+          const Expanded(child: OpenInsertCustomerPageButton()),
           if (printedProductsPresenter.customerInSaleRequest != null)
-            Expanded(
+            const Expanded(
                 child: Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: EdgeInsets.only(top: 4),
               child: RemoveCustomerButton(),
             )),
         ],

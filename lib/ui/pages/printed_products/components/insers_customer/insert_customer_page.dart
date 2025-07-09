@@ -65,7 +65,7 @@ class _InsertCustomerPageState extends State<InsertCustomerPage> {
                       child: Column(
                         children: [
                           CustomersItems(customers: snapCustomers.data!),
-                          ConfirmUpdateCustomerButton(),
+                          const ConfirmUpdateCustomerButton(),
                         ],
                       ),
                     ),

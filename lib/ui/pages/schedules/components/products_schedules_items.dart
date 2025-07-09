@@ -31,8 +31,8 @@ class _ProductsSchedulesItemsState extends State<ProductsSchedulesItems> {
         final color = productIndex % 2 == 0 ? Colors.grey[300] : Colors.white;
 
         return Container(
-          margin: EdgeInsets.all(3),
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          margin: const EdgeInsets.all(3),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.5,

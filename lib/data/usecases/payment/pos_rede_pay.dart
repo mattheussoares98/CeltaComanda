@@ -8,7 +8,7 @@ import '../../models/models.dart';
 class PosRedePay with ErrorHandling implements RedePay {
   @override
   Future<void> pay(PayParamsModel params) async {
-    final platform = MethodChannel("rede");
+    const platform = MethodChannel("rede");
 
     try {
       final result = await platform.invokeMethod(

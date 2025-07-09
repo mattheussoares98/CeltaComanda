@@ -134,7 +134,7 @@ class ChildsRadios extends StatelessWidget {
         if (hasChilds) {
           child = selectedFather.childs![i];
           if (!isEnabledToday(child)) {
-            return SizedBox();
+            return const SizedBox();
           }
         } else {
           child = selectedFather;

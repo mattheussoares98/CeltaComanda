@@ -161,7 +161,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(
-      PayParamsModel(
+      const PayParamsModel(
         longAmountValue: 0,
         portionQuantity: 0,
         paymentMode: PaymentMode.credit,

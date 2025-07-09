@@ -45,7 +45,7 @@ class EnterpriseIdInput extends StatelessWidget {
           ),
           fontSize: 14,
         ),
-        keyboardType: TextInputType.numberWithOptions(decimal: false),
+        keyboardType: const TextInputType.numberWithOptions(decimal: false),
         validator: (value) {
           if (value == null || value.isEmpty) {
             return R.string.enterpriseId;

@@ -79,7 +79,7 @@ class _CancelProductsPageState extends State<CancelProductsPage>
                       );
                     }
                     if (snapshot.data == null) {
-                      return SizedBox();
+                      return const SizedBox();
                     }
 
                     return Expanded(

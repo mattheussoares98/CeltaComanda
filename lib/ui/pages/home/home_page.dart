@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage>
     EnterprisePresenter enterprisePresenter =
         Provider.of(context, listen: false);
 
-    loadPrintedTimer = Timer.periodic(Duration(minutes: 1), (_) async {
+    loadPrintedTimer = Timer.periodic(const Duration(minutes: 1), (_) async {
       if (homePresenter.commandEntity?.commandNumber != null) {
         await printedProductsPresenter.loadPrinted(
           homePresenter.commandEntity!.commandNumber!,
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage>
       }
     });
 
-    needUpdateAppTimer = Timer.periodic(Duration(hours: 1), (_) async {
+    needUpdateAppTimer = Timer.periodic(const Duration(hours: 1), (_) async {
       await verifyNeedUpdateApp(homePresenter);
     });
 
@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage>
             ? R.string.msgNeedUpdateApplication
             : R.string.msgCallWaiterToUpdateApp,
         content: EnterpriseBuilder.entity?.blockUseAppIfIsOutdated == true
-            ? UpdateApplicationButton()
+            ? const UpdateApplicationButton()
             : null,
         showCancelAndConfirmMessage: false,
         showCloseAction:

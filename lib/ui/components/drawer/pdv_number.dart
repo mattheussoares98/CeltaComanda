@@ -13,13 +13,13 @@ class PdvNumber extends StatelessWidget {
 
     if (homePresenter.commandEntity?.pdv?.PdvNumber != null) {
       return Padding(
-        padding: EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 8),
         child: Text(
           "${R.string.pdv.toUpperCase()} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}",
           textAlign: TextAlign.center,
         ),
       );
     }
-    return SizedBox();
+    return const SizedBox();
   }
 }

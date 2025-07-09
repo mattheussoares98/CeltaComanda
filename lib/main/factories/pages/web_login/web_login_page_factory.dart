@@ -1,3 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-WebLoginPage makeWebLoginPage() => WebLoginPage();
+WebLoginPage makeWebLoginPage() => const WebLoginPage();

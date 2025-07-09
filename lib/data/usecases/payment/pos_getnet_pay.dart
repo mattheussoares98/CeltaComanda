@@ -9,7 +9,7 @@ class PosGetnetPay implements GetnetPay {
   @override
   Future<GetNetResponseModel?> pay(PayParamsModel params) async {
     try {
-      final int REQUEST_CODE = 10001;
+      const int requestCode = 10001;
       // final String ARG_RESULT = 'result';
       // final String ARG_RESULT_DETAILS = 'resultDetails';
       // final String ARG_AMOUNT = 'amount';
@@ -19,15 +19,15 @@ class PosGetnetPay implements GetnetPay {
       // final String ARG_NSU = 'nsu';
       // final String ARG_BRAND = 'brand';
       // final String ARG_CALLER_ID = 'callerId';
-      final String PARAM_PAYMENT_TYPE = 'paymentType';
-      final String PARAM_AMOUNT = 'amount';
-      final String PARAM_CUR_POS = 'currencyPosition';
-      final String PARAM_CUR_CODE = 'currencyCode';
-      final String PARAM_CALLER_ID = 'callerId';
+      const String paramPaymentType = 'paymentType';
+      const String paramAmount = 'amount';
+      const String paramCurPos = 'currencyPosition';
+      const String paramCurCode = 'currencyCode';
+      const String paramCallerId = 'callerId';
 
-      final channel = MethodChannel('sample.android/deeplink');
+      const channel = MethodChannel('sample.android/deeplink');
 
-      var uuid = Uuid();
+      var uuid = const Uuid();
       String callerId = uuid.v4();
 
       final totalAmount = params.longAmountValue
@@ -37,15 +37,15 @@ class PosGetnetPay implements GetnetPay {
           .padLeft(12, "0");
 
       Map<String, String> intentParams = {
-        PARAM_PAYMENT_TYPE: params.paymentMode.name,
-        PARAM_AMOUNT: totalAmount,
-        PARAM_CUR_POS: 'CURRENCY_AFTER_AMOUNT',
-        PARAM_CUR_CODE: '986',
-        PARAM_CALLER_ID: callerId
+        paramPaymentType: params.paymentMode.name,
+        paramAmount: totalAmount,
+        paramCurPos: 'CURRENCY_AFTER_AMOUNT',
+        paramCurCode: '986',
+        paramCallerId: callerId
       };
 
       final parameters = {
-        'requestCode': REQUEST_CODE,
+        'requestCode': requestCode,
         'action': 'android.intent.action.VIEW',
         'data': 'getnet://pagamento/v3/payment',
         'arguments': intentParams,

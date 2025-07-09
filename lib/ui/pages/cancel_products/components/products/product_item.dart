@@ -49,7 +49,7 @@ class ProductItem extends StatelessWidget {
         Provider.of(context, listen: false);
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       color: getColor(context),
       child: Column(
         children: [

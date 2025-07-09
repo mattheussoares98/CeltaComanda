@@ -30,12 +30,12 @@ class _CommandConfigurationsPageState extends State<CommandConfigurationsPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CommandField(commandNumberController: commandNumberController),
-              SizedBox(height: 10),
-              UpdatePeopleNumbersDropdown(),
-              SizedBox(height: 10),
-              UpdateSellerDropdown(),
+              const SizedBox(height: 10),
+              const UpdatePeopleNumbersDropdown(),
+              const SizedBox(height: 10),
+              const UpdateSellerDropdown(),
               ConfirmUpdateCommandDataButton(
                 formKey: CommandConfigurationsPage.formKey,
                 commandNumberController: commandNumberController,

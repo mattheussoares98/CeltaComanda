@@ -17,7 +17,7 @@ class OpenInsertCustomerPageButton extends StatelessWidget {
       onPressed: () {
         PersonalizedDialogPage.open(
           context: context,
-          page: InsertCustomerPage(),
+          page: const InsertCustomerPage(),
         );
       },
       child: Text(

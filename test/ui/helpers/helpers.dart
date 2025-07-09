@@ -34,7 +34,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.enterpriseValidation,
-      page: () => EnterpriseValidationPage(),
+      page: () => const EnterpriseValidationPage(),
     ),
     GetPage(
       name: PageRoutes.printedProducts,
@@ -50,7 +50,7 @@ Widget makePage(
     ),
     GetPage(
       name: PageRoutes.covenant,
-      page: () => CovenantPage(),
+      page: () => const CovenantPage(),
     ),
   ];
 

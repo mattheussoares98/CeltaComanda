@@ -51,7 +51,7 @@ class CommandField extends StatelessWidget {
                 textAlign: TextAlign.center,
                 focusNode: focusNode,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                keyboardType: TextInputType.numberWithOptions(decimal: false),
+                keyboardType: const TextInputType.numberWithOptions(decimal: false),
                 onTap: () {
                   commandNumberController.selection = TextSelection(
                     baseOffset: 0,
@@ -96,7 +96,7 @@ class CommandField extends StatelessWidget {
                         commandNumberController.text = (value - 1).toString();
                       }
                     },
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                   ),
                   suffixIcon: IconButton(
                     color: Theme.of(context).primaryColor,
@@ -112,7 +112,7 @@ class CommandField extends StatelessWidget {
                         commandNumberController.text = (value + 1).toString();
                       }
                     },
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   ),
                 ),
               ),
@@ -126,7 +126,7 @@ class CommandField extends StatelessWidget {
             },
             icon: Row(
               children: [
-                Icon(Icons.search),
+                const Icon(Icons.search),
                 if (ScreenSize.hasMinWidth)
                   Padding(
                     padding: const EdgeInsets.only(left: 8),

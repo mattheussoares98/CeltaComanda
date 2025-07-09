@@ -38,7 +38,7 @@ class _SalesDetailsState extends State<SalesDetails> {
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             selectedIndex = null;
-            return SizedBox();
+            return const SizedBox();
           }
 
           final pdvs = snapshot.data!.map((e) => e.PdvNumber).toSet().toList();

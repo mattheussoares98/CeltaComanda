@@ -51,7 +51,7 @@ class _ChildsItemsState extends State<ChildsItems> {
                   Expanded(
                     child: Text(
                       "- ${father.ChildName}   (${R.string.product.toUpperCase()})",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.deepPurple,
                         fontWeight: FontWeight.bold,
                       ),
@@ -75,8 +75,8 @@ class _ChildsItemsState extends State<ChildsItems> {
         return Stack(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 4),
-              padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
               decoration: BoxDecoration(
                 border: Border.all(),
                 borderRadius: BorderRadius.circular(10),
@@ -90,7 +90,7 @@ class _ChildsItemsState extends State<ChildsItems> {
 
                   return Column(
                     children: [
-                      if (childIndex > 0) Divider(thickness: 0.3),
+                      if (childIndex > 0) const Divider(thickness: 0.3),
                       InkWell(
                         onTap: () {
                           PersonalizedDialogPage.open(
@@ -111,7 +111,7 @@ class _ChildsItemsState extends State<ChildsItems> {
                               Expanded(
                                 child: Text(
                                   "- ${child.ChildName!}   (${R.string.child.toUpperCase()})",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.deepPurple,
                                     fontWeight: FontWeight.bold,
                                   ),

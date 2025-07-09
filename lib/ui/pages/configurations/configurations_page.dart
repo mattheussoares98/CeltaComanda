@@ -79,7 +79,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
                   ? "  ${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}"
                   : "")),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () async {
               if (homePresenter.commandEntity?.commandNumber != null) {
                 await printedProductsPresenter.loadPrinted(
@@ -100,7 +100,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
                 if (!applicationIsInLatestVersion &&
                     !homePresenter.isGeneratingVersionToRede &&
                     !homePresenter.isGeneratingVersionToGetNet)
-                  UpdateApplicationButton(),
+                  const UpdateApplicationButton(),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

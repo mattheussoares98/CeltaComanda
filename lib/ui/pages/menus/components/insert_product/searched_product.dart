@@ -63,7 +63,7 @@ class _SearchedProductState extends State<SearchedProduct> {
       widget.commentController.clear();
       PersonalizedDialogPage.open(
         context: context,
-        page: CartPage(),
+        page: const CartPage(),
       );
     }
   }
@@ -87,8 +87,8 @@ class _SearchedProductState extends State<SearchedProduct> {
         Provider.of(context, listen: false);
 
     return Container(
-      margin: EdgeInsets.only(top: 15),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(

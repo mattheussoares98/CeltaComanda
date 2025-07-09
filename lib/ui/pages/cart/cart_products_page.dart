@@ -56,9 +56,9 @@ class _CartPageState extends State<CartPage>
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        CartTitle(),
+                        const CartTitle(),
                         if (cartPresenter.cartProducts.isNotEmpty)
-                          Expanded(child: const CartProductsItems()),
+                          const Expanded(child: CartProductsItems()),
                       ],
                     )
                   : const EmptyCart(),

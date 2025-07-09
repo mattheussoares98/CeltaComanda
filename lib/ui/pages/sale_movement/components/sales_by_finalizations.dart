@@ -21,7 +21,7 @@ class SalesByFinalizations extends StatelessWidget {
         finalizationsByPdv.map((e) => e.finalizationType).toSet().toList();
 
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       color: pdvIndex % 2 == 0
           ? Theme.of(context).primaryColor.withAlpha(35)
           : Theme.of(context).primaryColor.withAlpha(15),

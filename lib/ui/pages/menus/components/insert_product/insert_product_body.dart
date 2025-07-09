@@ -83,7 +83,7 @@ class _InsertProductBodyState extends State<InsertProductBody>
               stream: menuPresenter.searchedProductStream,
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return SizedBox();
+                  return const SizedBox();
                 }
       
                 if (searchedProduct && searchProductController.text.isNotEmpty) {

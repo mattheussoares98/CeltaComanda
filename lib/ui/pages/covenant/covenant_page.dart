@@ -104,11 +104,11 @@ class _CovenantPageState extends State<CovenantPage>
                                 CheckboxListTile(
                                     value: _searchByPersonalizedCode,
                                     dense: true,
-                                    contentPadding: EdgeInsets.only(left: 4),
+                                    contentPadding: const EdgeInsets.only(left: 4),
                                     tileColor: Theme.of(context)
                                         .primaryColorLight
                                         .withAlpha(30),
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
                                     ),
@@ -136,7 +136,7 @@ class _CovenantPageState extends State<CovenantPage>
                                     ),
                                   ),
                                 ),
-                                Divider(thickness: 0.3),
+                                const Divider(thickness: 0.3),
                               ],
                             );
                           },

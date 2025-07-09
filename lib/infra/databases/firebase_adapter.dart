@@ -107,7 +107,7 @@ class FirebaseAdapter implements FirebaseStorage {
       SetOptions(merge: true),
     );
 
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 10));
 
     await docRef.set(
       {

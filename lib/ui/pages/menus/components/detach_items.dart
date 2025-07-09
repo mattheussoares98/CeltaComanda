@@ -20,7 +20,7 @@ class DetachItems extends StatelessWidget {
     MenuPresenter menuPresenter = Provider.of(context);
 
     if (menuPresenter.loadedMenu.isEmpty) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return CarouselSlider(

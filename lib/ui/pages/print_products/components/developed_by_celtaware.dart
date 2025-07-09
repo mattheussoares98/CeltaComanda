@@ -9,14 +9,14 @@ class DevelopedByCeltaware extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Divider(
+        const Divider(
           thickness: 0.2,
           height: 25,
         ),
         Center(
           child: Container(
             height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             color: Colors.white,
             child: Text(
               R.string.developedByCeltaware,

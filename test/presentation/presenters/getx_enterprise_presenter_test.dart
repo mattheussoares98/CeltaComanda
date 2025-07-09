@@ -580,7 +580,7 @@ void main() {
     test("Should remove registration correctly", () async {
       EnterpriseBuilder.entity = clearedEnterprise;
       final versionNumber =
-          "1.8.1 = ${DateFormat('dd/MM/yyyy').format(DateTime.now().subtract(Duration(days: 31)))}";
+          "1.8.1 = ${DateFormat('dd/MM/yyyy').format(DateTime.now().subtract(const Duration(days: 31)))}";
       final entities = [
         EntityFactory.makePdvEntity(
           pdvNumber: faker.randomGenerator.integer(999, min: 100),

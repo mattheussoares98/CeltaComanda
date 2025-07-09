@@ -38,7 +38,7 @@ class _SearchTypeRadiosState extends State<SearchTypeRadios> {
                           fontSize: StringSize.size,
                           color: Theme.of(context).primaryColor,
                         )),
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     value: 0,
                     groupValue: widget.selectedOption,
                     onChanged: widget.updateSelectedOption,

@@ -7,19 +7,19 @@ List<Widget> allButtons(BuildContext context) {
   HomePresenter homePresenter = Provider.of(context, listen: false);
 
   return [
-    ProductsSchedulesButton(),
+    const ProductsSchedulesButton(),
     // UpdateMenuButton(),
-    CancelProductsOrRemoveServiceChargeButton(),
-    TableConfigurationsButton(),
+    const CancelProductsOrRemoveServiceChargeButton(),
+    const TableConfigurationsButton(),
     // SendAllProductsToAnotherTableButton(),
-    SendProductsToAnotherTableButton(),
-    DoLogoutButton(),
-    CloseCommandButton(),
-    LiberateOrBlockTableButton(),
-    ParametersButton(),
+    const SendProductsToAnotherTableButton(),
+    const DoLogoutButton(),
+    const CloseCommandButton(),
+    const LiberateOrBlockTableButton(),
+    const ParametersButton(),
     if (!homePresenter.isGeneratingVersionToRede &&
         !homePresenter.isGeneratingVersionToGetNet)
-      ReserveTableButton(),
-    SaleMovementButton()
+      const ReserveTableButton(),
+    const SaleMovementButton()
   ];
 }

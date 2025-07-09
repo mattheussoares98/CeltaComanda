@@ -41,7 +41,7 @@ class DefaultButton extends StatelessWidget {
                 name,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style: TextStyle(),
+                style: const TextStyle(),
               ),
             ),
           ),
@@ -52,7 +52,7 @@ class DefaultButton extends StatelessWidget {
               child: FittedBox(
                 child: Text(
                   R.string.neww,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,

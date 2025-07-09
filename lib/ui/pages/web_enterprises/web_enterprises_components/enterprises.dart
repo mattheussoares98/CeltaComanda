@@ -41,7 +41,7 @@ class Enterprises extends StatelessWidget {
                           .goToAddOrEditEnterprise(enterprise);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: index % 2 == 0
                             ? Theme.of(context).primaryColorLight.withAlpha(30)

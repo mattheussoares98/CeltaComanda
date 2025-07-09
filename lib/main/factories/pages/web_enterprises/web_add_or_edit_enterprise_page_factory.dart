@@ -1,4 +1,4 @@
 import '../../../../ui/pages/pages.dart';
 
 WebAddOrEditEnterprisePage makeWebAddOrEditEnterprisePage() =>
-    WebAddOrEditEnterprisePage();
+    const WebAddOrEditEnterprisePage();

@@ -272,7 +272,7 @@ void main() {
         );
 
         verify(
-          () => localCommandData.update(CommandEntity(
+          () => localCommandData.update(const CommandEntity(
             commandNumber: null,
             isFixedCommandNumber: false,
             pdv: null,
@@ -398,7 +398,7 @@ void main() {
       await sut.clear();
 
       verify(() => localCommandData.update(
-            CommandEntity(
+            const CommandEntity(
               commandNumber: null,
               isFixedCommandNumber: false,
               pdv: null,
@@ -1758,7 +1758,7 @@ void main() {
             .called(1);
       });
       test("Should load remote if last import is null", () async {
-        lastImport.mockLoad(LastImportEntity(
+        lastImport.mockLoad(const LastImportEntity(
           products: null,
           images: null,
           users: null,

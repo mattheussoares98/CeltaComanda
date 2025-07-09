@@ -65,7 +65,7 @@ class ProductDetails extends StatelessWidget {
 
               return Row(
                 children: [
-                  Expanded(child: SizedBox()),
+                  const Expanded(child: SizedBox()),
                   Expanded(
                     flex: ScreenSize.hasMinWidth ? 7 : 6,
                     child: Wrap(

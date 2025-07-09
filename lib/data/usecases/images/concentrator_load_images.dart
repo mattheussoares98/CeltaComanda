@@ -141,7 +141,7 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
 
       for (final imageName in imagesNames.toSet()) {
         try {
-          final maxSizeInBytes = 1 * 1024 * 1024;
+          const maxSizeInBytes = 1 * 1024 * 1024;
           final url = "$concentratorUrl/Images/$imageName";
           final request = http.Request('GET', Uri.parse(url));
           final response = await client.send(request);
@@ -200,7 +200,7 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
             cancelOnError: false,
           );
 
-          await completer.future.timeout(Duration(seconds: 5));
+          await completer.future.timeout(const Duration(seconds: 5));
         } catch (e) {
           debugPrint(e.toString());
         }

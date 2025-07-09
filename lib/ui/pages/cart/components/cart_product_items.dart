@@ -38,7 +38,7 @@ class _CartProductsItemsState extends State<CartProductsItems> {
         commentController.clear();
         selectedProductIndexComment = index;
 
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           commentFocusNode.requestFocus();
         });
       });
@@ -63,7 +63,7 @@ class _CartProductsItemsState extends State<CartProductsItems> {
         selectedProductIndexComment = productIndex;
         selectedChildIndexComment = childIndex;
 
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           commentFocusNode.requestFocus();
         });
       });

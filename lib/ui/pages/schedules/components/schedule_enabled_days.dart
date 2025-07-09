@@ -42,7 +42,7 @@ class ScheduleEnabledDays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(3),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
         color: Theme.of(context).secondaryHeaderColor.withAlpha(30),
       ),

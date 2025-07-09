@@ -20,7 +20,7 @@ class TableConfigurationsButton extends StatelessWidget {
               showCancelAndConfirmMessage: false,
               showCloseAction: true,
               showLargeDialog: true,
-              content: CommandConfigurationsPage(),
+              content: const CommandConfigurationsPage(),
               onPress: () async {});
         });
   }

@@ -42,7 +42,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
       );
 
       // Espera um pequeno tempo para evitar problemas de renderização
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 100));
 
       // Captura o bitmap após a renderização
       await _print();
@@ -57,7 +57,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
 
   Future<void> _print() async {
     try {
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
 
       if (_repaintBoundaryKey.currentContext == null) return;
 
@@ -68,7 +68,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
       setState(() {});
 
       // Garante que o frame foi atualizado
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 100));
 
       // Captura a imagem do widget inteiro
       ui.Image rawImage = await boundary.toImage(pixelRatio: 3.0);
@@ -162,15 +162,15 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
                 "${R.string.conferenceOfTable} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
                 style: textStyle(context),
               ),
-              Divider(thickness: 0.2),
-              PrintProductsItems(),
-              Divider(thickness: 0.2),
-              SizedBox(height: 5),
-              TotalSummary(),
-              Divider(thickness: 0.2),
-              PrintDate(),
-              SizedBox(height: 10),
-              DevelopedByCeltaware(),
+              const Divider(thickness: 0.2),
+              const PrintProductsItems(),
+              const Divider(thickness: 0.2),
+              const SizedBox(height: 5),
+              const TotalSummary(),
+              const Divider(thickness: 0.2),
+              const PrintDate(),
+              const SizedBox(height: 10),
+              const DevelopedByCeltaware(),
             ],
           ),
         ),

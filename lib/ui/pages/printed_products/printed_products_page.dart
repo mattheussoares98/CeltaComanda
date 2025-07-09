@@ -86,8 +86,8 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
           actions: [
             if (homePresenter.isGeneratingVersionToRede ||
                 homePresenter.isGeneratingVersionToGetNet)
-              PrintPrintedProductsButton(),
-            LoadPrintedProductsAgainButton(),
+              const PrintPrintedProductsButton(),
+            const LoadPrintedProductsAgainButton(),
           ],
         ),
         body: SafeArea(

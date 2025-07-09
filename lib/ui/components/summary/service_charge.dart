@@ -60,7 +60,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
         context: context,
         titleMessage: R.string.removeServiceCharge,
         showCancelAndConfirmMessage: false,
-        content: ConfigurationsDialogPage(onlyRemoveServiceChargeOnSuccess: true),
+        content: const ConfigurationsDialogPage(onlyRemoveServiceChargeOnSuccess: true),
         onPress: () async {
           debugPrint("Caiu aqui ué, só fechar a tela");
         },
@@ -124,7 +124,7 @@ class _ServiceChargeState extends State<ServiceCharge> {
                                 fontSize: StringSize.size,
                               ),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.delete,
                               color: Colors.red,
                             ),

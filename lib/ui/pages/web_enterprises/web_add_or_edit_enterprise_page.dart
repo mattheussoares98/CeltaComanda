@@ -233,7 +233,7 @@ class _WebAddOrEditEnterprisePageState
                 },
               );
             },
-            icon: Icon(Icons.delete, color: Colors.red),
+            icon: const Icon(Icons.delete, color: Colors.red),
           ),
         ],
       ),
@@ -400,7 +400,7 @@ class _WebAddOrEditEnterprisePageState
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Expanded(
+                          const Expanded(
                             child: GoToDevicesInfoPageButton(),
                           ),
                         ],

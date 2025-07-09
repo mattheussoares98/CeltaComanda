@@ -65,18 +65,18 @@ class _WebEnterprisesPageState extends State<WebEnterprisesPage>
               onPressed: () async {
                 webEnterprisesPresenter.goToAddOrEditEnterprise(null);
               },
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
             ),
           ),
           IconButton(
             onPressed: () async {
               await webEnterprisesPresenter.loadEnterprises();
             },
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
-      body: Enterprises(),
+      body: const Enterprises(),
     );
   }
 }

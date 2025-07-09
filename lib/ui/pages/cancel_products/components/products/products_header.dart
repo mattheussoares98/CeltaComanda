@@ -70,8 +70,8 @@ class ProductsHeader extends StatelessWidget {
             SizedBox(height: deleteButtonSize, width: deleteButtonSize),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: Divider(thickness: 0.2),
         ),
       ],

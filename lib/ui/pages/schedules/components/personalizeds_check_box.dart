@@ -201,13 +201,13 @@ class PersonalizedsCheckBox extends StatelessWidget {
         ),
         title: Text(
           dayName,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         value: dayEnabled == true,
         fillColor:
-            dayEnabled == true ? WidgetStatePropertyAll(Colors.green) : null,
+            dayEnabled == true ? const WidgetStatePropertyAll(Colors.green) : null,
         tileColor:
             dayEnabled == true ? Colors.green.withAlpha(120) : Colors.red[100],
         onChanged: onChanged,

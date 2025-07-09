@@ -1,3 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-PrintProductsPage makePrintProductsPage() => PrintProductsPage();
+PrintProductsPage makePrintProductsPage() => const PrintProductsPage();

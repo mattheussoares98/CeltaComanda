@@ -38,7 +38,7 @@ class PrintPrintedProductsButton extends StatelessWidget {
               //   );
               // }
             },
-      icon: Icon(Icons.print),
+      icon: const Icon(Icons.print),
     );
   }
 }

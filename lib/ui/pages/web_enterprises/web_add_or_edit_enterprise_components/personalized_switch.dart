@@ -20,7 +20,7 @@ class PersonalizedSwitch extends StatelessWidget {
           changeValue();
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           decoration: BoxDecoration(
             border: Border.all(width: 0.2),
             color: Theme.of(context).primaryColorLight.withAlpha(30),

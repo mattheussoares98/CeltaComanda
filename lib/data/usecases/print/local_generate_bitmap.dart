@@ -195,7 +195,7 @@ class LocalGenerateBitmap implements GenerateBitmap {
         text: devBy,
         style: TextStyle(
             fontSize: 2.5 / _mmPerPx,
-            color: Color(0xFF000000),
+            color: const Color(0xFF000000),
             fontFamily: 'Roboto'),
       ),
       textDirection: TextDirection.ltr,

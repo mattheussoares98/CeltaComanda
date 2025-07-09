@@ -36,7 +36,7 @@ class _LoadedProductsItemsState extends State<LoadedProductsItems> {
         );
       }
       if (widget.printedViewModel == null) {
-        return SizedBox();
+        return const SizedBox();
       }
       return ListView.builder(
         shrinkWrap: true,

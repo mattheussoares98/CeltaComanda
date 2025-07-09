@@ -1,3 +1,3 @@
 import '../../../../ui/pages/pages.dart';
 
-ParametersPage makeParametersPage() => ParametersPage();
+ParametersPage makeParametersPage() => const ParametersPage();

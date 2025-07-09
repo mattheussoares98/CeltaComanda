@@ -108,7 +108,7 @@ class GetxHomePresenter
   Future<void> clear() async {
     _commandEntity = null;
     await localCommandData.update(
-      CommandEntity(
+      const CommandEntity(
         commandNumber: null,
         isFixedCommandNumber: false,
         pdv: null,

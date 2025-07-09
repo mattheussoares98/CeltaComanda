@@ -43,8 +43,8 @@ class _SaleMovementPageState extends State<SaleMovementPage>
         title: Text(
             "${R.string.sales}  ${homePresenter.commandEntity?.pdv?.PdvNumber != null ? "${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!}" : ""}"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

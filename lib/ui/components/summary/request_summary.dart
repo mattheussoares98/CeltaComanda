@@ -49,7 +49,7 @@ class RequestSummary extends StatelessWidget {
           Expanded(
             flex: 3,
             child: serviceChargeValue <= 0
-                ? SizedBox()
+                ? const SizedBox()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,

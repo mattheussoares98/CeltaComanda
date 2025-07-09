@@ -12,7 +12,7 @@ class Comment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (comment == null || comment!.isEmpty == true) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return Text(

@@ -61,7 +61,7 @@ class QuantityField extends StatelessWidget {
                       );
                     },
                     keyboardType:
-                        TextInputType.numberWithOptions(decimal: false),
+                        const TextInputType.numberWithOptions(decimal: false),
                     onFieldSubmitted: (_) async {
                       if (quantityController.text.isNotEmpty) {
                         commentFocusNode.requestFocus();
@@ -100,7 +100,7 @@ class QuantityField extends StatelessWidget {
                                 .toBrazilianNumber(3);
                           }
                         },
-                        icon: Icon(Icons.remove),
+                        icon: const Icon(Icons.remove),
                       ),
                       suffixIcon: IconButton(
                         color: Theme.of(context).primaryColor,
@@ -122,7 +122,7 @@ class QuantityField extends StatelessWidget {
                                 maximumQuantity.toString().toBrazilianNumber(3);
                           }
                         },
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                       ),
                     ),
                   ),

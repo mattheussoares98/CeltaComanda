@@ -72,7 +72,7 @@ class _SchedulesPageState extends State<SchedulesPage>
               );
               setState(() {});
             },
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -99,7 +99,7 @@ class _SchedulesPageState extends State<SchedulesPage>
             productsOfGroup.sort((a, b) => a.Name.compareTo(b.Name));
 
             return Container(
-              margin: EdgeInsets.all(3),
+              margin: const EdgeInsets.all(3),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
@@ -123,7 +123,7 @@ class _SchedulesPageState extends State<SchedulesPage>
                   ),
                   if (selectedGroupIndex == groupIndex)
                     ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20),
                       ),

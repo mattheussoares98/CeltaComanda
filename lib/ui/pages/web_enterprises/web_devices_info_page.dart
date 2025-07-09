@@ -123,7 +123,7 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                           R.string.reload,
                           style: TextStyle(fontSize: StringSize.size),
                         ),
-                        icon: Icon(Icons.refresh, size: 25),
+                        icon: const Icon(Icons.refresh, size: 25),
                         iconAlignment: IconAlignment.end,
                       ),
                     ),
@@ -139,7 +139,7 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length + 1,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return Row(
@@ -177,8 +177,8 @@ class _WebDevicesInfoPageState extends State<WebDevicesInfoPage> {
                           snapshot.data![index - 1];
 
                       return Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        padding: EdgeInsets.all(5),
+                        margin: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                           color:
                               Theme.of(context).primaryColorLight.withAlpha(20),

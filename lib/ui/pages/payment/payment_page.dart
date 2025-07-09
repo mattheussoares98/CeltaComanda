@@ -177,7 +177,7 @@ class _PaymentPageState extends State<PaymentPage>
                   if (paymentPresenter
                           .getTotalPendingValue(printedProductsPresenter) >
                       0)
-                    PaymentDetails(),
+                    const PaymentDetails(),
                   if (printedProductsPresenter.printed != null &&
                       paymentPresenter
                               .getTotalPendingValue(printedProductsPresenter) >
@@ -226,8 +226,8 @@ class _PaymentPageState extends State<PaymentPage>
                   if (paymentPresenter
                           .getTotalPendingValue(printedProductsPresenter) >
                       0)
-                    Divider(height: 40),
-                  TotalByPerson(),
+                    const Divider(height: 40),
+                  const TotalByPerson(),
                 ],
               ),
             ),

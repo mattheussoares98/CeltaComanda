@@ -43,19 +43,19 @@ class ProductName extends StatelessWidget {
             child: Tooltip(
               key: tooltipKey,
               message: "${R.string.canceledBy}: ${canceledBy.first.Name}",
-              child: Icon(
+              child: const Icon(
                 Icons.info,
                 color: Colors.black,
                 shadows: [
                   Shadow(
                     color: Colors.white,
                     blurRadius: 2,
-                    offset: const Offset(0, 0),
+                    offset: Offset(0, 0),
                   ),
                   Shadow(
                     color: Colors.white,
                     blurRadius: 2,
-                    offset: const Offset(1, 1),
+                    offset: Offset(1, 1),
                   ),
                 ],
               ),

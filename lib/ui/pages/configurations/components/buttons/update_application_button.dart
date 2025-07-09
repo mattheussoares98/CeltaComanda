@@ -22,11 +22,11 @@ class UpdateApplicationButton extends StatelessWidget {
           color: Colors.red,
           borderRadius: BorderRadius.circular(5),
         ),
-        margin: EdgeInsets.only(bottom: 8),
+        margin: const EdgeInsets.only(bottom: 8),
         child: Center(
           child: Text(
             R.string.updateApplication,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),

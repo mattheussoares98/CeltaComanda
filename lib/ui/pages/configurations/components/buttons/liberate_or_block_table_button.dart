@@ -20,7 +20,7 @@ class LiberateOrBlockTableButton extends StatelessWidget {
               showCancelAndConfirmMessage: false,
               showCloseAction: true,
               showLargeDialog: true,
-              content: SizedBox(
+              content: const SizedBox(
                 child: BlockOrLiberateCommandPage(),
               ),
               onPress: () async {});

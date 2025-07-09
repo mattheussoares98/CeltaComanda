@@ -106,7 +106,7 @@ class _PrintedItemState extends State<PrintedItem> {
                           if (!ScreenSize.hasMinWidth &&
                               index == widget.printed.Products.length - 1)
                             Padding(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 4),
                               child: SizedBox(
                                 height: MediaQuery.of(context).size.height * 0.5,
@@ -128,10 +128,10 @@ class _PrintedItemState extends State<PrintedItem> {
                                                     .size
                                                     .height *
                                                 0.08,
-                                        child: UpdateCustomer(),
+                                        child: const UpdateCustomer(),
                                       ),
                                     const SizedBox(height: 4),
-                                    Expanded(child: TotalByPerson()),
+                                    const Expanded(child: TotalByPerson()),
                                   ],
                                 ),
                               ),
@@ -158,11 +158,11 @@ class _PrintedItemState extends State<PrintedItem> {
                                     null
                                 ? MediaQuery.of(context).size.height * 0.3
                                 : MediaQuery.of(context).size.height * 0.1,
-                        child: UpdateCustomer(),
+                        child: const UpdateCustomer(),
                       ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.3,
-                      child: TotalByPerson(),
+                      child: const TotalByPerson(),
                     ),
                   ],
                 ),

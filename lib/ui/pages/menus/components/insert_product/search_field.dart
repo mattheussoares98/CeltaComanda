@@ -58,7 +58,7 @@ class SearchField extends StatelessWidget {
                     searchProductController.text = "";
                     focusNode.requestFocus();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                     color: Colors.red,
                   ),
@@ -90,7 +90,7 @@ class SearchField extends StatelessWidget {
               },
               icon: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.search,
                   ),
                   if (ScreenSize.hasMinWidth)

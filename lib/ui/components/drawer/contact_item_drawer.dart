@@ -9,7 +9,7 @@ class ContactItemDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final phoneNumber = "+55 (11) 3125-6767";
+    const phoneNumber = "+55 (11) 3125-6767";
 
     return DrawerItem(
       onTap: () async {
@@ -32,7 +32,7 @@ class ContactItemDrawer extends StatelessWidget {
                 )),
                 IconButton(
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: phoneNumber));
+                    Clipboard.setData(const ClipboardData(text: phoneNumber));
                     snackBarMessage(
                       context,
                       R.string.msgNumberCopiedSuccessfully,

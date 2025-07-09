@@ -64,7 +64,7 @@ class _ParametersPageState extends State<ParametersPage>
             stream: parametersPresenter.parametersStream,
             builder: (context, snapshot) {
               if (snapshot.data == null) {
-                return SizedBox();
+                return const SizedBox();
               }
 
               return SafeArea(

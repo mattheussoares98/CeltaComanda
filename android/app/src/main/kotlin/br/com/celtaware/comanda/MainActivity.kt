@@ -8,7 +8,6 @@ import android.util.Log
 //import br.com.celtaware.comanda.rede_channel.RedePayment
 //import br.com.celtaware.comanda.rede_channel.RedePrinter
 import br.com.celtaware.comanda.utils.AppUtils
-import br.com.celtaware.comanda.utils.OrientationUtils
 import br.com.celtaware.comanda.utils.PersistentChannelManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -52,12 +51,6 @@ class MainActivity : FlutterActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 //        redePaymentHandler.handleActivityResult(requestCode, resultCode, data)
         // getnetPaymentHandler.handleActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        OrientationUtils.doOrientation(this)
     }
 
     override fun onPause() {

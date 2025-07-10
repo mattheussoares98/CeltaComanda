@@ -34,31 +34,33 @@ class App extends StatelessWidget
 
     return MultiProvider(
       providers: Providers.providers,
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          UserInteraction.restartTimes();
-          FocusScope.of(context).unfocus();
-          hideKeyboard(context);
-        },
-        onPanDown: (_) {
-          UserInteraction.restartTimes();
-          FocusScope.of(context).unfocus();
-          hideKeyboard(context);
-        },
-        child: GetMaterialApp(
-          navigatorKey: NavigatorKey.key,
-          title: 'Celta restaurante',
-          debugShowCheckedModeBanner: false,
-          theme: makeAppTheme(context),
-          navigatorObservers: [routeObserver],
-          initialRoute: PageRoutes.splash,
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          getPages: GetPages.getPages,
+      child: OrientationController(
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            UserInteraction.restartTimes();
+            FocusScope.of(context).unfocus();
+            hideKeyboard(context);
+          },
+          onPanDown: (_) {
+            UserInteraction.restartTimes();
+            FocusScope.of(context).unfocus();
+            hideKeyboard(context);
+          },
+          child: GetMaterialApp(
+            navigatorKey: NavigatorKey.key,
+            title: 'Celta restaurante',
+            debugShowCheckedModeBanner: false,
+            theme: makeAppTheme(context),
+            navigatorObservers: [routeObserver],
+            initialRoute: PageRoutes.splash,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            getPages: GetPages.getPages,
+          ),
         ),
       ),
     );

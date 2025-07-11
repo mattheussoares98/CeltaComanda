@@ -90,6 +90,8 @@ class ExportChargingModel extends Equatable {
         loadType.toLowerCase() == "products".toLowerCase() ||
         loadType.toLowerCase() == "schedule".toLowerCase()) {
       return LoadTypeEnum.products;
+    } else if (loadType.toLowerCase() == "imagedeleted".toLowerCase()) {
+      return LoadTypeEnum.images;
     } else {
       for (var element in LoadTypeEnum.values) {
         if (element.name.toLowerCase() == loadType.toLowerCase()) {

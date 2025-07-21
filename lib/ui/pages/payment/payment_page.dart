@@ -91,6 +91,8 @@ class _PaymentPageState extends State<PaymentPage>
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     final totalLiquid = printedProductsPresenter
         .getTotalLiquid(printedProductsPresenter.printed);
+    final pendingValue =
+        paymentPresenter.getTotalPendingValue(printedProductsPresenter);
 
     printedLoadingSubscription?.cancel();
     loadingSubscription?.cancel();
@@ -174,14 +176,14 @@ class _PaymentPageState extends State<PaymentPage>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (paymentPresenter
-                          .getTotalPendingValue(printedProductsPresenter) >
-                      0)
-                    const PaymentDetails(),
+                  if (pendingValue > 0)
+                    PaymentDetails(
+                      totalLiquid: totalLiquid,
+                      totalPaidValue: paymentPresenter.totalPaidValue,
+                      totalPendingValue: pendingValue,
+                    ),
                   if (printedProductsPresenter.printed != null &&
-                      paymentPresenter
-                              .getTotalPendingValue(printedProductsPresenter) >
-                          0)
+                      pendingValue > 0)
                     Column(
                       children: [
                         if (homePresenter.isGeneratingVersionToGetNet ||
@@ -223,10 +225,7 @@ class _PaymentPageState extends State<PaymentPage>
                         },
                       ),
                     ),
-                  if (paymentPresenter
-                          .getTotalPendingValue(printedProductsPresenter) >
-                      0)
-                    const Divider(height: 40),
+                  if (pendingValue > 0) const Divider(height: 40),
                   const TotalByPerson(),
                 ],
               ),

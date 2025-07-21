@@ -5,22 +5,25 @@ import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
 class PaymentDetails extends StatelessWidget {
+  final double totalLiquid;
+  final double totalPaidValue;
+  final double totalPendingValue;
   const PaymentDetails({
     super.key,
+    required this.totalLiquid,
+    required this.totalPaidValue,
+    required this.totalPendingValue,
   });
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
-    PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return Column(
       children: [
         FittedBox(
           child: Text(
-            "${R.string.total}: ${printedProductsPresenter.getTotalLiquid(printedProductsPresenter.printed).toDouble().toString().toBrazilianNumber()} R\$",
+            "${R.string.total}: ${totalLiquid.toString().toBrazilianNumber()} R\$",
             style: TextStyle(
               fontSize: StringSize.size * 1.2,
               fontWeight: FontWeight.bold,
@@ -33,7 +36,7 @@ class PaymentDetails extends StatelessWidget {
             children: [
               FittedBox(
                 child: Text(
-                  "${R.string.totalPaid}: ${paymentPresenter.totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                  "${R.string.totalPaid}: ${totalPaidValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                   style: TextStyle(
                     fontSize: StringSize.size * 1.2,
                     fontWeight: FontWeight.bold,
@@ -42,7 +45,7 @@ class PaymentDetails extends StatelessWidget {
               ),
               FittedBox(
                 child: Text(
-                  "${R.string.missing} ${paymentPresenter.getTotalPendingValue(printedProductsPresenter).toString().toBrazilianNumber().addBrazilianCoin()}",
+                  "${R.string.missing} ${totalPendingValue.toString().toBrazilianNumber().addBrazilianCoin()}",
                   style: TextStyle(
                     fontSize: StringSize.size * 1.2,
                     fontWeight: FontWeight.bold,

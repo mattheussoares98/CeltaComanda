@@ -306,8 +306,10 @@ class GetxPaymentPresenter extends GetxController
     if (_successfulPayments.isEmpty) {
       return 0;
     } else {
-      return _successfulPayments.fold(
-          0.0, (previousValue, element) => previousValue + element.Value!);
+      return _successfulPayments
+          .fold(0.0, (previousValue, element) => previousValue + element.Value!)
+          .toStringAsFixed(2)
+          .toDouble();
     }
   }
 

@@ -11,12 +11,11 @@ class PrintPrintedProductsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+    PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
     HomePresenter homePresenter = Provider.of(context, listen: false);
 
     return IconButton(
-      onPressed: homePresenter.commandEntity!.commandNumber == null
+      onPressed: printedProductsPresenter.printed == null
           ? null
           : () async {
               // final bitmap =

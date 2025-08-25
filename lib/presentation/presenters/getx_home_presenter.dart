@@ -156,15 +156,15 @@ class GetxHomePresenter
         );
       }
 
+      final sellersEntity = await loadSellers.load();
+      _sellers =
+          sellersEntity.map((e) => SellersViewModel.fromEntity(e)).toList();
+
       if (commandEntity?.isFixedCommandNumber == true &&
           commandEntity?.commandNumber != null) {
         final saleRequest = await loadSaleRequestTemp.load(
           commandNumber: commandEntity!.commandNumber!.padLeft(3, "0"),
         );
-
-        final sellersEntity = await loadSellers.load();
-        _sellers =
-            sellersEntity.map((e) => SellersViewModel.fromEntity(e)).toList();
 
         updateSelectedPeoples(saleRequest.Peoples);
         updateSelectedSeller(

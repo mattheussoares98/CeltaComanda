@@ -41,7 +41,7 @@ class _PdvNotUsingDropdownState extends State<PdvNotUsingDropdown> {
                   validator: (value) {
                     return null;
                   },
-                  value: widget.selectedPdv,
+                  initialValue: widget.selectedPdv,
                   isExpanded: true,
                   alignment: Alignment.center,
                   hint: Text(

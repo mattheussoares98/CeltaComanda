@@ -174,31 +174,14 @@ class ChildsRadios extends StatelessWidget {
             );
             callSetState();
           },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 5),
-              Radio<int>(
-                value: i,
-                groupValue: selectedFather.indexOfSelectedChild,
-                visualDensity: VisualDensity.compact,
-                toggleable: selectedFather.IsOptionalItem == "true",
-                onChanged: (int? value) {
-                  _updateSelectedIndex(
-                    expansibleGroupFromProductPresenter:
-                        expansibleGroupFromProductPresenter,
-                    insertProductsPresenter: insertProductsPresenter,
-                    value: value,
-                    selectedFather: selectedFather,
-                    selectedProduct: selectedProduct,
-                  );
-                  callSetState();
-                },
-              ),
-              if (child.ChildName != null)
+          child: RadioGroup(
+            groupValue: selectedFather.indexOfSelectedChild,
+            child: Row(
+              children: [
+                Radio(value: i),
                 Expanded(
                   child: Text(
-                    child.ChildName!,
+                    child.ChildName ?? "",
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -207,20 +190,32 @@ class ChildsRadios extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (incrementValue != null)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    "+ ${incrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      fontSize: StringSize.size,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic,
+                if (incrementValue != null)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      "+ ${incrementValue.toString().toBrazilianNumber().addBrazilianCoin()}",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: StringSize.size,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
+            onChanged: (int? value) {
+              _updateSelectedIndex(
+                expansibleGroupFromProductPresenter:
+                    expansibleGroupFromProductPresenter,
+                insertProductsPresenter: insertProductsPresenter,
+                value: value,
+                selectedFather: selectedFather,
+                selectedProduct: selectedProduct,
+              );
+              callSetState();
+            },
           ),
         );
       },

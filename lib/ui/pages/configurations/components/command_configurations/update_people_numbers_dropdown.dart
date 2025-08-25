@@ -13,7 +13,7 @@ class UpdatePeopleNumbersDropdown extends StatelessWidget {
 
     return DropdownButtonFormField<int>(
       isExpanded: true,
-      value: homePresenter.selectedPeoples,
+      initialValue: homePresenter.selectedPeoples,
       decoration: InputDecoration(
         hintText: R.string.peopleQuantity,
         labelText: R.string.peopleQuantity,

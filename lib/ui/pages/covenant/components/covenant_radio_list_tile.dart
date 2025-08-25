@@ -20,11 +20,26 @@ class CovenantRadioListTile extends StatelessWidget {
   Future<void> _updateSelectedCovenant({
     required PaymentPresenter paymentPresenter,
     required int? value,
+    required BuildContext context,
   }) async {
-    await paymentPresenter.updateSelectedCustomer(
-      customer,
-      value,
-    );
+    if (paymentPresenter.authorizationPendingModel?.isPending == true) {
+      notificationDialog(
+          context: context,
+          titleMessage: R.string.msgAuthorizationIsPendant,
+          content: Text(R.string.msgPendantAuthorizationNotification),
+          onPress: () async {
+            await paymentPresenter.updateSelectedCustomer(
+              customer,
+              value,
+            );
+          });
+    } else {
+      await paymentPresenter.updateSelectedCustomer(
+        customer,
+        value,
+      );
+    }
+
     callSetState();
   }
 
@@ -32,36 +47,37 @@ class CovenantRadioListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     PaymentPresenter paymentPresenter = Provider.of(context, listen: false);
 
-    return RadioListTile<int?>(
-      dense: true,
-      visualDensity: VisualDensity.compact,
-      title: Text(
-        covenant!.Name,
-        style: TextStyle(
-          fontSize: StringSize.size,
+    return InkWell(
+      onTap: () async {
+        await _updateSelectedCovenant(
+          paymentPresenter: paymentPresenter,
+          value: covenant?.Code,
+          context: context,
+        );
+      },
+      child: RadioGroup<int?>(
+        groupValue: paymentPresenter.selectedCustomer?.covenantCode,
+        child: Row(
+          children: [
+            Radio(value: covenant?.Code),
+            Expanded(
+              child: Text(
+                covenant!.Name,
+                style: TextStyle(
+                  fontSize: StringSize.size,
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
-      value: covenant?.Code,
-      groupValue: paymentPresenter.selectedCustomer?.covenantCode,
-      onChanged: (value) async {
-        if (paymentPresenter.authorizationPendingModel?.isPending == true) {
-          notificationDialog(
-              context: context,
-              titleMessage: R.string.msgAuthorizationIsPendant,
-              content: Text(R.string.msgPendantAuthorizationNotification),
-              onPress: () async {
-                await _updateSelectedCovenant(
-                  paymentPresenter: paymentPresenter,
-                  value: value,
-                );
-              });
-        } else {
+        onChanged: (value) async {
           await _updateSelectedCovenant(
             paymentPresenter: paymentPresenter,
             value: value,
+            context: context,
           );
-        }
-      },
+        },
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../ui/helpers/helpers.dart';
 
-Future<void> notificationDialog({
+Future<bool> notificationDialog({
   required BuildContext context,
   required String titleMessage,
   required Widget? content,
@@ -16,6 +16,7 @@ Future<void> notificationDialog({
   bool? showLargeDialog = true,
   bool? showCloseAction = false,
 }) async {
+  bool confirmed = false;
   await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -70,6 +71,7 @@ Future<void> notificationDialog({
                           ),
                         ),
                         onPressed: () async {
+                          confirmed = true;
                           if (closeDialogOnConfirmPress == true) {
                             Navigator.of(context).pop();
                           }
@@ -103,4 +105,6 @@ Future<void> notificationDialog({
           ),
         );
       });
+
+  return confirmed;
 }

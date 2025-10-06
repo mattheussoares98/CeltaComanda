@@ -4,6 +4,8 @@ import './translation.dart';
 
 class PtBr implements Translation {
   String get msgAuthorizationIsPendant => "Autorização pendente";
+  String get msgAlcoolDrink =>
+      "Esse produto é uma bebida alcoólica. Deseja adicionar mesmo assim?";
   String get msgAllChildsAreDisabled =>
       "Por favor, chame o garçom para arrumar esse problema.\nTodos os filhos estão desativados no agendamento, habilite pelo menos um";
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';

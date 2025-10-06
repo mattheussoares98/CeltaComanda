@@ -109,6 +109,7 @@ abstract class Translation {
   String get addFlagOrTable;
   String get addItens;
   String get addMoreItens;
+  String get alcoolDrink;
   String get alwaysUseSameTable;
   String get applicationVersion;
   String get avaliate;

@@ -150,6 +150,7 @@ class PtBr implements Translation {
   String get addFlagOrTable => "Adicionar número da bandeira/mesa";
   String get addItens => "Adicionar itens";
   String get addMoreItens => "Adicionar mais itens";
+  String get alcoolDrink => "Bebida alcoólica";
   String get alwaysUseSameTable => "Usar sempre a mesma mesa";
   String get applicationVersion => "Versão do aplicativo";
   String get avaliate => 'Avaliar';

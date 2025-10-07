@@ -71,11 +71,10 @@ class _AdvanceButtonState extends State<AdvanceButton> {
     required ExpansibleGroupFromProductPresenter
         expansibleGroupFromProductPresenter,
   }) async {
-    if (widget.selectedProduct.childsComposition == null ||
-        widget.selectedProduct.childsComposition!.isEmpty &&
-            bool.tryParse(
-                    widget.selectedProduct.IsAlcoholicProduct.toString()) ==
-                true) {
+    if ((widget.selectedProduct.childsComposition == null ||
+            widget.selectedProduct.childsComposition!.isEmpty) &&
+        bool.tryParse(widget.selectedProduct.IsAlcoholicProduct.toString()) ==
+            true) {
       final confirmed = await notificationDialog(
         context: context,
         titleMessage: R.string.alcoolDrink,

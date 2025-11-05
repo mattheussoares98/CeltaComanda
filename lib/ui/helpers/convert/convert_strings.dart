@@ -64,16 +64,16 @@ extension StringModifier on String {
   }
 
   String removeComplementConfigurations() {
-    RegExp optionalRegex = RegExp(r'\(op\|[^|]*\|op\)');
-    RegExp obligatoryRegex = RegExp(r'\(ob\|[^|]*\|ob\)');
+    RegExp optionalRegex = RegExp(r'\(op\|[^|]*\|op\)', caseSensitive: false);
+    RegExp obligatoryRegex = RegExp(r'\(ob\|[^|]*\|ob\)', caseSensitive: false);
 
-    return toLowerCase()
+    return this
         .replaceAll(optionalRegex, '')
         .replaceAll(obligatoryRegex, '')
-        .replaceAll(RegExp(r'\(p\)'), '')
-        .replaceAll(RegExp(r'\(pp\)'), '')
-        .replaceAll(RegExp(r'\(ppp\)'), '')
-        .replaceAll(RegExp(r'\(kids\)'), '')
-        .replaceAll(RegExp(r'\(novo\)'), '');
+        .replaceAll(RegExp(r'\(p\)', caseSensitive: false), '')
+        .replaceAll(RegExp(r'\(pp\)', caseSensitive: false), '')
+        .replaceAll(RegExp(r'\(ppp\)', caseSensitive: false), '')
+        .replaceAll(RegExp(r'\(kids\)', caseSensitive: false), '')
+        .replaceAll(RegExp(r'\(novo\)', caseSensitive: false), '');
   }
 }

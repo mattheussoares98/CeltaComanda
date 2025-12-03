@@ -20,3 +20,4 @@ export './splash/splash.dart';
 export './support/support.dart';
 export 'web_enterprises/web_enterprises.dart';
 export './web_login/web_login.dart';
+export './web_sale_request_details/web_sale_request_details.dart';

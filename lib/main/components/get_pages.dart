@@ -97,5 +97,10 @@ class GetPages {
       page: makeWebLoginPage,
       transition: Transition.fade,
     ),
+    GetPage(
+      name: PageRoutes.webSaleRequestDetails,
+      page: makeWebSaleRequestDetailsPage,
+      transition: Transition.fade,
+    ),
   ];
 }

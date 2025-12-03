@@ -301,11 +301,11 @@ class GetxHomePresenter
   @override
   bool get isGeneratingVersionToMicrosoftStore => false;
 
-  bool _isGeneratingVersionToTablet = true;
+  bool _isGeneratingVersionToTablet = false;
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 
-  final bool _isGeneratingVersionToWebSaleRequestDetails = false;
+  final bool _isGeneratingVersionToWebSaleRequestDetails = true;
   @override
   bool get isGeneratingVersionToWebSaleRequestDetails =>
       _isGeneratingVersionToWebSaleRequestDetails;

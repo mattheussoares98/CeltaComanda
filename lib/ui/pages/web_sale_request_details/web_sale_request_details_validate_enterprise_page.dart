@@ -65,6 +65,8 @@ class _WebSaleRequestDetailsValidateEnterprisePageState
         children: [
           TextFormField(
             controller: controller,
+            onFieldSubmitted: (_) =>
+                provider.validateEnterprise(controller.text),
             decoration: formFieldDecoration(
               context: context,
               hintText: R.string.enterprise,

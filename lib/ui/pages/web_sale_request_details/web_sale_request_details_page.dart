@@ -29,7 +29,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         _dataRefreshTimer = Timer.periodic(
-          const Duration(minutes: 1),
+          const Duration(seconds: 30),
           (timer) {
             _fetchAndUpdateData();
           },
@@ -50,7 +50,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
   void _fetchAndUpdateData() {
     final provider =
         Provider.of<WebSaleRequestDetailsPresenter>(context, listen: false);
-    provider.loadOpenSaleRequests(isConsiderDelivered: false);
+    provider.loadOpenSaleRequests(isConsiderDelivered: true);
   }
 
   DateTime? findMostRecentDateFromSales(List<SaleRequestModel> sales) {
@@ -94,20 +94,22 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             );
           }
 
-          final mostRecentRequestFromAllSales =
-              findMostRecentDateFromSales(snapshot.data!);
+          final List<SaleRequestModel> saleRequests = List.of(snapshot.data!);
+          saleRequests.sort((a, b) {
+            final dateA = findMostRecentDateFromSales([a]);
+            final dateB = findMostRecentDateFromSales([b]);
+
+            if (dateA == null && dateB == null) return 0;
+            if (dateA == null) return 1;
+            if (dateB == null) return -1;
+
+            return dateB.compareTo(dateA);
+          });
 
           return ListView.builder(
-            itemCount: snapshot.data!.length + 1,
+            itemCount: saleRequests.length,
             itemBuilder: (_, index) {
-              if (index == 0) {
-                return AppBar(
-                  title: Text(
-                      "${R.string.lastRequestTime} ${DateFormat('HH:mm').format(mostRecentRequestFromAllSales!)}"),
-                );
-              }
-
-              final saleRequest = snapshot.data![index - 1];
+              final saleRequest = saleRequests[index];
 
               final mostRecentRequestFromCurrentSale =
                   findMostRecentDateFromSales([saleRequest]);

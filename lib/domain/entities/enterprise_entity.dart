@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 import 'entities.dart';
@@ -77,4 +78,62 @@ class EnterpriseEntity extends Equatable {
         requestTableNumber,
         useOldPrintWay,
       ];
+
+  EnterpriseEntity copyWith({
+    String? enterpriseName,
+    String? url,
+    int? enterpriseId,
+    String? concentradorUrl,
+    bool? persistApp,
+    String? urlCCS,
+    bool? useCovenant,
+    int? updateDevicesInformations,
+    int? updateEnterprise,
+    double? serviceChargePercentageOrValue,
+    bool? zoomImage,
+    String? latestCompatibleVersion,
+    int? minutesVerifyUpdateMenu,
+    bool? useReducedNameOnProduct,
+    bool? verifyCommandBlocked,
+    bool? canInsertCommentManually,
+    bool? blockUseAppIfIsOutdated,
+    bool? canInsertQuantityManually,
+    bool? canInsertCustomer,
+    bool? requestTableNumber,
+    bool? useOldPrintWay,
+  }) {
+    return EnterpriseEntity(
+      enterpriseConcentradorParametersEntity:
+          enterpriseConcentradorParametersEntity,
+      enterpriseName: enterpriseName ?? this.enterpriseName,
+      url: url ?? this.url,
+      enterpriseId: enterpriseId ?? this.enterpriseId,
+      concentradorUrl: concentradorUrl ?? this.concentradorUrl,
+      persistApp: persistApp ?? this.persistApp,
+      urlCCS: urlCCS ?? this.urlCCS,
+      useCovenant: useCovenant ?? this.useCovenant,
+      updateDevicesInformations:
+          updateDevicesInformations ?? this.updateDevicesInformations,
+      updateEnterprise: updateEnterprise ?? this.updateEnterprise,
+      serviceChargePercentageOrValue:
+          serviceChargePercentageOrValue ?? this.serviceChargePercentageOrValue,
+      zoomImage: zoomImage ?? this.zoomImage,
+      latestCompatibleVersion:
+          latestCompatibleVersion ?? this.latestCompatibleVersion,
+      minutesVerifyUpdateMenu:
+          minutesVerifyUpdateMenu ?? this.minutesVerifyUpdateMenu,
+      useReducedNameOnProduct:
+          useReducedNameOnProduct ?? this.useReducedNameOnProduct,
+      verifyCommandBlocked: verifyCommandBlocked ?? this.verifyCommandBlocked,
+      canInsertCommentManually:
+          canInsertCommentManually ?? this.canInsertCommentManually,
+      blockUseAppIfIsOutdated:
+          blockUseAppIfIsOutdated ?? this.blockUseAppIfIsOutdated,
+      canInsertQuantityManually:
+          canInsertQuantityManually ?? this.canInsertQuantityManually,
+      canInsertCustomer: canInsertCustomer ?? this.canInsertCustomer,
+      requestTableNumber: requestTableNumber ?? this.requestTableNumber,
+      useOldPrintWay: useOldPrintWay ?? this.useOldPrintWay,
+    );
+  }
 }

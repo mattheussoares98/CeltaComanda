@@ -6,5 +6,5 @@ abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  Future<void> validateEnterprise();
+  Future<void> validateEnterprise(String enterpriseName);
 }

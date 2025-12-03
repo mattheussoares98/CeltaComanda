@@ -8,15 +8,16 @@ import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
 
-class WebSaleRequestDetailsPage extends StatefulWidget {
-  const WebSaleRequestDetailsPage({super.key});
+class WebSaleRequestDetailsValidateEnterprisePage extends StatefulWidget {
+  const WebSaleRequestDetailsValidateEnterprisePage({super.key});
 
   @override
-  State<WebSaleRequestDetailsPage> createState() =>
-      _WebSaleRequestDetailsPageState();
+  State<WebSaleRequestDetailsValidateEnterprisePage> createState() =>
+      _WebSaleRequestDetailsValidateEnterprisePageState();
 }
 
-class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
+class _WebSaleRequestDetailsValidateEnterprisePageState
+    extends State<WebSaleRequestDetailsValidateEnterprisePage>
     with LoadingManager, UIErrorManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
@@ -61,7 +62,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
           ),
           ElevatedButton(
             onPressed: () {
-              provider.validateEnterprise();
+              provider.validateEnterprise(controller.text);
             },
             child: Text(R.string.validateEnterprise),
           )

@@ -8,6 +8,7 @@ export './remote_change_sale_request_personalized_code_factory.dart';
 export './remote_change_sale_request_personalized_code_products_factory.dart';
 export './remote_close_sale_request_factory.dart';
 export 'remote_finish_sale_request_temp_factory.dart';
+export './remote_load_open_sale_request.dart';
 export './remote_load_sale_request_factory.dart';
 export 'remote_load_sale_request_temp_factory.dart';
 export 'remote_update_product_quantity_factory.dart';

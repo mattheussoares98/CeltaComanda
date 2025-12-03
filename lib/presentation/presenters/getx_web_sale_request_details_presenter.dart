@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/data/models/sale_request_model.dart';
+
 import '../../data/usecases/usecases.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
@@ -14,11 +16,13 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
+  final LoadOpenSaleRequest loadOpenSaleRequest;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
+    required this.loadOpenSaleRequest,
   });
 
   @override
@@ -45,6 +49,28 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     } finally {
       isLoading = false;
     }
-    //TODO create tests
+  }
+
+  final _saleRequestsStream = Rx<List<SaleRequestModel>>([]);
+  @override
+  Stream<List<SaleRequestModel>> get saleRequestsStream =>
+      _saleRequestsStream.stream;
+
+  @override
+  Future<void> loadOpenSaleRequests({required bool isConsiderDelivered}) async {
+    try {
+      isLoading = true;
+      mainError = null;
+      final response = await loadOpenSaleRequest.load(
+        isConsiderDelivered: isConsiderDelivered,
+      );
+
+      _saleRequestsStream.subject.add(response);
+    } catch (e) {
+      mainError = getUIError(e);
+    } finally {
+      isLoading = false;
+    }
   }
 }
+//TODO create tests

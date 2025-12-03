@@ -7,4 +7,5 @@ WebSaleRequestDetailsPresenter makeGetxWebSaleRequestDetailsPresenter() =>
       loadEnterpriseData: makeRemoteLoadEnterpriseData(),
       localEntepriseData: makeLocalEnterpriseData(),
       navigateTo: makeNavigateTo(),
+      loadOpenSaleRequest: makeRemoteLoadOpenSaleRequest(),
     );

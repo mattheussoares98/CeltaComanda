@@ -136,4 +136,28 @@ class EnterpriseEntity extends Equatable {
       useOldPrintWay: useOldPrintWay ?? this.useOldPrintWay,
     );
   }
+
+  factory EnterpriseEntity.empty(String enterpriseName) => EnterpriseEntity(
+      enterpriseName: enterpriseName,
+      url: null,
+      enterpriseId: null,
+      concentradorUrl: null,
+      persistApp: null,
+      urlCCS: null,
+      useCovenant: null,
+      enterpriseConcentradorParametersEntity: null,
+      serviceChargePercentageOrValue: null,
+      updateDevicesInformations: null,
+      updateEnterprise: null,
+      zoomImage: null,
+      latestCompatibleVersion: null,
+      minutesVerifyUpdateMenu: null,
+      useReducedNameOnProduct: null,
+      verifyCommandBlocked: null,
+      canInsertCommentManually: null,
+      blockUseAppIfIsOutdated: null,
+      canInsertQuantityManually: null,
+      canInsertCustomer: null,
+      requestTableNumber: null,
+      useOldPrintWay: null);
 }

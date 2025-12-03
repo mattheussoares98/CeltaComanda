@@ -1,6 +1,7 @@
 import 'package:clean_celta_mobile/data/models/sale_request_model.dart';
 
 import '../../data/usecases/usecases.dart';
+import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
@@ -28,8 +29,10 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   @override
   Future<void> validateEnterprise(String enterpriseName) async {
     try {
-      EnterpriseBuilder.entity = EnterpriseBuilder.entity?.copyWith(
-          enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces());
+      EnterpriseBuilder.entity = (EnterpriseBuilder.entity ??
+              EnterpriseEntity.empty(enterpriseName))
+          .copyWith(
+              enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces());
 
       isLoading = true;
       mainError = null;

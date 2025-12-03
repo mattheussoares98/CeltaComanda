@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "celta-restaurant"
-  }
+  },
+  "targets": {
+    "celta-restaurant": {
+      "hosting": {
+        "openRequests": [
+          "openrequests"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

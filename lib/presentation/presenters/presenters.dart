@@ -15,3 +15,4 @@ export './getx_sale_movement_presenter.dart';
 export './getx_send_products_to_another_table_presenter.dart';
 export './getx_web_enterprises_presenter.dart';
 export './getx_web_login_presenter.dart';
+export './getx_web_sale_request_details_presenter.dart';

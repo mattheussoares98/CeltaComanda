@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../main/builders/builders.dart';
 import '../../components/components.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
@@ -30,6 +31,20 @@ class _WebSaleRequestDetailsValidateEnterprisePageState
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     controller.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        if (EnterpriseBuilder.entity?.enterpriseName != null &&
+            EnterpriseBuilder.entity!.enterpriseName.isNotEmpty) {
+          controller.text = EnterpriseBuilder.entity!.enterpriseName;
+        }
+      }
+    });
   }
 
   @override

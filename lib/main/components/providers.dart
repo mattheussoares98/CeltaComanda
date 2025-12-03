@@ -51,5 +51,8 @@ class Providers {
     ListenableProvider(
       create: (_) => makeGetxWebLoginPresenter(),
     ),
+    ListenableProvider(
+      create: (_) => makeGetxWebSaleRequestDetailsPresenter(),
+    ),
   ];
 }

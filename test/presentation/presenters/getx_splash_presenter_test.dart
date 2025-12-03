@@ -322,4 +322,17 @@ void main() {
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
     });
   });
+
+  group('Is generating version to sale request web page', () {
+    test(
+        "Should go to web sale request details when is generating respective version",
+        () async {
+      homePresenter.isGeneratingVersionToWebSaleRequestDetailsMock = true;
+
+      await sut.checkPageToGo(homePresenter: homePresenter);
+
+      verify(() => navigateTo.navigate(
+          pageRoute: PageRoutes.webSaleRequestDetails, clear: true)).called(1);
+    });
+  });
 }

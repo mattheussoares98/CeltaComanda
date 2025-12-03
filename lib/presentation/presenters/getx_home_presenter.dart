@@ -305,6 +305,11 @@ class GetxHomePresenter
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 
+  final bool _isGeneratingVersionToWebSaleRequestDetails = false;
+  @override
+  bool get isGeneratingVersionToWebSaleRequestDetails =>
+      _isGeneratingVersionToWebSaleRequestDetails;
+
   @override
   void changeIsGeneratingVersionToTablet(bool value) {
     _isGeneratingVersionToTablet = value;

@@ -16,6 +16,7 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   bool isGeneratingVersionToRedeMock = false;
   bool isGeneratingVersionToGetNetMock = false;
   bool isGeneratingVersionToTabletMock = false;
+  bool isGeneratingVersionToWebSaleRequestDetailsMock = false;
 
   HomePresenterSpy() {
     when(() => this.commandEntity).thenAnswer((_) => commandEntityController);
@@ -25,6 +26,8 @@ class HomePresenterSpy extends Mock implements HomePresenter {
         .thenAnswer((_) => isGeneratingVersionToGetNetMock);
     when(() => this.isGeneratingVersionToTablet)
         .thenAnswer((_) => isGeneratingVersionToTabletMock);
+    when(() => this.isGeneratingVersionToWebSaleRequestDetails)
+        .thenAnswer((_) => isGeneratingVersionToWebSaleRequestDetailsMock);
     when(() => this.updateCommandEntity(
           commandNumber: any(named: "commandNumber"),
           isFixedCommandNumber: any(named: "isFixedCommandNumber"),

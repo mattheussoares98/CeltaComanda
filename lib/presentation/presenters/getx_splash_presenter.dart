@@ -34,9 +34,15 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       final localCommandEntity = await localCommandData.load();
 
-      if (homePresenter.isGeneratingVersionToWebSaleRequestDetails) {
+      if (homePresenter.isGeneratingVersionToWebSaleRequestDetails &&
+          EnterpriseBuilder.entity?.url != null) {
         navigateTo.navigate(
             pageRoute: PageRoutes.webSaleRequestDetails, clear: true);
+      } else if (homePresenter.isGeneratingVersionToWebSaleRequestDetails &&
+          EnterpriseBuilder.entity?.url == null) {
+        navigateTo.navigate(
+            pageRoute: PageRoutes.webSaleRequestDetailsEnterpriseValidation,
+            clear: true);
       } else if (isWeb) {
         navigateTo.navigate(pageRoute: PageRoutes.webLogin, clear: true);
       } else if (EnterpriseBuilder.entity?.enterpriseId == null ||

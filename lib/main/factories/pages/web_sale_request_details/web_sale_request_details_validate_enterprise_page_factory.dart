@@ -1,5 +1,5 @@
 import '../../../../ui/pages/pages.dart';
 
 WebSaleRequestDetailsValidateEnterprisePage
-    makeGetxSaleRequestDetailsValidateEnterprisePage() =>
+    makeWebSaleRequestDetailsValidateEnterprisePage() =>
         const WebSaleRequestDetailsValidateEnterprisePage();

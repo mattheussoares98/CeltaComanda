@@ -323,16 +323,31 @@ void main() {
     });
   });
 
-  group('Is generating version to sale request web page', () {
+  group('Web sale details page', () {
     test(
-        "Should go to web sale request details when is generating respective version",
+        "Should go to validate page if is generating respective version and local enterprise is null",
+        () async {
+      homePresenter.isGeneratingVersionToWebSaleRequestDetailsMock = true;
+      loadEnterpriseData.mockLoad(null);
+
+      await sut.checkPageToGo(homePresenter: homePresenter);
+
+      verify(() => navigateTo.navigate(
+            pageRoute: PageRoutes.webSaleRequestDetailsEnterpriseValidation,
+            clear: true,
+          )).called(1);
+    });
+    test(
+        "Should go to validation page if is generating respective version and has local enterprise",
         () async {
       homePresenter.isGeneratingVersionToWebSaleRequestDetailsMock = true;
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 
       verify(() => navigateTo.navigate(
-          pageRoute: PageRoutes.webSaleRequestDetails, clear: true)).called(1);
+            pageRoute: PageRoutes.webSaleRequestDetails,
+            clear: true,
+          )).called(1);
     });
   });
 }

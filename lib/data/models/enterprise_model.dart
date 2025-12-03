@@ -5,6 +5,7 @@ import 'models.dart';
 class EnterpriseModel {
   final String enterpriseName;
   final String? url;
+  final String? httpsUrl;
   final int? enterpriseId;
   final String? concentradorUrl;
   final bool? persistApp;
@@ -30,6 +31,7 @@ class EnterpriseModel {
   EnterpriseModel({
     required this.enterpriseName,
     required this.url,
+    required this.httpsUrl,
     required this.enterpriseId,
     required this.concentradorUrl,
     required this.persistApp,
@@ -67,6 +69,7 @@ class EnterpriseModel {
     }
     return EnterpriseModel(
       url: json['url'],
+      httpsUrl: json['httpsUrl'],
       enterpriseName: json["enterpriseName"],
       enterpriseId: json["enterpriseId"],
       concentradorUrl: json["concentradorUrl"],
@@ -101,6 +104,7 @@ class EnterpriseModel {
   factory EnterpriseModel.fromEntity(EnterpriseEntity entity) =>
       EnterpriseModel(
         url: entity.url,
+        httpsUrl: entity.httpsUrl,
         updateEnterprise: entity.updateEnterprise,
         enterpriseName: entity.enterpriseName,
         enterpriseId: entity.enterpriseId,
@@ -128,6 +132,7 @@ class EnterpriseModel {
   EnterpriseEntity toEntity() => EnterpriseEntity(
         enterpriseName: enterpriseName.toLowerCase().removeWhiteSpaces(),
         url: url?.toLowerCase().removeWhiteSpaces(),
+        httpsUrl: httpsUrl?.toLowerCase().removeWhiteSpaces(),
         urlCCS: urlCCS?.toLowerCase().removeWhiteSpaces(),
         enterpriseId: enterpriseId,
         concentradorUrl: concentradorUrl?.toLowerCase().removeWhiteSpaces(),
@@ -155,6 +160,7 @@ class EnterpriseModel {
         'enterpriseName': enterpriseName.toLowerCase().removeWhiteSpaces(),
         'enterpriseId': enterpriseId,
         'url': url?.toLowerCase().removeWhiteSpaces(),
+        'httpsUrl': httpsUrl?.toLowerCase().removeWhiteSpaces(),
         'concentradorUrl': concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         'persistApp': persistApp,
         'urlCCS': urlCCS,

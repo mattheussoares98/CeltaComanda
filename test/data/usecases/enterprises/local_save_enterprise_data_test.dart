@@ -20,6 +20,7 @@ void main() {
     cacheStorage = HiveStorageSpy();
     enterpriseData = EnterpriseEntity(
       url: faker.internet.httpUrl(),
+      httpsUrl: faker.internet.httpsUrl(),
       urlCCS: faker.internet.httpUrl(),
       enterpriseName: faker.company.name(),
       enterpriseId: faker.randomGenerator.integer(3),

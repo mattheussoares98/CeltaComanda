@@ -38,10 +38,12 @@ class EntityFactory {
     bool? canInsertCustomer,
     bool? requestTableNumber,
     bool? useOldPrintWay,
+    bool? httpsUrl,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
       url: url == true ? null : atualEntity.url,
+      httpsUrl: httpsUrl == true ? null : atualEntity.httpsUrl,
       useOldPrintWay:
           useOldPrintWay == true ? null : atualEntity.useOldPrintWay,
       enterpriseId: enterpriseId == true ? null : atualEntity.enterpriseId,
@@ -94,6 +96,7 @@ class EntityFactory {
   static EnterpriseEntity makeEnterpriseData({
     String? enterpriseName,
     String? url,
+    String? httpsUrl,
     int? enterpriseId,
     String? concentradorUrl,
     bool? persistApp,
@@ -120,6 +123,8 @@ class EntityFactory {
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
+      httpsUrl: httpsUrl ??
+          faker.internet.httpsUrl().toLowerCase().removeWhiteSpaces(),
       urlCCS: urlCCS ?? faker.internet.httpUrl(),
       enterpriseId: enterpriseId ?? faker.randomGenerator.integer(3),
       enterpriseName: enterpriseName ??

@@ -17,6 +17,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final TextEditingController latestCompatibleVersionController;
   final TextEditingController serviceChargePercentageController;
   final TextEditingController minutesVerifyUpdateMenuController;
+  final TextEditingController httpsUrlController;
   final bool? zoomImage;
   final bool? useCovenant;
   final bool? useProductReducedName;
@@ -48,6 +49,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.canInsertCustomer,
     required this.canInsertQuantityManually,
     required this.requestTableNumber,
+    required this.httpsUrlController,
     super.key,
   });
 
@@ -110,6 +112,8 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                   canInsertQuantityManually: canInsertQuantityManually,
                   canInsertCustomer: canInsertCustomer,
                   requestTableNumber: requestTableNumber,
+                  httpsUrl:
+                      httpsUrlController.text.toLowerCase().removeWhiteSpaces(),
                 ),
               );
 

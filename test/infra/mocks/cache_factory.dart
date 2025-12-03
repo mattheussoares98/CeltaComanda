@@ -3,6 +3,7 @@ import 'package:faker/faker.dart';
 class CacheFactory {
   static Map makeEnterpriseData() => {
         'url': faker.internet.httpUrl(),
+        'httpsUrl': faker.internet.httpsUrl(),
         'urlCCS': faker.internet.httpUrl(),
         'concentradorUrl': faker.internet.httpUrl(),
         'enterpriseName': faker.company.name(),

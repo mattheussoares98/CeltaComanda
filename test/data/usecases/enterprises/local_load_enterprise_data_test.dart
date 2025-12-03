@@ -40,6 +40,10 @@ void main() {
               .toString()
               .toLowerCase()
               .removeWhiteSpaces(),
+          httpsUrl: enterpriseJsonData['httpsUrl']
+              .toString()
+              .toLowerCase()
+              .removeWhiteSpaces(),
           enterpriseName: enterpriseJsonData['enterpriseName']
               .toString()
               .toLowerCase()

@@ -193,7 +193,7 @@ void main() {
 
       await sut.updateEnterprise(EnterpriseBuilder.entity!);
 
-      var enterpriseWithCorrectValues = EnterpriseEntity(
+      var enterpriseWithCorrectValues = enterprise.copyWith(
         enterpriseName:
             enterprise.enterpriseName.toLowerCase().removeWhiteSpaces(),
         url: enterprise.url?.toLowerCase().removeWhiteSpaces(),
@@ -208,18 +208,7 @@ void main() {
             enterprise.serviceChargePercentageOrValue,
         enterpriseId: enterprise.enterpriseId,
         persistApp: false,
-        useCovenant: enterprise.useCovenant,
         enterpriseConcentradorParametersEntity: null,
-        zoomImage: enterprise.zoomImage,
-        latestCompatibleVersion: enterprise.latestCompatibleVersion,
-        minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
-        verifyCommandBlocked: enterprise.verifyCommandBlocked,
-        canInsertCommentManually: enterprise.canInsertCommentManually,
-        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
-        canInsertQuantityManually: enterprise.canInsertQuantityManually,
-        requestTableNumber: enterprise.requestTableNumber,
-        useOldPrintWay: enterprise.useOldPrintWay,
       );
 
       verify(() =>
@@ -231,29 +220,12 @@ void main() {
       final enterprise = EnterpriseBuilder.entity!;
       sut.goToAddOrEditEnterprise(enterprise);
 
-      final newEntity = EnterpriseEntity(
-        persistApp: false,
-        enterpriseName: enterprise.enterpriseName,
+      final newEntity =
+          EnterpriseEntity.empty(enterprise.enterpriseName).copyWith(
         enterpriseId: enterprise.enterpriseId!,
         updateDevicesInformations: enterprise.updateDevicesInformations! + 1,
         updateEnterprise: enterprise.updateEnterprise! + 1,
-        enterpriseConcentradorParametersEntity: null,
-        url: null,
-        concentradorUrl: null,
-        urlCCS: null,
-        verifyCommandBlocked: null,
-        latestCompatibleVersion: null,
-        serviceChargePercentageOrValue: null,
-        zoomImage: null,
-        useCovenant: null,
-        minutesVerifyUpdateMenu: null,
-        useReducedNameOnProduct: null,
-        canInsertCommentManually: null,
-        blockUseAppIfIsOutdated: null,
-        canInsertQuantityManually: null,
-        canInsertCustomer: null,
-        requestTableNumber: null,
-        useOldPrintWay: null,
+        persistApp: false,
       );
 
       await sut.updateEnterprise(newEntity);

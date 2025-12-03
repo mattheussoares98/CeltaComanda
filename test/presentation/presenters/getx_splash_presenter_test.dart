@@ -100,31 +100,7 @@ void main() {
     test('Should go to enterprise validation if EnterpriseId is null',
         () async {
       loadEnterpriseData.mockLoad(
-        EnterpriseEntity(
-          enterpriseName: "enterpriseName",
-          enterpriseId: null,
-          concentradorUrl: faker.internet.httpUrl(),
-          urlCCS: faker.internet.httpUrl(),
-          url: faker.internet.httpUrl(),
-          persistApp: faker.randomGenerator.boolean(),
-          useCovenant: faker.randomGenerator.boolean(),
-          enterpriseConcentradorParametersEntity:
-              EntityFactory.makeEnterpriseConcentradorParametersEntity(),
-          updateEnterprise: faker.randomGenerator.integer(100),
-          updateDevicesInformations: faker.randomGenerator.integer(100),
-          serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-          zoomImage: faker.randomGenerator.boolean(),
-          minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
-          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
-          useReducedNameOnProduct: faker.randomGenerator.boolean(),
-          verifyCommandBlocked: faker.randomGenerator.boolean(),
-          canInsertCommentManually: faker.randomGenerator.boolean(),
-          blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
-          canInsertQuantityManually: faker.randomGenerator.boolean(),
-          canInsertCustomer: faker.randomGenerator.boolean(),
-          requestTableNumber: faker.randomGenerator.boolean(),
-          useOldPrintWay: faker.randomGenerator.boolean(),
-        ),
+        EnterpriseEntity.empty('enterpriseName'),
       );
 
       await sut.checkPageToGo(
@@ -141,31 +117,7 @@ void main() {
     });
     test('Should go to enterprise validation if url is null', () async {
       loadEnterpriseData.mockLoad(
-        EnterpriseEntity(
-          enterpriseName: "enterpriseName",
-          enterpriseId: faker.randomGenerator.integer(100),
-          concentradorUrl: faker.internet.httpUrl(),
-          urlCCS: faker.internet.httpUrl(),
-          url: null,
-          persistApp: faker.randomGenerator.boolean(),
-          useCovenant: faker.randomGenerator.boolean(),
-          enterpriseConcentradorParametersEntity:
-              EntityFactory.makeEnterpriseConcentradorParametersEntity(),
-          updateEnterprise: faker.randomGenerator.integer(100),
-          updateDevicesInformations: faker.randomGenerator.integer(100),
-          serviceChargePercentageOrValue: faker.randomGenerator.decimal(),
-          zoomImage: faker.randomGenerator.boolean(),
-          latestCompatibleVersion: faker.randomGenerator.decimal().toString(),
-          minutesVerifyUpdateMenu: faker.randomGenerator.integer(100),
-          useReducedNameOnProduct: faker.randomGenerator.boolean(),
-          verifyCommandBlocked: faker.randomGenerator.boolean(),
-          canInsertCommentManually: faker.randomGenerator.boolean(),
-          blockUseAppIfIsOutdated: faker.randomGenerator.boolean(),
-          canInsertQuantityManually: faker.randomGenerator.boolean(),
-          canInsertCustomer: faker.randomGenerator.boolean(),
-          requestTableNumber: faker.randomGenerator.boolean(),
-          useOldPrintWay: faker.randomGenerator.boolean(),
-        ),
+        EnterpriseEntity.empty('enterpriseName'),
       );
 
       await sut.checkPageToGo(

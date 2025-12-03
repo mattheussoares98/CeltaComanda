@@ -25,6 +25,7 @@ class _WebAddOrEditEnterprisePageState
   final latestCompatibleVersionController = TextEditingController();
   final serviceChargePercentageController = TextEditingController();
   final minutesVerifyUpdateMenuController = TextEditingController();
+  final httpsUrlController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final navsFocusNode = FocusNode();
   final concentratorFocusNode = FocusNode();
@@ -111,6 +112,7 @@ class _WebAddOrEditEnterprisePageState
     latestCompatibleVersionController.dispose();
     serviceChargePercentageController.dispose();
     minutesVerifyUpdateMenuController.dispose();
+    httpsUrlController.dispose();
     navsFocusNode.dispose();
     concentratorFocusNode.dispose();
     ccsFocusNode.dispose();
@@ -405,12 +407,14 @@ class _WebAddOrEditEnterprisePageState
                           ),
                         ],
                       ),
+                      //TODO add httpsUrl param
                     ],
                   ),
                 ),
               ),
             ),
             ConfirmUpdateEnterpriseDataButton(
+              httpsUrlController: httpsUrlController,
               enterpriseNameController: enterpriseNameController,
               navsUrlController: navsUrlController,
               concentratorUrlController: concentratorUrlController,

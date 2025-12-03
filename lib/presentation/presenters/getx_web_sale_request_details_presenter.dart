@@ -44,6 +44,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       } else {
         EnterpriseBuilder.entity = enterpriseData;
         await localEntepriseData.add(enterpriseData);
+        isLoading = false;
         navigateTo.navigate(
             pageRoute: PageRoutes.webSaleRequestDetails, clear: true);
       }

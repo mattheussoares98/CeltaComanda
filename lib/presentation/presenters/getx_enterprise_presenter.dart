@@ -101,6 +101,7 @@ class GetxEnterprisePresenter extends GetxController
             canInsertCustomer: firebaseData.canInsertCustomer,
             requestTableNumber: firebaseData.requestTableNumber,
             useOldPrintWay: firebaseData.useOldPrintWay,
+            httpsUrl: firebaseData.httpsUrl,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -208,30 +209,7 @@ class GetxEnterprisePresenter extends GetxController
     String enterpriseName, {
     bool? updateEnterpriseNameController = false,
   }) {
-    EnterpriseBuilder.entity = EnterpriseEntity(
-      enterpriseName: enterpriseName,
-      url: null,
-      enterpriseId: null,
-      concentradorUrl: null,
-      persistApp: null,
-      urlCCS: null,
-      useCovenant: null,
-      enterpriseConcentradorParametersEntity: null,
-      serviceChargePercentageOrValue: null,
-      updateDevicesInformations: null,
-      updateEnterprise: null,
-      zoomImage: null,
-      latestCompatibleVersion: null,
-      minutesVerifyUpdateMenu: null,
-      useReducedNameOnProduct: null,
-      verifyCommandBlocked: null,
-      canInsertCommentManually: null,
-      blockUseAppIfIsOutdated: null,
-      canInsertQuantityManually: null,
-      canInsertCustomer: null,
-      requestTableNumber: null,
-      useOldPrintWay: null,
-    );
+    EnterpriseBuilder.entity = EnterpriseEntity.empty(enterpriseName);
 
     _enterpriseError.value =
         _validateField(field: "enterpriseName", enterpriseName: enterpriseName);
@@ -275,31 +253,8 @@ class GetxEnterprisePresenter extends GetxController
 
       await lastImport.save([LoadTypeEnum.enterprise]);
 
-      EnterpriseBuilder.entity = EnterpriseEntity(
-        enterpriseName: enterprise.enterpriseName,
-        url: enterprise.url,
-        enterpriseId: enterprise.enterpriseId,
-        concentradorUrl: enterprise.concentradorUrl,
-        persistApp: enterprise.persistApp,
-        urlCCS: enterprise.urlCCS,
-        useCovenant: enterprise.useCovenant,
-        enterpriseConcentradorParametersEntity: concentradorData,
-        updateDevicesInformations: enterprise.updateDevicesInformations,
-        serviceChargePercentageOrValue:
-            enterprise.serviceChargePercentageOrValue,
-        updateEnterprise: enterprise.updateEnterprise,
-        zoomImage: enterprise.zoomImage,
-        latestCompatibleVersion: enterprise.latestCompatibleVersion,
-        minutesVerifyUpdateMenu: enterprise.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct: enterprise.useReducedNameOnProduct,
-        verifyCommandBlocked: enterprise.verifyCommandBlocked,
-        canInsertCommentManually: enterprise.canInsertCommentManually,
-        blockUseAppIfIsOutdated: enterprise.blockUseAppIfIsOutdated,
-        canInsertQuantityManually: enterprise.canInsertQuantityManually,
-        canInsertCustomer: enterprise.canInsertCustomer,
-        requestTableNumber: enterprise.requestTableNumber,
-        useOldPrintWay: enterprise.useOldPrintWay,
-      );
+      EnterpriseBuilder.entity = enterprise.copyWith(
+          enterpriseConcentradorParametersEntity: concentradorData);
 
       await localEntepriseData.add(EnterpriseBuilder.entity!);
     } catch (e) {
@@ -312,30 +267,7 @@ class GetxEnterprisePresenter extends GetxController
     try {
       final oldEnterpriseName = EnterpriseBuilder.entity?.enterpriseName;
 
-      final newEnterprise = EnterpriseEntity(
-        enterpriseName: oldEnterpriseName ?? "",
-        url: null,
-        enterpriseId: null,
-        concentradorUrl: null,
-        persistApp: null,
-        urlCCS: null,
-        useCovenant: null,
-        enterpriseConcentradorParametersEntity: null,
-        serviceChargePercentageOrValue: null,
-        updateDevicesInformations: null,
-        updateEnterprise: null,
-        zoomImage: null,
-        latestCompatibleVersion: null,
-        minutesVerifyUpdateMenu: null,
-        useReducedNameOnProduct: null,
-        verifyCommandBlocked: null,
-        canInsertCommentManually: null,
-        blockUseAppIfIsOutdated: null,
-        canInsertQuantityManually: null,
-        canInsertCustomer: null,
-        requestTableNumber: null,
-        useOldPrintWay: null,
-      );
+      final newEnterprise = EnterpriseEntity.empty(oldEnterpriseName ?? "");
 
       EnterpriseBuilder.entity = newEnterprise;
 

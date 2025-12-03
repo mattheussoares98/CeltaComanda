@@ -6,6 +6,7 @@ import 'entities.dart';
 class EnterpriseEntity extends Equatable {
   final String enterpriseName;
   final String? url;
+  final String? httpsUrl;
   final int? enterpriseId;
   final String? concentradorUrl;
   final bool? persistApp;
@@ -31,6 +32,7 @@ class EnterpriseEntity extends Equatable {
   const EnterpriseEntity({
     required this.enterpriseName,
     required this.url,
+    required this.httpsUrl,
     required this.enterpriseId,
     required this.concentradorUrl,
     required this.persistApp,
@@ -56,6 +58,7 @@ class EnterpriseEntity extends Equatable {
   @override
   List get props => [
         url,
+        httpsUrl,
         enterpriseName,
         enterpriseId,
         concentradorUrl,
@@ -82,6 +85,7 @@ class EnterpriseEntity extends Equatable {
   EnterpriseEntity copyWith({
     String? enterpriseName,
     String? url,
+    String? httpsUrl,
     int? enterpriseId,
     String? concentradorUrl,
     bool? persistApp,
@@ -101,12 +105,16 @@ class EnterpriseEntity extends Equatable {
     bool? canInsertCustomer,
     bool? requestTableNumber,
     bool? useOldPrintWay,
+    EnterpriseConcentradorParametersEntity?
+        enterpriseConcentradorParametersEntity,
   }) {
     return EnterpriseEntity(
       enterpriseConcentradorParametersEntity:
-          enterpriseConcentradorParametersEntity,
+          enterpriseConcentradorParametersEntity ??
+              this.enterpriseConcentradorParametersEntity,
       enterpriseName: enterpriseName ?? this.enterpriseName,
       url: url ?? this.url,
+      httpsUrl: httpsUrl ?? this.httpsUrl,
       enterpriseId: enterpriseId ?? this.enterpriseId,
       concentradorUrl: concentradorUrl ?? this.concentradorUrl,
       persistApp: persistApp ?? this.persistApp,
@@ -140,6 +148,7 @@ class EnterpriseEntity extends Equatable {
   factory EnterpriseEntity.empty(String enterpriseName) => EnterpriseEntity(
       enterpriseName: enterpriseName,
       url: null,
+      httpsUrl: null,
       enterpriseId: null,
       concentradorUrl: null,
       persistApp: null,

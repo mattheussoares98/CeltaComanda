@@ -88,30 +88,8 @@ void main() {
     isFixedCommandNumber = faker.randomGenerator.boolean();
     commandNumber = faker.randomGenerator.integer(100);
 
-    clearedEnterprise = EnterpriseEntity(
-      enterpriseName: EnterpriseBuilder.entity?.enterpriseName ?? "",
-      url: null,
-      enterpriseId: null,
-      concentradorUrl: null,
-      persistApp: null,
-      urlCCS: null,
-      useCovenant: null,
-      enterpriseConcentradorParametersEntity: null,
-      serviceChargePercentageOrValue: null,
-      updateDevicesInformations: null,
-      updateEnterprise: null,
-      zoomImage: null,
-      latestCompatibleVersion: null,
-      minutesVerifyUpdateMenu: null,
-      useReducedNameOnProduct: null,
-      verifyCommandBlocked: null,
-      canInsertCommentManually: null,
-      blockUseAppIfIsOutdated: null,
-      canInsertQuantityManually: null,
-      canInsertCustomer: null,
-      requestTableNumber: null,
-      useOldPrintWay: null,
-    );
+    clearedEnterprise =
+        EnterpriseEntity.empty(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
     pdvsNotUsing = [
       EntityFactory.makePdvEntity(),
@@ -244,30 +222,7 @@ void main() {
 
       expect(
         EnterpriseBuilder.entity,
-        EnterpriseEntity(
-          enterpriseName: enterpriseName,
-          url: null,
-          enterpriseId: null,
-          concentradorUrl: null,
-          persistApp: null,
-          urlCCS: null,
-          useCovenant: null,
-          enterpriseConcentradorParametersEntity: null,
-          serviceChargePercentageOrValue: null,
-          updateDevicesInformations: null,
-          updateEnterprise: null,
-          zoomImage: null,
-          latestCompatibleVersion: null,
-          minutesVerifyUpdateMenu: null,
-          useReducedNameOnProduct: null,
-          verifyCommandBlocked: null,
-          canInsertCommentManually: null,
-          blockUseAppIfIsOutdated: null,
-          canInsertQuantityManually: null,
-          canInsertCustomer: null,
-          requestTableNumber: null,
-          useOldPrintWay: null,
-        ),
+        EnterpriseEntity.empty(enterpriseName),
       );
     });
   });
@@ -392,31 +347,8 @@ void main() {
 
       expect(
         EnterpriseBuilder.entity,
-        EnterpriseEntity(
-          enterpriseName: newEnterprise.enterpriseName,
-          url: newEnterprise.url,
-          enterpriseId: newEnterprise.enterpriseId,
-          concentradorUrl: newEnterprise.concentradorUrl,
-          persistApp: newEnterprise.persistApp,
-          urlCCS: newEnterprise.urlCCS,
-          useCovenant: newEnterprise.useCovenant,
-          serviceChargePercentageOrValue:
-              newEnterprise.serviceChargePercentageOrValue,
-          updateDevicesInformations: newEnterprise.updateDevicesInformations,
-          updateEnterprise: newEnterprise.updateEnterprise,
-          enterpriseConcentradorParametersEntity: newConcentratorEnterprise,
-          zoomImage: newEnterprise.zoomImage,
-          useReducedNameOnProduct: newEnterprise.useReducedNameOnProduct,
-          latestCompatibleVersion: newEnterprise.latestCompatibleVersion,
-          minutesVerifyUpdateMenu: newEnterprise.minutesVerifyUpdateMenu,
-          verifyCommandBlocked: newEnterprise.verifyCommandBlocked,
-          canInsertCommentManually: newEnterprise.canInsertCommentManually,
-          blockUseAppIfIsOutdated: newEnterprise.blockUseAppIfIsOutdated,
-          canInsertQuantityManually: newEnterprise.canInsertQuantityManually,
-          canInsertCustomer: newEnterprise.canInsertCustomer,
-          requestTableNumber: newEnterprise.requestTableNumber,
-          useOldPrintWay: newEnterprise.useOldPrintWay,
-        ),
+        newEnterprise.copyWith(
+            enterpriseConcentradorParametersEntity: newConcentratorEnterprise),
       );
     });
 
@@ -617,32 +549,7 @@ void main() {
       final enterpriseName = faker.person.name();
       sut.validateEnterpriseInput(enterpriseName);
 
-      expect(
-          EnterpriseBuilder.entity,
-          EnterpriseEntity(
-            enterpriseName: enterpriseName,
-            url: null,
-            enterpriseId: null,
-            concentradorUrl: null,
-            persistApp: null,
-            urlCCS: null,
-            useCovenant: null,
-            enterpriseConcentradorParametersEntity: null,
-            serviceChargePercentageOrValue: null,
-            updateDevicesInformations: null,
-            updateEnterprise: null,
-            zoomImage: null,
-            latestCompatibleVersion: null,
-            minutesVerifyUpdateMenu: null,
-            useReducedNameOnProduct: null,
-            verifyCommandBlocked: null,
-            canInsertCommentManually: null,
-            blockUseAppIfIsOutdated: null,
-            canInsertQuantityManually: null,
-            canInsertCustomer: null,
-            requestTableNumber: null,
-            useOldPrintWay: null,
-          ));
+      expect(EnterpriseBuilder.entity, EnterpriseEntity.empty(enterpriseName));
     });
   });
 
@@ -665,41 +572,9 @@ void main() {
       await sut.updateConcentratorEnterpriseParameters();
 
       expect(
-          EnterpriseBuilder.entity,
-          EnterpriseEntity(
-            enterpriseConcentradorParametersEntity:
-                newConcentratorEnterpriseParameters,
-            enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-            url: EnterpriseBuilder.entity!.url,
-            enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-            concentradorUrl: EnterpriseBuilder.entity!.concentradorUrl,
-            persistApp: EnterpriseBuilder.entity!.persistApp,
-            urlCCS: EnterpriseBuilder.entity!.urlCCS,
-            useCovenant: EnterpriseBuilder.entity!.useCovenant,
-            serviceChargePercentageOrValue:
-                EnterpriseBuilder.entity!.serviceChargePercentageOrValue,
-            updateDevicesInformations:
-                EnterpriseBuilder.entity!.updateDevicesInformations,
-            updateEnterprise: EnterpriseBuilder.entity!.updateEnterprise,
-            zoomImage: EnterpriseBuilder.entity!.zoomImage,
-            minutesVerifyUpdateMenu:
-                EnterpriseBuilder.entity!.minutesVerifyUpdateMenu,
-            latestCompatibleVersion:
-                EnterpriseBuilder.entity!.latestCompatibleVersion,
-            useReducedNameOnProduct:
-                EnterpriseBuilder.entity!.useReducedNameOnProduct,
-            verifyCommandBlocked:
-                EnterpriseBuilder.entity!.verifyCommandBlocked,
-            canInsertCommentManually:
-                EnterpriseBuilder.entity!.canInsertCommentManually,
-            blockUseAppIfIsOutdated:
-                EnterpriseBuilder.entity!.blockUseAppIfIsOutdated,
-            canInsertQuantityManually:
-                EnterpriseBuilder.entity!.canInsertQuantityManually,
-            canInsertCustomer: EnterpriseBuilder.entity!.canInsertCustomer,
-            requestTableNumber: EnterpriseBuilder.entity!.requestTableNumber,
-            useOldPrintWay: EnterpriseBuilder.entity!.useOldPrintWay,
-          ));
+        EnterpriseBuilder.entity?.enterpriseConcentradorParametersEntity,
+        newConcentratorEnterpriseParameters,
+      );
     });
     test("Should update last import when update enterprise parameters",
         () async {
@@ -715,30 +590,7 @@ void main() {
 
       expect(
         EnterpriseBuilder.entity,
-        EnterpriseEntity(
-          enterpriseName: EnterpriseBuilder.entity!.enterpriseName,
-          url: null,
-          enterpriseId: null,
-          concentradorUrl: null,
-          persistApp: null,
-          urlCCS: null,
-          useCovenant: null,
-          enterpriseConcentradorParametersEntity: null,
-          serviceChargePercentageOrValue: null,
-          updateDevicesInformations: null,
-          updateEnterprise: null,
-          zoomImage: null,
-          latestCompatibleVersion: null,
-          minutesVerifyUpdateMenu: null,
-          useReducedNameOnProduct: null,
-          verifyCommandBlocked: null,
-          canInsertCommentManually: null,
-          blockUseAppIfIsOutdated: null,
-          canInsertQuantityManually: null,
-          canInsertCustomer: null,
-          requestTableNumber: null,
-          useOldPrintWay: null,
-        ),
+        EnterpriseEntity.empty(EnterpriseBuilder.entity!.enterpriseName),
       );
     });
   });

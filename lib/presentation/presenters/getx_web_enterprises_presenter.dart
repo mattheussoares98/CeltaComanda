@@ -89,7 +89,7 @@ class GetxWebEnterprisesPresenter extends GetxController
       isLoading = true;
       mainError = null;
 
-      final enterprise = EnterpriseEntity(
+      final enterprise = entity.copyWith(
         enterpriseName:
             (_selectedEnterprise?.enterpriseName ?? entity.enterpriseName)
                 .toLowerCase()
@@ -102,23 +102,9 @@ class GetxWebEnterprisesPresenter extends GetxController
         enterpriseConcentradorParametersEntity: null,
         updateEnterprise: (_selectedEnterprise?.updateEnterprise ?? 0) + 1,
         url: entity.url?.toLowerCase().removeWhiteSpaces(),
-        enterpriseId: entity.enterpriseId,
         concentradorUrl:
             entity.concentradorUrl?.toLowerCase().removeWhiteSpaces(),
         urlCCS: entity.urlCCS?.toLowerCase().removeWhiteSpaces(),
-        useCovenant: entity.useCovenant,
-        serviceChargePercentageOrValue: entity.serviceChargePercentageOrValue,
-        zoomImage: entity.zoomImage,
-        latestCompatibleVersion: entity.latestCompatibleVersion,
-        minutesVerifyUpdateMenu: entity.minutesVerifyUpdateMenu,
-        useReducedNameOnProduct: entity.useReducedNameOnProduct,
-        verifyCommandBlocked: entity.verifyCommandBlocked,
-        canInsertCommentManually: entity.canInsertCommentManually,
-        blockUseAppIfIsOutdated: entity.blockUseAppIfIsOutdated,
-        canInsertQuantityManually: entity.canInsertQuantityManually,
-        canInsertCustomer: entity.canInsertCustomer,
-        requestTableNumber: entity.requestTableNumber,
-        useOldPrintWay: entity.useOldPrintWay,
       );
 
       await updateEnterpriseParameters.update(enterprise);

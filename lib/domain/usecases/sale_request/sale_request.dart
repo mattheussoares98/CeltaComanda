@@ -7,6 +7,7 @@ export './delete_sale_request.dart';
 export './finish_sale_request_temp_by_id.dart';
 export 'finish_sale_request_temp.dart';
 export './load_sale_request.dart';
+export './load_open_sale_request.dart';
 export 'load_sale_request_temp.dart';
 export 'update_sale_request_temp.dart';
 export './update_sale_request.dart';

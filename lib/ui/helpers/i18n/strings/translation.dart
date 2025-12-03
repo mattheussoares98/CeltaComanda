@@ -176,6 +176,7 @@ abstract class Translation {
   String get eanOrPlu;
   String get email;
   String get emptyCart;
+  String get emptySaleRequests;
   String get emptySales;
   String get emptyTable;
   String get enableCovenant;
@@ -201,6 +202,8 @@ abstract class Translation {
   String get ifWantSelectProducts;
   String get jump;
   String get lastDateUpdated;
+  String get lastRequest;
+  String get lastRequestTime;
   String get lastUpdate;
   String get latestCompatibleVersion;
   String get liberateCancelProducts;

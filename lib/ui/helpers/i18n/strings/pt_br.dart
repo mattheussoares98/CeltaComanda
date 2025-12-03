@@ -220,6 +220,7 @@ class PtBr implements Translation {
   String get eanOrPlu => "EAN ou PLU";
   String get email => "E-mail";
   String get emptyCart => 'O carrinho está vazio';
+  String get emptySaleRequests => 'Não há pedidos em aberto';
   String get emptySales => 'Não há vendas nessa data';
   String get emptyTable => 'A mesa está vazia';
   String get enableCovenant => 'Habilitar convênio';
@@ -245,6 +246,8 @@ class PtBr implements Translation {
   String get ifWantSelectProducts => 'Se desejar, selecione um produto';
   String get jump => 'Pular';
   String get lastDateUpdated => 'Último dia atualizado';
+  String get lastRequest => 'Última solicitação';
+  String get lastRequestTime => 'Horário da última solicitação';
   String get lastUpdate => 'Última atualização';
   String get latestCompatibleVersion => 'Última versão compatível';
   String get liberateCancelProducts => 'Liberar cancelamento de itens';

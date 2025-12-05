@@ -21,7 +21,6 @@ class PageRoutes {
   static const String webDevicesInfo = "/web_devices_info";
   static const String webEnterprises = "/web_enterprises";
   static const String webLogin = "/web_login";
-  static const String webSaleRequestDetailsEnterpriseValidation =
-      "/web_sale_request_details_enterprise_validation";
-  static const String webSaleRequestDetails = "/web_sale_request_details";
+  static const String webSaleRequestDetailsEnterpriseValidation = "/validation";
+  static const String webSaleRequestDetails = "/details";
 }

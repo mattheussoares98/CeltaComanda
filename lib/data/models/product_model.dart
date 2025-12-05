@@ -1,5 +1,3 @@
-
-
 import '../../domain/entities/entities.dart';
 import 'models.dart';
 

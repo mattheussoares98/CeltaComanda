@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/entities.dart';
+import 'models.dart';
 
 class SaleRequestProductModel extends Equatable {
   final String? SaleMovementProductCompositionId;
@@ -21,6 +22,7 @@ class SaleRequestProductModel extends Equatable {
   final double? Value;
   final double? Quantity;
   final double? TotalLiquid;
+  final ProductModel? product;
 
   const SaleRequestProductModel({
     required this.SaleMovementProductCompositionId,
@@ -41,6 +43,7 @@ class SaleRequestProductModel extends Equatable {
     required this.Value,
     required this.Quantity,
     required this.TotalLiquid,
+    required this.product,
   });
 
   @override
@@ -63,6 +66,7 @@ class SaleRequestProductModel extends Equatable {
         Value,
         Quantity,
         TotalLiquid,
+        product,
       ];
 
   factory SaleRequestProductModel.fromJson(Map json) => SaleRequestProductModel(
@@ -85,6 +89,7 @@ class SaleRequestProductModel extends Equatable {
         Value: json["Value"],
         Quantity: json["Quantity"],
         TotalLiquid: json["TotalLiquid"],
+        product: ProductModel.fromJson(json["Product"]),
       );
 
   factory SaleRequestProductModel.fromEntity(SaleRequestProductEntity entity) =>
@@ -108,6 +113,9 @@ class SaleRequestProductModel extends Equatable {
         Value: entity.Value,
         Quantity: entity.Quantity,
         TotalLiquid: entity.TotalLiquid,
+        product: entity.Product != null
+            ? ProductModel.fromEntity(entity.Product!)
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -125,9 +133,11 @@ class SaleRequestProductModel extends Equatable {
         "ProductionStatus": ProductionStatus,
         "ProductInternalCodeOnErp": ProductInternalCodeOnErp,
         "SaleRequestId": SaleRequestId,
-        "ProductIsFatherComposition": ProductIsFatherComposition == true ? 1 : 0,
+        "ProductIsFatherComposition":
+            ProductIsFatherComposition == true ? 1 : 0,
         "Value": Value,
         "Quantity": Quantity,
         "TotalLiquid": TotalLiquid,
+        "Product": product?.toJson(),
       };
 }

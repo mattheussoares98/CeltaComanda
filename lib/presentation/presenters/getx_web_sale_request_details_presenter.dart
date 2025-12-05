@@ -42,9 +42,9 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       if (enterpriseData == null) {
         throw DomainError.enterpriseOrUrlNotFound;
       } else {
+        isLoading = false;
         EnterpriseBuilder.entity = enterpriseData;
         await localEntepriseData.add(enterpriseData);
-        isLoading = false;
         navigateTo.navigate(
             pageRoute: PageRoutes.webSaleRequestDetails, clear: true);
       }

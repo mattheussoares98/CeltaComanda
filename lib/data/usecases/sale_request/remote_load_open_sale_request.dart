@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-import 'package:clean_celta_mobile/data/models/sale_request_model.dart';
+import 'package:clean_celta_mobile/data/models/models.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../domain/usecases/usecases.dart';
+import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 
 class RemoteLoadOpenSaleRequest implements LoadOpenSaleRequest {
@@ -35,11 +37,18 @@ class RemoteLoadOpenSaleRequest implements LoadOpenSaleRequest {
   }
 
   Future<Map<String, dynamic>> _loadSettingsFromServedAsset() async {
-    // In a web environment, the file must be served via HTTP.
-    // Since 'http-server' is running from 'build/web', we request the file
-    // relative to the server root, which is just "settings.txt".
+    if (!kIsWeb) {
+      return {
+        'url': EnterpriseBuilder.entity!.url,
+        'enterpriseId': EnterpriseBuilder.entity!.enterpriseId,
+        'isConsiderDelivered': true
+      };
+    }
+
+    String settingsUrl = '${Uri.base.removeFragment()}settings.txt';
+
     final response = await httpAdapter.request(
-      url: "http://localhost:8000/settings.txt",
+      url: settingsUrl,
       method: "get",
     );
 

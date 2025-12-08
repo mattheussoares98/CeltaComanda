@@ -102,10 +102,5 @@ class GetPages {
       page: makeWebSaleRequestDetailsPage,
       transition: Transition.fade,
     ),
-    GetPage(
-      name: PageRoutes.webSaleRequestDetailsEnterpriseValidation,
-      page: makeWebSaleRequestDetailsValidateEnterprisePage,
-      transition: Transition.fade,
-    ),
   ];
 }

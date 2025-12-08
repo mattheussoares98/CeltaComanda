@@ -1,17 +1,18 @@
 import '../../domain/entities/entities.dart';
 
-class SettingsModel {
+class WebLocalSettingsModel {
   final String? url;
   final int? enterpriseId;
   final bool? isConsiderDelivered;
 
-  SettingsModel({
+  WebLocalSettingsModel({
     required this.url,
     required this.enterpriseId,
     required this.isConsiderDelivered,
   });
 
-  factory SettingsModel.fromJson(Map<String, dynamic> json) => SettingsModel(
+  factory WebLocalSettingsModel.fromJson(Map<String, dynamic> json) =>
+      WebLocalSettingsModel(
         url: json['url'],
         enterpriseId: json['enterpriseId'],
         isConsiderDelivered: json['isConsiderDelivered'],
@@ -23,13 +24,14 @@ class SettingsModel {
         "isConsiderDelivered": isConsiderDelivered,
       };
 
-  factory SettingsModel.fromEntity(SettingsEntity entity) => SettingsModel(
+  factory WebLocalSettingsModel.fromEntity(WebLocalSettingsEntity entity) =>
+      WebLocalSettingsModel(
         url: entity.url,
         enterpriseId: entity.enterpriseId,
         isConsiderDelivered: entity.isConsiderDelivered,
       );
 
-  SettingsEntity toEntity() => SettingsEntity(
+  WebLocalSettingsEntity toEntity() => WebLocalSettingsEntity(
         url: url,
         enterpriseId: enterpriseId,
         isConsiderDelivered: isConsiderDelivered,

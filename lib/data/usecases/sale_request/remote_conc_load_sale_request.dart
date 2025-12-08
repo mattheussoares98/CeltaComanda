@@ -13,7 +13,7 @@ class RemoteConcLoadSaleRequest
 
   @override
   Future<List<ConcSaleRequestEntity>> load({
-    required SettingsEntity settings,
+    required WebLocalSettingsEntity settings,
     required String personalizedCode,
   }) async {
     try {

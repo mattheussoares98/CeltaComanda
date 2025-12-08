@@ -1,9 +1,9 @@
-class SettingsEntity {
+class WebLocalSettingsEntity {
   final String? url;
   final int? enterpriseId;
   final bool? isConsiderDelivered;
 
-  SettingsEntity({
+  WebLocalSettingsEntity({
     required this.url,
     required this.enterpriseId,
     required this.isConsiderDelivered,

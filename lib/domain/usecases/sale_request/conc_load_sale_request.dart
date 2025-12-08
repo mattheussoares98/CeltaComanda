@@ -3,7 +3,7 @@ import '../../entities/entities.dart';
 
 abstract class ConcLoadSaleRequest {
   Future<List<ConcSaleRequestEntity>> load({
-    required SettingsEntity settings,
+    required WebLocalSettingsEntity settings,
     required String personalizedCode,
   });
 }

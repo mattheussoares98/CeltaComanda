@@ -103,7 +103,7 @@ class UpdateSaleRequestTempModel {
       );
 
   Map<dynamic, dynamic> toJson() => {
-        "DeliveryControl": DeliveryControl,
+        "DeliveryControl": 1,
         "EnterpriseId": EnterpriseId,
         "PersonalizedCode": PersonalizedCode,
         "SaleRequestTempId": SaleRequestTempId,

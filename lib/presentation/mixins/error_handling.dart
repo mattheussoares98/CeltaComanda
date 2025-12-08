@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
+
 import '../../domain/helpers/helpers.dart';
 import '../../infra/helpers/helpers.dart';
 import '../../ui/helpers/helpers.dart';
 
 mixin ErrorHandling {
   UIError getUIError(dynamic error) {
+    debugPrint(error.toString());
     if (error is DomainError) {
       switch (error) {
         case DomainError.accessDenied:

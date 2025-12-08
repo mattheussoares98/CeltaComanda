@@ -65,9 +65,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     try {
       isLoading = true;
       mainError = null;
-      final response = await loadOpenSaleRequest.load(
-        isConsiderDelivered: isConsiderDelivered,
-      );
+      final response = await loadOpenSaleRequest.load();
 
       _saleRequestsStream.subject.add(response);
     } catch (e) {

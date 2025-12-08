@@ -41,7 +41,7 @@ class RemoteLoadOpenSaleRequest implements LoadOpenSaleRequest {
       return {
         'url': EnterpriseBuilder.entity!.url,
         'enterpriseId': EnterpriseBuilder.entity!.enterpriseId,
-        'isConsiderDelivered': true
+        'isConsiderDelivered': false
       };
     }
 

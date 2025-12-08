@@ -18,6 +18,7 @@ class ProductsListFlow extends StatelessWidget {
     final theme = Theme.of(context);
     final products = saleRequest.Products!;
 
+    products.sort((a, b) => a.product!.Name.compareTo(b.product!.Name));
     products.sort((a, b) {
       final dateA = a.DateHourOfCreation == null
           ? null

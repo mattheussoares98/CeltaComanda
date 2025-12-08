@@ -3,6 +3,7 @@ export './group_permission_concentrator/group_permission_concentrator.dart';
 export './cart_product_entity.dart';
 export './device_info_entity.dart';
 export './command_entity.dart';
+export './delivery_control_entity.dart';
 export './enterprise_concentrador_entity.dart';
 export './enterprise_concentrador_parameters_entity.dart';
 export './enterprise_entity.dart';

@@ -93,21 +93,21 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             );
           }
 
-          final List<ConcSaleRequestModel> saleRequests =
-              List.of(snapshot.data!);
-          saleRequests.sort((a, b) {
-            final dateA = findMostRecentDateFromSales([a]);
-            final dateB = findMostRecentDateFromSales([b]);
+          // final List<ConcSaleRequestModel> saleRequests =
+          //     List.of(snapshot.data!);
+          // saleRequests.sort((a, b) {
+          //   final dateA = findMostRecentDateFromSales([a]);
+          //   final dateB = findMostRecentDateFromSales([b]);
 
-            if (dateA == null && dateB == null) return 0;
-            if (dateA == null) return 1;
-            if (dateB == null) return -1;
+          //   if (dateA == null && dateB == null) return 0;
+          //   if (dateA == null) return 1;
+          //   if (dateB == null) return -1;
 
-            return dateB.compareTo(dateA);
-          });
+          //   return dateB.compareTo(dateA);
+          // });
 
           return ResponsiveListFlow(
-            itemCount: saleRequests.length,
+            itemCount: 0,
             itemBuilder: (_, index) {
               // final saleRequest = saleRequests[index];
 

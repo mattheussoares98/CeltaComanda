@@ -60,9 +60,9 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     }
   }
 
-  final _saleRequestsStream = Rx<List<ConcSaleRequestModel>>([]);
+  final _saleRequestsStream = Rx<Map<String, ConcSaleRequestModel>>({});
   @override
-  Stream<List<ConcSaleRequestModel>> get saleRequestsStream =>
+  Stream<Map<String, ConcSaleRequestModel>> get saleRequestsStream =>
       _saleRequestsStream.stream;
 
   @override

@@ -7,7 +7,7 @@ import '../../helpers/helpers.dart';
 abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<ConcSaleRequestModel>> get saleRequestsStream;
+  Stream<Map<String, ConcSaleRequestModel>> get saleRequestsStream;
 
   WebLocalSettingsEntity? get webLocalSettings;
 

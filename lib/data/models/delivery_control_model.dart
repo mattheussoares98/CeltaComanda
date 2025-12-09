@@ -80,15 +80,12 @@ class DeliveryControlModel extends Equatable {
       CouponFiscalNumber: map['CouponFiscalNumber'] != null
           ? map['CouponFiscalNumber'] as int
           : null,
-      DateOfCreation:
-          DateTime.fromMillisecondsSinceEpoch(map['DateOfCreation'] as int),
-      DateHourOfCreation:
-          DateTime.fromMillisecondsSinceEpoch(map['DateHourOfCreation'] as int),
+      DateOfCreation: DateTime.parse(map['DateOfCreation']),
+      DateHourOfCreation: DateTime.parse(map['DateHourOfCreation']),
       IsCancelled: map['IsCancelled'] as bool,
       IsToDelivery: map['IsToDelivery'] as int,
       DateHourOfDelivery: map['DateHourOfDelivery'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              map['DateHourOfDelivery'] as int)
+          ? DateTime.parse(map['DateHourOfDelivery'])
           : null,
       DeliveryControl:
           map['DeliveryControl'] != null ? map['DeliveryControl'] as int : null,

@@ -1,35 +1,35 @@
 import 'package:equatable/equatable.dart';
 
 class ConcSaleRequestProductEntity extends Equatable {
-  final int SaleRequestProductId;
-  final int InternalCodeOnERP;
-  final String ProductPlu;
-  final String EanCode;
-  final double Quantity;
-  final int UserId;
-  final double Value;
-  final bool IsCancelled;
+  final int? SaleRequestProductId;
+  final int? InternalCodeOnERP;
+  final String? ProductPlu;
+  final String? EanCode;
+  final double? Quantity;
+  final int? UserId;
+  final double? Value;
+  final bool? IsCancelled;
   final int? UserIdOfCancellation;
-  final bool IsDelivered;
-  final bool IsPrinted;
-  final String Comments;
-  final double TotalLiquid;
-  final int SaleRequestId;
-  final bool ProductIsFatherComposition;
-  final String SaleRequestProductIdOfFather;
+  final bool? IsDelivered;
+  final bool? IsPrinted;
+  final String? Comments;
+  final double? TotalLiquid;
+  final int? SaleRequestId;
+  final bool? ProductIsFatherComposition;
+  final String? SaleRequestProductIdOfFather;
   final int? SaleRequestProductInternalCodeOnERP;
-  final String ProductName;
-  final SaleBlockadeDiscountType saleBlockadeDiscountType;
-  final double DiscountFromSaleOffer;
-  final String UserOfDiscount;
-  final double AveragedDiscount;
-  final double AveragedIncrement;
-  final double AveragedDeliveryTax;
-  final double SaleRetailPrice;
-  final double SaleRetailOffer;
-  final double WholeSalePrice;
-  final double WholeSaleOffer;
-  final ConcSaleRequestProductEntity SaleRequestProducOfFatherComposition;
+  final String? ProductName;
+  final SaleBlockadeDiscountType? BlockadeDiscountType;
+  final double? DiscountFromSaleOffer;
+  final String? UserOfDiscount;
+  final double? AveragedDiscount;
+  final double? AveragedIncrement;
+  final double? AveragedDeliveryTax;
+  final double? SaleRetailPrice;
+  final double? SaleRetailOffer;
+  final double? WholeSalePrice;
+  final double? WholeSaleOffer;
+  final ConcSaleRequestProductEntity? SaleRequestProducOfFatherComposition;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductEntity({
@@ -51,7 +51,7 @@ class ConcSaleRequestProductEntity extends Equatable {
     required this.SaleRequestProductIdOfFather,
     required this.SaleRequestProductInternalCodeOnERP,
     required this.ProductName,
-    required this.saleBlockadeDiscountType,
+    required this.BlockadeDiscountType,
     required this.DiscountFromSaleOffer,
     required this.UserOfDiscount,
     required this.AveragedDiscount,
@@ -84,7 +84,7 @@ class ConcSaleRequestProductEntity extends Equatable {
         SaleRequestProductIdOfFather,
         SaleRequestProductInternalCodeOnERP,
         ProductName,
-        saleBlockadeDiscountType,
+        BlockadeDiscountType,
         DiscountFromSaleOffer,
         UserOfDiscount,
         AveragedDiscount,

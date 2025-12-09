@@ -5,7 +5,7 @@ import 'conc_sale_request.dart';
 class ConcSaleRequestEntity extends Equatable {
   final int SaleRequestId;
   final String PersonalizedCode;
-  final String Comments;
+  final String? Comments;
   final DateTime DateHourOfCreation;
   final DateTime DateOfCreation;
   final bool IsCancelled;
@@ -18,21 +18,21 @@ class ConcSaleRequestEntity extends Equatable {
   final String enterprisePersonalizedCode;
   final int InternalCodeOnERP;
   final int CustomerCode;
-  final String CpfCnpjNumber;
-  final String CustomerName;
-  final int CustomerAdditionalCode;
-  final String CustomerAdditionalName;
-  final int CovenantCode;
-  final String CovenantName;
+  final String? CpfCnpjNumber;
+  final String? CustomerName;
+  final int? CustomerAdditionalCode;
+  final String? CustomerAdditionalName;
+  final int? CovenantCode;
+  final String? CovenantName;
   final int? IncrementType;
   final double? IncrementValue;
-  final String SellerCode;
-  final String SellerName;
-  final int DeliveryControl;
-  final bool HasServices;
-  final int IsToDelivery;
+  final String? SellerCode;
+  final String? SellerName;
+  final int? DeliveryControl;
+  final bool? HasServices;
+  final int? IsToDelivery;
   final DateTime? DateHourOfDelivery;
-  final String PersonalizedCodeReduced;
+  final String? PersonalizedCodeReduced;
   // final ModelEnterprise Enterprise ;
 
   const ConcSaleRequestEntity({

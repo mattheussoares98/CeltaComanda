@@ -3,35 +3,35 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/conc_sale_request/conc_sale_request.dart';
 
 class ConcSaleRequestProductModel extends Equatable {
-  final int SaleRequestProductId;
-  final int InternalCodeOnERP;
-  final String ProductPlu;
-  final String EanCode;
-  final double Quantity;
-  final int UserId;
-  final double Value;
-  final bool IsCancelled;
+  final int? SaleRequestProductId;
+  final int? InternalCodeOnERP;
+  final String? ProductPlu;
+  final String? EanCode;
+  final double? Quantity;
+  final int? UserId;
+  final double? Value;
+  final bool? IsCancelled;
   final int? UserIdOfCancellation;
-  final bool IsDelivered;
-  final bool IsPrinted;
-  final String Comments;
-  final double TotalLiquid;
-  final int SaleRequestId;
-  final bool ProductIsFatherComposition;
-  final String SaleRequestProductIdOfFather;
+  final bool? IsDelivered;
+  final bool? IsPrinted;
+  final String? Comments;
+  final double? TotalLiquid;
+  final int? SaleRequestId;
+  final bool? ProductIsFatherComposition;
+  final String? SaleRequestProductIdOfFather;
   final int? SaleRequestProductInternalCodeOnERP;
-  final String ProductName;
-  final SaleBlockadeDiscountType saleBlockadeDiscountType;
-  final double DiscountFromSaleOffer;
-  final String UserOfDiscount;
-  final double AveragedDiscount;
-  final double AveragedIncrement;
-  final double AveragedDeliveryTax;
-  final double SaleRetailPrice;
-  final double SaleRetailOffer;
-  final double WholeSalePrice;
-  final double WholeSaleOffer;
-  final ConcSaleRequestProductModel SaleRequestProducOfFatherComposition;
+  final String? ProductName;
+  final SaleBlockadeDiscountType? BlockadeDiscountType;
+  final double? DiscountFromSaleOffer;
+  final String? UserOfDiscount;
+  final double? AveragedDiscount;
+  final double? AveragedIncrement;
+  final double? AveragedDeliveryTax;
+  final double? SaleRetailPrice;
+  final double? SaleRetailOffer;
+  final double? WholeSalePrice;
+  final double? WholeSaleOffer;
+  final ConcSaleRequestProductModel? SaleRequestProducOfFatherComposition;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductModel({
@@ -53,7 +53,7 @@ class ConcSaleRequestProductModel extends Equatable {
     required this.SaleRequestProductIdOfFather,
     required this.SaleRequestProductInternalCodeOnERP,
     required this.ProductName,
-    required this.saleBlockadeDiscountType,
+    required this.BlockadeDiscountType,
     required this.DiscountFromSaleOffer,
     required this.UserOfDiscount,
     required this.AveragedDiscount,
@@ -86,7 +86,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRequestProductIdOfFather,
         SaleRequestProductInternalCodeOnERP,
         ProductName,
-        saleBlockadeDiscountType,
+        BlockadeDiscountType,
         DiscountFromSaleOffer,
         UserOfDiscount,
         AveragedDiscount,
@@ -120,7 +120,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRequestProductInternalCodeOnERP:
             entity.SaleRequestProductInternalCodeOnERP,
         ProductName: entity.ProductName,
-        saleBlockadeDiscountType: entity.saleBlockadeDiscountType,
+        BlockadeDiscountType: entity.BlockadeDiscountType,
         DiscountFromSaleOffer: entity.DiscountFromSaleOffer,
         UserOfDiscount: entity.UserOfDiscount,
         AveragedDiscount: entity.AveragedDiscount,
@@ -131,8 +131,10 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice: entity.WholeSalePrice,
         WholeSaleOffer: entity.WholeSaleOffer,
         SaleRequestProducOfFatherComposition:
-            ConcSaleRequestProductModel.fromEntity(
-                entity.SaleRequestProducOfFatherComposition),
+            entity.SaleRequestProducOfFatherComposition == null
+                ? null
+                : ConcSaleRequestProductModel.fromEntity(
+                    entity.SaleRequestProducOfFatherComposition!),
       );
 
   ConcSaleRequestProductEntity toEntity() => ConcSaleRequestProductEntity(
@@ -155,7 +157,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRequestProductInternalCodeOnERP:
             SaleRequestProductInternalCodeOnERP,
         ProductName: ProductName,
-        saleBlockadeDiscountType: saleBlockadeDiscountType,
+        BlockadeDiscountType: BlockadeDiscountType,
         DiscountFromSaleOffer: DiscountFromSaleOffer,
         UserOfDiscount: UserOfDiscount,
         AveragedDiscount: AveragedDiscount,
@@ -166,7 +168,7 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice: WholeSalePrice,
         WholeSaleOffer: WholeSaleOffer,
         SaleRequestProducOfFatherComposition:
-            SaleRequestProducOfFatherComposition.toEntity(),
+            SaleRequestProducOfFatherComposition?.toEntity(),
       );
 
   factory ConcSaleRequestProductModel.fromJson(Map json) =>
@@ -190,8 +192,8 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRequestProductInternalCodeOnERP:
             json['SaleRequestProductInternalCodeOnERP'],
         ProductName: json['ProductName'],
-        saleBlockadeDiscountType: SaleBlockadeDiscountType.values
-            .firstWhere((e) => e.code == json['saleBlockadeDiscountType']),
+        BlockadeDiscountType: SaleBlockadeDiscountType.values
+            .firstWhere((e) => e.code == json['BlockadeDiscountType']),
         DiscountFromSaleOffer: json['DiscountFromSaleOffer'],
         UserOfDiscount: json['UserOfDiscount'],
         AveragedDiscount: json['AveragedDiscount'],
@@ -225,7 +227,7 @@ class ConcSaleRequestProductModel extends Equatable {
         "SaleRequestProductInternalCodeOnERP":
             SaleRequestProductInternalCodeOnERP,
         "ProductName": ProductName,
-        "saleBlockadeDiscountType": saleBlockadeDiscountType.code,
+        "BlockadeDiscountType": BlockadeDiscountType?.code,
         "DiscountFromSaleOffer": DiscountFromSaleOffer,
         "UserOfDiscount": UserOfDiscount,
         "AveragedDiscount": AveragedDiscount,

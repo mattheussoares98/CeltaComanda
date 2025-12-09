@@ -6,7 +6,7 @@ import 'conc_sale_request_product_model.dart';
 class ConcSaleRequestModel extends Equatable {
   final int SaleRequestId;
   final String PersonalizedCode;
-  final String Comments;
+  final String? Comments;
   final DateTime DateHourOfCreation;
   final DateTime DateOfCreation;
   final bool IsCancelled;
@@ -16,24 +16,24 @@ class ConcSaleRequestModel extends Equatable {
   final int EnterpriseId;
   final SaleRequestOriginType FlagOrigin;
   final int EnterpriseCode;
-  final String enterprisePersonalizedCode;
+  final String EnterprisePersonalizedCode;
   final int InternalCodeOnERP;
   final int CustomerCode;
-  final String CpfCnpjNumber;
-  final String CustomerName;
-  final int CustomerAdditionalCode;
-  final String CustomerAdditionalName;
-  final int CovenantCode;
-  final String CovenantName;
+  final String? CpfCnpjNumber;
+  final String? CustomerName;
+  final int? CustomerAdditionalCode;
+  final String? CustomerAdditionalName;
+  final int? CovenantCode;
+  final String? CovenantName;
   final int? IncrementType;
   final double? IncrementValue;
-  final String SellerCode;
-  final String SellerName;
-  final int DeliveryControl;
-  final bool HasServices;
-  final int IsToDelivery;
+  final String? SellerCode;
+  final String? SellerName;
+  final int? DeliveryControl;
+  final bool? HasServices;
+  final int? IsToDelivery;
   final DateTime? DateHourOfDelivery;
-  final String PersonalizedCodeReduced;
+  final String? PersonalizedCodeReduced;
   // final ModelEnterprise Enterprise ;
 
   const ConcSaleRequestModel({
@@ -49,7 +49,7 @@ class ConcSaleRequestModel extends Equatable {
     required this.EnterpriseId,
     required this.FlagOrigin,
     required this.EnterpriseCode,
-    required this.enterprisePersonalizedCode,
+    required this.EnterprisePersonalizedCode,
     required this.InternalCodeOnERP,
     required this.CustomerCode,
     required this.CpfCnpjNumber,
@@ -83,7 +83,7 @@ class ConcSaleRequestModel extends Equatable {
         EnterpriseId,
         FlagOrigin,
         EnterpriseCode,
-        enterprisePersonalizedCode,
+        EnterprisePersonalizedCode,
         InternalCodeOnERP,
         CustomerCode,
         CpfCnpjNumber,
@@ -108,7 +108,7 @@ class ConcSaleRequestModel extends Equatable {
         EnterpriseId: entity.EnterpriseId,
         FlagOrigin: entity.FlagOrigin,
         EnterpriseCode: entity.EnterpriseCode,
-        enterprisePersonalizedCode: entity.enterprisePersonalizedCode,
+        EnterprisePersonalizedCode: entity.enterprisePersonalizedCode,
         InternalCodeOnERP: entity.InternalCodeOnERP,
         CustomerCode: entity.CustomerCode,
         CpfCnpjNumber: entity.CpfCnpjNumber,
@@ -141,7 +141,7 @@ class ConcSaleRequestModel extends Equatable {
         EnterpriseId: EnterpriseId,
         FlagOrigin: FlagOrigin,
         EnterpriseCode: EnterpriseCode,
-        enterprisePersonalizedCode: enterprisePersonalizedCode,
+        enterprisePersonalizedCode: EnterprisePersonalizedCode,
         InternalCodeOnERP: InternalCodeOnERP,
         CustomerCode: CustomerCode,
         CpfCnpjNumber: CpfCnpjNumber,
@@ -165,17 +165,19 @@ class ConcSaleRequestModel extends Equatable {
         SaleRequestId: json['SaleRequestId'],
         PersonalizedCode: json['PersonalizedCode'],
         Comments: json['Comments'],
-        DateHourOfCreation: json['DateHourOfCreation'],
-        DateOfCreation: json['DateOfCreation'],
+        DateHourOfCreation: DateTime.parse(json['DateHourOfCreation']),
+        DateOfCreation: DateTime.parse(json['DateOfCreation']),
         IsCancelled: json['IsCancelled'],
         IsUsing: json['IsUsing'],
         TotalLiquid: json['TotalLiquid'],
-        Products: json['Products'],
+        Products: (json['Products'] as List)
+            .map((e) => ConcSaleRequestProductModel.fromJson(e))
+            .toList(),
         EnterpriseId: json['EnterpriseId'],
         FlagOrigin: SaleRequestOriginType.values
-            .firstWhere((e) => e.name == json['FlagOrigin']),
+            .firstWhere((e) => e.code == json['FlagOrigin']),
         EnterpriseCode: json['EnterpriseCode'],
-        enterprisePersonalizedCode: json['enterprisePersonalizedCode'],
+        EnterprisePersonalizedCode: json['EnterprisePersonalizedCode'],
         InternalCodeOnERP: json['InternalCodeOnERP'],
         CustomerCode: json['CustomerCode'],
         CpfCnpjNumber: json['CpfCnpjNumber'],

@@ -54,27 +54,25 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
   }
 
   DateTime? findMostRecentDateFromSales(List<ConcSaleRequestModel> sales) {
-    return null;
+    final allDateStrings = sales.expand((sale) {
+      final List<String?> dates = [sale.DateHourOfCreation.toIso8601String()];
 
-    // final allDateStrings = sales.expand((sale) {
-    //   final List<String?> dates = [sale.DateHourOfCreation];
+      // dates.addAll(sale.Products.map((p) => p.));
 
-    //   dates.addAll(sale.Products.map((p) => p.DateHourOfCreation));
+      return dates;
+    });
 
-    //   return dates;
-    // });
+    final allDates = allDateStrings
+        .whereType<String>()
+        .map((dateString) => DateTime.tryParse(dateString))
+        .whereType<DateTime>()
+        .toList();
 
-    // final allDates = allDateStrings
-    //     .whereType<String>()
-    //     .map((dateString) => DateTime.tryParse(dateString))
-    //     .whereType<DateTime>()
-    //     .toList();
+    if (allDates.isEmpty) {
+      return null;
+    }
 
-    // if (allDates.isEmpty) {
-    //   return null;
-    // }
-
-    // return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
+    return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
   }
 
   @override
@@ -93,37 +91,37 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             );
           }
 
-          // final List<ConcSaleRequestModel> saleRequests =
-          //     List.of(snapshot.data!);
-          // saleRequests.sort((a, b) {
-          //   final dateA = findMostRecentDateFromSales([a]);
-          //   final dateB = findMostRecentDateFromSales([b]);
+          final List<ConcSaleRequestModel> saleRequests =
+              List.of(snapshot.data!.values);
+          saleRequests.sort((a, b) {
+            final dateA = findMostRecentDateFromSales([a]);
+            final dateB = findMostRecentDateFromSales([b]);
 
-          //   if (dateA == null && dateB == null) return 0;
-          //   if (dateA == null) return 1;
-          //   if (dateB == null) return -1;
+            if (dateA == null && dateB == null) return 0;
+            if (dateA == null) return 1;
+            if (dateB == null) return -1;
 
-          //   return dateB.compareTo(dateA);
-          // });
+            return dateB.compareTo(dateA);
+          });
 
           return ResponsiveListFlow(
-            itemCount: 0,
+            itemCount: saleRequests.length,
             itemBuilder: (_, index) {
-              // final saleRequest = saleRequests[index];
+              final saleRequest = saleRequests[index];
 
-              // final mostRecentRequestFromCurrentSale =
-              //     findMostRecentDateFromSales([saleRequest]);
+              final mostRecentRequestFromCurrentSale =
+                  findMostRecentDateFromSales([saleRequest]);
 
-              return const Card(
+              return Card(
                 child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      // CommandTableAndLastChangedTime(
-                      //   saleRequest: saleRequest,
-                      //   mostRecentRequestFromCurrentSale:
-                      //       mostRecentRequestFromCurrentSale!,
-                      // ),
+                      CommandTableAndLastChangedTime(
+                        saleRequest: saleRequest,
+                        mostRecentRequestFromCurrentSale:
+                            mostRecentRequestFromCurrentSale!,
+                      ),
                       // const Divider(thickness: 0.1),
                       // ProductsListFlow(saleRequest: saleRequest),
                     ],

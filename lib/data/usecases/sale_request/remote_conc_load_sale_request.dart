@@ -12,7 +12,7 @@ class RemoteConcLoadSaleRequest
   RemoteConcLoadSaleRequest(this.httpAdapter);
 
   @override
-  Future<List<ConcSaleRequestEntity>> load({
+  Future<ConcSaleRequestEntity> load({
     required WebLocalSettingsEntity settings,
     required String personalizedCode,
   }) async {
@@ -24,9 +24,7 @@ class RemoteConcLoadSaleRequest
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );
 
-      return (response as List)
-          .map((e) => ConcSaleRequestModel.fromJson(e).toEntity())
-          .toList();
+      return ConcSaleRequestModel.fromJson((response as List).first).toEntity();
     } catch (e) {
       treatError(e);
     }

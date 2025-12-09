@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../../data/models/conc_sale_request/conc_sale_request.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
@@ -75,8 +73,38 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       final deliveryControls =
           await loadDeliveryControl.load(_webLocalSettings!);
 
-      // _saleRequestsStream.subject.add(response);
-      debugPrint(deliveryControls.toString());
+      final Map<String, ConcSaleRequestModel> updatedSaleRequests =
+          Map<String, ConcSaleRequestModel>.of(_saleRequestsStream.value);
+
+      final missingCodes = deliveryControls
+          .where((c) => !updatedSaleRequests.containsKey(c.PersonalizedCode))
+          .map((c) => c.PersonalizedCode)
+          .toSet();
+
+      if (missingCodes.isNotEmpty) {
+        // 4. Fetch all missing items in PARALLEL (Fixes Performance)
+        final results = await Future.wait(
+          missingCodes.map(
+            (code) => concLoadSaleRequest.load(
+              settings: _webLocalSettings!,
+              personalizedCode: code,
+            ),
+          ),
+        );
+
+        int index = 0;
+        for (final code in missingCodes) {
+          final resultEntity = results[index];
+
+          updatedSaleRequests[code] =
+              ConcSaleRequestModel.fromEntity(resultEntity);
+          index++;
+        }
+
+        _saleRequestsStream.value = updatedSaleRequests;
+      }
+
+      _saleRequestsStream.subject.add(updatedSaleRequests);
     } catch (e) {
       mainError = getUIError(e);
     } finally {

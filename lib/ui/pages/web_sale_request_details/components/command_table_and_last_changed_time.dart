@@ -5,7 +5,7 @@ import '../../../../data/models/models.dart';
 import '../../../helpers/helpers.dart';
 
 class CommandTableAndLastChangedTime extends StatelessWidget {
-  final SaleRequestModel saleRequest;
+  final ConcSaleRequestModel saleRequest;
   final DateTime mostRecentRequestFromCurrentSale;
   const CommandTableAndLastChangedTime(
       {super.key,
@@ -24,15 +24,16 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
               style: theme.textTheme.titleMedium,
               children: [
                 TextSpan(
-                  text: "${R.string.command} ${saleRequest.PersonalizedCode!}",
+                  text: "${R.string.command} ${saleRequest.PersonalizedCode}",
                   style: theme.textTheme.titleLarge,
                 ),
-                if (saleRequest.PlaceId != null &&
-                    saleRequest.PlaceId!.isNotEmpty)
-                  TextSpan(
-                    text: ' - Mesa (${saleRequest.PlaceId!})',
-                    style: theme.textTheme.titleLarge,
-                  ),
+                // if (saleRequest.PlaceId != null &&
+                //     saleRequest.PlaceId!.isNotEmpty)
+                //   TextSpan(
+                //     text: ' - Mesa (${saleRequest.PlaceId!})',
+                //     style: theme.textTheme.titleLarge,
+                //   ),
+                //TODO check if has this property
               ],
             ),
           ),

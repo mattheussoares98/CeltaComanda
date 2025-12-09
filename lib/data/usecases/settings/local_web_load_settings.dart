@@ -16,6 +16,11 @@ class LocalWebLoadSettings implements WebLoadSettings {
       return WebLocalSettingsEntity(
         url: EnterpriseBuilder.entity!.url,
         enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
+        enteprisePersonalizedCode: EnterpriseBuilder
+            .entity!
+            .enterpriseConcentradorParametersEntity
+            ?.enterprise
+            ?.personalizedCode,
         isConsiderDelivered: false,
       );
     }

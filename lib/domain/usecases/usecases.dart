@@ -29,6 +29,7 @@ export 'sale_movement/sale_movement.dart';
 export 'sale_request/sale_request.dart';
 export './schedule/schedule.dart';
 export './sellers/sellers.dart';
+export './settings/settings.dart';
 export './url/url.dart';
 export './users/users.dart';
 export './xml/xml.dart';

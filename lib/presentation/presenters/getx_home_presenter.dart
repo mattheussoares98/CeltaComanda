@@ -305,7 +305,7 @@ class GetxHomePresenter
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 
-  final bool _isGeneratingVersionToWebSaleRequestDetails = false;
+  final bool _isGeneratingVersionToWebSaleRequestDetails = true;
   @override
   bool get isGeneratingVersionToWebSaleRequestDetails =>
       _isGeneratingVersionToWebSaleRequestDetails;

@@ -1,13 +1,11 @@
 class WebLocalSettingsEntity {
-  final String? url;
   final int? enterpriseId;
+  final String? concentratorUrl;
   final String? enteprisePersonalizedCode;
-  final bool? isConsiderDelivered;
 
   WebLocalSettingsEntity({
-    required this.url,
     required this.enterpriseId,
+    required this.concentratorUrl,
     required this.enteprisePersonalizedCode,
-    required this.isConsiderDelivered,
   });
 }

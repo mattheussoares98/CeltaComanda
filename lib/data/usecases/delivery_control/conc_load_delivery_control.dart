@@ -13,7 +13,7 @@ class ConcLoadDeliveryControl implements LoadDeliveryControl {
   ) async {
     final response = await httpClient.request(
       url:
-          '${settings.url}/api/APIDeliveryControl/GetSaleRequestDeliveryStatus?enteprisePersonalizedCode=${settings.enteprisePersonalizedCode}',
+          '${settings.concentratorUrl}/api/APIDeliveryControl/GetSaleRequestDeliveryStatus?enteprisePersonalizedCode=${settings.enteprisePersonalizedCode}',
       method: "get",
       headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
     );

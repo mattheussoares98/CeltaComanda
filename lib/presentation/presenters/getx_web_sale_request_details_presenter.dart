@@ -1,5 +1,6 @@
-import 'package:clean_celta_mobile/data/models/sale_request_model.dart';
+import 'package:flutter/foundation.dart';
 
+import '../../data/models/conc_sale_request/conc_sale_request.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -17,13 +18,17 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final LoadOpenSaleRequest loadOpenSaleRequest;
+  final LoadDeliveryControl loadDeliveryControl;
+  final ConcLoadSaleRequest concLoadSaleRequest;
+  final WebLoadSettings webLoadSettings;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
-    required this.loadOpenSaleRequest,
+    required this.loadDeliveryControl,
+    required this.concLoadSaleRequest,
+    required this.webLoadSettings,
   });
 
   @override
@@ -55,9 +60,9 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     }
   }
 
-  final _saleRequestsStream = Rx<List<SaleRequestModel>>([]);
+  final _saleRequestsStream = Rx<List<ConcSaleRequestModel>>([]);
   @override
-  Stream<List<SaleRequestModel>> get saleRequestsStream =>
+  Stream<List<ConcSaleRequestModel>> get saleRequestsStream =>
       _saleRequestsStream.stream;
 
   @override
@@ -65,14 +70,21 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     try {
       isLoading = true;
       mainError = null;
-      final response = await loadOpenSaleRequest.load();
 
-      _saleRequestsStream.subject.add(response);
+      _webLocalSettings ??= await webLoadSettings.load();
+      final deliveryControls =
+          await loadDeliveryControl.load(_webLocalSettings!);
+
+      // _saleRequestsStream.subject.add(response);
+      debugPrint(deliveryControls.toString());
     } catch (e) {
       mainError = getUIError(e);
     } finally {
       isLoading = false;
     }
   }
+
+  WebLocalSettingsEntity? _webLocalSettings;
+  @override
+  WebLocalSettingsEntity? get webLocalSettings => _webLocalSettings;
 }
-//TODO create tests

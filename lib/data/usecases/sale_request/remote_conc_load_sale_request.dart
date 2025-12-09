@@ -19,7 +19,7 @@ class RemoteConcLoadSaleRequest
     try {
       final response = await httpAdapter.request(
         url:
-            '${settings.url}/api/APISaleRequest/GetSaleRequest?enterpriseId=${settings.enterpriseId}&personalizedCode=$personalizedCode&considerUsing=true',
+            '${settings.concentratorUrl}/api/APISaleRequest/GetSaleRequest?enterpriseId=${settings.enterpriseId}&personalizedCode=$personalizedCode&considerUsing=true',
         method: "get",
         headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
       );

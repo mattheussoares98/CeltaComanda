@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/models.dart';
+import '../../../data/models/conc_sale_request/conc_sale_request.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -53,28 +53,28 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     provider.loadOpenSaleRequests(isConsiderDelivered: true);
   }
 
-  DateTime? findMostRecentDateFromSales(List<SaleRequestModel> sales) {
-    final allDateStrings = sales.expand((sale) {
-      final List<String?> dates = [sale.DateHourOfCreation];
+  DateTime? findMostRecentDateFromSales(List<ConcSaleRequestModel> sales) {
+    return null;
 
-      if (sale.Products != null) {
-        dates.addAll(sale.Products!.map((p) => p.DateHourOfCreation));
-      }
+    // final allDateStrings = sales.expand((sale) {
+    //   final List<String?> dates = [sale.DateHourOfCreation];
 
-      return dates;
-    });
+    //   dates.addAll(sale.Products.map((p) => p.DateHourOfCreation));
 
-    final allDates = allDateStrings
-        .whereType<String>()
-        .map((dateString) => DateTime.tryParse(dateString))
-        .whereType<DateTime>()
-        .toList();
+    //   return dates;
+    // });
 
-    if (allDates.isEmpty) {
-      return null;
-    }
+    // final allDates = allDateStrings
+    //     .whereType<String>()
+    //     .map((dateString) => DateTime.tryParse(dateString))
+    //     .whereType<DateTime>()
+    //     .toList();
 
-    return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
+    // if (allDates.isEmpty) {
+    //   return null;
+    // }
+
+    // return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
   }
 
   @override
@@ -93,7 +93,8 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             );
           }
 
-          final List<SaleRequestModel> saleRequests = List.of(snapshot.data!);
+          final List<ConcSaleRequestModel> saleRequests =
+              List.of(snapshot.data!);
           saleRequests.sort((a, b) {
             final dateA = findMostRecentDateFromSales([a]);
             final dateB = findMostRecentDateFromSales([b]);
@@ -108,23 +109,23 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
           return ResponsiveListFlow(
             itemCount: saleRequests.length,
             itemBuilder: (_, index) {
-              final saleRequest = saleRequests[index];
+              // final saleRequest = saleRequests[index];
 
-              final mostRecentRequestFromCurrentSale =
-                  findMostRecentDateFromSales([saleRequest]);
+              // final mostRecentRequestFromCurrentSale =
+              //     findMostRecentDateFromSales([saleRequest]);
 
-              return Card(
+              return const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      CommandTableAndLastChangedTime(
-                        saleRequest: saleRequest,
-                        mostRecentRequestFromCurrentSale:
-                            mostRecentRequestFromCurrentSale!,
-                      ),
-                      const Divider(thickness: 0.1),
-                      ProductsListFlow(saleRequest: saleRequest),
+                      // CommandTableAndLastChangedTime(
+                      //   saleRequest: saleRequest,
+                      //   mostRecentRequestFromCurrentSale:
+                      //       mostRecentRequestFromCurrentSale!,
+                      // ),
+                      // const Divider(thickness: 0.1),
+                      // ProductsListFlow(saleRequest: saleRequest),
                     ],
                   ),
                 ),

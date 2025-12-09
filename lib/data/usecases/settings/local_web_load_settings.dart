@@ -1,8 +1,7 @@
-import 'package:clean_celta_mobile/domain/entities/web_local_settings_entity.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/settings/settings.dart';
-import '../../../main/builders/builders.dart';
 import '../../http/http.dart';
 import '../../models/models.dart';
 
@@ -13,15 +12,11 @@ class LocalWebLoadSettings implements WebLoadSettings {
   @override
   Future<WebLocalSettingsEntity> load() async {
     if (!kIsWeb) {
+      //local configurations for tests
       return WebLocalSettingsEntity(
-        url: EnterpriseBuilder.entity!.url,
-        enterpriseId: EnterpriseBuilder.entity!.enterpriseId,
-        enteprisePersonalizedCode: EnterpriseBuilder
-            .entity!
-            .enterpriseConcentradorParametersEntity
-            ?.enterprise
-            ?.personalizedCode,
-        isConsiderDelivered: false,
+        enterpriseId: 2,
+        concentratorUrl: "http://192.168.15.4:9090",
+        enteprisePersonalizedCode: "02",
       );
     }
 

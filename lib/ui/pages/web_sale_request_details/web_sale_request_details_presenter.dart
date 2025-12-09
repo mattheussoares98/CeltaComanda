@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/models/models.dart';
+import '../../../data/models/conc_sale_request/conc_sale_request.dart';
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 
 abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
-  Stream<List<SaleRequestModel>> get saleRequestsStream;
+  Stream<List<ConcSaleRequestModel>> get saleRequestsStream;
+
+  WebLocalSettingsEntity? get webLocalSettings;
 
   Future<void> validateEnterprise(String enterpriseName);
   Future<void> loadOpenSaleRequests({required bool isConsiderDelivered});

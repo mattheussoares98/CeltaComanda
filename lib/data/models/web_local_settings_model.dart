@@ -1,45 +1,39 @@
 import '../../domain/entities/entities.dart';
 
 class WebLocalSettingsModel {
-  final String? url;
   final int? enterpriseId;
+  final String? concentratorUrl;
   final String? enteprisePersonalizedCode;
-  final bool? isConsiderDelivered;
 
   WebLocalSettingsModel({
-    required this.url,
     required this.enterpriseId,
+    required this.concentratorUrl,
     required this.enteprisePersonalizedCode,
-    required this.isConsiderDelivered,
   });
 
   factory WebLocalSettingsModel.fromJson(Map<String, dynamic> json) =>
       WebLocalSettingsModel(
-        url: json['url'],
         enterpriseId: json['enterpriseId'],
+        concentratorUrl: json['concentratorUrl'],
         enteprisePersonalizedCode: json['enteprisePersonalizedCode'],
-        isConsiderDelivered: json['isConsiderDelivered'],
       );
 
   Map<String, dynamic> toJson() => {
-        "url": url,
-        "enterpriseId": enterpriseId,
-        "enteprisePersonalizedCode": enteprisePersonalizedCode,
-        "isConsiderDelivered": isConsiderDelivered,
+        'enterpriseId': enterpriseId,
+        'concentratorUrl': concentratorUrl,
+        'enteprisePersonalizedCode': enteprisePersonalizedCode,
       };
 
   factory WebLocalSettingsModel.fromEntity(WebLocalSettingsEntity entity) =>
       WebLocalSettingsModel(
-        url: entity.url,
         enterpriseId: entity.enterpriseId,
+        concentratorUrl: entity.concentratorUrl,
         enteprisePersonalizedCode: entity.enteprisePersonalizedCode,
-        isConsiderDelivered: entity.isConsiderDelivered,
       );
 
   WebLocalSettingsEntity toEntity() => WebLocalSettingsEntity(
-        url: url,
         enterpriseId: enterpriseId,
+        concentratorUrl: concentratorUrl,
         enteprisePersonalizedCode: enteprisePersonalizedCode,
-        isConsiderDelivered: isConsiderDelivered,
       );
 }

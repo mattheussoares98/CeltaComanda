@@ -14,6 +14,7 @@ class DeliveryControlEntity extends Equatable {
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
   final int DeliveryStatusLate;
+  final double TotalLiquid;
 
   const DeliveryControlEntity({
     required this.Id,
@@ -29,6 +30,7 @@ class DeliveryControlEntity extends Equatable {
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
+    required this.TotalLiquid,
   });
 
   @override
@@ -46,5 +48,6 @@ class DeliveryControlEntity extends Equatable {
         this.DateHourOfDelivery,
         this.DeliveryControl,
         this.DeliveryStatusLate,
+        this.TotalLiquid,
       ];
 }

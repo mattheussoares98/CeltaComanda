@@ -18,6 +18,7 @@ class DeliveryControlModel extends Equatable {
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
   final int DeliveryStatusLate;
+  final double TotalLiquid;
 
   const DeliveryControlModel({
     required this.Id,
@@ -33,6 +34,7 @@ class DeliveryControlModel extends Equatable {
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
+    required this.TotalLiquid,
   });
 
   @override
@@ -50,6 +52,7 @@ class DeliveryControlModel extends Equatable {
         this.DateHourOfDelivery,
         this.DeliveryControl,
         this.DeliveryStatusLate,
+        this.TotalLiquid,
       ];
 
   Map<String, dynamic> toJson() {
@@ -67,6 +70,7 @@ class DeliveryControlModel extends Equatable {
       'DateHourOfDelivery': DateHourOfDelivery?.millisecondsSinceEpoch,
       'DeliveryControl': DeliveryControl,
       'DeliveryStatusLate': DeliveryStatusLate,
+      'TotalLiquid': TotalLiquid,
     };
   }
 
@@ -90,6 +94,7 @@ class DeliveryControlModel extends Equatable {
       DeliveryControl:
           map['DeliveryControl'] != null ? map['DeliveryControl'] as int : null,
       DeliveryStatusLate: map['DeliveryStatusLate'] as int,
+      TotalLiquid: map['TotalLiquid'] as double,
     );
   }
 
@@ -108,6 +113,7 @@ class DeliveryControlModel extends Equatable {
         DateHourOfDelivery: entity.DateHourOfDelivery,
         DeliveryControl: entity.DeliveryControl,
         DeliveryStatusLate: entity.DeliveryStatusLate,
+        TotalLiquid: entity.TotalLiquid,
       );
 
   DeliveryControlEntity toEntity() => DeliveryControlEntity(
@@ -124,5 +130,6 @@ class DeliveryControlModel extends Equatable {
         DateHourOfDelivery: DateHourOfDelivery,
         DeliveryControl: DeliveryControl,
         DeliveryStatusLate: DeliveryStatusLate,
+        TotalLiquid: TotalLiquid,
       );
 }

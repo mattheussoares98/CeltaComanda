@@ -459,7 +459,7 @@ class GetxCartPresenter
               (previousValue, element) => element.TotalLiquid + previousValue);
 
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
+        DeliveryControl: 1,
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),

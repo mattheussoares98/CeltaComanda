@@ -122,8 +122,8 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
                         mostRecentRequestFromCurrentSale:
                             mostRecentRequestFromCurrentSale!,
                       ),
-                      // const Divider(thickness: 0.1),
-                      // ProductsListFlow(saleRequest: saleRequest),
+                      const Divider(thickness: 0.1),
+                      ProductsListFlow(saleRequest: saleRequest),
                     ],
                   ),
                 ),

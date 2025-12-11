@@ -15,7 +15,7 @@ class LocalWebLoadSettings implements WebLoadSettings {
       //local configurations for tests
       return WebLocalSettingsEntity(
         enterpriseId: 2,
-        concentratorUrl: "http://192.168.15.4:9090",
+        concentratorUrl: "http://cloud.celtaware.com.br:42021",
         enteprisePersonalizedCode: "02",
       );
     }

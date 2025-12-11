@@ -81,10 +81,30 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
           .map((c) => c.PersonalizedCode)
           .toSet();
 
-      if (missingCodes.isNotEmpty) {
+      final updateCodes = deliveryControls
+          .where((deliveryControl) {
+            final code = deliveryControl.PersonalizedCode;
+            final isLoaded = updatedSaleRequests.containsKey(code);
+
+            if (isLoaded) {
+              final currentSaleRequest = updatedSaleRequests[code]!;
+
+              final hasUpdate =
+                  deliveryControl.TotalLiquid != currentSaleRequest.TotalLiquid;
+
+              return hasUpdate;
+            }
+            return false;
+          })
+          .map((c) => c.PersonalizedCode)
+          .toSet();
+
+      final codesToFetch = missingCodes.union(updateCodes);
+
+      if (codesToFetch.isNotEmpty) {
         // 4. Fetch all missing items in PARALLEL (Fixes Performance)
         final results = await Future.wait(
-          missingCodes.map(
+          codesToFetch.map(
             (code) => concLoadSaleRequest.load(
               settings: _webLocalSettings!,
               personalizedCode: code,
@@ -93,15 +113,13 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
         );
 
         int index = 0;
-        for (final code in missingCodes) {
+        for (final code in codesToFetch) {
           final resultEntity = results[index];
 
           updatedSaleRequests[code] =
               ConcSaleRequestModel.fromEntity(resultEntity);
           index++;
         }
-
-        _saleRequestsStream.value = updatedSaleRequests;
       }
 
       _saleRequestsStream.subject.add(updatedSaleRequests);

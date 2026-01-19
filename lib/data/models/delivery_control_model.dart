@@ -14,7 +14,7 @@ class DeliveryControlModel extends Equatable {
   final DateTime DateOfCreation;
   final DateTime DateHourOfCreation;
   final bool IsCancelled;
-  final int IsToDelivery;
+  final IsToDelivery isToDelivery;
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
   final int DeliveryStatusLate;
@@ -30,7 +30,7 @@ class DeliveryControlModel extends Equatable {
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.IsCancelled,
-    required this.IsToDelivery,
+    required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
@@ -48,7 +48,7 @@ class DeliveryControlModel extends Equatable {
         this.DateOfCreation,
         this.DateHourOfCreation,
         this.IsCancelled,
-        this.IsToDelivery,
+        this.isToDelivery,
         this.DateHourOfDelivery,
         this.DeliveryControl,
         this.DeliveryStatusLate,
@@ -66,7 +66,7 @@ class DeliveryControlModel extends Equatable {
       'DateOfCreation': DateOfCreation.millisecondsSinceEpoch,
       'DateHourOfCreation': DateHourOfCreation.millisecondsSinceEpoch,
       'IsCancelled': IsCancelled,
-      'IsToDelivery': IsToDelivery,
+      'IsToDelivery': isToDelivery,
       'DateHourOfDelivery': DateHourOfDelivery?.millisecondsSinceEpoch,
       'DeliveryControl': DeliveryControl,
       'DeliveryStatusLate': DeliveryStatusLate,
@@ -87,7 +87,7 @@ class DeliveryControlModel extends Equatable {
       DateOfCreation: DateTime.parse(map['DateOfCreation']),
       DateHourOfCreation: DateTime.parse(map['DateHourOfCreation']),
       IsCancelled: map['IsCancelled'] as bool,
-      IsToDelivery: map['IsToDelivery'] as int,
+      isToDelivery: IsToDelivery.values[map['IsToDelivery']],
       DateHourOfDelivery: map['DateHourOfDelivery'] != null
           ? DateTime.parse(map['DateHourOfDelivery'])
           : null,
@@ -109,7 +109,7 @@ class DeliveryControlModel extends Equatable {
         DateOfCreation: entity.DateOfCreation,
         DateHourOfCreation: entity.DateHourOfCreation,
         IsCancelled: entity.IsCancelled,
-        IsToDelivery: entity.IsToDelivery,
+        isToDelivery: entity.isToDelivery,
         DateHourOfDelivery: entity.DateHourOfDelivery,
         DeliveryControl: entity.DeliveryControl,
         DeliveryStatusLate: entity.DeliveryStatusLate,
@@ -126,7 +126,7 @@ class DeliveryControlModel extends Equatable {
         DateOfCreation: DateOfCreation,
         DateHourOfCreation: DateHourOfCreation,
         IsCancelled: IsCancelled,
-        IsToDelivery: IsToDelivery,
+        isToDelivery: isToDelivery,
         DateHourOfDelivery: DateHourOfDelivery,
         DeliveryControl: DeliveryControl,
         DeliveryStatusLate: DeliveryStatusLate,

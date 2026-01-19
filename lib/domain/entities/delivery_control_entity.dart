@@ -1,5 +1,14 @@
 import 'package:equatable/equatable.dart';
 
+enum IsToDelivery {
+  preparing(1),
+  ready(2),
+  delivered(3);
+
+  final int value;
+  const IsToDelivery(this.value);
+}
+
 class DeliveryControlEntity extends Equatable {
   final int Id;
   final int EnterpriseId;
@@ -10,7 +19,7 @@ class DeliveryControlEntity extends Equatable {
   final DateTime DateOfCreation;
   final DateTime DateHourOfCreation;
   final bool IsCancelled;
-  final int IsToDelivery;
+  final IsToDelivery isToDelivery;
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
   final int DeliveryStatusLate;
@@ -26,7 +35,7 @@ class DeliveryControlEntity extends Equatable {
     required this.DateOfCreation,
     required this.DateHourOfCreation,
     required this.IsCancelled,
-    required this.IsToDelivery,
+    required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
@@ -44,7 +53,7 @@ class DeliveryControlEntity extends Equatable {
         this.DateOfCreation,
         this.DateHourOfCreation,
         this.IsCancelled,
-        this.IsToDelivery,
+        this.isToDelivery,
         this.DateHourOfDelivery,
         this.DeliveryControl,
         this.DeliveryStatusLate,

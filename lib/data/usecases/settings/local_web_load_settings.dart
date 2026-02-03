@@ -11,13 +11,13 @@ class LocalWebLoadSettings implements WebLoadSettings {
 
   @override
   Future<WebLocalSettingsEntity> load() async {
-    if (!kIsWeb) {
-      //local configurations for tests
+    if (kDebugMode) {
       return WebLocalSettingsEntity(
         enterpriseId: 2,
         concentratorUrl: "http://cloud.celtaware.com.br:42021",
         enteprisePersonalizedCode: "02",
       );
+      //local configurations for tests
     }
 
     String settingsUrl = '${Uri.base.removeFragment()}settings.txt';

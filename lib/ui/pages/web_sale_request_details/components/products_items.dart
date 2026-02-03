@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:collection/collection.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../helpers/helpers.dart';
@@ -11,6 +12,20 @@ class ProductsItems extends StatelessWidget {
     super.key,
     required this.saleRequest,
   });
+
+  Color _getGroupColor(int index) {
+    List<Color> colors = [
+      Colors.yellowAccent.withAlpha(50),
+      Colors.blue.withAlpha(50),
+      Colors.orange.withAlpha(50),
+      Colors.purple.withAlpha(50),
+      Colors.lightGreen.withAlpha(50),
+      Colors.pink.withAlpha(50),
+      Colors.teal.withAlpha(50),
+      Colors.greenAccent.withAlpha(50),
+    ];
+    return colors[index % colors.length];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,35 +44,44 @@ class ProductsItems extends StatelessWidget {
       return dateA.compareTo(dateB);
     });
 
+    final grouped = groupBy(products, (p) => p.DateHourOfCreation);
+    final groupKeys = grouped.keys.toList();
+
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: products.length,
-        itemBuilder: (_, index) {
-          final product = products[index];
+        itemCount: groupKeys.length,
+        itemBuilder: (_, groupIndex) {
+          final dateKey = groupKeys[groupIndex];
+          final groupItems = grouped[dateKey]!;
+          final groupColor = _getGroupColor(groupIndex);
 
-          return Column(
-            children: [
-              ProductInformations(product: product),
-              Builder(builder: (context) {
-                final childs = saleRequest.Products.where((e) =>
+          return Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              color: groupColor,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: groupColor, style: BorderStyle.solid),
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: groupItems.length,
+              itemBuilder: (context, index) {
+                final product = groupItems[index];
+                final children = saleRequest.Products.where((e) =>
                     e.SaleRequestProductIdOfFather?.toInt() ==
                     product.SaleRequestProductId).toList();
-                return ListView.builder(
-                  itemCount: childs.length,
-                  shrinkWrap: true,
-                  itemBuilder: (_, index) {
-                    final child = childs[index];
 
-                    return ProductInformations(product: child);
-                  },
+                return Column(
+                  children: [
+                    ProductInformations(
+                        product: product, showDateHourOfCreation: index == 0),
+                    ...children.map((child) => ProductInformations(
+                        product: child, showDateHourOfCreation: false)),
+                  ],
                 );
-              }),
-              if (index < products.length - 1)
-                const Divider(
-                  thickness: 0.1,
-                  height: 8,
-                ),
-            ],
+              },
+            ),
           );
         });
   }
@@ -65,7 +89,12 @@ class ProductsItems extends StatelessWidget {
 
 class ProductInformations extends StatelessWidget {
   final ConcSaleRequestProductModel product;
-  const ProductInformations({super.key, required this.product});
+  final bool showDateHourOfCreation;
+  const ProductInformations({
+    super.key,
+    required this.product,
+    required this.showDateHourOfCreation,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +103,7 @@ class ProductInformations extends StatelessWidget {
     final formatter = DateFormat('HH:mm:ss');
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: RichText(
@@ -113,7 +143,7 @@ class ProductInformations extends StatelessWidget {
             ),
           ),
         ),
-        if (product.DateHourOfCreation != null)
+        if (product.DateHourOfCreation != null && showDateHourOfCreation)
           Text(formatter.format(product.DateHourOfCreation!)),
       ],
     );

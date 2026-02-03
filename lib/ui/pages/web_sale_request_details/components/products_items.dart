@@ -7,10 +7,12 @@ import '../../../helpers/helpers.dart';
 
 class ProductsItems extends StatelessWidget {
   final ConcSaleRequestModel saleRequest;
+  final bool isPreparingColumn;
 
   const ProductsItems({
     super.key,
     required this.saleRequest,
+    required this.isPreparingColumn,
   });
 
   Color _getGroupColor(int index) {
@@ -29,8 +31,16 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = saleRequest.Products.where(
-        (e) => e.SaleRequestProductIdOfFather == null).toList();
+    final products = saleRequest.Products.where((e) {
+      if (saleRequest.DateHourOfDelivery == null || !isPreparingColumn) {
+        return e.SaleRequestProductIdOfFather == null;
+      }
+
+      return e.SaleRequestProductIdOfFather == null &&
+          e.DateHourOfCreation!.isAfter(
+            saleRequest.DateHourOfDelivery!,
+          );
+    }).toList();
 
     products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
     products.sort((a, b) {

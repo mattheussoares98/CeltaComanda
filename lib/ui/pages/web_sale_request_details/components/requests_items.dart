@@ -64,7 +64,10 @@ class RequestsItems extends StatelessWidget {
                             mostRecentRequestFromCurrentSale!,
                       ),
                       const Divider(thickness: 0.1),
-                      ProductsItems(saleRequest: saleRequest),
+                      ProductsItems(
+                        saleRequest: saleRequest,
+                        isPreparingColumn: isPreparingColumn,
+                      ),
                     ],
                   ),
                 ),

@@ -288,6 +288,7 @@ class PtBr implements Translation {
   String get pix => 'Pix';
   String get portion => 'Boleto';
   String get pos => 'Pos';
+  String get preparing => 'Preparando';
   String get price => 'Preço';
   String get productsAndComments => 'Produtos e comentários';
   String get productsSchedules => 'Agendamento de produtos';
@@ -297,6 +298,7 @@ class PtBr implements Translation {
   String get purchaseVale => 'Vale compra';
   String get quantity => 'Quantidade';
   String get quantityAbbreviated => 'Qtd';
+  String get ready => 'Pronto';
   String get register => 'Registrar';
   String get reload => 'Recarregar';
   String get removeCustomer => 'Remover cliente';

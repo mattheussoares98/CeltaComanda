@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/conc_sale_request/conc_sale_request.dart';
+import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
 import '../pages.dart';
@@ -104,31 +105,31 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             return dateB.compareTo(dateA);
           });
 
-          return ResponsiveListFlow(
-            itemCount: saleRequests.length,
-            itemBuilder: (_, index) {
-              final saleRequest = saleRequests[index];
+          final preparing = saleRequests
+              .where(
+                  (e) => e.isToDelivery?.value == IsToDelivery.preparing.value)
+              .toList();
+          final ready = saleRequests
+              .where((e) => e.isToDelivery?.value == IsToDelivery.ready.value)
+              .toList();
 
-              final mostRecentRequestFromCurrentSale =
-                  findMostRecentDateFromSales([saleRequest]);
-
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CommandTableAndLastChangedTime(
-                        saleRequest: saleRequest,
-                        mostRecentRequestFromCurrentSale:
-                            mostRecentRequestFromCurrentSale!,
-                      ),
-                      const Divider(thickness: 0.1),
-                      ProductsListFlow(saleRequest: saleRequest),
-                    ],
-                  ),
+          return Row(
+            children: [
+              Expanded(
+                child: RequestsItems(
+                  findMostRecentDateFromSales: findMostRecentDateFromSales,
+                  requests: preparing,
+                  isPreparingColumn: true,
                 ),
-              );
-            },
+              ),
+              Expanded(
+                child: RequestsItems(
+                  findMostRecentDateFromSales: findMostRecentDateFromSales,
+                  requests: ready,
+                  isPreparingColumn: false,
+                ),
+              ),
+            ],
           );
         },
       ),

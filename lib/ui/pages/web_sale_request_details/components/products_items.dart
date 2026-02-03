@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../helpers/helpers.dart';
-import 'components.dart';
 
-class ProductsListFlow extends StatelessWidget {
+class ProductsItems extends StatelessWidget {
   final ConcSaleRequestModel saleRequest;
 
-  const ProductsListFlow({
+  const ProductsItems({
     super.key,
     required this.saleRequest,
   });
@@ -33,7 +32,7 @@ class ProductsListFlow extends StatelessWidget {
     //   return dateB.compareTo(dateA);
     // });
 
-    return ResponsiveListFlow(
+    return ListView.builder(
         shrinkWrap: true,
         itemCount: products.length,
         itemBuilder: (_, index) {

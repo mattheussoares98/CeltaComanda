@@ -12,7 +12,7 @@ class ResponsiveListFlow extends StatelessWidget {
     super.key,
     required this.itemCount,
     required this.itemBuilder,
-    this.maxItemWidth = 600,
+    this.maxItemWidth = 450,
     this.isSliver = false,
     this.shrinkWrap = false,
   });

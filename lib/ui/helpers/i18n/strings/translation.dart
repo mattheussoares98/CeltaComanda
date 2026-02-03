@@ -243,6 +243,7 @@ abstract class Translation {
   String get portion;
   String get pos;
   String get price;
+  String get preparing;
   String get productsAndComments;
   String get productsSchedules;
   String get products;
@@ -251,6 +252,7 @@ abstract class Translation {
   String get purchaseVale;
   String get quantity;
   String get quantityAbbreviated;
+  String get ready;
   String get register;
   String get reload;
   String get removeCustomer;

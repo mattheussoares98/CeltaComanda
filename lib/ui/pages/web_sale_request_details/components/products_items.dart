@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../helpers/helpers.dart';
@@ -16,21 +17,17 @@ class ProductsItems extends StatelessWidget {
     final products = saleRequest.Products.where(
         (e) => e.SaleRequestProductIdOfFather == null).toList();
 
-    // products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
-    // products.sort((a, b) {
-    //   final dateA = a.DateHourOfCreation == null
-    //       ? null
-    //       : DateTime.parse(a.DateHourOfCreation!);
-    //   final dateB = b.DateHourOfCreation == null
-    //       ? null
-    //       : DateTime.parse(b.DateHourOfCreation!);
+    products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
+    products.sort((a, b) {
+      final dateA = a.DateHourOfCreation;
+      final dateB = b.DateHourOfCreation;
 
-    //   if (dateA == null && dateB == null) return 0;
-    //   if (dateA == null) return 1;
-    //   if (dateB == null) return -1;
+      if (dateA == null && dateB == null) return 0;
+      if (dateA == null) return 1;
+      if (dateB == null) return -1;
 
-    //   return dateB.compareTo(dateA);
-    // });
+      return dateA.compareTo(dateB);
+    });
 
     return ListView.builder(
         shrinkWrap: true,
@@ -80,8 +77,8 @@ class ProductInformations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     final productIsChild = product.SaleRequestProductIdOfFather != null;
+    final formatter = DateFormat('HH:mm:ss');
 
     return Row(
       children: [
@@ -123,7 +120,8 @@ class ProductInformations extends StatelessWidget {
             ),
           ),
         ),
-        const Text('Horário de solicitação'),
+        if (product.DateHourOfCreation != null)
+          Text(formatter.format(product.DateHourOfCreation!)),
       ],
     );
   }

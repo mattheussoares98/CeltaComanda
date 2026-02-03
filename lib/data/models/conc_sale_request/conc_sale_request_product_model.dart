@@ -32,6 +32,7 @@ class ConcSaleRequestProductModel extends Equatable {
   final double? WholeSalePrice;
   final double? WholeSaleOffer;
   final ConcSaleRequestProductModel? SaleRequestProducOfFatherComposition;
+  final DateTime? DateHourOfCreation;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductModel({
@@ -64,6 +65,7 @@ class ConcSaleRequestProductModel extends Equatable {
     required this.WholeSalePrice,
     required this.WholeSaleOffer,
     required this.SaleRequestProducOfFatherComposition,
+    required this.DateHourOfCreation,
   });
 
   @override
@@ -96,6 +98,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRetailOffer,
         WholeSalePrice,
         WholeSaleOffer,
+        DateHourOfCreation,
       ];
 
   factory ConcSaleRequestProductModel.fromEntity(
@@ -130,6 +133,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRetailOffer: entity.SaleRetailOffer,
         WholeSalePrice: entity.WholeSalePrice,
         WholeSaleOffer: entity.WholeSaleOffer,
+        DateHourOfCreation: entity.DateHourOfCreation,
         SaleRequestProducOfFatherComposition:
             entity.SaleRequestProducOfFatherComposition == null
                 ? null
@@ -167,6 +171,7 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRetailOffer: SaleRetailOffer,
         WholeSalePrice: WholeSalePrice,
         WholeSaleOffer: WholeSaleOffer,
+        DateHourOfCreation: DateHourOfCreation,
         SaleRequestProducOfFatherComposition:
             SaleRequestProducOfFatherComposition?.toEntity(),
       );
@@ -205,6 +210,7 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSaleOffer: json['WholeSaleOffer'],
         SaleRequestProducOfFatherComposition:
             json['SaleRequestProducOfFatherComposition'],
+        DateHourOfCreation: DateTime.tryParse(json['DateHourOfCreation'] ?? ''),
       );
 
   Map<String, dynamic> toJson() => {
@@ -239,5 +245,6 @@ class ConcSaleRequestProductModel extends Equatable {
         "WholeSaleOffer": WholeSaleOffer,
         "SaleRequestProducOfFatherComposition":
             SaleRequestProducOfFatherComposition,
+        "DateHourOfCreation": DateHourOfCreation?.toIso8601String(),
       };
 }

@@ -30,6 +30,7 @@ class ConcSaleRequestProductEntity extends Equatable {
   final double? WholeSalePrice;
   final double? WholeSaleOffer;
   final ConcSaleRequestProductEntity? SaleRequestProducOfFatherComposition;
+  final DateTime? DateHourOfCreation;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductEntity({
@@ -62,6 +63,7 @@ class ConcSaleRequestProductEntity extends Equatable {
     required this.WholeSalePrice,
     required this.WholeSaleOffer,
     required this.SaleRequestProducOfFatherComposition,
+    required this.DateHourOfCreation,
   });
 
   @override
@@ -94,6 +96,7 @@ class ConcSaleRequestProductEntity extends Equatable {
         SaleRetailOffer,
         WholeSalePrice,
         WholeSaleOffer,
+        DateHourOfCreation,
       ];
 }
 

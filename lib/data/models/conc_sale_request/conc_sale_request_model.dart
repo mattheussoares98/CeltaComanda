@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 
 import '../../../domain/entities/conc_sale_request/conc_sale_request.dart';
 import 'conc_sale_request_product_model.dart';
@@ -31,7 +32,7 @@ class ConcSaleRequestModel extends Equatable {
   final String? SellerName;
   final int? DeliveryControl;
   final bool? HasServices;
-  final int? IsToDelivery;
+  final IsToDelivery? isToDelivery;
   final DateTime? DateHourOfDelivery;
   final String? PersonalizedCodeReduced;
   // final ModelEnterprise Enterprise ;
@@ -64,7 +65,7 @@ class ConcSaleRequestModel extends Equatable {
     required this.SellerName,
     required this.DeliveryControl,
     required this.HasServices,
-    required this.IsToDelivery,
+    required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.PersonalizedCodeReduced,
   });
@@ -91,6 +92,16 @@ class ConcSaleRequestModel extends Equatable {
         CustomerAdditionalCode,
         CustomerAdditionalName,
         CovenantCode,
+        CovenantName,
+        IncrementType,
+        IncrementValue,
+        SellerCode,
+        SellerName,
+        DeliveryControl,
+        HasServices,
+        isToDelivery,
+        DateHourOfDelivery,
+        PersonalizedCodeReduced,
       ];
 
   factory ConcSaleRequestModel.fromEntity(ConcSaleRequestEntity entity) =>
@@ -123,7 +134,7 @@ class ConcSaleRequestModel extends Equatable {
         SellerName: entity.SellerName,
         DeliveryControl: entity.DeliveryControl,
         HasServices: entity.HasServices,
-        IsToDelivery: entity.IsToDelivery,
+        isToDelivery: entity.isToDelivery,
         DateHourOfDelivery: entity.DateHourOfDelivery,
         PersonalizedCodeReduced: entity.PersonalizedCodeReduced,
       );
@@ -156,7 +167,7 @@ class ConcSaleRequestModel extends Equatable {
         SellerName: SellerName,
         DeliveryControl: DeliveryControl,
         HasServices: HasServices,
-        IsToDelivery: IsToDelivery,
+        isToDelivery: isToDelivery,
         DateHourOfDelivery: DateHourOfDelivery,
         PersonalizedCodeReduced: PersonalizedCodeReduced,
       );
@@ -192,7 +203,8 @@ class ConcSaleRequestModel extends Equatable {
         SellerName: json['SellerName'],
         DeliveryControl: json['DeliveryControl'],
         HasServices: json['HasServices'],
-        IsToDelivery: json['IsToDelivery'],
+        isToDelivery: IsToDelivery.values
+            .firstWhereOrNull((e) => e.value == json['IsToDelivery']),
         DateHourOfDelivery: json['DateHourOfDelivery'] == null
             ? null
             : DateTime.parse(json['DateHourOfDelivery']),

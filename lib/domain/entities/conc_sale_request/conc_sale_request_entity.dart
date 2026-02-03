@@ -30,7 +30,7 @@ class ConcSaleRequestEntity extends Equatable {
   final String? SellerName;
   final int? DeliveryControl;
   final bool? HasServices;
-  final int? IsToDelivery;
+  final IsToDelivery? isToDelivery;
   final DateTime? DateHourOfDelivery;
   final String? PersonalizedCodeReduced;
   // final ModelEnterprise Enterprise ;
@@ -63,7 +63,7 @@ class ConcSaleRequestEntity extends Equatable {
     required this.SellerName,
     required this.DeliveryControl,
     required this.HasServices,
-    required this.IsToDelivery,
+    required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.PersonalizedCodeReduced,
   });

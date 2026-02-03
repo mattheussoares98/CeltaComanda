@@ -51,7 +51,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
   void _fetchAndUpdateData() {
     final provider =
         Provider.of<WebSaleRequestDetailsPresenter>(context, listen: false);
-    provider.loadOpenSaleRequests(isConsiderDelivered: true);
+    provider.loadOpenSaleRequests();
   }
 
   DateTime? findMostRecentDateFromSales(List<ConcSaleRequestModel> sales) {

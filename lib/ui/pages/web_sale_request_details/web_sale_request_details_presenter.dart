@@ -12,5 +12,9 @@ abstract class WebSaleRequestDetailsPresenter implements Listenable {
   WebLocalSettingsEntity? get webLocalSettings;
 
   Future<void> validateEnterprise(String enterpriseName);
-  Future<void> loadOpenSaleRequests({required bool isConsiderDelivered});
+  Future<void> loadOpenSaleRequests();
+  Future<void> updateDeliveryControlStatus({
+    required int deliveryControlId,
+    required IsToDelivery newStatus,
+  });
 }

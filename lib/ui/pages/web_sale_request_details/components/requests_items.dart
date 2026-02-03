@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../data/models/models.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
+import '../web_sale_request_details.dart';
 import 'components.dart';
 
 class RequestsItems extends StatelessWidget {
@@ -54,21 +57,34 @@ class RequestsItems extends StatelessWidget {
               // return const Text('working');
 
               return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CommandTableAndLastChangedTime(
-                        saleRequest: saleRequest,
-                        mostRecentRequestFromCurrentSale:
-                            mostRecentRequestFromCurrentSale!,
-                      ),
-                      const Divider(thickness: 0.1),
-                      ProductsItems(
-                        saleRequest: saleRequest,
-                        isPreparingColumn: isPreparingColumn,
-                      ),
-                    ],
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onDoubleTap: () {
+                    Provider.of<WebSaleRequestDetailsPresenter>(context,
+                            listen: false)
+                        .updateDeliveryControlStatus(
+                      deliveryControlId: saleRequest.SaleRequestId,
+                      newStatus: isPreparingColumn
+                          ? IsToDelivery.ready
+                          : IsToDelivery.delivered,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        CommandTableAndLastChangedTime(
+                          saleRequest: saleRequest,
+                          mostRecentRequestFromCurrentSale:
+                              mostRecentRequestFromCurrentSale!,
+                        ),
+                        const Divider(thickness: 0.1),
+                        ProductsItems(
+                          saleRequest: saleRequest,
+                          isPreparingColumn: isPreparingColumn,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

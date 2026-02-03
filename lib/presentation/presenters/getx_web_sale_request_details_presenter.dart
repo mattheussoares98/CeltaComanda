@@ -66,7 +66,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       _saleRequestsStream.stream;
 
   @override
-  Future<void> loadOpenSaleRequests({required bool isConsiderDelivered}) async {
+  Future<void> loadOpenSaleRequests() async {
     try {
       isLoading = true;
       mainError = null;
@@ -135,4 +135,22 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   WebLocalSettingsEntity? _webLocalSettings;
   @override
   WebLocalSettingsEntity? get webLocalSettings => _webLocalSettings;
+
+  @override
+  Future<void> updateDeliveryControlStatus({
+    required int deliveryControlId,
+    required IsToDelivery newStatus,
+  }) async {
+    try {
+      await updateDeliveryStatus.update(
+        settings: _webLocalSettings!,
+        id: deliveryControlId,
+        newStatus: newStatus,
+      );
+
+      await loadOpenSaleRequests();
+    } catch (e) {
+      mainError = getUIError(e);
+    }
+  }
 }

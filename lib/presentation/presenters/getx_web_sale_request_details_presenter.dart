@@ -19,6 +19,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LoadDeliveryControl loadDeliveryControl;
   final ConcLoadSaleRequest concLoadSaleRequest;
   final WebLoadSettings webLoadSettings;
+  final UpdateDeliveryStatus updateDeliveryStatus;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
@@ -27,6 +28,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     required this.loadDeliveryControl,
     required this.concLoadSaleRequest,
     required this.webLoadSettings,
+    required this.updateDeliveryStatus,
   });
 
   @override

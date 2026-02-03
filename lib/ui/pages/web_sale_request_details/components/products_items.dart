@@ -6,12 +6,12 @@ import '../../../../data/models/models.dart';
 import '../../../helpers/helpers.dart';
 
 class ProductsItems extends StatelessWidget {
-  final ConcSaleRequestModel saleRequest;
+  final List<ConcSaleRequestProductModel> products;
   final bool isPreparingColumn;
 
   const ProductsItems({
     super.key,
-    required this.saleRequest,
+    required this.products,
     required this.isPreparingColumn,
   });
 
@@ -31,17 +31,6 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = saleRequest.Products.where((e) {
-      if (saleRequest.DateHourOfDelivery == null || !isPreparingColumn) {
-        return e.SaleRequestProductIdOfFather == null;
-      }
-
-      return e.SaleRequestProductIdOfFather == null &&
-          e.DateHourOfCreation!.isAfter(
-            saleRequest.DateHourOfDelivery!,
-          );
-    }).toList();
-
     products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
     products.sort((a, b) {
       final dateA = a.DateHourOfCreation;
@@ -78,9 +67,11 @@ class ProductsItems extends StatelessWidget {
               itemCount: groupItems.length,
               itemBuilder: (context, index) {
                 final product = groupItems[index];
-                final children = saleRequest.Products.where((e) =>
-                    e.SaleRequestProductIdOfFather?.toInt() ==
-                    product.SaleRequestProductId).toList();
+                final children = products
+                    .where((e) =>
+                        e.SaleRequestProductIdOfFather?.toInt() ==
+                        product.SaleRequestProductId)
+                    .toList();
 
                 return Column(
                   children: [

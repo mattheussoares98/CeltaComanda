@@ -2,6 +2,7 @@ abstract class Translation {
   String get msgAuthorizationIsPendant;
   String get msgAlcoolDrink;
   String get msgAllChildsAreDisabled;
+  String get msgAllProductsAreDelivered;
   String get msgBarcodeNotRead;
   String get msgBlockedCommand;
   String get msgEmailInUse;

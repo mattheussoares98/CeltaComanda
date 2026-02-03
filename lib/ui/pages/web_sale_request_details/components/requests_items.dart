@@ -51,8 +51,17 @@ class RequestsItems extends StatelessWidget {
             itemBuilder: (_, index) {
               final saleRequest = requests[index];
 
-              final mostRecentRequestFromCurrentSale =
-                  findMostRecentDateFromSales([saleRequest]);
+              final products = saleRequest.Products.where((e) {
+                if (saleRequest.DateHourOfDelivery == null ||
+                    !isPreparingColumn) {
+                  return e.SaleRequestProductIdOfFather == null;
+                }
+
+                return e.SaleRequestProductIdOfFather == null &&
+                    e.DateHourOfCreation!.isAfter(
+                      saleRequest.DateHourOfDelivery!,
+                    );
+              }).toList();
 
               // return const Text('working');
 
@@ -76,11 +85,27 @@ class RequestsItems extends StatelessWidget {
                         CommandTableAndLastChangedTime(
                           saleRequest: saleRequest,
                           mostRecentRequestFromCurrentSale:
-                              mostRecentRequestFromCurrentSale!,
+                              findMostRecentDateFromSales([saleRequest])!,
                         ),
                         const Divider(thickness: 0.1),
+                        if (products.isEmpty)
+                          //!quando marca como pronto, salva o horário do campo DateHourOfDelivery. Mas quando marca como preparando de novo, esse campo
+                          //!continua igual. Esse campo é usado para identificar os produtos que foram solicitados após a última entrega
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                R.string.msgAllProductsAreDelivered,
+                                style: const TextStyle(color: Colors.red),
+                              )),
+                              const Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
+                            ],
+                          ),
                         ProductsItems(
-                          saleRequest: saleRequest,
+                          products: products,
                           isPreparingColumn: isPreparingColumn,
                         ),
                       ],

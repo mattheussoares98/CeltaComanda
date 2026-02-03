@@ -8,6 +8,7 @@ class PtBr implements Translation {
       "Esse produto é uma bebida alcoólica. Deseja adicionar mesmo assim?";
   String get msgAllChildsAreDisabled =>
       "Por favor, chame o garçom para arrumar esse problema.\nTodos os filhos estão desativados no agendamento, habilite pelo menos um";
+  String get msgAllProductsAreDelivered => 'Todos produtos já foram entregues';
   String get msgBarcodeNotRead => 'Nenhum código de barras foi lido';
   String get msgBlockedCommand => 'Comanda bloqueada';
   String get msgCantAddCombox => 'Não é permitido adicionar combo por aqui';

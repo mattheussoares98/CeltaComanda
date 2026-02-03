@@ -42,7 +42,8 @@ class RequestsItems extends StatelessWidget {
                   ]),
             ),
           ),
-          SliverList.builder(
+          ResponsiveListFlow(
+            isSliver: true,
             itemCount: requests.length,
             itemBuilder: (_, index) {
               final saleRequest = requests[index];

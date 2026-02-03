@@ -37,14 +37,7 @@ class ProductsItems extends StatelessWidget {
 
           return Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: ProductInformations(product: product),
-                  ),
-                ],
-              ),
+              ProductInformations(product: product),
               Builder(builder: (context) {
                 final childs = saleRequest.Products.where((e) =>
                     e.SaleRequestProductIdOfFather?.toInt() ==

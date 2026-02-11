@@ -54,6 +54,10 @@ class ProductsItems extends StatelessWidget {
           final groupItems = grouped[dateKey]!;
           final groupColor = _getGroupColor(groupIndex);
 
+          final notChildProducts = groupItems
+              .where((p) => p.SaleRequestProductIdOfFather == null)
+              .toList();
+
           return Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -64,9 +68,9 @@ class ProductsItems extends StatelessWidget {
             ),
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: groupItems.length,
+              itemCount: notChildProducts.length,
               itemBuilder: (context, index) {
-                final product = groupItems[index];
+                final product = notChildProducts[index];
                 final children = products
                     .where((e) =>
                         e.SaleRequestProductIdOfFather?.toInt() ==

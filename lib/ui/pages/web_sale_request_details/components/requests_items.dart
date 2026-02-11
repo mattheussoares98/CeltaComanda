@@ -46,18 +46,7 @@ class RequestsItems extends StatelessWidget {
               itemCount: requests.length,
               itemBuilder: (_, index) {
                 final saleRequest = requests[index];
-
-                final products = saleRequest.Products.where((e) {
-                  if (saleRequest.DateHourOfDelivery == null ||
-                      !isPreparingColumn) {
-                    return e.SaleRequestProductIdOfFather == null;
-                  }
-
-                  return e.SaleRequestProductIdOfFather == null &&
-                      e.DateHourOfCreation!.isAfter(
-                        saleRequest.DateHourOfDelivery!,
-                      );
-                }).toList();
+                final products = saleRequest.Products;
 
                 // return const Text('working');
 

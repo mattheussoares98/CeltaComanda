@@ -18,6 +18,10 @@ class ConcLoadDeliveryControl implements LoadDeliveryControl {
       headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
     );
 
+    if (response == null) {
+      return [];
+    }
+
     return (response as List)
         .map((e) => DeliveryControlModel.fromJson(e).toEntity())
         .toList();

@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/conc_sale_request/conc_sale_request.dart';
 import '../../../domain/entities/entities.dart';
 import '../../helpers/helpers.dart';
 import '../../mixins/mixins.dart';
@@ -53,34 +51,6 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     final provider =
         Provider.of<WebSaleRequestDetailsPresenter>(context, listen: false);
     provider.loadOpenSaleRequests();
-  }
-
-  Map<int?, List<ConcSaleRequestModel>> getRequestsGroupedByLot(
-    List<ConcSaleRequestModel> originalRequests,
-    IsToDelivery status,
-  ) {
-    // 1. Create a flattened list of "Single-Product Requests"
-    // This handles the case where one Request has products in different Lots.
-    final List<ConcSaleRequestModel> flattenedRequests = [];
-
-    for (var request in originalRequests) {
-      // Filter products by status
-      final filteredProducts =
-          request.Products.where((p) => p.isToDelivery == status).toList();
-
-      if (filteredProducts.isEmpty) continue;
-
-      // Group these filtered products by their DeliveryLot
-      final productsByLot = groupBy(filteredProducts, (p) => p.DeliveryLot);
-
-      // Create a unique Request entity for each Lot found within the same SaleRequest
-      productsByLot.forEach((lotId, products) {
-        flattenedRequests.add(request.copyWith(Products: products));
-      });
-    }
-
-    // 2. Group the resulting requests by the DeliveryLot (looking at the first product)
-    return groupBy(flattenedRequests, (req) => req.Products.first.DeliveryLot);
   }
 
   @override

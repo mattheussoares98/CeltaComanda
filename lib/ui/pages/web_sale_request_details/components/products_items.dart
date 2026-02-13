@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 
 import '../../../../data/models/models.dart';
@@ -81,52 +80,45 @@ class ProductInformations extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final productIsChild = product.SaleRequestProductIdOfFather != null;
-    final formatter = DateFormat('HH:mm:ss');
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: RichText(
-            text: TextSpan(
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontStyle: productIsChild ? FontStyle.italic : FontStyle.normal,
-              ),
-              children: [
-                if (productIsChild)
-                  const TextSpan(
-                    text: '  - ',
-                  ),
-                TextSpan(
-                  text: product.Quantity.toString().toBrazilianNumber(2, true),
-                ),
-                const TextSpan(
-                  text: ' x ',
-                ),
-                TextSpan(
-                    text: product.ProductName ??
-                        (productIsChild ? 'childName' : 'productName')),
-                if (product.ProductIsFatherComposition == true) ...[
-                  TextSpan(
-                    text: ' (${R.string.combox})',
-                    style: const TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-                if (product.Comments != null)
-                  TextSpan(
-                    text: ' (${product.Comments!})',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.red, fontStyle: FontStyle.italic),
-                  )
-              ],
-            ),
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: RichText(
+        text: TextSpan(
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontStyle: productIsChild ? FontStyle.italic : FontStyle.normal,
           ),
+          children: [
+            if (productIsChild)
+              const TextSpan(
+                text: '  - ',
+              ),
+            TextSpan(
+              text: product.Quantity.toString().toBrazilianNumber(2, true),
+            ),
+            const TextSpan(
+              text: ' x ',
+            ),
+            TextSpan(
+                text: product.ProductName ??
+                    (productIsChild ? 'childName' : 'productName')),
+            if (product.ProductIsFatherComposition == true) ...[
+              TextSpan(
+                text: ' (${R.string.combox})',
+                style: const TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ],
+            if (product.Comments != null)
+              TextSpan(
+                text: ' (${product.Comments!})',
+                style: theme.textTheme.titleMedium
+                    ?.copyWith(color: Colors.red, fontStyle: FontStyle.italic),
+              )
+          ],
         ),
-        if (product.DateHourOfCreation != null && showDateHourOfCreation)
-          Text(formatter.format(product.DateHourOfCreation!)),
-      ],
+      ),
     );
   }
 }

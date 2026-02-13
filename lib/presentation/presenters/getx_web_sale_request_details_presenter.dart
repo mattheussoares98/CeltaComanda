@@ -138,13 +138,15 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
 
   @override
   Future<void> updateDeliveryControlStatus({
-    required int deliveryControlId,
+    required int saleRequestId,
+    required int deliveryLotId,
     required IsToDelivery newStatus,
   }) async {
     try {
       await updateDeliveryStatus.update(
         settings: _webLocalSettings!,
-        id: deliveryControlId,
+        saleRequestId: saleRequestId,
+        deliveryLotId: deliveryLotId,
         newStatus: newStatus,
       );
 

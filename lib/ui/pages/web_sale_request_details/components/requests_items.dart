@@ -105,7 +105,8 @@ class RequestsItems extends StatelessWidget {
                       Provider.of<WebSaleRequestDetailsPresenter>(context,
                               listen: false)
                           .updateDeliveryControlStatus(
-                        deliveryControlId: saleRequest.SaleRequestId,
+                        saleRequestId: saleRequest.SaleRequestId,
+                        deliveryLotId: saleRequest.Products.first.DeliveryLot!,
                         newStatus: isToDeliveryStatus == IsToDelivery.preparing
                             ? IsToDelivery.ready
                             : IsToDelivery.delivered,

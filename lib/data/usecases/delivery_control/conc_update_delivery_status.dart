@@ -9,12 +9,13 @@ class ConcUpdateDeliveryStatus implements UpdateDeliveryStatus {
   @override
   Future<void> update({
     required WebLocalSettingsEntity settings,
-    required int id,
+    required int saleRequestId,
+    required int deliveryLotId,
     required IsToDelivery newStatus,
     OriginType? originType = OriginType.saleRequest,
   }) async {
     final url =
-        '${settings.concentratorUrl}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${originType!.value}&id=$id&deliveryStatus=${newStatus.value}';
+        '${settings.concentratorUrl}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${originType!.value}&saleRequestId=$saleRequestId&deliveryLotId=$deliveryLotId&deliveryStatus=${newStatus.value}';
 
     await httpClient.request(
       url: url,

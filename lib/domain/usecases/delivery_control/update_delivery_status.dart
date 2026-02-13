@@ -3,7 +3,8 @@ import '../../entities/entities.dart';
 abstract class UpdateDeliveryStatus {
   Future<void> update({
     required WebLocalSettingsEntity settings,
-    required int id,
+    required int saleRequestId,
+    required int deliveryLotId,
     required IsToDelivery newStatus,
     OriginType? originType = OriginType.saleRequest,
   });

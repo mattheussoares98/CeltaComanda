@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/conc_sale_request/conc_sale_request.dart';
+import '../../../domain/entities/entities.dart';
 
 class ConcSaleRequestProductModel extends Equatable {
   final int? SaleRequestProductId;
@@ -34,7 +36,7 @@ class ConcSaleRequestProductModel extends Equatable {
   final ConcSaleRequestProductModel? SaleRequestProducOfFatherComposition;
   final DateTime? DateHourOfCreation;
   final int? DeliveryLot;
-  final int? IsToDelivery;
+  final IsToDelivery? isToDelivery;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductModel({
@@ -69,7 +71,7 @@ class ConcSaleRequestProductModel extends Equatable {
     required this.SaleRequestProducOfFatherComposition,
     required this.DateHourOfCreation,
     required this.DeliveryLot,
-    required this.IsToDelivery,
+    required this.isToDelivery,
   });
 
   @override
@@ -104,7 +106,7 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSaleOffer,
         DateHourOfCreation,
         DeliveryLot,
-        IsToDelivery,
+        isToDelivery,
       ];
 
   factory ConcSaleRequestProductModel.fromEntity(
@@ -141,7 +143,7 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSaleOffer: entity.WholeSaleOffer,
         DateHourOfCreation: entity.DateHourOfCreation,
         DeliveryLot: entity.DeliveryLot,
-        IsToDelivery: entity.IsToDelivery,
+        isToDelivery: entity.isToDelivery,
         SaleRequestProducOfFatherComposition:
             entity.SaleRequestProducOfFatherComposition == null
                 ? null
@@ -181,7 +183,7 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSaleOffer: WholeSaleOffer,
         DateHourOfCreation: DateHourOfCreation,
         DeliveryLot: DeliveryLot,
-        IsToDelivery: IsToDelivery,
+        isToDelivery: isToDelivery,
         SaleRequestProducOfFatherComposition:
             SaleRequestProducOfFatherComposition?.toEntity(),
       );
@@ -219,7 +221,8 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice: json['WholeSalePrice'],
         WholeSaleOffer: json['WholeSaleOffer'],
         DeliveryLot: json['DeliveryLot'],
-        IsToDelivery: json['IsToDelivery'],
+        isToDelivery: IsToDelivery.values
+            .firstWhereOrNull((e) => e.value == json['IsToDelivery']),
         SaleRequestProducOfFatherComposition:
             json['SaleRequestProducOfFatherComposition'],
         DateHourOfCreation: DateTime.tryParse(json['DateHourOfCreation'] ?? ''),
@@ -255,6 +258,8 @@ class ConcSaleRequestProductModel extends Equatable {
         "SaleRetailOffer": SaleRetailOffer,
         "WholeSalePrice": WholeSalePrice,
         "WholeSaleOffer": WholeSaleOffer,
+        "DeliveryLot": DeliveryLot,
+        "isToDelivery": isToDelivery?.value,
         "SaleRequestProducOfFatherComposition":
             SaleRequestProducOfFatherComposition,
         "DateHourOfCreation": DateHourOfCreation?.toIso8601String(),

@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../entities.dart';
+
 class ConcSaleRequestProductEntity extends Equatable {
   final int? SaleRequestProductId;
   final int? InternalCodeOnERP;
@@ -32,7 +34,7 @@ class ConcSaleRequestProductEntity extends Equatable {
   final ConcSaleRequestProductEntity? SaleRequestProducOfFatherComposition;
   final DateTime? DateHourOfCreation;
   final int? DeliveryLot;
-  final int? IsToDelivery; // 1-Preparing, 2-Ready, 3-Delivered
+  final IsToDelivery? isToDelivery; // 1-Preparing, 2-Ready, 3-Delivered
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductEntity({
@@ -54,7 +56,7 @@ class ConcSaleRequestProductEntity extends Equatable {
     required this.SaleRequestProductIdOfFather,
     required this.SaleRequestProductInternalCodeOnERP,
     required this.DeliveryLot,
-    required this.IsToDelivery,
+    required this.isToDelivery,
     required this.ProductName,
     required this.BlockadeDiscountType,
     required this.DiscountFromSaleOffer,
@@ -90,7 +92,7 @@ class ConcSaleRequestProductEntity extends Equatable {
         SaleRequestProductIdOfFather,
         SaleRequestProductInternalCodeOnERP,
         DeliveryLot,
-        IsToDelivery,
+        isToDelivery,
         ProductName,
         BlockadeDiscountType,
         DiscountFromSaleOffer,

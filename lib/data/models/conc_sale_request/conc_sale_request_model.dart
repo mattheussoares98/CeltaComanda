@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/conc_sale_request/conc_sale_request.dart';
+import '../../../domain/entities/entities.dart';
 import 'conc_sale_request_product_model.dart';
 
 class ConcSaleRequestModel extends Equatable {
@@ -210,4 +212,74 @@ class ConcSaleRequestModel extends Equatable {
             : DateTime.parse(json['DateHourOfDelivery']),
         PersonalizedCodeReduced: json['PersonalizedCodeReduced'],
       );
+
+  ConcSaleRequestModel copyWith({
+    int? SaleRequestId,
+    String? PersonalizedCode,
+    String? Comments,
+    DateTime? DateHourOfCreation,
+    DateTime? DateOfCreation,
+    bool? IsCancelled,
+    bool? IsUsing,
+    double? TotalLiquid,
+    List<ConcSaleRequestProductModel>? Products,
+    int? EnterpriseId,
+    SaleRequestOriginType? FlagOrigin,
+    int? EnterpriseCode,
+    String? EnterprisePersonalizedCode,
+    int? InternalCodeOnERP,
+    int? CustomerCode,
+    String? CpfCnpjNumber,
+    String? CustomerName,
+    int? CustomerAdditionalCode,
+    String? CustomerAdditionalName,
+    int? CovenantCode,
+    String? CovenantName,
+    int? IncrementType,
+    double? IncrementValue,
+    String? SellerCode,
+    String? SellerName,
+    int? DeliveryControl,
+    bool? HasServices,
+    IsToDelivery? isToDelivery,
+    DateTime? DateHourOfDelivery,
+    String? PersonalizedCodeReduced,
+  }) {
+    return ConcSaleRequestModel(
+      SaleRequestId: SaleRequestId ?? this.SaleRequestId,
+      PersonalizedCode: PersonalizedCode ?? this.PersonalizedCode,
+      Comments: Comments ?? this.Comments,
+      DateHourOfCreation: DateHourOfCreation ?? this.DateHourOfCreation,
+      DateOfCreation: DateOfCreation ?? this.DateOfCreation,
+      IsCancelled: IsCancelled ?? this.IsCancelled,
+      IsUsing: IsUsing ?? this.IsUsing,
+      TotalLiquid: TotalLiquid ?? this.TotalLiquid,
+      Products: Products ?? this.Products,
+      EnterpriseId: EnterpriseId ?? this.EnterpriseId,
+      FlagOrigin: FlagOrigin ?? this.FlagOrigin,
+      EnterpriseCode: EnterpriseCode ?? this.EnterpriseCode,
+      EnterprisePersonalizedCode:
+          EnterprisePersonalizedCode ?? this.EnterprisePersonalizedCode,
+      InternalCodeOnERP: InternalCodeOnERP ?? this.InternalCodeOnERP,
+      CustomerCode: CustomerCode ?? this.CustomerCode,
+      CpfCnpjNumber: CpfCnpjNumber ?? this.CpfCnpjNumber,
+      CustomerName: CustomerName ?? this.CustomerName,
+      CustomerAdditionalCode:
+          CustomerAdditionalCode ?? this.CustomerAdditionalCode,
+      CustomerAdditionalName:
+          CustomerAdditionalName ?? this.CustomerAdditionalName,
+      CovenantCode: CovenantCode ?? this.CovenantCode,
+      CovenantName: CovenantName ?? this.CovenantName,
+      IncrementType: IncrementType ?? this.IncrementType,
+      IncrementValue: IncrementValue ?? this.IncrementValue,
+      SellerCode: SellerCode ?? this.SellerCode,
+      SellerName: SellerName ?? this.SellerName,
+      DeliveryControl: DeliveryControl ?? this.DeliveryControl,
+      HasServices: HasServices ?? this.HasServices,
+      isToDelivery: isToDelivery ?? this.isToDelivery,
+      DateHourOfDelivery: DateHourOfDelivery ?? this.DateHourOfDelivery,
+      PersonalizedCodeReduced:
+          PersonalizedCodeReduced ?? this.PersonalizedCodeReduced,
+    );
+  }
 }

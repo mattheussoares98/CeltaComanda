@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -76,6 +77,34 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
   }
 
+  Map<int?, List<ConcSaleRequestModel>> getRequestsGroupedByLot(
+    List<ConcSaleRequestModel> originalRequests,
+    IsToDelivery status,
+  ) {
+    // 1. Create a flattened list of "Single-Product Requests"
+    // This handles the case where one Request has products in different Lots.
+    final List<ConcSaleRequestModel> flattenedRequests = [];
+
+    for (var request in originalRequests) {
+      // Filter products by status
+      final filteredProducts =
+          request.Products.where((p) => p.isToDelivery == status).toList();
+
+      if (filteredProducts.isEmpty) continue;
+
+      // Group these filtered products by their DeliveryLot
+      final productsByLot = groupBy(filteredProducts, (p) => p.DeliveryLot);
+
+      // Create a unique Request entity for each Lot found within the same SaleRequest
+      productsByLot.forEach((lotId, products) {
+        flattenedRequests.add(request.copyWith(Products: products));
+      });
+    }
+
+    // 2. Group the resulting requests by the DeliveryLot (looking at the first product)
+    return groupBy(flattenedRequests, (req) => req.Products.first.DeliveryLot);
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider =
@@ -105,28 +134,20 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             return dateB.compareTo(dateA);
           });
 
-          final preparing = saleRequests
-              .where(
-                  (e) => e.isToDelivery?.value == IsToDelivery.preparing.value)
-              .toList();
-          final ready = saleRequests
-              .where((e) => e.isToDelivery?.value == IsToDelivery.ready.value)
-              .toList();
-
           return Row(
             children: [
               Expanded(
                 child: RequestsItems(
                   findMostRecentDateFromSales: findMostRecentDateFromSales,
-                  requests: preparing,
-                  isPreparingColumn: true,
+                  isToDeliveryStatus: IsToDelivery.preparing,
+                  saleRequests: saleRequests,
                 ),
               ),
               Expanded(
                 child: RequestsItems(
                   findMostRecentDateFromSales: findMostRecentDateFromSales,
-                  requests: ready,
-                  isPreparingColumn: false,
+                  isToDeliveryStatus: IsToDelivery.ready,
+                  saleRequests: saleRequests,
                 ),
               ),
             ],

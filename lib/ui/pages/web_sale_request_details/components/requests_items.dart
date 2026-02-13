@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,27 +12,64 @@ import 'components.dart';
 class RequestsItems extends StatelessWidget {
   final DateTime? Function(List<ConcSaleRequestModel> sales)
       findMostRecentDateFromSales;
-  final List<ConcSaleRequestModel> requests;
-  final bool isPreparingColumn;
+  final List<ConcSaleRequestModel> saleRequests;
+  final IsToDelivery isToDeliveryStatus;
 
   const RequestsItems({
     super.key,
     required this.findMostRecentDateFromSales,
-    required this.requests,
-    required this.isPreparingColumn,
+    required this.saleRequests,
+    required this.isToDeliveryStatus,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = isPreparingColumn ? Colors.amber : Colors.green;
+    final color = isToDeliveryStatus == IsToDelivery.preparing
+        ? Colors.amber
+        : Colors.green;
+
+    List<ConcSaleRequestModel> splitRequestsByLotAndStatus(
+        List<ConcSaleRequestModel> originalRequests, IsToDelivery status) {
+      final List<ConcSaleRequestModel> explodedList = [];
+
+      for (var request in originalRequests) {
+        // 1. Filter products by the requested status first
+        final validProducts =
+            request.Products.where((p) => p.isToDelivery == status).toList();
+
+        if (validProducts.isEmpty) continue;
+
+        // 2. Group the valid products by their DeliveryLot
+        // This identifies how many unique lots exist in THIS specific request
+        final productsByLot = groupBy(validProducts, (p) => p.DeliveryLot);
+
+        // 3. For each unique lot, create a new 'exploded' version of the SaleRequest
+        for (var entry in productsByLot.entries) {
+          final productsForThisSpecificLot = entry.value;
+
+          explodedList.add(
+            request.copyWith(
+              Products: productsForThisSpecificLot,
+            ),
+          );
+        }
+      }
+
+      return explodedList;
+    }
+
+    final filteredSaleRequests =
+        splitRequestsByLotAndStatus(saleRequests, isToDeliveryStatus);
 
     return Container(
       color: color.withAlpha(20),
       child: Column(
         children: [
           Text(
-            isPreparingColumn ? R.string.preparing : R.string.ready,
+            isToDeliveryStatus == IsToDelivery.preparing
+                ? R.string.preparing
+                : R.string.ready,
             textAlign: TextAlign.center,
             style: theme.textTheme.headlineLarge
                 ?.copyWith(color: color, fontWeight: FontWeight.bold, shadows: [
@@ -43,9 +81,12 @@ class RequestsItems extends StatelessWidget {
           ),
           Expanded(
             child: ResponsiveListFlow(
-              itemCount: requests.length,
+              itemCount: filteredSaleRequests.length,
               itemBuilder: (_, index) {
-                final saleRequest = requests[index];
+                final item = filteredSaleRequests.elementAt(index);
+                // final deliveryLotId = item.key;
+                final saleRequest = item;
+
                 final products = saleRequest.Products;
 
                 // return const Text('working');
@@ -58,7 +99,7 @@ class RequestsItems extends StatelessWidget {
                               listen: false)
                           .updateDeliveryControlStatus(
                         deliveryControlId: saleRequest.SaleRequestId,
-                        newStatus: isPreparingColumn
+                        newStatus: isToDeliveryStatus == IsToDelivery.preparing
                             ? IsToDelivery.ready
                             : IsToDelivery.delivered,
                       );
@@ -91,7 +132,8 @@ class RequestsItems extends StatelessWidget {
                             ),
                           ProductsItems(
                             products: products,
-                            isPreparingColumn: isPreparingColumn,
+                            isPreparingColumn:
+                                isToDeliveryStatus == IsToDelivery.preparing,
                           ),
                         ],
                       ),

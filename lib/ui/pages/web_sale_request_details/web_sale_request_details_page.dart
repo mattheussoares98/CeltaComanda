@@ -55,28 +55,6 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     provider.loadOpenSaleRequests();
   }
 
-  DateTime? findMostRecentDateFromSales(List<ConcSaleRequestModel> sales) {
-    final allDateStrings = sales.expand((sale) {
-      final List<String?> dates = [sale.DateHourOfCreation.toIso8601String()];
-
-      // dates.addAll(sale.Products.map((p) => p.));
-
-      return dates;
-    });
-
-    final allDates = allDateStrings
-        .whereType<String>()
-        .map((dateString) => DateTime.tryParse(dateString))
-        .whereType<DateTime>()
-        .toList();
-
-    if (allDates.isEmpty) {
-      return null;
-    }
-
-    return allDates.reduce((a, b) => a.isAfter(b) ? a : b);
-  }
-
   Map<int?, List<ConcSaleRequestModel>> getRequestsGroupedByLot(
     List<ConcSaleRequestModel> originalRequests,
     IsToDelivery status,
@@ -121,33 +99,18 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
             );
           }
 
-          final List<ConcSaleRequestModel> saleRequests =
-              List.of(snapshot.data!.values);
-          saleRequests.sort((a, b) {
-            final dateA = findMostRecentDateFromSales([a]);
-            final dateB = findMostRecentDateFromSales([b]);
-
-            if (dateA == null && dateB == null) return 0;
-            if (dateA == null) return 1;
-            if (dateB == null) return -1;
-
-            return dateB.compareTo(dateA);
-          });
-
           return Row(
             children: [
               Expanded(
                 child: RequestsItems(
-                  findMostRecentDateFromSales: findMostRecentDateFromSales,
                   isToDeliveryStatus: IsToDelivery.preparing,
-                  saleRequests: saleRequests,
+                  saleRequests: List.of(snapshot.data!.values),
                 ),
               ),
               Expanded(
                 child: RequestsItems(
-                  findMostRecentDateFromSales: findMostRecentDateFromSales,
                   isToDeliveryStatus: IsToDelivery.ready,
-                  saleRequests: saleRequests,
+                  saleRequests: List.of(snapshot.data!.values),
                 ),
               ),
             ],

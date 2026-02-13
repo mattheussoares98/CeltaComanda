@@ -10,14 +10,11 @@ import '../web_sale_request_details.dart';
 import 'components.dart';
 
 class RequestsItems extends StatelessWidget {
-  final DateTime? Function(List<ConcSaleRequestModel> sales)
-      findMostRecentDateFromSales;
   final List<ConcSaleRequestModel> saleRequests;
   final IsToDelivery isToDeliveryStatus;
 
   const RequestsItems({
     super.key,
-    required this.findMostRecentDateFromSales,
     required this.saleRequests,
     required this.isToDeliveryStatus,
   });
@@ -61,6 +58,16 @@ class RequestsItems extends StatelessWidget {
 
     final filteredSaleRequests =
         splitRequestsByLotAndStatus(saleRequests, isToDeliveryStatus);
+    filteredSaleRequests.sort((a, b) {
+      final dateA = a.Products.first.DateHourOfCreation;
+      final dateB = b.Products.first.DateHourOfCreation;
+
+      if (dateA == null && dateB == null) return 0;
+      if (dateA == null) return 1;
+      if (dateB == null) return -1;
+
+      return dateA.compareTo(dateB);
+    });
 
     return Container(
       color: color.withAlpha(20),
@@ -111,7 +118,7 @@ class RequestsItems extends StatelessWidget {
                           CommandTableAndLastChangedTime(
                             saleRequest: saleRequest,
                             mostRecentRequestFromCurrentSale:
-                                findMostRecentDateFromSales([saleRequest])!,
+                                saleRequest.Products.first.DateHourOfCreation!,
                           ),
                           const Divider(thickness: 0.1),
                           if (products.isEmpty)

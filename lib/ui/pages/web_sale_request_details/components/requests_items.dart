@@ -122,22 +122,22 @@ class RequestsItems extends StatelessWidget {
                                 saleRequest.Products.first.DateHourOfCreation!,
                           ),
                           const Divider(thickness: 0.1),
-                          if (products.isEmpty)
-                            //!quando marca como pronto, salva o horário do campo DateHourOfDelivery. Mas quando marca como preparando de novo, esse campo
-                            //!continua igual. Esse campo é usado para identificar os produtos que foram solicitados após a última entrega
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  R.string.msgAllProductsAreDelivered,
-                                  style: const TextStyle(color: Colors.red),
-                                )),
-                                const Icon(
-                                  Icons.error,
-                                  color: Colors.red,
-                                ),
-                              ],
-                            ),
+                          // if (products.isEmpty)
+                          //   //!quando marca como pronto, salva o horário do campo DateHourOfDelivery. Mas quando marca como preparando de novo, esse campo
+                          //   //!continua igual. Esse campo é usado para identificar os produtos que foram solicitados após a última entrega
+                          //   Row(
+                          //     children: [
+                          //       Expanded(
+                          //           child: Text(
+                          //         R.string.msgAllProductsAreDelivered,
+                          //         style: const TextStyle(color: Colors.red),
+                          //       )),
+                          //       const Icon(
+                          //         Icons.error,
+                          //         color: Colors.red,
+                          //       ),
+                          //     ],
+                          //   ),
                           ProductsItems(
                             products: products,
                             isPreparingColumn:

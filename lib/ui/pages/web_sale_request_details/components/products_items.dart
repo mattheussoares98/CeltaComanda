@@ -15,20 +15,6 @@ class ProductsItems extends StatelessWidget {
     required this.isPreparingColumn,
   });
 
-  Color _getGroupColor(int index) {
-    List<Color> colors = [
-      Colors.yellowAccent.withAlpha(50),
-      Colors.blue.withAlpha(50),
-      Colors.orange.withAlpha(50),
-      Colors.purple.withAlpha(50),
-      Colors.lightGreen.withAlpha(50),
-      Colors.pink.withAlpha(50),
-      Colors.teal.withAlpha(50),
-      Colors.greenAccent.withAlpha(50),
-    ];
-    return colors[index % colors.length];
-  }
-
   @override
   Widget build(BuildContext context) {
     products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
@@ -52,41 +38,31 @@ class ProductsItems extends StatelessWidget {
         itemBuilder: (_, groupIndex) {
           final dateKey = groupKeys[groupIndex];
           final groupItems = grouped[dateKey]!;
-          final groupColor = _getGroupColor(groupIndex);
 
           final notChildProducts = groupItems
               .where((p) => p.SaleRequestProductIdOfFather == null)
               .toList();
 
-          return Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: groupColor,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: groupColor, style: BorderStyle.solid),
-            ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: notChildProducts.length,
-              itemBuilder: (context, index) {
-                final product = notChildProducts[index];
-                final children = products
-                    .where((e) =>
-                        e.SaleRequestProductIdOfFather?.toInt() ==
-                        product.SaleRequestProductId)
-                    .toList();
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: notChildProducts.length,
+            itemBuilder: (context, index) {
+              final product = notChildProducts[index];
+              final children = products
+                  .where((e) =>
+                      e.SaleRequestProductIdOfFather?.toInt() ==
+                      product.SaleRequestProductId)
+                  .toList();
 
-                return Column(
-                  children: [
-                    ProductInformations(
-                        product: product, showDateHourOfCreation: index == 0),
-                    ...children.map((child) => ProductInformations(
-                        product: child, showDateHourOfCreation: false)),
-                  ],
-                );
-              },
-            ),
+              return Column(
+                children: [
+                  ProductInformations(
+                      product: product, showDateHourOfCreation: index == 0),
+                  ...children.map((child) => ProductInformations(
+                      product: child, showDateHourOfCreation: false)),
+                ],
+              );
+            },
           );
         });
   }

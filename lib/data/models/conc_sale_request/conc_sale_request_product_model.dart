@@ -33,6 +33,8 @@ class ConcSaleRequestProductModel extends Equatable {
   final double? WholeSaleOffer;
   final ConcSaleRequestProductModel? SaleRequestProducOfFatherComposition;
   final DateTime? DateHourOfCreation;
+  final int? DeliveryLot;
+  final int? IsToDelivery;
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductModel({
@@ -66,6 +68,8 @@ class ConcSaleRequestProductModel extends Equatable {
     required this.WholeSaleOffer,
     required this.SaleRequestProducOfFatherComposition,
     required this.DateHourOfCreation,
+    required this.DeliveryLot,
+    required this.IsToDelivery,
   });
 
   @override
@@ -99,6 +103,8 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice,
         WholeSaleOffer,
         DateHourOfCreation,
+        DeliveryLot,
+        IsToDelivery,
       ];
 
   factory ConcSaleRequestProductModel.fromEntity(
@@ -134,6 +140,8 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice: entity.WholeSalePrice,
         WholeSaleOffer: entity.WholeSaleOffer,
         DateHourOfCreation: entity.DateHourOfCreation,
+        DeliveryLot: entity.DeliveryLot,
+        IsToDelivery: entity.IsToDelivery,
         SaleRequestProducOfFatherComposition:
             entity.SaleRequestProducOfFatherComposition == null
                 ? null
@@ -172,6 +180,8 @@ class ConcSaleRequestProductModel extends Equatable {
         WholeSalePrice: WholeSalePrice,
         WholeSaleOffer: WholeSaleOffer,
         DateHourOfCreation: DateHourOfCreation,
+        DeliveryLot: DeliveryLot,
+        IsToDelivery: IsToDelivery,
         SaleRequestProducOfFatherComposition:
             SaleRequestProducOfFatherComposition?.toEntity(),
       );
@@ -208,6 +218,8 @@ class ConcSaleRequestProductModel extends Equatable {
         SaleRetailOffer: json['SaleRetailOffer'],
         WholeSalePrice: json['WholeSalePrice'],
         WholeSaleOffer: json['WholeSaleOffer'],
+        DeliveryLot: json['DeliveryLot'],
+        IsToDelivery: json['IsToDelivery'],
         SaleRequestProducOfFatherComposition:
             json['SaleRequestProducOfFatherComposition'],
         DateHourOfCreation: DateTime.tryParse(json['DateHourOfCreation'] ?? ''),

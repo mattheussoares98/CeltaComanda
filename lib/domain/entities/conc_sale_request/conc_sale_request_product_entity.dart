@@ -31,6 +31,8 @@ class ConcSaleRequestProductEntity extends Equatable {
   final double? WholeSaleOffer;
   final ConcSaleRequestProductEntity? SaleRequestProducOfFatherComposition;
   final DateTime? DateHourOfCreation;
+  final int? DeliveryLot;
+  final int? IsToDelivery; // 1-Preparing, 2-Ready, 3-Delivered
 // final ModelSaleRequest SaleRequest ;
 
   const ConcSaleRequestProductEntity({
@@ -51,6 +53,8 @@ class ConcSaleRequestProductEntity extends Equatable {
     required this.ProductIsFatherComposition,
     required this.SaleRequestProductIdOfFather,
     required this.SaleRequestProductInternalCodeOnERP,
+    required this.DeliveryLot,
+    required this.IsToDelivery,
     required this.ProductName,
     required this.BlockadeDiscountType,
     required this.DiscountFromSaleOffer,
@@ -85,6 +89,8 @@ class ConcSaleRequestProductEntity extends Equatable {
         ProductIsFatherComposition,
         SaleRequestProductIdOfFather,
         SaleRequestProductInternalCodeOnERP,
+        DeliveryLot,
+        IsToDelivery,
         ProductName,
         BlockadeDiscountType,
         DiscountFromSaleOffer,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
-import '../../../../data/models/models.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class ProductsItems extends StatelessWidget {
-  final List<ConcSaleRequestProductModel> products;
+  final List<PrintedProductsEntity> products;
   final bool isPreparingColumn;
 
   const ProductsItems({
@@ -16,7 +16,7 @@ class ProductsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    products.sort((a, b) => a.ProductName!.compareTo(b.ProductName!));
+    products.sort((a, b) => a.Product!.Name.compareTo(b.Product!.Name));
     products.sort((a, b) {
       final dateA = a.DateHourOfCreation;
       final dateB = b.DateHourOfCreation;
@@ -68,7 +68,7 @@ class ProductsItems extends StatelessWidget {
 }
 
 class ProductInformations extends StatelessWidget {
-  final ConcSaleRequestProductModel product;
+  final PrintedProductsEntity product;
   final bool showDateHourOfCreation;
   const ProductInformations({
     super.key,
@@ -100,7 +100,7 @@ class ProductInformations extends StatelessWidget {
               text: ' x ',
             ),
             TextSpan(
-                text: product.ProductName ??
+                text: product.Product?.Name ??
                     (productIsChild ? 'childName' : 'productName')),
             if (product.ProductIsFatherComposition == true) ...[
               TextSpan(

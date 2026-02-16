@@ -17,6 +17,7 @@ class PrintedProductsViewModel extends Equatable {
   final String? IsCancelled;
   final String? IsDelivered;
   final String? IsPrinted;
+  final IsToDelivery? isToDelivery;
   final String? ProductionStatus;
   final String? TotalLiquid;
   final String? ProductInternalCodeOnErp;
@@ -24,6 +25,7 @@ class PrintedProductsViewModel extends Equatable {
   final String? ProductIsFatherComposition;
   final String? SaleMovementProductCompositionId;
   final String? UserIdOfCancellation;
+  final String? DeliveryLoteNumber;
   final List<PrintedProductsViewModel> childs;
 
   @override
@@ -37,6 +39,7 @@ class PrintedProductsViewModel extends Equatable {
         UserId,
         DateHourOfCreation,
         IsCancelled,
+        isToDelivery,
         IsDelivered,
         IsPrinted,
         ProductionStatus,
@@ -48,6 +51,7 @@ class PrintedProductsViewModel extends Equatable {
         UserIdOfCancellation,
         childs,
         Comments,
+        DeliveryLoteNumber,
       ];
 
   const PrintedProductsViewModel({
@@ -69,7 +73,9 @@ class PrintedProductsViewModel extends Equatable {
     required this.ProductIsFatherComposition,
     required this.SaleMovementProductCompositionId,
     required this.UserIdOfCancellation,
+    required this.isToDelivery,
     required this.childs,
+    required this.DeliveryLoteNumber,
     this.Comments,
   });
 
@@ -101,6 +107,8 @@ class PrintedProductsViewModel extends Equatable {
         childs: entity.childs
             .map((e) => PrintedProductsViewModel.fromEntity(e))
             .toList(),
+        isToDelivery: entity.isToDelivery,
+        DeliveryLoteNumber: entity.DeliveryLoteNumber?.toString(),
       );
 
   PrintedProductsEntity toEntity() => PrintedProductsEntity(
@@ -126,5 +134,7 @@ class PrintedProductsViewModel extends Equatable {
         ProductIsFatherComposition: ProductIsFatherComposition == "true",
         childs: childs.map((e) => e.toEntity()).toList(),
         SaleRequestProductIdOfFather: SaleRequestProductId?.toInt(),
+        isToDelivery: isToDelivery,
+        DeliveryLoteNumber: DeliveryLoteNumber?.toInt(),
       );
 }

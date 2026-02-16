@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'product_entity.dart';
+import 'entities.dart';
 
 class PrintedProductsEntity extends Equatable {
   final ProductEntity? Product;
@@ -15,6 +15,7 @@ class PrintedProductsEntity extends Equatable {
   final bool? IsCancelled;
   final bool? IsDelivered;
   final bool? IsPrinted;
+  final IsToDelivery? isToDelivery; // 1-Preparing, 2-Ready, 3-Delivered
   final int? ProductionStatus;
   final double? TotalLiquid;
   final int? ProductInternalCodeOnErp;
@@ -24,6 +25,7 @@ class PrintedProductsEntity extends Equatable {
   final int? SaleMovementProductCompositionId;
   final int? UserIdOfCancellation;
   final List<PrintedProductsEntity> childs;
+  final int? DeliveryLoteNumber;
 
   const PrintedProductsEntity({
     required this.Product,
@@ -36,6 +38,7 @@ class PrintedProductsEntity extends Equatable {
     required this.UserId,
     required this.DateHourOfCreation,
     required this.IsCancelled,
+    required this.isToDelivery,
     required this.IsDelivered,
     required this.IsPrinted,
     required this.ProductionStatus,
@@ -47,6 +50,7 @@ class PrintedProductsEntity extends Equatable {
     required this.SaleRequestProductIdOfFather,
     required this.SaleMovementProductCompositionId,
     required this.UserIdOfCancellation,
+    required this.DeliveryLoteNumber,
   });
 
   @override
@@ -62,6 +66,7 @@ class PrintedProductsEntity extends Equatable {
         DateHourOfCreation,
         IsCancelled,
         IsDelivered,
+        isToDelivery,
         IsPrinted,
         ProductionStatus,
         TotalLiquid,
@@ -72,5 +77,6 @@ class PrintedProductsEntity extends Equatable {
         SaleRequestProductIdOfFather,
         SaleMovementProductCompositionId,
         UserIdOfCancellation,
+        DeliveryLoteNumber,
       ];
 }

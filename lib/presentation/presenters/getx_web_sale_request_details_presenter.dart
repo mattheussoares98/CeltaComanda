@@ -1,4 +1,3 @@
-import '../../data/models/conc_sale_request/conc_sale_request.dart';
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -17,7 +16,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
   final LoadDeliveryControl loadDeliveryControl;
-  final ConcLoadSaleRequest concLoadSaleRequest;
+  final LoadPrintedProducts loadPrintedProducts;
   final WebLoadSettings webLoadSettings;
   final UpdateDeliveryStatus updateDeliveryStatus;
 
@@ -26,7 +25,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     required this.loadEnterpriseData,
     required this.navigateTo,
     required this.loadDeliveryControl,
-    required this.concLoadSaleRequest,
+    required this.loadPrintedProducts,
     required this.webLoadSettings,
     required this.updateDeliveryStatus,
   });
@@ -60,9 +59,9 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     }
   }
 
-  final _saleRequestsStream = Rx<Map<String, ConcSaleRequestModel>>({});
+  final _saleRequestsStream = Rx<Map<String, PrintedEntity>>({});
   @override
-  Stream<Map<String, ConcSaleRequestModel>> get saleRequestsStream =>
+  Stream<Map<String, PrintedEntity>> get saleRequestsStream =>
       _saleRequestsStream.stream;
 
   @override
@@ -75,8 +74,8 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       final deliveryControls =
           await loadDeliveryControl.load(_webLocalSettings!);
 
-      final Map<String, ConcSaleRequestModel> updatedSaleRequests =
-          Map<String, ConcSaleRequestModel>.of(_saleRequestsStream.value);
+      final Map<String, PrintedEntity> updatedSaleRequests =
+          Map<String, PrintedEntity>.of(_saleRequestsStream.value);
 
       final missingCodes = deliveryControls
           .where((c) => !updatedSaleRequests.containsKey(c.PersonalizedCode))
@@ -107,19 +106,23 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
         // 4. Fetch all missing items in PARALLEL (Fixes Performance)
         final results = await Future.wait(
           codesToFetch.map(
-            (code) => concLoadSaleRequest.load(
-              settings: _webLocalSettings!,
-              personalizedCode: code,
+            (personalizedCode) => loadPrintedProducts.load(
+              commandNumber: personalizedCode.toInt(),
+              enterpriseId: _webLocalSettings!.enterpriseId,
+              url: _webLocalSettings!.concentratorUrl,
             ),
           ),
         );
 
         int index = 0;
-        for (final code in codesToFetch) {
+        for (final personalizedCode in codesToFetch) {
           final resultEntity = results[index];
 
-          updatedSaleRequests[code] =
-              ConcSaleRequestModel.fromEntity(resultEntity);
+          if (resultEntity == null) {
+            continue;
+          }
+
+          updatedSaleRequests[personalizedCode] = resultEntity;
           index++;
         }
       }

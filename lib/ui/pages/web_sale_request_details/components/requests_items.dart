@@ -3,14 +3,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../data/models/models.dart';
 import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 import '../web_sale_request_details.dart';
 import 'components.dart';
 
 class RequestsItems extends StatelessWidget {
-  final List<ConcSaleRequestModel> saleRequests;
+  final List<PrintedEntity> saleRequests;
   final IsToDelivery isToDeliveryStatus;
 
   const RequestsItems({
@@ -26,9 +25,9 @@ class RequestsItems extends StatelessWidget {
         ? Colors.amber
         : Colors.green;
 
-    List<ConcSaleRequestModel> splitRequestsByLotAndStatus(
-        List<ConcSaleRequestModel> originalRequests, IsToDelivery status) {
-      final List<ConcSaleRequestModel> explodedList = [];
+    List<PrintedEntity> splitRequestsByLotAndStatus(
+        List<PrintedEntity> originalRequests, IsToDelivery status) {
+      final List<PrintedEntity> explodedList = [];
 
       for (var request in originalRequests) {
         // 1. Filter products by the requested status first
@@ -106,7 +105,7 @@ class RequestsItems extends StatelessWidget {
                       Provider.of<WebSaleRequestDetailsPresenter>(context,
                               listen: false)
                           .updateDeliveryControlStatus(
-                        saleRequestId: saleRequest.SaleRequestId,
+                        saleRequestId: saleRequest.SaleRequestId!,
                         deliveryLotId:
                             saleRequest.Products.first.DeliveryLoteNumber!,
                         newStatus: isToDeliveryStatus == IsToDelivery.preparing
@@ -120,8 +119,8 @@ class RequestsItems extends StatelessWidget {
                         children: [
                           CommandTableAndLastChangedTime(
                             saleRequest: saleRequest,
-                            mostRecentRequestFromCurrentSale:
-                                saleRequest.Products.first.DateHourOfCreation!,
+                            mostRecentRequestFromCurrentSale: DateTime.parse(
+                                saleRequest.Products.first.DateHourOfCreation!),
                           ),
                           const Divider(thickness: 0.1),
                           // if (products.isEmpty)

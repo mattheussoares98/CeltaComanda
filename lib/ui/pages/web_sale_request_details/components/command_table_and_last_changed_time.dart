@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../data/models/models.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class CommandTableAndLastChangedTime extends StatelessWidget {
-  final ConcSaleRequestModel saleRequest;
+  final PrintedEntity saleRequest;
   final DateTime mostRecentRequestFromCurrentSale;
   const CommandTableAndLastChangedTime(
       {super.key,

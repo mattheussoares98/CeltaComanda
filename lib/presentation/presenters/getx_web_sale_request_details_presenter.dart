@@ -149,7 +149,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       await updateDeliveryStatus.update(
         settings: _webLocalSettings!,
         saleRequestId: saleRequestId,
-        deliveryLotId: deliveryLotId,
+        deliveryLoteNumber: deliveryLotId,
         newStatus: newStatus,
       );
 

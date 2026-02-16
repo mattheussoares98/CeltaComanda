@@ -171,12 +171,13 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
             },
             onDone: () async {
               if (!completer.isCompleted) {
-                final imagePath = await _getImagePath() + imageName;
+                final normalizedName = imageName.toLowerCase();
+                final imagePath = await _getImagePath() + normalizedName;
                 final bytes = Uint8List.fromList(buffer);
                 final file = File(imagePath);
 
                 final image = ImageModel(
-                  pluOrEan: imageName,
+                  pluOrEan: normalizedName,
                   image: bytes,
                   file: file,
                   keyIsEan: imageName.length > 11,

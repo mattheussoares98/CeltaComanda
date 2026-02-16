@@ -37,9 +37,10 @@ class RequestsItems extends StatelessWidget {
 
         if (validProducts.isEmpty) continue;
 
-        // 2. Group the valid products by their DeliveryLot
+        // 2. Group the valid products by their DeliveryLoteNumber
         // This identifies how many unique lots exist in THIS specific request
-        final productsByLot = groupBy(validProducts, (p) => p.DeliveryLot);
+        final productsByLot =
+            groupBy(validProducts, (p) => p.DeliveryLoteNumber);
 
         // 3. For each unique lot, create a new 'exploded' version of the SaleRequest
         for (var entry in productsByLot.entries) {
@@ -91,7 +92,7 @@ class RequestsItems extends StatelessWidget {
               itemCount: filteredSaleRequests.length,
               itemBuilder: (_, index) {
                 final item = filteredSaleRequests.elementAt(index);
-                // final deliveryLotId = item.key;
+                // final deliveryLoteNumber = item.key;
                 final saleRequest = item;
 
                 final products = saleRequest.Products;
@@ -106,7 +107,8 @@ class RequestsItems extends StatelessWidget {
                               listen: false)
                           .updateDeliveryControlStatus(
                         saleRequestId: saleRequest.SaleRequestId,
-                        deliveryLotId: saleRequest.Products.first.DeliveryLot!,
+                        deliveryLoteNumber:
+                            saleRequest.Products.first.DeliveryLoteNumber!,
                         newStatus: isToDeliveryStatus == IsToDelivery.preparing
                             ? IsToDelivery.ready
                             : IsToDelivery.delivered,

@@ -15,7 +15,7 @@ abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Future<void> loadOpenSaleRequests();
   Future<void> updateDeliveryControlStatus({
     required int saleRequestId,
-    required int deliveryLotId,
+    required int deliveryLoteNumber,
     required IsToDelivery newStatus,
   });
 }

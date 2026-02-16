@@ -1,3 +1,4 @@
+import 'entities.dart';
 import 'product_entity.dart';
 
 class SaleRequestProductEntity {
@@ -20,6 +21,8 @@ class SaleRequestProductEntity {
   final double? Value;
   final double? Quantity;
   final double? TotalLiquid;
+  final IsToDelivery? isToDelivery;
+  final int? DeliveryLoteNumber;
 
   const SaleRequestProductEntity({
     required this.Product,
@@ -41,5 +44,7 @@ class SaleRequestProductEntity {
     required this.Value,
     required this.Quantity,
     required this.TotalLiquid,
+    required this.isToDelivery,
+    required this.DeliveryLoteNumber,
   });
 }

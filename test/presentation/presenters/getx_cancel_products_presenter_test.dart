@@ -193,6 +193,8 @@ void main() {
                       Value: e.Value,
                       Quantity: e.Quantity,
                       TotalLiquid: e.TotalLiquid,
+                      isToDelivery: e.isToDelivery,
+                      DeliveryLoteNumber: e.DeliveryLoteNumber,
                     ),
                   );
                 },

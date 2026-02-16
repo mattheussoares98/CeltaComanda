@@ -1337,6 +1337,9 @@ class EntityFactory {
         Value: faker.randomGenerator.decimal(),
         Quantity: faker.randomGenerator.decimal(),
         TotalLiquid: faker.randomGenerator.decimal(),
+        DeliveryLoteNumber: faker.randomGenerator.integer(100),
+        isToDelivery: IsToDelivery
+            .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
       );
 
   static makeSaleRequestModel({

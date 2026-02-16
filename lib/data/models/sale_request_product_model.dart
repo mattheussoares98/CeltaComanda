@@ -23,6 +23,8 @@ class SaleRequestProductModel extends Equatable {
   final double? Quantity;
   final double? TotalLiquid;
   final ProductModel? product;
+  final int? DeliveryLotNumber;
+  final IsToDelivery? isToDelivery;
 
   const SaleRequestProductModel({
     required this.SaleMovementProductCompositionId,
@@ -44,6 +46,8 @@ class SaleRequestProductModel extends Equatable {
     required this.Quantity,
     required this.TotalLiquid,
     required this.product,
+    required this.isToDelivery,
+    required this.DeliveryLotNumber,
   });
 
   @override
@@ -67,6 +71,8 @@ class SaleRequestProductModel extends Equatable {
         Quantity,
         TotalLiquid,
         product,
+        isToDelivery,
+        DeliveryLotNumber,
       ];
 
   factory SaleRequestProductModel.fromJson(Map json) => SaleRequestProductModel(
@@ -90,6 +96,11 @@ class SaleRequestProductModel extends Equatable {
         Quantity: json["Quantity"],
         TotalLiquid: json["TotalLiquid"],
         product: ProductModel.fromJson(json["Product"]),
+        isToDelivery: json["IsToDelivery"] == null || json["IsToDelivery"] == 0
+            ? null
+            : IsToDelivery.values
+                .firstWhere((x) => x.value == json["IsToDelivery"]),
+        DeliveryLotNumber: json["DeliveryLoteNumber"],
       );
 
   factory SaleRequestProductModel.fromEntity(SaleRequestProductEntity entity) =>
@@ -113,6 +124,8 @@ class SaleRequestProductModel extends Equatable {
         Value: entity.Value,
         Quantity: entity.Quantity,
         TotalLiquid: entity.TotalLiquid,
+        isToDelivery: entity.isToDelivery,
+        DeliveryLotNumber: entity.DeliveryLoteNumber,
         product: entity.Product != null
             ? ProductModel.fromEntity(entity.Product!)
             : null,
@@ -139,5 +152,7 @@ class SaleRequestProductModel extends Equatable {
         "Quantity": Quantity,
         "TotalLiquid": TotalLiquid,
         "Product": product?.toJson(),
+        "IsToDelivery": isToDelivery?.value,
+        "DeliveryLoteNumber": DeliveryLotNumber,
       };
 }

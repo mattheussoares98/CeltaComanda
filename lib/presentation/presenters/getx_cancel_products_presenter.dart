@@ -95,6 +95,8 @@ class GetxCancelProductsPresenter extends GetxController
                 Value: e.Value,
                 Quantity: e.Quantity,
                 TotalLiquid: e.TotalLiquid,
+                isToDelivery: e.isToDelivery,
+                DeliveryLoteNumber: e.DeliveryLoteNumber,
               ),
             );
           },

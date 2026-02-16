@@ -86,10 +86,11 @@ class PrintedModel {
                     e["SaleMovementProductCompositionId"],
                 UserIdOfCancellation: e["UserIdOfCancellation"],
                 DeliveryLoteNumber: e["DeliveryLoteNumber"],
-                isToDelivery: e["IsToDelivery"] == null
-                    ? null
-                    : IsToDelivery.values
-                        .firstWhere((x) => x.index == e["IsToDelivery"]),
+                isToDelivery:
+                    e["IsToDelivery"] == null || e["IsToDelivery"] == 0
+                        ? null
+                        : IsToDelivery.values
+                            .firstWhere((x) => x.value == e["IsToDelivery"]),
               ))
           .toList(),
       PersonalizedCode: json["PersonalizedCode"],

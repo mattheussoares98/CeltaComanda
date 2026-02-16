@@ -109,7 +109,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
             (personalizedCode) => loadPrintedProducts.load(
               commandNumber: personalizedCode.toInt(),
               enterpriseId: _webLocalSettings!.enterpriseId,
-              url: _webLocalSettings!.concentratorUrl,
+              url: _webLocalSettings!.navsApi,
             ),
           ),
         );

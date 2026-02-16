@@ -22,11 +22,11 @@ class RemoteLoadPrintedProducts
   }) async {
     try {
       final id = enterpriseId ?? EnterpriseBuilder.entity!.enterpriseId;
-      final concUrl = url ?? EnterpriseBuilder.entity!.url;
+      final navsApi = url ?? EnterpriseBuilder.entity!.url;
 
       final printedProducts = await httpAdapter.request(
         url:
-            "$concUrl/api/apiSaleRequest/Get?_enterpriseId=$id&_personalizedCode=$commandNumber&_considerUsing=false",
+            "$navsApi/api/apiSaleRequest/Get?_enterpriseId=$id&_personalizedCode=$commandNumber&_considerUsing=false",
         method: "get",
       );
       if (printedProducts == null) return null;

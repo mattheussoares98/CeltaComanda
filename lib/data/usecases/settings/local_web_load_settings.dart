@@ -14,6 +14,7 @@ class LocalWebLoadSettings implements WebLoadSettings {
     if (kDebugMode) {
       return WebLocalSettingsEntity(
         enterpriseId: 2,
+        navsApi: "http://cloud.celtaware.com.br:32021",
         concentratorUrl: "http://cloud.celtaware.com.br:42021",
         enteprisePersonalizedCode: "02",
       );

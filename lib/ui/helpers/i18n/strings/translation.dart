@@ -121,6 +121,7 @@ abstract class Translation {
   String get by;
   String get call;
   String get cancel;
+  String get canceled;
   String get canceledBy;
   String get cancelProductsOrRemoveServiceCharge;
   String get cancelProduct;

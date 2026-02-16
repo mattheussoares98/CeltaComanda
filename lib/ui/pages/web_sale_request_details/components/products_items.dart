@@ -80,6 +80,9 @@ class ProductInformations extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final productIsChild = product.SaleRequestProductIdOfFather != null;
+    final canceledDecoration = TextDecoration.combine([
+      if (product.IsCancelled == true) TextDecoration.lineThrough,
+    ]);
 
     return Align(
       alignment: Alignment.centerLeft,
@@ -87,6 +90,7 @@ class ProductInformations extends StatelessWidget {
         text: TextSpan(
           style: theme.textTheme.titleSmall?.copyWith(
             fontStyle: productIsChild ? FontStyle.italic : FontStyle.normal,
+            decoration: canceledDecoration,
           ),
           children: [
             if (productIsChild)
@@ -113,8 +117,20 @@ class ProductInformations extends StatelessWidget {
             if (product.Comments != null)
               TextSpan(
                 text: ' (${product.Comments!})',
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: Colors.red, fontStyle: FontStyle.italic),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.red,
+                  fontStyle: FontStyle.italic,
+                  decoration: canceledDecoration,
+                ),
+              ),
+            if (product.IsCancelled == true)
+              TextSpan(
+                text: " ${R.string.canceled}",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: Colors.red,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
               )
           ],
         ),

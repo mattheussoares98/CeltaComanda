@@ -17,14 +17,16 @@ class RemoteLoadPrintedProducts
   @override
   Future<PrintedEntity?> load({
     required int commandNumber,
+    int? enterpriseId,
+    String? url,
   }) async {
     try {
-      final enterpriseId = EnterpriseBuilder.entity!.enterpriseId;
-      final url = EnterpriseBuilder.entity!.url;
+      final id = enterpriseId ?? EnterpriseBuilder.entity!.enterpriseId;
+      final concUrl = url ?? EnterpriseBuilder.entity!.url;
 
       final printedProducts = await httpAdapter.request(
         url:
-            "$url/api/apiSaleRequest/Get?_enterpriseId=$enterpriseId&_personalizedCode=$commandNumber&_considerUsing=false",
+            "$concUrl/api/apiSaleRequest/Get?_enterpriseId=$id&_personalizedCode=$commandNumber&_considerUsing=false",
         method: "get",
       );
       if (printedProducts == null) return null;

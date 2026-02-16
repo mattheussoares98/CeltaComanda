@@ -1,13 +1,15 @@
 class WebLocalSettingsEntity {
   final int? enterpriseId;
-  final String? concentratorUrl;
-  final String? navsApi;
+  final int concentratorPort;
+  final int navsPort;
+  final String defaultUrl;
   final String? enteprisePersonalizedCode;
 
   WebLocalSettingsEntity({
     required this.enterpriseId,
-    required this.concentratorUrl,
-    required this.navsApi,
+    required this.concentratorPort,
+    required this.navsPort,
+    required this.defaultUrl,
     required this.enteprisePersonalizedCode,
   });
 }

@@ -1,5 +1,4 @@
 import 'entities.dart';
-import 'product_entity.dart';
 
 class SaleRequestProductEntity {
   final ProductEntity? Product;

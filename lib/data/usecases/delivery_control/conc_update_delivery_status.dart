@@ -15,7 +15,7 @@ class ConcUpdateDeliveryStatus implements UpdateDeliveryStatus {
     OriginType? originType = OriginType.saleRequest,
   }) async {
     final url =
-        '${settings.concentratorUrl}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${originType!.value}&saleRequestId=$saleRequestId&deliveryLoteNumber=$deliveryLoteNumber&deliveryStatus=${newStatus.value}';
+        '${settings.defaultUrl}:${settings.concentratorPort}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${originType!.value}&saleRequestId=$saleRequestId&deliveryLoteNumber=$deliveryLoteNumber&deliveryStatus=${newStatus.value}';
 
     await httpClient.request(
       url: url,

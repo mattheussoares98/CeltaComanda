@@ -14,20 +14,32 @@ class LocalWebLoadSettings implements WebLoadSettings {
     if (kDebugMode) {
       return WebLocalSettingsEntity(
         enterpriseId: 2,
-        navsApi: "http://cloud.celtaware.com.br:32021",
-        concentratorUrl: "http://cloud.celtaware.com.br:42021",
+        defaultUrl: "http://cloud.celtaware.com.br",
+        concentratorPort: 42021,
+        navsPort: 32021,
         enteprisePersonalizedCode: "02",
       );
       //local configurations for tests
     }
 
-    String settingsUrl = '${Uri.base.removeFragment()}settings.txt';
+    final baseUri = Uri.base;
+
+    String settingsUrl = '${baseUri.removeFragment()}settings.txt';
 
     final response = await httpAdapter.request(
       url: settingsUrl,
       method: "get",
     );
 
-    return WebLocalSettingsModel.fromJson(response).toEntity();
+    final urlWithoutPort = Uri(
+      scheme: baseUri.scheme,
+      host: baseUri.host,
+      path: baseUri.path,
+    ).removeFragment().toString();
+    final cleanedUrl = urlWithoutPort.endsWith('/')
+        ? urlWithoutPort.substring(0, urlWithoutPort.length - 1)
+        : urlWithoutPort;
+
+    return WebLocalSettingsModel.fromJson(response, cleanedUrl).toEntity();
   }
 }

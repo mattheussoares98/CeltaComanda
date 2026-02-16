@@ -2,44 +2,51 @@ import '../../domain/entities/entities.dart';
 
 class WebLocalSettingsModel {
   final int? enterpriseId;
-  final String? concentratorUrl;
-  final String? navsApi;
+  final int concentratorPort;
+  final int navsPort;
+  final String defaultUrl;
   final String? enteprisePersonalizedCode;
 
   WebLocalSettingsModel({
     required this.enterpriseId,
-    required this.concentratorUrl,
-    required this.navsApi,
+    required this.concentratorPort,
+    required this.navsPort,
+    required this.defaultUrl,
     required this.enteprisePersonalizedCode,
   });
 
-  factory WebLocalSettingsModel.fromJson(Map<String, dynamic> json) =>
+  factory WebLocalSettingsModel.fromJson(
+          Map<String, dynamic> json, String defaultUrl) =>
       WebLocalSettingsModel(
         enterpriseId: json['enterpriseId'],
-        concentratorUrl: json['concentratorUrl'],
-        navsApi: json['navsApi'],
+        concentratorPort: json['concentratorPort'],
+        defaultUrl: defaultUrl,
+        navsPort: json['navsPort'],
         enteprisePersonalizedCode: json['enteprisePersonalizedCode'],
       );
 
   Map<String, dynamic> toJson() => {
         'enterpriseId': enterpriseId,
-        'concentratorUrl': concentratorUrl,
-        'navsApi': navsApi,
+        'concentratorPort': concentratorPort,
+        'defaultUrl': defaultUrl,
+        'navsPort': navsPort,
         'enteprisePersonalizedCode': enteprisePersonalizedCode,
       };
 
   factory WebLocalSettingsModel.fromEntity(WebLocalSettingsEntity entity) =>
       WebLocalSettingsModel(
         enterpriseId: entity.enterpriseId,
-        concentratorUrl: entity.concentratorUrl,
-        navsApi: entity.navsApi,
+        concentratorPort: entity.concentratorPort,
+        navsPort: entity.navsPort,
+        defaultUrl: entity.defaultUrl,
         enteprisePersonalizedCode: entity.enteprisePersonalizedCode,
       );
 
   WebLocalSettingsEntity toEntity() => WebLocalSettingsEntity(
         enterpriseId: enterpriseId,
-        concentratorUrl: concentratorUrl,
-        navsApi: navsApi,
+        concentratorPort: concentratorPort,
+        navsPort: navsPort,
+        defaultUrl: defaultUrl,
         enteprisePersonalizedCode: enteprisePersonalizedCode,
       );
 }

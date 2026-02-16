@@ -92,7 +92,7 @@ class RequestsItems extends StatelessWidget {
               itemCount: filteredSaleRequests.length,
               itemBuilder: (_, index) {
                 final item = filteredSaleRequests.elementAt(index);
-                // final deliveryLoteNumber = item.key;
+                // final deliveryLotId = item.key;
                 final saleRequest = item;
 
                 final products = saleRequest.Products;
@@ -107,7 +107,7 @@ class RequestsItems extends StatelessWidget {
                               listen: false)
                           .updateDeliveryControlStatus(
                         saleRequestId: saleRequest.SaleRequestId,
-                        deliveryLoteNumber:
+                        deliveryLotId:
                             saleRequest.Products.first.DeliveryLoteNumber!,
                         newStatus: isToDeliveryStatus == IsToDelivery.preparing
                             ? IsToDelivery.ready

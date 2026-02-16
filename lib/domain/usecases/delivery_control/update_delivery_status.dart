@@ -4,7 +4,7 @@ abstract class UpdateDeliveryStatus {
   Future<void> update({
     required WebLocalSettingsEntity settings,
     required int saleRequestId,
-    required int deliveryLoteNumber,
+    required int deliveryLotId,
     required IsToDelivery newStatus,
     OriginType? originType = OriginType.saleRequest,
   });

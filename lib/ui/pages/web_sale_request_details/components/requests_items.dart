@@ -30,9 +30,14 @@ class RequestsItems extends StatelessWidget {
       final List<PrintedEntity> explodedList = [];
 
       for (var request in originalRequests) {
+        final products = request.Products;
+        final childs =
+            request.Products.map((e) => e.childs.map((e) => e)).toList();
         // 1. Filter products by the requested status first
-        final validProducts =
-            request.Products.where((p) => p.isToDelivery == status).toList();
+        final validProducts = [products, ...childs]
+            .expand((e) => e)
+            .where((p) => p.isToDelivery == status)
+            .toList();
 
         if (validProducts.isEmpty) continue;
 

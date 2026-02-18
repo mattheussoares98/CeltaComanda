@@ -12,11 +12,11 @@ class LoadEnterpriseConcentradorParametersSpy extends Mock
         concentradorUrl: any(named: "concentradorUrl"),
       ));
 
-  mockLoadEnterprise(EnterpriseConcentradorParametersEntity entity) {
+  void mockLoadEnterprise(EnterpriseConcentradorParametersEntity entity) {
     _mockLoadEnterpriseCall().thenAnswer((any) async => entity);
   }
 
-  mockLoadEnterpriseError() {
+  void mockLoadEnterpriseError() {
     _mockLoadEnterpriseCall().thenThrow(DomainError.unexpected);
   }
 }

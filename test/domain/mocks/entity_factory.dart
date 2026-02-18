@@ -1276,12 +1276,12 @@ class EntityFactory {
         ),
       ];
 
-  static _makeTelephoneEntity() => TelephoneEntity(
+  static TelephoneEntity _makeTelephoneEntity() => TelephoneEntity(
         AreaCode: faker.randomGenerator.string(100),
         PhoneNumber: faker.randomGenerator.string(100),
       );
 
-  static _makeAdressEntity() => AddressEntity(
+  static AddressEntity _makeAdressEntity() => AddressEntity(
         Zip: faker.randomGenerator.string(100),
         Address: faker.randomGenerator.string(100),
         Number: faker.randomGenerator.string(100),
@@ -1292,7 +1292,7 @@ class EntityFactory {
         Reference: faker.randomGenerator.string(100),
       );
 
-  static makeSaleRequestEntity() => SaleRequestEntity(
+  static SaleRequestEntity makeSaleRequestEntity() => SaleRequestEntity(
         Products: [makeSaleRequestProductEntity()],
         DateOfCreation: faker.randomGenerator.string(10),
         DateHourOfCreation: faker.randomGenerator.string(10),
@@ -1342,7 +1342,7 @@ class EntityFactory {
             .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
       );
 
-  static makeSaleRequestModel({
+  static SaleRequestModel makeSaleRequestModel({
     required int covenantCode,
     required int customerCode,
   }) =>
@@ -1372,7 +1372,8 @@ class EntityFactory {
         PlaceId: faker.randomGenerator.integer(100).toString(),
       );
 
-  static makeConcentratorFinaliztionModel() => ConcentratorFinalizationModel(
+  static ConcentratorFinalizationModel makeConcentratorFinaliztionModel() =>
+      ConcentratorFinalizationModel(
         FinalizationId: faker.randomGenerator.integer(100),
         PortionQuantity: faker.randomGenerator.integer(100),
         Value: faker.randomGenerator.decimal(),

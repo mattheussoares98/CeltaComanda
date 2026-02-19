@@ -8,6 +8,15 @@ import '../../../helpers/helpers.dart';
 import '../web_sale_request_details.dart';
 import 'components.dart';
 
+enum TardyStatus {
+  onTime(Colors.white),
+  warning(Colors.orange),
+  late(Colors.red);
+
+  final Color color;
+  const TardyStatus(this.color);
+}
+
 class RequestsItems extends StatelessWidget {
   final List<PrintedEntity> saleRequests;
   final IsToDelivery isToDeliveryStatus;
@@ -20,10 +29,21 @@ class RequestsItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     final theme = Theme.of(context);
     final color = isToDeliveryStatus == IsToDelivery.preparing
         ? Colors.amber
         : Colors.green;
+    TardyStatus getTardyStatus(DateTime requestDate) {
+      final differenceInMinutes = now.difference(requestDate).inMinutes;
+      if (differenceInMinutes < 15) {
+        return TardyStatus.onTime;
+      } else if (differenceInMinutes < 25) {
+        return TardyStatus.warning;
+      } else {
+        return TardyStatus.late;
+      }
+    }
 
     List<PrintedEntity> splitRequestsByLotAndStatus(
         List<PrintedEntity> originalRequests, IsToDelivery status) {
@@ -103,8 +123,14 @@ class RequestsItems extends StatelessWidget {
 
                 // return const Text('working');
 
+                final tardyStatus = getTardyStatus(
+                  DateTime.parse(
+                      saleRequest.Products.first.DateHourOfCreation!),
+                );
+
                 return Card(
                   clipBehavior: Clip.antiAlias,
+                  color: tardyStatus.color,
                   child: InkWell(
                     onDoubleTap: () {
                       Provider.of<WebSaleRequestDetailsPresenter>(context,
@@ -125,7 +151,8 @@ class RequestsItems extends StatelessWidget {
                           CommandTableAndLastChangedTime(
                             saleRequest: saleRequest,
                             mostRecentRequestFromCurrentSale: DateTime.parse(
-                                saleRequest.Products.first.DateHourOfCreation!),
+                              saleRequest.Products.first.DateHourOfCreation!,
+                            ),
                           ),
                           const Divider(thickness: 0.1),
                           // if (products.isEmpty)
@@ -148,6 +175,7 @@ class RequestsItems extends StatelessWidget {
                             products: products,
                             isPreparingColumn:
                                 isToDeliveryStatus == IsToDelivery.preparing,
+                            tardyStatus: tardyStatus,
                           ),
                         ],
                       ),

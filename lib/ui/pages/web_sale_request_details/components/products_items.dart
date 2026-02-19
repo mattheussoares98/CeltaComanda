@@ -3,15 +3,18 @@ import 'package:collection/collection.dart';
 
 import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
+import 'components.dart';
 
 class ProductsItems extends StatelessWidget {
   final List<PrintedProductsEntity> products;
   final bool isPreparingColumn;
+  final TardyStatus tardyStatus;
 
   const ProductsItems({
     super.key,
     required this.products,
     required this.isPreparingColumn,
+    required this.tardyStatus,
   });
 
   @override
@@ -57,11 +60,13 @@ class ProductsItems extends StatelessWidget {
                 children: [
                   ProductInformations(
                     product: product,
+                    tardyStatus: tardyStatus,
                     showDateHourOfCreation: index == 0,
                     isCancelled: product.IsCancelled == true,
                   ),
                   ...children.map((child) => ProductInformations(
                         product: child,
+                        tardyStatus: tardyStatus,
                         showDateHourOfCreation: false,
                         isCancelled: product.IsCancelled == true,
                       )),
@@ -77,11 +82,13 @@ class ProductInformations extends StatelessWidget {
   final PrintedProductsEntity product;
   final bool showDateHourOfCreation;
   final bool isCancelled;
+  final TardyStatus tardyStatus;
   const ProductInformations({
     super.key,
     required this.product,
     required this.showDateHourOfCreation,
     required this.isCancelled,
+    required this.tardyStatus,
   });
 
   @override
@@ -118,8 +125,10 @@ class ProductInformations extends StatelessWidget {
             if (product.ProductIsFatherComposition == true) ...[
               TextSpan(
                 text: ' (${R.string.combox})',
-                style: const TextStyle(
-                  color: Colors.red,
+                style: TextStyle(
+                  color: tardyStatus == TardyStatus.late
+                      ? Colors.white
+                      : Colors.red,
                 ),
               ),
             ],
@@ -127,7 +136,9 @@ class ProductInformations extends StatelessWidget {
               TextSpan(
                 text: ' (${product.Comments!})',
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.red,
+                  color: tardyStatus == TardyStatus.late
+                      ? Colors.white
+                      : Colors.red,
                   fontStyle: FontStyle.italic,
                   decoration: canceledDecoration,
                 ),
@@ -136,7 +147,9 @@ class ProductInformations extends StatelessWidget {
               TextSpan(
                 text: " ${R.string.canceled}",
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: Colors.red,
+                  color: tardyStatus == TardyStatus.late
+                      ? Colors.white
+                      : Colors.red,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
                 ),

@@ -56,9 +56,15 @@ class ProductsItems extends StatelessWidget {
               return Column(
                 children: [
                   ProductInformations(
-                      product: product, showDateHourOfCreation: index == 0),
+                    product: product,
+                    showDateHourOfCreation: index == 0,
+                    isCancelled: product.IsCancelled == true,
+                  ),
                   ...children.map((child) => ProductInformations(
-                      product: child, showDateHourOfCreation: false)),
+                        product: child,
+                        showDateHourOfCreation: false,
+                        isCancelled: product.IsCancelled == true,
+                      )),
                 ],
               );
             },
@@ -70,10 +76,12 @@ class ProductsItems extends StatelessWidget {
 class ProductInformations extends StatelessWidget {
   final PrintedProductsEntity product;
   final bool showDateHourOfCreation;
+  final bool isCancelled;
   const ProductInformations({
     super.key,
     required this.product,
     required this.showDateHourOfCreation,
+    required this.isCancelled,
   });
 
   @override
@@ -81,7 +89,8 @@ class ProductInformations extends StatelessWidget {
     final theme = Theme.of(context);
     final productIsChild = product.SaleRequestProductIdOfFather != null;
     final canceledDecoration = TextDecoration.combine([
-      if (product.IsCancelled == true) TextDecoration.lineThrough,
+      if (product.IsCancelled == true || isCancelled)
+        TextDecoration.lineThrough,
     ]);
 
     return Align(

@@ -14,9 +14,9 @@ class LocalWebLoadSettings implements WebLoadSettings {
     if (kDebugMode) {
       return WebLocalSettingsEntity(
         enterpriseId: 2,
-        defaultUrl: "http://cloud.celtaware.com.br",
-        concentratorPort: 42021,
-        navsPort: 32021,
+        defaultUrl: "http://localhost",
+        concentratorPort: 64286,
+        navsPort: 10966,
         enteprisePersonalizedCode: "02",
       );
       //local configurations for tests

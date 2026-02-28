@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -82,6 +79,16 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
     storageBucket: 'celta-restaurant.firebasestorage.app',
     measurementId: 'G-VFMT0F8VEK',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBeMjDEPBuPCAWU22EJUtu2WWSO6BmiMOY',
+    appId: '1:619247462622:ios:be12b3f133c82783813a4f',
+    messagingSenderId: '619247462622',
+    projectId: 'celta-restaurant',
+    databaseURL: 'https://celta-restaurant-default-rtdb.firebaseio.com',
+    storageBucket: 'celta-restaurant.firebasestorage.app',
+    iosBundleId: 'br.com.celtaware.cleanCeltaMobile',
   );
 
 }

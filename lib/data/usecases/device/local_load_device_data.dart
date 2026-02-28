@@ -14,6 +14,10 @@ class LocalLoadimeiOrWindowsId implements LoadDeviceData {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       WindowsDeviceInfo windowsInfo = await deviceInfo.windowsInfo;
       identifier = windowsInfo.deviceId;
+    } else if (Platform.isMacOS) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      MacOsDeviceInfo macosInfo = await deviceInfo.macOsInfo;
+      identifier = macosInfo.systemGUID;
     } else {
       identifier = await FlutterDeviceImei.instance.getIMEI();
     }

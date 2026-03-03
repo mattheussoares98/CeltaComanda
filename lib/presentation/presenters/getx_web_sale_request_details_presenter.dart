@@ -95,7 +95,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
 
               return hasUpdate;
             }
-            return false;
+            return true;
           })
           .map((c) => c.PersonalizedCode)
           .toSet();
@@ -120,6 +120,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
           final resultEntity = results[index];
 
           if (resultEntity == null) {
+            index++;
             continue;
           }
 

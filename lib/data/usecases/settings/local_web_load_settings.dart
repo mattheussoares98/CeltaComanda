@@ -17,7 +17,7 @@ class LocalWebLoadSettings implements WebLoadSettings {
         defaultUrl: "http://localhost",
         concentratorPort: 64286,
         navsPort: 10966,
-        enteprisePersonalizedCode: "02",
+        enteprisePersonalizedCode: "1",
       );
       //local configurations for tests
     }

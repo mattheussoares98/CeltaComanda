@@ -182,6 +182,7 @@ void main() {
       SellerCode: saleRequestTempEntity.SellerCode,
       CustomerCode: saleRequestTempEntity.CustomerCode,
       CovenantCode: saleRequestTempEntity.CovenantCode,
+      IsToDelivery: saleRequestTempEntity.IsToDelivery,
       IncrementValue: 0,
       IncrementType: 0,
       PlaceId: tableNumber.toString(),
@@ -1185,6 +1186,7 @@ void main() {
 
       final teste = UpdateSaleRequestTempEntity(
         PlaceId: tableNumber.toString(),
+        IsToDelivery: updateSaleRequestTempEntity.IsToDelivery,
         Peoples: updateSaleRequestTempEntity.Peoples,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
@@ -1257,6 +1259,7 @@ void main() {
       final entity = UpdateSaleRequestTempEntity(
         PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
+        IsToDelivery: updateSaleRequestTempEntity.IsToDelivery,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
@@ -1846,6 +1849,7 @@ void main() {
       final teste = UpdateSaleRequestTempEntity(
         PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
+        IsToDelivery: updateSaleRequestTempEntity.IsToDelivery,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,
@@ -1901,6 +1905,7 @@ void main() {
       final teste = UpdateSaleRequestTempEntity(
         PlaceId: tableNumber.toString(),
         Peoples: updateSaleRequestTempEntity.Peoples,
+        IsToDelivery: updateSaleRequestTempEntity.IsToDelivery,
         SellerCode: updateSaleRequestTempEntity.SellerCode,
         Comments: updateSaleRequestTempEntity.Comments,
         DeliveryControl: updateSaleRequestTempEntity.DeliveryControl,

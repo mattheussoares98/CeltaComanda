@@ -337,6 +337,7 @@ class EntityFactory {
       List<ProductModel> products) {
     return SaleRequestTempViewModel(
       Comments: null,
+      IsToDelivery: faker.randomGenerator.integer(10).toString(),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       Peoples: faker.randomGenerator.integer(100).toString(),
       SaleRequestTempId: faker.randomGenerator.integer(3).toString(),
@@ -708,6 +709,7 @@ class EntityFactory {
 
   static SaleRequestTempEntity makeApiSaleRequestEntity() {
     return SaleRequestTempEntity(
+      IsToDelivery: faker.randomGenerator.integer(10),
       Peoples: faker.randomGenerator.integer(100),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       Products: const [],
@@ -807,6 +809,7 @@ class EntityFactory {
     final products = [makeUpdateSaleRequestTempProductEntity()];
 
     return UpdateSaleRequestTempEntity(
+      IsToDelivery: faker.randomGenerator.integer(10),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       DeliveryControl: faker.randomGenerator.integer(5),
       EnterpriseId: faker.randomGenerator.integer(5),
@@ -845,6 +848,7 @@ class EntityFactory {
 
   static SaleRequestTempEntity makeSaleRequestTempEntity(int? tableNumber) =>
       SaleRequestTempEntity(
+        IsToDelivery: faker.randomGenerator.integer(10),
         Peoples: faker.randomGenerator.integer(100),
         SellerCode: faker.randomGenerator.integer(100).toString(),
         Products: [makeSaleRequestTempProductEntity()],

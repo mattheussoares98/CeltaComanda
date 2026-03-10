@@ -13,6 +13,7 @@ class SaleRequestTempModel {
   final String? SellerCode;
   final int? CustomerCode;
   final int? CovenantCode;
+  final int? IsToDelivery;
   final double? IncrementValue;
   final int? IncrementType; //1 == value && 2 == percentage
   final String? PlaceId;
@@ -29,6 +30,7 @@ class SaleRequestTempModel {
     required this.SellerCode,
     required this.CustomerCode,
     required this.CovenantCode,
+    required this.IsToDelivery,
     required this.IncrementValue,
     required this.IncrementType,
     required this.PlaceId,
@@ -63,6 +65,7 @@ class SaleRequestTempModel {
       SellerCode: json["SellerCode"],
       CustomerCode: json["CustomerCode"],
       CovenantCode: json["CovenantCode"],
+      IsToDelivery: json["IsToDelivery"],
       IncrementValue: json["IncrementValue"],
       IncrementType: json["IncrementType"],
       PlaceId: json["PlaceId"],
@@ -81,6 +84,7 @@ class SaleRequestTempModel {
         Peoples: entity.Peoples,
         SellerCode: entity.SellerCode,
         CovenantCode: entity.CovenantCode,
+        IsToDelivery: entity.IsToDelivery,
         CustomerCode: entity.CustomerCode,
         IncrementValue: entity.IncrementValue,
         IncrementType: entity.IncrementType,
@@ -99,6 +103,7 @@ class SaleRequestTempModel {
         SellerCode: SellerCode,
         CustomerCode: CustomerCode,
         CovenantCode: CovenantCode,
+        IsToDelivery: IsToDelivery,
         IncrementValue: IncrementValue,
         IncrementType: IncrementType,
         PlaceId: PlaceId,
@@ -117,6 +122,7 @@ class SaleRequestTempModel {
         "SellerCode": SellerCode,
         "CustomerCode": CustomerCode,
         "CovenantCode": CovenantCode,
+        "IsToDelivery": IsToDelivery,
         "IncrementValue": IncrementValue,
         "IncrementType": IncrementType,
         "PlaceId": PlaceId,

@@ -227,6 +227,7 @@ class GetxConfigurationsPresenter extends GetxController
           IncrementValue: saleRequestTempEntity.IncrementValue,
           IncrementType: saleRequestTempEntity.IncrementType,
           PlaceId: saleRequestTempEntity.PlaceId,
+          IsToDelivery: saleRequestTempEntity.IsToDelivery,
         ),
       );
 

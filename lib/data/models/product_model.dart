@@ -69,7 +69,7 @@ class ProductModel {
   final bool? GoesForFastTable;
   final bool? IsAlcoholicProduct;
   final List<ProductCompositionEntity>? childsComposition;
-  final ProductScheduleEntity? Schedule;
+  final ProductScheduleModel? Schedule;
 
   ProductModel({
     required this.ProductsId,
@@ -224,7 +224,7 @@ class ProductModel {
       ProductComplement: json["ProductComplement"],
       Schedule: json["Schedule"] == null
           ? null
-          : ProductScheduleModel.fromJson(json["Schedule"]).toEntity(),
+          : ProductScheduleModel.fromJson(json["Schedule"]),
       childsComposition: json["childsComposition"],
     );
   }
@@ -297,7 +297,9 @@ class ProductModel {
       NameComplete: entity.NameComplete,
       NameReduced: entity.NameReduced,
       ProductComplement: entity.ProductComplement,
-      Schedule: entity.Schedule,
+      Schedule: entity.Schedule == null
+          ? null
+          : ProductScheduleModel.fromEntity(entity.Schedule!),
       childsComposition: entity.childsComposition,
     );
   }
@@ -440,7 +442,7 @@ class ProductModel {
         SaleRetailPraticed: SaleRetailPraticed,
         SaleRetailPraticedString: SaleRetailPraticedString,
         ProductComplement: ProductComplement,
-        Schedule: Schedule,
+        Schedule: Schedule?.toEntity(),
         childsComposition: childsComposition,
       );
 }

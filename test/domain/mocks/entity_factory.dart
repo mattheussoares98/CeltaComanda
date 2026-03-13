@@ -482,7 +482,7 @@ class EntityFactory {
   static List<ProductModel> makeProductModel() {
     return [
       ProductModel(
-        Schedule: makeProductScheduleEntity(),
+        Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
@@ -552,7 +552,7 @@ class EntityFactory {
         childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductModel(
-        Schedule: makeProductScheduleEntity(),
+        Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),

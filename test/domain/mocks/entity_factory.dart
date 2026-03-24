@@ -1632,9 +1632,8 @@ class EntityFactory {
       );
 
   static ImageModel makeImageModel() => ImageModel(
-        pluOrEan: faker.guid.guid(),
+        plu: faker.guid.guid(),
         image: Uint8List.fromList(faker.randomGenerator.string(10).codeUnits),
-        keyIsEan: faker.randomGenerator.boolean(),
         isLogoImage: faker.randomGenerator.boolean(),
         isMarketingImage: faker.randomGenerator.boolean(),
         enterpriseName: faker.company.name(),

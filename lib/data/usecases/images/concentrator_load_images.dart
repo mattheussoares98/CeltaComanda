@@ -177,10 +177,9 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
                 final file = File(imagePath);
 
                 final image = ImageModel(
-                  pluOrEan: normalizedName,
+                  plu: normalizedName,
                   image: bytes,
                   file: file,
-                  keyIsEan: imageName.length > 11,
                   isLogoImage: imageName.toLowerCase().contains("logo"),
                   enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
                   imagePath: imagePath
@@ -223,7 +222,7 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
 
       for (var updatedImage in newImages) {
         int indexInLocalImages = localImages.indexWhere((e) =>
-            e.pluOrEan.toLowerCase() == updatedImage.pluOrEan.toLowerCase() &&
+            e.plu.toLowerCase() == updatedImage.plu.toLowerCase() &&
             e.enterpriseName?.toLowerCase() ==
                 updatedImage.enterpriseName?.toLowerCase());
 
@@ -314,10 +313,9 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
 
           images.add(
             ImageModel(
-              pluOrEan: pluOrEan,
+              plu: pluOrEan,
               image: newBytes,
               file: file,
-              keyIsEan: !pluOrEan.contains("-"),
               isLogoImage: file.path.toLowerCase().contains("logo"),
               enterpriseName: EnterpriseBuilder.entity?.enterpriseName,
               imagePath: file.path,

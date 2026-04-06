@@ -52,7 +52,7 @@ class _PrintedItemState extends State<PrintedItem> {
   @override
   Widget build(BuildContext context) {
     PrintedProductsPresenter printedProductsPresenter =
-        Provider.of(context, listen: false);
+        Provider.of(context, listen: true);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),

@@ -63,7 +63,7 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> loadPrinted(String commandNumber,
+  Future<bool> loadPrinted(String commandNumber,
       {bool showIsLoading = true}) async {
     if (showIsLoading) {
       isLoading = true;
@@ -71,6 +71,7 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
+      _printed = null;
       PrintedEntity? printed = await loadPrintedProducts.load(
         commandNumber: commandNumber.toInt(),
       );
@@ -94,9 +95,11 @@ class GetxPrintedProductsPresenter
           json.decode(response).first,
         );
       }
+      return true;
     } on BsError catch (e) {
       mainError = UIError.custom(e.toString());
       _customerInSaleRequest = null;
+      return false;
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:

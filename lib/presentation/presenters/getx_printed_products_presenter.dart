@@ -71,13 +71,12 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
-      PrintedEntity? printedProducts = await loadPrintedProducts.load(
+      PrintedEntity? printed = await loadPrintedProducts.load(
         commandNumber: commandNumber.toInt(),
       );
 
-      _printed = null;
-      if (printedProducts?.Products.isEmpty == false) {
-        _printed = PrintedViewModel.fromEntity(printedProducts!);
+      if (printed?.Products.isEmpty == false) {
+        _printed = PrintedViewModel.fromEntity(printed!);
         _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation!)
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
       }

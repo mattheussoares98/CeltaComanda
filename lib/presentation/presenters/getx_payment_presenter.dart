@@ -53,6 +53,9 @@ class GetxPaymentPresenter extends GetxController
     required this.validateCpfCnpj,
   });
 
+  String? _paymentCommandNumber;
+  String? _paymentSaleRequestId;
+
   @override
   Future<void> callPayment({
     required double longAmountValue,
@@ -66,6 +69,9 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      _paymentCommandNumber = homePresenter.commandEntity?.commandNumber;
+      _paymentSaleRequestId = printedProductsPresenter.printed?.SaleRequestId;
+
       _lastRequestedPaymentFinalization = ConcentratorFinalizationModel(
         FinalizationId: paymentMode.finalizationId,
         Value: longAmountValue,
@@ -124,6 +130,27 @@ class GetxPaymentPresenter extends GetxController
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
+    final targetCommandNumber =
+        _paymentCommandNumber ?? homePresenter.commandEntity?.commandNumber;
+
+    if (targetCommandNumber == null) {
+      throw DomainError.unexpected;
+    }
+
+    if (_paymentSaleRequestId != null &&
+        printedProductsPresenter.printed?.SaleRequestId !=
+            _paymentSaleRequestId) {
+      await printedProductsPresenter.loadPrinted(
+        targetCommandNumber,
+        showIsLoading: false,
+      );
+    }
+
+    final printed = printedProductsPresenter.printed;
+    if (printed == null) {
+      throw DomainError.unexpected;
+    }
+
     updateScreen = true;
 
     if (_lastRequestedPaymentFinalization != null &&
@@ -132,9 +159,7 @@ class GetxPaymentPresenter extends GetxController
     }
     updateScreen = false;
 
-    if (totalPaidValue <
-        printedProductsPresenter
-            .getTotalLiquid(printedProductsPresenter.printed)) {
+    if (totalPaidValue < printedProductsPresenter.getTotalLiquid(printed)) {
       return;
     }
 
@@ -151,25 +176,24 @@ class GetxPaymentPresenter extends GetxController
       if (useSharing == false) {
         final xml = await generateXmlForNfce.generate(
           couponFiscalNumber: newCouponNumber,
-          printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
-              .toEntity(),
+          printed: PrintedModel.fromViewModel(printed).toEntity(),
           finalizations: _successfulPayments,
           customer: _selectedCustomer?.customer.toEntity(),
           cpfCnpj: _cpfCnpj,
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
-            printedProductsPresenter.printed,
+            printed,
           ),
         );
 
         xmlReponse = await sendSaleMovementAsNfce.send(xml);
       }
 
-      final double serviceChargeValue = printedProductsPresenter
-          .getServiceChargeValue(printedProductsPresenter.printed);
+      final double serviceChargeValue =
+          printedProductsPresenter.getServiceChargeValue(printed);
 
       await concInsertSaleMovement.insert(
-        commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
+        commandNumber: targetCommandNumber.toInt(),
         couponFiscalNumber: newCouponNumber,
         pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
@@ -178,10 +202,9 @@ class GetxPaymentPresenter extends GetxController
         cpfCnpj: _cpfCnpj?.toString(),
         incrementType: serviceChargeValue == 0 ? null : 1,
         incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
-        totalLiquid: printedProductsPresenter
-            .getTotalLiquid(printedProductsPresenter.printed),
+        totalLiquid: printedProductsPresenter.getTotalLiquid(printed),
         finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-        products: printedProductsPresenter.printed!.Products,
+        products: printed.Products,
         xmlToGenerateFiscal: useSharing == false ? xmlReponse : null,
       );
 
@@ -191,10 +214,11 @@ class GetxPaymentPresenter extends GetxController
       showSuccessAndCloseUntilHomePage();
       _lastRequestedPaymentFinalization = null;
       _authorizationPendingModel = null;
-      await deleteSaleRequest
-          .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
+      _paymentCommandNumber = null;
+      _paymentSaleRequestId = null;
+      await deleteSaleRequest.delete(printed.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(
-        homePresenter.commandEntity!.commandNumber!,
+        targetCommandNumber,
       );
     } catch (e) {
       mainError = getUIError(e);
@@ -449,6 +473,8 @@ class GetxPaymentPresenter extends GetxController
   @override
   void clearPayments() {
     _lastRequestedPaymentFinalization = null;
+    _paymentCommandNumber = null;
+    _paymentSaleRequestId = null;
     _successfulPayments.clear();
   }
 

@@ -20,6 +20,7 @@ class _PaymentPageState extends State<PaymentPage>
   StreamSubscription? printedLoadingSubscription;
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? printedErrorSubscription;
   StreamSubscription? updateScrrenSubscription;
   PaymentPresenter? paymentPresenter;
   final formKey = GlobalKey<FormState>();
@@ -33,6 +34,7 @@ class _PaymentPageState extends State<PaymentPage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    printedErrorSubscription?.cancel();
     printedLoadingSubscription?.cancel();
     updateScrrenSubscription?.cancel();
     paymentPresenter?.disposePaymentResultHandler();
@@ -98,7 +100,12 @@ class _PaymentPageState extends State<PaymentPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     updateScrrenSubscription?.cancel();
+    printedErrorSubscription?.cancel();
 
+    printedErrorSubscription = handleMainError(
+      context,
+      printedProductsPresenter.mainErrorStream,
+    );
     loadingSubscription =
         handleLoading(context, paymentPresenter.isLoadingStream);
     printedLoadingSubscription =

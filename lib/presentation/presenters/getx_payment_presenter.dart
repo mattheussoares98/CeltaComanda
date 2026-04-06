@@ -137,9 +137,11 @@ class GetxPaymentPresenter extends GetxController
       throw DomainError.unexpected;
     }
 
-    if (_paymentSaleRequestId != null &&
+    bool isSameSaleRequestId = _paymentSaleRequestId != null &&
         printedProductsPresenter.printed?.SaleRequestId !=
-            _paymentSaleRequestId) {
+            _paymentSaleRequestId;
+
+    if (isSameSaleRequestId) {
       await printedProductsPresenter.loadPrinted(
         targetCommandNumber,
         showIsLoading: false,
@@ -147,7 +149,7 @@ class GetxPaymentPresenter extends GetxController
     }
 
     final printed = printedProductsPresenter.printed;
-    if (printed == null) {
+    if (printed == null || isSameSaleRequestId) {
       throw DomainError.unexpected;
     }
 

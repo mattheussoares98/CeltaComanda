@@ -588,7 +588,7 @@ void main() {
         CovenantCode: faker.randomGenerator.integer(10),
         CustomerCode: faker.randomGenerator.integer(10),
         SellerCode: faker.randomGenerator.integer(10),
-        Products: [],
+        Products: const [],
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),
         DateHourOfCreation: faker.randomGenerator.string(10),

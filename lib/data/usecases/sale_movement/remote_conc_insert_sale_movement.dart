@@ -110,8 +110,8 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     final correctProducts = _getProductsToInsertInConcentrator(products);
 
     return SaleMovementConcentratorEntity(
-      Checks: [],
-      Portions: [],
+      Checks: const [],
+      Portions: const [],
       XmlSatNfce: xml,
       SaleFiscalTypeString: xml == null ? "Venda" : "NFCe",
       SaleFiscalType:

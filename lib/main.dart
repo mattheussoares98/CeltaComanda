@@ -54,7 +54,7 @@ class App extends StatelessWidget
             theme: makeAppTheme(context),
             navigatorObservers: [routeObserver],
             initialRoute: PageRoutes.splash,
-            localizationsDelegates: [
+            localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,

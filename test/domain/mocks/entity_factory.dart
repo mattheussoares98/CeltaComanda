@@ -676,7 +676,7 @@ class EntityFactory {
         ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
         isToDelivery: IsToDelivery
             .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
-        childs: [],
+        childs: const [],
         DeliveryLoteNumber: faker.randomGenerator.integer(100).toString(),
       ),
       PrintedProductsViewModel(
@@ -701,7 +701,7 @@ class EntityFactory {
         ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
         isToDelivery: IsToDelivery
             .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
-        childs: [],
+        childs: const [],
         DeliveryLoteNumber: faker.randomGenerator.integer(100).toString(),
       ),
     ];
@@ -758,7 +758,7 @@ class EntityFactory {
           SaleRequestProductIdOfFather: faker.randomGenerator.integer(100),
           isToDelivery: IsToDelivery.values[
               faker.randomGenerator.integer(IsToDelivery.values.length)],
-          childs: [],
+          childs: const [],
           DeliveryLoteNumber: faker.randomGenerator.integer(100),
         ),
       ],
@@ -1460,8 +1460,8 @@ class EntityFactory {
 
   static SaleMovementConcentratorEntity makeSaleMovementConcentratorEntity() =>
       SaleMovementConcentratorEntity(
-        Checks: [],
-        Portions: [],
+        Checks: const [],
+        Portions: const [],
         PdvNumber: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),

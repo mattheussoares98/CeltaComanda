@@ -775,9 +775,9 @@ class GetxMenuPresenter extends GetxController
                 ExpansibleGroupType: "0",
                 OrderClassification: "0",
                 Schedule: null,
-                subgroups: [],
+                subgroups: const [],
               ),
-              productsViewModel: [],
+              productsViewModel: const [],
             ));
       } else if (!searchProductsEnabled) {
         int index = _loadedMenu.indexWhere((e) =>

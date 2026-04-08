@@ -220,7 +220,7 @@ class GetxConfigurationsPresenter extends GetxController
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
           SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
-          Products: [],
+          Products: const [],
           SellerCode: sellerCode,
           CustomerCode: saleRequestTempEntity.CustomerCode,
           CovenantCode: saleRequestTempEntity.CovenantCode,

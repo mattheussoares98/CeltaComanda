@@ -363,7 +363,7 @@ class GetxPrintedProductsPresenter
       if (call.arguments == "Success") {
         isLoading = false;
       } else {
-        mainError = UIError.unexpected;
+        mainError = UIError.custom(call.arguments);
         isLoading = false;
       }
     });

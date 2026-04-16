@@ -1,5 +1,5 @@
 // package br.com.celtaware.comanda.getnet_channel
-
+//
 // import android.app.Activity
 // import android.graphics.Bitmap
 // import android.graphics.BitmapFactory
@@ -10,35 +10,35 @@
 // import com.getnet.posdigital.printer.IPrinterCallback
 // import io.flutter.embedding.engine.FlutterEngine
 // import io.flutter.plugin.common.MethodChannel
-
-
+//
+//
 // class GetNetPrinter(
 //     private val activity: Activity,
 //     private val flutterEngine: FlutterEngine,
 // ) {
 //     private val channel: String = "printer"
-
-
+//
+//
 //     private val bindCallback: PosDigital.BindCallback
 //         get() = object : PosDigital.BindCallback {
 //             override fun onError(e: Exception) {
 //                 if (PosDigital.getInstance().isInitiated)
 //                     PosDigital.unregister(activity.applicationContext)
-
+//
 //                 connectPosDigitalService()
 //             }
-
+//
 //             override fun onConnected() {}
 //             override fun onDisconnected() {
 //                 //TODO send message indicating to try again or automatically try again 3 times
 //             }
 //         }
-
+//
 //     private fun connectPosDigitalService() {
 //         PosDigital.register(activity.applicationContext, bindCallback)
 //     }
-
-
+//
+//
 //     fun setupMethodChannel() {
 //         connectPosDigitalService()
 //         MethodChannel(
@@ -51,7 +51,7 @@
 //                         bitmapBytes, 0, bitmapBytes.size
 //                     )
 //                     Log.d("MainActivity", "Bitmap received: ${bitmap.height}x${bitmap.width}")
-
+//
 //                     try {
 //                         printReceipt(bitmap);
 //                     } catch (e: Exception) {
@@ -63,7 +63,7 @@
 //             }
 //         }
 //     }
-
+//
 //     fun printReceipt(bitmap: Bitmap) {
 //         if (PosDigital.getInstance().isInitiated) {
 //             try {
@@ -71,33 +71,33 @@
 //                 PosDigital.getInstance().printer.addImageBitmap(AlignMode.CENTER, bitmap)
 //                 PosDigital.getInstance().printer.print(getPrinterCallback())
 //             } catch (e: Exception) {
-//                 sendMessageToFlutter("Error");
+//                 sendMessageToFlutter("Error: ${e.message}");
 //             }
 //         } else {
 //             // falha no service de impressão
 //             // refaça o start da activity que
 //             // extende a BaseActivity para reconectar o service
-//             sendMessageToFlutter("Error");
+//             sendMessageToFlutter("Error: PosDigital is not initiated");
 //         }
 //     }
-
-
+//
+//
 //     private fun getPrinterCallback(): IPrinterCallback.Stub {
 //         return object : IPrinterCallback.Stub() {
 //             @Throws(RemoteException::class)
-
+//
 //             override fun onSuccess() {
 //                 sendMessageToFlutter("Success");
 //             }
-
+//
 //             @Throws(RemoteException::class)
-
+//
 //             override fun onError(cause: Int) {
-//                 sendMessageToFlutter("Error");
+//                 sendMessageToFlutter("Error: $cause");
 //             }
 //         }
 //     }
-
+//
 //     fun onDestroy() {
 //         val tag = javaClass.name
 //         try {
@@ -107,8 +107,8 @@
 //             Log.e(tag, "Erro de exception no Destroy da Activity")
 //         }
 //     }
-
-
+//
+//
 //     private fun sendMessageToFlutter(message: Any) {
 //         val methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
 //         methodChannel.invokeMethod("paymentResult", message)

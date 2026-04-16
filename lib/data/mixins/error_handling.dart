@@ -17,6 +17,6 @@ mixin ErrorHandling {
       throw e;
     }
 
-    throw DomainError.unexpected;
+    throw e;
   }
 }

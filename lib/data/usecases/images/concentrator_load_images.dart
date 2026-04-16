@@ -141,7 +141,7 @@ class ConcentratorLoadImages with ErrorHandling implements LoadImages {
 
       for (final imageName in imagesNames.toSet()) {
         try {
-          const maxSizeInBytes = 1 * 1024 * 1024;
+          const maxSizeInBytes = 2 * 1024 * 1024;
           final url = "$concentratorUrl/Images/$imageName";
           final request = http.Request('GET', Uri.parse(url));
           final response = await client.send(request);

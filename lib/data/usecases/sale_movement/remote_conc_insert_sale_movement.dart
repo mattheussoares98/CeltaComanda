@@ -174,33 +174,85 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
 List<ConcentratorFinalizationEntity> _getFinalizations({
   required List<ConcentratorFinalizationEntity> finalizations,
   required double totalLiquid,
-}) =>
-    finalizations.isEmpty
-        ? [
-            ConcentratorFinalizationEntity(
-              FinalizationId: FinalizationType.money.id,
-              PortionQuantity: null,
-              Value: totalLiquid,
-              ValueLiquid: totalLiquid,
-              SaleMovementFinalizationId: 0,
-              PayBackValue: null,
-              AuthorizationCode: null,
-              AuthorizationType: null,
-              FinalizationPdvId: null,
-              TEFNSUSitef: null,
-              TEFNSUHost: null,
-              TEFAuthorizationCode: null,
-              TEFBinCode: null,
-              TEFCardLastNumbers: null,
-              TEFNetWorkCode: null,
-              TEFFlagCode: null,
-              TEFFlagDescription: null,
-              TEFModalityPaymentCode: null,
-              TEFModalityDescription: null,
-              TEFPlanCardCode: null,
-            )
-          ]
-        : finalizations;
+}) {
+  if (finalizations.isEmpty) {
+    return [
+      ConcentratorFinalizationEntity(
+        FinalizationId: FinalizationType.money.id,
+        PortionQuantity: null,
+        Value: totalLiquid,
+        ValueLiquid: totalLiquid,
+        SaleMovementFinalizationId: 0,
+        PayBackValue: null,
+        AuthorizationCode: null,
+        AuthorizationType: null,
+        FinalizationPdvId: null,
+        TEFNSUSitef: null,
+        TEFNSUHost: null,
+        TEFAuthorizationCode: null,
+        TEFBinCode: null,
+        TEFCardLastNumbers: null,
+        TEFNetWorkCode: null,
+        TEFFlagCode: null,
+        TEFFlagDescription: null,
+        TEFModalityPaymentCode: null,
+        TEFModalityDescription: null,
+        TEFPlanCardCode: null,
+      )
+    ];
+  }
+
+  return finalizations;
+  //if continues with problems of difference between the payment methods and total liquid, remote this above line
+
+  double paymentsTotal =
+      finalizations.fold(0.0, (sum, f) => sum + (f.Value ?? 0));
+
+  double difference =
+      double.parse((totalLiquid - paymentsTotal).toStringAsFixed(2));
+
+  if (difference != 0.0) {
+    List<ConcentratorFinalizationEntity> adjustedFinalizations =
+        List.from(finalizations);
+
+    int indexToAdjust = 0;
+    for (int i = 0; i < adjustedFinalizations.length; i++) {
+      if ((adjustedFinalizations[i].Value ?? 0) + difference > 0) {
+        indexToAdjust = i;
+        break;
+      }
+    }
+
+    final target = adjustedFinalizations[indexToAdjust];
+    adjustedFinalizations[indexToAdjust] = ConcentratorFinalizationEntity(
+      FinalizationId: target.FinalizationId,
+      PortionQuantity: target.PortionQuantity,
+      Value:
+          double.parse(((target.Value ?? 0) + difference).toStringAsFixed(2)),
+      ValueLiquid: double.parse(
+          ((target.ValueLiquid ?? 0) + difference).toStringAsFixed(2)),
+      SaleMovementFinalizationId: target.SaleMovementFinalizationId,
+      PayBackValue: target.PayBackValue,
+      AuthorizationCode: target.AuthorizationCode,
+      AuthorizationType: target.AuthorizationType,
+      FinalizationPdvId: target.FinalizationPdvId,
+      TEFNSUSitef: target.TEFNSUSitef,
+      TEFNSUHost: target.TEFNSUHost,
+      TEFAuthorizationCode: target.TEFAuthorizationCode,
+      TEFBinCode: target.TEFBinCode,
+      TEFCardLastNumbers: target.TEFCardLastNumbers,
+      TEFNetWorkCode: target.TEFNetWorkCode,
+      TEFFlagCode: target.TEFFlagCode,
+      TEFFlagDescription: target.TEFFlagDescription,
+      TEFModalityPaymentCode: target.TEFModalityPaymentCode,
+      TEFModalityDescription: target.TEFModalityDescription,
+      TEFPlanCardCode: target.TEFPlanCardCode,
+    );
+    return adjustedFinalizations;
+  }
+
+  return finalizations;
+}
 
 List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
   List<PrintedProductsViewModel> products,

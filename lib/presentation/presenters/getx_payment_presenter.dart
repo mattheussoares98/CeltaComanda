@@ -137,19 +137,17 @@ class GetxPaymentPresenter extends GetxController
       throw DomainError.unexpected;
     }
 
-    bool isSameSaleRequestId = _paymentSaleRequestId != null &&
+    await printedProductsPresenter.loadPrinted(
+      targetCommandNumber,
+      showIsLoading: false,
+    );
+
+    bool hasDifferentSaleRequestId = _paymentSaleRequestId != null &&
         printedProductsPresenter.printed?.SaleRequestId !=
             _paymentSaleRequestId;
 
-    if (isSameSaleRequestId) {
-      await printedProductsPresenter.loadPrinted(
-        targetCommandNumber,
-        showIsLoading: false,
-      );
-    }
-
     final printed = printedProductsPresenter.printed;
-    if (printed == null || isSameSaleRequestId) {
+    if (printed == null || hasDifferentSaleRequestId) {
       throw DomainError.unexpected;
     }
 
@@ -422,6 +420,8 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      _paymentSaleRequestId = printedProductsPresenter.printed?.SaleRequestId;
+      _paymentCommandNumber = homePresenter.commandEntity?.commandNumber;
       if (customerPassword != null && customerPassword.isNotEmpty) {
         await checkPasswordByCustomerCode.validate(
           customerCode: _selectedCustomer!.customer.Code!,

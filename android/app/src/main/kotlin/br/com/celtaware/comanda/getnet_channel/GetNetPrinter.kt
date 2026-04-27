@@ -20,23 +20,35 @@
 //
 //
 //     private val bindCallback: PosDigital.BindCallback
-//         get() = object : PosDigital.BindCallback {
-//             override fun onError(e: Exception) {
-//                 if (PosDigital.getInstance().isInitiated)
-//                     PosDigital.unregister(activity.applicationContext)
+//        get() = object : PosDigital.BindCallback {
+//            override fun onError(e: Exception) {
+//                Log.e("GetNetPrinter", "PosDigital error: ${e.message}")
+//                if (PosDigital.getInstance().isInitiated) {
+//                    try {
+//                        PosDigital.unregister(activity.applicationContext)
+//                    } catch (ignored: Exception) {}
+//                }
+//                connectPosDigitalService()
+//            }
 //
-//                 connectPosDigitalService()
-//             }
+//            override fun onConnected() {
+//                Log.d("GetNetPrinter", "PosDigital service connected")
+//            }
 //
-//             override fun onConnected() {}
-//             override fun onDisconnected() {
-//                 //TODO send message indicating to try again or automatically try again 3 times
-//             }
-//         }
+//            override fun onDisconnected() {
+//                Log.d("GetNetPrinter", "PosDigital service disconnected")
+//                connectPosDigitalService()
+//            }
+//        }
 //
 //     private fun connectPosDigitalService() {
-//         PosDigital.register(activity.applicationContext, bindCallback)
-//     }
+//        Log.d("GetNetPrinter", "Registering PosDigital service...")
+//        try {
+//            PosDigital.register(activity.applicationContext, bindCallback)
+//        } catch (e: Exception) {
+//            Log.e("GetNetPrinter", "Failed to register PosDigital: ${e.message}")
+//        }
+//    }
 //
 //
 //     fun setupMethodChannel() {
@@ -65,21 +77,20 @@
 //     }
 //
 //     fun printReceipt(bitmap: Bitmap) {
-//         if (PosDigital.getInstance().isInitiated) {
-//             try {
-//                 PosDigital.getInstance().printer.init()
-//                 PosDigital.getInstance().printer.addImageBitmap(AlignMode.CENTER, bitmap)
-//                 PosDigital.getInstance().printer.print(getPrinterCallback())
-//             } catch (e: Exception) {
-//                 sendMessageToFlutter("Error: ${e.message}");
-//             }
-//         } else {
-//             // falha no service de impressão
-//             // refaça o start da activity que
-//             // extende a BaseActivity para reconectar o service
-//             sendMessageToFlutter("Error: PosDigital is not initiated");
-//         }
-//     }
+//        if (PosDigital.getInstance().isInitiated) {
+//            try {
+//                PosDigital.getInstance().printer.init()
+//                PosDigital.getInstance().printer.addImageBitmap(AlignMode.CENTER, bitmap)
+//                PosDigital.getInstance().printer.print(getPrinterCallback())
+//            } catch (e: Exception) {
+//                sendMessageToFlutter("Error: ${e.message}");
+//            }
+//        } else {
+//            Log.w("GetNetPrinter", "PosDigital not initiated, attempting to connect...")
+//            connectPosDigitalService()
+//            sendMessageToFlutter("Error: PosDigital is not initiated. Reconnecting... Please try again in a few seconds.");
+//        }
+//    }
 //
 //
 //     private fun getPrinterCallback(): IPrinterCallback.Stub {
@@ -99,14 +110,14 @@
 //     }
 //
 //     fun onDestroy() {
-//         val tag = javaClass.name
-//         try {
-//             if (PosDigital.getInstance().isInitiated)
-//                 PosDigital.unregister(activity.applicationContext)
-//         } catch (e: Exception) {
-//             Log.e(tag, "Erro de exception no Destroy da Activity")
-//         }
-//     }
+//        val tag = javaClass.name
+//        try {
+//            if (PosDigital.getInstance().isInitiated)
+//                PosDigital.unregister(activity.applicationContext)
+//        } catch (e: Exception) {
+//            Log.e(tag, "Erro de exception no Destroy da Activity: ${e.message}")
+//        }
+//    }
 //
 //
 //     private fun sendMessageToFlutter(message: Any) {
@@ -114,3 +125,4 @@
 //         methodChannel.invokeMethod("paymentResult", message)
 //     }
 // }
+//

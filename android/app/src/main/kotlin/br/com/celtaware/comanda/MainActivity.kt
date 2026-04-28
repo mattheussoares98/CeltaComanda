@@ -7,6 +7,8 @@ import android.util.Log
 // import br.com.celtaware.comanda.getnet_channel.GetNetPrinter
 //import br.com.celtaware.comanda.rede_channel.RedePayment
 //import br.com.celtaware.comanda.rede_channel.RedePrinter
+//import br.com.celtaware.comanda.cielo_channel.CieloPayment
+//import br.com.celtaware.comanda.cielo_channel.CieloPrinter
 import br.com.celtaware.comanda.utils.AppUtils
 import br.com.celtaware.comanda.utils.PersistentChannelManager
 import io.flutter.embedding.android.FlutterActivity
@@ -27,6 +29,10 @@ class MainActivity : FlutterActivity() {
     // private lateinit var getnetPaymentHandler: GetNetPaymentHandler
 
     // private lateinit var getnetPrinter: GetNetPrinter
+
+    // private lateinit var cieloPaymentHandler: CieloPayment
+    // private lateinit var cieloPrinter: CieloPrinter
+
     private var engine: FlutterEngine? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -45,12 +51,20 @@ class MainActivity : FlutterActivity() {
 
         // getnetPrinter = GetNetPrinter(this, flutterEngine)
         // getnetPrinter.setupMethodChannel()
+
+        // cieloPaymentHandler = CieloPayment(this)
+        // cieloPaymentHandler.setupMethodChannel(flutterEngine)
+
+        // cieloPrinter = CieloPrinter(this, flutterEngine)
+        // cieloPrinter.setupMethodChannel()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //        redePaymentHandler.handleActivityResult(requestCode, resultCode, data)
         // getnetPaymentHandler.handleActivityResult(requestCode, resultCode, data)
+        // cieloPaymentHandler.handleActivityResult(requestCode, resultCode, data)
+        // cieloPrinter.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun onPause() {
@@ -69,6 +83,17 @@ class MainActivity : FlutterActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+
+        // // Handle Cielo deep link responses (order://response)
+        // if (Intent.ACTION_VIEW == intent.action) {
+        //     val scheme = intent.data?.scheme
+        //     val host = intent.data?.host
+        //     if (scheme == "order" && host == "response") {
+        //         cieloPaymentHandler.handleDeepLinkResponse(intent)
+        //         cieloPrinter.handleDeepLinkResponse(intent)
+        //     }
+        // }
+
         if (Intent.ACTION_MAIN == intent.action && persistentChannelManager.isPersistApp()) {
             Log.i("MyLauncher", "onNewIntent: HOME Key")
         }

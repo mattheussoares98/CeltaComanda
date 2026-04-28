@@ -3,4 +3,6 @@ enum Channels {
   getnet,
   persistent,
   printer,
+  cielo,
+  cieloPrinter,
 }

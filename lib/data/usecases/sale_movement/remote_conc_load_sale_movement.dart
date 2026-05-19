@@ -43,4 +43,32 @@ class RemoteConcLoadSaleMovement implements ConcLoadSaleMovement {
       rethrow;
     }
   }
+
+  @override
+  Future<List<SaleMovementConcentratorEntity>?> loadDeliverySales(
+    int enterpriseId,
+  ) async {
+    try {
+      var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
+
+      final url =
+          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/GetSaleMovementDeliveryToPrint?enterpriseId=$enterpriseId";
+      final response = await httpAdapter.request(
+        url: url,
+        method: "get",
+        headers: headers,
+      );
+      if (response == null) {
+        throw Error();
+      } else if (response.isEmpty == true) {
+        throw DomainError.emptySales;
+      }
+
+      return (response as List)
+          .map((e) => SaleMovementConcentratorModel.fromJson(e).toEntity())
+          .toList();
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

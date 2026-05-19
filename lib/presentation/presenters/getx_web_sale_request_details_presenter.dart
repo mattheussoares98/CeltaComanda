@@ -19,6 +19,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LoadPrintedProducts loadPrintedProducts;
   final WebLoadSettings webLoadSettings;
   final UpdateDeliveryStatus updateDeliveryStatus;
+  final ConcLoadSaleMovement concLoadSaleMovement;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
@@ -28,6 +29,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     required this.loadPrintedProducts,
     required this.webLoadSettings,
     required this.updateDeliveryStatus,
+    required this.concLoadSaleMovement,
   });
 
   @override

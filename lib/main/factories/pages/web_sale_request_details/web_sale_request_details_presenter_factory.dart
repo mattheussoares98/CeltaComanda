@@ -11,4 +11,5 @@ WebSaleRequestDetailsPresenter makeGetxWebSaleRequestDetailsPresenter() =>
       loadDeliveryControl: makeConcLoadDeliveryControl(),
       webLoadSettings: makeLocalWebLoadSettings(),
       updateDeliveryStatus: makeConcUpdateDeliveryStatus(),
+      concLoadSaleMovement: makeRemoteLoadSaleMovementConcentrator(),
     );

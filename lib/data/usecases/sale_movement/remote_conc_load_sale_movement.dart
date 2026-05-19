@@ -45,14 +45,16 @@ class RemoteConcLoadSaleMovement implements ConcLoadSaleMovement {
   }
 
   @override
-  Future<List<SaleMovementConcentratorEntity>?> loadDeliverySales(
-    int enterpriseId,
-  ) async {
+  Future<List<SaleMovementConcentratorEntity>?> loadDeliverySales({
+    required String concentratorUrl,
+    required int enterpriseId,
+    required int concentratorPort,
+  }) async {
     try {
       var headers = {'Authorization': 'Basic MASTERPDV:PASSWORD'};
 
       final url =
-          "${EnterpriseBuilder.entity!.concentradorUrl}/api/APISaleMovement/GetSaleMovementDeliveryToPrint?enterpriseId=$enterpriseId";
+          "$concentratorUrl:$concentratorPort/api/APISaleMovement/GetSaleMovementDeliveryToPrint?enterpriseId=$enterpriseId";
       final response = await httpAdapter.request(
         url: url,
         method: "get",

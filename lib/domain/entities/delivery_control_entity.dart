@@ -9,11 +9,23 @@ enum IsToDelivery {
   const IsToDelivery(this.value);
 }
 
+enum DeliveryOriginType {
+  pdv(1),
+  saleRequest(2);
+
+  final int value;
+  const DeliveryOriginType(this.value);
+
+  factory DeliveryOriginType.fromValue(int value) {
+    return DeliveryOriginType.values.firstWhere((e) => e.value == value);
+  }
+}
+
 class DeliveryControlEntity extends Equatable {
   final int Id;
   final int EnterpriseId;
   final int EnterpriseCode;
-  final int OriginType;
+  final DeliveryOriginType OriginType;
   final String PersonalizedCode;
   final int? CouponFiscalNumber;
   final DateTime DateOfCreation;

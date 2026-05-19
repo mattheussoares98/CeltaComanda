@@ -8,7 +8,7 @@ class DeliveryControlModel extends Equatable {
   final int Id;
   final int EnterpriseId;
   final int EnterpriseCode;
-  final int OriginType;
+  final DeliveryOriginType OriginType;
   final String PersonalizedCode;
   final int? CouponFiscalNumber;
   final DateTime DateOfCreation;
@@ -60,7 +60,7 @@ class DeliveryControlModel extends Equatable {
       'Id': Id,
       'EnterpriseId': EnterpriseId,
       'EnterpriseCode': EnterpriseCode,
-      'OriginType': OriginType,
+      'OriginType': OriginType.value,
       'PersonalizedCode': PersonalizedCode,
       'CouponFiscalNumber': CouponFiscalNumber,
       'DateOfCreation': DateOfCreation.millisecondsSinceEpoch,
@@ -79,7 +79,7 @@ class DeliveryControlModel extends Equatable {
       Id: map['Id'] as int,
       EnterpriseId: map['EnterpriseId'] as int,
       EnterpriseCode: map['EnterpriseCode'] as int,
-      OriginType: map['OriginType'] as int,
+      OriginType: DeliveryOriginType.fromValue(map['OriginType'] as int),
       PersonalizedCode: map['PersonalizedCode'] as String,
       CouponFiscalNumber: map['CouponFiscalNumber'] != null
           ? map['CouponFiscalNumber'] as int

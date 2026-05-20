@@ -1,6 +1,6 @@
 import '../../entities/entities.dart';
 
-abstract class UpdateDeliveryStatus {
+abstract class ConcDeliveryControl {
   Future<void> update({
     required WebLocalSettingsEntity settings,
     required int saleRequestId,
@@ -8,6 +8,7 @@ abstract class UpdateDeliveryStatus {
     required IsToDelivery newStatus,
     OriginType? originType = OriginType.saleRequest,
   });
+  Future<List<DeliveryControlEntity>> load(WebLocalSettingsEntity settings);
 }
 
 enum OriginType {

@@ -15,20 +15,18 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final LoadDeliveryControl loadDeliveryControl;
   final LoadPrintedProducts loadPrintedProducts;
   final WebLoadSettings webLoadSettings;
-  final UpdateDeliveryStatus updateDeliveryStatus;
+  final ConcDeliveryControl concDeliveryControl;
   final ConcLoadSaleMovement concLoadSaleMovement;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
-    required this.loadDeliveryControl,
     required this.loadPrintedProducts,
     required this.webLoadSettings,
-    required this.updateDeliveryStatus,
+    required this.concDeliveryControl,
     required this.concLoadSaleMovement,
   });
 
@@ -74,7 +72,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
 
       _webLocalSettings ??= await webLoadSettings.load();
       final deliveryControls =
-          await loadDeliveryControl.load(_webLocalSettings!);
+          await concDeliveryControl.load(_webLocalSettings!);
 
       final Map<String, PrintedEntity> updatedSaleRequests =
           Map<String, PrintedEntity>.of(_saleRequestsStream.value);
@@ -150,7 +148,7 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     required IsToDelivery newStatus,
   }) async {
     try {
-      await updateDeliveryStatus.update(
+      await concDeliveryControl.update(
         settings: _webLocalSettings!,
         saleRequestId: saleRequestId,
         deliveryLoteNumber: deliveryLotId,

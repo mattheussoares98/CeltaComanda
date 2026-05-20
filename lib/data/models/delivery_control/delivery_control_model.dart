@@ -3,6 +3,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
+import 'delivery_product_control_model.dart';
 
 class DeliveryControlModel extends Equatable {
   final int Id;
@@ -19,6 +20,7 @@ class DeliveryControlModel extends Equatable {
   final int? DeliveryControl;
   final int DeliveryStatusLate;
   final double TotalLiquid;
+  final List<DeliveryProductControlModel>? Products;
 
   const DeliveryControlModel({
     required this.Id,
@@ -35,6 +37,7 @@ class DeliveryControlModel extends Equatable {
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
     required this.TotalLiquid,
+    this.Products,
   });
 
   @override
@@ -53,6 +56,7 @@ class DeliveryControlModel extends Equatable {
         this.DeliveryControl,
         this.DeliveryStatusLate,
         this.TotalLiquid,
+        this.Products,
       ];
 
   Map<String, dynamic> toJson() {
@@ -71,6 +75,7 @@ class DeliveryControlModel extends Equatable {
       'DeliveryControl': DeliveryControl,
       'DeliveryStatusLate': DeliveryStatusLate,
       'TotalLiquid': TotalLiquid,
+      'Products': Products?.map((x) => x.toJson()).toList(),
     };
   }
 
@@ -94,7 +99,14 @@ class DeliveryControlModel extends Equatable {
       DeliveryControl:
           map['DeliveryControl'] != null ? map['DeliveryControl'] as int : null,
       DeliveryStatusLate: map['DeliveryStatusLate'] as int,
-      TotalLiquid: map['TotalLiquid'] as double,
+      TotalLiquid: (map['TotalLiquid'] as num).toDouble(),
+      Products: map['Products'] != null
+          ? List<DeliveryProductControlModel>.from(
+              (map['Products'] as List<dynamic>).map<DeliveryProductControlModel?>(
+                (x) => DeliveryProductControlModel.fromJson(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
@@ -114,6 +126,9 @@ class DeliveryControlModel extends Equatable {
         DeliveryControl: entity.DeliveryControl,
         DeliveryStatusLate: entity.DeliveryStatusLate,
         TotalLiquid: entity.TotalLiquid,
+        Products: entity.Products
+            ?.map((e) => DeliveryProductControlModel.fromEntity(e))
+            .toList(),
       );
 
   DeliveryControlEntity toEntity() => DeliveryControlEntity(
@@ -131,5 +146,6 @@ class DeliveryControlModel extends Equatable {
         DeliveryControl: DeliveryControl,
         DeliveryStatusLate: DeliveryStatusLate,
         TotalLiquid: TotalLiquid,
+        Products: Products?.map((e) => e.toEntity()).toList(),
       );
 }

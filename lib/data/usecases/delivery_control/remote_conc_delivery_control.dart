@@ -44,4 +44,24 @@ class RemoteConcDeliveryControl implements ConcDeliveryControl {
         .map((e) => DeliveryControlModel.fromJson(e).toEntity())
         .toList();
   }
+
+  @override
+  Future<List<DeliveryControlEntity>> loadWithProducts(
+    WebLocalSettingsEntity settings,
+  ) async {
+    final response = await httpClient.request(
+      url:
+          '${settings.defaultUrl}:${settings.concentratorPort}/api/APIDeliveryControl/GetDeliveryStatusWithProducts?enteprisePersonalizedCode=${settings.enteprisePersonalizedCode}',
+      method: "get",
+      headers: {'Authorization': 'Basic MASTERPDV:PASSWORD'},
+    );
+
+    if (response == null) {
+      return [];
+    }
+
+    return (response as List)
+        .map((e) => DeliveryControlModel.fromJson(e).toEntity())
+        .toList();
+  }
 }

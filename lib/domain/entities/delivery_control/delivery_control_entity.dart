@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'delivery_product_control_entity.dart';
+
 enum IsToDelivery {
   preparing(1),
   ready(2),
@@ -36,6 +38,7 @@ class DeliveryControlEntity extends Equatable {
   final int? DeliveryControl;
   final int DeliveryStatusLate;
   final double TotalLiquid;
+  final List<DeliveryProductControlEntity>? Products;
 
   const DeliveryControlEntity({
     required this.Id,
@@ -52,6 +55,7 @@ class DeliveryControlEntity extends Equatable {
     required this.DeliveryControl,
     required this.DeliveryStatusLate,
     required this.TotalLiquid,
+    this.Products,
   });
 
   @override
@@ -70,5 +74,6 @@ class DeliveryControlEntity extends Equatable {
         this.DeliveryControl,
         this.DeliveryStatusLate,
         this.TotalLiquid,
+        this.Products,
       ];
 }

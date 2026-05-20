@@ -9,6 +9,9 @@ abstract class ConcDeliveryControl {
     OriginType? originType = OriginType.saleRequest,
   });
   Future<List<DeliveryControlEntity>> load(WebLocalSettingsEntity settings);
+  Future<List<DeliveryControlEntity>> loadWithProducts(
+    WebLocalSettingsEntity settings,
+  );
 }
 
 enum OriginType {

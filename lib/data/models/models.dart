@@ -4,7 +4,7 @@ export './group_permission_concentrator/group_permission_concentrator.dart';
 export 'sale_movement/sale_movement.dart';
 export './cart_product_model.dart';
 export './command_model.dart';
-export './delivery_control_model.dart';
+export './delivery_control/delivery_control.dart';
 export './device_info_model.dart';
 export './enterprise_concentrador_model.dart';
 export './enterprise_concentrador_parameters_model.dart';

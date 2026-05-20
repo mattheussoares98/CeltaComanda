@@ -2,7 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/entities.dart';
+import '../../../domain/entities/entities.dart';
 
 class DeliveryControlModel extends Equatable {
   final int Id;

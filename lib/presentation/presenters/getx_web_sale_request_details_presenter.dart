@@ -62,10 +62,11 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
   final _saleRequestsStream = Rx<Map<String, PrintedEntity>>({});
   @override
   Stream<Map<String, PrintedEntity>> get saleRequestsStream =>
-      _saleRequestsStream.stream;
+      _saleRequestsStream.stream; //TODO delete this
 
   @override
   Future<void> loadOpenSaleRequests() async {
+    //TODO delete this method
     try {
       isLoading = true;
       mainError = null;
@@ -158,6 +159,29 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
       await loadOpenSaleRequests();
     } catch (e) {
       mainError = getUIError(e);
+    }
+  }
+
+  final _deliveryControlsStream = Rx<List<DeliveryControlEntity>>([]);
+  @override
+  Stream<List<DeliveryControlEntity>> get deliveryControlsStream =>
+      _deliveryControlsStream.stream;
+
+  @override
+  Future<void> loadDeliveryControls() async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      _webLocalSettings ??= await webLoadSettings.load();
+      final deliveryControls =
+          await concDeliveryControl.loadWithProducts(_webLocalSettings!);
+
+      _deliveryControlsStream.subject.add(deliveryControls);
+    } catch (e) {
+      mainError = getUIError(e);
+    } finally {
+      isLoading = false;
     }
   }
 }

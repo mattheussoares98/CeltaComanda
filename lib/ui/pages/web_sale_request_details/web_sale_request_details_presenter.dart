@@ -7,9 +7,11 @@ abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
   Stream<Map<String, PrintedEntity>> get saleRequestsStream;
+  Stream<List<DeliveryControlEntity>> get deliveryControlsStream;
 
   WebLocalSettingsEntity? get webLocalSettings;
 
+  Future<void> loadDeliveryControls();
   Future<void> validateEnterprise(String enterpriseName);
   Future<void> loadOpenSaleRequests();
   Future<void> updateDeliveryControlStatus({

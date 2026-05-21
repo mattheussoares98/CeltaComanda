@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../firebase_options.dart';
 import '../../infra/helpers/helpers.dart';
@@ -14,11 +15,11 @@ import '../../infra/helpers/helpers.dart';
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  _deletePath();
   await initFirebase();
   await _initHive();
   _hideNavigationButtons();
   WakelockPlus.enable();
-  _deletePath();
 }
 
 Future<void> initFirebase() async {
@@ -30,6 +31,12 @@ Future<void> initFirebase() async {
     await Firebase.initializeApp(
       options: Platform.isIOS ? null : DefaultFirebaseOptions.currentPlatform,
     );
+
+    if (Platform.isWindows) {
+      FirebaseFirestore.instance.settings = const Settings(
+        persistenceEnabled: false,
+      );
+    }
   }
 }
 
@@ -37,12 +44,11 @@ void _deletePath() {
   try {
     if (kIsWeb || !Platform.isWindows) return;
 
-    final separator = Platform.pathSeparator;
-    final path = "AppData${separator}Local${separator}firestore";
+    final localAppData = Platform.environment['LOCALAPPDATA'];
+    if (localAppData == null) return;
 
-    final userHome =
-        Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
-    final pathToDelete = '$userHome/$path';
+    final separator = Platform.pathSeparator;
+    final pathToDelete = '$localAppData${separator}firestore';
     final directoryToDelete = Directory(pathToDelete);
     if (directoryToDelete.existsSync()) {
       directoryToDelete.deleteSync(recursive: true);

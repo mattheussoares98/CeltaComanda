@@ -9,6 +9,10 @@ enum IsToDelivery {
 
   final int value;
   const IsToDelivery(this.value);
+
+  static IsToDelivery fromValue(int value) {
+    return IsToDelivery.values.firstWhere((e) => e.value == value);
+  }
 }
 
 enum DeliveryOriginType {

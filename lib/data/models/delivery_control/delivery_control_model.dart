@@ -92,7 +92,7 @@ class DeliveryControlModel extends Equatable {
       DateOfCreation: DateTime.parse(map['DateOfCreation']),
       DateHourOfCreation: DateTime.parse(map['DateHourOfCreation']),
       IsCancelled: map['IsCancelled'] as bool,
-      isToDelivery: IsToDelivery.values[map['IsToDelivery']],
+      isToDelivery: IsToDelivery.fromValue(map['IsToDelivery'] as int),
       DateHourOfDelivery: map['DateHourOfDelivery'] != null
           ? DateTime.parse(map['DateHourOfDelivery'])
           : null,
@@ -102,8 +102,10 @@ class DeliveryControlModel extends Equatable {
       TotalLiquid: (map['TotalLiquid'] as num).toDouble(),
       Products: map['Products'] != null
           ? List<DeliveryProductControlModel>.from(
-              (map['Products'] as List<dynamic>).map<DeliveryProductControlModel?>(
-                (x) => DeliveryProductControlModel.fromJson(x as Map<String, dynamic>),
+              (map['Products'] as List<dynamic>)
+                  .map<DeliveryProductControlModel?>(
+                (x) => DeliveryProductControlModel.fromJson(
+                    x as Map<String, dynamic>),
               ),
             )
           : null,
@@ -126,9 +128,8 @@ class DeliveryControlModel extends Equatable {
         DeliveryControl: entity.DeliveryControl,
         DeliveryStatusLate: entity.DeliveryStatusLate,
         TotalLiquid: entity.TotalLiquid,
-        Products: entity.Products
-            ?.map((e) => DeliveryProductControlModel.fromEntity(e))
-            .toList(),
+        Products: entity.Products?.map(
+            (e) => DeliveryProductControlModel.fromEntity(e)).toList(),
       );
 
   DeliveryControlEntity toEntity() => DeliveryControlEntity(

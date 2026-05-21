@@ -13,7 +13,7 @@ abstract class WebSaleRequestDetailsPresenter implements Listenable {
   Future<void> loadDeliveryControls();
   Future<void> validateEnterprise(String enterpriseName);
   Future<void> updateDeliveryControlStatus({
-    required int saleRequestId,
+    required DeliveryControlEntity deliveryControl,
     required int? deliveryLotId,
     required IsToDelivery newStatus,
   });

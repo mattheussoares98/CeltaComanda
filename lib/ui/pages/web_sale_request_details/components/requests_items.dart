@@ -58,7 +58,7 @@ class RequestsItems extends StatelessWidget {
                       Provider.of<WebSaleRequestDetailsPresenter>(context,
                               listen: false)
                           .updateDeliveryControlStatus(
-                        saleRequestId: deliveryControl.Id,
+                        deliveryControl: deliveryControl,
                         deliveryLotId:
                             deliveryControl.Products?.first.DeliveryLoteNumber,
                         newStatus: isToDeliveryStatus == IsToDelivery.preparing
@@ -79,10 +79,25 @@ class RequestsItems extends StatelessWidget {
                               itemCount: products.length,
                               itemBuilder: (context, index) {
                                 final product = products.elementAt(index);
+                                final children = product.children;
 
-                                return ProductInfo(
-                                  deliveryControl: deliveryControl,
-                                  product: product,
+                                return Column(
+                                  children: [
+                                    ProductInfo(
+                                      deliveryControl: deliveryControl,
+                                      product: product,
+                                    ),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: children?.length,
+                                      itemBuilder: (context, index) {
+                                        return ProductInfo(
+                                          deliveryControl: deliveryControl,
+                                          product: children!.elementAt(index),
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 );
                               }),
                         ],

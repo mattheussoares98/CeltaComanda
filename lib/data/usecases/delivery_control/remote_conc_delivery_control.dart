@@ -10,13 +10,12 @@ class RemoteConcDeliveryControl implements ConcDeliveryControl {
   @override
   Future<void> update({
     required WebLocalSettingsEntity settings,
-    required int saleRequestId,
+    required DeliveryControlEntity deliveryControl,
     required int? deliveryLoteNumber,
     required IsToDelivery newStatus,
-    OriginType? originType = OriginType.saleRequest,
   }) async {
     final url =
-        '${settings.defaultUrl}:${settings.concentratorPort}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${originType!.value}&saleRequestId=$saleRequestId&deliveryStatus=${newStatus.value}&deliveryLoteNumber=$deliveryLoteNumber';
+        '${settings.defaultUrl}:${settings.concentratorPort}/api/APIDeliveryControl/UpdateDeliveryStatus?originType=${deliveryControl.OriginType.value}&saleRequestId=${deliveryControl.Id}&deliveryStatus=${newStatus.value}&deliveryLoteNumber=$deliveryLoteNumber';
 
     await httpClient.request(
       url: url,

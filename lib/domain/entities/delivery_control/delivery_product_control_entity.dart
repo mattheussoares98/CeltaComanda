@@ -14,7 +14,7 @@ class DeliveryProductControlEntity extends Equatable {
   final IsToDelivery isToDelivery;
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
-  final int DeliveryStatusLate;
+  final DeliveryStatusLate deliveryStatusLate;
   final String ProductInternalCode;
   final String ProductName;
   final double Quantity;
@@ -22,6 +22,8 @@ class DeliveryProductControlEntity extends Equatable {
   final int? DeliveryLoteNumber;
   final bool? ProductIsFatherComposition;
   final int? ProductIdOfFather;
+  final bool? IsCancelled;
+  final String? Comments;
   final List<DeliveryProductControlEntity>? children;
 
   const DeliveryProductControlEntity({
@@ -36,7 +38,7 @@ class DeliveryProductControlEntity extends Equatable {
     required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
-    required this.DeliveryStatusLate,
+    required this.deliveryStatusLate,
     required this.ProductInternalCode,
     required this.ProductName,
     required this.Quantity,
@@ -44,6 +46,8 @@ class DeliveryProductControlEntity extends Equatable {
     required this.DeliveryLoteNumber,
     required this.ProductIsFatherComposition,
     required this.ProductIdOfFather,
+    required this.IsCancelled,
+    required this.Comments,
     required this.children,
   });
 
@@ -60,7 +64,7 @@ class DeliveryProductControlEntity extends Equatable {
         isToDelivery,
         DateHourOfDelivery,
         DeliveryControl,
-        DeliveryStatusLate,
+        deliveryStatusLate,
         ProductInternalCode,
         ProductName,
         Quantity,
@@ -68,6 +72,8 @@ class DeliveryProductControlEntity extends Equatable {
         DeliveryLoteNumber,
         ProductIsFatherComposition,
         ProductIdOfFather,
+        IsCancelled,
+        Comments,
         children,
       ];
 
@@ -83,7 +89,7 @@ class DeliveryProductControlEntity extends Equatable {
     IsToDelivery? isToDelivery,
     DateTime? DateHourOfDelivery,
     int? DeliveryControl,
-    int? DeliveryStatusLate,
+    DeliveryStatusLate? deliveryStatusLate,
     String? ProductInternalCode,
     String? ProductName,
     double? Quantity,
@@ -91,6 +97,8 @@ class DeliveryProductControlEntity extends Equatable {
     int? DeliveryLoteNumber,
     bool? ProductIsFatherComposition,
     int? ProductIdOfFather,
+    bool? IsCancelled,
+    String? Comments,
     List<DeliveryProductControlEntity>? children,
   }) =>
       DeliveryProductControlEntity(
@@ -105,7 +113,7 @@ class DeliveryProductControlEntity extends Equatable {
         isToDelivery: isToDelivery ?? this.isToDelivery,
         DateHourOfDelivery: DateHourOfDelivery ?? this.DateHourOfDelivery,
         DeliveryControl: DeliveryControl ?? this.DeliveryControl,
-        DeliveryStatusLate: DeliveryStatusLate ?? this.DeliveryStatusLate,
+        deliveryStatusLate: deliveryStatusLate ?? this.deliveryStatusLate,
         ProductInternalCode: ProductInternalCode ?? this.ProductInternalCode,
         ProductName: ProductName ?? this.ProductName,
         Quantity: Quantity ?? this.Quantity,
@@ -114,6 +122,24 @@ class DeliveryProductControlEntity extends Equatable {
         ProductIsFatherComposition:
             ProductIsFatherComposition ?? this.ProductIsFatherComposition,
         ProductIdOfFather: ProductIdOfFather ?? this.ProductIdOfFather,
+        IsCancelled: IsCancelled ?? this.IsCancelled,
+        Comments: Comments ?? this.Comments,
         children: children ?? this.children,
       );
+}
+
+enum DeliveryStatusLate {
+  onTime(1),
+  warning(2),
+  late(3);
+
+  final int value;
+  const DeliveryStatusLate(this.value);
+
+  factory DeliveryStatusLate.fromValue(int value) {
+    return DeliveryStatusLate.values.firstWhere(
+      (e) => e.value == value,
+      orElse: () => DeliveryStatusLate.onTime,
+    );
+  }
 }

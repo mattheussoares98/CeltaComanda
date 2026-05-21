@@ -15,7 +15,7 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
     required super.isToDelivery,
     required super.DateHourOfDelivery,
     required super.DeliveryControl,
-    required super.DeliveryStatusLate,
+    required super.deliveryStatusLate,
     required super.ProductInternalCode,
     required super.ProductName,
     required super.Quantity,
@@ -23,6 +23,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
     required super.DeliveryLoteNumber,
     required super.ProductIsFatherComposition,
     required super.ProductIdOfFather,
+    required super.IsCancelled,
+    required super.Comments,
     required super.children,
   });
 
@@ -39,7 +41,7 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
       'IsToDelivery': isToDelivery.index,
       'DateHourOfDelivery': DateHourOfDelivery?.millisecondsSinceEpoch,
       'DeliveryControl': DeliveryControl,
-      'DeliveryStatusLate': DeliveryStatusLate,
+      'DeliveryStatusLate': deliveryStatusLate.value,
       'ProductInternalCode': ProductInternalCode,
       'ProductName': ProductName,
       'Quantity': Quantity,
@@ -47,6 +49,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
       'DeliveryLoteNumber': DeliveryLoteNumber,
       'ProductIsFatherComposition': ProductIsFatherComposition,
       'ProductIdOfFather': ProductIdOfFather,
+      'IsCancelled': IsCancelled,
+      'Comments': Comments,
       'Children': children
           ?.map((x) => (x as DeliveryProductControlModel).toJson())
           .toList(),
@@ -82,7 +86,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
           : null,
       DeliveryControl:
           map['DeliveryControl'] != null ? map['DeliveryControl'] as int : null,
-      DeliveryStatusLate: map['DeliveryStatusLate'] as int,
+      deliveryStatusLate:
+          DeliveryStatusLate.fromValue(map['DeliveryStatusLate'] as int),
       ProductInternalCode: map['ProductInternalCode'] as String,
       ProductName: map['ProductName'] as String,
       Quantity: (map['Quantity'] as num).toDouble(),
@@ -96,6 +101,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
       ProductIdOfFather: map['ProductIdOfFather'] != null
           ? map['ProductIdOfFather'] as int
           : null,
+      IsCancelled: map['IsCancelled'] == true,
+      Comments: map['Comments'] as String?,
       children: map['Children'] != null
           ? (map['Children'] as List)
               .map((x) => DeliveryProductControlModel.fromJson(x))
@@ -118,7 +125,7 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
         isToDelivery: entity.isToDelivery,
         DateHourOfDelivery: entity.DateHourOfDelivery,
         DeliveryControl: entity.DeliveryControl,
-        DeliveryStatusLate: entity.DeliveryStatusLate,
+        deliveryStatusLate: entity.deliveryStatusLate,
         ProductInternalCode: entity.ProductInternalCode,
         ProductName: entity.ProductName,
         Quantity: entity.Quantity,
@@ -126,6 +133,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
         DeliveryLoteNumber: entity.DeliveryLoteNumber,
         ProductIsFatherComposition: entity.ProductIsFatherComposition,
         ProductIdOfFather: entity.ProductIdOfFather,
+        IsCancelled: entity.IsCancelled,
+        Comments: entity.Comments,
         children: entity.children,
       );
 
@@ -141,7 +150,7 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
         isToDelivery: isToDelivery,
         DateHourOfDelivery: DateHourOfDelivery,
         DeliveryControl: DeliveryControl,
-        DeliveryStatusLate: DeliveryStatusLate,
+        deliveryStatusLate: deliveryStatusLate,
         ProductInternalCode: ProductInternalCode,
         ProductName: ProductName,
         Quantity: Quantity,
@@ -149,6 +158,8 @@ class DeliveryProductControlModel extends DeliveryProductControlEntity {
         DeliveryLoteNumber: DeliveryLoteNumber,
         ProductIsFatherComposition: ProductIsFatherComposition,
         ProductIdOfFather: ProductIdOfFather,
+        IsCancelled: IsCancelled,
+        Comments: Comments,
         children: children,
       );
 }

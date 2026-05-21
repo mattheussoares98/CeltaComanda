@@ -52,7 +52,8 @@ class RequestsItems extends StatelessWidget {
                 final products = deliveryControl.Products!;
                 return Card(
                   clipBehavior: Clip.antiAlias,
-                  color: deliveryControl.deliveryStatusLate.color,
+                  color:
+                      deliveryControl.Products!.first.deliveryStatusLate.color,
                   child: InkWell(
                     onDoubleTap: () {
                       Provider.of<WebSaleRequestDetailsPresenter>(context,

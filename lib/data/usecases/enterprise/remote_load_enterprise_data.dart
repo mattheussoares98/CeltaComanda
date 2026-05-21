@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -14,12 +12,6 @@ class RemoteLoadEnterpriseData implements LoadEnterpriseData {
   RemoteLoadEnterpriseData({
     required this.firebaseStorage,
   });
-
-  static final FirebaseFirestore _firebaseFirestore =
-      FirebaseFirestore.instance;
-  static final clientsCollection = _firebaseFirestore.collection(
-    FirebaseCollections.clients.name,
-  );
 
   @override
   Future<EnterpriseEntity?> load() async {

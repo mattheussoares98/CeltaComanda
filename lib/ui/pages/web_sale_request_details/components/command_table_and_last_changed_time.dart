@@ -5,12 +5,12 @@ import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class CommandTableAndLastChangedTime extends StatelessWidget {
-  final PrintedEntity saleRequest;
-  final DateTime mostRecentRequestFromCurrentSale;
-  const CommandTableAndLastChangedTime(
-      {super.key,
-      required this.saleRequest,
-      required this.mostRecentRequestFromCurrentSale});
+  final DeliveryControlEntity deliveryControl;
+
+  const CommandTableAndLastChangedTime({
+    super.key,
+    required this.deliveryControl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
               style: theme.textTheme.titleMedium,
               children: [
                 TextSpan(
-                  text: "${R.string.command} ${saleRequest.PersonalizedCode}",
+                  text:
+                      "${deliveryControl.CouponFiscalNumber == null ? R.string.command : R.string.sale} ${deliveryControl.CouponFiscalNumber ?? deliveryControl.PersonalizedCode}",
                   style: theme.textTheme.titleLarge,
                 ),
                 // if (saleRequest.PlaceId != null &&
@@ -41,10 +42,10 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
         Expanded(
           child: Text(
             DateFormat(
-                    mostRecentRequestFromCurrentSale.day != DateTime.now().day
+                    deliveryControl.DateHourOfCreation.day != DateTime.now().day
                         ? "dd/MM HH:mm:ss"
                         : "HH:mm:ss")
-                .format(mostRecentRequestFromCurrentSale),
+                .format(deliveryControl.DateHourOfCreation),
             textAlign: TextAlign.end,
             style: theme.textTheme.titleMedium,
           ),

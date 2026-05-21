@@ -22,6 +22,7 @@ class DeliveryProductControlEntity extends Equatable {
   final int? DeliveryLoteNumber;
   final bool? ProductIsFatherComposition;
   final int? ProductIdOfFather;
+  final List<DeliveryProductControlEntity>? children;
 
   const DeliveryProductControlEntity({
     required this.OriginType,
@@ -43,6 +44,7 @@ class DeliveryProductControlEntity extends Equatable {
     required this.DeliveryLoteNumber,
     required this.ProductIsFatherComposition,
     required this.ProductIdOfFather,
+    required this.children,
   });
 
   @override
@@ -66,5 +68,52 @@ class DeliveryProductControlEntity extends Equatable {
         DeliveryLoteNumber,
         ProductIsFatherComposition,
         ProductIdOfFather,
+        children,
       ];
+
+  DeliveryProductControlEntity copyWith({
+    DeliveryOriginType? OriginType,
+    int? Id,
+    int? ProductLineId,
+    int? EnterpriseId,
+    int? EnterpriseCode,
+    String? PersonalizedCode,
+    int? CouponFiscalNumber,
+    DateTime? DateHourOfCreation,
+    IsToDelivery? isToDelivery,
+    DateTime? DateHourOfDelivery,
+    int? DeliveryControl,
+    int? DeliveryStatusLate,
+    String? ProductInternalCode,
+    String? ProductName,
+    double? Quantity,
+    double? ItemValue,
+    int? DeliveryLoteNumber,
+    bool? ProductIsFatherComposition,
+    int? ProductIdOfFather,
+    List<DeliveryProductControlEntity>? children,
+  }) =>
+      DeliveryProductControlEntity(
+        OriginType: OriginType ?? this.OriginType,
+        Id: Id ?? this.Id,
+        ProductLineId: ProductLineId ?? this.ProductLineId,
+        EnterpriseId: EnterpriseId ?? this.EnterpriseId,
+        EnterpriseCode: EnterpriseCode ?? this.EnterpriseCode,
+        PersonalizedCode: PersonalizedCode ?? this.PersonalizedCode,
+        CouponFiscalNumber: CouponFiscalNumber ?? this.CouponFiscalNumber,
+        DateHourOfCreation: DateHourOfCreation ?? this.DateHourOfCreation,
+        isToDelivery: isToDelivery ?? this.isToDelivery,
+        DateHourOfDelivery: DateHourOfDelivery ?? this.DateHourOfDelivery,
+        DeliveryControl: DeliveryControl ?? this.DeliveryControl,
+        DeliveryStatusLate: DeliveryStatusLate ?? this.DeliveryStatusLate,
+        ProductInternalCode: ProductInternalCode ?? this.ProductInternalCode,
+        ProductName: ProductName ?? this.ProductName,
+        Quantity: Quantity ?? this.Quantity,
+        ItemValue: ItemValue ?? this.ItemValue,
+        DeliveryLoteNumber: DeliveryLoteNumber ?? this.DeliveryLoteNumber,
+        ProductIsFatherComposition:
+            ProductIsFatherComposition ?? this.ProductIsFatherComposition,
+        ProductIdOfFather: ProductIdOfFather ?? this.ProductIdOfFather,
+        children: children ?? this.children,
+      );
 }

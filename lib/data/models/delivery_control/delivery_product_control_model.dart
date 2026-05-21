@@ -1,74 +1,30 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:equatable/equatable.dart';
-
 import '../../../domain/entities/entities.dart';
 
-class DeliveryProductControlModel extends Equatable {
-  final DeliveryOriginType OriginType;
-  final int Id;
-  final int ProductLineId;
-  final int EnterpriseId;
-  final int EnterpriseCode;
-  final String PersonalizedCode;
-  final int? CouponFiscalNumber;
-  final DateTime DateHourOfCreation;
-  final IsToDelivery isToDelivery;
-  final DateTime? DateHourOfDelivery;
-  final int? DeliveryControl;
-  final int DeliveryStatusLate;
-  final String ProductInternalCode;
-  final String ProductName;
-  final double Quantity;
-  final double ItemValue;
-  final int? DeliveryLoteNumber;
-  final bool? ProductIsFatherComposition;
-  final int? ProductIdOfFather;
-
+class DeliveryProductControlModel extends DeliveryProductControlEntity {
   const DeliveryProductControlModel({
-    required this.OriginType,
-    required this.Id,
-    required this.ProductLineId,
-    required this.EnterpriseId,
-    required this.EnterpriseCode,
-    required this.PersonalizedCode,
-    required this.CouponFiscalNumber,
-    required this.DateHourOfCreation,
-    required this.isToDelivery,
-    required this.DateHourOfDelivery,
-    required this.DeliveryControl,
-    required this.DeliveryStatusLate,
-    required this.ProductInternalCode,
-    required this.ProductName,
-    required this.Quantity,
-    required this.ItemValue,
-    required this.DeliveryLoteNumber,
-    required this.ProductIsFatherComposition,
-    required this.ProductIdOfFather,
+    required super.OriginType,
+    required super.Id,
+    required super.ProductLineId,
+    required super.EnterpriseId,
+    required super.EnterpriseCode,
+    required super.PersonalizedCode,
+    required super.CouponFiscalNumber,
+    required super.DateHourOfCreation,
+    required super.isToDelivery,
+    required super.DateHourOfDelivery,
+    required super.DeliveryControl,
+    required super.DeliveryStatusLate,
+    required super.ProductInternalCode,
+    required super.ProductName,
+    required super.Quantity,
+    required super.ItemValue,
+    required super.DeliveryLoteNumber,
+    required super.ProductIsFatherComposition,
+    required super.ProductIdOfFather,
+    required super.children,
   });
-
-  @override
-  List<Object?> get props => [
-        OriginType,
-        Id,
-        ProductLineId,
-        EnterpriseId,
-        EnterpriseCode,
-        PersonalizedCode,
-        CouponFiscalNumber,
-        DateHourOfCreation,
-        isToDelivery,
-        DateHourOfDelivery,
-        DeliveryControl,
-        DeliveryStatusLate,
-        ProductInternalCode,
-        ProductName,
-        Quantity,
-        ItemValue,
-        DeliveryLoteNumber,
-        ProductIsFatherComposition,
-        ProductIdOfFather,
-      ];
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -91,6 +47,9 @@ class DeliveryProductControlModel extends Equatable {
       'DeliveryLoteNumber': DeliveryLoteNumber,
       'ProductIsFatherComposition': ProductIsFatherComposition,
       'ProductIdOfFather': ProductIdOfFather,
+      'Children': children
+          ?.map((x) => (x as DeliveryProductControlModel).toJson())
+          .toList(),
     };
   }
 
@@ -106,7 +65,8 @@ class DeliveryProductControlModel extends Equatable {
           ? map['CouponFiscalNumber'] as int
           : null,
       DateHourOfCreation: map['DateHourOfCreation'] is int
-          ? DateTime.fromMillisecondsSinceEpoch(map['DateHourOfCreation'] as int)
+          ? DateTime.fromMillisecondsSinceEpoch(
+              map['DateHourOfCreation'] as int)
           : DateTime.parse(map['DateHourOfCreation'].toString()),
       isToDelivery: map['IsToDelivery'] is int
           ? IsToDelivery.values.firstWhere(
@@ -116,7 +76,8 @@ class DeliveryProductControlModel extends Equatable {
           : IsToDelivery.preparing,
       DateHourOfDelivery: map['DateHourOfDelivery'] != null
           ? (map['DateHourOfDelivery'] is int
-              ? DateTime.fromMillisecondsSinceEpoch(map['DateHourOfDelivery'] as int)
+              ? DateTime.fromMillisecondsSinceEpoch(
+                  map['DateHourOfDelivery'] as int)
               : DateTime.parse(map['DateHourOfDelivery'].toString()))
           : null,
       DeliveryControl:
@@ -134,6 +95,11 @@ class DeliveryProductControlModel extends Equatable {
           : null,
       ProductIdOfFather: map['ProductIdOfFather'] != null
           ? map['ProductIdOfFather'] as int
+          : null,
+      children: map['Children'] != null
+          ? (map['Children'] as List)
+              .map((x) => DeliveryProductControlModel.fromJson(x))
+              .toList()
           : null,
     );
   }
@@ -160,6 +126,7 @@ class DeliveryProductControlModel extends Equatable {
         DeliveryLoteNumber: entity.DeliveryLoteNumber,
         ProductIsFatherComposition: entity.ProductIsFatherComposition,
         ProductIdOfFather: entity.ProductIdOfFather,
+        children: entity.children,
       );
 
   DeliveryProductControlEntity toEntity() => DeliveryProductControlEntity(
@@ -182,5 +149,6 @@ class DeliveryProductControlModel extends Equatable {
         DeliveryLoteNumber: DeliveryLoteNumber,
         ProductIsFatherComposition: ProductIsFatherComposition,
         ProductIdOfFather: ProductIdOfFather,
+        children: children,
       );
 }

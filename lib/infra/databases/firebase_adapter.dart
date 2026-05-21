@@ -15,6 +15,9 @@ class FirebaseAdapter implements FirebaseStorage {
 
   FirebaseAdapter({required this.firestore});
 
+  static const _firestoreBaseUrl =
+      'https://firestore.googleapis.com/v1/projects/celta-restaurant/databases/(default)/documents';
+
   dynamic _parseValue(dynamic val) {
     if (val is! Map) return val;
     final keys = val.keys;
@@ -47,6 +50,87 @@ class FirebaseAdapter implements FirebaseStorage {
     }
   }
 
+  Map<String, dynamic> _convertToFirestoreValue(dynamic val) {
+    if (val == null) {
+      return {'nullValue': null};
+    } else if (val is String) {
+      return {'stringValue': val};
+    } else if (val is bool) {
+      return {'booleanValue': val};
+    } else if (val is int) {
+      return {'integerValue': val.toString()};
+    } else if (val is double) {
+      return {'doubleValue': val};
+    } else if (val is Map) {
+      final Map<String, dynamic> fields = {};
+      val.forEach((k, v) {
+        fields[k.toString()] = _convertToFirestoreValue(v);
+      });
+      return {
+        'mapValue': {'fields': fields}
+      };
+    } else if (val is List) {
+      final List<dynamic> values = val.map((v) => _convertToFirestoreValue(v)).toList();
+      return {
+        'arrayValue': {'values': values}
+      };
+    } else {
+      return {'stringValue': val.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>?> _getRestDocument(String path) async {
+    try {
+      final url = '$_firestoreBaseUrl/$path';
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final body = jsonDecode(response.body) as Map<String, dynamic>;
+        final fieldsJson = body['fields'] as Map<String, dynamic>? ?? {};
+        final Map<String, dynamic> parsedData = {};
+        fieldsJson.forEach((key, val) {
+          parsedData[key] = _parseValue(val);
+        });
+        return parsedData;
+      }
+    } catch (e) {
+      // Ignore
+    }
+    return null;
+  }
+
+  Future<bool> _patchRestDocument(String path, Map<String, dynamic> data) async {
+    try {
+      final url = '$_firestoreBaseUrl/$path';
+      final fields = <String, dynamic>{};
+      data.forEach((k, v) {
+        fields[k] = _convertToFirestoreValue(v);
+      });
+      final body = jsonEncode({
+        'fields': fields,
+      });
+      final response = await http.patch(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      // Ignore
+    }
+    return false;
+  }
+
+  Future<bool> _deleteRestDocument(String path) async {
+    try {
+      final url = '$_firestoreBaseUrl/$path';
+      final response = await http.delete(Uri.parse(url));
+      return response.statusCode == 200;
+    } catch (e) {
+      // Ignore
+    }
+    return false;
+  }
+
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> get({
     required String collection,
@@ -55,7 +139,7 @@ class FirebaseAdapter implements FirebaseStorage {
   }) async {
     if (!kIsWeb && Platform.isWindows) {
       try {
-        final url = 'https://firestore.googleapis.com/v1/projects/celta-restaurant/databases/(default)/documents/$collection';
+        final url = '$_firestoreBaseUrl/$collection';
         final response = await http.get(Uri.parse(url));
         if (response.statusCode == 200) {
           final body = jsonDecode(response.body) as Map<String, dynamic>;
@@ -107,6 +191,33 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> addNewPrintRequest(PrintRequestEntity entity) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        var agora = DateTime.now();
+        var mesAnoAtual = '${agora.month}-${agora.year}';
+        final path = 'requests/$mesAnoAtual/requestsInformations/${EnterpriseBuilder.entity!.enterpriseName}';
+        
+        final current = await _getRestDocument(path) ?? {};
+        final int currentCount = (current['printRequest'] as num?)?.toInt() ?? 0;
+        final List<dynamic> currentDates = current['dates'] as List? ?? [];
+        
+        final newDates = List<dynamic>.from(currentDates);
+        for (var date in entity.dates) {
+          if (!newDates.contains(date)) {
+            newDates.add(date);
+          }
+        }
+        
+        final success = await _patchRestDocument(path, {
+          'printRequest': currentCount + entity.timesUsed,
+          'dates': newDates,
+        });
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     try {
       var agora = DateTime.now();
       var mesAnoAtual = '${agora.month}-${agora.year}';
@@ -131,6 +242,18 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> addDeviceInfo(DeviceInfoEntity entity) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final path = 'clients/${EnterpriseBuilder.entity!.enterpriseName}/devices/loadedDevices';
+        final current = await _getRestDocument(path) ?? {};
+        current[entity.imeiOrWindowsId] = DeviceInfoModel.fromEntity(entity).toJson();
+        final success = await _patchRestDocument(path, current);
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     try {
       var docRef = firestore
           .collection('clients')
@@ -150,20 +273,11 @@ class FirebaseAdapter implements FirebaseStorage {
   Future<List<DeviceInfoEntity>> loadDeviceInfo(String enterpriseName) async {
     try {
       if (!kIsWeb && Platform.isWindows) {
-        final url = 'https://firestore.googleapis.com/v1/projects/celta-restaurant/databases/(default)/documents/clients/$enterpriseName/devices/loadedDevices';
-        final response = await http.get(Uri.parse(url));
-        if (response.statusCode == 404) {
+        final path = 'clients/$enterpriseName/devices/loadedDevices';
+        final parsedData = await _getRestDocument(path);
+        if (parsedData == null) {
           throw DomainError.notFound;
         }
-        if (response.statusCode != 200) {
-          throw Exception('Failed to load device info: ${response.statusCode}');
-        }
-        final body = jsonDecode(response.body) as Map<String, dynamic>;
-        final fieldsJson = body['fields'] as Map<String, dynamic>? ?? {};
-        final Map<String, dynamic> parsedData = {};
-        fieldsJson.forEach((key, val) {
-          parsedData[key] = _parseValue(val);
-        });
         
         List<DeviceInfoEntity> devices = parsedData.values
             .map((data) => DeviceInfoModel.fromJson(data as Map).toEntity())
@@ -197,6 +311,32 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> updateMenu(String enterpriseName) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final path = 'clients/$enterpriseName';
+        
+        final current1 = await _getRestDocument(path) ?? {};
+        final int currentPending = (current1['updatePendingDevices'] as num?)?.toInt() ?? 0;
+        final success1 = await _patchRestDocument(path, {
+          'updatePendingDevices': currentPending + 1,
+          'pendingDevicesToUpdate': [],
+        });
+        
+        if (success1) {
+          await Future.delayed(const Duration(seconds: 10));
+          
+          final current2 = await _getRestDocument(path) ?? {};
+          final int currentUpdateMenu = (current2['updateMenu'] as num?)?.toInt() ?? 0;
+          await _patchRestDocument(path, {
+            'updateMenu': currentUpdateMenu + 1,
+          });
+          return;
+        }
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     var docRef = firestore.collection('clients').doc(enterpriseName);
 
     await docRef.set(
@@ -222,6 +362,24 @@ class FirebaseAdapter implements FirebaseStorage {
     required String imeiOrWindowsId,
     required String enterpriseName,
   }) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final path = 'clients/$enterpriseName';
+        final current = await _getRestDocument(path) ?? {};
+        final List<dynamic> currentPending = current['pendingDevicesToUpdate'] as List? ?? [];
+        final newPending = List<dynamic>.from(currentPending);
+        if (!newPending.contains(imeiOrWindowsId)) {
+          newPending.add(imeiOrWindowsId);
+        }
+        final success = await _patchRestDocument(path, {
+          'pendingDevicesToUpdate': newPending,
+        });
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     var docRef = firestore.collection('clients').doc(enterpriseName);
 
     await docRef.set(
@@ -234,6 +392,19 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> updateEnterpriseParameters(EnterpriseEntity enterprise) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final path = 'clients/${enterprise.enterpriseName}';
+        final success = await _patchRestDocument(
+          path,
+          EnterpriseModel.fromEntity(enterprise).toJson(),
+        );
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     try {
       var docRef =
           firestore.collection('clients').doc(enterprise.enterpriseName);
@@ -248,6 +419,24 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> updateDeviceInformations(String enterpriseName) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final docPath = 'clients/$enterpriseName';
+        final devicesPath = 'clients/$enterpriseName/devices/loadedDevices';
+        
+        await _deleteRestDocument(devicesPath);
+        
+        final current = await _getRestDocument(docPath) ?? {};
+        final int currentUpdate = (current['updateDevicesInformations'] as num?)?.toInt() ?? 0;
+        final success = await _patchRestDocument(docPath, {
+          'updateDevicesInformations': currentUpdate + 1,
+        });
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     try {
       var docRef = firestore.collection('clients').doc(enterpriseName);
       var devicesRef = docRef.collection("devices").doc("loadedDevices");
@@ -266,6 +455,16 @@ class FirebaseAdapter implements FirebaseStorage {
 
   @override
   Future<void> deleteEnterprise(String enterpriseName) async {
+    if (!kIsWeb && Platform.isWindows) {
+      try {
+        final path = 'clients/$enterpriseName';
+        final success = await _deleteRestDocument(path);
+        if (success) return;
+      } catch (e) {
+        // Fallback below
+      }
+    }
+
     try {
       var docRef = firestore.collection('clients').doc(enterpriseName);
       await docRef.delete();

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import 'delivery_control_entity.dart';
 
@@ -129,12 +130,13 @@ class DeliveryProductControlEntity extends Equatable {
 }
 
 enum DeliveryStatusLate {
-  onTime(1),
-  warning(2),
-  late(3);
+  onTime(1, Colors.white),
+  warning(2, Colors.amber),
+  late(3, Colors.red);
 
   final int value;
-  const DeliveryStatusLate(this.value);
+  final Color color;
+  const DeliveryStatusLate(this.value, this.color);
 
   factory DeliveryStatusLate.fromValue(int value) {
     return DeliveryStatusLate.values.firstWhere(

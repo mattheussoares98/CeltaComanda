@@ -40,7 +40,7 @@ class DeliveryControlEntity extends Equatable {
   final IsToDelivery isToDelivery;
   final DateTime? DateHourOfDelivery;
   final int? DeliveryControl;
-  final int DeliveryStatusLate;
+  final DeliveryStatusLate deliveryStatusLate;
   final double TotalLiquid;
   final List<DeliveryProductControlEntity>? Products;
 
@@ -57,7 +57,7 @@ class DeliveryControlEntity extends Equatable {
     required this.isToDelivery,
     required this.DateHourOfDelivery,
     required this.DeliveryControl,
-    required this.DeliveryStatusLate,
+    required this.deliveryStatusLate,
     required this.TotalLiquid,
     this.Products,
   });
@@ -76,7 +76,7 @@ class DeliveryControlEntity extends Equatable {
         this.isToDelivery,
         this.DateHourOfDelivery,
         this.DeliveryControl,
-        this.DeliveryStatusLate,
+        this.deliveryStatusLate,
         this.TotalLiquid,
         this.Products,
       ];

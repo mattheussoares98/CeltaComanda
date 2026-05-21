@@ -1,62 +1,44 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:equatable/equatable.dart';
-
 import '../../../domain/entities/entities.dart';
 import 'delivery_product_control_model.dart';
 
-class DeliveryControlModel extends Equatable {
-  final int Id;
-  final int EnterpriseId;
-  final int EnterpriseCode;
-  final DeliveryOriginType OriginType;
-  final String PersonalizedCode;
-  final int? CouponFiscalNumber;
-  final DateTime DateOfCreation;
-  final DateTime DateHourOfCreation;
-  final bool IsCancelled;
-  final IsToDelivery isToDelivery;
-  final DateTime? DateHourOfDelivery;
-  final int? DeliveryControl;
-  final int DeliveryStatusLate;
-  final double TotalLiquid;
-  final List<DeliveryProductControlModel>? Products;
-
+class DeliveryControlModel extends DeliveryControlEntity {
   const DeliveryControlModel({
-    required this.Id,
-    required this.EnterpriseId,
-    required this.EnterpriseCode,
-    required this.OriginType,
-    required this.PersonalizedCode,
-    required this.CouponFiscalNumber,
-    required this.DateOfCreation,
-    required this.DateHourOfCreation,
-    required this.IsCancelled,
-    required this.isToDelivery,
-    required this.DateHourOfDelivery,
-    required this.DeliveryControl,
-    required this.DeliveryStatusLate,
-    required this.TotalLiquid,
-    this.Products,
+    required super.Id,
+    required super.EnterpriseId,
+    required super.EnterpriseCode,
+    required super.OriginType,
+    required super.PersonalizedCode,
+    required super.CouponFiscalNumber,
+    required super.DateOfCreation,
+    required super.DateHourOfCreation,
+    required super.IsCancelled,
+    required super.isToDelivery,
+    required super.DateHourOfDelivery,
+    required super.DeliveryControl,
+    required super.deliveryStatusLate,
+    required super.TotalLiquid,
+    super.Products,
   });
 
   @override
   List<Object?> get props => [
-        this.Id,
-        this.EnterpriseId,
-        this.EnterpriseCode,
-        this.OriginType,
-        this.PersonalizedCode,
-        this.CouponFiscalNumber,
-        this.DateOfCreation,
-        this.DateHourOfCreation,
-        this.IsCancelled,
-        this.isToDelivery,
-        this.DateHourOfDelivery,
-        this.DeliveryControl,
-        this.DeliveryStatusLate,
-        this.TotalLiquid,
-        this.Products,
+        super.Id,
+        super.EnterpriseId,
+        super.EnterpriseCode,
+        super.OriginType,
+        super.PersonalizedCode,
+        super.CouponFiscalNumber,
+        super.DateOfCreation,
+        super.DateHourOfCreation,
+        super.IsCancelled,
+        super.isToDelivery,
+        super.DateHourOfDelivery,
+        super.DeliveryControl,
+        super.deliveryStatusLate,
+        super.TotalLiquid,
+        super.Products,
       ];
 
   Map<String, dynamic> toJson() {
@@ -73,9 +55,11 @@ class DeliveryControlModel extends Equatable {
       'IsToDelivery': isToDelivery,
       'DateHourOfDelivery': DateHourOfDelivery?.millisecondsSinceEpoch,
       'DeliveryControl': DeliveryControl,
-      'DeliveryStatusLate': DeliveryStatusLate,
+      'DeliveryStatusLate': deliveryStatusLate,
       'TotalLiquid': TotalLiquid,
-      'Products': Products?.map((x) => x.toJson()).toList(),
+      'Products':
+          Products?.map((x) => (x as DeliveryProductControlModel).toJson())
+              .toList(),
     };
   }
 
@@ -98,17 +82,12 @@ class DeliveryControlModel extends Equatable {
           : null,
       DeliveryControl:
           map['DeliveryControl'] != null ? map['DeliveryControl'] as int : null,
-      DeliveryStatusLate: map['DeliveryStatusLate'] as int,
+      deliveryStatusLate:
+          DeliveryStatusLate.fromValue(map['DeliveryStatusLate'] as int),
       TotalLiquid: (map['TotalLiquid'] as num).toDouble(),
-      Products: map['Products'] != null
-          ? List<DeliveryProductControlModel>.from(
-              (map['Products'] as List<dynamic>)
-                  .map<DeliveryProductControlModel?>(
-                (x) => DeliveryProductControlModel.fromJson(
-                    x as Map<String, dynamic>),
-              ),
-            )
-          : null,
+      Products: (map['Products'] as List?)
+          ?.map((e) => DeliveryProductControlModel.fromJson(e))
+          .toList(),
     );
   }
 
@@ -126,7 +105,7 @@ class DeliveryControlModel extends Equatable {
         isToDelivery: entity.isToDelivery,
         DateHourOfDelivery: entity.DateHourOfDelivery,
         DeliveryControl: entity.DeliveryControl,
-        DeliveryStatusLate: entity.DeliveryStatusLate,
+        deliveryStatusLate: entity.deliveryStatusLate,
         TotalLiquid: entity.TotalLiquid,
         Products: entity.Products?.map(
             (e) => DeliveryProductControlModel.fromEntity(e)).toList(),
@@ -145,8 +124,10 @@ class DeliveryControlModel extends Equatable {
         isToDelivery: isToDelivery,
         DateHourOfDelivery: DateHourOfDelivery,
         DeliveryControl: DeliveryControl,
-        DeliveryStatusLate: DeliveryStatusLate,
+        deliveryStatusLate: deliveryStatusLate,
         TotalLiquid: TotalLiquid,
-        Products: Products?.map((e) => e.toEntity()).toList(),
+        Products:
+            Products?.map((e) => (e as DeliveryProductControlModel).toEntity())
+                .toList(),
       );
 }

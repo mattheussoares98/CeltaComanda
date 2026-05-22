@@ -30,7 +30,7 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
                   text: deliveryControl.OriginType ==
                           DeliveryOriginType.saleRequest
                       ? "${R.string.command} ${deliveryControl.PersonalizedCode}"
-                      : "${R.string.sale} ${deliveryControl.CouponFiscalNumber}",
+                      : "${R.string.sale} ${deliveryControl.DeliveryControl}",
                   style: theme.textTheme.titleLarge,
                 ),
               ],

@@ -51,7 +51,11 @@ class GetxHomePresenter
     required this.lastImport,
     required this.loadExportCharging,
     required this.concentratorLogin,
-  });
+  }) {
+    loadDeviceData.getApplicationVersion().then((version) {
+      _currentAppVersion = version;
+    });
+  }
 
   @override
   Future<void> doLogout({
@@ -607,4 +611,8 @@ class GetxHomePresenter
       pdvNumber: commandEntity?.pdv?.PdvNumber,
     );
   }
+
+  String? _currentAppVersion;
+  @override
+  String? get currentAppVersion => _currentAppVersion;
 }

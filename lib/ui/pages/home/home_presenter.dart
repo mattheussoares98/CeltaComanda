@@ -19,6 +19,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
   CommandEntity? get commandEntity;
+  String? get currentAppVersion;
 
   Future<void> updateCommandEntity({
     required String? commandNumber,

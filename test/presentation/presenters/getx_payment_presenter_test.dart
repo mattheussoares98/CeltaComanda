@@ -31,6 +31,7 @@ void main() {
 
   late RedePaySpy redePay;
   late GetnetPaySpy getnetPay;
+  late CieloPaySpy cieloPay;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
@@ -65,6 +66,7 @@ void main() {
   initUseCases() {
     redePay = RedePaySpy();
     getnetPay = GetnetPaySpy();
+    cieloPay = CieloPaySpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
@@ -88,6 +90,7 @@ void main() {
     sut = GetxPaymentPresenter(
       redePay: redePay,
       getnetPay: getnetPay,
+      cieloPay: cieloPay,
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       navigateTo: navigateTo,

@@ -1,11 +1,11 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'dart:async';
-import 'package:flutter/material.dart';
-
 import '../../../ui/helpers/helpers.dart';
-import '../../mixins/mixins.dart';
 import '../../components/components.dart';
+import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -194,6 +194,7 @@ class _PaymentPageState extends State<PaymentPage>
                     Column(
                       children: [
                         if (homePresenter.isGeneratingVersionToGetNet ||
+                            homePresenter.isGeneratingVersionToCielo ||
                             homePresenter.isGeneratingVersionToRede)
                           Form(
                             key: formKey,

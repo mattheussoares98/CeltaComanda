@@ -17,6 +17,7 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final RedePay redePay;
   final GetnetPay getnetPay;
+  final CieloPay cieloPay;
   final CommandInformations commandInformations;
   final ConcFinishSaleRequest finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
@@ -36,6 +37,7 @@ class GetxPaymentPresenter extends GetxController
   GetxPaymentPresenter({
     required this.redePay,
     required this.getnetPay,
+    required this.cieloPay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.navigateTo,
@@ -105,6 +107,23 @@ class GetxPaymentPresenter extends GetxController
         );
 
         await _treatGetNetResponse(
+          homePresenter,
+          result,
+          printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs,
+        );
+        isLoading = false;
+      } else if (homePresenter.isGeneratingVersionToCielo) {
+        final result = await cieloPay.pay(
+          PayParamsModel(
+            longAmountValue: (longAmountValue * 100).toInt(),
+            portionQuantity: portionQuantity,
+            paymentMode: paymentMode,
+          ),
+        );
+
+        await _treatCieloResponse(
           homePresenter,
           result,
           printedProductsPresenter,
@@ -276,6 +295,42 @@ class GetxPaymentPresenter extends GetxController
         mainError = UIError.paymentUnexpectedError;
       } else if (response?.result == "5") {
         mainError = UIError.paymentPendant;
+      } else {
+        mainError = UIError.paymentUnexpectedError;
+      }
+    } catch (e) {
+      mainError = getUIError(e);
+    }
+    isLoading = false;
+  }
+
+  Future<void> _treatCieloResponse(
+    HomePresenter homePresenter,
+    Map<String, dynamic>? response,
+    PrintedProductsPresenter printedProductsPresenter,
+    void Function() showSuccessAndCloseUntilHomePage,
+    void Function(String error) showErrorMessageReturnedByBs,
+  ) async {
+    try {
+      if (response != null && response['responseJson'] != null) {
+        final Map<String, dynamic> responseMap =
+            json.decode(response['responseJson']);
+        if (responseMap.containsKey('payments') &&
+            (responseMap['payments'] as List).isNotEmpty) {
+          await liquidateCommand(
+            homePresenter: homePresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+            showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+          );
+        } else if (responseMap.containsKey('reason')) {
+          showErrorMessageReturnedByBs(
+              responseMap['reason'] ?? 'Erro no pagamento');
+          mainError =
+              UIError.custom(responseMap['reason'] ?? 'Erro no pagamento');
+        } else {
+          mainError = UIError.paymentUnexpectedError;
+        }
       } else {
         mainError = UIError.paymentUnexpectedError;
       }

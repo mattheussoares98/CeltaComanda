@@ -53,7 +53,8 @@ class PaymentButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (homePresenter.isGeneratingVersionToRede ||
-            homePresenter.isGeneratingVersionToGetNet)
+            homePresenter.isGeneratingVersionToGetNet ||
+            homePresenter.isGeneratingVersionToCielo)
           Column(
             children: [
               ElevatedButton(

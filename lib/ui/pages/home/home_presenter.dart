@@ -13,6 +13,7 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   bool get isGeneratingVersionToTablet;
   bool get isGeneratingVersionToMicrosoftStore;
   bool get isGeneratingVersionToWebSaleRequestDetails;
+  bool get isGeneratingVersionToCielo;
   int? get selectedPeoples;
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;

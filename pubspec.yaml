@@ -44,7 +44,7 @@ dependencies:
   carousel_slider: ^5.0.0
   xml2json: ^6.2.4
 
-  #remove to getnet
+  #remove to getnet and cielo
   flutter_widget_from_html: ^0.17.1
   wakelock_plus: ^1.2.5
   firebase_auth: ^6.1.4

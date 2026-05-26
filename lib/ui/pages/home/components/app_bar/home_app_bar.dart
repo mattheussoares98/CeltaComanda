@@ -20,6 +20,7 @@ PreferredSize homeAppBar({
       actions: [
         if (homePresenter.isGeneratingVersionToRede ||
             homePresenter.isGeneratingVersionToGetNet ||
+            homePresenter.isGeneratingVersionToCielo ||
             EnterpriseBuilder.entity?.useCovenant == true)
           SizedBox(
             width: MediaQuery.of(context).size.width *

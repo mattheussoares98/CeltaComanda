@@ -1,0 +1,49 @@
+https://www.cielo.com.br/alianca/
+
+isGeneratingVersionToRede = false
+isGeneratingVersionToGetNet = false
+isGeneratingVersionToTable = false
+isGeneratingVersionToMicrosoftStore = false
+isGeneratingVersionToWebSaleRequestDetails = false
+isGeneratingVersionToCielo = true
+
+- Change version in gradle and pubspec and do a commit
+
+- In AndroidManifest.xml, uncomment the Cielo query package:
+  <package android:name="com.ads.lio.uriappclient" />
+
+- In AndroidManifest.xml, comment:
+  <category android:name="android.intent.category.HOME" />
+  <category android:name="android.intent.category.DEFAULT" />
+
+- In AndroidManifest.xml, uncomment:
+  <meta-data
+      android:name="cs_integration_type"
+      android:value="uri" />
+
+- In AndroidManifest.xml, uncomment:
+  <intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <data android:host="response" android:scheme="order" />
+  </intent-filter>
+
+- change targetSdk to 33
+
+- Uncomment CieloPayment.kt
+
+- Uncomment CieloPrinter.kt
+
+- Uncomment everything about cielo in MainActivity.kt
+
+- Comment the dependence of wakelock_plus
+- Comment the dependence flutter_widget_from_html
+- Comment the dependence firebase_auth (used only in web version)
+- Comment the dependence url_launcher
+- Comment every dependencies of firebase in build.gradle
+
+Build command:
+flutter build apk --release
+
+Upload the APK to Cielo Store Dev Console:
+https://www.cieloliostore.com.br/sign-in

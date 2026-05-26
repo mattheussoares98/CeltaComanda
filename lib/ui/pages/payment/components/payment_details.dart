@@ -31,6 +31,7 @@ class PaymentDetails extends StatelessWidget {
           ),
         ),
         if (homePresenter.isGeneratingVersionToGetNet ||
+            homePresenter.isGeneratingVersionToCielo ||
             homePresenter.isGeneratingVersionToRede)
           Column(
             children: [

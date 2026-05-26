@@ -300,8 +300,10 @@ class GetxHomePresenter
   bool get isGeneratingVersionToGetNet => false;
   @override
   bool get isGeneratingVersionToMicrosoftStore => false;
+  @override
+  bool get isGeneratingVersionToCielo => true;
 
-  bool _isGeneratingVersionToTablet = true;
+  bool _isGeneratingVersionToTablet = false;
   @override
   bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
 

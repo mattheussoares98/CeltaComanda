@@ -17,7 +17,7 @@
         <action android:name="android.support.customtabs.action.CustomTabsService" />
       </intent>
       <!-- Required for Cielo Smart deep link integration (Android 11+) -->
-      <!-- <package android:name="com.ads.lio.uriappclient" /> -->
+      <package android:name="com.ads.lio.uriappclient" />
     </queries>
     <application
         android:label="Celta comanda"
@@ -25,6 +25,10 @@
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
         android:enableOnBackInvokedCallback="true">
+        <!-- Required for Cielo Smart to identify the integration type -->
+        <meta-data
+            android:name="cs_integration_type"
+            android:value="uri" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -51,6 +55,7 @@
             <!-- Cielo Smart deep link response callback -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:host="response" android:scheme="order" />
             </intent-filter>
         </activity>

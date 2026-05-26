@@ -1,0 +1,12 @@
+isGeneratingVersionToRede = false
+isGeneratingVersionToGetNet = false
+isGeneratingVersionToTable = false
+isGeneratingVersionToMicrosoftStore = true
+
+Change the version of microsoft in pubspec.yaml
+
+
+Publicação na microsoft store
+https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview
+suporteceltaware@hotmail.com
+Celta@123

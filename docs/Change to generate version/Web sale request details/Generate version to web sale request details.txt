@@ -1,0 +1,12 @@
+isGeneratingVersionToRede = false
+isGeneratingVersionToGetNet = false
+isGeneratingVersionToTable = false
+isGeneratingVersionToMicrosoftStore = false
+isGeneratingVersionToWebSaleRequestDetails = true
+
+1- 
+flutter build web --pwa-strategy=none
+
+Put the settings.file inside the folder and deploy on services.celtaware.com.br/downloads/lastversion
+
+I am not sure, but maybe should put the web.config file inside the folder too

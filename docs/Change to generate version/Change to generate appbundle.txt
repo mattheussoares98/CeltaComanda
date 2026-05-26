@@ -1,0 +1,36 @@
+- Mudar a versão do build.gradle e do pubspec.yaml
+
+- Fazer um commit com essa alteração
+
+- no GetxHomePresenter mudar:
+bool get isGeneratingVersionToRede => false;
+bool get isGeneratingVersionToGetNet => false;
+bool get isGeneratingVersionToMicrosoftStore => false;
+bool _isGeneratingVersionToTablet = true;
+
+
+########################################
+ABAIXO É PARA SE TIVER COM O GRUPO DE AVALIAÇÃO DO APP
+
+- no GetxMenuPresenter remover esse código:
+ _loadedMenu.add({
+        const ExpansibleGroupsViewModel(
+          Name: "Avaliar",
+          ExpansibleGroupId: "0",
+          ExpansibleGroupType: "0",
+          OrderClassification: "0",
+        ): []
+      });
+	  
+- no lib\ui\pages\menus\components\products_items.dart
+comentar esse trecho:
+    MenuPresenter menuPresenter = Provider.of(context, listen: false);
+
+    if ((widget.selectedGroupIndex ?? 0) + 1 ==
+        menuPresenter.loadedMenu.length) {
+      if (hasMinWidth(context)) {
+        return const LandscapeEvaluateService();
+      } else {
+        return const PortraitEvaluateService();
+      }
+    }

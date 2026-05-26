@@ -1,0 +1,36 @@
+https://redestore.service-now.com
+
+1- Change in homePresenter
+bool get isGeneratingVersionToRede => true;
+bool get isGeneratingVersionToGetNet => false;
+bool get isGeneratingVersionToMicrosoftStore => false;
+bool _isGeneratingVersionToTablet = false;
+
+- Uncomment dependencies of rede in build.gradle
+
+- Uncomment RedePayment.kt and RedePrinter.kt
+
+- Uncomment evertything in App.kt
+
+- Uncomment everything of koin and rede in MainActivity.kt
+
+- Comment in AndroidManifest.xml
+<category android:name="android.intent.category.HOME" />
+<category android:name="android.intent.category.DEFAULT" />  
+
+
+Olá, Mattheus! Espero que esteja bem.
+Conforme comunicado enviado em 28/02/25 passamos a aceitar apenas 1 requisição de nova versão mensalmente. A requisição atual deve necessariamente ser uma correção de bug, e, nesse caso, precisa ser apresentado explicitamente como correção de bug na release note e detalhada as correções feita no campo de Motivo Prioridade da requisição.
+Seguiremos com a certificação para este caso, mas por favor fique atento com as novas diretrizes para as próximas requisições.
+
+Dores que o APP resolve
+Atendimento lento e filas desnecessárias.
+Erros no pedido causados por falhas na comunicação.
+Garçons sobrecarregados e clientes esperando para serem atendidos.
+Dificuldade em atualizar o cardápio ou comunicar promoções na hora.
+Processos manuais para cancelamentos ou transferências de itens entre mesas.
+Perda de vendas por clientes indecisos ou mal atendidos.
+
+Proposta de valor
+Mais agilidade, menos erros, e clientes mais satisfeitos.
+Com nosso app, o próprio cliente faz o pedido direto da mesa, visualiza o cardápio atualizado e envia o pedido para a cozinha. Tudo isso sem sobrecarregar a equipe e com muito mais controle e organização para o restaurante. Modernize o atendimento e aumente as vendas!

@@ -29,8 +29,8 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
                 TextSpan(
                   text: deliveryControl.OriginType ==
                           DeliveryOriginType.saleRequest
-                      ? "${R.string.command} ${deliveryControl.PersonalizedCode}"
-                      : "${R.string.sale} ${deliveryControl.DeliveryControl}",
+                      ? "${R.string.table} ${deliveryControl.PersonalizedCode}"
+                      : "${R.string.table} ${deliveryControl.DeliveryControl}",
                   style: theme.textTheme.titleLarge,
                 ),
               ],

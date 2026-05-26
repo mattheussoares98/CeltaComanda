@@ -16,7 +16,8 @@ class PaymentButtons extends StatelessWidget {
     super.key,
   });
 
-  void showSuccessAndCloseUntilHomePage() {
+  void showSuccessAndCloseUntilHomePage(BuildContext context) {
+    snackBarMessage(context, R.string.liquidateCommandSucceeds);
     Navigator.of(NavigatorKey.key.currentState!.context)
         .popUntil((route) => route.isFirst);
   }
@@ -37,7 +38,8 @@ class PaymentButtons extends StatelessWidget {
           paymentMode: paymentMode,
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
-          showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showSuccessAndCloseUntilHomePage: () =>
+              showSuccessAndCloseUntilHomePage(context),
           showErrorMessageReturnedByBs: (error) {
             snackBarMessage(
               context,

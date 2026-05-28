@@ -1,3 +1,13 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Getnet:
+
+   dart run bin/switch_platform.dart getnet
+
+After running, run:
+   flutter pub get
+========================================================================
+
 https://getstore.getnet.com.br/#/app/list
 rene@celtaware.com.br
 C3lta@GetNet

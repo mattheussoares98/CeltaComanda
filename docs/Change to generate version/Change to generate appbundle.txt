@@ -1,3 +1,13 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Tablet:
+
+   dart run bin/switch_platform.dart tablet
+
+After running, run:
+   flutter pub get
+========================================================================
+
 - Mudar a versão do build.gradle e do pubspec.yaml
 
 - Fazer um commit com essa alteração

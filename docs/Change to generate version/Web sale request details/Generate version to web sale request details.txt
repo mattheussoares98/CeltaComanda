@@ -1,3 +1,13 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Web Sale Request Details:
+
+   dart run bin/switch_platform.dart web
+
+After running, run:
+   flutter pub get
+========================================================================
+
 isGeneratingVersionToRede = false
 isGeneratingVersionToGetNet = false
 isGeneratingVersionToTable = false

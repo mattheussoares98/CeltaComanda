@@ -1,3 +1,13 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Cielo:
+
+   dart run bin/switch_platform.dart cielo
+
+After running, run:
+   flutter pub get
+========================================================================
+
 https://www.cielo.com.br/alianca/
 
 isGeneratingVersionToRede = false

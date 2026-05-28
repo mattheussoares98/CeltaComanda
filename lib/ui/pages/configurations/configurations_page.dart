@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -98,8 +99,7 @@ class _ConfigurationsPageState extends State<ConfigurationsPage>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (!applicationIsInLatestVersion &&
-                    !homePresenter.isGeneratingVersionToRede &&
-                    !homePresenter.isGeneratingVersionToGetNet)
+                    !activePlatform.isPaymentPlatform)
                   const UpdateApplicationButton(),
                 GridView.builder(
                   shrinkWrap: true,

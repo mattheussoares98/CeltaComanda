@@ -3,18 +3,17 @@ import 'dart:convert';
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -123,7 +122,6 @@ void main() {
       pdv: EntityFactory.makePdvEntity(),
     );
     commandNumber = faker.randomGenerator.integer(999).toString();
-    homePresenter.isGeneratingVersionToRedeMock = true;
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
@@ -293,7 +291,7 @@ void main() {
           )).called(1);
     });
     test('Should not call is is not generating version to rede', () async {
-      homePresenter.isGeneratingVersionToRedeMock = false;
+      homePresenter.appPlatform = AppPlatform.rede;
 
       await sut.callPayment(
         homePresenter: homePresenter,

@@ -1,18 +1,16 @@
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:faker/faker.dart';
-
-import '../../data/mocks/mocks.dart';
-import '../../domain/mocks/mocks.dart';
-
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-
+import '../../data/mocks/mocks.dart';
+import '../../domain/mocks/mocks.dart';
 import '../../ui/mocks/mocks.dart';
 
 void main() {
@@ -138,7 +136,7 @@ void main() {
     test(
         'Should call get pdv by id if local pdv is not null and is generating version to rede',
         () async {
-      homePresenter.isGeneratingVersionToRedeMock = true;
+      homePresenter.appPlatform = AppPlatform.rede;
 
       await sut.checkPageToGo(
         homePresenter: homePresenter,
@@ -150,7 +148,7 @@ void main() {
     });
 
     test('Should call get pdv by id if local pdv is not null', () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
 
       await sut.checkPageToGo(
         homePresenter: homePresenter,
@@ -163,7 +161,7 @@ void main() {
 
     test("Should go to enterprise page dont have a pdv in local command data",
         () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
 
       localCommandData.mockLoad(
         CommandEntity(
@@ -181,7 +179,7 @@ void main() {
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
     });
     test("Should go to home page if get pdv by id return null", () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
       pdvRegistration.mockGetById(null);
 
       await sut.checkPageToGo(
@@ -192,18 +190,17 @@ void main() {
           .called(1);
     });
     test("Should call load imei or windows id", () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
       pdvRegistration.mockGetById(null);
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 
-      verify(() => loadDeviceData.getImeiOrWindowsId(
-          isRedeVersion: homePresenter.isGeneratingVersionToRede)).called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
     test(
         "Should go to enterprise page if device id and remote id registered are differently",
         () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 
@@ -213,7 +210,7 @@ void main() {
     test(
         "Should call correct usecases if device id and remote id registered is equal",
         () async {
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
       loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
       final applicationVersion = faker.guid.guid();
       loadDeviceData.mockGetApplicationVersion(applicationVersion);
@@ -230,7 +227,7 @@ void main() {
     });
     test("Should go to home page if update pdv register trhows", () async {
       //já validou que o mac é igual o id do dispositivo, não tem problema se não atualizar. Depois atualiza
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+      homePresenter.appPlatform = AppPlatform.getnet;
       loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
       final applicationVersion = faker.guid.guid();
       loadDeviceData.mockGetApplicationVersion(applicationVersion);
@@ -279,7 +276,7 @@ void main() {
     test(
         "Should go to validation page if is generating respective version and has local enterprise",
         () async {
-      homePresenter.isGeneratingVersionToWebSaleRequestDetailsMock = true;
+      homePresenter.appPlatform = AppPlatform.webSaleRequestDetails;
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 

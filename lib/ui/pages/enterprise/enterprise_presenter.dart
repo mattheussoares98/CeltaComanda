@@ -33,6 +33,5 @@ abstract class EnterprisePresenter implements Listenable {
     required PdvNotUsingViewModel selectedPdv,
     required String? commandNumber,
     required bool isFixedCommandNumber,
-    required bool isRedeVersion,
   });
 }

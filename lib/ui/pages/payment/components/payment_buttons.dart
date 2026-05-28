@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,9 +55,7 @@ class PaymentButtons extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (homePresenter.isGeneratingVersionToRede ||
-            homePresenter.isGeneratingVersionToGetNet ||
-            homePresenter.isGeneratingVersionToCielo)
+        if (activePlatform.isPaymentPlatform)
           Column(
             children: [
               ElevatedButton(

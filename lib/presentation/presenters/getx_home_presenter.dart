@@ -10,6 +10,7 @@ import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../helpers/app_platform.dart';
 import '../mixins/mixins.dart';
 
 class GetxHomePresenter
@@ -141,12 +142,11 @@ class GetxHomePresenter
     mainError = null;
 
     try {
-      if (EnterpriseBuilder.entity?.persistApp == true &&
-          _isGeneratingVersionToTablet) {
-        await persistent.makePersistent();
-      } else {
-        await persistent.makeNotPersistent();
-      }
+      // if (EnterpriseBuilder.entity?.persistApp == true) {
+      //   await persistent.makePersistent();
+      // } else {
+      //   await persistent.makeNotPersistent();
+      // }//TODO delete this persistent logic
 
       CommandEntity? loadedCommand = await localCommandData.load();
 
@@ -298,29 +298,6 @@ class GetxHomePresenter
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
 
-  @override
-  bool get isGeneratingVersionToRede => false;
-  @override
-  bool get isGeneratingVersionToGetNet => false;
-  @override
-  bool get isGeneratingVersionToMicrosoftStore => false;
-  @override
-  bool get isGeneratingVersionToCielo => true;
-
-  bool _isGeneratingVersionToTablet = false;
-  @override
-  bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
-
-  final bool _isGeneratingVersionToWebSaleRequestDetails = false;
-  @override
-  bool get isGeneratingVersionToWebSaleRequestDetails =>
-      _isGeneratingVersionToWebSaleRequestDetails;
-
-  @override
-  void changeIsGeneratingVersionToTablet(bool value) {
-    _isGeneratingVersionToTablet = value;
-  }
-
   List<SellersViewModel> _sellers = [];
   @override
   List<SellersViewModel> get sellers => _sellers;
@@ -434,7 +411,7 @@ class GetxHomePresenter
   @override
   Future<bool> applicationIsInLatestVersion() async {
     try {
-      if (!isGeneratingVersionToTablet) {
+      if (activePlatform != AppPlatform.tablet) {
         return true;
       }
 
@@ -600,9 +577,7 @@ class GetxHomePresenter
   @override
   Future<void> updateDeviceInformations() async {
     final applicationVersion = await loadDeviceData.getApplicationVersion();
-    final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
-      isRedeVersion: isGeneratingVersionToRede,
-    );
+    final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
 
     await addDeviceInfo.add(
       commandNumber: commandEntity?.commandNumber?.toInt(),

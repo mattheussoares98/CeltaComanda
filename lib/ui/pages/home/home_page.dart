@@ -1,11 +1,12 @@
 // import 'package:battery_plus/battery_plus.dart';
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:provider/provider.dart';
-
 import 'dart:async';
+
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../main/builders/builders.dart';
 import '../../../ui/components/components.dart';
@@ -192,7 +193,7 @@ class _HomePageState extends State<HomePage>
           onPopInvokedWithResult: (didPop, _) {
             loadingSubscription?.cancel();
             mainErrorSubscription?.cancel();
-            if (!homePresenter.isGeneratingVersionToTablet) {
+            if (activePlatform != AppPlatform.tablet) {
               notificationDialog(
                 context: context,
                 titleMessage: R.string.msgCloseApplication,

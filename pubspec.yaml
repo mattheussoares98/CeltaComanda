@@ -44,12 +44,12 @@ dependencies:
   carousel_slider: ^5.0.0
   xml2json: ^6.2.4
 
-  #remove to getnet and cielo
+  # [PLATFORM-DEPS-START]
   flutter_widget_from_html: ^0.17.1
   wakelock_plus: ^1.2.5
   firebase_auth: ^6.1.4
   url_launcher: ^6.3.1
-  #remove to getnet
+  # [PLATFORM-DEPS-END]
 
   icons_launcher: ^3.0.0
   package_info_plus: ^9.0.0

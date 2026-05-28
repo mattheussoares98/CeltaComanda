@@ -1,3 +1,5 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/usecases/usecases.dart';
@@ -7,10 +9,8 @@ import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-import '../protocols/protocols.dart';
 import '../mixins/mixins.dart';
-
-import 'package:get/get.dart';
+import '../protocols/protocols.dart';
 
 class GetxEnterprisePresenter extends GetxController
     with LoadingManager, FormManager, UIErrorManager, ErrorHandling
@@ -126,8 +126,7 @@ class GetxEnterprisePresenter extends GetxController
       );
 
       if (EnterpriseBuilder.entity?.persistApp == true &&
-          !homePresenter.isGeneratingVersionToRede &&
-          !homePresenter.isGeneratingVersionToGetNet) {
+          !activePlatform.isPaymentPlatform) {
         await persistent.makePersistent();
       } else {
         await persistent.makeNotPersistent();
@@ -287,13 +286,11 @@ class GetxEnterprisePresenter extends GetxController
     required PdvNotUsingViewModel selectedPdv,
     required String? commandNumber,
     required bool isFixedCommandNumber,
-    required bool isRedeVersion,
   }) async {
     isLoading = true;
     mainError = null;
     try {
-      final imeiOrWindowsId =
-          await loadDeviceData.getImeiOrWindowsId(isRedeVersion: isRedeVersion);
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
       final applicationVersion = await loadDeviceData.getApplicationVersion();
 
       await pdvRegistration.setPdvRegister(

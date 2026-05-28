@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -89,7 +90,7 @@ class GetxPaymentPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      if (homePresenter.isGeneratingVersionToRede) {
+      if (activePlatform == AppPlatform.rede) {
         await redePay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
@@ -97,7 +98,7 @@ class GetxPaymentPresenter extends GetxController
             paymentMode: paymentMode,
           ),
         );
-      } else if (homePresenter.isGeneratingVersionToGetNet) {
+      } else if (activePlatform == AppPlatform.getnet) {
         final result = await getnetPay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
@@ -114,7 +115,7 @@ class GetxPaymentPresenter extends GetxController
           showErrorMessageReturnedByBs,
         );
         isLoading = false;
-      } else if (homePresenter.isGeneratingVersionToCielo) {
+      } else if (activePlatform == AppPlatform.cielo) {
         final result = await cieloPay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
@@ -255,7 +256,7 @@ class GetxPaymentPresenter extends GetxController
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   }) {
-    if (!homePresenter.isGeneratingVersionToRede) {
+    if (!activePlatform.isPaymentPlatform) {
       return;
     }
 

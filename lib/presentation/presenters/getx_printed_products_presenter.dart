@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -352,8 +353,7 @@ class GetxPrintedProductsPresenter
     required HomePresenter homePresenter,
     required void Function() closePageForOldPrintWay,
   }) {
-    if (homePresenter.isGeneratingVersionToRede ||
-        homePresenter.isGeneratingVersionToGetNet) {
+    if (activePlatform.isPaymentPlatform) {
       _channel = MethodChannel(Channels.printer.name);
     } else {
       return;

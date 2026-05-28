@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
@@ -9,8 +10,6 @@ import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
-
-import 'package:get/get.dart';
 
 class GetxConfigurationsPresenter extends GetxController
     with LoadingManager, UIErrorManager, ErrorHandling
@@ -153,8 +152,7 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
 
     try {
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
-          isRedeVersion: false /* tanto faz, não usa mais essa função */);
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
       await addPendingDeviceToUpdate.add(
         imeiOrWindowsId: imeiOrWindowsId,
         enterpriseName: enterpriseName,

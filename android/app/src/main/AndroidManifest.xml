@@ -16,8 +16,10 @@
       <intent>
         <action android:name="android.support.customtabs.action.CustomTabsService" />
       </intent>
-      <!-- Required for Cielo Smart deep link integration (Android 11+) -->
+      <!-- [CIELO-QUERIES-START] -->
+      Required for Cielo Smart deep link integration (Android 11+)
       <package android:name="com.ads.lio.uriappclient" />
+      <!-- [CIELO-QUERIES-END] -->
     </queries>
     <application
         android:label="Celta comanda"
@@ -25,10 +27,12 @@
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
         android:enableOnBackInvokedCallback="true">
-        <!-- Required for Cielo Smart to identify the integration type -->
-        <meta-data
+        <!-- [CIELO-METADATA-START] -->
+        Required for Cielo Smart to identify the integration type
+        <!-- <meta-data
             android:name="cs_integration_type"
-            android:value="uri" />
+            android:value="uri" /> -->
+        <!-- [CIELO-METADATA-END] -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -52,12 +56,14 @@
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- Cielo Smart deep link response callback -->
-            <intent-filter>
+            <!-- [CIELO-CALLBACK-START] -->
+            Cielo Smart deep link response callback
+            <!-- <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:host="response" android:scheme="order" />
-            </intent-filter>
+            </intent-filter> -->
+            <!-- [CIELO-CALLBACK-END] -->
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -80,8 +86,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="br.com.celtaware.comanda.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <!-- [GETNET-PERMISSIONS-START] -->
     <!-- <uses-permission android:name="com.getnet.posdigital.service.POSDIGITAL" />
-    <uses-permission android:name="android.permission.DUMP" tools:node="remove" /> -->
+    <!-- <uses-permission android:name="android.permission.DUMP" tools:node="remove" /> --> -->
+    <!-- [GETNET-PERMISSIONS-END] -->
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 </manifest>

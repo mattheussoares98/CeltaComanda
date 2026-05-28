@@ -9,9 +9,7 @@ class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
     this.mockIsAndroidPlatform(true);
     this.mockIsIOSPlatform(true);
   }
-  When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId(
-        isRedeVersion: any(named: "isRedeVersion"),
-      ));
+  When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId());
 
   void mockGetImeiOrWindowsId(String imeiOrWindowsId) {
     this

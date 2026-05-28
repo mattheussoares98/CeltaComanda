@@ -7,16 +7,13 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
-
-import 'package:get/get.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-
 import '../../ui/mocks/mocks.dart';
 
 void main() {
@@ -455,8 +452,7 @@ void main() {
     test("Should call load pending device", () async {
       await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
-      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false))
-          .called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
   });
 

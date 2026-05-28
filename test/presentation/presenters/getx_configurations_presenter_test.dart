@@ -26,7 +26,6 @@ void main() {
   late UserValidationsSpy userValidations;
   late CommandInformationsSpy commandInformations;
   late NavigateToSpy navigateTo;
-  late PersistentSpy persistent;
   late UpdateMenuSpy updateMenu;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late LocalCommandDataSpy localCommandData;
@@ -67,7 +66,6 @@ void main() {
       userValidations: userValidations,
       commandInformations: commandInformations,
       navigateTo: navigateTo,
-      persistent: persistent,
       updateMenu: updateMenu,
       loadSaleRequestTemp: loadSaleRequestTemp,
       localCommandData: localCommandData,
@@ -90,7 +88,6 @@ void main() {
     userValidations = UserValidationsSpy();
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
-    persistent = PersistentSpy();
     updateMenu = UpdateMenuSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     localCommandData = LocalCommandDataSpy();
@@ -347,16 +344,7 @@ void main() {
 
       verify(() => homePresenter.clear()).called(1);
     });
-    test("Should make not persistent", () async {
-      await sut.doLogout(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
 
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
     test("Should call navigate to splash page correctly", () async {
       await sut.doLogout(
         menuPresenter: menuPresenter,

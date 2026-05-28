@@ -320,8 +320,9 @@ void _toggleFileBlock(
             final space = line.substring(0, indent);
             var content = line.substring(indent + 4, line.length - 3);
             if (content.startsWith(' ')) content = content.substring(1);
-            if (content.endsWith(' '))
+            if (content.endsWith(' ')) {
               content = content.substring(0, content.length - 1);
+            }
             newLine = '$space$content';
           }
         }

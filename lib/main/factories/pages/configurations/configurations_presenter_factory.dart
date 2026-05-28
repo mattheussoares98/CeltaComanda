@@ -7,7 +7,6 @@ ConfigurationsPresenter makeGetxConfigurationsPresenter() =>
       userValidations: makeRemoteUserValidations(),
       commandInformations: makeRemoteCommandInformations(),
       navigateTo: makeNavigateTo(),
-      persistent: makeAndroidPersistent(),
       updateMenu: makeRemoteUpdateMenu(),
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       localCommandData: makeLocalCommandData(),

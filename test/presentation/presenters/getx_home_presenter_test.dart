@@ -34,7 +34,6 @@ void main() {
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
-  late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadDeviceData;
@@ -81,7 +80,6 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
-      persistent: persistent,
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadDeviceData,
@@ -102,7 +100,6 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
-    persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadDeviceData = LoadDeviceDataSpy();
@@ -210,16 +207,7 @@ void main() {
             )).called(1);
       });
 
-      test('Should make not persist app when go to splash page', () async {
-        await sut.doLogout(
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
 
-        verify(() => persistent.makeNotPersistent()).called(1);
-      });
 
       test('Should call enterprisePresenter.clearEnterpriseData', () async {
         await sut.doLogout(
@@ -795,20 +783,6 @@ void main() {
       );
     });
 
-    test("Should make NOT persist Enterprise.persist is false", () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: false,
-      );
-
-      await sut.loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
   });
 
   group("Is valid user and password", () {
@@ -1023,13 +997,7 @@ void main() {
     });
   });
 
-  group("Close APP", () {
-    test("Should call persistent.closeApp", () async {
-      await sut.closeApp();
 
-      verify(() => persistent.closeApp()).called(1);
-    });
-  });
 
   group("Update command entity", () {
     test("Should update correctly when pass all parameters", () async {

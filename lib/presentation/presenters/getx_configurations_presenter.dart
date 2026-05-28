@@ -17,7 +17,6 @@ class GetxConfigurationsPresenter extends GetxController
   final UserValidations userValidations;
   final CommandInformations commandInformations;
   final NavigateTo navigateTo;
-  final Persistent persistent;
   final UpdateMenu updateMenu;
   final LocalCommandData localCommandData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
@@ -38,7 +37,6 @@ class GetxConfigurationsPresenter extends GetxController
     required this.userValidations,
     required this.commandInformations,
     required this.navigateTo,
-    required this.persistent,
     required this.updateMenu,
     required this.localCommandData,
     required this.loadSaleRequestTemp,
@@ -66,7 +64,6 @@ class GetxConfigurationsPresenter extends GetxController
     printedProductsPresenter.clear();
     cartPresenter.clear();
     homePresenter.clear();
-    await persistent.makeNotPersistent();
     await deleteData.delete([
       CacheKeys.alreadyPaid,
       CacheKeys.cartProducts,

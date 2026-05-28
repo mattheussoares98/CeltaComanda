@@ -24,7 +24,6 @@ void main() {
   late NavigateToSpy navigateTo;
   late CommandInformationsSpy commandInformations;
   late LocalCommandDataSpy localCommandData;
-  late PersistentSpy persistent;
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
@@ -49,7 +48,6 @@ void main() {
     loadEnterpriseData = LoadEnterpriseDataSpy();
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
-    persistent = PersistentSpy();
     loadEnterpriseConcentradorParameters =
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
@@ -67,7 +65,6 @@ void main() {
       navigateTo: navigateTo,
       commandInformations: commandInformations,
       localCommandData: localCommandData,
-      persistent: persistent,
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
@@ -138,71 +135,6 @@ void main() {
   });
 
   group("old tests", () {
-    test(
-        "Should make persist app when go to home page and enterprise.persist app is true",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makePersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is false",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: false,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-
     test("Should call loadCommandData on loadLocalData", () async {
       await sut.updateEnterpriseWithLocalData();
 

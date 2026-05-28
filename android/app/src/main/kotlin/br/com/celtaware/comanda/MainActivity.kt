@@ -19,7 +19,6 @@ import br.com.celtaware.comanda.cielo_channel.CieloPayment
 import br.com.celtaware.comanda.cielo_channel.CieloPrinter
 // [CIELO-IMPORTS-END]
 import br.com.celtaware.comanda.utils.AppUtils
-import br.com.celtaware.comanda.utils.PersistentChannelManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
@@ -30,7 +29,6 @@ class MainActivity : FlutterActivity() {
    // private lateinit var redePrinter: RedePrinter
    // private lateinit var redePaymentHandler: RedePayment
     // [REDE-VARS-END]
-    private lateinit var persistentChannelManager: PersistentChannelManager
 
     // [GETNET-VARS-START]
     // private lateinit var getnetPaymentHandler: GetNetPaymentHandler
@@ -47,7 +45,6 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         engine = flutterEngine
         super.configureFlutterEngine(flutterEngine)
-        persistentChannelManager = PersistentChannelManager(flutterEngine)
 
         // [REDE-SETUP-START]
        // redePaymentHandler = RedePayment(this, redePayments, flutterEngine)
@@ -87,25 +84,11 @@ class MainActivity : FlutterActivity() {
         // [CIELO-RESULT-END]
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (persistentChannelManager.isPersistApp()) {
-            AppUtils.bringAppToFront(this)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (persistentChannelManager.isPersistApp()) {
-            AppUtils.bringAppToFront(this)
-        }
-    }
-
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
         // [CIELO-INTENT-START]
-        Handle Cielo deep link responses (order://response)
+        // Handle Cielo deep link responses (order://response)
         if (Intent.ACTION_VIEW == intent.action) {
            val scheme = intent.data?.scheme
            val host = intent.data?.host
@@ -115,10 +98,6 @@ class MainActivity : FlutterActivity() {
            }
         }
         // [CIELO-INTENT-END]
-
-        if (Intent.ACTION_MAIN == intent.action && persistentChannelManager.isPersistApp()) {
-            Log.i("MyLauncher", "onNewIntent: HOME Key")
-        }
     }
 
 

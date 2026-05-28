@@ -1,4 +1,3 @@
-import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -21,7 +20,6 @@ class GetxEnterprisePresenter extends GetxController
   final NavigateTo navigateTo;
   final CommandInformations commandInformations;
   final LocalCommandData localCommandData;
-  final Persistent persistent;
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
   final PdvRegistration pdvRegistration;
@@ -35,7 +33,6 @@ class GetxEnterprisePresenter extends GetxController
     required this.navigateTo,
     required this.commandInformations,
     required this.localCommandData,
-    required this.persistent,
     required this.loadEnterpriseConcentradorParameters,
     required this.pdvRegistration,
     required this.loadDeviceData,
@@ -124,13 +121,6 @@ class GetxEnterprisePresenter extends GetxController
           pdv: null,
         ),
       );
-
-      if (EnterpriseBuilder.entity?.persistApp == true &&
-          !activePlatform.isPaymentPlatform) {
-        await persistent.makePersistent();
-      } else {
-        await persistent.makeNotPersistent();
-      }
 
       var pdvs = await pdvRegistration.getByEnterpriseId();
 

@@ -24,7 +24,6 @@ class GetxHomePresenter
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadSellers loadSellers;
-  final Persistent persistent;
   final AddDeviceInfo addDeviceInfo;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
   final LoadDeviceData loadDeviceData;
@@ -43,7 +42,6 @@ class GetxHomePresenter
     required this.updateSaleRequestTemp,
     required this.loadSaleRequestTemp,
     required this.loadSellers,
-    required this.persistent,
     required this.addDeviceInfo,
     required this.addPendingDeviceToUpdate,
     required this.loadDeviceData,
@@ -83,7 +81,6 @@ class GetxHomePresenter
       }
 
       await enterprisePresenter.clearEnterpriseData();
-      await persistent.makeNotPersistent();
       await clear();
       await deleteData.delete([
         CacheKeys.alreadyPaid,
@@ -142,12 +139,6 @@ class GetxHomePresenter
     mainError = null;
 
     try {
-      // if (EnterpriseBuilder.entity?.persistApp == true) {
-      //   await persistent.makePersistent();
-      // } else {
-      //   await persistent.makeNotPersistent();
-      // }//TODO delete this persistent logic
-
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {
@@ -329,10 +320,7 @@ class GetxHomePresenter
     _selectedSeller = seller;
   }
 
-  @override
-  Future<void> closeApp() async {
-    await persistent.closeApp();
-  }
+
 
   @override
   Future<void> doOnRemoteEnterpriseChanges({

@@ -63,8 +63,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void updateSelectedCommand(int value);
   void updateSelectedSeller(SellersViewModel? seller);
 
-  Future<void> closeApp();
-
   Future<void> doOnRemoteEnterpriseChanges({
     required Map<String, dynamic> data,
     required MenuPresenter menuPresenter,

@@ -1,10 +1,10 @@
 // ignore_for_file: unnecessary_this
 
+import 'dart:async';
+
 import 'package:clean_celta_mobile/domain/helpers/domain_error.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-
-import 'dart:async';
 import 'package:mocktail/mocktail.dart';
 
 import '../../domain/mocks/mocks.dart';
@@ -35,13 +35,13 @@ class PrintedProductsPresenterSpy extends Mock
     when(() => this.alertMessageStream)
         .thenAnswer((_) => alertMessageController.stream);
 
-    _mockLoadPrintedCall().thenAnswer((any) async => any);
+    _mockLoadPrintedCall().thenAnswer((_) async => true);
     when(() => this.clear()).thenAnswer((any) => any);
     when(() => this.doOnClosePage()).thenAnswer((any) => any);
     when(() => this.validateUserAndPermissionToCancelProducts(
           personalizedCode: any(named: "personalizedCode"),
           password: any(named: "password"),
-        )).thenAnswer((any) async => any);
+        )).thenAnswer((_) async => true);
   }
 
   void mockRemoveProduct() {
@@ -56,7 +56,10 @@ class PrintedProductsPresenterSpy extends Mock
         )).thenAnswer((any) async => any);
   }
 
-  When _mockLoadPrintedCall() => when(() => this.loadPrinted(any()));
+  When _mockLoadPrintedCall() => when(() => this.loadPrinted(
+        any(),
+        showIsLoading: any<bool>(named: "showIsLoading"),
+      ));
 
   void mockLoadPrintedError(DomainError error) {
     _mockLoadPrintedCall().thenThrow(error);

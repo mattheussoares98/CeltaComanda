@@ -154,6 +154,7 @@ void main() {
   }
 
   setUp(() {
+    activePlatform = AppPlatform.rede;
     initUseCases();
     initPresenters();
     initEntitys();
@@ -291,7 +292,7 @@ void main() {
           )).called(1);
     });
     test('Should not call is is not generating version to rede', () async {
-      homePresenter.appPlatform = AppPlatform.rede;
+      activePlatform = AppPlatform.tablet;
 
       await sut.callPayment(
         homePresenter: homePresenter,
@@ -327,6 +328,7 @@ void main() {
     });
     test('Should emit correct values on throws unexpected', () async {
       redePay.mockPayError(DomainError.unexpected);
+      activePlatform = AppPlatform.rede;
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -344,6 +346,7 @@ void main() {
     });
     test('Should emit correct values on throws blockedCommand', () async {
       redePay.mockPayError(DomainError.blockedCommand);
+      activePlatform = AppPlatform.rede;
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -1094,6 +1097,11 @@ void main() {
 
   group("Finish sale request by covenant", () {
     test("Should emit correct values on success", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
@@ -1106,6 +1114,11 @@ void main() {
       );
     });
     test("Should emit correct values on error", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
         sut.mainErrorStream,

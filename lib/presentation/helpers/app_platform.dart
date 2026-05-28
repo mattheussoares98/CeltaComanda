@@ -11,4 +11,4 @@ enum AppPlatform {
 }
 
 // Automatically updated by the switcher script
-const AppPlatform activePlatform = AppPlatform.tablet;
+AppPlatform activePlatform = AppPlatform.tablet;

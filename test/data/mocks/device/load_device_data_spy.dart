@@ -2,12 +2,15 @@
 
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/domain/usecases/usecases.dart';
+import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 
 class LoadDeviceDataSpy extends Mock implements LoadDeviceData {
   LoadDeviceDataSpy() {
     this.mockIsAndroidPlatform(true);
     this.mockIsIOSPlatform(true);
+    this.mockGetApplicationVersion(faker.randomGenerator.string(10));
+    this.mockGetImeiOrWindowsId(faker.randomGenerator.string(10));
   }
   When _mockGetImeiOrWindowsIdCall() => when(() => this.getImeiOrWindowsId());
 

@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
-import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ class HomePresenterSpy extends Mock implements HomePresenter {
   final mainErrorController = StreamController<UIError?>();
   final isLoadingController = StreamController<bool>();
   CommandEntity? commandEntityController;
-  AppPlatform appPlatform = AppPlatform.tablet;
 
   HomePresenterSpy() {
     when(() => this.commandEntity).thenAnswer((_) => commandEntityController);

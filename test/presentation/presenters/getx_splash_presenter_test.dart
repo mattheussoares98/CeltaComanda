@@ -67,6 +67,7 @@ void main() {
   }
 
   setUp(() {
+    activePlatform = AppPlatform.tablet;
     initUsecases();
     initPresenters();
     initEntitys();
@@ -136,7 +137,7 @@ void main() {
     test(
         'Should call get pdv by id if local pdv is not null and is generating version to rede',
         () async {
-      homePresenter.appPlatform = AppPlatform.rede;
+      activePlatform = AppPlatform.rede;
 
       await sut.checkPageToGo(
         homePresenter: homePresenter,
@@ -148,7 +149,7 @@ void main() {
     });
 
     test('Should call get pdv by id if local pdv is not null', () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
 
       await sut.checkPageToGo(
         homePresenter: homePresenter,
@@ -161,7 +162,7 @@ void main() {
 
     test("Should go to enterprise page dont have a pdv in local command data",
         () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
 
       localCommandData.mockLoad(
         CommandEntity(
@@ -179,7 +180,7 @@ void main() {
           pageRoute: PageRoutes.enterpriseValidation, clear: true)).called(1);
     });
     test("Should go to home page if get pdv by id return null", () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
       pdvRegistration.mockGetById(null);
 
       await sut.checkPageToGo(
@@ -190,7 +191,7 @@ void main() {
           .called(1);
     });
     test("Should call load imei or windows id", () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
       pdvRegistration.mockGetById(null);
 
       await sut.checkPageToGo(homePresenter: homePresenter);
@@ -200,7 +201,7 @@ void main() {
     test(
         "Should go to enterprise page if device id and remote id registered are differently",
         () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 
@@ -210,7 +211,7 @@ void main() {
     test(
         "Should call correct usecases if device id and remote id registered is equal",
         () async {
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
       loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
       final applicationVersion = faker.guid.guid();
       loadDeviceData.mockGetApplicationVersion(applicationVersion);
@@ -227,7 +228,7 @@ void main() {
     });
     test("Should go to home page if update pdv register trhows", () async {
       //já validou que o mac é igual o id do dispositivo, não tem problema se não atualizar. Depois atualiza
-      homePresenter.appPlatform = AppPlatform.getnet;
+      activePlatform = AppPlatform.getnet;
       loadDeviceData.mockGetImeiOrWindowsId(registeredPdv.MacAddress!);
       final applicationVersion = faker.guid.guid();
       loadDeviceData.mockGetApplicationVersion(applicationVersion);
@@ -276,7 +277,7 @@ void main() {
     test(
         "Should go to validation page if is generating respective version and has local enterprise",
         () async {
-      homePresenter.appPlatform = AppPlatform.webSaleRequestDetails;
+      activePlatform = AppPlatform.webSaleRequestDetails;
 
       await sut.checkPageToGo(homePresenter: homePresenter);
 

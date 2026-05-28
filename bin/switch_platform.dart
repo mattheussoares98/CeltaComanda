@@ -83,8 +83,8 @@ void _updateDartPlatform(String enumName) {
 
   var content = file.readAsStringSync();
   content = content.replaceAll(
-    RegExp(r'const AppPlatform activePlatform = AppPlatform\.\w+;'),
-    'const AppPlatform activePlatform = AppPlatform.$enumName;',
+    RegExp(r'(const\s+)?AppPlatform activePlatform = AppPlatform\.\w+;'),
+    'AppPlatform activePlatform = AppPlatform.$enumName;',
   );
   file.writeAsStringSync(content);
   print('Updated app_platform.dart to AppPlatform.$enumName');

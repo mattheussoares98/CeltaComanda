@@ -29,7 +29,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         _dataRefreshTimer = Timer.periodic(
-          const Duration(seconds: 30),
+          const Duration(seconds: 20),
           (timer) {
             _fetchAndUpdateData();
           },

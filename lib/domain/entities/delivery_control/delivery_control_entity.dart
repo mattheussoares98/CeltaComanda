@@ -80,4 +80,40 @@ class DeliveryControlEntity extends Equatable {
         this.TotalLiquid,
         this.Products,
       ];
+
+  DeliveryControlEntity copyWith({
+    int? Id,
+    int? EnterpriseId,
+    int? EnterpriseCode,
+    DeliveryOriginType? OriginType,
+    String? PersonalizedCode,
+    int? CouponFiscalNumber,
+    DateTime? DateOfCreation,
+    DateTime? DateHourOfCreation,
+    bool? IsCancelled,
+    IsToDelivery? isToDelivery,
+    DateTime? DateHourOfDelivery,
+    int? DeliveryControl,
+    DeliveryStatusLate? deliveryStatusLate,
+    double? TotalLiquid,
+    List<DeliveryProductControlEntity>? Products,
+  }) {
+    return DeliveryControlEntity(
+      Id: Id ?? this.Id,
+      EnterpriseId: EnterpriseId ?? this.EnterpriseId,
+      EnterpriseCode: EnterpriseCode ?? this.EnterpriseCode,
+      OriginType: OriginType ?? this.OriginType,
+      PersonalizedCode: PersonalizedCode ?? this.PersonalizedCode,
+      CouponFiscalNumber: CouponFiscalNumber ?? this.CouponFiscalNumber,
+      DateOfCreation: DateOfCreation ?? this.DateOfCreation,
+      DateHourOfCreation: DateHourOfCreation ?? this.DateHourOfCreation,
+      IsCancelled: IsCancelled ?? this.IsCancelled,
+      isToDelivery: isToDelivery ?? this.isToDelivery,
+      DateHourOfDelivery: DateHourOfDelivery ?? this.DateHourOfDelivery,
+      DeliveryControl: DeliveryControl ?? this.DeliveryControl,
+      deliveryStatusLate: deliveryStatusLate ?? this.deliveryStatusLate,
+      TotalLiquid: TotalLiquid ?? this.TotalLiquid,
+      Products: Products ?? this.Products,
+    );
+  }
 }

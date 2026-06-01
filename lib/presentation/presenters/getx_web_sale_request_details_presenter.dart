@@ -69,7 +69,30 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     required int? deliveryLotId,
     required IsToDelivery newStatus,
   }) async {
+    mainError = null;
+    final currentStreamValue = _deliveryControlsStream.subject.value;
     try {
+      final index = currentStreamValue?.indexWhere((e) {
+        final matchId = e.Id == deliveryControl.Id;
+        if (!matchId) return false;
+        final matchProducts = deliveryLotId != null &&
+            deliveryControl.Products?.any(
+                    (x) => x.DeliveryLoteNumber == deliveryLotId) !=
+                null;
+        return matchId && matchProducts;
+      });
+
+      if (index != null && index != -1) {
+        final optimizedUpdated = currentStreamValue
+            ?.elementAt(index)
+            .copyWith(isToDelivery: newStatus);
+        if (optimizedUpdated != null) {
+          final deliveryControls = [...currentStreamValue!];
+          deliveryControls[index] = optimizedUpdated;
+          _deliveryControlsStream.subject.add(deliveryControls);
+        }
+      }
+
       await concDeliveryControl.update(
         settings: _webLocalSettings!,
         deliveryControl: deliveryControl,
@@ -79,6 +102,9 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
 
       await loadDeliveryControls();
     } catch (e) {
+      if (currentStreamValue != null) {
+        _deliveryControlsStream.subject.add(currentStreamValue);
+      }
       mainError = getUIError(e);
     }
   }

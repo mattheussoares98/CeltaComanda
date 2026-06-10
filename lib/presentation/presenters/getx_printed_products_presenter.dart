@@ -72,15 +72,16 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
-      _printed = null;
       PrintedEntity? printed = await loadPrintedProducts.load(
         commandNumber: commandNumber.toInt(),
       );
 
-      if (printed?.Products.isEmpty == false) {
+      if (printed?.Products.isNotEmpty ?? false) {
         _printed = PrintedViewModel.fromEntity(printed!);
         _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation!)
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
+      } else {
+        _printed = null;
       }
 
       if (_printed?.CustomerCode == null ||

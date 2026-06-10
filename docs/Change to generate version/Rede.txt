@@ -9,12 +9,9 @@ After running, run:
 ========================================================================
 
 https://redestore.service-now.com
+suporte@celtaware.com.br
+C3lta@Rede
 
-1- Change in homePresenter
-bool get isGeneratingVersionToRede => true;
-bool get isGeneratingVersionToGetNet => false;
-bool get isGeneratingVersionToMicrosoftStore => false;
-bool _isGeneratingVersionToTablet = false;
 
 - Uncomment dependencies of rede in build.gradle
 

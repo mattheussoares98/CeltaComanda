@@ -14,11 +14,6 @@ C3lta@GetNet
 
 - Change version in gradle and pubspec and do a commit
 
-isGeneratingVersionToRede => false;
-isGeneratingVersionToGetNet => true;
-isGeneratingVersionToMicrosoftStore => false;
-_isGeneratingVersionToTablet = false;
-
 - change C:\Celta\CeltaComanda\android\local.properties\ 
 flutter.minSdkVersion=22
 flutter.targetSdkVersion=34

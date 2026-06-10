@@ -8,14 +8,9 @@ After running, run:
    flutter pub get
 ========================================================================
 
-https://www.cielo.com.br/alianca/
-
-isGeneratingVersionToRede = false
-isGeneratingVersionToGetNet = false
-isGeneratingVersionToTable = false
-isGeneratingVersionToMicrosoftStore = false
-isGeneratingVersionToWebSaleRequestDetails = false
-isGeneratingVersionToCielo = true
+https://www.cieloliostore.com.br/sign-in
+suporte@celtaware.com.br
+C3lta@Ciel0Paid
 
 - Change version in gradle and pubspec and do a commit
 

@@ -8,11 +8,6 @@ After running, run:
    flutter pub get
 ========================================================================
 
-isGeneratingVersionToRede = false
-isGeneratingVersionToGetNet = false
-isGeneratingVersionToTable = false
-isGeneratingVersionToMicrosoftStore = true
-
 Change the version of microsoft in pubspec.yaml
 
 

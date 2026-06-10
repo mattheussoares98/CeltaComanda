@@ -12,13 +12,6 @@ After running, run:
 
 - Fazer um commit com essa alteração
 
-- no GetxHomePresenter mudar:
-bool get isGeneratingVersionToRede => false;
-bool get isGeneratingVersionToGetNet => false;
-bool get isGeneratingVersionToMicrosoftStore => false;
-bool _isGeneratingVersionToTablet = true;
-
-
 ########################################
 ABAIXO É PARA SE TIVER COM O GRUPO DE AVALIAÇÃO DO APP
 

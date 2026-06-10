@@ -68,8 +68,15 @@ class CieloPrinter(
 
     private fun saveBitmapToFile(bitmapBytes: ByteArray): String? {
         return try {
+            val savedImagesDir = java.io.File(
+                android.os.Environment.getExternalStorageDirectory(),
+                "saved_images"
+            )
+            if (!savedImagesDir.exists()) {
+                savedImagesDir.mkdirs()
+            }
             val file = java.io.File(
-                activity.cacheDir,
+                savedImagesDir,
                 "cielo_print_${System.currentTimeMillis()}.png"
             )
             java.io.FileOutputStream(file).use { fos ->

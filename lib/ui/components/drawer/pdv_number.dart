@@ -15,7 +15,7 @@ class PdvNumber extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Text(
-          "${R.string.pdv.toUpperCase()} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}",
+          "${R.string.pdv.toUpperCase()} ${homePresenter.commandEntity?.pdv?.PdvNumber?.toInt() ?? 0}",
           textAlign: TextAlign.center,
         ),
       );

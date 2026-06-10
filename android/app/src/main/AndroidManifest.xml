@@ -25,6 +25,7 @@
         android:name="br.com.celtaware.comanda.App"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
+        android:requestLegacyExternalStorage="true"
         android:enableOnBackInvokedCallback="true">
         <!-- [CIELO-METADATA-START] -->
         <!-- <meta-data -->

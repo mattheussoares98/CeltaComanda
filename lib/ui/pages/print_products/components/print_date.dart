@@ -16,7 +16,7 @@ class PrintDate extends StatelessWidget {
       children: [
         if (homePresenter.commandEntity?.pdv?.PdvNumber != null)
           Text(
-            "${R.string.pdv.toUpperCase()} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}",
+            "${R.string.pdv.toUpperCase()} ${homePresenter.commandEntity?.pdv?.PdvNumber?.toInt() ?? 0}",
             style: textStyle(context),
           ),
         Text(

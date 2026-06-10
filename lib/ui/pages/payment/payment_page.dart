@@ -158,8 +158,10 @@ class _PaymentPageState extends State<PaymentPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter
-                    .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+                final commandNum = homePresenter.commandEntity?.commandNumber;
+                if (commandNum != null) {
+                  await printedProductsPresenter.loadPrinted(commandNum);
+                }
               },
               icon: Row(
                 children: [
@@ -167,7 +169,7 @@ class _PaymentPageState extends State<PaymentPage>
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: Text(
-                        "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
+                        "${R.string.command} ${homePresenter.commandEntity?.commandNumber?.toInt() ?? 0}",
                         style: TextStyle(fontSize: StringSize.size),
                       ),
                     ),

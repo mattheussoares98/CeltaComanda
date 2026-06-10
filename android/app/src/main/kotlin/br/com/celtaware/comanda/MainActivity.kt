@@ -15,8 +15,8 @@ import android.util.Log
 // import rede.smartrede.sdk.RedePayments
 // [REDE-IMPORTS-END]
 // [CIELO-IMPORTS-START]
-import br.com.celtaware.comanda.cielo_channel.CieloPayment
-import br.com.celtaware.comanda.cielo_channel.CieloPrinter
+// import br.com.celtaware.comanda.cielo_channel.CieloPayment
+// import br.com.celtaware.comanda.cielo_channel.CieloPrinter
 // [CIELO-IMPORTS-END]
 import br.com.celtaware.comanda.utils.AppUtils
 import io.flutter.embedding.android.FlutterActivity
@@ -36,8 +36,8 @@ class MainActivity : FlutterActivity() {
     // [GETNET-VARS-END]
 
     // [CIELO-VARS-START]
-    private lateinit var cieloPaymentHandler: CieloPayment
-    private lateinit var cieloPrinter: CieloPrinter
+    // private lateinit var cieloPaymentHandler: CieloPayment
+    // private lateinit var cieloPrinter: CieloPrinter
     // [CIELO-VARS-END]
 
     private var engine: FlutterEngine? = null
@@ -62,11 +62,11 @@ class MainActivity : FlutterActivity() {
         // [GETNET-SETUP-END]
 
         // [CIELO-SETUP-START]
-        cieloPaymentHandler = CieloPayment(this)
-        cieloPaymentHandler.setupMethodChannel(flutterEngine)
-
-        cieloPrinter = CieloPrinter(this, flutterEngine)
-        cieloPrinter.setupMethodChannel()
+        // cieloPaymentHandler = CieloPayment(this)
+        // cieloPaymentHandler.setupMethodChannel(flutterEngine)
+// 
+        // cieloPrinter = CieloPrinter(this, flutterEngine)
+        // cieloPrinter.setupMethodChannel()
         // [CIELO-SETUP-END]
     }
 
@@ -79,8 +79,8 @@ class MainActivity : FlutterActivity() {
         // getnetPaymentHandler.handleActivityResult(requestCode, resultCode, data)
         // [GETNET-RESULT-END]
         // [CIELO-RESULT-START]
-        cieloPaymentHandler.handleActivityResult(requestCode, resultCode, data)
-        cieloPrinter.handleActivityResult(requestCode, resultCode, data)
+        // cieloPaymentHandler.handleActivityResult(requestCode, resultCode, data)
+        // cieloPrinter.handleActivityResult(requestCode, resultCode, data)
         // [CIELO-RESULT-END]
     }
 
@@ -89,14 +89,14 @@ class MainActivity : FlutterActivity() {
 
         // [CIELO-INTENT-START]
         // Handle Cielo deep link responses (order://response)
-        if (Intent.ACTION_VIEW == intent.action) {
-           val scheme = intent.data?.scheme
-           val host = intent.data?.host
-           if (scheme == "order" && host == "response") {
-               cieloPaymentHandler.handleDeepLinkResponse(intent)
-               cieloPrinter.handleDeepLinkResponse(intent)
-           }
-        }
+        // if (Intent.ACTION_VIEW == intent.action) {
+           // val scheme = intent.data?.scheme
+           // val host = intent.data?.host
+           // if (scheme == "order" && host == "response") {
+               // cieloPaymentHandler.handleDeepLinkResponse(intent)
+               // cieloPrinter.handleDeepLinkResponse(intent)
+           // }
+        // }
         // [CIELO-INTENT-END]
     }
 

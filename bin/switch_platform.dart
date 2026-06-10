@@ -71,6 +71,9 @@ void main(List<String> args) {
   // 6. Update App.kt
   _updateAppKotlin(targetPlatform);
 
+  // 7. Update Dart dependencies toggle blocks
+  _updateDartDependencies(targetPlatform);
+
   print('Successfully switched platform configuration!');
 }
 
@@ -334,4 +337,27 @@ void _toggleFileBlock(
   }
 
   file.writeAsStringSync('${result.join('\n')}\n');
+}
+
+void _updateDartDependencies(String platform) {
+  final shouldComment = (platform == 'cielo' || platform == 'getnet');
+
+  // product_complement.dart
+  _toggleFileBlock('lib/ui/components/product_complement.dart', 'HTML-WIDGET-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/ui/components/product_complement.dart', 'HTML-WIDGET-INACTIVE', 'slash', !shouldComment);
+
+  // init_app.dart
+  _toggleFileBlock('lib/main/init/init_app.dart', 'WAKELOCK-ACTIVE', 'slash', shouldComment);
+
+  // firebase_auth_adapter_factory.dart
+  _toggleFileBlock('lib/main/factories/cache/firebase_auth_adapter_factory.dart', 'FIREBASE-AUTH-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/main/factories/cache/firebase_auth_adapter_factory.dart', 'FIREBASE-AUTH-INACTIVE', 'slash', !shouldComment);
+
+  // firebase_auth_adapter.dart
+  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart', 'FIREBASE-AUTH-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart', 'FIREBASE-AUTH-INACTIVE', 'slash', !shouldComment);
+
+  // remote_launch_url.dart
+  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart', 'URL-LAUNCHER-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart', 'URL-LAUNCHER-INACTIVE', 'slash', !shouldComment);
 }

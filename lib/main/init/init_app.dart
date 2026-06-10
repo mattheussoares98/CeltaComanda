@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+// [WAKELOCK-ACTIVE-START]
 import 'package:wakelock_plus/wakelock_plus.dart';
+// [WAKELOCK-ACTIVE-END]
 
 import '../../firebase_options.dart';
 import '../../infra/helpers/helpers.dart';
@@ -19,7 +21,9 @@ Future<void> initApp() async {
   await initFirebase();
   await _initHive();
   _hideNavigationButtons();
+// [WAKELOCK-ACTIVE-START]
   WakelockPlus.enable();
+// [WAKELOCK-ACTIVE-END]
 }
 
 Future<void> initFirebase() async {

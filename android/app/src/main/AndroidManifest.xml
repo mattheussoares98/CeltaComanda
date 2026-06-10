@@ -17,7 +17,7 @@
         <action android:name="android.support.customtabs.action.CustomTabsService" />
       </intent>
       <!-- [CIELO-QUERIES-START] -->
-      <package android:name="com.ads.lio.uriappclient" />
+      <!-- <package android:name="com.ads.lio.uriappclient" /> -->
       <!-- [CIELO-QUERIES-END] -->
     </queries>
     <application
@@ -27,9 +27,9 @@
         tools:replace="android:label"
         android:enableOnBackInvokedCallback="true">
         <!-- [CIELO-METADATA-START] -->
-        <!-- <meta-data
-            android:name="cs_integration_type"
-            android:value="uri" /> -->
+        <!-- <meta-data -->
+            <!-- android:name="cs_integration_type" -->
+            <!-- android:value="uri" /> -->
         <!-- [CIELO-METADATA-END] -->
         <activity
             android:name=".MainActivity"
@@ -51,15 +51,17 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 
+                <!-- [LAUNCHER-CATEGORIES-START] -->
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <!-- [LAUNCHER-CATEGORIES-END] -->
             </intent-filter>
             <!-- [CIELO-CALLBACK-START] -->
-            <!-- <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:host="response" android:scheme="order" />
-            </intent-filter> -->
+            <!-- <intent-filter> -->
+                <!-- <action android:name="android.intent.action.VIEW" /> -->
+                <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+                <!-- <data android:host="response" android:scheme="order" /> -->
+            <!-- </intent-filter> -->
             <!-- [CIELO-CALLBACK-END] -->
         </activity>
         <!-- Don't delete the meta-data below.

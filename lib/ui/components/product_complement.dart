@@ -1,6 +1,10 @@
+// [HTML-WIDGET-ACTIVE-START]
 import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+// [HTML-WIDGET-ACTIVE-END]
 import 'package:flutter/material.dart';
+// [HTML-WIDGET-ACTIVE-START]
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// [HTML-WIDGET-ACTIVE-END]
 
 import '../../../ui/helpers/helpers.dart';
 
@@ -26,11 +30,17 @@ class ProductComplement extends StatelessWidget {
             padding: const EdgeInsets.all(2),
             child: Align(
               alignment: Alignment.bottomCenter,
+// [HTML-WIDGET-ACTIVE-START]
               child: activePlatform == AppPlatform.tablet
                   ? Text(_parseHtmlString(
                       productComplement!.removeComplementConfigurations()))
                   : HtmlWidget(
                       productComplement!.removeComplementConfigurations()),
+// [HTML-WIDGET-ACTIVE-END]
+// [HTML-WIDGET-INACTIVE-START]
+              // child: Text(_parseHtmlString(
+                  // productComplement!.removeComplementConfigurations())),
+// [HTML-WIDGET-INACTIVE-END]
             ),
           ),
         ],

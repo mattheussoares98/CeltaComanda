@@ -14,7 +14,7 @@ class CieloPrinter(
     private val activity: Activity,
     private val flutterEngine: FlutterEngine,
 ) {
-    private val channel: String = "cielo_printer"
+    private val channel: String = "printer"
     private val TAG = "CieloPrinter"
     private var methodChannel: MethodChannel? = null
 

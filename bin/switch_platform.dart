@@ -128,6 +128,19 @@ void _updateBuildGradle(String platform) {
   // SIGNING-CONFIG-GETNET uncommented only for getnet
   _toggleFileBlock('android/app/build.gradle', 'SIGNING-CONFIG-GETNET', 'slash',
       platform != 'getnet');
+
+  // Update targetSdk in build.gradle
+  final gradleFile = File('android/app/build.gradle');
+  if (gradleFile.existsSync()) {
+    var content = gradleFile.readAsStringSync();
+    final targetSdkValue = platform == 'cielo' ? 33 : 36;
+    content = content.replaceAll(
+      RegExp(r'targetSdk\s+\d+'),
+      'targetSdk $targetSdkValue',
+    );
+    gradleFile.writeAsStringSync(content);
+    print('Updated targetSdk in build.gradle to $targetSdkValue');
+  }
 }
 
 void _updateAndroidManifest(String platform) {

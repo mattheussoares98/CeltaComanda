@@ -88,7 +88,6 @@ class MainActivity : FlutterActivity() {
         super.onNewIntent(intent)
 
         // [CIELO-INTENT-START]
-        // Handle Cielo deep link responses (order://response)
         // if (Intent.ACTION_VIEW == intent.action) {
            // val scheme = intent.data?.scheme
            // val host = intent.data?.host

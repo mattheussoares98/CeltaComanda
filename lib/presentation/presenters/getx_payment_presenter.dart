@@ -137,9 +137,14 @@ class GetxPaymentPresenter extends GetxController
       mainError = getUIError(e);
       isLoading = false;
     } finally {
-      Future.delayed(const Duration(seconds: 20), () {
-        isLoading = false;
-      });
+      Future.delayed(
+        Duration(
+          seconds: activePlatform == AppPlatform.cielo ? 5 : 20,
+        ),
+        () {
+          isLoading = false;
+        },
+      );
     }
   }
 

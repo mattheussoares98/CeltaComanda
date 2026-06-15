@@ -19,7 +19,7 @@ class PaymentButtons extends StatelessWidget {
 
   void showSuccessAndCloseUntilHomePage(BuildContext context) {
     snackBarMessage(context, R.string.liquidateCommandSucceeds);
-    Navigator.of(NavigatorKey.key.currentState!.context)
+    Navigator.of(NavigatorKey.key.currentState?.context ?? context)
         .popUntil((route) => route.isFirst);
   }
 

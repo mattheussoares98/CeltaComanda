@@ -75,10 +75,11 @@ class _PaymentPageState extends State<PaymentPage>
           },
         );
 
-        paymentController.text = paymentPresenter!
-            .getTotalPendingValue(printedProductsPresenter)
-            .toString()
-            .replaceAll(RegExp(r'\.'), ',');
+        paymentController.text = paymentPresenter
+                ?.getTotalPendingValue(printedProductsPresenter)
+                .toString()
+                .replaceAll(RegExp(r'\.'), ',') ??
+            '';
 
         if (paymentPresenter?.cpfCnpj != null) {
           cpfCnpjController.text = paymentPresenter!.cpfCnpj.toString();

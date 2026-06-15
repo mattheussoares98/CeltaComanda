@@ -17,6 +17,7 @@ class CieloPrinter(
     private val channel: String = "printer"
     private val TAG = "CieloPrinter"
     private var methodChannel: MethodChannel? = null
+    private var printStartTime: Long = 0
 
     companion object {
         const val CIELO_PRINT_REQUEST_CODE = 20002
@@ -130,6 +131,7 @@ class CieloPrinter(
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(printUri))
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            printStartTime = System.currentTimeMillis()
             activity.startActivityForResult(intent, CIELO_PRINT_REQUEST_CODE)
         } catch (e: Exception) {
             Log.e(TAG, "Error launching print intent: ${e.message}")
@@ -169,7 +171,13 @@ class CieloPrinter(
                     sendMessageToFlutter("Success")
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                sendMessageToFlutter("Error: Print canceled")
+                val duration = System.currentTimeMillis() - printStartTime
+                Log.d(TAG, "onActivityResult RESULT_CANCELED after ${duration}ms")
+                if (duration > 1500) {
+                    sendMessageToFlutter("Error: Print canceled")
+                } else {
+                    Log.d(TAG, "Ignoring immediate automatic RESULT_CANCELED (duration: ${duration}ms)")
+                }
             } else {
                 sendMessageToFlutter("Error: Unexpected result")
             }

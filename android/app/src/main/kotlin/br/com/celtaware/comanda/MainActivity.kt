@@ -85,18 +85,19 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-
         // [CIELO-INTENT-START]
         // if (Intent.ACTION_VIEW == intent.action) {
-           // val scheme = intent.data?.scheme
-           // val host = intent.data?.host
-           // if (scheme == "order" && host == "response") {
-               // cieloPaymentHandler.handleDeepLinkResponse(intent)
-               // cieloPrinter.handleDeepLinkResponse(intent)
-           // }
+            // val scheme = intent.data?.scheme
+            // val host = intent.data?.host
+            // if (scheme == "order" && host == "response") {
+                // cieloPaymentHandler.handleDeepLinkResponse(intent)
+                // cieloPrinter.handleDeepLinkResponse(intent)
+                // return
+            // }
         // }
         // [CIELO-INTENT-END]
+
+        super.onNewIntent(intent)
     }
 
 

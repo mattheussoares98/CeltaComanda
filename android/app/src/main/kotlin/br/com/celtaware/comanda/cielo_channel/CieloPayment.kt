@@ -19,9 +19,7 @@ class CieloPayment(private val activity: Activity) : MethodCallHandler {
     private var callback: Result? = null
     private var paymentStartTime: Long = 0
 
-    companion object {
-        const val CIELO_PAYMENT_REQUEST_CODE = 20001
-    }
+
 
     fun setupMethodChannel(flutterEngine: FlutterEngine) {
         channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
@@ -97,7 +95,7 @@ class CieloPayment(private val activity: Activity) : MethodCallHandler {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(checkoutUri))
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     paymentStartTime = System.currentTimeMillis()
-                    activity.startActivityForResult(intent, CIELO_PAYMENT_REQUEST_CODE)
+                    activity.startActivity(intent)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error launching payment: ${e.message}")
                     result.error("PAYMENT_ERROR", e.message, null)
@@ -107,49 +105,10 @@ class CieloPayment(private val activity: Activity) : MethodCallHandler {
         }
     }
 
+
+
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != CIELO_PAYMENT_REQUEST_CODE) return
-
-        try {
-            if (resultCode == Activity.RESULT_OK && data?.data != null) {
-                val uri = data.data
-                val response = uri?.getQueryParameter("response")
-                val responseCode = uri?.getQueryParameter("responsecode")
-
-                if (response != null) {
-                    val decodedBytes = Base64.decode(response, Base64.DEFAULT)
-                    val jsonString = String(decodedBytes, Charsets.UTF_8)
-
-                    Log.d(TAG, "Payment response JSON: $jsonString")
-
-                    val resultMap = HashMap<String, Any?>()
-                    resultMap["responseJson"] = jsonString
-                    resultMap["responsecode"] = responseCode
-
-                    callback?.success(resultMap)
-                    callback = null
-                } else {
-                    callback?.error("PAYMENT_ERROR", "Empty response from Cielo", null)
-                    callback = null
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                val duration = System.currentTimeMillis() - paymentStartTime
-                Log.d(TAG, "onActivityResult RESULT_CANCELED after ${duration}ms")
-                if (duration > 1500) {
-                    callback?.error("PAYMENT_CANCELED", "Payment was canceled", null)
-                    callback = null
-                } else {
-                    Log.d(TAG, "Ignoring immediate automatic RESULT_CANCELED (duration: ${duration}ms)")
-                }
-            } else {
-                callback?.error("PAYMENT_ERROR", "Unexpected result from Cielo", null)
-                callback = null
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error handling payment result: ${e.message}")
-            callback?.error("PAYMENT_ERROR", e.message, null)
-            callback = null
-        }
+        // No-op: Cielo handles all callback responses via deep links (onNewIntent)
     }
 
     /**

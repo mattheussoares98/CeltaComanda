@@ -19,9 +19,7 @@ class CieloPrinter(
     private var methodChannel: MethodChannel? = null
     private var printStartTime: Long = 0
 
-    companion object {
-        const val CIELO_PRINT_REQUEST_CODE = 20002
-    }
+
 
     fun setupMethodChannel() {
         methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
@@ -132,59 +130,17 @@ class CieloPrinter(
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(printUri))
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             printStartTime = System.currentTimeMillis()
-            activity.startActivityForResult(intent, CIELO_PRINT_REQUEST_CODE)
+            activity.startActivity(intent)
         } catch (e: Exception) {
             Log.e(TAG, "Error launching print intent: ${e.message}")
             sendMessageToFlutter("Error: ${e.message}")
         }
     }
 
+
+
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != CIELO_PRINT_REQUEST_CODE) return
-
-        try {
-            if (resultCode == Activity.RESULT_OK && data?.data != null) {
-                val uri = data.data
-                val response = uri?.getQueryParameter("response")
-
-                if (response != null) {
-                    val decodedBytes = Base64.decode(response, Base64.DEFAULT)
-                    val jsonString = String(decodedBytes, Charsets.UTF_8)
-                    Log.d(TAG, "Print response: $jsonString")
-
-                    // Check if response contains an error
-                    try {
-                        val jsonResponse = JSONObject(jsonString)
-                        if (jsonResponse.has("code")) {
-                            val code = jsonResponse.getInt("code")
-                            val reason = jsonResponse.optString("reason", "Unknown error")
-                            if (code != 0) {
-                                sendMessageToFlutter("Error: $reason")
-                                return
-                            }
-                        }
-                    } catch (e: Exception) {
-                        // Not an error JSON, might be success
-                    }
-                    sendMessageToFlutter("Success")
-                } else {
-                    sendMessageToFlutter("Success")
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                val duration = System.currentTimeMillis() - printStartTime
-                Log.d(TAG, "onActivityResult RESULT_CANCELED after ${duration}ms")
-                if (duration > 1500) {
-                    sendMessageToFlutter("Error: Print canceled")
-                } else {
-                    Log.d(TAG, "Ignoring immediate automatic RESULT_CANCELED (duration: ${duration}ms)")
-                }
-            } else {
-                sendMessageToFlutter("Error: Unexpected result")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error handling print result: ${e.message}")
-            sendMessageToFlutter("Error: ${e.message}")
-        }
+        // No-op: Cielo handles all callback responses via deep links (onNewIntent)
     }
 
     /**

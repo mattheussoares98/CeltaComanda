@@ -207,7 +207,8 @@ class _HomePageState extends State<HomePage>
           child: Scaffold(
             drawerEnableOpenDragGesture: false,
             //não abre o drawer se arrastar a tela da esquerda pra direita bem no cantinho
-            drawer: homePresenter.commandEntity?.isFixedCommandNumber != true
+            drawer: homePresenter.commandEntity?.isFixedCommandNumber != true ||
+                    activePlatform != AppPlatform.tablet
                 ? const DrawerItems()
                 : null,
             appBar: homeAppBar(

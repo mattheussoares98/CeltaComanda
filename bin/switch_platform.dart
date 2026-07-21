@@ -74,7 +74,77 @@ void main(List<String> args) {
   // 7. Update Dart dependencies toggle blocks
   _updateDartDependencies(targetPlatform);
 
+  // 8. Update platform-specific channel files (comment/uncomment entire files)
+  _updatePlatformChannelFiles(targetPlatform);
+
   print('Successfully switched platform configuration!');
+}
+
+void _updatePlatformChannelFiles(String platform) {
+  // Rede files
+  final redeFiles = [
+    'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePayment.kt',
+    'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePrinter.kt',
+  ];
+  for (final file in redeFiles) {
+    _toggleEntireFile(file, 'slash', platform != 'rede');
+  }
+
+  // Getnet files
+  final getnetFiles = [
+    'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPayment.kt',
+    'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPrinter.kt',
+  ];
+  for (final file in getnetFiles) {
+    _toggleEntireFile(file, 'slash', platform != 'getnet');
+  }
+}
+
+void _toggleEntireFile(
+    String filePath, String commentType, bool shouldComment) {
+  final file = File(filePath);
+  if (!file.existsSync()) {
+    print('Warning: File $filePath not found.');
+    return;
+  }
+
+  final rawContent = file.readAsStringSync();
+  final lineEnding = rawContent.contains('\r\n') ? '\r\n' : '\n';
+  final lines = file.readAsLinesSync();
+  final result = <String>[];
+
+  for (var i = 0; i < lines.length; i++) {
+    final line = lines[i];
+    final trimmed = line.trim();
+    if (trimmed.isEmpty) {
+      result.add(line);
+      continue;
+    }
+
+    var newLine = line;
+    if (shouldComment) {
+      if (commentType == 'slash') {
+        if (!trimmed.startsWith('//')) {
+          final indent = line.length - line.trimLeft().length;
+          final space = line.substring(0, indent);
+          newLine = '$space// ${line.substring(indent)}';
+        }
+      }
+    } else {
+      if (commentType == 'slash') {
+        if (trimmed.startsWith('//')) {
+          final indent = line.length - line.trimLeft().length;
+          final space = line.substring(0, indent);
+          var content = line.substring(indent + 2);
+          if (content.startsWith(' ')) content = content.substring(1);
+          newLine = '$space$content';
+        }
+      }
+    }
+    result.add(newLine);
+  }
+
+  file.writeAsStringSync('${result.join(lineEnding)}$lineEnding');
 }
 
 void _updateDartPlatform(String enumName) {
@@ -271,6 +341,8 @@ void _toggleFileBlock(
     return;
   }
 
+  final rawContent = file.readAsStringSync();
+  final lineEnding = rawContent.contains('\r\n') ? '\r\n' : '\n';
   final lines = file.readAsLinesSync();
   final result = <String>[];
   bool inBlock = false;
@@ -349,28 +421,43 @@ void _toggleFileBlock(
     }
   }
 
-  file.writeAsStringSync('${result.join('\n')}\n');
+  file.writeAsStringSync('${result.join(lineEnding)}$lineEnding');
 }
 
 void _updateDartDependencies(String platform) {
   final shouldComment = (platform == 'cielo' || platform == 'getnet');
 
   // product_complement.dart
-  _toggleFileBlock('lib/ui/components/product_complement.dart', 'HTML-WIDGET-ACTIVE', 'slash', shouldComment);
-  _toggleFileBlock('lib/ui/components/product_complement.dart', 'HTML-WIDGET-INACTIVE', 'slash', !shouldComment);
+  _toggleFileBlock('lib/ui/components/product_complement.dart',
+      'HTML-WIDGET-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/ui/components/product_complement.dart',
+      'HTML-WIDGET-INACTIVE', 'slash', !shouldComment);
 
   // init_app.dart
-  _toggleFileBlock('lib/main/init/init_app.dart', 'WAKELOCK-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock(
+      'lib/main/init/init_app.dart', 'WAKELOCK-ACTIVE', 'slash', shouldComment);
 
   // firebase_auth_adapter_factory.dart
-  _toggleFileBlock('lib/main/factories/cache/firebase_auth_adapter_factory.dart', 'FIREBASE-AUTH-ACTIVE', 'slash', shouldComment);
-  _toggleFileBlock('lib/main/factories/cache/firebase_auth_adapter_factory.dart', 'FIREBASE-AUTH-INACTIVE', 'slash', !shouldComment);
+  _toggleFileBlock(
+      'lib/main/factories/cache/firebase_auth_adapter_factory.dart',
+      'FIREBASE-AUTH-ACTIVE',
+      'slash',
+      shouldComment);
+  _toggleFileBlock(
+      'lib/main/factories/cache/firebase_auth_adapter_factory.dart',
+      'FIREBASE-AUTH-INACTIVE',
+      'slash',
+      !shouldComment);
 
   // firebase_auth_adapter.dart
-  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart', 'FIREBASE-AUTH-ACTIVE', 'slash', shouldComment);
-  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart', 'FIREBASE-AUTH-INACTIVE', 'slash', !shouldComment);
+  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart',
+      'FIREBASE-AUTH-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/infra/databases/firebase_auth_adapter.dart',
+      'FIREBASE-AUTH-INACTIVE', 'slash', !shouldComment);
 
   // remote_launch_url.dart
-  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart', 'URL-LAUNCHER-ACTIVE', 'slash', shouldComment);
-  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart', 'URL-LAUNCHER-INACTIVE', 'slash', !shouldComment);
+  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart',
+      'URL-LAUNCHER-ACTIVE', 'slash', shouldComment);
+  _toggleFileBlock('lib/data/usecases/url/remote_launch_url.dart',
+      'URL-LAUNCHER-INACTIVE', 'slash', !shouldComment);
 }

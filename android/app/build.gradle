@@ -108,7 +108,7 @@ dependencies {
     //adding getnet library
     // implementation files('libs/libposdigital-1.8.1-13-release.aar')
     // //below, are the rede sdk dependencies
-    // implementation files('libs/smartrede-sdk-l400-4.0.6.release.aar')
+    // implementation files('libs/smartrede-sdk-l400-4.3.23.release.aar')
     // implementation 'com.google.guava:guava:33.3.0-android'
     // implementation 'com.google.code.gson:gson:2.11.0'
     // implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'

@@ -42,6 +42,7 @@ class _WebAddOrEditEnterprisePageState
   bool canInsertCommentManually = false;
   bool blockUseAppIfIsOutdated = false;
   bool canInsertQuantityManually = false;
+  bool printSaleRequestWhenPaymentSucceeds = false;
   bool canInsertCustomer = false;
   bool requestTableNumber = false;
 
@@ -66,6 +67,13 @@ class _WebAddOrEditEnterprisePageState
   void changeCanInsertQuantityManually() {
     setState(() {
       canInsertQuantityManually = !(canInsertQuantityManually);
+    });
+  }
+
+  void changePrintSaleRequestWhenPaymentSucceeds() {
+    setState(() {
+      printSaleRequestWhenPaymentSucceeds =
+          !(printSaleRequestWhenPaymentSucceeds);
     });
   }
 
@@ -188,6 +196,9 @@ class _WebAddOrEditEnterprisePageState
                 true;
             canInsertQuantityManually = webEnterprisesPresenter
                     .selectedEnterprise?.canInsertQuantityManually ==
+                true;
+            printSaleRequestWhenPaymentSucceeds = webEnterprisesPresenter
+                    .selectedEnterprise?.printSaleRequestWhenPaymentSucceeds ==
                 true;
             canInsertCustomer =
                 webEnterprisesPresenter.selectedEnterprise?.canInsertCustomer ==
@@ -435,6 +446,8 @@ class _WebAddOrEditEnterprisePageState
               canInsertCommentManually: canInsertCommentManually,
               blockUseAppIfIsOutdated: blockUseAppIfIsOutdated,
               canInsertQuantityManually: canInsertQuantityManually,
+              printSaleRequestWhenPaymentSucceeds:
+                  printSaleRequestWhenPaymentSucceeds,
               canInsertCustomer: canInsertCustomer,
               requestTableNumber: requestTableNumber,
             ),

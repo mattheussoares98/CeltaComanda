@@ -6,7 +6,6 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-
 import 'package:faker/faker.dart';
 import 'package:flutter/services.dart';
 
@@ -39,6 +38,7 @@ class EntityFactory {
     bool? requestTableNumber,
     bool? useOldPrintWay,
     bool? httpsUrl,
+    bool? printSaleRequestWhenPaymentSucceeds,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -90,6 +90,10 @@ class EntityFactory {
           canInsertCustomer == true ? null : atualEntity.canInsertCustomer,
       requestTableNumber:
           requestTableNumber == true ? null : atualEntity.requestTableNumber,
+      printSaleRequestWhenPaymentSucceeds:
+          printSaleRequestWhenPaymentSucceeds == true
+              ? null
+              : atualEntity.printSaleRequestWhenPaymentSucceeds,
     );
   }
 
@@ -120,6 +124,7 @@ class EntityFactory {
     bool? canInsertCustomer,
     bool? requestTableNumber,
     bool? useOldPrintWay,
+    bool? printSaleRequestWhenPaymentSucceeds,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -159,6 +164,9 @@ class EntityFactory {
       canInsertCustomer: canInsertCustomer ?? faker.randomGenerator.boolean(),
       requestTableNumber: requestTableNumber ?? faker.randomGenerator.boolean(),
       useOldPrintWay: useOldPrintWay ?? faker.randomGenerator.boolean(),
+      printSaleRequestWhenPaymentSucceeds:
+          printSaleRequestWhenPaymentSucceeds ??
+              faker.randomGenerator.boolean(),
     );
   }
 

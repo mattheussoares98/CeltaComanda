@@ -99,6 +99,8 @@ class GetxEnterprisePresenter extends GetxController
             requestTableNumber: firebaseData.requestTableNumber,
             useOldPrintWay: firebaseData.useOldPrintWay,
             httpsUrl: firebaseData.httpsUrl,
+            printSaleRequestWhenPaymentSucceeds:
+                firebaseData.printSaleRequestWhenPaymentSucceeds,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);

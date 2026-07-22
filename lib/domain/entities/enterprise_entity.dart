@@ -28,6 +28,7 @@ class EnterpriseEntity extends Equatable {
   final bool? canInsertCustomer;
   final bool? requestTableNumber;
   final bool? useOldPrintWay;
+  final bool? printSaleRequestWhenPaymentSucceeds;
 
   const EnterpriseEntity({
     required this.enterpriseName,
@@ -53,6 +54,7 @@ class EnterpriseEntity extends Equatable {
     required this.canInsertCustomer,
     required this.requestTableNumber,
     required this.useOldPrintWay,
+    required this.printSaleRequestWhenPaymentSucceeds,
   });
 
   @override
@@ -80,6 +82,7 @@ class EnterpriseEntity extends Equatable {
         canInsertCustomer,
         requestTableNumber,
         useOldPrintWay,
+        printSaleRequestWhenPaymentSucceeds,
       ];
 
   EnterpriseEntity copyWith({
@@ -105,6 +108,7 @@ class EnterpriseEntity extends Equatable {
     bool? canInsertCustomer,
     bool? requestTableNumber,
     bool? useOldPrintWay,
+    bool? printSaleRequestWhenPaymentSucceeds,
     EnterpriseConcentradorParametersEntity?
         enterpriseConcentradorParametersEntity,
   }) {
@@ -142,6 +146,9 @@ class EnterpriseEntity extends Equatable {
       canInsertCustomer: canInsertCustomer ?? this.canInsertCustomer,
       requestTableNumber: requestTableNumber ?? this.requestTableNumber,
       useOldPrintWay: useOldPrintWay ?? this.useOldPrintWay,
+      printSaleRequestWhenPaymentSucceeds:
+          printSaleRequestWhenPaymentSucceeds ??
+              this.printSaleRequestWhenPaymentSucceeds,
     );
   }
 
@@ -168,5 +175,6 @@ class EnterpriseEntity extends Equatable {
       canInsertQuantityManually: null,
       canInsertCustomer: null,
       requestTableNumber: null,
-      useOldPrintWay: null);
+      useOldPrintWay: null,
+      printSaleRequestWhenPaymentSucceeds: null);
 }

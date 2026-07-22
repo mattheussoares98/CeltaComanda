@@ -27,6 +27,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
   final bool? canInsertCustomer;
   final bool? canInsertQuantityManually;
   final bool? requestTableNumber;
+  final bool? printSaleRequestWhenPaymentSucceeds;
   final GlobalKey<FormState> formKey;
 
   const ConfirmUpdateEnterpriseDataButton({
@@ -49,6 +50,7 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
     required this.canInsertCustomer,
     required this.canInsertQuantityManually,
     required this.requestTableNumber,
+    required this.printSaleRequestWhenPaymentSucceeds,
     required this.httpsUrlController,
     super.key,
   });
@@ -112,6 +114,8 @@ class ConfirmUpdateEnterpriseDataButton extends StatelessWidget {
                   canInsertQuantityManually: canInsertQuantityManually,
                   canInsertCustomer: canInsertCustomer,
                   requestTableNumber: requestTableNumber,
+                  printSaleRequestWhenPaymentSucceeds:
+                      printSaleRequestWhenPaymentSucceeds,
                   httpsUrl:
                       httpsUrlController.text.toLowerCase().removeWhiteSpaces(),
                 ),

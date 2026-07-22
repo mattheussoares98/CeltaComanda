@@ -1,5 +1,5 @@
-import '../../ui/helpers/helpers.dart';
 import '../../domain/entities/entities.dart';
+import '../../ui/helpers/helpers.dart';
 import 'models.dart';
 
 class EnterpriseModel {
@@ -27,6 +27,7 @@ class EnterpriseModel {
   final bool? canInsertCustomer;
   final bool? requestTableNumber;
   final bool? useOldPrintWay;
+  final bool? printSaleRequestWhenPaymentSucceeds;
 
   EnterpriseModel({
     required this.enterpriseName,
@@ -52,6 +53,7 @@ class EnterpriseModel {
     required this.canInsertCustomer,
     required this.requestTableNumber,
     required this.useOldPrintWay,
+    required this.printSaleRequestWhenPaymentSucceeds,
   });
 
   factory EnterpriseModel.fromJson(
@@ -98,6 +100,8 @@ class EnterpriseModel {
       canInsertCustomer: json["canInsertCustomer"],
       requestTableNumber: json["requestTableNumber"],
       useOldPrintWay: json["useOldPrintWay"],
+      printSaleRequestWhenPaymentSucceeds:
+          json["printSaleRequestWhenPaymentSucceeds"],
     );
   }
 
@@ -127,6 +131,8 @@ class EnterpriseModel {
         canInsertCustomer: entity.canInsertCustomer,
         requestTableNumber: entity.requestTableNumber,
         useOldPrintWay: entity.useOldPrintWay,
+        printSaleRequestWhenPaymentSucceeds:
+            entity.printSaleRequestWhenPaymentSucceeds,
       );
 
   EnterpriseEntity toEntity() => EnterpriseEntity(
@@ -154,6 +160,8 @@ class EnterpriseModel {
         canInsertCustomer: canInsertCustomer,
         requestTableNumber: requestTableNumber,
         useOldPrintWay: useOldPrintWay,
+        printSaleRequestWhenPaymentSucceeds:
+            printSaleRequestWhenPaymentSucceeds,
       );
 
   Map<String, dynamic> toJson() => {
@@ -185,5 +193,7 @@ class EnterpriseModel {
         'canInsertCustomer': canInsertCustomer,
         'requestTableNumber': requestTableNumber,
         'useOldPrintWay': useOldPrintWay,
+        'printSaleRequestWhenPaymentSucceeds':
+            printSaleRequestWhenPaymentSucceeds,
       };
 }

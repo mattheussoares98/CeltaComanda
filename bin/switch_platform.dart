@@ -96,7 +96,8 @@ void _updatePlatformChannelFiles(String platform) {
     'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPrinter.kt',
   ];
   for (final file in getnetFiles) {
-    _toggleEntireFile(file, 'slash', platform != 'getnet');
+    _toggleEntireFile(
+        file, 'slash', platform != 'getnet' && platform != 'cielo');
   }
 }
 
@@ -208,13 +209,15 @@ void _updateBuildGradle(String platform) {
       RegExp(r'targetSdk\s+\d+'),
       'targetSdk $targetSdkValue',
     );
-    final minSdkVersionValue = platform == 'rede' ? '28' : 'flutter.minSdkVersion';
+    final minSdkVersionValue =
+        platform == 'rede' ? '28' : 'flutter.minSdkVersion';
     content = content.replaceAll(
       RegExp(r'minSdkVersion\s+\S+'),
       'minSdkVersion $minSdkVersionValue',
     );
     gradleFile.writeAsStringSync(content);
-    print('Updated targetSdk to $targetSdkValue and minSdkVersion to $minSdkVersionValue in build.gradle');
+    print(
+        'Updated targetSdk to $targetSdkValue and minSdkVersion to $minSdkVersionValue in build.gradle');
   }
 
   // Update flutter.minSdkVersion in local.properties

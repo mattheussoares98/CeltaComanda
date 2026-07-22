@@ -102,8 +102,10 @@ flutter {
 }
 
 dependencies {
+    // [FIREBASE-DEPS-START]
     implementation platform('com.google.firebase:firebase-bom:33.7.0')
     implementation 'com.google.firebase:firebase-analytics'
+    // [FIREBASE-DEPS-END]
     
     //adding getnet library
     // implementation files('libs/libposdigital-1.8.1-13-release.aar')

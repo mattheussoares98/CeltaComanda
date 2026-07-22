@@ -199,7 +199,7 @@ void _updateBuildGradle(String platform) {
   _toggleFileBlock('android/app/build.gradle', 'SIGNING-CONFIG-GETNET', 'slash',
       platform != 'getnet');
 
-  // Update targetSdk in build.gradle
+  // Update targetSdk and minSdkVersion in build.gradle
   final gradleFile = File('android/app/build.gradle');
   if (gradleFile.existsSync()) {
     var content = gradleFile.readAsStringSync();
@@ -208,8 +208,26 @@ void _updateBuildGradle(String platform) {
       RegExp(r'targetSdk\s+\d+'),
       'targetSdk $targetSdkValue',
     );
+    final minSdkVersionValue = platform == 'rede' ? '28' : 'flutter.minSdkVersion';
+    content = content.replaceAll(
+      RegExp(r'minSdkVersion\s+\S+'),
+      'minSdkVersion $minSdkVersionValue',
+    );
     gradleFile.writeAsStringSync(content);
-    print('Updated targetSdk in build.gradle to $targetSdkValue');
+    print('Updated targetSdk to $targetSdkValue and minSdkVersion to $minSdkVersionValue in build.gradle');
+  }
+
+  // Update flutter.minSdkVersion in local.properties
+  final propertiesFile = File('android/local.properties');
+  if (propertiesFile.existsSync()) {
+    var content = propertiesFile.readAsStringSync();
+    final minSdkVal = platform == 'rede' ? '28' : '22';
+    content = content.replaceAll(
+      RegExp(r'flutter\.minSdkVersion\s*=\s*\d+'),
+      'flutter.minSdkVersion=$minSdkVal',
+    );
+    propertiesFile.writeAsStringSync(content);
+    print('Updated flutter.minSdkVersion in local.properties to $minSdkVal');
   }
 }
 

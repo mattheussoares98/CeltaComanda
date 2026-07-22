@@ -413,7 +413,24 @@ class _WebAddOrEditEnterprisePageState
                             ),
                           ),
                           const SizedBox(width: 8),
-                          const Expanded(
+                          Expanded(
+                            child: PersonalizedSwitch(
+                              value: printSaleRequestWhenPaymentSucceeds,
+                              changeValue:
+                                  changePrintSaleRequestWhenPaymentSucceeds,
+                              title:
+                                  R.string.printSaleRequestWhenPaymentSucceeds,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(),
+                          ),
+                          SizedBox(width: 8),
+                          Expanded(
                             child: GoToDevicesInfoPageButton(),
                           ),
                         ],

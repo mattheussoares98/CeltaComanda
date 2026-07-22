@@ -245,6 +245,7 @@ abstract class Translation {
   String get portion;
   String get pos;
   String get price;
+  String get printSaleRequestWhenPaymentSucceeds;
   String get preparing;
   String get productsAndComments;
   String get productsSchedules;

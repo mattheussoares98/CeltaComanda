@@ -13,11 +13,6 @@ Remove the dependence of path provider
 Change the configuration to init the page in page of configurations
 
 execute:
-flutter build web -t lib/main/main.dart
+flutter build web --pwa-strategy=none
 
-if want generate version to celta-restaurant, remove this line below in the firebase.json
-"site": "comandaconfigurations",
-
-#########
-if want generate version to comandaconfigurations site, execute this command:
 firebase deploy --only hosting:comandaconfigurations

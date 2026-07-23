@@ -7,6 +7,9 @@
       "hosting": {
         "openRequests": [
           "openrequests"
+        ],
+        "comandaconfigurations": [
+          "comandaconfigurations"
         ]
       }
     }

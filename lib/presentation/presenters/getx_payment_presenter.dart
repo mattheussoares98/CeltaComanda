@@ -237,7 +237,8 @@ class GetxPaymentPresenter extends GetxController
       await couponFiscalNumber.save(newCouponNumber);
 
       final pdvNum = homePresenter.commandEntity?.pdv?.PdvNumber?.toInt();
-      if (EnterpriseBuilder.entity?.printSaleRequestWhenPaymentSucceeds ==
+      if (activePlatform.isPaymentPlatform &&
+          EnterpriseBuilder.entity?.printSaleRequestWhenPaymentSucceeds ==
               true &&
           targetCommandNumber.isNotEmpty &&
           pdvNum != null) {

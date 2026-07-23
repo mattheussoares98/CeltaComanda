@@ -35,9 +35,9 @@ C3lta@Ciel0Paid
     <data android:host="response" android:scheme="order" />
   </intent-filter>
 
-- Uncomment CieloPayment.kt
-
-- Uncomment CieloPrinter.kt
+- Cielo isn't using a third library. Because of this, don't need to touch these files:
+  - CieloPayment.kt
+  - CieloPrinter.kt
 
 - Uncomment everything about cielo in MainActivity.kt
 

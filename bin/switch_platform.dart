@@ -74,35 +74,35 @@ void main(List<String> args) {
   // 7. Update Dart dependencies toggle blocks
   _updateDartDependencies(targetPlatform);
 
-  // 8. Update platform-specific channel files (comment/uncomment entire files)
+  // 8. Uncomment only the channel files required by the selected platform.
   _updatePlatformChannelFiles(targetPlatform);
 
   print('Successfully switched platform configuration!');
 }
 
 void _updatePlatformChannelFiles(String platform) {
-  // Rede files
-  final redeFiles = [
-    'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePayment.kt',
-    'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePrinter.kt',
-  ];
-  for (final file in redeFiles) {
-    _toggleEntireFile(file, 'slash', platform != 'rede');
-  }
+  final platformFiles = switch (platform) {
+    'cielo' => [
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/cielo_channel/CieloPayment.kt',
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/cielo_channel/CieloPrinter.kt',
+      ],
+    'getnet' => [
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPayment.kt',
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPrinter.kt',
+      ],
+    'rede' => [
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePayment.kt',
+        'android/app/src/main/kotlin/br/com/celtaware/comanda/rede_channel/RedePrinter.kt',
+      ],
+    _ => <String>[],
+  };
 
-  // Getnet files
-  final getnetFiles = [
-    'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPayment.kt',
-    'android/app/src/main/kotlin/br/com/celtaware/comanda/getnet_channel/GetNetPrinter.kt',
-  ];
-  for (final file in getnetFiles) {
-    _toggleEntireFile(
-        file, 'slash', platform != 'getnet' && platform != 'cielo');
+  for (final file in platformFiles) {
+    _uncommentEntireFile(file);
   }
 }
 
-void _toggleEntireFile(
-    String filePath, String commentType, bool shouldComment) {
+void _uncommentEntireFile(String filePath) {
   final file = File(filePath);
   if (!file.existsSync()) {
     print('Warning: File $filePath not found.');
@@ -112,38 +112,23 @@ void _toggleEntireFile(
   final rawContent = file.readAsStringSync();
   final lineEnding = rawContent.contains('\r\n') ? '\r\n' : '\n';
   final lines = file.readAsLinesSync();
-  final result = <String>[];
+  final nonEmptyLines = lines.where((line) => line.trim().isNotEmpty);
 
-  for (var i = 0; i < lines.length; i++) {
-    final line = lines[i];
-    final trimmed = line.trim();
-    if (trimmed.isEmpty) {
-      result.add(line);
-      continue;
-    }
-
-    var newLine = line;
-    if (shouldComment) {
-      if (commentType == 'slash') {
-        if (!trimmed.startsWith('//')) {
-          final indent = line.length - line.trimLeft().length;
-          final space = line.substring(0, indent);
-          newLine = '$space// ${line.substring(indent)}';
-        }
-      }
-    } else {
-      if (commentType == 'slash') {
-        if (trimmed.startsWith('//')) {
-          final indent = line.length - line.trimLeft().length;
-          final space = line.substring(0, indent);
-          var content = line.substring(indent + 2);
-          if (content.startsWith(' ')) content = content.substring(1);
-          newLine = '$space$content';
-        }
-      }
-    }
-    result.add(newLine);
+  // An active file can contain real source comments. Do not remove them.
+  if (nonEmptyLines.any((line) => !line.trimLeft().startsWith('//'))) {
+    return;
   }
+
+  final result = lines.map((line) {
+    final trimmed = line.trim();
+    if (trimmed.isEmpty) return line;
+
+    final indent = line.length - line.trimLeft().length;
+    final space = line.substring(0, indent);
+    var content = line.substring(indent + 2);
+    if (content.startsWith(' ')) content = content.substring(1);
+    return '$space$content';
+  });
 
   file.writeAsStringSync('${result.join(lineEnding)}$lineEnding');
 }

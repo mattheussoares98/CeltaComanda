@@ -33,11 +33,12 @@ Conforme comunicado enviado em 28/02/25 passamos a aceitar apenas 1 requisição
 Seguiremos com a certificação para este caso, mas por favor fique atento com as novas diretrizes para as próximas requisições.
 
 Dores que o APP resolve
-Atendimento lento e filas desnecessárias.
-Erros no pedido causados por falhas na comunicação.
-Garçons sobrecarregados e clientes esperando para serem atendidos.
-Dificuldade em atualizar o cardápio ou comunicar promoções na hora.
-Processos manuais para cancelamentos ou transferências de itens entre mesas.
+Atendimento mais rápido e menos filas.
+Equalização de erros causados por falhas na comunicação.
+Garçons com mais disponibilidade e consequentemente clientes esperando menos para serem atendidos.
+Cozinheiros visualizando praticamente instanteneamente novos pratos que devem ser produzidos. 
+Facilidade para atualizar o cardápio desabilitando produtos que não estão mais disponíveis.
+Cancelamento e envio de produtos de uma mesa para outra de forma rápida e simples.
 Perda de vendas por clientes indecisos ou mal atendidos.
 
 Proposta de valor

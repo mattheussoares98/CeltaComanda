@@ -12,6 +12,7 @@ https://redestore.service-now.com
 soares.celtaware@gmail.com
 C3lta@Rede
 
+[RULES-START]
 
 - Uncomment dependencies of rede in build.gradle
 
@@ -25,6 +26,7 @@ C3lta@Rede
 <category android:name="android.intent.category.HOME" />
 <category android:name="android.intent.category.DEFAULT" />  
 
+[RULES-END]
 
 Olá, Mattheus! Espero que esteja bem.
 Conforme comunicado enviado em 28/02/25 passamos a aceitar apenas 1 requisição de nova versão mensalmente. A requisição atual deve necessariamente ser uma correção de bug, e, nesse caso, precisa ser apresentado explicitamente como correção de bug na release note e detalhada as correções feita no campo de Motivo Prioridade da requisição.

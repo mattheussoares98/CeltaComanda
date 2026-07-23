@@ -12,6 +12,8 @@ https://www.cieloliostore.com.br/sign-in
 suporte@celtaware.com.br
 C3lta@Ciel0Paid
 
+[RULES-START]
+
 - Change version in gradle and pubspec and do a commit
 
 - In AndroidManifest.xml, uncomment the Cielo query package:
@@ -47,6 +49,8 @@ C3lta@Ciel0Paid
 # Build.gradle
 - Comment all FIREBASE dependencies
 - change targetSdk to 33
+
+[RULES-END]
 
 Build command:
 flutter build apk --release

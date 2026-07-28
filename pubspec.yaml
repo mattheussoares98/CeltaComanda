@@ -54,13 +54,13 @@ dependencies:
   #remove to getnet
 
   icons_launcher: ^3.0.0
-  package_info_plus: ^9.0.0
+  package_info_plus: ^10.2.1
   flutter_device_imei: ^0.0.3
-  device_info_plus: ^12.3.0
-  flutter_barcode_scanner_plus: ^3.0.8
+  device_info_plus: ^13.2.0
+  flutter_barcode_scanner_plus: 3.0.8
   date_format: ^2.0.9
   intl: 0.20.2
-  xml: ^6.5.0
+  xml: ^7.0.1
   cpf_cnpj_validator: ^2.0.0
   uuid: ^4.5.1
   js: ^0.7.2

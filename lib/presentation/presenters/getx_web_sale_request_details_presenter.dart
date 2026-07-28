@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import '../../data/usecases/usecases.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/helpers/helpers.dart';
@@ -7,27 +9,25 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
-import 'package:get/get.dart';
-
 class GetxWebSaleRequestDetailsPresenter extends GetxController
     with LoadingManager, UIErrorManager, ErrorHandling
     implements WebSaleRequestDetailsPresenter {
   final LocalEnterpriseData localEntepriseData;
   final LoadEnterpriseData loadEnterpriseData;
   final NavigateTo navigateTo;
-  final LoadDeliveryControl loadDeliveryControl;
   final LoadPrintedProducts loadPrintedProducts;
   final WebLoadSettings webLoadSettings;
-  final UpdateDeliveryStatus updateDeliveryStatus;
+  final ConcDeliveryControl concDeliveryControl;
+  final ConcLoadSaleMovement concLoadSaleMovement;
 
   GetxWebSaleRequestDetailsPresenter({
     required this.localEntepriseData,
     required this.loadEnterpriseData,
     required this.navigateTo,
-    required this.loadDeliveryControl,
     required this.loadPrintedProducts,
     required this.webLoadSettings,
-    required this.updateDeliveryStatus,
+    required this.concDeliveryControl,
+    required this.concLoadSaleMovement,
   });
 
   @override
@@ -59,104 +59,76 @@ class GetxWebSaleRequestDetailsPresenter extends GetxController
     }
   }
 
-  final _saleRequestsStream = Rx<Map<String, PrintedEntity>>({});
-  @override
-  Stream<Map<String, PrintedEntity>> get saleRequestsStream =>
-      _saleRequestsStream.stream;
-
-  @override
-  Future<void> loadOpenSaleRequests() async {
-    try {
-      isLoading = true;
-      mainError = null;
-
-      _webLocalSettings ??= await webLoadSettings.load();
-      final deliveryControls =
-          await loadDeliveryControl.load(_webLocalSettings!);
-
-      final Map<String, PrintedEntity> updatedSaleRequests =
-          Map<String, PrintedEntity>.of(_saleRequestsStream.value);
-
-      final missingCodes = deliveryControls
-          .where((c) => !updatedSaleRequests.containsKey(c.PersonalizedCode))
-          .map((c) => c.PersonalizedCode)
-          .toSet();
-
-      final updateCodes = deliveryControls
-          .where((deliveryControl) {
-            final code = deliveryControl.PersonalizedCode;
-            final isLoaded = updatedSaleRequests.containsKey(code);
-
-            if (isLoaded) {
-              final currentSaleRequest = updatedSaleRequests[code]!;
-
-              final hasUpdate =
-                  deliveryControl.TotalLiquid != currentSaleRequest.TotalLiquid;
-
-              return hasUpdate;
-            }
-            return false;
-          })
-          .map((c) => c.PersonalizedCode)
-          .toSet();
-
-      final codesToFetch = missingCodes.union(updateCodes);
-
-      if (codesToFetch.isNotEmpty) {
-        // 4. Fetch all missing items in PARALLEL (Fixes Performance)
-        final results = await Future.wait(
-          codesToFetch.map(
-            (personalizedCode) => loadPrintedProducts.load(
-              commandNumber: personalizedCode.toInt(),
-              enterpriseId: _webLocalSettings!.enterpriseId,
-              url:
-                  '${_webLocalSettings!.defaultUrl}:${_webLocalSettings!.navsPort}',
-            ),
-          ),
-        );
-
-        int index = 0;
-        for (final personalizedCode in codesToFetch) {
-          final resultEntity = results[index];
-
-          if (resultEntity == null) {
-            continue;
-          }
-
-          updatedSaleRequests[personalizedCode] = resultEntity;
-          index++;
-        }
-      }
-
-      _saleRequestsStream.subject.add(updatedSaleRequests);
-    } catch (e) {
-      mainError = getUIError(e);
-    } finally {
-      isLoading = false;
-    }
-  }
-
   WebLocalSettingsEntity? _webLocalSettings;
   @override
   WebLocalSettingsEntity? get webLocalSettings => _webLocalSettings;
 
   @override
   Future<void> updateDeliveryControlStatus({
-    required int saleRequestId,
-    required int deliveryLotId,
+    required DeliveryControlEntity deliveryControl,
+    required int? deliveryLotId,
     required IsToDelivery newStatus,
   }) async {
+    mainError = null;
+    final currentStreamValue = _deliveryControlsStream.subject.value;
     try {
-      await updateDeliveryStatus.update(
+      final index = currentStreamValue?.indexWhere((e) {
+        final matchId = e.Id == deliveryControl.Id;
+        if (!matchId) return false;
+        final matchProducts = deliveryLotId != null &&
+            deliveryControl.Products?.any(
+                    (x) => x.DeliveryLoteNumber == deliveryLotId) !=
+                null;
+        return matchId && matchProducts;
+      });
+
+      if (index != null && index != -1) {
+        final optimizedUpdated = currentStreamValue
+            ?.elementAt(index)
+            .copyWith(isToDelivery: newStatus);
+        if (optimizedUpdated != null) {
+          final deliveryControls = [...currentStreamValue!];
+          deliveryControls[index] = optimizedUpdated;
+          _deliveryControlsStream.subject.add(deliveryControls);
+        }
+      }
+
+      await concDeliveryControl.update(
         settings: _webLocalSettings!,
-        saleRequestId: saleRequestId,
+        deliveryControl: deliveryControl,
         deliveryLoteNumber: deliveryLotId,
         newStatus: newStatus,
       );
 
-      await loadOpenSaleRequests();
+      await loadDeliveryControls();
+    } catch (e) {
+      if (currentStreamValue != null) {
+        _deliveryControlsStream.subject.add(currentStreamValue);
+      }
+      mainError = getUIError(e);
+    }
+  }
+
+  final _deliveryControlsStream = Rx<List<DeliveryControlEntity>>([]);
+  @override
+  Stream<List<DeliveryControlEntity>> get deliveryControlsStream =>
+      _deliveryControlsStream.stream;
+
+  @override
+  Future<void> loadDeliveryControls() async {
+    try {
+      isLoading = true;
+      mainError = null;
+
+      _webLocalSettings ??= await webLoadSettings.load();
+      final deliveryControls =
+          await concDeliveryControl.loadWithProducts(_webLocalSettings!);
+
+      _deliveryControlsStream.subject.add(deliveryControls);
     } catch (e) {
       mainError = getUIError(e);
+    } finally {
+      isLoading = false;
     }
   }
 }

@@ -19,11 +19,14 @@ class PrintPrintedProductsButton extends StatelessWidget {
           ? null
           : () async {
               // final bitmap =
-              await printedProductsPresenter.printPrintedProducts(
-                commandNumber:
-                    homePresenter.commandEntity!.commandNumber!.toInt(),
-                pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!.toInt(),
-              );
+              final commandNum = homePresenter.commandEntity?.commandNumber?.toInt();
+              final pdvNum = homePresenter.commandEntity?.pdv?.PdvNumber?.toInt();
+              if (commandNum != null && pdvNum != null) {
+                await printedProductsPresenter.printPrintedProducts(
+                  commandNumber: commandNum,
+                  pdvNumber: pdvNum,
+                );
+              }
 
               //PARA TESTAR COMO VAI SAIR A IMPRESSÃo
               // if (bitmap != null) {

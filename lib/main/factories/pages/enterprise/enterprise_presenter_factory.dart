@@ -9,7 +9,6 @@ EnterprisePresenter makeGetxEnterprisePresenter() => GetxEnterprisePresenter(
       navigateTo: makeNavigateTo(),
       commandInformations: makeRemoteCommandInformations(),
       localCommandData: makeLocalCommandData(),
-      persistent: makeAndroidPersistent(),
       loadEnterpriseConcentradorParameters:
           makeRemoteLoadEnterpriseConcentradorParameters(),
       pdvRegistration: makeConcentratorPdvRegistration(),

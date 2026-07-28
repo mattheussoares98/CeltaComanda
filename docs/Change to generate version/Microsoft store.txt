@@ -1,0 +1,17 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Microsoft Store:
+
+   dart run bin/switch_platform.dart msstore
+
+After running, run:
+   flutter pub get
+========================================================================
+
+Change the version of microsoft in pubspec.yaml
+
+
+Publicação na microsoft store
+https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview
+suporteceltaware@hotmail.com
+Celta@123

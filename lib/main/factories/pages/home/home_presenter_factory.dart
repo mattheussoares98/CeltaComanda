@@ -11,7 +11,6 @@ HomePresenter makeGetxHomePresenter() => GetxHomePresenter(
       loadSaleRequestTemp: makeRemoteLoadSaleRequestTemp(),
       updateSaleRequestTemp: makeRemoteUpdateSaleRequestTemp(),
       loadSellers: makeRemoteLoadSellers(),
-      persistent: makeAndroidPersistent(),
       addDeviceInfo: makeRemoteAddDeviceInfo(),
       addPendingDeviceToUpdate: makeRemoteAddPendingDeviceToUpdate(),
       loadDeviceData: makeLocalLoadDeviceData(),

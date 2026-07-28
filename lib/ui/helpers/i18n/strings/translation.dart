@@ -245,6 +245,7 @@ abstract class Translation {
   String get portion;
   String get pos;
   String get price;
+  String get printSaleRequestWhenPaymentSucceeds;
   String get preparing;
   String get productsAndComments;
   String get productsSchedules;
@@ -265,6 +266,7 @@ abstract class Translation {
   String get requestTableNumber;
   String get reserved;
   String get reserveTable;
+  String get sale;
   String get sales;
   String get saturday;
   String get search;

@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'dart:convert';
 
 import '../../data/http/http.dart';
 import '../helpers/helpers.dart';
@@ -36,7 +37,7 @@ class HttpAdapter implements HttpClient {
             client.put(Uri.parse(url), headers: defaultHeaders, body: jsonBody);
       }
       if (futureResponse != null) {
-        response = await futureResponse.timeout(const Duration(seconds: 15));
+        response = await futureResponse.timeout(const Duration(seconds: 45));
       }
     } catch (error) {
       debugPrint(error.toString());

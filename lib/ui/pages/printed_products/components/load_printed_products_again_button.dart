@@ -13,11 +13,13 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
     PrintedProductsPresenter printedProductsPresenter = Provider.of(context);
 
     return IconButton(
-      onPressed: printedProductsPresenter.printed == null
+      onPressed: homePresenter.commandEntity?.commandNumber == null
           ? null
           : () async {
-              await printedProductsPresenter
-                  .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+              final commandNum = homePresenter.commandEntity?.commandNumber;
+              if (commandNum != null) {
+                await printedProductsPresenter.loadPrinted(commandNum);
+              }
             },
       icon: Row(
         children: [
@@ -25,7 +27,7 @@ class LoadPrintedProductsAgainButton extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Text(
-                "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
+                "${R.string.command} ${homePresenter.commandEntity?.commandNumber?.toInt() ?? 0}",
                 style: TextStyle(fontSize: StringSize.size),
               ),
             ),

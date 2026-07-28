@@ -6,7 +6,6 @@ import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/main/builders/builders.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
-
 import 'package:faker/faker.dart';
 import 'package:flutter/services.dart';
 
@@ -39,6 +38,7 @@ class EntityFactory {
     bool? requestTableNumber,
     bool? useOldPrintWay,
     bool? httpsUrl,
+    bool? printSaleRequestWhenPaymentSucceeds,
   }) {
     return EnterpriseEntity(
       enterpriseName: enterpriseName == true ? "" : atualEntity.enterpriseName,
@@ -90,6 +90,10 @@ class EntityFactory {
           canInsertCustomer == true ? null : atualEntity.canInsertCustomer,
       requestTableNumber:
           requestTableNumber == true ? null : atualEntity.requestTableNumber,
+      printSaleRequestWhenPaymentSucceeds:
+          printSaleRequestWhenPaymentSucceeds == true
+              ? null
+              : atualEntity.printSaleRequestWhenPaymentSucceeds,
     );
   }
 
@@ -120,6 +124,7 @@ class EntityFactory {
     bool? canInsertCustomer,
     bool? requestTableNumber,
     bool? useOldPrintWay,
+    bool? printSaleRequestWhenPaymentSucceeds,
   }) {
     return EnterpriseEntity(
       url: url ?? faker.internet.httpUrl().toLowerCase().removeWhiteSpaces(),
@@ -159,6 +164,9 @@ class EntityFactory {
       canInsertCustomer: canInsertCustomer ?? faker.randomGenerator.boolean(),
       requestTableNumber: requestTableNumber ?? faker.randomGenerator.boolean(),
       useOldPrintWay: useOldPrintWay ?? faker.randomGenerator.boolean(),
+      printSaleRequestWhenPaymentSucceeds:
+          printSaleRequestWhenPaymentSucceeds ??
+              faker.randomGenerator.boolean(),
     );
   }
 
@@ -337,6 +345,7 @@ class EntityFactory {
       List<ProductModel> products) {
     return SaleRequestTempViewModel(
       Comments: null,
+      IsToDelivery: faker.randomGenerator.integer(10).toString(),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       Peoples: faker.randomGenerator.integer(100).toString(),
       SaleRequestTempId: faker.randomGenerator.integer(3).toString(),
@@ -481,7 +490,7 @@ class EntityFactory {
   static List<ProductModel> makeProductModel() {
     return [
       ProductModel(
-        Schedule: makeProductScheduleEntity(),
+        Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
@@ -551,7 +560,7 @@ class EntityFactory {
         childsComposition: makeProductsCompositionsEntity(isOptionalItem: true),
       ),
       ProductModel(
-        Schedule: makeProductScheduleEntity(),
+        Schedule: ProductScheduleModel.fromEntity(makeProductScheduleEntity()),
         MaximumQuantityForSale: faker.randomGenerator.decimal(),
         ProductComplement: faker.randomGenerator.string(10),
         ProductsId: faker.randomGenerator.integer(20),
@@ -675,7 +684,7 @@ class EntityFactory {
         ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
         isToDelivery: IsToDelivery
             .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
-        childs: [],
+        childs: const [],
         DeliveryLoteNumber: faker.randomGenerator.integer(100).toString(),
       ),
       PrintedProductsViewModel(
@@ -700,7 +709,7 @@ class EntityFactory {
         ProductIsFatherComposition: faker.randomGenerator.boolean().toString(),
         isToDelivery: IsToDelivery
             .values[faker.randomGenerator.integer(IsToDelivery.values.length)],
-        childs: [],
+        childs: const [],
         DeliveryLoteNumber: faker.randomGenerator.integer(100).toString(),
       ),
     ];
@@ -708,6 +717,7 @@ class EntityFactory {
 
   static SaleRequestTempEntity makeApiSaleRequestEntity() {
     return SaleRequestTempEntity(
+      IsToDelivery: faker.randomGenerator.integer(10),
       Peoples: faker.randomGenerator.integer(100),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       Products: const [],
@@ -756,7 +766,7 @@ class EntityFactory {
           SaleRequestProductIdOfFather: faker.randomGenerator.integer(100),
           isToDelivery: IsToDelivery.values[
               faker.randomGenerator.integer(IsToDelivery.values.length)],
-          childs: [],
+          childs: const [],
           DeliveryLoteNumber: faker.randomGenerator.integer(100),
         ),
       ],
@@ -807,6 +817,7 @@ class EntityFactory {
     final products = [makeUpdateSaleRequestTempProductEntity()];
 
     return UpdateSaleRequestTempEntity(
+      IsToDelivery: faker.randomGenerator.integer(10),
       SellerCode: faker.randomGenerator.integer(100).toString(),
       DeliveryControl: faker.randomGenerator.integer(5),
       EnterpriseId: faker.randomGenerator.integer(5),
@@ -845,6 +856,7 @@ class EntityFactory {
 
   static SaleRequestTempEntity makeSaleRequestTempEntity(int? tableNumber) =>
       SaleRequestTempEntity(
+        IsToDelivery: faker.randomGenerator.integer(10),
         Peoples: faker.randomGenerator.integer(100),
         SellerCode: faker.randomGenerator.integer(100).toString(),
         Products: [makeSaleRequestTempProductEntity()],
@@ -1456,8 +1468,8 @@ class EntityFactory {
 
   static SaleMovementConcentratorEntity makeSaleMovementConcentratorEntity() =>
       SaleMovementConcentratorEntity(
-        Checks: [],
-        Portions: [],
+        Checks: const [],
+        Portions: const [],
         PdvNumber: faker.randomGenerator.string(10),
         PersonalizedCode: faker.randomGenerator.string(10),
         DateOfCreation: faker.randomGenerator.string(10),
@@ -1628,9 +1640,8 @@ class EntityFactory {
       );
 
   static ImageModel makeImageModel() => ImageModel(
-        pluOrEan: faker.guid.guid(),
+        plu: faker.guid.guid(),
         image: Uint8List.fromList(faker.randomGenerator.string(10).codeUnits),
-        keyIsEan: faker.randomGenerator.boolean(),
         isLogoImage: faker.randomGenerator.boolean(),
         isMarketingImage: faker.randomGenerator.boolean(),
         enterpriseName: faker.company.name(),

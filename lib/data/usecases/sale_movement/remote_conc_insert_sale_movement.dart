@@ -110,8 +110,8 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
     final correctProducts = _getProductsToInsertInConcentrator(products);
 
     return SaleMovementConcentratorEntity(
-      Checks: [],
-      Portions: [],
+      Checks: const [],
+      Portions: const [],
       XmlSatNfce: xml,
       SaleFiscalTypeString: xml == null ? "Venda" : "NFCe",
       SaleFiscalType:
@@ -174,33 +174,36 @@ class RemoteConcInsertSaleMovement implements ConcInsertSaleMovement {
 List<ConcentratorFinalizationEntity> _getFinalizations({
   required List<ConcentratorFinalizationEntity> finalizations,
   required double totalLiquid,
-}) =>
-    finalizations.isEmpty
-        ? [
-            ConcentratorFinalizationEntity(
-              FinalizationId: FinalizationType.money.id,
-              PortionQuantity: null,
-              Value: totalLiquid,
-              ValueLiquid: totalLiquid,
-              SaleMovementFinalizationId: 0,
-              PayBackValue: null,
-              AuthorizationCode: null,
-              AuthorizationType: null,
-              FinalizationPdvId: null,
-              TEFNSUSitef: null,
-              TEFNSUHost: null,
-              TEFAuthorizationCode: null,
-              TEFBinCode: null,
-              TEFCardLastNumbers: null,
-              TEFNetWorkCode: null,
-              TEFFlagCode: null,
-              TEFFlagDescription: null,
-              TEFModalityPaymentCode: null,
-              TEFModalityDescription: null,
-              TEFPlanCardCode: null,
-            )
-          ]
-        : finalizations;
+}) {
+  if (finalizations.isEmpty) {
+    return [
+      ConcentratorFinalizationEntity(
+        FinalizationId: FinalizationType.money.id,
+        PortionQuantity: null,
+        Value: totalLiquid,
+        ValueLiquid: totalLiquid,
+        SaleMovementFinalizationId: 0,
+        PayBackValue: null,
+        AuthorizationCode: null,
+        AuthorizationType: null,
+        FinalizationPdvId: null,
+        TEFNSUSitef: null,
+        TEFNSUHost: null,
+        TEFAuthorizationCode: null,
+        TEFBinCode: null,
+        TEFCardLastNumbers: null,
+        TEFNetWorkCode: null,
+        TEFFlagCode: null,
+        TEFFlagDescription: null,
+        TEFModalityPaymentCode: null,
+        TEFModalityDescription: null,
+        TEFPlanCardCode: null,
+      )
+    ];
+  }
+
+  return finalizations;
+}
 
 List<SaleMovementProductConcentratorEntity> _getProductsToInsertInConcentrator(
   List<PrintedProductsViewModel> products,

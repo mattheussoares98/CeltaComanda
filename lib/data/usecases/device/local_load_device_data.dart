@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_device_imei/flutter_device_imei.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -8,7 +9,7 @@ import '../../../domain/usecases/usecases.dart';
 
 class LocalLoadimeiOrWindowsId implements LoadDeviceData {
   @override
-  Future<String> getImeiOrWindowsId({required bool isRedeVersion}) async {
+  Future<String> getImeiOrWindowsId() async {
     String? identifier;
     if (Platform.isWindows) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -22,8 +23,8 @@ class LocalLoadimeiOrWindowsId implements LoadDeviceData {
       identifier = await FlutterDeviceImei.instance.getIMEI();
     }
 
-    if (isRedeVersion) {
-      return "Rede - ${identifier ?? ""}";
+    if (activePlatform.isPaymentPlatform) {
+      return "${activePlatform.name} - ${identifier ?? ""}";
     }
 
     return identifier ?? "";

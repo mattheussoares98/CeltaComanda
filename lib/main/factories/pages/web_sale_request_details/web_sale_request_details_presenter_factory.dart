@@ -8,7 +8,7 @@ WebSaleRequestDetailsPresenter makeGetxWebSaleRequestDetailsPresenter() =>
       localEntepriseData: makeLocalEnterpriseData(),
       navigateTo: makeNavigateTo(),
       loadPrintedProducts: makeRemoteLoadPrintedProducts(),
-      loadDeliveryControl: makeConcLoadDeliveryControl(),
       webLoadSettings: makeLocalWebLoadSettings(),
-      updateDeliveryStatus: makeConcUpdateDeliveryStatus(),
+      concDeliveryControl: makeConcDeliveryControl(),
+      concLoadSaleMovement: makeRemoteLoadSaleMovementConcentrator(),
     );

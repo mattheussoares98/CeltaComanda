@@ -3,18 +3,17 @@ import 'dart:convert';
 import 'package:clean_celta_mobile/data/models/models.dart';
 import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
+import 'package:clean_celta_mobile/main/builders/builders.dart';
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/presentation/protocols/protocols.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:clean_celta_mobile/main/builders/builders.dart';
-import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
@@ -31,6 +30,7 @@ void main() {
 
   late RedePaySpy redePay;
   late GetnetPaySpy getnetPay;
+  late CieloPaySpy cieloPay;
   late LoadPrintedProductsSpy loadPrintedProducts;
   late BarcodeScannerSpy barcodeScanner;
   late CommandInformationsSpy commandInformations;
@@ -65,6 +65,7 @@ void main() {
   initUseCases() {
     redePay = RedePaySpy();
     getnetPay = GetnetPaySpy();
+    cieloPay = CieloPaySpy();
     loadPrintedProducts = LoadPrintedProductsSpy();
     barcodeScanner = BarcodeScannerSpy();
     commandInformations = CommandInformationsSpy();
@@ -88,6 +89,7 @@ void main() {
     sut = GetxPaymentPresenter(
       redePay: redePay,
       getnetPay: getnetPay,
+      cieloPay: cieloPay,
       commandInformations: commandInformations,
       finishSaleRequestConcentrador: finishSaleRequestConcentrador,
       navigateTo: navigateTo,
@@ -120,7 +122,6 @@ void main() {
       pdv: EntityFactory.makePdvEntity(),
     );
     commandNumber = faker.randomGenerator.integer(999).toString();
-    homePresenter.isGeneratingVersionToRedeMock = true;
     customersEntitys = EntityFactory.makeCustomersEntitys();
     customersViewModel =
         customersEntitys.map((e) => CustomerViewModel.fromEntity(e)).toList();
@@ -153,6 +154,7 @@ void main() {
   }
 
   setUp(() {
+    activePlatform = AppPlatform.rede;
     initUseCases();
     initPresenters();
     initEntitys();
@@ -290,7 +292,7 @@ void main() {
           )).called(1);
     });
     test('Should not call is is not generating version to rede', () async {
-      homePresenter.isGeneratingVersionToRedeMock = false;
+      activePlatform = AppPlatform.tablet;
 
       await sut.callPayment(
         homePresenter: homePresenter,
@@ -326,6 +328,7 @@ void main() {
     });
     test('Should emit correct values on throws unexpected', () async {
       redePay.mockPayError(DomainError.unexpected);
+      activePlatform = AppPlatform.rede;
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -343,6 +346,7 @@ void main() {
     });
     test('Should emit correct values on throws blockedCommand', () async {
       redePay.mockPayError(DomainError.blockedCommand);
+      activePlatform = AppPlatform.rede;
 
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
@@ -1093,6 +1097,11 @@ void main() {
 
   group("Finish sale request by covenant", () {
     test("Should emit correct values on success", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(sut.mainErrorStream, emits(null));
 
@@ -1105,6 +1114,11 @@ void main() {
       );
     });
     test("Should emit correct values on error", () async {
+      await sut.updateSelectedCustomer(
+        customersViewModel[0],
+        faker.randomGenerator.integer(100),
+      );
+
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       expectLater(
         sut.mainErrorStream,

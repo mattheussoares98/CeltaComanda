@@ -292,6 +292,8 @@ class PtBr implements Translation {
   String get pos => 'Pos';
   String get preparing => 'Preparando';
   String get price => 'Preço';
+  String get printSaleRequestWhenPaymentSucceeds =>
+      'Imprimir pedido após efetuar pagamento';
   String get productsAndComments => 'Produtos e comentários';
   String get productsSchedules => 'Agendamento de produtos';
   String get products => 'Produtos';
@@ -312,6 +314,7 @@ class PtBr implements Translation {
   String get requestSentSuccessfully => "O pedido foi enviado com sucesso";
   String get reserved => 'Reservada';
   String get reserveTable => 'Reservar mesa';
+  String get sale => "Venda";
   String get sales => "Vendas";
   String get saturday => "Sábado";
   String get search => "Pesquisar";

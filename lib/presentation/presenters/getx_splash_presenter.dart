@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:get/get.dart';
 
 import '../../domain/usecases/usecases.dart';
@@ -34,7 +35,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
 
       final localCommandEntity = await localCommandData.load();
 
-      if (homePresenter.isGeneratingVersionToWebSaleRequestDetails) {
+      if (activePlatform == AppPlatform.webSaleRequestDetails) {
         navigateTo.navigate(
             pageRoute: PageRoutes.webSaleRequestDetails, clear: true);
       } else if (isWeb) {
@@ -53,9 +54,7 @@ class GetxSplashPresenter extends GetxController implements SplashPresenter {
       } else {
         final registeredPdv =
             await pdvRegistration.getById(localCommandEntity!.pdv!.PdvId!);
-        final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
-          isRedeVersion: homePresenter.isGeneratingVersionToRede,
-        );
+        final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
 
         if (registeredPdv == null) {
           //não conseguiu validar, depois valida

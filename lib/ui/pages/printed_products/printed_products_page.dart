@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
@@ -84,8 +85,7 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
             child: Text(R.string.requested),
           ),
           actions: [
-            if (homePresenter.isGeneratingVersionToRede ||
-                homePresenter.isGeneratingVersionToGetNet)
+            if (activePlatform.isPaymentPlatform)
               const PrintPrintedProductsButton(),
             const LoadPrintedProductsAgainButton(),
           ],
@@ -112,10 +112,12 @@ class _PrintedProductsPageState extends State<PrintedProductsPage>
                     requestUserAndPassword: true,
                     printed: printedProductsPresenter.printed!,
                     commandNumber:
-                        homePresenter.commandEntity!.commandNumber!.toInt(),
+                        homePresenter.commandEntity?.commandNumber?.toInt() ?? 0,
                     loadPrintedAgain: () async {
-                      await printedProductsPresenter.loadPrinted(
-                          homePresenter.commandEntity!.commandNumber!);
+                      final commandNum = homePresenter.commandEntity?.commandNumber;
+                      if (commandNum != null) {
+                        await printedProductsPresenter.loadPrinted(commandNum);
+                      }
                     },
                   ),
               ],

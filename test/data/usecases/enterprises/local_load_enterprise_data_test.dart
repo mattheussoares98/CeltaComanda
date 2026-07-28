@@ -3,13 +3,11 @@ import 'package:clean_celta_mobile/domain/entities/entities.dart';
 import 'package:clean_celta_mobile/domain/helpers/helpers.dart';
 import 'package:clean_celta_mobile/infra/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../infra/mocks/mocks.dart';
 import '../../mocks/mocks.dart';
-
-import 'package:mocktail/mocktail.dart';
-
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late LocalEnterpriseData sut;
@@ -83,6 +81,8 @@ void main() {
           canInsertCustomer: enterpriseJsonData["canInsertCustomer"],
           requestTableNumber: enterpriseJsonData["requestTableNumber"],
           useOldPrintWay: enterpriseJsonData["useOldPrintWay"],
+          printSaleRequestWhenPaymentSucceeds:
+              enterpriseJsonData["printSaleRequestWhenPaymentSucceeds"],
         ),
       );
     });

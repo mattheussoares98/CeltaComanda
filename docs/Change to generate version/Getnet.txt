@@ -1,0 +1,60 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Getnet:
+
+   dart run bin/switch_platform.dart getnet
+
+After running, run:
+   flutter pub get
+========================================================================
+
+https://getstore.getnet.com.br/#/app/list
+rene@celtaware.com.br
+C3lta@GetNet
+
+[RULES-START]
+
+- Change version in gradle and pubspec and do a commit
+
+- change C:\Celta\CeltaComanda\android\local.properties\ 
+flutter.minSdkVersion=22
+flutter.targetSdkVersion=34
+flutter.compileSdkVersion=31
+
+- change (buildGradle) 
+. targetSdk 36
+. Comment signingConfigs release blok
+. Comment signingConfigs.release
+. Uncomment signingConfigs.config
+. Comment every dependencies of firebase in build.gradle 
+. Uncomment all dependencies of getnet
+. Remove comment 
+configurations {
+    all {
+        exclude group: 'androidx.profileinstaller', module: 'profileinstaller'
+    }
+}
+
+
+- Remove comment in AndroidManifest.xml
+<uses-permission android:name="com.getnet.posdigital.service.POSDIGITAL" />
+    <uses-permission android:name="android.permission.DUMP" tools:node="remove" />
+	
+- Comment in AndroidManifest.xml
+<category android:name="android.intent.category.HOME" />
+<category android:name="android.intent.category.DEFAULT" />
+
+- Uncomment everything in GetNetPayment.kt
+
+- Uncomment everything in GetNetPrinter.kt
+
+- Uncomment everything about getnet in MainActivity.kt
+
+- Comment _hideNavigationButtons in initApp
+
+- Comment the dependence of wakelock_plus
+- Comment the dependence flutter_widget_from_html
+- Comment the dependence firebase_auth (used only in web version)
+- Comment the dependence url_launcher
+
+[RULES-END]

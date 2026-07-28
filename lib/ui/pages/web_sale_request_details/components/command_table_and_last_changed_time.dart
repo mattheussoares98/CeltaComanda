@@ -5,16 +5,19 @@ import '../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
 class CommandTableAndLastChangedTime extends StatelessWidget {
-  final PrintedEntity saleRequest;
-  final DateTime mostRecentRequestFromCurrentSale;
-  const CommandTableAndLastChangedTime(
-      {super.key,
-      required this.saleRequest,
-      required this.mostRecentRequestFromCurrentSale});
+  final DeliveryControlEntity deliveryControl;
+
+  const CommandTableAndLastChangedTime({
+    super.key,
+    required this.deliveryControl,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final dateHourOfCreation =
+        deliveryControl.Products!.first.DateHourOfCreation;
+
     return Row(
       children: [
         Expanded(
@@ -24,27 +27,22 @@ class CommandTableAndLastChangedTime extends StatelessWidget {
               style: theme.textTheme.titleMedium,
               children: [
                 TextSpan(
-                  text: "${R.string.command} ${saleRequest.PersonalizedCode}",
+                  text: deliveryControl.OriginType ==
+                          DeliveryOriginType.saleRequest
+                      ? "${R.string.table} ${deliveryControl.PersonalizedCode}"
+                      : "${R.string.table} ${deliveryControl.DeliveryControl}",
                   style: theme.textTheme.titleLarge,
                 ),
-                // if (saleRequest.PlaceId != null &&
-                //     saleRequest.PlaceId!.isNotEmpty)
-                //   TextSpan(
-                //     text: ' - Mesa (${saleRequest.PlaceId!})',
-                //     style: theme.textTheme.titleLarge,
-                //   ),
-                //TODO check if has this property
               ],
             ),
           ),
         ),
         Expanded(
           child: Text(
-            DateFormat(
-                    mostRecentRequestFromCurrentSale.day != DateTime.now().day
-                        ? "dd/MM HH:mm:ss"
-                        : "HH:mm:ss")
-                .format(mostRecentRequestFromCurrentSale),
+            DateFormat(dateHourOfCreation.day != DateTime.now().day
+                    ? "dd/MM HH:mm:ss"
+                    : "HH:mm:ss")
+                .format(dateHourOfCreation),
             textAlign: TextAlign.end,
             style: theme.textTheme.titleMedium,
           ),

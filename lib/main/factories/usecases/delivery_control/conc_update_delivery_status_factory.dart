@@ -1,5 +1,5 @@
 import '../../../../data/usecases/usecases.dart';
 import '../../factories.dart';
 
-ConcUpdateDeliveryStatus makeConcUpdateDeliveryStatus() =>
-    ConcUpdateDeliveryStatus(makeHttpAdapter());
+RemoteConcDeliveryControl makeConcDeliveryControl() =>
+    RemoteConcDeliveryControl(makeHttpAdapter());

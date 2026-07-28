@@ -7,16 +7,13 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
-
-import 'package:get/get.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
-
 import '../../ui/mocks/mocks.dart';
 
 void main() {
@@ -29,7 +26,6 @@ void main() {
   late UserValidationsSpy userValidations;
   late CommandInformationsSpy commandInformations;
   late NavigateToSpy navigateTo;
-  late PersistentSpy persistent;
   late UpdateMenuSpy updateMenu;
   late LoadSaleRequestTempSpy loadSaleRequestTemp;
   late LocalCommandDataSpy localCommandData;
@@ -70,7 +66,6 @@ void main() {
       userValidations: userValidations,
       commandInformations: commandInformations,
       navigateTo: navigateTo,
-      persistent: persistent,
       updateMenu: updateMenu,
       loadSaleRequestTemp: loadSaleRequestTemp,
       localCommandData: localCommandData,
@@ -93,7 +88,6 @@ void main() {
     userValidations = UserValidationsSpy();
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
-    persistent = PersistentSpy();
     updateMenu = UpdateMenuSpy();
     loadSaleRequestTemp = LoadSaleRequestTempSpy();
     localCommandData = LocalCommandDataSpy();
@@ -350,16 +344,7 @@ void main() {
 
       verify(() => homePresenter.clear()).called(1);
     });
-    test("Should make not persistent", () async {
-      await sut.doLogout(
-        menuPresenter: menuPresenter,
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        homePresenter: homePresenter,
-      );
 
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
     test("Should call navigate to splash page correctly", () async {
       await sut.doLogout(
         menuPresenter: menuPresenter,
@@ -455,8 +440,7 @@ void main() {
     test("Should call load pending device", () async {
       await sut.loadMenuAgain(EnterpriseBuilder.entity?.enterpriseName ?? "");
 
-      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false))
-          .called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
   });
 

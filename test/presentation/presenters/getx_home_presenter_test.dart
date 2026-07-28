@@ -7,16 +7,14 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
 import '../../ui/mocks/mocks.dart';
-
-import 'package:get/get.dart';
-import 'package:mocktail/mocktail.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   late GetxHomePresenter sut;
@@ -36,7 +34,6 @@ void main() {
   late UpdateSaleRequestTempSpy updateSaleRequestTemp;
   late LoadSellersSpy loadSellers;
   late CommandInformationsSpy commandInformations;
-  late PersistentSpy persistent;
   late AddDeviceInfoSpy addDeviceInfo;
   late AddPendingDeviceToUpdateSpy addPendingDeviceToUpdate;
   late LoadDeviceDataSpy loadDeviceData;
@@ -83,7 +80,6 @@ void main() {
       loadSaleRequestTemp: loadSaleRequestTemp,
       updateSaleRequestTemp: updateSaleRequestTemp,
       loadSellers: loadSellers,
-      persistent: persistent,
       addDeviceInfo: addDeviceInfo,
       addPendingDeviceToUpdate: addPendingDeviceToUpdate,
       loadDeviceData: loadDeviceData,
@@ -104,7 +100,6 @@ void main() {
     updateSaleRequestTemp = UpdateSaleRequestTempSpy();
     loadSellers = LoadSellersSpy();
     commandInformations = CommandInformationsSpy();
-    persistent = PersistentSpy();
     addDeviceInfo = AddDeviceInfoSpy();
     addPendingDeviceToUpdate = AddPendingDeviceToUpdateSpy();
     loadDeviceData = LoadDeviceDataSpy();
@@ -212,16 +207,7 @@ void main() {
             )).called(1);
       });
 
-      test('Should make not persist app when go to splash page', () async {
-        await sut.doLogout(
-          printedProductsPresenter: printedProductsPresenter,
-          cartPresenter: cartPresenter,
-          menuPresenter: menuPresenter,
-          enterprisePresenter: enterprisePresenter,
-        );
 
-        verify(() => persistent.makeNotPersistent()).called(1);
-      });
 
       test('Should call enterprisePresenter.clearEnterpriseData', () async {
         await sut.doLogout(
@@ -797,57 +783,6 @@ void main() {
       );
     });
 
-    test(
-        "Should make persist when Enterprise.persist is true and is generating version to tablet",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      sut.changeIsGeneratingVersionToTablet(true);
-
-      await sut.loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => persistent.makePersistent()).called(1);
-    });
-
-    test(
-        "Should make NOT persist when is not generating version to tablet and Enterprise.persist is true",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      sut.changeIsGeneratingVersionToTablet(false);
-
-      await sut.loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-    test("Should make NOT persist Enterprise.persist is false", () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: false,
-      );
-
-      await sut.loadCommandData(
-        printedProductsPresenter: printedProductsPresenter,
-        cartPresenter: cartPresenter,
-        expansibleGroupFromProductPresenter:
-            expansibleGroupFromProductPresenter,
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
   });
 
   group("Is valid user and password", () {
@@ -1062,13 +997,7 @@ void main() {
     });
   });
 
-  group("Close APP", () {
-    test("Should call persistent.closeApp", () async {
-      await sut.closeApp();
 
-      verify(() => persistent.closeApp()).called(1);
-    });
-  });
 
   group("Update command entity", () {
     test("Should update correctly when pass all parameters", () async {
@@ -1325,35 +1254,12 @@ void main() {
 
       expect(result, true);
     });
-    test("Should return false if remote version is greater than local version",
-        () async {
-      sut.changeIsGeneratingVersionToTablet(true);
-      loadDeviceData.mockGetApplicationVersion(
-        faker.randomGenerator.integer(100).toString(),
-      );
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        latestCompatibleVersion:
-            faker.randomGenerator.integer(1000, min: 101).toString(),
-      );
-
-      final result = await sut.applicationIsInLatestVersion();
-
-      expect(result, false);
-    });
-
     test("Should return true versions are equals", () async {
       loadDeviceData.mockGetApplicationVersion(
         EnterpriseBuilder.entity!.latestCompatibleVersion!,
       );
 
       final result = await sut.applicationIsInLatestVersion();
-
-      expect(result, true);
-    });
-    test("Should return true is not generating version to tablet", () async {
-      sut.changeIsGeneratingVersionToTablet(false);
-
-      bool result = await sut.applicationIsInLatestVersion();
 
       expect(result, true);
     });
@@ -1888,14 +1794,6 @@ void main() {
       await sut.updateDeviceInformations();
 
       verify(() => loadDeviceData.getApplicationVersion()).called(1);
-    });
-
-    test("Should load imeiOrWindowsId", () async {
-      await sut.updateDeviceInformations();
-
-      verify(() => loadDeviceData.getImeiOrWindowsId(
-            isRedeVersion: sut.isGeneratingVersionToRede,
-          )).called(1);
     });
 
     test("Should call add device informations correctly", () async {

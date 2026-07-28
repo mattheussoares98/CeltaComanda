@@ -1,7 +1,6 @@
 plugins {
     id "com.android.application"
     id 'com.google.gms.google-services'
-    id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
 
@@ -31,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "br.com.celtaware.comanda"
-    compileSdk 35
+    compileSdk 36
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -56,9 +55,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         multiDexEnabled true
-        minSdkVersion 23
-        targetSdk 35
-        versionCode 129
+        minSdkVersion flutter.minSdkVersion
+        targetSdk 36
+        versionCode 139
         versionName flutterVersionName
         ndkVersion "29.0.13113456"
     }
@@ -103,28 +102,34 @@ flutter {
 }
 
 dependencies {
+    // [FIREBASE-DEPS-START]
     implementation platform('com.google.firebase:firebase-bom:33.7.0')
     implementation 'com.google.firebase:firebase-analytics'
+    // [FIREBASE-DEPS-END]
     
     //adding getnet library
     // implementation files('libs/libposdigital-1.8.1-13-release.aar')
-    // //below, are the rede sdk dependencies
-    // implementation files('libs/smartrede-sdk-l400-4.0.6.release.aar')
-    // implementation 'com.google.guava:guava:33.3.0-android'
-    // implementation 'com.google.code.gson:gson:2.11.0'
-    // implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'
-    // implementation 'org.jetbrains.kotlin:kotlin-reflect:2.0.20'
-    // implementation 'org.apache.commons:commons-lang3:3.17.0'
-    // implementation 'androidx.appcompat:appcompat:1.7.0'
-    // implementation 'androidx.activity:activity-ktx:1.9.3'
-    // implementation 'androidx.fragment:fragment-ktx:1.8.5'
-    // implementation 'io.insert-koin:koin-android:3.5.6'
-    // implementation 'io.insert-koin:koin-core:3.5.6'
+    
+    // [REDE-DEPS-START]
+    //implementation files('libs/smartrede-sdk-l400-4.3.23.release.aar')
+    //implementation 'com.google.guava:guava:33.3.0-android'
+    //implementation 'com.google.code.gson:gson:2.11.0'
+    //implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'
+    //implementation 'org.jetbrains.kotlin:kotlin-reflect:2.0.20'
+    //implementation 'org.apache.commons:commons-lang3:3.17.0'
+    //implementation 'androidx.appcompat:appcompat:1.7.0'
+    //implementation 'androidx.activity:activity-ktx:1.9.3'
+    //implementation 'androidx.fragment:fragment-ktx:1.8.5'
+    //implementation 'io.insert-koin:koin-android:3.5.6'
+    //implementation 'io.insert-koin:koin-core:3.5.6'
+    // [REDE-DEPS-END]
 }
 
+// [PROFILEINSTALLER-START]
 // configurations {
 //     all {
 //         exclude group: 'androidx.profileinstaller', module: 'profileinstaller'
 //     }
 // }
+// [PROFILEINSTALLER-END]
 

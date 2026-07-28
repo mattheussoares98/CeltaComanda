@@ -66,6 +66,6 @@ mixin ErrorHandling {
       return UIError.custom(error.message);
     }
 
-    return UIError.unexpected;
+    return UIError.custom(error.toString());
   }
 }

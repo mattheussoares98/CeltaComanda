@@ -1,0 +1,119 @@
+import 'package:equatable/equatable.dart';
+
+import 'delivery_product_control_entity.dart';
+
+enum IsToDelivery {
+  preparing(1),
+  ready(2),
+  delivered(3);
+
+  final int value;
+  const IsToDelivery(this.value);
+
+  static IsToDelivery fromValue(int value) {
+    return IsToDelivery.values.firstWhere((e) => e.value == value);
+  }
+}
+
+enum DeliveryOriginType {
+  pdv(1),
+  saleRequest(2);
+
+  final int value;
+  const DeliveryOriginType(this.value);
+
+  factory DeliveryOriginType.fromValue(int value) {
+    return DeliveryOriginType.values.firstWhere((e) => e.value == value);
+  }
+}
+
+class DeliveryControlEntity extends Equatable {
+  final int Id;
+  final int EnterpriseId;
+  final int EnterpriseCode;
+  final DeliveryOriginType OriginType;
+  final String PersonalizedCode;
+  final int? CouponFiscalNumber;
+  final DateTime DateOfCreation;
+  final DateTime DateHourOfCreation;
+  final bool IsCancelled;
+  final IsToDelivery isToDelivery;
+  final DateTime? DateHourOfDelivery;
+  final int? DeliveryControl;
+  final DeliveryStatusLate deliveryStatusLate;
+  final double TotalLiquid;
+  final List<DeliveryProductControlEntity>? Products;
+
+  const DeliveryControlEntity({
+    required this.Id,
+    required this.EnterpriseId,
+    required this.EnterpriseCode,
+    required this.OriginType,
+    required this.PersonalizedCode,
+    required this.CouponFiscalNumber,
+    required this.DateOfCreation,
+    required this.DateHourOfCreation,
+    required this.IsCancelled,
+    required this.isToDelivery,
+    required this.DateHourOfDelivery,
+    required this.DeliveryControl,
+    required this.deliveryStatusLate,
+    required this.TotalLiquid,
+    this.Products,
+  });
+
+  @override
+  List<Object?> get props => [
+        this.Id,
+        this.EnterpriseId,
+        this.EnterpriseCode,
+        this.OriginType,
+        this.PersonalizedCode,
+        this.CouponFiscalNumber,
+        this.DateOfCreation,
+        this.DateHourOfCreation,
+        this.IsCancelled,
+        this.isToDelivery,
+        this.DateHourOfDelivery,
+        this.DeliveryControl,
+        this.deliveryStatusLate,
+        this.TotalLiquid,
+        this.Products,
+      ];
+
+  DeliveryControlEntity copyWith({
+    int? Id,
+    int? EnterpriseId,
+    int? EnterpriseCode,
+    DeliveryOriginType? OriginType,
+    String? PersonalizedCode,
+    int? CouponFiscalNumber,
+    DateTime? DateOfCreation,
+    DateTime? DateHourOfCreation,
+    bool? IsCancelled,
+    IsToDelivery? isToDelivery,
+    DateTime? DateHourOfDelivery,
+    int? DeliveryControl,
+    DeliveryStatusLate? deliveryStatusLate,
+    double? TotalLiquid,
+    List<DeliveryProductControlEntity>? Products,
+  }) {
+    return DeliveryControlEntity(
+      Id: Id ?? this.Id,
+      EnterpriseId: EnterpriseId ?? this.EnterpriseId,
+      EnterpriseCode: EnterpriseCode ?? this.EnterpriseCode,
+      OriginType: OriginType ?? this.OriginType,
+      PersonalizedCode: PersonalizedCode ?? this.PersonalizedCode,
+      CouponFiscalNumber: CouponFiscalNumber ?? this.CouponFiscalNumber,
+      DateOfCreation: DateOfCreation ?? this.DateOfCreation,
+      DateHourOfCreation: DateHourOfCreation ?? this.DateHourOfCreation,
+      IsCancelled: IsCancelled ?? this.IsCancelled,
+      isToDelivery: isToDelivery ?? this.isToDelivery,
+      DateHourOfDelivery: DateHourOfDelivery ?? this.DateHourOfDelivery,
+      DeliveryControl: DeliveryControl ?? this.DeliveryControl,
+      deliveryStatusLate: deliveryStatusLate ?? this.deliveryStatusLate,
+      TotalLiquid: TotalLiquid ?? this.TotalLiquid,
+      Products: Products ?? this.Products,
+    );
+  }
+}

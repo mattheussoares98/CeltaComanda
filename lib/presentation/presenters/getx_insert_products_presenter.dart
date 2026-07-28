@@ -331,6 +331,7 @@ class GetxInsertProductsPresenter extends GetxController
             EnterpriseBuilder.entity?.serviceChargePercentageOrValue,
         IncrementType: 1,
         PlaceId: cartPresenter.saleRequestTemp!.PlaceId,
+        IsToDelivery: cartPresenter.saleRequestTemp!.IsToDelivery?.toInt(),
       );
 
       await updateSaleRequestTemp.update(

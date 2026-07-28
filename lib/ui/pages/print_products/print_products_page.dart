@@ -159,7 +159,7 @@ class _PrintProductsPageState extends State<PrintProductsPage> {
           child: Column(
             children: [
               Text(
-                "${R.string.conferenceOfTable} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
+                "${R.string.conferenceOfTable} ${homePresenter.commandEntity?.commandNumber?.toInt() ?? 0}",
                 style: textStyle(context),
               ),
               const Divider(thickness: 0.2),

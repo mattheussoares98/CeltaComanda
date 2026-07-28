@@ -459,7 +459,7 @@ class GetxCartPresenter
               (previousValue, element) => element.TotalLiquid + previousValue);
 
       final entity = UpdateSaleRequestTempEntity(
-        DeliveryControl: 1,
+        DeliveryControl: _saleRequestTemp!.DeliveryControl.toInt(),
         EnterpriseId: _saleRequestTemp!.EnterpriseId.toInt(),
         PersonalizedCode: _saleRequestTemp!.PersonalizedCode,
         SaleRequestTempId: _saleRequestTemp!.SaleRequestTempId.toInt(),
@@ -473,6 +473,7 @@ class GetxCartPresenter
         IncrementValue: 0,
         IncrementType: 0,
         PlaceId: tableNumber?.toString(),
+        IsToDelivery: 1, //always send to delivery
       );
 
       bool cartProductsAlreadyConfirmed =

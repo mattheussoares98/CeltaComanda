@@ -1,0 +1,46 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Rede:
+
+   dart run bin/switch_platform.dart rede
+
+After running, run:
+   flutter pub get
+========================================================================
+
+https://redestore.service-now.com
+soares.celtaware@gmail.com
+C3lta@Rede
+
+[RULES-START]
+
+- Uncomment dependencies of rede in build.gradle
+
+- Uncomment RedePayment.kt and RedePrinter.kt
+
+- Uncomment evertything in App.kt
+
+- Uncomment everything of koin and rede in MainActivity.kt
+
+- Comment in AndroidManifest.xml
+<category android:name="android.intent.category.HOME" />
+<category android:name="android.intent.category.DEFAULT" />  
+
+[RULES-END]
+
+Olá, Mattheus! Espero que esteja bem.
+Conforme comunicado enviado em 28/02/25 passamos a aceitar apenas 1 requisição de nova versão mensalmente. A requisição atual deve necessariamente ser uma correção de bug, e, nesse caso, precisa ser apresentado explicitamente como correção de bug na release note e detalhada as correções feita no campo de Motivo Prioridade da requisição.
+Seguiremos com a certificação para este caso, mas por favor fique atento com as novas diretrizes para as próximas requisições.
+
+Dores que o APP resolve
+Atendimento mais rápido e menos filas.
+Equalização de erros causados por falhas na comunicação.
+Garçons com mais disponibilidade e consequentemente clientes esperando menos para serem atendidos.
+Cozinheiros visualizando praticamente instanteneamente novos pratos que devem ser produzidos. 
+Facilidade para atualizar o cardápio desabilitando produtos que não estão mais disponíveis.
+Cancelamento e envio de produtos de uma mesa para outra de forma rápida e simples.
+Perda de vendas por clientes indecisos ou mal atendidos.
+
+Proposta de valor
+Mais agilidade, menos erros, e clientes mais satisfeitos.
+Com nosso app, o próprio cliente faz o pedido direto da mesa, visualiza o cardápio atualizado e envia o pedido para a cozinha. Tudo isso sem sobrecarregar a equipe e com muito mais controle e organização para o restaurante. Modernize o atendimento e aumente as vendas!

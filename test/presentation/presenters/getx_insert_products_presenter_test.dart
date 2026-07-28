@@ -48,6 +48,7 @@ void main() {
   }) {
     final updateSaleRequestTempEntity = UpdateSaleRequestTempEntity(
         PlaceId: cartPresenter.saleRequestTempMock!.PlaceId,
+        IsToDelivery: cartPresenter.saleRequestTempMock!.IsToDelivery?.toInt(),
         Peoples: cartPresenter.saleRequestTempMock!.Peoples?.toInt(),
         SellerCode: cartPresenter.saleRequestTempMock!.SellerCode,
         Comments: cartPresenter.saleRequestTempMock!.Comments,

@@ -10,6 +10,7 @@ import '../../infra/helpers/helpers.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
+import '../helpers/app_platform.dart';
 import '../mixins/mixins.dart';
 
 class GetxHomePresenter
@@ -23,7 +24,6 @@ class GetxHomePresenter
   final UpdateSaleRequestTemp updateSaleRequestTemp;
   final LoadSaleRequestTemp loadSaleRequestTemp;
   final LoadSellers loadSellers;
-  final Persistent persistent;
   final AddDeviceInfo addDeviceInfo;
   final AddPendingDeviceToUpdate addPendingDeviceToUpdate;
   final LoadDeviceData loadDeviceData;
@@ -42,7 +42,6 @@ class GetxHomePresenter
     required this.updateSaleRequestTemp,
     required this.loadSaleRequestTemp,
     required this.loadSellers,
-    required this.persistent,
     required this.addDeviceInfo,
     required this.addPendingDeviceToUpdate,
     required this.loadDeviceData,
@@ -51,7 +50,11 @@ class GetxHomePresenter
     required this.lastImport,
     required this.loadExportCharging,
     required this.concentratorLogin,
-  });
+  }) {
+    loadDeviceData.getApplicationVersion().then((version) {
+      _currentAppVersion = version;
+    });
+  }
 
   @override
   Future<void> doLogout({
@@ -78,7 +81,6 @@ class GetxHomePresenter
       }
 
       await enterprisePresenter.clearEnterpriseData();
-      await persistent.makeNotPersistent();
       await clear();
       await deleteData.delete([
         CacheKeys.alreadyPaid,
@@ -137,13 +139,6 @@ class GetxHomePresenter
     mainError = null;
 
     try {
-      if (EnterpriseBuilder.entity?.persistApp == true &&
-          _isGeneratingVersionToTablet) {
-        await persistent.makePersistent();
-      } else {
-        await persistent.makeNotPersistent();
-      }
-
       CommandEntity? loadedCommand = await localCommandData.load();
 
       if (loadedCommand != null) {
@@ -294,27 +289,6 @@ class GetxHomePresenter
   Stream<UIError?> get mainErrorStream => _mainError.stream;
   set mainError(UIError? value) => _mainError.value = value;
 
-  @override
-  bool get isGeneratingVersionToRede => false;
-  @override
-  bool get isGeneratingVersionToGetNet => false;
-  @override
-  bool get isGeneratingVersionToMicrosoftStore => false;
-
-  bool _isGeneratingVersionToTablet = false;
-  @override
-  bool get isGeneratingVersionToTablet => _isGeneratingVersionToTablet;
-
-  final bool _isGeneratingVersionToWebSaleRequestDetails = true;
-  @override
-  bool get isGeneratingVersionToWebSaleRequestDetails =>
-      _isGeneratingVersionToWebSaleRequestDetails;
-
-  @override
-  void changeIsGeneratingVersionToTablet(bool value) {
-    _isGeneratingVersionToTablet = value;
-  }
-
   List<SellersViewModel> _sellers = [];
   @override
   List<SellersViewModel> get sellers => _sellers;
@@ -346,10 +320,7 @@ class GetxHomePresenter
     _selectedSeller = seller;
   }
 
-  @override
-  Future<void> closeApp() async {
-    await persistent.closeApp();
-  }
+
 
   @override
   Future<void> doOnRemoteEnterpriseChanges({
@@ -428,7 +399,7 @@ class GetxHomePresenter
   @override
   Future<bool> applicationIsInLatestVersion() async {
     try {
-      if (!isGeneratingVersionToTablet) {
+      if (activePlatform != AppPlatform.tablet) {
         return true;
       }
 
@@ -594,9 +565,7 @@ class GetxHomePresenter
   @override
   Future<void> updateDeviceInformations() async {
     final applicationVersion = await loadDeviceData.getApplicationVersion();
-    final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
-      isRedeVersion: isGeneratingVersionToRede,
-    );
+    final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
 
     await addDeviceInfo.add(
       commandNumber: commandEntity?.commandNumber?.toInt(),
@@ -605,4 +574,8 @@ class GetxHomePresenter
       pdvNumber: commandEntity?.pdv?.PdvNumber,
     );
   }
+
+  String? _currentAppVersion;
+  @override
+  String? get currentAppVersion => _currentAppVersion;
 }

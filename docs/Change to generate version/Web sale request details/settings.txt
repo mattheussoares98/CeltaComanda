@@ -1,0 +1,1 @@
+{"concentratorPort":9090,"navsPort":10965, "enterpriseId":1,"enteprisePersonalizedCode": 1}

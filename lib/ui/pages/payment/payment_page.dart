@@ -1,11 +1,12 @@
+import 'dart:async';
+
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'dart:async';
-import 'package:flutter/material.dart';
-
 import '../../../ui/helpers/helpers.dart';
-import '../../mixins/mixins.dart';
 import '../../components/components.dart';
+import '../../mixins/mixins.dart';
 import '../pages.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _PaymentPageState extends State<PaymentPage>
   StreamSubscription? printedLoadingSubscription;
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
+  StreamSubscription? printedErrorSubscription;
   StreamSubscription? updateScrrenSubscription;
   PaymentPresenter? paymentPresenter;
   final formKey = GlobalKey<FormState>();
@@ -33,6 +35,7 @@ class _PaymentPageState extends State<PaymentPage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    printedErrorSubscription?.cancel();
     printedLoadingSubscription?.cancel();
     updateScrrenSubscription?.cancel();
     paymentPresenter?.disposePaymentResultHandler();
@@ -72,10 +75,11 @@ class _PaymentPageState extends State<PaymentPage>
           },
         );
 
-        paymentController.text = paymentPresenter!
-            .getTotalPendingValue(printedProductsPresenter)
-            .toString()
-            .replaceAll(RegExp(r'\.'), ',');
+        paymentController.text = paymentPresenter
+                ?.getTotalPendingValue(printedProductsPresenter)
+                .toString()
+                .replaceAll(RegExp(r'\.'), ',') ??
+            '';
 
         if (paymentPresenter?.cpfCnpj != null) {
           cpfCnpjController.text = paymentPresenter!.cpfCnpj.toString();
@@ -98,7 +102,12 @@ class _PaymentPageState extends State<PaymentPage>
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
     updateScrrenSubscription?.cancel();
+    printedErrorSubscription?.cancel();
 
+    printedErrorSubscription = handleMainError(
+      context,
+      printedProductsPresenter.mainErrorStream,
+    );
     loadingSubscription =
         handleLoading(context, paymentPresenter.isLoadingStream);
     printedLoadingSubscription =
@@ -150,8 +159,10 @@ class _PaymentPageState extends State<PaymentPage>
           actions: [
             IconButton(
               onPressed: () async {
-                await printedProductsPresenter
-                    .loadPrinted(homePresenter.commandEntity!.commandNumber!);
+                final commandNum = homePresenter.commandEntity?.commandNumber;
+                if (commandNum != null) {
+                  await printedProductsPresenter.loadPrinted(commandNum);
+                }
               },
               icon: Row(
                 children: [
@@ -159,7 +170,7 @@ class _PaymentPageState extends State<PaymentPage>
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: Text(
-                        "${R.string.command} ${homePresenter.commandEntity!.commandNumber!.toInt()}",
+                        "${R.string.command} ${homePresenter.commandEntity?.commandNumber?.toInt() ?? 0}",
                         style: TextStyle(fontSize: StringSize.size),
                       ),
                     ),
@@ -186,8 +197,7 @@ class _PaymentPageState extends State<PaymentPage>
                       pendingValue > 0)
                     Column(
                       children: [
-                        if (homePresenter.isGeneratingVersionToGetNet ||
-                            homePresenter.isGeneratingVersionToRede)
+                        if (activePlatform.isPaymentPlatform)
                           Form(
                             key: formKey,
                             child: Column(

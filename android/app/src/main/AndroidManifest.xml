@@ -16,13 +16,22 @@
       <intent>
         <action android:name="android.support.customtabs.action.CustomTabsService" />
       </intent>
+      <!-- [CIELO-QUERIES-START] -->
+      <!-- <package android:name="com.ads.lio.uriappclient" /> -->
+      <!-- [CIELO-QUERIES-END] -->
     </queries>
     <application
         android:label="Celta comanda"
         android:name="br.com.celtaware.comanda.App"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
+        android:requestLegacyExternalStorage="true"
         android:enableOnBackInvokedCallback="true">
+        <!-- [CIELO-METADATA-START] -->
+        <!-- <meta-data -->
+            <!-- android:name="cs_integration_type" -->
+            <!-- android:value="uri" /> -->
+        <!-- [CIELO-METADATA-END] -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,9 +52,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 
-               <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />  
+                <!-- [LAUNCHER-CATEGORIES-START] -->
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- [LAUNCHER-CATEGORIES-END] -->
             </intent-filter>
+            <!-- [CIELO-CALLBACK-START] -->
+            <!-- <intent-filter> -->
+                <!-- <action android:name="android.intent.action.VIEW" /> -->
+                <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+                <!-- <data android:host="response" android:scheme="order" /> -->
+            <!-- </intent-filter> -->
+            <!-- [CIELO-CALLBACK-END] -->
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -68,8 +86,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="br.com.celtaware.comanda.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-    <!-- <uses-permission android:name="com.getnet.posdigital.service.POSDIGITAL" />
-    <uses-permission android:name="android.permission.DUMP" tools:node="remove" /> -->
+    <!-- [GETNET-PERMISSIONS-START] -->
+    <!-- <uses-permission android:name="com.getnet.posdigital.service.POSDIGITAL" /> -->
+    <!-- <uses-permission android:name="android.permission.DUMP" tools:node="remove" /> -->
+    <!-- [GETNET-PERMISSIONS-END] -->
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 </manifest>

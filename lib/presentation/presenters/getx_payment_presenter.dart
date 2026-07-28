@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class GetxPaymentPresenter extends GetxController
     implements PaymentPresenter {
   final RedePay redePay;
   final GetnetPay getnetPay;
+  final CieloPay cieloPay;
   final CommandInformations commandInformations;
   final ConcFinishSaleRequest finishSaleRequestConcentrador;
   final NavigateTo navigateTo;
@@ -36,6 +38,7 @@ class GetxPaymentPresenter extends GetxController
   GetxPaymentPresenter({
     required this.redePay,
     required this.getnetPay,
+    required this.cieloPay,
     required this.commandInformations,
     required this.finishSaleRequestConcentrador,
     required this.navigateTo,
@@ -53,6 +56,9 @@ class GetxPaymentPresenter extends GetxController
     required this.validateCpfCnpj,
   });
 
+  String? _paymentCommandNumber;
+  String? _paymentSaleRequestId;
+
   @override
   Future<void> callPayment({
     required double longAmountValue,
@@ -66,6 +72,9 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      _paymentCommandNumber = homePresenter.commandEntity?.commandNumber;
+      _paymentSaleRequestId = printedProductsPresenter.printed?.SaleRequestId;
+
       _lastRequestedPaymentFinalization = ConcentratorFinalizationModel(
         FinalizationId: paymentMode.finalizationId,
         Value: longAmountValue,
@@ -81,7 +90,7 @@ class GetxPaymentPresenter extends GetxController
         throw DomainError.blockedCommand;
       }
 
-      if (homePresenter.isGeneratingVersionToRede) {
+      if (activePlatform == AppPlatform.rede) {
         await redePay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
@@ -89,7 +98,7 @@ class GetxPaymentPresenter extends GetxController
             paymentMode: paymentMode,
           ),
         );
-      } else if (homePresenter.isGeneratingVersionToGetNet) {
+      } else if (activePlatform == AppPlatform.getnet) {
         final result = await getnetPay.pay(
           PayParamsModel(
             longAmountValue: (longAmountValue * 100).toInt(),
@@ -106,14 +115,36 @@ class GetxPaymentPresenter extends GetxController
           showErrorMessageReturnedByBs,
         );
         isLoading = false;
+      } else if (activePlatform == AppPlatform.cielo) {
+        final result = await cieloPay.pay(
+          PayParamsModel(
+            longAmountValue: (longAmountValue * 100).toInt(),
+            portionQuantity: portionQuantity,
+            paymentMode: paymentMode,
+          ),
+        );
+
+        await _treatCieloResponse(
+          homePresenter,
+          result,
+          printedProductsPresenter,
+          showSuccessAndCloseUntilHomePage,
+          showErrorMessageReturnedByBs,
+        );
+        isLoading = false;
       }
     } catch (e) {
       mainError = getUIError(e);
       isLoading = false;
     } finally {
-      Future.delayed(const Duration(seconds: 20), () {
-        isLoading = false;
-      });
+      Future.delayed(
+        Duration(
+          seconds: activePlatform == AppPlatform.cielo ? 5 : 20,
+        ),
+        () {
+          isLoading = false;
+        },
+      );
     }
   }
 
@@ -124,6 +155,27 @@ class GetxPaymentPresenter extends GetxController
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   }) async {
+    final targetCommandNumber =
+        _paymentCommandNumber ?? homePresenter.commandEntity?.commandNumber;
+
+    if (targetCommandNumber == null) {
+      throw DomainError.unexpected;
+    }
+
+    await printedProductsPresenter.loadPrinted(
+      targetCommandNumber,
+      showIsLoading: false,
+    );
+
+    bool hasDifferentSaleRequestId = _paymentSaleRequestId != null &&
+        printedProductsPresenter.printed?.SaleRequestId !=
+            _paymentSaleRequestId;
+
+    final printed = printedProductsPresenter.printed;
+    if (printed == null || hasDifferentSaleRequestId) {
+      throw DomainError.unexpected;
+    }
+
     updateScreen = true;
 
     if (_lastRequestedPaymentFinalization != null &&
@@ -132,9 +184,7 @@ class GetxPaymentPresenter extends GetxController
     }
     updateScreen = false;
 
-    if (totalPaidValue <
-        printedProductsPresenter
-            .getTotalLiquid(printedProductsPresenter.printed)) {
+    if (totalPaidValue < printedProductsPresenter.getTotalLiquid(printed)) {
       return;
     }
 
@@ -151,25 +201,24 @@ class GetxPaymentPresenter extends GetxController
       if (useSharing == false) {
         final xml = await generateXmlForNfce.generate(
           couponFiscalNumber: newCouponNumber,
-          printed: PrintedModel.fromViewModel(printedProductsPresenter.printed!)
-              .toEntity(),
+          printed: PrintedModel.fromViewModel(printed).toEntity(),
           finalizations: _successfulPayments,
           customer: _selectedCustomer?.customer.toEntity(),
           cpfCnpj: _cpfCnpj,
           pdvNumber: homePresenter.commandEntity?.pdv?.PdvNumber?.toInt(),
           incrementValue: printedProductsPresenter.getServiceChargeValue(
-            printedProductsPresenter.printed,
+            printed,
           ),
         );
 
         xmlReponse = await sendSaleMovementAsNfce.send(xml);
       }
 
-      final double serviceChargeValue = printedProductsPresenter
-          .getServiceChargeValue(printedProductsPresenter.printed);
+      final double serviceChargeValue =
+          printedProductsPresenter.getServiceChargeValue(printed);
 
       await concInsertSaleMovement.insert(
-        commandNumber: homePresenter.commandEntity!.commandNumber!.toInt(),
+        commandNumber: targetCommandNumber.toInt(),
         couponFiscalNumber: newCouponNumber,
         pdvId: homePresenter.commandEntity!.pdv!.PdvId!,
         pdvNumber: homePresenter.commandEntity!.pdv!.PdvNumber!,
@@ -178,23 +227,36 @@ class GetxPaymentPresenter extends GetxController
         cpfCnpj: _cpfCnpj?.toString(),
         incrementType: serviceChargeValue == 0 ? null : 1,
         incrementValue: serviceChargeValue == 0 ? null : serviceChargeValue,
-        totalLiquid: printedProductsPresenter
-            .getTotalLiquid(printedProductsPresenter.printed),
+        totalLiquid: printedProductsPresenter.getTotalLiquid(printed),
         finalizations: _successfulPayments.map((e) => e.toEntity()).toList(),
-        products: printedProductsPresenter.printed!.Products,
+        products: printed.Products,
         xmlToGenerateFiscal: useSharing == false ? xmlReponse : null,
       );
 
       _couponNumber = newCouponNumber;
       await couponFiscalNumber.save(newCouponNumber);
+
+      final pdvNum = homePresenter.commandEntity?.pdv?.PdvNumber?.toInt();
+      if (activePlatform.isPaymentPlatform &&
+          EnterpriseBuilder.entity?.printSaleRequestWhenPaymentSucceeds ==
+              true &&
+          targetCommandNumber.isNotEmpty &&
+          pdvNum != null) {
+        await printedProductsPresenter.printPrintedProducts(
+          commandNumber: targetCommandNumber.toInt(),
+          pdvNumber: pdvNum,
+        );
+      }
+
       _successfulPayments.clear();
       showSuccessAndCloseUntilHomePage();
       _lastRequestedPaymentFinalization = null;
       _authorizationPendingModel = null;
-      await deleteSaleRequest
-          .delete(printedProductsPresenter.printed!.SaleRequestId!.toInt());
+      _paymentCommandNumber = null;
+      _paymentSaleRequestId = null;
+      await deleteSaleRequest.delete(printed.SaleRequestId!.toInt());
       await printedProductsPresenter.loadPrinted(
-        homePresenter.commandEntity!.commandNumber!,
+        targetCommandNumber,
       );
     } catch (e) {
       mainError = getUIError(e);
@@ -212,7 +274,7 @@ class GetxPaymentPresenter extends GetxController
     required void Function() showSuccessAndCloseUntilHomePage,
     required void Function(String error) showErrorMessageReturnedByBs,
   }) {
-    if (!homePresenter.isGeneratingVersionToRede) {
+    if (!activePlatform.isPaymentPlatform) {
       return;
     }
 
@@ -252,6 +314,42 @@ class GetxPaymentPresenter extends GetxController
         mainError = UIError.paymentUnexpectedError;
       } else if (response?.result == "5") {
         mainError = UIError.paymentPendant;
+      } else {
+        mainError = UIError.paymentUnexpectedError;
+      }
+    } catch (e) {
+      mainError = getUIError(e);
+    }
+    isLoading = false;
+  }
+
+  Future<void> _treatCieloResponse(
+    HomePresenter homePresenter,
+    Map<String, dynamic>? response,
+    PrintedProductsPresenter printedProductsPresenter,
+    void Function() showSuccessAndCloseUntilHomePage,
+    void Function(String error) showErrorMessageReturnedByBs,
+  ) async {
+    try {
+      if (response != null && response['responseJson'] != null) {
+        final Map<String, dynamic> responseMap =
+            json.decode(response['responseJson']);
+        if (responseMap.containsKey('payments') &&
+            (responseMap['payments'] as List).isNotEmpty) {
+          await liquidateCommand(
+            homePresenter: homePresenter,
+            printedProductsPresenter: printedProductsPresenter,
+            showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+            showErrorMessageReturnedByBs: showErrorMessageReturnedByBs,
+          );
+        } else if (responseMap.containsKey('reason')) {
+          showErrorMessageReturnedByBs(
+              responseMap['reason'] ?? 'Erro no pagamento');
+          mainError =
+              UIError.custom(responseMap['reason'] ?? 'Erro no pagamento');
+        } else {
+          mainError = UIError.paymentUnexpectedError;
+        }
       } else {
         mainError = UIError.paymentUnexpectedError;
       }
@@ -396,6 +494,8 @@ class GetxPaymentPresenter extends GetxController
     mainError = null;
     isLoading = true;
     try {
+      _paymentSaleRequestId = printedProductsPresenter.printed?.SaleRequestId;
+      _paymentCommandNumber = homePresenter.commandEntity?.commandNumber;
       if (customerPassword != null && customerPassword.isNotEmpty) {
         await checkPasswordByCustomerCode.validate(
           customerCode: _selectedCustomer!.customer.Code!,
@@ -449,6 +549,8 @@ class GetxPaymentPresenter extends GetxController
   @override
   void clearPayments() {
     _lastRequestedPaymentFinalization = null;
+    _paymentCommandNumber = null;
+    _paymentSaleRequestId = null;
     _successfulPayments.clear();
   }
 

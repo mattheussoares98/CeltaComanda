@@ -8,16 +8,12 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   Stream<UIError?> get mainErrorStream;
   Stream<bool> get isLoadingStream;
 
-  bool get isGeneratingVersionToRede;
-  bool get isGeneratingVersionToGetNet;
-  bool get isGeneratingVersionToTablet;
-  bool get isGeneratingVersionToMicrosoftStore;
-  bool get isGeneratingVersionToWebSaleRequestDetails;
   int? get selectedPeoples;
   int? get selectedCommand;
   SellersViewModel? get selectedSeller;
   List<SellersViewModel> get sellers;
   CommandEntity? get commandEntity;
+  String? get currentAppVersion;
 
   Future<void> updateCommandEntity({
     required String? commandNumber,
@@ -66,9 +62,6 @@ abstract class HomePresenter with ChangeNotifier implements Listenable {
   void updateSelectedPeoples(int? value);
   void updateSelectedCommand(int value);
   void updateSelectedSeller(SellersViewModel? seller);
-
-  Future<void> closeApp();
-  void changeIsGeneratingVersionToTablet(bool value);
 
   Future<void> doOnRemoteEnterpriseChanges({
     required Map<String, dynamic> data,

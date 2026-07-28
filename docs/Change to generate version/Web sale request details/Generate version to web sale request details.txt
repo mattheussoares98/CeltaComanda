@@ -1,0 +1,22 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+Run this command from the project root to automatically switch to Web Sale Request Details:
+
+   dart run bin/switch_platform.dart web
+
+After running, run:
+   flutter pub get
+========================================================================
+
+isGeneratingVersionToRede = false
+isGeneratingVersionToGetNet = false
+isGeneratingVersionToTable = false
+isGeneratingVersionToMicrosoftStore = false
+isGeneratingVersionToWebSaleRequestDetails = true
+
+1- 
+flutter build web --pwa-strategy=none
+
+Put the settings.file inside the folder and deploy on services.celtaware.com.br/downloads/lastversion
+
+I am not sure, but maybe should put the web.config file inside the folder too

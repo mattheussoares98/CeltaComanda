@@ -5,58 +5,58 @@ import '../../../components/components.dart';
 import '../../../helpers/helpers.dart';
 import '../../pages.dart';
 
-double _getImageSize(BuildContext context) {
-  double width = MediaQuery.of(context).size.width;
-  double height = MediaQuery.of(context).size.height;
-
-  if (width > height) {
-    return height * 0.5;
-  } else {
-    return width * 0.8;
-  }
-}
-
 void showSuggestionDialog(
   BuildContext context,
   ProductsViewModel product,
   MenuPresenter menuPresenter,
 ) {
+  final double screenHeight = MediaQuery.sizeOf(context).height;
+  final bool isShortScreen = screenHeight < 600;
+  final bool showImage = screenHeight > 450;
+  final double imageSize = isShortScreen
+      ? (screenHeight * 0.2).clamp(50.0, 100.0)
+      : (screenHeight * 0.35).clamp(100.0, 250.0);
+
   notificationDialog(
       canPop: false,
       context: context,
       titleMessage: R.string.doYouWantToAdd,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            children: [
-              Text(
-                product.Name,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: StringSize.size,
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              product.Name,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize:
+                    isShortScreen ? StringSize.size * 0.8 : StringSize.size,
+              ),
+            ),
+            if (showImage) ...[
+              SizedBox(height: isShortScreen ? 8 : 20),
+              Padding(
+                padding: EdgeInsets.only(bottom: isShortScreen ? 8 : 20),
+                child: ImageWidget(
+                  ean: product.EanCode,
+                  plu: product.PriceLookupCode,
+                  selectedProduct: product,
+                  height: imageSize,
+                  width: imageSize,
                 ),
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: ImageWidget(
-              ean: product.EanCode,
-              plu: product.PriceLookupCode,
-              selectedProduct: product,
-              height: _getImageSize(context),
-              width: _getImageSize(context),
-            ),
-          ),
-          Text(
-              "${R.string.per} ${product.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin()}",
-              style: TextStyle(
-                color: Theme.of(context).secondaryHeaderColor,
-              )),
-        ],
+            ] else
+              const SizedBox(height: 12),
+            Text(
+                "${R.string.per} ${product.SaleRetailPraticed.toDouble().toString().toBrazilianNumber().addBrazilianCoin()}",
+                style: TextStyle(
+                  color: Theme.of(context).secondaryHeaderColor,
+                  fontSize: isShortScreen ? 14 : 16,
+                )),
+          ],
+        ),
       ),
       onCancelPress: () async {
         menuPresenter.advanceIndexOfAtualSuggestion();

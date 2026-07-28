@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/ui/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -92,6 +93,7 @@ class _ConfigurationsDialogPageState extends State<ConfigurationsDialogPage> {
                     child: Text(
                         "${R.string.pdv} ${homePresenter.commandEntity!.pdv!.PdvNumber!.toInt()}"),
                   ),
+                const AppVersion(),
                 Form(
                   key: formKey,
                   child: Column(

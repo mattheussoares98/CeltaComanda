@@ -29,7 +29,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (mounted) {
         _dataRefreshTimer = Timer.periodic(
-          const Duration(seconds: 30),
+          const Duration(seconds: 20),
           (timer) {
             _fetchAndUpdateData();
           },
@@ -50,7 +50,7 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
   void _fetchAndUpdateData() {
     final provider =
         Provider.of<WebSaleRequestDetailsPresenter>(context, listen: false);
-    provider.loadOpenSaleRequests();
+    provider.loadDeliveryControls();
   }
 
   @override
@@ -61,9 +61,9 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
 
     return Scaffold(
       body: StreamBuilder(
-        stream: provider.saleRequestsStream,
+        stream: provider.deliveryControlsStream,
         builder: (context, snapshot) {
-          if (snapshot.hasData == false || snapshot.data!.isEmpty) {
+          if (snapshot.hasData == false || (snapshot.data?.isEmpty ?? true)) {
             return Center(
               child: Text(R.string.emptySaleRequests),
             );
@@ -74,13 +74,13 @@ class _WebSaleRequestDetailsPageState extends State<WebSaleRequestDetailsPage>
               Expanded(
                 child: RequestsItems(
                   isToDeliveryStatus: IsToDelivery.preparing,
-                  saleRequests: List.of(snapshot.data!.values),
+                  deliveryControls: List.of(snapshot.data!),
                 ),
               ),
               Expanded(
                 child: RequestsItems(
                   isToDeliveryStatus: IsToDelivery.ready,
-                  saleRequests: List.of(snapshot.data!.values),
+                  deliveryControls: List.of(snapshot.data!),
                 ),
               ),
             ],

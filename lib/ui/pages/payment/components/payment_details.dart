@@ -1,8 +1,7 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 import '../../../helpers/helpers.dart';
-import '../../pages.dart';
 
 class PaymentDetails extends StatelessWidget {
   final double totalLiquid;
@@ -17,8 +16,6 @@ class PaymentDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomePresenter homePresenter = Provider.of(context, listen: false);
-
     return Column(
       children: [
         FittedBox(
@@ -30,8 +27,7 @@ class PaymentDetails extends StatelessWidget {
             ),
           ),
         ),
-        if (homePresenter.isGeneratingVersionToGetNet ||
-            homePresenter.isGeneratingVersionToRede)
+        if (activePlatform.isPaymentPlatform)
           Column(
             children: [
               FittedBox(

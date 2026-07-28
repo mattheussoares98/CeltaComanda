@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/entities.dart';
@@ -21,6 +19,7 @@ class SaleRequestTempViewModel extends Equatable {
   final String? IncrementValue;
   final String? IncrementType;
   final String? PlaceId;
+  final String? IsToDelivery;
 
   @override
   List get props => [
@@ -38,6 +37,7 @@ class SaleRequestTempViewModel extends Equatable {
         IncrementValue,
         IncrementType,
         PlaceId,
+        IsToDelivery,
       ];
 
   const SaleRequestTempViewModel({
@@ -55,6 +55,7 @@ class SaleRequestTempViewModel extends Equatable {
     required this.IncrementValue,
     required this.IncrementType,
     required this.PlaceId,
+    required this.IsToDelivery,
   });
 
   factory SaleRequestTempViewModel.fromEntity(SaleRequestTempEntity entity) =>
@@ -75,6 +76,7 @@ class SaleRequestTempViewModel extends Equatable {
         IncrementValue: entity.IncrementValue?.toString(),
         IncrementType: entity.IncrementType?.toString(),
         PlaceId: entity.PlaceId?.toString(),
+        IsToDelivery: entity.IsToDelivery?.toString(),
       );
 
   SaleRequestTempEntity toEntity() => SaleRequestTempEntity(
@@ -92,6 +94,7 @@ class SaleRequestTempViewModel extends Equatable {
         IncrementValue: IncrementValue?.toDouble(),
         IncrementType: IncrementType?.toInt(),
         PlaceId: PlaceId?.toString(),
+        IsToDelivery: IsToDelivery?.toInt(),
       );
 
   Map toJson() => {
@@ -109,5 +112,6 @@ class SaleRequestTempViewModel extends Equatable {
         "IncrementValue": IncrementValue,
         "IncrementType": IncrementType,
         "PlaceId": PlaceId,
+        "IsToDelivery": IsToDelivery,
       };
 }

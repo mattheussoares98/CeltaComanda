@@ -1,4 +1,3 @@
-export 'app_manager/app_manager.dart';
 export './barcode/barcode.dart';
 export './cart/cart.dart';
 export 'export/export.dart';
@@ -6,7 +5,7 @@ export './command/command.dart';
 export './cpf_cnpj/cpf_cnpj.dart';
 export './customer/customer.dart';
 export 'data/data.dart';
-export './delivery_control/delivery_control.dart';
+export 'delivery_control/delivery_control.dart';
 export 'device/device.dart';
 export './enterprise_concentrador/enterprise_concentrador.dart';
 export './enterprise_data/enterprise_data.dart';

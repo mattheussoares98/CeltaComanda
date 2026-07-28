@@ -1,0 +1,18 @@
+========================================================================
+⚡ AUTOMATED SWITCH PLATFORM COMMAND:
+If generating the web configurations site, run this command from the project root to switch to Web:
+
+   dart run bin/switch_platform.dart web
+
+After running, run:
+   flutter pub get
+========================================================================
+
+Remove the dependence of path provider
+
+Change the configuration to init the page in page of configurations
+
+execute:
+flutter build web --pwa-strategy=none
+
+firebase deploy --only hosting:comandaconfigurations

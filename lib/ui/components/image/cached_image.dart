@@ -31,9 +31,8 @@ class CachedImage extends StatelessWidget {
     final pathIndex = menuPresenter.downloadedImages
         .indexWhere((e) => e.imagePath == imagePath);
 
-    final productIndex = menuPresenter.downloadedImages.indexWhere((e) =>
-        e.pluOrEan.toLowerCase() ==
-        "${e.keyIsEan ? ean : plu}.PNG".toLowerCase());
+    final productIndex = menuPresenter.downloadedImages
+        .indexWhere((e) => e.plu.toLowerCase() == "$plu.PNG".toLowerCase());
 
     ImageModel? image;
     if (pathIndex != -1) {

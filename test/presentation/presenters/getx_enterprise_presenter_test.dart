@@ -5,14 +5,12 @@ import 'package:clean_celta_mobile/presentation/presenters/presenters.dart';
 import 'package:clean_celta_mobile/ui/helpers/helpers.dart';
 import 'package:clean_celta_mobile/ui/pages/pages.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../data/mocks/mocks.dart';
 import '../../domain/mocks/mocks.dart';
-
-import 'package:flutter_test/flutter_test.dart';
-
-import 'package:mocktail/mocktail.dart';
 import '../../ui/mocks/mocks.dart';
 import '../mocks/mocks.dart';
 
@@ -26,7 +24,6 @@ void main() {
   late NavigateToSpy navigateTo;
   late CommandInformationsSpy commandInformations;
   late LocalCommandDataSpy localCommandData;
-  late PersistentSpy persistent;
   late LoadEnterpriseConcentradorParametersSpy
       loadEnterpriseConcentradorParameters;
   late PdvRegistrationSpy pdvRegistration;
@@ -51,7 +48,6 @@ void main() {
     loadEnterpriseData = LoadEnterpriseDataSpy();
     commandInformations = CommandInformationsSpy();
     navigateTo = NavigateToSpy();
-    persistent = PersistentSpy();
     loadEnterpriseConcentradorParameters =
         LoadEnterpriseConcentradorParametersSpy();
     pdvRegistration = PdvRegistrationSpy();
@@ -69,7 +65,6 @@ void main() {
       navigateTo: navigateTo,
       commandInformations: commandInformations,
       localCommandData: localCommandData,
-      persistent: persistent,
       loadEnterpriseConcentradorParameters:
           loadEnterpriseConcentradorParameters,
       pdvRegistration: pdvRegistration,
@@ -140,73 +135,6 @@ void main() {
   });
 
   group("old tests", () {
-    test(
-        "Should make persist app when go to home page and enterprise.persist app is true",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makePersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to rede",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-      homePresenter.isGeneratingVersionToRedeMock = true;
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is true and is generating version to getnet",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: true,
-      );
-      homePresenter.isGeneratingVersionToGetNetMock = true;
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-    test(
-        "Should make NOT persist app when go to home page and enterprise.persist app is false",
-        () async {
-      EnterpriseBuilder.entity = EntityFactory.makeEnterpriseData(
-        persistApp: false,
-      );
-
-      await sut.validateEnterpriseByName(
-        homePresenter: homePresenter,
-        isFixedCommandNumber: faker.randomGenerator.boolean(),
-        commandNumber:
-            faker.randomGenerator.integer(100).toString().padLeft(3, "0"),
-      );
-
-      verify(() => persistent.makeNotPersistent()).called(1);
-    });
-
     test("Should call loadCommandData on loadLocalData", () async {
       await sut.updateEnterpriseWithLocalData();
 
@@ -289,7 +217,7 @@ void main() {
     test("Should emit correct values dont have liberated pdvs to registration",
         () async {
       EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToGetNetMock = true;
+
       pdvRegistration.mockGetPdvNotUsingError(DomainError.dontHaveUnusedPdvs);
 
       expectLater(sut.mainErrorStream,
@@ -461,7 +389,7 @@ void main() {
         "Should get pdvs not using when is generating version to rede or getnet",
         () async {
       EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToRedeMock = true;
+
       await sut.validateEnterpriseByName(
         isFixedCommandNumber: isFixedCommandNumber,
         commandNumber: commandNumber.toString(),
@@ -472,7 +400,6 @@ void main() {
 
     test("Should emit correct values on enterprises not using", () async {
       EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToRedeMock = true;
 
       expectLater(
         sut.pdvsNotUsingStream,
@@ -494,7 +421,6 @@ void main() {
         "Should emit error if is generating version to tablet and dont have pdv number greater than 100",
         () async {
       EnterpriseBuilder.entity = clearedEnterprise;
-      homePresenter.isGeneratingVersionToTabletMock = true;
       pdvRegistration.mockGetPdvNotUsing([
         EntityFactory.makePdvEntity(
             pdvNumber: faker.randomGenerator.integer(99, min: 1)),
@@ -620,7 +546,6 @@ void main() {
 
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -637,7 +562,6 @@ void main() {
 
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -646,19 +570,16 @@ void main() {
     test("Should call get imei or windows id", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
       );
 
-      verify(() => loadDeviceData.getImeiOrWindowsId(isRedeVersion: false))
-          .called(1);
+      verify(() => loadDeviceData.getImeiOrWindowsId()).called(1);
     });
     test("Should call get application version", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -670,7 +591,6 @@ void main() {
     test("Should call set pdv register with correct values", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -687,7 +607,6 @@ void main() {
     test("Should call navigate to home page", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,
@@ -701,7 +620,6 @@ void main() {
     test("Should update local command data correctly", () async {
       final selectedPdv = PdvNotUsingViewModel.fromEntity(pdvsNotUsing[0]);
       await sut.registerPdvAndGoToHomePage(
-        isRedeVersion: false,
         selectedPdv: selectedPdv,
         commandNumber: commandNumber.toString(),
         isFixedCommandNumber: isFixedCommandNumber,

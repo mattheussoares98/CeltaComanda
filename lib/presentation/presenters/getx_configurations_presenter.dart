@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../data/models/models.dart';
 import '../../domain/entities/entities.dart';
@@ -10,15 +11,12 @@ import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
-import 'package:get/get.dart';
-
 class GetxConfigurationsPresenter extends GetxController
     with LoadingManager, UIErrorManager, ErrorHandling
     implements ConfigurationsPresenter {
   final UserValidations userValidations;
   final CommandInformations commandInformations;
   final NavigateTo navigateTo;
-  final Persistent persistent;
   final UpdateMenu updateMenu;
   final LocalCommandData localCommandData;
   final LoadSaleRequestTemp loadSaleRequestTemp;
@@ -39,7 +37,6 @@ class GetxConfigurationsPresenter extends GetxController
     required this.userValidations,
     required this.commandInformations,
     required this.navigateTo,
-    required this.persistent,
     required this.updateMenu,
     required this.localCommandData,
     required this.loadSaleRequestTemp,
@@ -67,7 +64,6 @@ class GetxConfigurationsPresenter extends GetxController
     printedProductsPresenter.clear();
     cartPresenter.clear();
     homePresenter.clear();
-    await persistent.makeNotPersistent();
     await deleteData.delete([
       CacheKeys.alreadyPaid,
       CacheKeys.cartProducts,
@@ -153,8 +149,7 @@ class GetxConfigurationsPresenter extends GetxController
     mainError = null;
 
     try {
-      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId(
-          isRedeVersion: false /* tanto faz, não usa mais essa função */);
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
       await addPendingDeviceToUpdate.add(
         imeiOrWindowsId: imeiOrWindowsId,
         enterpriseName: enterpriseName,
@@ -220,13 +215,14 @@ class GetxConfigurationsPresenter extends GetxController
           PersonalizedCode: saleRequestTempEntity.PersonalizedCode,
           SaleRequestTempId: saleRequestTempEntity.SaleRequestTempId,
           TotalLiquid: saleRequestTempEntity.TotalLiquid,
-          Products: [],
+          Products: const [],
           SellerCode: sellerCode,
           CustomerCode: saleRequestTempEntity.CustomerCode,
           CovenantCode: saleRequestTempEntity.CovenantCode,
           IncrementValue: saleRequestTempEntity.IncrementValue,
           IncrementType: saleRequestTempEntity.IncrementType,
           PlaceId: saleRequestTempEntity.PlaceId,
+          IsToDelivery: saleRequestTempEntity.IsToDelivery,
         ),
       );
 

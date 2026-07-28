@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/usecases/usecases.dart';
@@ -7,10 +8,8 @@ import '../../domain/usecases/usecases.dart';
 import '../../main/builders/builders.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-import '../protocols/protocols.dart';
 import '../mixins/mixins.dart';
-
-import 'package:get/get.dart';
+import '../protocols/protocols.dart';
 
 class GetxEnterprisePresenter extends GetxController
     with LoadingManager, FormManager, UIErrorManager, ErrorHandling
@@ -21,7 +20,6 @@ class GetxEnterprisePresenter extends GetxController
   final NavigateTo navigateTo;
   final CommandInformations commandInformations;
   final LocalCommandData localCommandData;
-  final Persistent persistent;
   final LoadEnterpriseConcentradorParameters
       loadEnterpriseConcentradorParameters;
   final PdvRegistration pdvRegistration;
@@ -35,7 +33,6 @@ class GetxEnterprisePresenter extends GetxController
     required this.navigateTo,
     required this.commandInformations,
     required this.localCommandData,
-    required this.persistent,
     required this.loadEnterpriseConcentradorParameters,
     required this.pdvRegistration,
     required this.loadDeviceData,
@@ -102,6 +99,8 @@ class GetxEnterprisePresenter extends GetxController
             requestTableNumber: firebaseData.requestTableNumber,
             useOldPrintWay: firebaseData.useOldPrintWay,
             httpsUrl: firebaseData.httpsUrl,
+            printSaleRequestWhenPaymentSucceeds:
+                firebaseData.printSaleRequestWhenPaymentSucceeds,
           );
 
           await localEntepriseData.add(EnterpriseBuilder.entity!);
@@ -124,14 +123,6 @@ class GetxEnterprisePresenter extends GetxController
           pdv: null,
         ),
       );
-
-      if (EnterpriseBuilder.entity?.persistApp == true &&
-          !homePresenter.isGeneratingVersionToRede &&
-          !homePresenter.isGeneratingVersionToGetNet) {
-        await persistent.makePersistent();
-      } else {
-        await persistent.makeNotPersistent();
-      }
 
       var pdvs = await pdvRegistration.getByEnterpriseId();
 
@@ -287,13 +278,11 @@ class GetxEnterprisePresenter extends GetxController
     required PdvNotUsingViewModel selectedPdv,
     required String? commandNumber,
     required bool isFixedCommandNumber,
-    required bool isRedeVersion,
   }) async {
     isLoading = true;
     mainError = null;
     try {
-      final imeiOrWindowsId =
-          await loadDeviceData.getImeiOrWindowsId(isRedeVersion: isRedeVersion);
+      final imeiOrWindowsId = await loadDeviceData.getImeiOrWindowsId();
       final applicationVersion = await loadDeviceData.getApplicationVersion();
 
       await pdvRegistration.setPdvRegister(

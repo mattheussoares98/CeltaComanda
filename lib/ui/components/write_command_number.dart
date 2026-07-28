@@ -18,6 +18,7 @@ class WriteNumber {
   static final _commandNumberController = TextEditingController();
   static final _context = NavigatorKey.key.currentContext!;
   static final _focusNode = FocusNode();
+  static final commandKey = GlobalKey<FormState>();
 
   static Future<String?> writeAndReturnNumber(
     ActionType? action, {
@@ -30,7 +31,6 @@ class WriteNumber {
   }) async {
     //is action is null, dont do anything
 
-    final commandKey = GlobalKey<FormState>();
     CartPresenter cartPresenter = Provider.of(_context, listen: false);
     HomePresenter homePresenter = Provider.of(_context, listen: false);
     ExpansibleGroupFromProductPresenter expansibleGroupFromProductPresenter =
@@ -55,9 +55,10 @@ class WriteNumber {
               key: commandKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Builder(builder: (context) {
-                Future.delayed(Duration.zero, () {
-                  _focusNode.unfocus();
-                  _focusNode.requestFocus();
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  if (!_focusNode.hasPrimaryFocus) {
+                    _focusNode.requestFocus();
+                  }
                 });
 
                 return TextFormField(
@@ -192,14 +193,17 @@ Future<void> _onPress({
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
   } else if (action == ActionType.loadPrintedProducts) {
-    await homePresenter.updateCommandEntity(
-      commandNumber: commandNumber,
-      isFixedCommandNumber:
-          homePresenter.commandEntity?.isFixedCommandNumber == true,
-      pdv: homePresenter.commandEntity?.pdv,
+    final succeeds = await printedProductsPresenter.loadPrinted(
+      commandNumber,
     );
-    await printedProductsPresenter.loadPrinted(
-      homePresenter.commandEntity!.commandNumber!,
-    );
+
+    if (succeeds) {
+      await homePresenter.updateCommandEntity(
+        commandNumber: commandNumber,
+        isFixedCommandNumber:
+            homePresenter.commandEntity?.isFixedCommandNumber == true,
+        pdv: homePresenter.commandEntity?.pdv,
+      );
+    }
   }
 }

@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/entities.dart';
@@ -16,6 +14,7 @@ class SaleRequestTempEntity extends Equatable {
   final String? SellerCode;
   final int? CustomerCode;
   final int? CovenantCode;
+  final int? IsToDelivery;
   final double? IncrementValue;
   final int? IncrementType; //1 == value && 2 == percentage
   final String? PlaceId; //1 == value && 2 == percentage
@@ -32,6 +31,7 @@ class SaleRequestTempEntity extends Equatable {
     required this.SellerCode,
     required this.CustomerCode,
     required this.CovenantCode,
+    required this.IsToDelivery,
     required this.IncrementValue,
     required this.IncrementType,
     required this.PlaceId,
@@ -50,6 +50,7 @@ class SaleRequestTempEntity extends Equatable {
         SellerCode,
         CustomerCode,
         CovenantCode,
+        IsToDelivery,
         IncrementValue,
         IncrementType,
         PlaceId,

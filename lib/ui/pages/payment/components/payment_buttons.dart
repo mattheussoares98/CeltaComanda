@@ -1,3 +1,4 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +17,9 @@ class PaymentButtons extends StatelessWidget {
     super.key,
   });
 
-  void showSuccessAndCloseUntilHomePage() {
-    Navigator.of(NavigatorKey.key.currentState!.context)
+  void showSuccessAndCloseUntilHomePage(BuildContext context) {
+    snackBarMessage(context, R.string.liquidateCommandSucceeds);
+    Navigator.of(NavigatorKey.key.currentState?.context ?? context)
         .popUntil((route) => route.isFirst);
   }
 
@@ -37,7 +39,8 @@ class PaymentButtons extends StatelessWidget {
           paymentMode: paymentMode,
           homePresenter: homePresenter,
           printedProductsPresenter: printedProductsPresenter,
-          showSuccessAndCloseUntilHomePage: showSuccessAndCloseUntilHomePage,
+          showSuccessAndCloseUntilHomePage: () =>
+              showSuccessAndCloseUntilHomePage(context),
           showErrorMessageReturnedByBs: (error) {
             snackBarMessage(
               context,
@@ -52,8 +55,7 @@ class PaymentButtons extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (homePresenter.isGeneratingVersionToRede ||
-            homePresenter.isGeneratingVersionToGetNet)
+        if (activePlatform.isPaymentPlatform)
           Column(
             children: [
               ElevatedButton(

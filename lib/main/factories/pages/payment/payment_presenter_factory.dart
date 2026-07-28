@@ -8,6 +8,7 @@ import '../../factories.dart';
 PaymentPresenter makeGetxPaymentPresenter() => GetxPaymentPresenter(
       redePay: makePosRedePay(),
       getnetPay: makePosGetnetPay(),
+      cieloPay: makePosCieloPay(),
       commandInformations: makeRemoteCommandInformations(),
       finishSaleRequestConcentrador: makeRemoteFinishSaleRequestConcentrador(),
       navigateTo: makeNavigateTo(),

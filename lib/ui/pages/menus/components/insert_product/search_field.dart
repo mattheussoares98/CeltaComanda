@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,6 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MenuPresenter menuPresenter = Provider.of(context, listen: false);
-    HomePresenter homePresenter = Provider.of(context, listen: false);
     return Row(
       children: [
         Expanded(
@@ -64,8 +64,7 @@ class SearchField extends StatelessWidget {
                   ),
                 ),
                 suffixIcon: Platform.isWindows ||
-                        homePresenter.isGeneratingVersionToGetNet ||
-                        homePresenter.isGeneratingVersionToRede
+                        activePlatform.isPaymentPlatform
                     ? null
                     : IconButton(
                         onPressed: () async {

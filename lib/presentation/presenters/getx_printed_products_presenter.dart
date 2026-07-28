@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,7 @@ class GetxPrintedProductsPresenter
   }
 
   @override
-  Future<void> loadPrinted(String commandNumber,
+  Future<bool> loadPrinted(String commandNumber,
       {bool showIsLoading = true}) async {
     if (showIsLoading) {
       isLoading = true;
@@ -71,15 +72,16 @@ class GetxPrintedProductsPresenter
     mainError = null;
 
     try {
-      PrintedEntity? printedProducts = await loadPrintedProducts.load(
+      PrintedEntity? printed = await loadPrintedProducts.load(
         commandNumber: commandNumber.toInt(),
       );
 
-      _printed = null;
-      if (printedProducts?.Products.isEmpty == false) {
-        _printed = PrintedViewModel.fromEntity(printedProducts!);
+      if (printed?.Products.isNotEmpty ?? false) {
+        _printed = PrintedViewModel.fromEntity(printed!);
         _printed!.Products.sort((a, b) => DateTime.parse(a.DateHourOfCreation!)
             .compareTo(DateTime.parse(b.DateHourOfCreation!)));
+      } else {
+        _printed = null;
       }
 
       if (_printed?.CustomerCode == null ||
@@ -95,9 +97,11 @@ class GetxPrintedProductsPresenter
           json.decode(response).first,
         );
       }
+      return true;
     } on BsError catch (e) {
       mainError = UIError.custom(e.toString());
       _customerInSaleRequest = null;
+      return false;
     } catch (error) {
       switch (error) {
         case DomainError.commandNotAvailable:
@@ -350,8 +354,7 @@ class GetxPrintedProductsPresenter
     required HomePresenter homePresenter,
     required void Function() closePageForOldPrintWay,
   }) {
-    if (homePresenter.isGeneratingVersionToRede ||
-        homePresenter.isGeneratingVersionToGetNet) {
+    if (activePlatform.isPaymentPlatform) {
       _channel = MethodChannel(Channels.printer.name);
     } else {
       return;
@@ -361,7 +364,7 @@ class GetxPrintedProductsPresenter
       if (call.arguments == "Success") {
         isLoading = false;
       } else {
-        mainError = UIError.unexpected;
+        mainError = UIError.custom(call.arguments);
         isLoading = false;
       }
     });

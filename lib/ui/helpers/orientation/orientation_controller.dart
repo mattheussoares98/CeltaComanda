@@ -1,8 +1,6 @@
+import 'package:clean_celta_mobile/presentation/helpers/app_platform.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
-import '../../pages/pages.dart';
 
 class OrientationController extends StatefulWidget {
   final Widget child;
@@ -24,10 +22,8 @@ class _OrientationControllerState extends State<OrientationController> {
     // This is the best way to determine if the device is a "tablet"
     // because it doesn't change with orientation.
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final homePresenter = Provider.of<HomePresenter>(context, listen: false);
 
-    if (homePresenter.isGeneratingVersionToGetNet ||
-        homePresenter.isGeneratingVersionToRede) {
+    if (activePlatform.isPaymentPlatform) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,

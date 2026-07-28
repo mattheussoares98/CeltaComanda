@@ -75,6 +75,31 @@ class _PaymentPageState extends State<PaymentPage>
           },
         );
 
+        printedErrorSubscription = handleMainError(
+          context,
+          printedProductsPresenter.mainErrorStream,
+        );
+        printedLoadingSubscription = handleLoading(
+          context,
+          printedProductsPresenter.isLoadingStream,
+        );
+        loadingSubscription =
+            handleLoading(context, paymentPresenter!.isLoadingStream);
+        mainErrorSubscription =
+            handleMainError(context, paymentPresenter!.mainErrorStream);
+        updateScrrenSubscription = handleUpdateScreen(
+          context,
+          paymentPresenter!.updateScreenStream,
+          () {
+            Future.delayed(Duration.zero, () {
+              if (mounted) {
+                paymentController.clear();
+                setState(() {});
+              }
+            });
+          },
+        );
+
         paymentController.text = paymentPresenter
                 ?.getTotalPendingValue(printedProductsPresenter)
                 .toString()
@@ -97,35 +122,6 @@ class _PaymentPageState extends State<PaymentPage>
         .getTotalLiquid(printedProductsPresenter.printed);
     final pendingValue =
         paymentPresenter.getTotalPendingValue(printedProductsPresenter);
-
-    printedLoadingSubscription?.cancel();
-    loadingSubscription?.cancel();
-    mainErrorSubscription?.cancel();
-    updateScrrenSubscription?.cancel();
-    printedErrorSubscription?.cancel();
-
-    printedErrorSubscription = handleMainError(
-      context,
-      printedProductsPresenter.mainErrorStream,
-    );
-    loadingSubscription =
-        handleLoading(context, paymentPresenter.isLoadingStream);
-    printedLoadingSubscription =
-        handleLoading(context, printedProductsPresenter.isLoadingStream);
-    mainErrorSubscription =
-        handleMainError(context, paymentPresenter.mainErrorStream);
-    updateScrrenSubscription = handleUpdateScreen(
-      context,
-      paymentPresenter.updateScreenStream,
-      () {
-        Future.delayed(Duration.zero, () {
-          if (mounted) {
-            paymentController.clear();
-            setState(() {});
-          }
-        });
-      },
-    );
 
     return PopScope(
       canPop: false,

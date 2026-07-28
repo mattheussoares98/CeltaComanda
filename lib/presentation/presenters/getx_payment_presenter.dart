@@ -98,6 +98,7 @@ class GetxPaymentPresenter extends GetxController
             paymentMode: paymentMode,
           ),
         );
+        isLoading = false;
       } else if (activePlatform == AppPlatform.getnet) {
         final result = await getnetPay.pay(
           PayParamsModel(
@@ -137,6 +138,7 @@ class GetxPaymentPresenter extends GetxController
       mainError = getUIError(e);
       isLoading = false;
     } finally {
+      isLoading = false;
       Future.delayed(
         Duration(
           seconds: activePlatform == AppPlatform.cielo ? 5 : 20,
@@ -319,8 +321,17 @@ class GetxPaymentPresenter extends GetxController
       }
     } catch (e) {
       mainError = getUIError(e);
+    } finally {
+      isLoading = false;
+      Future.delayed(
+        const Duration(
+          seconds: 5,
+        ),
+        () {
+          isLoading = false;
+        },
+      );
     }
-    isLoading = false;
   }
 
   Future<void> _treatCieloResponse(

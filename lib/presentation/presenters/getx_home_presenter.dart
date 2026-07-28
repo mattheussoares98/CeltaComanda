@@ -71,7 +71,8 @@ class GetxHomePresenter
     try {
       final localEntity = await localCommandData.load();
       if (localEntity?.pdv?.PdvId != null) {
-        await pdvRegistration.setPdvRegister(
+        //TODO test whether is doing logout without removing the register
+        pdvRegistration.setPdvRegister(
           pdvId: localEntity!.pdv!.PdvId!,
           imeiOrWindowsId: "",
           versionNumber: "",
@@ -319,8 +320,6 @@ class GetxHomePresenter
   void updateSelectedSeller(SellersViewModel? seller) {
     _selectedSeller = seller;
   }
-
-
 
   @override
   Future<void> doOnRemoteEnterpriseChanges({

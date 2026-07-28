@@ -67,7 +67,7 @@ class ConcentratorPdvRegistration
         headers: headers,
       );
     } catch (e) {
-      treatError(e);
+      debugPrint(e.toString());
     }
   }
 

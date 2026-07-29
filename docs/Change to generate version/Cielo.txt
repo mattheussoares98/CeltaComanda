@@ -34,6 +34,11 @@ C3lta@Ciel0Paid
     <category android:name="android.intent.category.DEFAULT" />
     <data android:host="response" android:scheme="order" />
   </intent-filter>
+  
+- In AndroidManifest.xml, uncomment:
+ <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+   
 
 - Cielo isn't using a third library. Because of this, don't need to touch these files:
   - CieloPayment.kt

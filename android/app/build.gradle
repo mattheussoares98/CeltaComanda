@@ -57,7 +57,7 @@ android {
         multiDexEnabled true
         minSdkVersion flutter.minSdkVersion
         targetSdk 36
-        versionCode 139
+        versionCode 140
         versionName flutterVersionName
         ndkVersion "29.0.13113456"
     }

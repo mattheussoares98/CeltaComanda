@@ -320,6 +320,11 @@ void _updateMainActivity(String platform) {
       platform != 'cielo');
   _toggleFileBlock(
       'android/app/src/main/kotlin/br/com/celtaware/comanda/MainActivity.kt',
+      'CIELO-PERMISSION-RESULT',
+      'slash',
+      platform != 'cielo');
+  _toggleFileBlock(
+      'android/app/src/main/kotlin/br/com/celtaware/comanda/MainActivity.kt',
       'CIELO-INTENT',
       'slash',
       platform != 'cielo');

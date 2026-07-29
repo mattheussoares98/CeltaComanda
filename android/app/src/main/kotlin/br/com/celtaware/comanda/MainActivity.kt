@@ -84,6 +84,17 @@ class MainActivity : FlutterActivity() {
         // [CIELO-RESULT-END]
     }
 
+    // [CIELO-PERMISSION-RESULT-START]
+    // override fun onRequestPermissionsResult(
+        // requestCode: Int,
+        // permissions: Array<out String>,
+        // grantResults: IntArray,
+    // ) {
+        // super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // cieloPrinter.onRequestPermissionsResult(requestCode, grantResults)
+    // }
+    // [CIELO-PERMISSION-RESULT-END]
+
     override fun onNewIntent(intent: Intent) {
         // [CIELO-INTENT-START]
         // if (Intent.ACTION_VIEW == intent.action) {

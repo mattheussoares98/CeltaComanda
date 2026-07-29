@@ -232,6 +232,10 @@ void _updateAndroidManifest(String platform) {
   _toggleFileBlock('android/app/src/main/AndroidManifest.xml', 'CIELO-CALLBACK',
       'xml', platform != 'cielo');
 
+  // CIELO-PERMISSIONS uncommented only for cielo
+  _toggleFileBlock('android/app/src/main/AndroidManifest.xml',
+      'CIELO-PERMISSIONS', 'xml', platform != 'cielo');
+
   // LAUNCHER-CATEGORIES commented for rede, getnet, cielo
   final commentLauncher =
       (platform == 'rede' || platform == 'getnet' || platform == 'cielo');

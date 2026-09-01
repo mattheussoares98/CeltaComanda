@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../../main/builders/builders.dart';
 import '../../../../ui/helpers/helpers.dart';
 import '../../../components/components.dart';
 import '../../pages.dart';
@@ -108,13 +109,11 @@ class _AdvanceButtonState extends State<AdvanceButton> {
       menuPresenter: menuPresenter,
       expansibleGroupFromProductPresenter: expansibleGroupFromProductPresenter,
     );
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      PersonalizedDialogPage.open(
-        context: context,
-        page: const CartPage(),
-      );
-    });
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    PersonalizedDialogPage.open(
+      context: NavigatorKey.key.currentState?.context ?? context,
+      page: const CartPage(),
+    );
     menuPresenter.advanceIndexOfAtualSuggestion();
   }
 

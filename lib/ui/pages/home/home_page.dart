@@ -22,10 +22,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with LoadingManager, UIErrorManager {
+    with LoadingManager, UIErrorManager, SuggestionManager {
   StreamSubscription? loadingSubscription;
   StreamSubscription? mainErrorSubscription;
-  ProductsViewModel? _lastShowedSuggestionProduct;
+  StreamSubscription? suggestionSubscription;
   Timer? loadPrintedTimer;
   Timer? needUpdateAppTimer;
   Timer? verifyNeedUpdateMenuOrImagesTimer;
@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage>
     super.dispose();
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    suggestionSubscription?.cancel();
     loadPrintedTimer?.cancel();
     needUpdateAppTimer?.cancel();
     verifyNeedUpdateMenuOrImagesTimer?.cancel();
@@ -162,9 +163,15 @@ class _HomePageState extends State<HomePage>
 
     loadingSubscription?.cancel();
     mainErrorSubscription?.cancel();
+    suggestionSubscription?.cancel();
     loadingSubscription = handleLoading(context, homePresenter.isLoadingStream);
     mainErrorSubscription =
         handleMainError(context, homePresenter.mainErrorStream);
+    suggestionSubscription = handleSuggestion(
+      context,
+      menuPresenter.atualSuggestionProductStream,
+      menuPresenter,
+    );
 
     return ListenFirebaseStreamAndCallFunction(
       collection: "clients",
@@ -219,24 +226,9 @@ class _HomePageState extends State<HomePage>
               menuPresenter: menuPresenter,
             ),
             body: SafeArea(
-              child: StreamBuilder<ProductsViewModel?>(
-                  stream: menuPresenter.atualSuggestionProductStream,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData &&
-                        snapshot.data != _lastShowedSuggestionProduct) {
-                      _lastShowedSuggestionProduct = snapshot.data;
-                      WidgetsBinding.instance.addPostFrameCallback((_) async {
-                        showSuggestionDialog(
-                          context,
-                          snapshot.data!,
-                          menuPresenter,
-                        );
-                      });
-                    }
-                    return MenuPage(
-                        homePresenter.commandEntity?.isFixedCommandNumber ==
-                            true);
-                  }),
+              child: MenuPage(
+                homePresenter.commandEntity?.isFixedCommandNumber == true,
+              ),
             ),
           ),
         ),

@@ -134,6 +134,9 @@ class _LandScapeInsertProductsPageBodyState
                   if (atualOption == SelectedOptionType.optionalExpansibleGroup)
                     Expanded(
                       child: OptionalGroups(
+                        callSetState: () {
+                          setState(() {});
+                        },
                         selectedProduct: widget.selectedProduct,
                         selectedLeftIndex: widget.indexOfAtualOption,
                       ),

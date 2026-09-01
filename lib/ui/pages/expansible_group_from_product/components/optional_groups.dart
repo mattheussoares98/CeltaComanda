@@ -8,9 +8,11 @@ import '../../pages.dart';
 class OptionalGroups extends StatefulWidget {
   final ProductsViewModel selectedProduct;
   final int selectedLeftIndex;
+  final void Function() callSetState;
   const OptionalGroups({
     required this.selectedProduct,
     required this.selectedLeftIndex,
+    required this.callSetState,
     super.key,
   });
 
@@ -80,6 +82,7 @@ class _CommentsState extends State<OptionalGroups> {
                   expansibleGroupFromProductPresenter
                       .changeCommentIsSelected(comment);
                 });
+                widget.callSetState();
               },
               child: Padding(
                 padding: ScreenSize.hasMinWidth
@@ -104,6 +107,7 @@ class _CommentsState extends State<OptionalGroups> {
                           expansibleGroupFromProductPresenter
                               .changeCommentIsSelected(comment);
                         });
+                        widget.callSetState();
                       },
                     ),
                   ],

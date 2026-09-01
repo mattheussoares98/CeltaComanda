@@ -156,6 +156,9 @@ class _PortraitInsertProductsPageBodyState
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
                     child: OptionalGroups(
+                      callSetState: () {
+                        setState(() {});
+                      },
                       selectedProduct: widget.selectedProduct,
                       selectedLeftIndex: widget.indexOfAtualOption,
                     ),

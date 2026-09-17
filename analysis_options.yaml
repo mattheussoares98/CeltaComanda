@@ -13,6 +13,13 @@ analyzer:
     non_constant_identifier_names: ignore
     unnecessary_this: ignore
     no_wildcard_variable_uses: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
 include: package:flutter_lints/flutter.yaml
 
 linter:
